@@ -1,0 +1,51 @@
+{
+    "$schema": "https://meta.comcast.com/firebolt/entertainment",
+    "$id": "https://meta.comcast.com/firebolt/entertainment",
+    "title": "Entertainment",
+    "anyOf": [
+        {
+            "$ref": "#/definitions/ProgramType"
+        }
+    ],
+    "definitions": {
+        "ProgramType": {
+            "title": "ProgramType",
+            "type": "string",
+            "description": "In the case of a program `entityType`, specifies the program type.",
+            "enum": [
+                "movie",
+                "episode",
+                "season",
+                "series",
+                "other",
+                "preview",
+                "extra",
+                "concert",
+                "sportingEvent",
+                "advertisement",
+                "musicVideo",
+                "minisode"
+            ]
+        },
+        "Entitlement": {
+            "title": "Entitlement",
+            "type": "object",
+            "properties": {
+              "entitlementId": {
+                "type": "string"
+              },
+              "startTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "endTime": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "entitlementId"
+            ]
+        }        
+    }
+}

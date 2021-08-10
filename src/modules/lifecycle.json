@@ -1,0 +1,435 @@
+{
+  "openrpc": "1.2.4",
+  "info": {
+    "title": "Lifecycle",
+    "description": "Methods and events for responding to lifecycle changes in your app",
+    "version": "0.0.0"
+  },
+  "methods": [
+    {
+      "name": "ready",
+      "summary": "Notify the platform that the app is ready",
+      "params": [],
+      "result": {
+        "name": "result",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Let the platform know that your app is ready",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "close",
+      "summary": "Request that the platform move your app out of focus",
+      "params": [
+        {
+          "name": "reason",
+          "summary": "The reason the app is requesting to be closed",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/CloseReason"
+          }
+        }
+      ],
+      "result": {
+        "name": "success",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Close the app when the user presses back on the app home screen",
+          "params": [
+            {
+              "name": "reason",
+              "value": "REMOTE_BUTTON"
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "finished",
+      "summary": "Notify the platform that the app is done unloading",
+      "params": [],
+      "result": {
+        "name": "results",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "state",
+      "summary": "Get the current state of the app. This function is **synchronous**.",
+      "tags": [
+        {
+          "name": "synchronous"
+        }
+      ],
+      "params": [],
+      "result": {
+        "name": "state",
+        "summary": "the current state of the app.",
+        "schema": {
+          "$ref": "#/components/schemas/LifecycleState"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "foreground"
+          }
+        }
+      ]
+    },
+    {
+      "name": "onInactive",
+      "tags": [
+        {
+          "name": "event"
+        }
+      ],
+      "summary": "Listen to the inactive event",
+      "params": [
+        {
+          "name": "listen",
+          "required": true,
+          "summary": "whether to listen, or stop listening",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "result": {
+        "name": "value",
+        "schema": {
+          "oneOf": [
+            {
+              "$ref": "#/components/schemas/LifecycleEvent"
+            },
+            {
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
+            }
+          ]
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [
+            {
+              "name": "listen",
+              "value": true
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "state": "inactive",
+              "previous": "initializing"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onForeground",
+      "tags": [
+        {
+          "name": "event"
+        }
+      ],
+      "summary": "Listen to the foreground event",
+      "params": [
+        {
+          "name": "listen",
+          "required": true,
+          "summary": "whether to listen, or stop listening",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "result": {
+        "name": "value",
+        "schema": {
+          "oneOf": [
+            {
+              "$ref": "#/components/schemas/LifecycleEvent"
+            },
+            {
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
+            }
+          ]
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [
+            {
+              "name": "listen",
+              "value": true
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "state": "foreground",
+              "previous": "inactive"
+            }
+          }
+        },
+        {
+          "name": "Move to foreground via remote branded buton",
+          "params": [
+            {
+              "name": "listen",
+              "value": true
+            }
+          ],
+          "result": {
+            "name": "value",
+            "value": {
+              "state": "foreground",
+              "previous": "inactive",
+              "source": "remote"
+            }
+          }
+        }        
+      ]
+    },
+    {
+      "name": "onBackground",
+      "tags": [
+        {
+          "name": "event"
+        }
+      ],
+      "summary": "Listen to the background event",
+      "params": [
+        {
+          "name": "listen",
+          "required": true,
+          "summary": "whether to listen, or stop listening",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "result": {
+        "name": "value",
+        "schema": {
+          "oneOf": [
+            {
+              "$ref": "#/components/schemas/LifecycleEvent"
+            },
+            {
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
+            }
+          ]
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [
+            {
+              "name": "listen",
+              "value": true
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "state": "background",
+              "previous": "foreground"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onSuspended",
+      "tags": [
+        {
+          "name": "event"
+        }
+      ],
+      "summary": "Listen to the suspended event",
+      "params": [
+        {
+          "name": "listen",
+          "required": true,
+          "summary": "whether to listen, or stop listening",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "result": {
+        "name": "value",
+        "schema": {
+          "oneOf": [
+            {
+              "$ref": "#/components/schemas/LifecycleEvent"
+            },
+            {
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
+            }
+          ]
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [
+            {
+              "name": "listen",
+              "value": true
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "state": "suspended",
+              "previous": "inactive"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onUnloading",
+      "tags": [
+        {
+          "name": "event"
+        }
+      ],
+      "summary": "Listen to the unloading event",
+      "params": [
+        {
+          "name": "listen",
+          "required": true,
+          "summary": "whether to listen, or stop listening",
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "result": {
+        "name": "value",
+        "schema": {
+          "oneOf": [
+            {
+              "$ref": "#/components/schemas/LifecycleEvent"
+            },
+            {
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
+            }
+          ]
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [
+            {
+              "name": "listen",
+              "value": true
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "state": "unloading",
+              "previous": "inactive"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "components": {
+    "schemas": {
+      "LifecycleEvent": {
+        "title": "LifecycleEvent",
+        "description": "A an object describing the previous and current states",
+        "type": "object",
+        "required": [
+          "state",
+          "previous"
+        ],
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/LifecycleState",
+            "description": "The current lifcycle state"
+          },
+          "previous": {
+            "$ref": "#/components/schemas/LifecycleState",
+            "description": "The previous lifcycle state"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "voice",
+              "remote"
+            ],
+            "description": "The source of the lifecycle change."
+          }
+        }
+      },
+      "LifecycleState": {
+        "title": "LifecycleState",
+        "description": "Valid states in the `Lifecycle` API",
+        "type": "string",
+        "enum": [
+          "initializing",
+          "inactive",
+          "background",
+          "foreground",
+          "suspended",
+          "unloading"
+        ]
+      },
+      "CloseReason": {
+        "title": "CloseReason",
+        "description": "Reasons for calling the `close` method",
+        "type": "string",
+        "enum": [
+          "remoteButton",
+          "userExit",
+          "error"
+        ]
+      }
+    }
+  }
+}
