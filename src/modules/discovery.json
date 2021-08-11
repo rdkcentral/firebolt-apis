@@ -46,8 +46,12 @@
         "summary": "discovery policy opt-in/outs",
         "schema": {
           "oneOf": [
-            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
-            { "$ref": "#/components/schemas/DiscoveryPolicy" }
+            {
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
+            },
+            {
+              "$ref": "#/components/schemas/DiscoveryPolicy"
+            }
           ]
         }
       },
