@@ -14,5 +14,4 @@
 /* ${EXPORTS} */
 export { default as Log } from './Log'
 export { default as Events } from './Events'
-export { default as Platform } from './Platform'
 export { default as Settings } from './Settings'

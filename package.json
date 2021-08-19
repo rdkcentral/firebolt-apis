@@ -1,6 +1,6 @@
 {
   "name": "@firebolt-js/sdk",
-  "version": "0.5.2-beta.1",
+  "version": "0.5.2-test.1",
   "description": "The Firebolt JS SDK",
   "main": "./dist/firebolt.js",
   "scripts": {
@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.comcast.com/ottx/firebolt-core-sdk#readme",
   "devDependencies": {
-    "@firebolt-js/openrpc": "1.0.0-beta.2",
+    "@firebolt-js/openrpc": "1.0.1-beta.1",
     "@babel/core": "^7.14.6",
     "@babel/node": "^7.14.5",
     "@babel/preset-env": "^7.14.5",
