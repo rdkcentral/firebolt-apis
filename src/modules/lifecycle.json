@@ -52,7 +52,20 @@
           "params": [
             {
               "name": "reason",
-              "value": "REMOTE_BUTTON"
+              "value": "remoteButton"
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": null
+          }
+        },
+        {
+          "name": "Close the app when the user selects an exit menu item",
+          "params": [
+            {
+              "name": "reason",
+              "value": "userExit"
             }
           ],
           "result": {

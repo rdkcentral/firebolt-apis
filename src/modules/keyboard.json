@@ -40,11 +40,28 @@
           "params": [
             {
               "name": "type",
-              "value": "SIGN-IN"
+              "value": "signIn"
             },
             {
               "name": "message",
               "value": "Enter your email to sign into this app"
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": "user@domain.com"
+          }
+        },
+        {
+          "name": "Prompt the user to type an email address to sign up",
+          "params": [
+            {
+              "name": "type",
+              "value": "signUp"
+            },
+            {
+              "name": "message",
+              "value": "Enter your email to sign up for this app"
             }
           ],
           "result": {

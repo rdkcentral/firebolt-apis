@@ -46,12 +46,8 @@
         "summary": "discovery policy opt-in/outs",
         "schema": {
           "oneOf": [
-            {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-            },
-            {
-              "$ref": "#/components/schemas/DiscoveryPolicy"
-            }
+            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
+            { "$ref": "#/components/schemas/DiscoveryPolicy" }
           ]
         }
       },
@@ -133,8 +129,8 @@
                       "entitledExpires": "2025-01-01T00:00:00.000Z",
                       "offeringType": "buy",
                       "price": 2.99,
-                      "videoQuality": "UHD",
-                      "audioProfile": "dolbyAtmos",
+                      "videoQuality": ["UHD"],
+                      "audioProfile": ["dolbyAtmos"],
                       "audioLanguages": [
                         "en"
                       ],
@@ -194,8 +190,8 @@
                       "entitledExpires": "2025-01-01T00:00:00.000Z",
                       "offeringType": "buy",
                       "price": 2.99,
-                      "videoQuality": "UHD",
-                      "audioProfile": "dolbyAtmos",
+                      "videoQuality": ["UHD"],
+                      "audioProfile": ["dolbyAtmos"],
                       "audioLanguages": [
                         "en"
                       ],
@@ -226,8 +222,8 @@
                           "entityId": "345"
                         },
                         "entitled": true,
-                        "videoQuality": "HD",
-                        "audioProfile": "dolbyAtmos",
+                        "videoQuality": ["HD"],
+                        "audioProfile": ["dolbyAtmos"],
                         "audioLanguages": [
                           "en"
                         ],
@@ -258,7 +254,7 @@
                     "entityId": "98765"
                   },
                   "entityType": "program",
-                  "programType": "tvSeries",
+                  "programType": "series",
                   "title": "Perfect Strangers",
                   "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
                   "releaseDate": "1986-01-01T00:00:00.000Z",
@@ -276,7 +272,7 @@
                       "seriesId": "98765"
                     },
                     "entityType": "program",
-                    "programType": "tvSeason",
+                    "programType": "season",
                     "seasonNumber": 1,
                     "title": "Perfect Strangers Season 3",
                     "contentRatings": [
@@ -290,12 +286,12 @@
                         "identifiers": {
                           "assetId": "556",
                           "entityId": "111",
-                          "tvSeriesId": "98765"
+                          "seriesId": "98765"
                         },
                         "entitled": true,
                         "offeringType": "free",
-                        "videoQuality": "SD",
-                        "audioProfile": "stereo",
+                        "videoQuality": ["SD"],
+                        "audioProfile": ["stereo"],
                         "audioLanguages": [
                           "en"
                         ],
@@ -311,7 +307,7 @@
                       "seriesId": "98765"
                     },
                     "entityType": "program",
-                    "programType": "tvEpisode",
+                    "programType": "episode",
                     "seasonNumber": 1,
                     "episodeNumber": 1,
                     "title": "Knock Knock, Who's There?",
@@ -328,12 +324,12 @@
                         "identifiers": {
                           "assetId": "556",
                           "entityId": "111",
-                          "tvSeriesId": "98765"
+                          "seriesId": "98765"
                         },
                         "entitled": true,
                         "offeringType": "free",
-                        "videoQuality": "SD",
-                        "audioProfile": "stereo",
+                        "videoQuality": ["SD"],
+                        "audioProfile": ["stereo"],
                         "audioLanguages": [
                           "en"
                         ],
@@ -349,7 +345,7 @@
                       "seriesId": "98765"
                     },
                     "entityType": "program",
-                    "programType": "tvEpisode",
+                    "programType": "episode",
                     "seasonNumber": 1,
                     "episodeNumber": 2,
                     "title": "Picture This",
@@ -366,12 +362,12 @@
                         "identifiers": {
                           "assetId": "557",
                           "entityId": "112",
-                          "tvSeriesId": "98765"
+                          "seriesId": "98765"
                         },
                         "entitled": true,
                         "offeringType": "free",
-                        "videoQuality": "SD",
-                        "audioProfile": "stereo",
+                        "videoQuality": ["SD"],
+                        "audioProfile": ["stereo"],
                         "audioLanguages": [
                           "en"
                         ],
@@ -456,8 +452,8 @@
                         "entitledExpires": "2025-01-01T00:00:00.000Z",
                         "offeringType": "buy",
                         "price": 2.99,
-                        "videoQuality": "UHD",
-                        "audioProfile": "dolbyAtmos",
+                        "videoQuality": ["UHD"],
+                        "audioProfile": ["dolbyAtmos"],
                         "audioLanguages": [
                           "en"
                         ],
@@ -692,7 +688,7 @@
     },
     {
       "name": "launch",
-      "summary": "Launch specified app, and optionally instructs it to navigate to the specified user action",
+      "summary": "Launch or foreground the specified app, and optionally instructs it to navigate to the specified user action",
       "params": [
         {
           "name": "appId",
@@ -720,32 +716,252 @@
       },
       "examples": [
         {
-          "name": "Launch the EPG",
+          "name": "Launch the 'Foo' app to it's home screen.",
           "params": [
             {
               "name": "appId",
-              "value": "urn:firebolt:apps:guide"
+              "value": "foo"
             },
             {
-              "name": "action",
-              "value": "section"
-            },
-            {
-              "name": "data",
+              "name": "intent",
               "value": {
-                "sectionName": "epg"
+                "action": "home",
+                "context": {
+                  "source": "voice"
+                }
               }
-            },
-            {
-              "name": "campaign",
-              "value": "partner.com/campaign/123"
             }
           ],
           "result": {
             "name": "success",
             "value": true
           }
-        }
+        },
+        {
+          "name": "Launch the 'Foo' app to it's own page for a specific entity.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "foo"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "entity",
+                "data": {
+                  "entityType": "program",
+                  "programType": "movie",
+                  "entityId": "example-movie-id"
+                },
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Launch the 'Foo' app to a fullscreen playback experience for a specific entity.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "foo"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "playback",
+                "data": {
+                  "entityType": "program",
+                  "programType": "movie",
+                  "entityId": "example-movie-id"
+                },
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Launch the Aggregated Experience to a global page for a specific entity.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "urn:firebolt:apps:main"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "entity",
+                "data": {
+                  "entityType": "program",
+                  "programType": "movie",
+                  "entityId": "example-movie-id"
+                },
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Launch the Aggregated Experience to a global page for the company / partner with the ID 'foo'.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "urn:firebolt:apps:main"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "section",
+                "data": {
+                  "sectionName": "company:foo"
+                },
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Launch the Aggregated Experience to it's home screen, as if the Home remote button was pressed.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "urn:firebolt:apps:main"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "home",
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Launch the Aggregated Experience to it's search screen.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "urn:firebolt:apps:main"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "search",
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Launch the Aggregated Experience to it's settings screen.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "urn:firebolt:apps:main"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "section",
+                "data": {
+                  "sectionName": "settings"
+                },
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Launch the Aggregated Experience to it's linear/epg guide.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "urn:firebolt:apps:main"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "section",
+                "data": {
+                  "sectionName": "guide"
+                },
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Launch the Aggregated Experience to the App Store details page for a specfic app with the ID 'foo'.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "urn:firebolt:apps:main"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "section",
+                "data": {
+                  "sectionName": "app:foo"
+                },
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        }                           
       ]
     },
     {
