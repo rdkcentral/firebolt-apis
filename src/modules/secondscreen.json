@@ -56,7 +56,7 @@
           "params": [],
           "result": {
             "name": "Default Result",
-            "value": "dial"
+            "value": "device-id"
           }
         }
       ]
