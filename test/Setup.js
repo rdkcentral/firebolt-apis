@@ -13,3 +13,11 @@ win.__firebolt.mockTransportLayer = true
 
 // sets a flag that mock defaults impls can use to speed things up, e.g. Lifecycle/defaults.js
 win.__firebolt.automation = true
+
+export const testHarness = {
+    initialize: function(config) {
+        this.emit = config.emit
+    }
+}
+
+win.__firebolt.testHarness = testHarness

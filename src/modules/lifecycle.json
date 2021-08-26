@@ -8,6 +8,11 @@
   "methods": [
     {
       "name": "ready",
+      "tags": [
+        {
+          "name": "calls-metrics"
+        }
+      ],
       "summary": "Notify the platform that the app is ready",
       "params": [],
       "result": {
@@ -77,6 +82,7 @@
     },
     {
       "name": "finished",
+      "tags": [ { "name": "exclude-from-sdk" }],
       "summary": "Notify the platform that the app is done unloading",
       "params": [],
       "result": {
@@ -102,6 +108,9 @@
       "tags": [
         {
           "name": "synchronous"
+        },
+        {
+          "name": "exclude-from-sdk"
         }
       ],
       "params": [],

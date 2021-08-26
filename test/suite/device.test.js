@@ -1,19 +1,12 @@
 import Setup from '../Setup'
 import { Device } from '../../dist/firebolt.js'
 
-const version = require('../../version.json')
-const foo = require('../../package.json')
+const version = require('../../package.json').version.split('-')[0].split('.')
 
-test(`Device.version() to be ${version.major}.${version.minor}.${version.patch}`, () => {
+test(`Device.version() to be ${version[0]}.${version[1]}.${version[2]}`, () => {
     return Device.version().then( v => {
-        expect(v.sdk.major).toBe(version.major)
-        expect(v.sdk.minor).toBe(version.minor)
-        expect(v.sdk.patch).toBe(version.patch)
+        expect(v.sdk.major).toBe(parseInt(version[0]))
+        expect(v.sdk.minor).toBe(parseInt(version[1]))
+        expect(v.sdk.patch).toBe(parseInt(version[2]))
     })
-});
-
-test(`package.json version to be ${version.major}.${version.minor}.${version.patch}`, () => {
-    expect(parseInt(foo.version.split('.')[0])).toBe(version.major)
-    expect(parseInt(foo.version.split('.')[1])).toBe(version.minor)
-    expect(parseInt(foo.version.split('.')[2])).toBe(version.patch)
 });

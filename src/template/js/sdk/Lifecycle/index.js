@@ -11,14 +11,8 @@
  * without the express written permission of Comcast.
  */
 
-import Transport from '../Transport/index.js'
-import Events from '../Events'
-import { registerEvents } from '../Events'
-import { ready as metricsReady } from '../Metrics'
-
-const Metrics = {
-  ready: metricsReady
-}
+import Transport from '../Transport'
+/* ${IMPORTS} */
 
 /* ${INITIALIZATION} */
 
@@ -33,29 +27,19 @@ Events.listen('Lifecycle', (event, value) => {
   store._current = event
 })
 
+/* ${METHODS} */
+
 function state() {
   return store.current
 }
 
-function ready() {
-  Metrics.ready()
-  return Transport.send('lifecycle', 'ready')
-}
-
-function close(reason) {
-  return Transport.send('lifecycle', 'close', { reason: reason })
-}
-
 function finished() {
   if (store.current === 'unloading') {
-    // Metrics.app.close()
     return Transport.send('lifecycle', 'finished')
   } else {
     throw 'Cannot call finished() except when in the unloading transition'
   }
 }
-
-/* ${EVENT_METHODS} */
 
 // public API
 export default {
@@ -64,5 +48,9 @@ export default {
 
   /* ${ENUMS} */
 
+  state,
+  finished,
+
   /* ${METHOD_LIST} */
+  
 }
