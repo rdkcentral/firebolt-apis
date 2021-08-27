@@ -307,16 +307,24 @@
       "summary": "Inform the platform of an error that has occured in your app.",
       "params": [
         {
+          "name": "type",
+          "summary": "The type of error",
+          "schema": {
+            "$ref": "#/components/schemas/ErrorType"
+          },
+          "required": true
+        },
+        {
           "name": "code",
-          "summary": "The error code",
+          "summary": "an app-specific error code",
           "schema": {
             "type": "string"
           },
           "required": true
         },
         {
-          "name": "message",
-          "summary": "The error message",
+          "name": "description",
+          "summary": "A short description of the error",
           "schema": {
             "type": "string"
           },
@@ -879,6 +887,17 @@
             "minimum": 1,
             "maximum": 86400
           }
+        ]
+      },
+      "ErrorType": {
+        "title": "ErrorType",
+        "type": "string",
+        "enum": [
+          "network",
+          "media",
+          "restriction",
+          "entitlement",
+          "other"
         ]
       }
     }
