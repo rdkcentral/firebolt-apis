@@ -116,7 +116,7 @@
         "schema": {
           "oneOf": [
             {
-              "$ref": "#/components/schemas/SecondScreenEvent"
+              "$ref": "https://meta.comcast.com/firebolt/secondscreen#/definitions/SecondScreenEvent"
             },
             {
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
@@ -167,7 +167,7 @@
         "schema": {
           "oneOf": [
             {
-              "$ref": "#/components/schemas/SecondScreenEvent"
+              "$ref": "https://meta.comcast.com/firebolt/secondscreen#/definitions/SecondScreenEvent"
             },
             {
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
@@ -194,31 +194,5 @@
         }
       ]
     }
-  ],
-  "components": {
-    "schemas": {
-      "SecondScreenEvent": {
-        "title": "SecondScreenEvent",
-        "description": "An a message notification from a second screen device",
-        "type": "object",
-        "required": [
-          "type"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "dial"
-            ]
-          },
-          "version": {
-            "type": "string"
-          },
-          "data": {
-            "type": "string"
-          }
-        }
-      }
-    }
-  }
+  ]
 }

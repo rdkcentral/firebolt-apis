@@ -48,7 +48,7 @@
               "adNetworkId": "519178",
               "adProfileId": "12345:caf_allinone_profile",
               "adSiteSectionId": "caf_allinone_profile_section",
-              "adOutOut": true,
+              "adOptOut": true,
               "privacyData": "ew0KICAicGR0IjogImdkcDp2MSIsDQogICJ1c19wcml2YWN5IjogIjEtTi0iLA0KICAibG10IjogIjEiIA0KfQ0K",
               "ifaValue": "01234567-89AB-CDEF-GH01-23456789ABCD",
               "ifa": "ewogICJ2YWx1ZSI6ICIwMTIzNDU2Ny04OUFCLUNERUYtR0gwMS0yMzQ1Njc4OUFCQ0QiLAogICJpZmFfdHlwZSI6ICJzc3BpZCIsCiAgImxtdCI6ICIwIgp9Cg==",

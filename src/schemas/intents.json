@@ -379,6 +379,9 @@
                 },
                 {
                   "$ref": "#/definitions/AdditionalEntity"
+                },
+                {
+                  "$ref": "#/definitions/UntypedEntity"
                 }
               ]
             }
@@ -658,6 +661,36 @@
           "entityType": "program",
           "programType": "concert",
           "entityId": "live-aid"
+        }
+      ]
+    },
+    "UntypedEntity": {
+      "title": "UntypedEntity",
+      "allOf": [
+        {
+          "description": "A Firebolt compliant representation of the remaining entity types.",
+          "type": "object",
+          "required": [
+            "entityId"
+          ],
+          "properties": {
+            "entityId": {
+              "$ref": "#/definitions/Identifier"
+            },
+            "assetId": {
+              "$ref": "#/definitions/Identifier"
+            },
+            "appContentData": {
+              "type": "string",
+              "maxLength": 256
+            }
+          },
+          "additionalProperties": false
+        }
+      ],
+      "examples": [
+        {
+          "entityId": "an-entity"
         }
       ]
     },
