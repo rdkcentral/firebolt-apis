@@ -1,6 +1,6 @@
 {
   "name": "@firebolt-js/sdk",
-  "version": "0.5.2-rc.1",
+  "version": "0.5.2-rc.2",
   "description": "The Firebolt JS SDK",
   "main": "./dist/firebolt.js",
   "scripts": {
