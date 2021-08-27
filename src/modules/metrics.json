@@ -357,22 +357,17 @@
         {
           "name": "Send error metric",
           "params": [
-          ],
-          "result": {
-            "name": "success",
-            "value": true
-          }
-        },  
-        {
-          "name": "Send error metric",
-          "params": [
             {
-              "name": "code",
-              "value": "404"
+              "name": "type",
+              "value": "media"
             },
             {
-              "name": "message",
-              "value": "The page was not found"
+              "name": "code",
+              "value": "MEDIA-STALLED"
+            },
+            {
+              "name": "description",
+              "value": "playback stalled"
             },
             {
               "name": "visible",
@@ -383,7 +378,7 @@
             "name": "success",
             "value": true
           }
-        }         
+        }      
       ]
     },
     {
