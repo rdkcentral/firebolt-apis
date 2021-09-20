@@ -1,5 +1,5 @@
 ---
-title: Home
+title: Firebolt Core SDK
 ---
 # Firebolt JS SDK
 For building Firebolt compliant apps.
