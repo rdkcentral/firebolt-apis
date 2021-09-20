@@ -1785,31 +1785,6 @@
       "maxProperties": 1,
       "additionalProperties": false
     },
-    "VREXResponse": {
-      "type": "object",
-      "examples": [
-        {
-          "msgType": "vrexResponse",
-          "trx": "2d425323-dabd-498e-a8b2-720a3e05a7af:1554153670676",
-          "created": 1513273754636,
-          "msgPayload": {
-            "returnCode": 0,
-            "lastCommand": {
-              "transcription": "watch CNN",
-              "created": 1573697680134
-            },
-            "connectionClosed": true,
-            "executeResponse": {
-              "executeAgent": "tv",
-              "jsonResponse": {
-                "failed": false,
-                "executions": []
-              }
-            }
-          }
-        }
-      ]
-    },
     "IntentMessage": {
       "type": "object",
       "properties": {
