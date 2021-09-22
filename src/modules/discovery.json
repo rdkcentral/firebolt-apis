@@ -3,7 +3,7 @@
   "info": {
     "title": "Discovery",
     "version": "0.0.0",
-    "description": "Your App likely wants to integrate with the Platform's discovery capabilities. For example to add a \"Watch Next\" tile that links to your app from platform home screen.\n\nGetting access to this information requires to connect to lower level APIs made available by the platform. Since implementations differ between operators and platforms, the Firebolt SDK offers a Discovery module, that exposes a generic, agnostic interface to the developer.\n\nUnder the hood, an underlaying transport layer will then take care of calling the right APIs for the actual platform implementation that your App is running on.\n\nThe Discovery plugin is used to _send_ information to the Platform.\n\n### Localization\nApps should provide all user-facing strings in the device's language, as specified by the Firebolt `Localization.language` property.\n\nApps should provide prices in the same currency presented in the app. If multiple currencies are supported in the app, the app should provide prices in the user's current default currency."
+    "description": "Your App likely wants to integrate with the Platform's discovery capabilities. For example to add a \"Watch Next\" tile that links to your app from the platform's home screen.\n\nGetting access to this information requires connecting to lower level APIs made available by the platform. Since implementations differ between operators and platforms, the Firebolt SDK offers a Discovery module, that exposes a generic, agnostic interface to the developer.\n\nUnder the hood, an underlying transport layer will then take care of calling the right APIs for the actual platform implementation that your App is running on.\n\nThe Discovery plugin is used to _send_ information to the Platform.\n\n### Localization\nApps should provide all user-facing strings in the device's language, as specified by the Firebolt `Localization.language` property.\n\nApps should provide prices in the same currency presented in the app. If multiple currencies are supported in the app, the app should provide prices in the user's current default currency."
   },
   "methods": [
     {
@@ -1385,10 +1385,10 @@
             "items": {
               "type": "string"
             },
-            "description": "List of languages for which audio descriptions (DVD) as available on the WayToWatch. Languages are expressed as ISO 639 1/2 codes."
+            "description": "List of languages for which audio descriptions (DVS) are available on the WayToWatch. Languages are expressed as ISO 639 1/2 codes."
           }
         },
-        "description": "A WayToWatch describes a way to watch a video program. It may describe a single\nstreamable asset or a set of streamable assets. For example, an app provider may\ndescribe HD, SD, and UHD assets as individual WayToWatch objects or rolled into\na single WayToWatch.\n\nIf the WayToWatch represents a single streamable asset, the provided\nContentIdentifiers must be sufficient to play back the specific asset when sent\nvia a playback intent or deep link. If the WayToWatch represents multiple\nstreamable assets, the provided ContentIdentifiers must be sufficient to\nplayback one of the assets represented with no user action. In this scenario,\nthe app SHOULD choose the best asset for the user based on their device and\nsettings. The ContentIdentifiers MUST also be sufficient for navigating the user\nto the appropriate entity or detail screen via an entity intent.\n\nThe app should set the `entitled` property to indicate if the user can watch, or\nnot watch, the asset without making a purchase. If the entitlement is known to\nexpire at a certain time (e.g., a rental), the app should also provide the\n`entitledExpires` property. If the entitlement is not expired, the UI will use\nthe `entitled` property to display watchable assets to the user, adjust how\nassets are presented to the user, and how intents into the app are generated.\nFor example, the the Aggregated Experience could render a \"Watch\" button for an\nentitled asset versus a \"Subscribe\" button for an non-entitled asset.\n\nThe app should set the `offeringType` to define how the content may be\nauthorized. The UI will use this to adjust how content is presented to the user.\n\nA single WayToWatch cannot represent streamable assets available via multiple\npurchase paths. If, for example, an asset has both Buy, Rent and Subscription\navailability, the three different entitlement paths MUST be represented as\nmultiple WayToWatch objects.\n\n`price` should be populated for WayToWatch objects with `buy` or `rent`\n`offeringType`. If the WayToWatch represents a set of assets with various price\npoints, the `price` provided must be the lowest available price."
+        "description": "A WayToWatch describes a way to watch a video program. It may describe a single\nstreamable asset or a set of streamable assets. For example, an app provider may\ndescribe HD, SD, and UHD assets as individual WayToWatch objects or rolled into\na single WayToWatch.\n\nIf the WayToWatch represents a single streamable asset, the provided\nContentIdentifiers must be sufficient to play back the specific asset when sent\nvia a playback intent or deep link. If the WayToWatch represents multiple\nstreamable assets, the provided ContentIdentifiers must be sufficient to\nplayback one of the assets represented with no user action. In this scenario,\nthe app SHOULD choose the best asset for the user based on their device and\nsettings. The ContentIdentifiers MUST also be sufficient for navigating the user\nto the appropriate entity or detail screen via an entity intent.\n\nThe app should set the `entitled` property to indicate if the user can watch, or\nnot watch, the asset without making a purchase. If the entitlement is known to\nexpire at a certain time (e.g., a rental), the app should also provide the\n`entitledExpires` property. If the entitlement is not expired, the UI will use\nthe `entitled` property to display watchable assets to the user, adjust how\nassets are presented to the user, and how intents into the app are generated.\nFor example, the Aggregated Experience could render a \"Watch\" button for an\nentitled asset versus a \"Subscribe\" button for a non-entitled asset.\n\nThe app should set the `offeringType` to define how the content may be\nauthorized. The UI will use this to adjust how content is presented to the user.\n\nA single WayToWatch cannot represent streamable assets available via multiple\npurchase paths. If, for example, an asset has both Buy, Rent and Subscription\navailability, the three different entitlement paths MUST be represented as\nmultiple WayToWatch objects.\n\n`price` should be populated for WayToWatch objects with `buy` or `rent`\n`offeringType`. If the WayToWatch represents a set of assets with various price\npoints, the `price` provided must be the lowest available price."
       },
       "ContentRating": {
         "title": "ContentRating",
@@ -1624,6 +1624,18 @@
           "limit": {
             "type": "integer",
             "minimum": -1
+          },
+          "offeringType": {
+            "type" : "string",
+            "enum": [
+              "free",
+              "subscribe",
+              "buy",
+              "rent"
+            ]
+          },
+          "programType": {
+            "type" : "string"
           }
         },
         "required": [
