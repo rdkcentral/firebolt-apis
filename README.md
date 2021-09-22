@@ -1,5 +1,5 @@
 ---
-title: Firebolt Core SDK
+title: API Documentation
 ---
 # Firebolt JS SDK
 For building Firebolt compliant apps.
