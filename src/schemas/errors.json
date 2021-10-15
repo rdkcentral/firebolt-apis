@@ -1,0 +1,52 @@
+{
+  "$schema": "https://meta.comcast.com/firebolt/errors",
+  "$id": "https://meta.comcast.com/firebolt/errors",
+  "title": "Errors",
+  "oneOf": [
+    { "$ref": "#/definitions/FireboltError" },
+    { "$ref": "#/definitions/UserNotAuthenticatedError" }
+  ],
+  "definitions": {
+    "FireboltError": {
+      "title": "FireboltError",
+      "description": "An error resulting from calling a Firebolt method.",
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": {
+          "type": "number"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        }
+      },
+      "examples": [
+        {
+          "code": -32601,
+          "message": "Method not found"
+        }
+      ]
+    },
+    "UserNotAuthenticatedError": {
+      "title": "UserNotAuthenticatedError",
+      "allOf": [
+        { "$ref": "#/definitions/FireboltError" },
+        {
+          "const": {
+            "code": 401,
+            "message": "User is not authenticated."
+          }
+        }
+      ],
+      "examples": [
+        {
+          "code": 401,
+          "message": "User is not authenticated."
+        }
+      ]
+    }
+  }
+}

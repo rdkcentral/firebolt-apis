@@ -1,0 +1,49 @@
+{
+  "name": "@firebolt-js/sdk",
+  "version": "0.5.2-rc.7",
+  "description": "The Firebolt JS SDK",
+  "main": "./dist/firebolt.js",
+  "scripts": {
+    "prepare": "npm run prepare:setup && npm run dist:docs && npm run dist:sdk && npm run dist:d",
+    "prepare:setup": "mkdir -p ./dist/docs ./build/docs/markdown ./build/sdk/javascript/src",
+    "validate": "npm run build:openrpc && firebolt-openrpc validate ./src",
+    "build:openrpc": "firebolt-openrpc openrpc ./src ./src/template/openrpc/template.json ./dist/firebolt-open-rpc.json",
+    "build:sdk": "firebolt-openrpc sdk ./src/ ./src/template/js ./build/sdk/javascript/src Platform",
+    "build:docs": "firebolt-openrpc docs ./src/ ./src/template/markdown ./build/docs/markdown asPath",
+    "build:wiki": "firebolt-openrpc docs ./src/ ./src/template/markdown ./build/docs/markdown",
+    "dist:sdk": "npm run validate && npm run build:sdk && npm run pack && npm run test",
+    "dist:d": "npm run validate && firebolt-openrpc declarations ./src/ ./dist/firebolt.d.ts",
+    "dist:docs": "npm run validate && npm run build:docs asPath && rm -r ./dist/docs && cp -R ./build/docs/markdown ./dist/docs",
+    "dist:wiki": "npm run validate && npm run build:wiki && rm -r ./dist/docs && cp -R ./build/docs/markdown ./dist/docs",
+    "test": "jest --config=jest.config.js --detectOpenHandles",
+    "clean": "rm -rf build && mkdir -p build",
+    "build": "npm run validate && npm run build:docs && npm run build:sdk",
+    "pack": "webpack --config ./webpack.config.js",
+    "publish:docs": "npm run build:docs && sh ./push-docs.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdkcentral/firebolt-core-sdk/blob/main/src/modules//ottx/firebolt-core-sdk.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/rdkcentral/firebolt-core-sdk/issues"
+  },
+  "homepage": "https://github.com/rdkcentral/firebolt-core-sdk#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/node": "^7.14.5",
+    "@babel/preset-env": "^7.14.5",
+    "@firebolt-js/openrpc": "1.0.1-rc.5",
+    "ajv": "^6.12.6",
+    "jest": "^27.0.4",
+    "webpack": "^5.39.1",
+    "webpack-cli": "^4.2.0"
+  },
+  "keywords": [
+    "firebolt",
+    "apps",
+    "sdk"
+  ],
+  "license": "Apache-2.0"
+}

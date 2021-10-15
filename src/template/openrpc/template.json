@@ -1,0 +1,23 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Firebolt",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "rpc.discover",
+            "summary": "Firebolt OpenRPC schema",
+            "params": [],
+            "result": {
+                "name": "OpenRPC Schema",
+                "schema": {
+                    "type": "object"
+                }
+            }
+        }
+    ],
+    "components": {
+        "schemas": {}
+    }
+}

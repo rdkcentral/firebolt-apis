@@ -1,0 +1,54 @@
+{
+  "openrpc": "1.2.4",
+  "info": {
+    "title": "Account",
+    "description": "A module for querying about the device account.",
+    "version": "0.0.0"
+  },
+  "methods": [
+    {
+      "name": "id",
+      "summary": "Get the platform back-office account identifier",
+      "params": [],
+      "result": {
+        "name": "id",
+        "summary": "the id",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "123"
+          }
+        }
+      ]
+    },
+    {
+      "name": "uid",
+      "summary": "Gets a unique id for the current app & account",
+      "params": [],
+      "result": {
+        "name": "uniqueId",
+        "summary": "a unique ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the unique ID",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "ee6723b8-7ab3-462c-8d93-dbf61227998e"
+          }
+        }
+      ]
+    }
+  ]
+}
