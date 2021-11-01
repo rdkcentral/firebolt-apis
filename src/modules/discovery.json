@@ -565,7 +565,7 @@
           "name": "title",
           "summary": "The title of this call to action",
           "schema": {
-            "type": "string"
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/LocalizedString"
           }
         },
         {
@@ -587,7 +587,12 @@
           "name": "images",
           "summary": "A set of images for this call to action",
           "schema": {
-            "type": "object"
+            "type": "object",
+            "patternProperties": {
+              "^.*$": {
+                "$ref": "https://meta.comcast.com/firebolt/types#/definitions/LocalizedString"
+              }
+            }
           }
         }
       ],
