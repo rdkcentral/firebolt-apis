@@ -6,6 +6,9 @@
 - Fixed typo in Advertising.config example result for docs/Mock
 - Updated Metrics.error signature to include `type` as first parameter
 - Created window.__firebolt.testHarness handshake (for Mock TL only)
+- Added `LocalizedString` type for localized string dictionaries
+- Updated `Discovery.watchNext` to use `LocalizedString` for `title` and each property of `images`
+- Added `OfferingType` and `ProgramType` parameters to `Discovery.purchasedContent`
 
 ## 0.5.1
 
