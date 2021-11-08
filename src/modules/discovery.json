@@ -385,6 +385,108 @@
             "name": "success",
             "value": true
           }
+        },
+        {
+          "name": "Send entity info for a Bundle with seasons to the platform.",
+          "params": [
+            {
+              "name": "data",
+              "value": {
+                "expires": "2025-01-01T00:00:00.000Z",
+                "entity": {
+                  "identifiers": {
+                    "entityId": "123456"
+                  },
+                  "entityType": "bundle",
+                  "title": "Sam & Cat: The Complete Series (Bundle)",
+                  "synopsis": "Match made in bestie heaven? Check. Most fit to run an at-home babysitting company? Not so much! Laugh until your stomach cramps with these two babysitting besties in Sam and Cat: The Complete Series.",
+                  "releaseDate": "2013-01-01T00:00:00.000Z",
+                  "purchasedStatus" : "unentitled",
+                  "price" : 49.99,
+                  "contentRatings": [
+                    {
+                      "scheme": "US-TV",
+                      "rating": "TV-PG"
+                    }
+                  ]
+                },
+                "bundledItems": [
+                  {
+                    "identifiers": {
+                      "entityId": "4567891",
+                      "seriesId": "987654"
+                    },
+                    "entityType": "program",
+                    "programType": "season",
+                    "seasonNumber": 1,
+                    "title": "Sam & Cat: Volume 1",
+                    "purchasedStatus" : "unentitled",
+                    "contentRatings": [
+                      {
+                        "scheme": "US-TV",
+                        "rating": "TV-PG"
+                      }
+                    ]
+                  },
+                  {
+                    "identifiers": {
+                      "entityId": "4567892",
+                      "seriesId": "987654"
+                    },
+                    "entityType": "program",
+                    "programType": "season",
+                    "seasonNumber": 2,
+                    "title": "Sam & Cat: Volume 2",
+                    "purchasedStatus" : "unentitled",
+                    "contentRatings": [
+                      {
+                        "scheme": "US-TV",
+                        "rating": "TV-PG"
+                      }
+                    ]
+                  },
+                  {
+                    "identifiers": {
+                      "entityId": "4567893",
+                      "seriesId": "987654"
+                    },
+                    "entityType": "program",
+                    "programType": "season",
+                    "purchasedStatus" : "unentitled",
+                    "seasonNumber": 3,
+                    "title": "Sam & Cat: Volume 3",
+                    "contentRatings": [
+                      {
+                        "scheme": "US-TV",
+                        "rating": "TV-PG"
+                      }
+                    ]
+                  },
+                  {
+                    "identifiers": {
+                      "entityId": "4567894",
+                      "seriesId": "987654"
+                    },
+                    "entityType": "program",
+                    "programType": "season",
+                    "seasonNumber": 4,
+                    "title": "Sam & Cat: Volume 4",
+                    "purchasedStatus" : "unentitled",
+                    "contentRatings": [
+                      {
+                        "scheme": "US-TV",
+                        "rating": "TV-PG"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
         }
       ]
     },
