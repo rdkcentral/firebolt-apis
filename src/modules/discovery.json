@@ -46,7 +46,9 @@
         "summary": "discovery policy opt-in/outs",
         "schema": {
           "oneOf": [
-            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
+            {
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
+            },
             { "$ref": "#/components/schemas/DiscoveryPolicy" }
           ]
         }
@@ -131,18 +133,10 @@
                       "price": 2.99,
                       "videoQuality": ["UHD"],
                       "audioProfile": ["dolbyAtmos"],
-                      "audioLanguages": [
-                        "en"
-                      ],
-                      "closedCaptions": [
-                        "en"
-                      ],
-                      "subtitles": [
-                        "es"
-                      ],
-                      "audioDescriptions": [
-                        "en"
-                      ]
+                      "audioLanguages": ["en"],
+                      "closedCaptions": ["en"],
+                      "subtitles": ["es"],
+                      "audioDescriptions": ["en"]
                     }
                   ]
                 }
@@ -192,18 +186,10 @@
                       "price": 2.99,
                       "videoQuality": ["UHD"],
                       "audioProfile": ["dolbyAtmos"],
-                      "audioLanguages": [
-                        "en"
-                      ],
-                      "closedCaptions": [
-                        "en"
-                      ],
-                      "subtitles": [
-                        "es"
-                      ],
-                      "audioDescriptions": [
-                        "en"
-                      ]
+                      "audioLanguages": ["en"],
+                      "closedCaptions": ["en"],
+                      "subtitles": ["es"],
+                      "audioDescriptions": ["en"]
                     }
                   ]
                 },
@@ -224,12 +210,8 @@
                         "entitled": true,
                         "videoQuality": ["HD"],
                         "audioProfile": ["dolbyAtmos"],
-                        "audioLanguages": [
-                          "en"
-                        ],
-                        "closedCaptions": [
-                          "en"
-                        ]
+                        "audioLanguages": ["en"],
+                        "closedCaptions": ["en"]
                       }
                     ]
                   }
@@ -292,12 +274,8 @@
                         "offeringType": "free",
                         "videoQuality": ["SD"],
                         "audioProfile": ["stereo"],
-                        "audioLanguages": [
-                          "en"
-                        ],
-                        "closedCaptions": [
-                          "en"
-                        ]
+                        "audioLanguages": ["en"],
+                        "closedCaptions": ["en"]
                       }
                     ]
                   },
@@ -330,12 +308,8 @@
                         "offeringType": "free",
                         "videoQuality": ["SD"],
                         "audioProfile": ["stereo"],
-                        "audioLanguages": [
-                          "en"
-                        ],
-                        "closedCaptions": [
-                          "en"
-                        ]
+                        "audioLanguages": ["en"],
+                        "closedCaptions": ["en"]
                       }
                     ]
                   },
@@ -368,12 +342,8 @@
                         "offeringType": "free",
                         "videoQuality": ["SD"],
                         "audioProfile": ["stereo"],
-                        "audioLanguages": [
-                          "en"
-                        ],
-                        "closedCaptions": [
-                          "en"
-                        ]
+                        "audioLanguages": ["en"],
+                        "closedCaptions": ["en"]
                       }
                     ]
                   }
@@ -454,18 +424,10 @@
                         "price": 2.99,
                         "videoQuality": ["UHD"],
                         "audioProfile": ["dolbyAtmos"],
-                        "audioLanguages": [
-                          "en"
-                        ],
-                        "closedCaptions": [
-                          "en"
-                        ],
-                        "subtitles": [
-                          "es"
-                        ],
-                        "audioDescriptions": [
-                          "en"
-                        ]
+                        "audioLanguages": ["en"],
+                        "closedCaptions": ["en"],
+                        "subtitles": ["es"],
+                        "audioDescriptions": ["en"]
                       }
                     ]
                   }
@@ -966,7 +928,7 @@
             "name": "success",
             "value": true
           }
-        }                           
+        }
       ]
     },
     {
@@ -1036,7 +998,7 @@
           "name": "rpc-only"
         }
       ],
-      "summary": "listen to `entityInfo` pull events",
+      "summary": "listen to entityInfo pull events",
       "params": [
         {
           "name": "listen",
@@ -1062,7 +1024,7 @@
       },
       "examples": [
         {
-          "name": "Platform requests entity `abc`",
+          "name": "Platform requests entity abc",
           "params": [
             {
               "name": "listen",
@@ -1249,12 +1211,7 @@
         "title": "EntityInfo",
         "description": "An EntityInfo object represents an \"entity\" on the platform. Currently, only entities of type `program` are supported. `programType` must be supplied to identify the program type.\n\nAdditionally, EntityInfo objects must specify a properly formed\nContentIdentifiers object, `entityType`, and `title`.  The app should provide\nthe `synopsis` property for a good user experience if the content\nmetadata is not available another way.\n\nThe ContentIdentifiers must be sufficient for navigating the user to the\nappropriate entity or detail screen via a `detail` intent or deep link.\n\nEntityInfo objects must provide at least one WayToWatch object when returned as\npart of an `entityInfo` method and a streamable asset is available to the user.\nIt is optional for the `purchasedContent` method, but recommended because the UI\nmay use those data.",
         "type": "object",
-        "required": [
-          "identifiers",
-          "entityType",
-          "programType",
-          "title"
-        ],
+        "required": ["identifiers", "entityType", "programType", "title"],
         "properties": {
           "identifiers": {
             "$ref": "#/components/schemas/ContentIdentifiers"
@@ -1306,9 +1263,7 @@
       "WayToWatch": {
         "title": "WayToWatch",
         "type": "object",
-        "required": [
-          "identifiers"
-        ],
+        "required": ["identifiers"],
         "properties": {
           "identifiers": {
             "$ref": "#/components/schemas/ContentIdentifiers"
@@ -1342,11 +1297,7 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": [
-                "SD",
-                "HD",
-                "UHD"
-              ]
+              "enum": ["SD", "HD", "UHD"]
             },
             "description": "List of the video qualities available via the WayToWatch."
           },
@@ -1391,10 +1342,7 @@
       "ContentRating": {
         "title": "ContentRating",
         "type": "object",
-        "required": [
-          "scheme",
-          "rating"
-        ],
+        "required": ["scheme", "rating"],
         "properties": {
           "scheme": {
             "type": "string",
@@ -1458,14 +1406,9 @@
             "type": "string"
           }
         },
-        "required": [
-          "correlationId"
-        ],
+        "required": ["correlationId"],
         "propertyNames": {
-          "enum": [
-            "correlationId",
-            "parameters"
-          ]
+          "enum": ["correlationId", "parameters"]
         },
         "examples": [
           {
@@ -1481,15 +1424,9 @@
             "type": "string"
           }
         },
-        "required": [
-          "correlationId",
-          "result"
-        ],
+        "required": ["correlationId", "result"],
         "propertyNames": {
-          "enum": [
-            "correlationId",
-            "result"
-          ]
+          "enum": ["correlationId", "result"]
         },
         "examples": [
           {
@@ -1510,10 +1447,7 @@
                 "$ref": "#/components/schemas/EntityInfoParameters"
               }
             },
-            "required": [
-              "correlationId",
-              "parameters"
-            ]
+            "required": ["correlationId", "parameters"]
           }
         ],
         "examples": [
@@ -1536,9 +1470,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "entityId"
-        ],
+        "required": ["entityId"],
         "additionalProperties": false,
         "examples": [
           {
@@ -1581,10 +1513,7 @@
             }
           }
         },
-        "required": [
-          "expires",
-          "entity"
-        ],
+        "required": ["expires", "entity"],
         "additionalProperties": false
       },
       "PurchasedContentFederatedRequest": {
@@ -1600,10 +1529,7 @@
                 "$ref": "#/components/schemas/PurchasedContentParameters"
               }
             },
-            "required": [
-              "correlationId",
-              "parameters"
-            ]
+            "required": ["correlationId", "parameters"]
           }
         ],
         "examples": [
@@ -1630,9 +1556,7 @@
             "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ProgramType"
           }
         },
-        "required": [
-          "limit"
-        ],
+        "required": ["limit"],
         "additionalProperties": false,
         "examples": [
           {
@@ -1675,11 +1599,7 @@
             }
           }
         },
-        "required": [
-          "expires",
-          "totalCount",
-          "entries"
-        ],
+        "required": ["expires", "totalCount", "entries"],
         "additionalProperties": false
       }
     }

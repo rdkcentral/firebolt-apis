@@ -20,10 +20,7 @@
         },
         {
           "type": "object",
-          "required": [
-            "appId",
-            "intent"
-          ],
+          "required": ["appId", "intent"],
           "properties": {
             "appId": {
               "type": "string"
@@ -36,12 +33,7 @@
             }
           },
           "propertyNames": {
-            "enum": [
-              "type",
-              "appId",
-              "intent",
-              "metadata"
-            ]
+            "enum": ["type", "appId", "intent", "metadata"]
           }
         }
       ],
@@ -88,9 +80,7 @@
         },
         {
           "type": "object",
-          "required": [
-            "intent"
-          ],
+          "required": ["intent"],
           "properties": {
             "intent": {
               "oneOf": [
@@ -113,11 +103,7 @@
             }
           },
           "propertyNames": {
-            "enum": [
-              "type",
-              "intent",
-              "metadata"
-            ]
+            "enum": ["type", "intent", "metadata"]
           }
         }
       ],
@@ -143,9 +129,7 @@
             "action": "discovery",
             "data": {
               "query": "christmas",
-              "menus": [
-                "christmas-menu"
-              ],
+              "menus": ["christmas-menu"],
               "federation": [
                 {
                   "appId": "netflix",
@@ -163,27 +147,18 @@
     "Intent": {
       "description": "A Firebolt compliant representation of a user intention.",
       "type": "object",
-      "required": [
-        "action",
-        "context"
-      ],
+      "required": ["action", "context"],
       "properties": {
         "action": {
           "type": "string"
         },
         "context": {
           "type": "object",
-          "required": [
-            "source"
-          ],
+          "required": ["source"],
           "properties": {
             "source": {
               "type": "string",
-              "enum": [
-                "voice",
-                "editorial",
-                "device"
-              ]
+              "enum": ["voice", "editorial", "device"]
             }
           }
         }
@@ -192,11 +167,7 @@
     "IntentProperties": {
       "type": "object",
       "propertyNames": {
-        "enum": [
-          "action",
-          "data",
-          "context"
-        ]
+        "enum": ["action", "data", "context"]
       }
     },
     "NavigationIntent": {
@@ -356,9 +327,7 @@
         },
         {
           "type": "object",
-          "required": [
-            "data"
-          ],
+          "required": ["data"],
           "properties": {
             "action": {
               "const": "entity"
@@ -416,11 +385,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "entityType",
-        "programType",
-        "entityId"
-      ]
+      "required": ["entityType", "programType", "entityId"]
     },
     "MovieEntity": {
       "title": "MovieEntity",
@@ -432,11 +397,7 @@
           "description": "A Firebolt compliant representation of a Movie entity.",
           "title": "MovieEntity",
           "type": "object",
-          "required": [
-            "entityType",
-            "programType",
-            "entityId"
-          ],
+          "required": ["entityType", "programType", "entityId"],
           "properties": {
             "entityType": {
               "const": "program"
@@ -529,12 +490,7 @@
         },
         {
           "type": "object",
-          "required": [
-            "entityType",
-            "programType",
-            "entityId",
-            "seriesId"
-          ],
+          "required": ["entityType", "programType", "entityId", "seriesId"],
           "properties": {
             "entityType": {
               "const": "program"
@@ -577,11 +533,7 @@
         {
           "description": "A Firebolt compliant representation of a TV Series entity.",
           "type": "object",
-          "required": [
-            "entityType",
-            "programType",
-            "entityId"
-          ],
+          "required": ["entityType", "programType", "entityId"],
           "properties": {
             "entityType": {
               "const": "program"
@@ -620,10 +572,7 @@
         {
           "description": "A Firebolt compliant representation of the remaining entity types.",
           "type": "object",
-          "required": [
-            "entityType",
-            "entityId"
-          ],
+          "required": ["entityType", "entityId"],
           "properties": {
             "entityType": {
               "const": "program"
@@ -669,9 +618,7 @@
         {
           "description": "A Firebolt compliant representation of the remaining entity types.",
           "type": "object",
-          "required": [
-            "entityId"
-          ],
+          "required": ["entityId"],
           "properties": {
             "entityId": {
               "$ref": "#/definitions/Identifier"
@@ -705,9 +652,7 @@
         },
         {
           "type": "object",
-          "required": [
-            "data"
-          ],
+          "required": ["data"],
           "properties": {
             "action": {
               "const": "playback"
@@ -762,9 +707,7 @@
             },
             "data": {
               "type": "object",
-              "required": [
-                "query"
-              ],
+              "required": ["query"],
               "properties": {
                 "query": {
                   "type": "string"
@@ -805,9 +748,7 @@
             },
             "data": {
               "type": "object",
-              "required": [
-                "sectionName"
-              ],
+              "required": ["sectionName"],
               "properties": {
                 "sectionName": {
                   "type": "string"
@@ -842,18 +783,14 @@
         },
         {
           "type": "object",
-          "required": [
-            "data"
-          ],
+          "required": ["data"],
           "properties": {
             "action": {
               "const": "discovery"
             },
             "data": {
               "type": "object",
-              "required": [
-                "query"
-              ],
+              "required": ["query"],
               "properties": {
                 "query": {
                   "type": "string"
@@ -898,20 +835,14 @@
         },
         {
           "type": "object",
-          "required": [
-            "data"
-          ],
+          "required": ["data"],
           "properties": {
             "action": {
               "const": "entityAppSelection"
             },
             "data": {
               "type": "object",
-              "required": [
-                "query",
-                "entity",
-                "apps"
-              ],
+              "required": ["query", "entity", "apps"],
               "properties": {
                 "query": {
                   "type": "string"
@@ -1030,9 +961,7 @@
                 "exclude": true
               }
             ],
-            "menusIds": [
-              "123"
-            ]
+            "menusIds": ["123"]
           }
         }
       ]
@@ -1055,9 +984,7 @@
             },
             "data": {
               "type": "object",
-              "required": [
-                "operation"
-              ],
+              "required": ["operation"],
               "properties": {
                 "operation": {
                   "type": "string",
@@ -1281,18 +1208,11 @@
             },
             "data": {
               "type": "object",
-              "required": [
-                "interface"
-              ],
+              "required": ["interface"],
               "properties": {
                 "interface": {
                   "type": "string",
-                  "enum": [
-                    "hdmi",
-                    "rca",
-                    "vga",
-                    "etc..."
-                  ]
+                  "enum": ["hdmi", "rca", "vga", "etc..."]
                 },
                 "number": {
                   "type": "integer",
@@ -1457,10 +1377,7 @@
                     }
                   },
                   "propertyNames": {
-                    "enum": [
-                      "direction",
-                      "speed"
-                    ]
+                    "enum": ["direction", "speed"]
                   }
                 }
               ]
@@ -1522,10 +1439,7 @@
                     }
                   },
                   "propertyNames": {
-                    "enum": [
-                      "direction",
-                      "seconds"
-                    ]
+                    "enum": ["direction", "seconds"]
                   }
                 }
               ]
@@ -1596,10 +1510,7 @@
                     }
                   },
                   "propertyNames": {
-                    "enum": [
-                      "direction",
-                      "count"
-                    ]
+                    "enum": ["direction", "count"]
                   }
                 }
               ]
@@ -1763,10 +1674,7 @@
       "properties": {
         "direction": {
           "type": "string",
-          "enum": [
-            "forward",
-            "backward"
-          ]
+          "enum": ["forward", "backward"]
         }
       }
     },
@@ -1792,9 +1700,7 @@
           "pattern": "^xrn:firebolt:intent:(app|platform):[a-zA-Z]+$"
         }
       },
-      "required": [
-        "type"
-      ]
+      "required": ["type"]
     }
   }
 }
