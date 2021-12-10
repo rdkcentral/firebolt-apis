@@ -795,6 +795,41 @@
                 "query": {
                   "type": "string"
                 },
+                "filters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "keywords": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "keyword": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "appId": {
+                        "$ref": "#/definitions/Identifier"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "maxItems": 100
+                },
                 "menus": {
                   "type": "array",
                   "items": {
