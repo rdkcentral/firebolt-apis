@@ -10,45 +10,16 @@
       "name": "policy",
       "summary": "get the discovery policy",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "policy",
         "summary": "discovery policy opt-in/outs",
         "schema": {
           "$ref": "#/components/schemas/DiscoveryPolicy"
-        }
-      },
-      "examples": [
-        {
-          "name": "Getting the discovery policy",
-          "params": [],
-          "result": {
-            "name": "Default Result",
-            "value": {
-              "enableRecommendations": true,
-              "shareWatchHistory": true,
-              "rememberWatchedPrograms": true
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "onPolicyChanged",
-      "tags": [
-        {
-          "name": "event"
-        }
-      ],
-      "summary": "Subscribe to notifications for discovery policy changes",
-      "params": [],
-      "result": {
-        "name": "policy",
-        "summary": "discovery policy opt-in/outs",
-        "schema": {
-          "oneOf": [
-            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
-            { "$ref": "#/components/schemas/DiscoveryPolicy" }
-          ]
         }
       },
       "examples": [

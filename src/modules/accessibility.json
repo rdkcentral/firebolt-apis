@@ -10,6 +10,11 @@
       "name": "closedCaptions",
       "summary": "Get the user's preferred closed-captions settings",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "closedCaptionsSettings",
         "summary": "the closed captions settings",
@@ -43,53 +48,14 @@
       ]
     },
     {
-      "name": "onClosedCaptionsSettingsChanged",
-      "tags": [
-        {
-          "name": "event"
-        }
-      ],
-      "summary": "Subscribe to notifications with the user's preferred closed-captions settings",
-      "params": [],
-      "result": {
-        "name": "settings",
-        "summary": "the closed captions settings",
-        "schema": {
-          "oneOf": [
-            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
-            { "$ref": "#/components/schemas/ClosedCaptionsSettings" }
-          ]
-        }
-      },
-      "examples": [
-        {
-          "name": "Getting the closed captions settings",
-          "params": [],
-          "result": {
-            "name": "settings",
-            "value": {
-              "enabled": true,
-              "styles": {
-                "fontFamily": "Monospace sans-serif",
-                "fontSize": 1,
-                "fontColor": "#ffffff",
-                "fontEdge": "none",
-                "fontEdgeColor": "#7F7F7F",
-                "fontOpacity": 100,
-                "backgroundColor": "#000000",
-                "backgroundOpacity": 100,
-                "textAlign": "center",
-                "textAlignVertical": "middle"
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
       "name": "voiceGuidance",
       "summary": "Get the user's preferred voice guidance settings",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "settings",
         "summary": "the voice guidance settings",
@@ -110,40 +76,8 @@
           }
         }
       ]
-    },
-    {
-      "name": "onVoiceGuidanceSettingsChanged",
-      "tags": [
-        {
-          "name": "event"
-        }
-      ],
-      "summary": "Subscribe to notifications with the user's preferred voice guidance settings",
-      "params": [],
-      "result": {
-        "name": "settings",
-        "summary": "the voice guidance settings",
-        "schema": {
-          "oneOf": [
-            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
-            { "$ref": "#/components/schemas/VoiceGuidanceSettings" }
-          ]
-        }
-      },
-      "examples": [
-        {
-          "name": "Getting the voice guidance settings",
-          "params": [],
-          "result": {
-            "name": "Default Result",
-            "value": {
-              "enabled": true,
-              "speed": 5
-            }
-          }
-        }
-      ]
-    }  ],
+    }
+  ],
   "components": {
     "schemas": {
       "ClosedCaptionsStyles": {

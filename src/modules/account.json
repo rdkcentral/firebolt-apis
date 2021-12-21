@@ -10,6 +10,11 @@
       "name": "id",
       "summary": "Get the platform back-office account identifier",
       "params": [],
+      "tags": [
+        {
+          "name": "property:immutable"
+        }
+      ],
       "result": {
         "name": "id",
         "summary": "the id",
@@ -32,6 +37,11 @@
       "name": "uid",
       "summary": "Gets a unique id for the current app & account",
       "params": [],
+      "tags": [
+        {
+          "name": "property:immutable"
+        }
+      ],
       "result": {
         "name": "uniqueId",
         "summary": "a unique ID",
