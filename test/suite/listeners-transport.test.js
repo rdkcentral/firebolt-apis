@@ -67,6 +67,8 @@ const transport = {
     }
 }
 
+win.__firebolt.setTransportLayer(transport)
+
 // listen twice, using event-specific call FIRST
 Discovery.listen("navigateTo", (value) => { callbackWiredUp = true })
 Discovery.listen("navigateTo", (value) => { /* this just adds more listen calls to make sure we don't spam */ })
@@ -78,8 +80,6 @@ Discovery.listen("pullEntityInfo", (value) => {  })
 Discovery.listen("pullEntityInfo", (value) => {  })
 
 Lifecycle.ready()
-
-win.__firebolt.setTransportLayer(transport)
 
 test('Transport injected after SDK', () => {
     expect(callbackWiredUp).toBe(true)
