@@ -462,6 +462,36 @@
       ]
     },
     {
+      "name": "onDeviceNameChanged",
+      "tags": [
+        {
+          "name": "event"
+        }
+      ],
+      "summary": "Get the human readable name of the device",
+      "params": [],
+      "result": {
+        "name": "value",
+        "summary": "the device friendly-name",
+        "schema": {
+          "oneOf": [
+            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
+            { "type": "string" }
+          ]
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the device name",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "Living Room"
+          }
+        }
+      ]
+    },
+    {
       "name": "network",
       "summary": "Get the current network status and type",
       "params": [],
