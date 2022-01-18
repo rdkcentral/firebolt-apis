@@ -798,15 +798,7 @@
                 "filters": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "key": {
-                        "type": "string"
-                      },
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                    "$ref": "#/definitions/Filter"
                   },
                   "minItems": 1,
                   "maxItems": 100
@@ -814,18 +806,7 @@
                 "keywords": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "keyword": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      },
-                      "appId": {
-                        "$ref": "#/definitions/Identifier"
-                      }
-                    }
+                    "$ref": "#/definitions/Keyword"
                   },
                   "minItems": 1,
                   "maxItems": 100
@@ -854,6 +835,42 @@
                 }
               }
             }
+          }
+        }
+      ],
+      "examples": [
+        {
+          "action": "contentDiscovery",
+          "context": {
+            "source": "voice"
+          },
+          "data": {
+            "query": "Bill Murray Comedies in 4K",
+            "filters": [
+              {
+                "key": "videoResolution",
+                "value": "UHD"
+              }
+            ],
+            "keywords": [
+              {
+                "keyword": "Bill Murray",
+                "type": "Person",
+                "appId": "FooApp"
+              },
+              {
+                "keyword": "Comedies",
+                "type": "Genre",
+                "appId": "FooApp"
+              }
+            ],
+            "menus": ["abcdef", "ghijkl"],
+            "federation": [
+              {
+                "appId": "BarApp",
+                "exclude": false
+              }
+            ]
           }
         }
       ]
@@ -1703,6 +1720,31 @@
     },
     "Identifier": {
       "type": "string"
+    },
+    "Filter": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "Keyword": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "appId": {
+          "$ref": "#/definitions/Identifier"
+        }
+      }
     },
     "DirectionalOperation": {
       "type": "object",
