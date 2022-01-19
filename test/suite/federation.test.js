@@ -111,6 +111,8 @@ const transport = {
     }
 }
 
+win.__firebolt.setTransportLayer(transport)
+
 // Setup a callback that returns the correct payload
 Discovery.entityInfo((parameters) => {
     if (parameters.entityId === 'this-will-fail') {
@@ -222,8 +224,6 @@ Discovery.entityInfo({
 Discovery.entityInfo(() => {}).catch(error => {
     secondRegistrationFailed = true
 })
-
-win.__firebolt.setTransportLayer(transport)
 
 Lifecycle.ready()
 
