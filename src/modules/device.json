@@ -10,6 +10,11 @@
       "name": "id",
       "summary": "Get the platform back-office device identifier",
       "params": [],
+      "tags": [
+        {
+          "name": "property:immutable"
+        }
+      ],
       "result": {
         "name": "id",
         "summary": "the id",
@@ -32,6 +37,11 @@
       "name": "distributor",
       "summary": "Get the distributor ID for this device",
       "params": [],
+      "tags": [
+        {
+          "name": "property:immutable"
+        }
+      ],
       "result": {
         "name": "distributorId",
         "summary": "the distributor ID",
@@ -54,6 +64,11 @@
       "name": "platform",
       "summary": "Get the platform ID for this device",
       "params": [],
+      "tags": [
+        {
+          "name": "property:immutable"
+        }
+      ],
       "result": {
         "name": "platformId",
         "summary": "the platform ID",
@@ -76,6 +91,11 @@
       "name": "uid",
       "summary": "Gets a unique id for the current app & device",
       "params": [],
+      "tags": [
+        {
+          "name": "property:immutable"
+        }
+      ],
       "result": {
         "name": "uniqueId",
         "summary": "a unique ID",
@@ -98,6 +118,11 @@
       "name": "type",
       "summary": "Get the device type",
       "params": [],
+      "tags": [
+        {
+          "name": "property:immutable"
+        }
+      ],
       "result": {
         "name": "deviceType",
         "summary": "the device type",
@@ -120,6 +145,11 @@
       "name": "model",
       "summary": "Get the device model",
       "params": [],
+      "tags": [
+        {
+          "name": "property:immutable"
+        }
+      ],
       "result": {
         "name": "model",
         "summary": "the device model",
@@ -142,6 +172,11 @@
       "name": "sku",
       "summary": "Get the device sku",
       "params": [],
+      "tags": [
+        {
+          "name": "property:immutable"
+        }
+      ],
       "result": {
         "name": "sku",
         "summary": "the device sku",
@@ -164,6 +199,11 @@
       "name": "make",
       "summary": "Get the device make",
       "params": [],
+      "tags": [
+        {
+          "name": "property:immutable"
+        }
+      ],
       "result": {
         "name": "make",
         "summary": "the device make",
@@ -185,8 +225,15 @@
     {
       "name": "version",
       "summary": "Get the SDK, OS and other version info",
-      "tags": [ { "name": "exclude-from-sdk" }],
       "params": [],
+      "tags": [
+        {
+          "name": "exclude-from-sdk"
+        },
+        {
+          "name": "property:immutable"
+        }
+      ],
       "result": {
         "name": "versions",
         "summary": "the versions",
@@ -237,6 +284,11 @@
       "name": "hdcp",
       "summary": "Get the supported HDCP profiles",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "supportedHdcpProfiles",
         "summary": "the supported HDCP profiles",
@@ -262,6 +314,11 @@
       "name": "hdr",
       "summary": "Get the supported HDR profiles",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "supportedHdrProfiles",
         "summary": "the supported HDR profiles",
@@ -289,6 +346,11 @@
       "name": "audio",
       "summary": "Get the supported audio profiles",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "supportedAudioProfiles",
         "summary": "the supported audio profiles",
@@ -316,6 +378,11 @@
       "name": "screenResolution",
       "summary": "Get the current screen resolution",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "screenResolution",
         "summary": "the resolution",
@@ -341,6 +408,11 @@
       "name": "videoResolution",
       "summary": "Get the current video resolution",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "videoResolution",
         "summary": "the resolution",
@@ -364,10 +436,15 @@
     },
     {
       "name": "name",
-      "summary": "Get the human readable name of the device",
+      "summary": "The human readable name of the device",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
-        "name": "deviceName",
+        "name": "value",
         "summary": "the device friendly-name",
         "schema": {
           "type": "string"
@@ -375,7 +452,7 @@
       },
       "examples": [
         {
-          "name": "Getting the device name",
+          "name": "Example value for device name",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -418,6 +495,11 @@
       "name": "network",
       "summary": "Get the current network status and type",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "networkInfo",
         "summary": "the status and type",

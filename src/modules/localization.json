@@ -70,6 +70,11 @@
       "name": "language",
       "summary": "Get the ISO 639 1/2 code for the preferred language",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "lang",
         "summary": "the device language",

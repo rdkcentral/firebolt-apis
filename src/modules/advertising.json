@@ -67,6 +67,11 @@
       "name": "policy",
       "summary": "Get the advertising privacy and playback policy",
       "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "adPolicy",
         "summary": "the ad policy",

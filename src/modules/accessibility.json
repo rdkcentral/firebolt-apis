@@ -10,6 +10,11 @@
       "name": "closedCaptions",
       "summary": "Get the user's preferred closed-captions settings",
       "params": [],
+      "tags": [
+        {
+          "name": "deprecated"
+        }
+      ],
       "result": {
         "name": "closedCaptionsSettings",
         "summary": "the closed captions settings",
@@ -43,22 +48,19 @@
       ]
     },
     {
-      "name": "onClosedCaptionsSettingsChanged",
+      "name": "closedCaptionsSettings",
+      "summary": "Get the user's preferred closed-captions settings",
+      "params": [],
       "tags": [
         {
-          "name": "event"
+          "name": "property:readonly"
         }
       ],
-      "summary": "Subscribe to notifications with the user's preferred closed-captions settings",
-      "params": [],
       "result": {
-        "name": "settings",
+        "name": "closedCaptionsSettings",
         "summary": "the closed captions settings",
         "schema": {
-          "oneOf": [
-            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
-            { "$ref": "#/components/schemas/ClosedCaptionsSettings" }
-          ]
+          "$ref": "#/components/schemas/ClosedCaptionsSettings"
         }
       },
       "examples": [
@@ -90,6 +92,11 @@
       "name": "voiceGuidance",
       "summary": "Get the user's preferred voice guidance settings",
       "params": [],
+      "tags": [
+        {
+          "name": "deprecated"
+        }
+      ],
       "result": {
         "name": "settings",
         "summary": "the voice guidance settings",
@@ -112,22 +119,19 @@
       ]
     },
     {
-      "name": "onVoiceGuidanceSettingsChanged",
+      "name": "voiceGuidanceSettings",
+      "summary": "Get the user's preferred voice guidance settings",
+      "params": [],
       "tags": [
         {
-          "name": "event"
+          "name": "property:readonly"
         }
       ],
-      "summary": "Subscribe to notifications with the user's preferred voice guidance settings",
-      "params": [],
       "result": {
         "name": "settings",
         "summary": "the voice guidance settings",
         "schema": {
-          "oneOf": [
-            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
-            { "$ref": "#/components/schemas/VoiceGuidanceSettings" }
-          ]
+          "$ref": "#/components/schemas/VoiceGuidanceSettings"
         }
       },
       "examples": [
@@ -143,7 +147,8 @@
           }
         }
       ]
-    }  ],
+    }
+  ],
   "components": {
     "schemas": {
       "ClosedCaptionsStyles": {
