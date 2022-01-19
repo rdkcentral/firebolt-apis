@@ -74,6 +74,11 @@
           }
         }
       ],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
       "result": {
         "name": "friendlyName",
         "summary": "the device friendly-name",
