@@ -840,7 +840,7 @@
       ],
       "examples": [
         {
-          "action": "contentDiscovery",
+          "action": "discovery",
           "context": {
             "source": "voice"
           },

@@ -133,8 +133,8 @@
         ]
       },
       {
-        "name": "delete",
-        "summary": "Delete a secure data value.",
+        "name": "remove",
+        "summary": "Remove a secure data value.",
         "params": [
           {
             "name": "scope",
@@ -146,7 +146,7 @@
           },
           {
             "name": "key",
-            "summary": "Key to delete.",
+            "summary": "Key to remove.",
             "schema": {
               "type": "string"
             },
@@ -162,7 +162,7 @@
         },
         "examples": [
           {
-            "name": "Delete the value with key 'authRefreshToken'",
+            "name": "Remove the value with key 'authRefreshToken'",
             "params": [
               {
                 "name": "scope",
