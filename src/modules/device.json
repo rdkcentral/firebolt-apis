@@ -2,13 +2,18 @@
   "openrpc": "1.2.4",
   "info": {
     "title": "Device",
-    "description": "A module for querying about the device and it's capabilities.",
+    "description": {
+      "$ref": "file:../descriptions/modules/device/index.md"
+    },
     "version": "0.0.0"
   },
   "methods": [
     {
       "name": "id",
       "summary": "Get the platform back-office device identifier",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/id.md"
+      },
       "params": [],
       "tags": [
         {
@@ -36,6 +41,9 @@
     {
       "name": "distributor",
       "summary": "Get the distributor ID for this device",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/distributor.md"
+      },
       "params": [],
       "tags": [
         {
@@ -63,6 +71,9 @@
     {
       "name": "platform",
       "summary": "Get the platform ID for this device",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/platform.md"
+      },
       "params": [],
       "tags": [
         {
@@ -90,6 +101,9 @@
     {
       "name": "uid",
       "summary": "Gets a unique id for the current app & device",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/uid.md"
+      },
       "params": [],
       "tags": [
         {
@@ -117,6 +131,9 @@
     {
       "name": "type",
       "summary": "Get the device type",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/type.md"
+      },
       "params": [],
       "tags": [
         {
@@ -144,6 +161,9 @@
     {
       "name": "model",
       "summary": "Get the device model",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/model.md"
+      },
       "params": [],
       "tags": [
         {
@@ -171,6 +191,9 @@
     {
       "name": "sku",
       "summary": "Get the device sku",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/sku.md"
+      },
       "params": [],
       "tags": [
         {
@@ -198,6 +221,9 @@
     {
       "name": "make",
       "summary": "Get the device make",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/make.md"
+      },
       "params": [],
       "tags": [
         {
@@ -283,6 +309,9 @@
     {
       "name": "hdcp",
       "summary": "Get the supported HDCP profiles",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/hdcp.md"
+      },
       "params": [],
       "tags": [
         {
@@ -313,6 +342,9 @@
     {
       "name": "hdr",
       "summary": "Get the supported HDR profiles",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/hdr.md"
+      },
       "params": [],
       "tags": [
         {
@@ -345,6 +377,9 @@
     {
       "name": "audio",
       "summary": "Get the supported audio profiles",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/audio.md"
+      },
       "params": [],
       "tags": [
         {
@@ -377,6 +412,9 @@
     {
       "name": "screenResolution",
       "summary": "Get the current screen resolution",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/screenResolution.md"
+      },
       "params": [],
       "tags": [
         {
@@ -407,6 +445,9 @@
     {
       "name": "videoResolution",
       "summary": "Get the current video resolution",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/videoResolution.md"
+      },
       "params": [],
       "tags": [
         {
@@ -494,6 +535,9 @@
     {
       "name": "network",
       "summary": "Get the current network status and type",
+      "description": {
+        "$ref": "file:../descriptions/modules/device/network.md"
+      },
       "params": [],
       "tags": [
         {
