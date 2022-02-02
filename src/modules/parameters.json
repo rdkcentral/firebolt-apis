@@ -30,7 +30,9 @@
                     "navigateTo": {
                         "action": "entity",
                         "data": {
-                            "entityId": "abc"
+                            "entityId": "abc",
+                            "entityType": "program",
+                            "programType": "movie"
                         },
                         "context": {
                             "source": "voice"
