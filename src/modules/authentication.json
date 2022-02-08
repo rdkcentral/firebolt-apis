@@ -9,6 +9,9 @@
     {
       "name": "token",
       "summary": "Get a specific `type` of authentication token",
+      "description": {
+        "$ref": "file:../descriptions/modules/authentication/token.md"
+      },
       "params": [
         {
           "name": "type",
