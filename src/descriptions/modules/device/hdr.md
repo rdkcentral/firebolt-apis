@@ -1,4 +1,6 @@
-| Device Information | Request      | Response                                                     | Value                                                        | Return Type[^1] | Description                |
-| ------------------ | ------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------- | -------------------------- |
-| HDR                | `device.hdr` | `{   "jsonrpc": "2.0",   "id": 1,   "result": {     "hdr10": true,     "hdr10Plus": true,     "dolbyVision": true,     "hlg": true   } }` | `{   "hdr10": true,   "hdr10Plus": true,   "dolbyVision": true,   "hlg": true }` | `BooleanMap`    | The supported HDR profiles |
-
+| Platform   | Result                                                       |
+| ---------- | ------------------------------------------------------------ |
+| CAD        | `{ "tvHdrSupport": [  "HDR10", "HLG", "Dolby Vision" ],  "settopHdrSupport": [ "HDR10", "HLG",  "Dolby Vision" ] }` |
+| Hicense TV | `{"tvHdrSupport":["HDR10","HLG","Dolby  Vision"],"settopHdrSupport":["HDR10","HLG","Dolby  Vision"]}` |
+| XRE        | `"error":  {"code":401,"message":"App does not have permission  to call device.hdr"` |
+| Thor XRE   | `{"dolbyVision":true,"hlg":true,"technicolorPrime":true,"hdr10":true}` |

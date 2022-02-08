@@ -13,6 +13,9 @@
         {
           "name": "options",
           "summary": "Configuration options",
+          "description": {
+            "$ref": "file:../descriptions/modules/advertising/config.md"
+          },
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/AdConfigurationOptions"
@@ -66,6 +69,9 @@
     {
       "name": "policy",
       "summary": "Get the advertising privacy and playback policy",
+      "description": {
+        "$ref": "file:../descriptions/modules/advertising/policy.md"
+      },
       "params": [],
       "tags": [
         {
@@ -96,6 +102,9 @@
     {
       "name": "advertisingId",
       "summary": "Get the advertising ID",
+      "description": {
+        "$ref": "file:../descriptions/modules/advertising/advertisingId.md"
+      },
       "params": [],
       "result": {
         "name": "advertisingId",
@@ -136,6 +145,9 @@
     {
       "name": "deviceAttributes",
       "summary": "Get the device advertising device attributes",
+      "description": {
+        "$ref": "file:../descriptions/modules/advertising/deviceAttributes.md"
+      },
       "params": [],
       "result": {
         "name": "deviceAttributes",
@@ -158,6 +170,9 @@
     {
       "name": "appBundleId",
       "summary": "Get the App's Bundle ID",
+      "description": {
+        "$ref": "file:../descriptions/modules/advertising/appBundleId.md"
+      },
       "params": [],
       "result": {
         "name": "appBundleId",

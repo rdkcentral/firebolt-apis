@@ -1,6 +1,11 @@
 Using this you can get what kind of device type your app is running on. 
 
-| Device Information | Request       | Response                                               | Value | Return Type[^1] | Description |
-| ------------------ | ------------- | ------------------------------------------------------ | ----- | --------------- | ----------- |
-| Type               | `deivce.type` | `{   "jsonrpc": "2.0",   "id": 1,   "result": "STB" }` | "STB" | `Sting`         | "STB"       |
+| Platform   | Result      |
+| ---------- | ----------- |
+| CAD        | `"smarttv"` |
+| Hicense TV | `"smarttv"` |
+| XRE        | `"ipstb"`   |
+| Thor XRE   | `"ipstb"`   |
+
+**Remarks: This differs for PLATCO and XRE devices.**
 

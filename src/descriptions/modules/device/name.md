@@ -1,4 +1,8 @@
-| Device Information | Request       | Response                                                     | Value           | Return Type[^1] | Description                           |
-| ------------------ | ------------- | ------------------------------------------------------------ | --------------- | --------------- | ------------------------------------- |
-| Name               | `device.name` | `{   "jsonrpc": "2.0",   "id": 1,   "result": "Living Room" }` | `"Living Room"` | `String`        | The human readable name of the device |
+| Platform   | Result                                                       |
+| ---------- | ------------------------------------------------------------ |
+| CAD        | `"Hisense XClass TV -  shuail_room"`                         |
+| Hicense TV | `"Hisense XClass TV -  thortv"`                              |
+| XRE        | `"error":  {"code":401,"message":"App does not have permission  to call device.name"` |
+| Thor XRE   | `"error":  {"code":401,"message":"App does not have permission  to call device.name"` |
 
+**Remarks: Differs for PLATCO and XRE  devices and differs across devices**

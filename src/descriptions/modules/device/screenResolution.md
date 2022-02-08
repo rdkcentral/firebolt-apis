@@ -1,4 +1,9 @@
-| Device Information | Request                   | Response                                                     | Value                | Return Type[^1]    | Description                         |
-| ------------------ | ------------------------- | ------------------------------------------------------------ | -------------------- | ------------------ | ----------------------------------- |
-| Screen Resolution  | `device.screenResolution` | `{   "jsonrpc": "2.0",   "id": 1,   "result": [     1920,     1080   ] }` | `[   1920,   1080 ]` | `[bigint, bigint]` | The screen resolution of the device |
+| Platform   | Result           |
+| ---------- | ---------------- |
+| CAD        | `[ 1920, 1080 ]` |
+| Hicense TV | `[1920,1080]`    |
+| XRE        | `[1280,720]`     |
+| Thor XRE   | `[1280,720]`     |
+
+**Remarks: This differs for PLATCO and XRE devices.****
 

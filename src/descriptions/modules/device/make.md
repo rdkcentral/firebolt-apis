@@ -1,6 +1,11 @@
 Get the device make
 
-| Device Information | Request       | Response                                                 | Value   | Return Type[^1] | Description     |
-| ------------------ | ------------- | -------------------------------------------------------- | ------- | --------------- | --------------- |
-| Make               | `device.make` | `{   "jsonrpc": "2.0",   "id": 1,   "result": "Arris" }` | "Arris" | `Sting`         | The device make |
+| Platform   | Result      |
+| ---------- | ----------- |
+| CAD        | `"hisense"` |
+| Hicense TV | `"hisense"` |
+| XRE        | `"pace"`    |
+| Thor XRE   | `"Sercomm"` |
+
+**Remarks: Same for CAD and Hicense but different for XRE and Thor XRE**
 

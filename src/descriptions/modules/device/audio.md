@@ -1,4 +1,9 @@
-| Device Information | Request        | Response                                                     | Value                                                        | Return Type[^1] | Description                  |
-| ------------------ | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------- | ---------------------------- |
-| Audio              | `device.audio` | `{   "jsonrpc": "2.0",   "id": 1,   "result": {     "stereo": true,     "dolbyDigital5.1": true,     "dolbyDigital5.1+": true,     "dolbyAtmos": true   } }` | `{   "stereo": true,   "dolbyDigital5.1": true,   "dolbyDigital5.1+": true,   "dolbyAtmos": true }` | `AudioProfiles` | The supported audio profiles |
+| Platform   | device.audio                                                 |
+| ---------- | ------------------------------------------------------------ |
+| CAD        | `{}`                                                         |
+| Hicense TV | `{}`                                                         |
+| XRE        | `"error":  {"code":401,"message":"App does not have permission  to call device.audio"` |
+| Thor XRE   | `"error":  {"code":401,"message":"App does not have permission  to call device.audio"` |
+
+**Remarks: This differs for PLATCO and XRE devices.**
 

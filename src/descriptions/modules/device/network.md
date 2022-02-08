@@ -1,8 +1,15 @@
-Network allows you to see if your app is running on a connected device and how it's connected to the internet. 
+| Platform   | Result                                                   |
+| ---------- | -------------------------------------------------------- |
+| CAD        | `{{"state":"connected","type":"WIFI"},"success":true  }` |
+| Hicense TV | `{"state":"connected","type":"ETHERNET"}`                |
+| XRE        | `{"state":"connected","type":"hybrid"}`                  |
+| Thor XRE   | `{"state":"connected","type":"wifi"}`                    |
 
-| Device Information | Request          | Response                                                     | Value                                        | Return Type[^1] | Description                         |
-| ------------------ | ---------------- | ------------------------------------------------------------ | -------------------------------------------- | --------------- | ----------------------------------- |
-| Network            | `device.network` | `{   "jsonrpc": "2.0",   "id": 1,   "result": {     "state": "connected",     "type": "wifi"   } }` | `{ "state": "connected",   "type": "wifi" }` | `Object`        | The current network status and type |
+**Remarks: Differs for devices according to  the network.**
+
+#### Notes
+
+Network allows you to see if your app is running on a connected device and how it's connected to the internet. 
 
 For Network type you can have a single return value of `wifi`, `ethernet`, or `hybrid`. Similarly you can have a single return value for NetworkState of either `connected` or `dicconnected`.
 
