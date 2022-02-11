@@ -466,6 +466,11 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "deprecated",
+          "x-since": "0.6.0",
+          "x-alternative": "Device.name()"
         }
       ],
       "summary": "Get the human readable name of the device",

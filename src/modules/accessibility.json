@@ -12,7 +12,9 @@
       "params": [],
       "tags": [
         {
-          "name": "deprecated"
+          "name": "deprecated",
+          "x-alternative": "Accessibility.closedCaptionsSettings()",
+          "x-since": "0.6.0"
         }
       ],
       "result": {
@@ -94,7 +96,9 @@
       "params": [],
       "tags": [
         {
-          "name": "deprecated"
+          "name": "deprecated",
+          "x-alternative": "Accessibility.voiceGuidanceSettings()",
+          "x-since": "0.6.0"
         }
       ],
       "result": {
