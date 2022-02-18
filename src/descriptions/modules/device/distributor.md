@@ -1,5 +1,3 @@
-Get the distributor ID for this device
-
 | Platform          | Result    |
 | ----------------- | --------- |
 | CAD  Result       | "xglobal" |

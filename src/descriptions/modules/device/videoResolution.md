@@ -10,9 +10,3 @@
 With videoResolution you can have a return of the . Similarly you can have a single return value for NetworkState of either `connected` or `dicconnected`.
 
 The return values are also reusable objects. 
-
-##### Resolution
-
-```typescript
-type Resolution = [bigint, bigint]
-```
