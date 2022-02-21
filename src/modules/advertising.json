@@ -8,7 +8,7 @@
   "methods": [
     {
       "name": "config",
-      "summary": "Build configuration object for Ad Framework initialization",
+      "summary": "Build a configuration object for Ad Framework initialization",
       "params": [
         {
           "name": "options",
@@ -68,7 +68,7 @@
     },
     {
       "name": "policy",
-      "summary": "Get the advertising privacy and playback policy",
+      "summary": "Get the advertising, privacy, and playback policy",
       "description": {
         "$ref": "file:../descriptions/modules/advertising/policy.md"
       },

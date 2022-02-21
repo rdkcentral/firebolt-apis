@@ -1,6 +1,6 @@
  
 
-| Method            | Enabled false Response                                       | Enabled True Response                                        |
+| Platform          | Enabled false Response                                       | Enabled True Response                                        |
 | ----------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | CAD Result        | {"enabled":false,"styles":{"fontFamily":"default","fontSize":0.5,"fontColor":"#FFFFFF","fontEdge":"none","fontEdgeColor":"#FFFFFF","fontOpacity":1,"backgroundColor":"#000000","backgroundOpacity":1}} | `{"enabled":true,"styles":{"fontFamily":"default","fontSize":0.5,"fontColor":"#FFFFFF","fontEdge":"none","fontEdgeColor":"#FFFFFF","fontOpacity":1,"backgroundColor":"#000000","backgroundOpacity":1}}`` |
 | Hicense TV Result | `{"enabled":false,"styles":{"fontFamily":"default","fontSize":0.5,"fontColor":"#FF0000","fontEdge":"none","fontEdgeColor":"#FFFFFF","fontOpacity":1,"backgroundColor":"#000000","backgroundOpacity":1}}` | `{"enabled":true,"styles":{"fontFamily":"default","fontSize":0.5,"fontColor":"#FF0000","fontEdge":"none","fontEdgeColor":"#FFFFFF","fontOpacity":1,"backgroundColor":"#000000","backgroundOpacity":1}}` |

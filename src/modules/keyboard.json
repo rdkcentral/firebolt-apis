@@ -9,6 +9,8 @@
     {
       "name": "email",
       "summary": "Prompt the user for their email address with a simplified list of choices.",
+      "$ref": "file:../descriptions/modules/keyboard/email.md"
+      },
       "params": [
         {
           "name": "type",
@@ -74,6 +76,8 @@
     {
       "name": "password",
       "summary": "Show the password entry keyboard, with typing obfuscated from visibility",
+      "$ref": "file:../descriptions/modules/keyboard/password.md"
+      },
       "params": [
         {
           "name": "message",
@@ -110,6 +114,8 @@
     {
       "name": "standard",
       "summary": "Show the standard platform keyboard, and return the submitted value",
+      "$ref": "file:../descriptions/modules/keyboard/standard.md"
+      },
       "params": [
         {
           "name": "message",

@@ -8,7 +8,10 @@
   "methods": [
     {
       "name": "id",
-      "summary": "Get the platform back-office account identifier",
+      "summary": "The unique platform account identifier for a user",
+      "description": {
+        "$ref": "file:../descriptions/modules/account/id.md"
+      },
       "params": [],
       "tags": [
         {
@@ -36,6 +39,9 @@
     {
       "name": "uid",
       "summary": "Gets a unique id for the current app & account",
+      "description": {
+        "$ref": "file:../descriptions/modules/account/uid.md"
+      },
       "params": [],
       "tags": [
         {
