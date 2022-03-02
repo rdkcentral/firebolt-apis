@@ -1,5 +1,14 @@
 # Release Notes
 
+## 0.6.0
+
+- Added support for [rdkcentral/mock-firebolt](https://github.com/rdkcentral/mock-firebolt/) via a WebSocket transport layer
+- Deprecated Accessibility.closedCaptions and voiceGuidance, created properties for Accessibility.closedCaptionsSettings and voiceGuidanceSettings, which support subscribers
+- Deprecated Device.listen('deviceNameChanged'), added support for subscribing to Device.name()
+- Added support for subscribing to property changes: Device.audio, hdcp, hdr, name, network, screenResolution, videoResolution, Advertising.policy, Discovery.policy, Localization.language
+- Added proper TypeScript declarations for Discovery.entityInfo and Discovery.purchasedContent
+- Fixed race condition w/ Transport Layer initialization
+
 ## 0.5.2
 
 - Added Parameters modules
