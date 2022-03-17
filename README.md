@@ -21,3 +21,5 @@ import { Lifecycle } from '@firebolt-js/sdk'
 The Firebolt Core SDK is built using the Firebolt OpenRPC toolset:
 
 See [Firebolt OpenRPC](https://www.github.com/rdkcentral/firebolt-openrpc/), for more info.
+
+foo
