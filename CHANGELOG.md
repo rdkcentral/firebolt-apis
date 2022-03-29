@@ -1,5 +1,9 @@
 # Release Notes
 
+## 0.6.1
+
+- Distributing `firebolt-js/sdk` as a commonjs library
+
 ## 0.6.0
 
 - Added support for [rdkcentral/mock-firebolt](https://github.com/rdkcentral/mock-firebolt/) via a WebSocket transport layer
@@ -8,6 +12,10 @@
 - Added support for subscribing to property changes: Device.audio, hdcp, hdr, name, network, screenResolution, videoResolution, Advertising.policy, Discovery.policy, Localization.language
 - Added proper TypeScript declarations for Discovery.entityInfo and Discovery.purchasedContent
 - Fixed race condition w/ Transport Layer initialization
+
+## 0.5.3
+
+- Maintenance Release
 
 ## 0.5.2
 

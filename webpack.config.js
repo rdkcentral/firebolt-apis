@@ -13,7 +13,7 @@ module.exports = {
   },
   output: {
     library: {
-      type: 'module'
+      type: 'commonjs2'
     },
     filename: 'firebolt.js',
     globalObject: 'this',

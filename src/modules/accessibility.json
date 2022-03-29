@@ -3,7 +3,7 @@
   "info": {
     "title": "Accessibility",
     "version": "0.0.0",
-    "description": "The `Accessibility` module provides access to the user/device settings for closed captioning and voice guidance.\n\nApps **SHOULD** attempt o respect these settings, rather than manage and persist seprate settings, which would be different per-app."
+    "description": "The `Accessibility` module provides access to the user/device settings for closed captioning and voice guidance.\n\nApps **SHOULD** attempt to respect these settings, rather than manage and persist seprate settings, which would be different per-app."
   },
   "methods": [
     {
