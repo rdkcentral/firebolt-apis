@@ -11,6 +11,12 @@
       "tags": [
         {
           "name": "calls-metrics"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:basic"
+          ]
         }
       ],
       "summary": "Notify the platform that the app is ready",
@@ -34,6 +40,14 @@
     },
     {
       "name": "close",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:basic"
+          ]
+        }
+      ],
       "summary": "Request that the platform move your app out of focus",
       "params": [
         {
@@ -82,7 +96,17 @@
     },
     {
       "name": "finished",
-      "tags": [ { "name": "exclude-from-sdk" }],
+      "tags": [
+        {
+          "name": "exclude-from-sdk"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:basic"
+          ]
+        }
+      ],
       "summary": "Notify the platform that the app is done unloading",
       "params": [],
       "result": {
@@ -111,6 +135,12 @@
         },
         {
           "name": "exclude-from-sdk"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:basic"
+          ]
         }
       ],
       "params": [],
@@ -137,6 +167,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:basic"
+          ]
         }
       ],
       "summary": "Listen to the inactive event",
@@ -187,6 +223,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:basic"
+          ]
         }
       ],
       "summary": "Listen to the foreground event",
@@ -254,6 +296,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:background"
+          ]
         }
       ],
       "summary": "Listen to the background event",
@@ -304,6 +352,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:suspend"
+          ]
         }
       ],
       "summary": "Listen to the suspended event",
@@ -354,6 +408,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:basic"
+          ]
         }
       ],
       "summary": "Listen to the unloading event",

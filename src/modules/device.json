@@ -13,6 +13,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:id"
+          ]
         }
       ],
       "result": {
@@ -40,6 +46,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:distributor"
+          ]
         }
       ],
       "result": {
@@ -67,6 +79,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -94,6 +112,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:uid"
+          ]
         }
       ],
       "result": {
@@ -121,6 +145,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -148,6 +178,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:model"
+          ]
         }
       ],
       "result": {
@@ -175,6 +211,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:sku"
+          ]
         }
       ],
       "result": {
@@ -202,6 +244,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:make"
+          ]
         }
       ],
       "result": {
@@ -232,6 +280,12 @@
         },
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -287,6 +341,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -317,6 +377,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -349,6 +415,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -381,6 +453,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -411,6 +489,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -441,6 +525,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:name"
+          ]
         }
       ],
       "result": {
@@ -471,6 +561,12 @@
           "name": "deprecated",
           "x-since": "0.6.0",
           "x-alternative": "Device.name()"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:name"
+          ]
         }
       ],
       "summary": "Get the human readable name of the device",
@@ -503,6 +599,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:network:status"
+          ]
         }
       ],
       "result": {

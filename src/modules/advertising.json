@@ -9,6 +9,14 @@
     {
       "name": "config",
       "summary": "Build configuration object for Ad Framework initialization",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:distribution:capability:monetization:advertising"
+          ]
+        }
+      ],
       "params": [
         {
           "name": "options",
@@ -70,6 +78,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:advertising:policy"
+          ]
         }
       ],
       "result": {
@@ -95,6 +109,14 @@
     },
     {
       "name": "advertisingId",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:advertising:xifa"
+          ]
+        }
+      ],
       "summary": "Get the advertising ID",
       "params": [],
       "result": {
@@ -135,6 +157,14 @@
     },
     {
       "name": "deviceAttributes",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:distribution:capability:monetization:advertising"
+          ]
+        }
+      ],
       "summary": "Get the device advertising device attributes",
       "params": [],
       "result": {
@@ -157,6 +187,14 @@
     },
     {
       "name": "appBundleId",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:distribution:capability:monetization:advertising"
+          ]
+        }
+      ],
       "summary": "Get the App's Bundle ID",
       "params": [],
       "result": {

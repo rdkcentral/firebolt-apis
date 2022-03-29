@@ -13,6 +13,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:policy"
+          ]
         }
       ],
       "result": {
@@ -42,6 +48,12 @@
       "tags": [
         {
           "name": "polymorphic-pull"
+        },
+        {
+          "name": "capabilities",
+          "x-provides": [
+            "xrn:firebolt:capability:discovery:entity-info"
+          ]
         }
       ],
       "summary": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow.",
@@ -332,6 +344,12 @@
       "tags": [
         {
           "name": "polymorphic-pull"
+        },
+        {
+          "name": "capabilities",
+          "x-provides": [
+            "xrn:firebolt:capability:discovery:purchased-content"
+          ]
         }
       ],
       "summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
@@ -418,6 +436,12 @@
       "tags": [
         {
           "name": "polymorphic-reducer"
+        },
+        {
+          "name": "capabilities",
+          "x-provides": [
+            "xrn:firebolt:capability:discovery:watched"
+          ]
         }
       ],
       "params": [
@@ -491,6 +515,14 @@
     {
       "name": "watchNext",
       "summary": "Suggest a call-to-action for this app on the platform home screen",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-provides": [
+            "xrn:firebolt:capability:discovery:watch-next"
+          ]
+        }
+      ],
       "params": [
         {
           "name": "title",
@@ -574,6 +606,14 @@
     },
     {
       "name": "entitlements",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-provides": [
+            "xrn:firebolt:capability:discovery:entitlements"
+          ]
+        }
+      ],
       "summary": "Inform the platform of the users latest entitlements w/in this app",
       "params": [
         {
@@ -624,6 +664,14 @@
     },
     {
       "name": "launch",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:launch"
+          ]
+        }
+      ],
       "summary": "Launch or foreground the specified app, and optionally instructs it to navigate to the specified user action",
       "params": [
         {
@@ -905,6 +953,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:navigate-to"
+          ]
         }
       ],
       "summary": "listen to `navigateTo` events",
@@ -962,6 +1016,12 @@
       "tags": [
         {
           "name": "calls-metrics"
+        },
+        {
+          "name": "capabilities",
+          "x-provides": [
+            "xrn:firebolt:capability:discovery:sign-in-status"
+          ]
         }
       ],
       "summary": "Inform the platform that your user is signed in, for increased visiblity in search & discovery.",
@@ -1019,6 +1079,12 @@
       "tags": [
         {
           "name": "calls-metrics"
+        },
+        {
+          "name": "capabilities",
+          "x-provides": [
+            "xrn:firebolt:capability:discovery:sign-in-status"
+          ]
         }
       ],
       "summary": "Inform the platform that your user has signed out and that entitlements may no longer be valid.",

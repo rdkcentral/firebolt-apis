@@ -8,6 +8,14 @@
   "methods": [
     {
       "name": "locality",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:locality"
+          ]
+        }
+      ],
       "summary": "Get the locality/city the device is located in",
       "params": [],
       "result": {
@@ -28,6 +36,14 @@
     },
     {
       "name": "postalCode",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:postal-code"
+          ]
+        }
+      ],
       "summary": "Get the postal code the device is located in",
       "params": [],
       "result": {
@@ -48,6 +64,14 @@
     },
     {
       "name": "countryCode",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:country-code"
+          ]
+        }
+      ],
       "summary": "Get the ISO 3166 code for the counrty device is located in",
       "params": [],
       "result": {
@@ -73,6 +97,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:language"
+          ]
         }
       ],
       "result": {
@@ -93,6 +123,14 @@
     },
     {
       "name": "locale",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:locale"
+          ]
+        }
+      ],
       "summary": "Get the *full* BCP 47 code, including script, region, variant, etc., for the preferred langauage/locale",
       "params": [],
       "result": {
@@ -113,6 +151,14 @@
     },
     {
       "name": "latlon",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:location"
+          ]
+        }
+      ],
       "summary": "Get the approximate latitude and longitude coordinates of the device location",
       "params": [],
       "result": {
@@ -135,6 +181,14 @@
     },
     {
       "name": "additionalInfo",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:language"
+          ]
+        }
+      ],
       "summary": "Get any platform-specific localization information, in an Map<string, string>",
       "params": [],
       "result": {

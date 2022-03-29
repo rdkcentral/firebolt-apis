@@ -15,6 +15,12 @@
           "name": "deprecated",
           "x-alternative": "Accessibility.closedCaptionsSettings()",
           "x-since": "0.6.0"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:closed-captions"
+          ]
         }
       ],
       "result": {
@@ -56,6 +62,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:closed-captions"
+          ]
         }
       ],
       "result": {
@@ -99,6 +111,12 @@
           "name": "deprecated",
           "x-alternative": "Accessibility.voiceGuidanceSettings()",
           "x-since": "0.6.0"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:voice-guidance"
+          ]
         }
       ],
       "result": {
@@ -129,7 +147,13 @@
       "tags": [
         {
           "name": "property:readonly"
-        }
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:voice-guidance"
+          ]
+        }        
       ],
       "result": {
         "name": "settings",
