@@ -15,7 +15,7 @@ module.exports = {
     library: {
       type: 'module'
     },
-    filename: 'firebolt.js',
+    filename: 'firebolt.mjs',
     globalObject: 'this',
     path: path.resolve(__dirname, 'dist')
   }

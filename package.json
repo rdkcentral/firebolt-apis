@@ -2,7 +2,7 @@
   "name": "@firebolt-js/sdk",
   "version": "0.6.0",
   "description": "The Firebolt JS SDK",
-  "main": "./dist/firebolt.js",
+  "main": "./dist/firebolt.mjs",
   "scripts": {
     "prepare": "npm run prepare:setup && npm run dist:docs && npm run dist:sdk && npm run dist:d",
     "prepare:setup": "mkdir -p ./dist/docs ./build/docs/markdown ./build/sdk/javascript/src",

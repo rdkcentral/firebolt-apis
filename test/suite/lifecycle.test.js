@@ -17,7 +17,7 @@
  */
 
 import { testHarness } from '../Setup'
-import { Lifecycle } from '../../dist/firebolt.js'
+import { Lifecycle } from '../../dist/firebolt.mjs'
 
 let readyResolved = false
 let readyCalled = false
