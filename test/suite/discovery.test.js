@@ -17,7 +17,7 @@
  */
 
 import Setup from '../Setup'
-import { Discovery } from '../../dist/firebolt.js'
+import { Discovery } from '../../dist/firebolt.mjs'
 
 test('watched(contentId)', () => {
     return Discovery.watched('abc').then(success => {

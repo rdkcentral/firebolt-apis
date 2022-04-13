@@ -17,7 +17,7 @@
  */
 
 import Setup from '../Setup'
-import { Accessibility } from '../../dist/firebolt.js'
+import { Accessibility } from '../../dist/firebolt.mjs'
 
 test('closedCaptions() settings', () => {
     return Accessibility.closedCaptions().then(settings => {

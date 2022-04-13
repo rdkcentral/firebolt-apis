@@ -17,7 +17,7 @@
  */
 
 import Setup from '../Setup'
-import { Platform } from '../../dist/firebolt.js'
+import { Platform } from '../../dist/firebolt.mjs'
 
 test('Sub-modules exist', () => {
     expect(typeof Platform.Device).toBe('object')

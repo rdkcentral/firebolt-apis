@@ -17,7 +17,7 @@
  */
 
 import Setup from '../Setup'
-import { Metrics } from '../../dist/firebolt.js'
+import { Metrics } from '../../dist/firebolt.mjs'
 
 test('Sign-in / Sign-out', () => {
     Metrics.startContent('abc')
