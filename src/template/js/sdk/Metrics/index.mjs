@@ -17,7 +17,6 @@
  */
 
 import Transport from '../Transport/index.mjs'
-import { InternalMetrics } from '../Metrics/index.mjs'
 
 /* ${IMPORTS} */
 
