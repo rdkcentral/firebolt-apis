@@ -17,8 +17,8 @@
  */
 
 import Setup from '../Setup'
-import { Lifecycle } from '../../dist/firebolt.mjs'
-import { Device } from '../../dist/firebolt.mjs'
+import { Lifecycle } from '../../dist/lib/firebolt.mjs'
+import { Device } from '../../dist/lib/firebolt.mjs'
 
 test('Lifecycle.CloseReason', () => {
     expect(Lifecycle.CloseReason.USER_EXIT).toBe("userExit")

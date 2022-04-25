@@ -16,35 +16,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import Transport from '../Transport'
-/* ${IMPORTS} */
-
-/* ${INITIALIZATION} */
-
-function version() {
-  return new Promise( (resolve, reject) => {
-      Transport.send('device', 'version').then( v => {
-          v = v || {}
-          v.sdk = v.sdk || {}
-          v.sdk.major = parseInt('${major}')
-          v.sdk.minor = parseInt('${minor}')
-          v.sdk.patch = parseInt('${patch}')
-          v.sdk.readable = '${readable}'
-          resolve(v)    
-      }).catch(error => {
-          reject(error)
-      })
-  })
-}
-
-/* ${METHODS} */
-
-export default {
-
-  /* ${EVENTS} */
-  /* ${ENUMS} */
-
-  version,
-  /* ${METHOD_LIST} */
-
-}
+/* ${EXPORTS} */
+export { default as Log } from './Log/index.mjs'
+export { default as Events } from './Events/index.mjs'
+export { default as Settings } from './Settings/index.mjs'

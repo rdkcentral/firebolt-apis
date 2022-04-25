@@ -16,8 +16,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import Transport from '../Transport'
-import { InternalMetrics } from '../Metrics'
+import Transport from '../Transport/index.mjs'
+import { InternalMetrics } from '../Metrics/index.mjs'
+
 /* ${IMPORTS} */
 
 /* ${INITIALIZATION} */

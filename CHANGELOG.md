@@ -1,5 +1,14 @@
 # Release Notes
 
+## 0.6.1
+
+- changed Firebolt build to use `.mjs` extension
+- added `types` path to package.json
+- Fixed TypeScript declarations for `FlatMap` and `BooleanMap`
+- Added TypeScript return type declarations for `listen` and `once` (all modules)
+- Added TypeScript declaration for `clear` method (all modules)
+- Changed `{}` return type to `void` for listener callbacks
+
 ## 0.6.0
 
 - Added support for [rdkcentral/mock-firebolt](https://github.com/rdkcentral/mock-firebolt/) via a WebSocket transport layer

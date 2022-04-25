@@ -16,12 +16,46 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import accessibility from '../Accessibility/defaults'
-import device from '../Device/defaults'
-import localization from '../Localization/defaults'
+import Transport from '../Transport/index.mjs'
+/* ${IMPORTS} */
 
+/* ${INITIALIZATION} */
+
+export const store = {
+  _current: 'initializing',
+  get current() {
+    return this._current
+  }
+}
+
+Events.listen('Lifecycle', (event, value) => {
+  store._current = event
+})
+
+/* ${METHODS} */
+
+function state() {
+  return store.current
+}
+
+function finished() {
+  if (store.current === 'unloading') {
+    return Transport.send('lifecycle', 'finished')
+  } else {
+    throw 'Cannot call finished() except when in the unloading transition'
+  }
+}
+
+// public API
 export default {
-  localization: localization,
-  device: device,
-  accessibility: accessibility,
+
+  /* ${EVENTS} */
+
+  /* ${ENUMS} */
+
+  state,
+  finished,
+
+  /* ${METHOD_LIST} */
+  
 }

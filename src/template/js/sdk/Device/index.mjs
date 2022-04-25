@@ -16,7 +16,35 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* ${EXPORTS} */
-export { default as Log } from './Log'
-export { default as Events } from './Events'
-export { default as Settings } from './Settings'
+import Transport from '../Transport/index.mjs'
+/* ${IMPORTS} */
+
+/* ${INITIALIZATION} */
+
+function version() {
+  return new Promise( (resolve, reject) => {
+      Transport.send('device', 'version').then( v => {
+          v = v || {}
+          v.sdk = v.sdk || {}
+          v.sdk.major = parseInt('${major}')
+          v.sdk.minor = parseInt('${minor}')
+          v.sdk.patch = parseInt('${patch}')
+          v.sdk.readable = '${readable}'
+          resolve(v)    
+      }).catch(error => {
+          reject(error)
+      })
+  })
+}
+
+/* ${METHODS} */
+
+export default {
+
+  /* ${EVENTS} */
+  /* ${ENUMS} */
+
+  version,
+  /* ${METHOD_LIST} */
+
+}
