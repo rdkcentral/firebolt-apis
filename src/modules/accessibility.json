@@ -155,62 +155,6 @@
   ],
   "components": {
     "schemas": {
-      "ClosedCaptionsStyles": {
-        "title": "ClosedCaptionsStyles",
-        "type": "object",
-        "description": "The default styles to use when displaying closed-captions",
-        "properties": {
-          "fontFamily": {
-            "type": "string"
-          },
-          "fontSize": {
-            "type": "number",
-            "minimum": 0
-          },
-          "fontColor": {
-            "type": "string"
-          },
-          "fontEdge": {
-            "type": "string"
-          },
-          "fontEdgeColor": {
-            "type": "string"
-          },
-          "fontOpacity": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 100
-          },
-          "backgroundColor": {
-            "type": "string"
-          },
-          "backgroundOpacity": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 100
-          },
-          "textAlign": {
-            "type": "string"
-          },
-          "textAlignVertical": {
-            "type": "string"
-          }
-        }
-      },
-      "ClosedCaptionsSettings": {
-        "title": "ClosedCaptionsSettings",
-        "type": "object",
-        "required": ["enabled", "styles"],
-        "properties": {
-          "enabled": {
-            "type": "boolean",
-            "description": "Whether or not closed-captions should be enabled by default"
-          },
-          "styles": {
-            "$ref": "#/components/schemas/ClosedCaptionsStyles"
-          }
-        }
-      },
       "VoiceGuidanceSettings": {
         "title": "VoiceGuidanceSettings",
         "type": "object",
