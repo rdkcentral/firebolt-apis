@@ -19,7 +19,7 @@
         "name": "policy",
         "summary": "discovery policy opt-in/outs",
         "schema": {
-          "$ref": "#/components/schemas/DiscoveryPolicy"
+          "$ref": "https://meta.comcast.com/firebolt/privacy#/definitions/ContentPolicy"
         }
       },
       "examples": [
@@ -1043,29 +1043,6 @@
   ],
   "components": {
     "schemas": {
-      "DiscoveryPolicy": {
-        "title": "DiscoveryPolicy",
-        "type": "object",
-        "required": [
-          "enableRecommendations",
-          "shareWatchHistory",
-          "rememberWatchedPrograms"
-        ],
-        "properties": {
-          "enableRecommendations": {
-            "type": "boolean",
-            "description": "Whether or not to the user has enabled history-based recommendations"
-          },
-          "shareWatchHistory": {
-            "type": "boolean",
-            "description": "Whether or not the user has enabled app watch history data to be shared with the platform"
-          },
-          "rememberWatchedPrograms": {
-            "type": "boolean",
-            "description": "Whether or not the user has enabled watch history"
-          }
-        }
-      },
       "EntityInfo": {
         "title": "EntityInfo",
         "description": {

@@ -21,7 +21,7 @@
         "name": "closedCaptionsSettings",
         "summary": "the closed captions settings",
         "schema": {
-          "$ref": "#/components/schemas/ClosedCaptionsSettings"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/ClosedCaptionsSettings"
         }
       },
       "examples": [
@@ -62,7 +62,7 @@
         "name": "closedCaptionsSettings",
         "summary": "the closed captions settings",
         "schema": {
-          "$ref": "#/components/schemas/ClosedCaptionsSettings"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/ClosedCaptionsSettings"
         }
       },
       "examples": [
@@ -105,7 +105,7 @@
         "name": "settings",
         "summary": "the voice guidance settings",
         "schema": {
-          "$ref": "#/components/schemas/VoiceGuidanceSettings"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VoiceGuidanceSettings"
         }
       },
       "examples": [
@@ -135,7 +135,7 @@
         "name": "settings",
         "summary": "the voice guidance settings",
         "schema": {
-          "$ref": "#/components/schemas/VoiceGuidanceSettings"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VoiceGuidanceSettings"
         }
       },
       "examples": [
@@ -155,21 +155,6 @@
   ],
   "components": {
     "schemas": {
-      "VoiceGuidanceSettings": {
-        "title": "VoiceGuidanceSettings",
-        "type": "object",
-        "required": ["enabled", "speed"],
-        "properties": {
-          "enabled": {
-            "type": "boolean",
-            "description": "Whether or not voice guidance should be enabled by default"
-          },
-          "speed": {
-            "type": "number",
-            "description": "The speed at which voice guidance speech will be read back to the user"
-          }
-        }
-      }
     }
   }
 }
