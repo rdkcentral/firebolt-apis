@@ -16,8 +16,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import Setup from '../Setup'
-import { Accessibility } from '../../dist/firebolt.mjs'
+import Setup from '../Setup.js'
+import { Accessibility } from '../../dist/lib/firebolt.mjs'
 
 test('closedCaptions() settings', () => {
     return Accessibility.closedCaptions().then(settings => {

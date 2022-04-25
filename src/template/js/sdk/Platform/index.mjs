@@ -16,10 +16,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import accessibility from '../Accessibility'
-import device from '../Device'
-import localization from '../Localization'
-
+import accessibility from '../Accessibility/index.mjs'
+import device from '../Device/index.mjs'
+import localization from '../Localization/index.mjs'
 
 // public API
 export default {
