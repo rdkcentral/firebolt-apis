@@ -6,21 +6,21 @@
   "types": "./dist/lib/firebolt.d.ts",
   "scripts": {
     "prepare": "npm run prepare:setup && npm run dist:docs && npm run dist:sdk && npm run dist:d",
-    "prepare:setup": "npm run clean && mkdir -p ./dist/docs ./dist/lib ./build/docs/markdown ./build/sdk/javascript/src",
+    "prepare:setup": "npm run clean && npx mkdirp ./dist/docs ./dist/lib ./build/docs/markdown ./build/sdk/javascript/src",
     "validate": "firebolt-openrpc --task validate --source ./src --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/ && npm run build:openrpc && firebolt-openrpc --task validate --source ./dist/firebolt-open-rpc.json --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/",
     "build:openrpc": "firebolt-openrpc --task openrpc --source ./src --template ./src/template/openrpc/template.json --output ./dist/firebolt-open-rpc.json --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/",
     "build:sdk": "firebolt-openrpc --task sdk --source ./src/ --template ./src/template/js --output ./build/sdk/javascript/src --static-modules Platform --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/",
     "build:docs": "firebolt-openrpc --task docs --source ./src/ --template ./src/template/markdown --output ./build/docs/markdown --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/ --as-path",
     "build:wiki": "firebolt-openrpc --task docs --source ./src/ --template ./src/template/markdown --output ./build/docs/markdown --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/",
-    "dist:sdk": "npm run validate && npm run build:sdk && rm -rf ./dist/lib && cp -R ./build/sdk/javascript/src ./dist/lib && npm run test",
+    "dist:sdk": "npm run validate && npm run build:sdk && rimraf ./dist/lib && cp -R ./build/sdk/javascript/src ./dist/lib && npm run test",
     "dist:d": "npm run validate && firebolt-openrpc --task declarations --source ./src/ --output ./dist/lib/firebolt.d.ts --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/",
-    "dist:docs": "npm run validate && npm run build:docs asPath && rm -r ./dist/docs && cp -R ./build/docs/markdown ./dist/docs",
-    "dist:wiki": "npm run validate && npm run build:wiki && rm -r ./dist/docs && cp -R ./build/docs/markdown ./dist/docs",
+    "dist:docs": "npm run validate && npm run build:docs asPath && rimraf ./dist/docs && cp -R ./build/docs/markdown ./dist/docs",
+    "dist:wiki": "npm run validate && npm run build:wiki && rimraf ./dist/docs && cp -R ./build/docs/markdown ./dist/docs",
     "test": "jest --config=jest.config.js --detectOpenHandles",
-    "clean": "rm -rf build && rm -rf dist",
+    "clean": "rimraf build && rimraf dist",
     "build": "npm run validate && npm run build:docs && npm run build:sdk",
     "publish:docs": "npm run build:docs && sh ./push-docs.sh",
-    "publish:word": "mkdir -p ./dist/word/schemas && cd ./dist/docs && find . -iname \"*.md\" -type f -exec sh -c 'pandoc \"${0}\" -o \"../word/${0%.md}.docx\"' {} \\;"
+    "publish:word": "npx mkdirp ./dist/word/schemas && cd ./dist/docs && find . -iname \"*.md\" -type f -exec sh -c 'pandoc \"${0}\" -o \"../word/${0%.md}.docx\"' {} \\;"
   },
   "repository": {
     "type": "git",
@@ -38,7 +38,9 @@
     "@firebolt-js/openrpc": "1.4.0",
     "@firebolt-js/schemas": "0.2.0",
     "ajv": "^6.12.6",
-    "jest": "^27.0.4"
+    "jest": "^27.0.4",
+    "mkdirp": "^0.5.6",
+    "rimraf": "^3.0.2"
   },
   "keywords": [
     "firebolt",
