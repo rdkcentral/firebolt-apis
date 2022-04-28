@@ -2,8 +2,9 @@
 
 ## 0.6.1
 
-- changed Firebolt build to use `.mjs` extension
-- added `types` path to package.json
+- Changed Firebolt build to use `.mjs` extension
+- Firebolt builds are now pure ES6 modules, not bundled with Webpack
+- Added `types` path to package.json
 - Fixed TypeScript declarations for `FlatMap` and `BooleanMap`
 - Added TypeScript return type declarations for `listen` and `once` (all modules)
 - Added TypeScript declaration for `clear` method (all modules)
