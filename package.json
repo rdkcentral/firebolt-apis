@@ -6,7 +6,7 @@
   "types": "./dist/lib/firebolt.d.ts",
   "scripts": {
     "prepare": "npm run prepare:setup && npm run dist:docs && npm run dist:sdk && npm run dist:d",
-    "prepare:setup": "npm run clean && mkdir -p ./dist/docs ./dist/lib ./build/docs/markdown ./build/sdk/javascript/src",
+    "prepare:setup": "npm run clean && npx mkdirp ./dist/docs ./dist/lib ./build/docs/markdown ./build/sdk/javascript/src",
     "validate": "firebolt-openrpc --task validate --source ./src --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/ && npm run build:openrpc && firebolt-openrpc --task validate --source ./dist/firebolt-open-rpc.json --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/",
     "build:openrpc": "firebolt-openrpc --task openrpc --source ./src --template ./src/template/openrpc/template.json --output ./dist/firebolt-open-rpc.json --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/",
     "build:sdk": "firebolt-openrpc --task sdk --source ./src/ --template ./src/template/js --output ./build/sdk/javascript/src --static-modules Platform --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/",
@@ -17,7 +17,7 @@
     "dist:docs": "npm run validate && npm run build:docs asPath && rm -r ./dist/docs && cp -R ./build/docs/markdown ./dist/docs",
     "dist:wiki": "npm run validate && npm run build:wiki && rm -r ./dist/docs && cp -R ./build/docs/markdown ./dist/docs",
     "test": "jest --config=jest.config.js --detectOpenHandles",
-    "clean": "rm -rf build && rm -rf dist",
+    "clean": "rimraf build && rimraf dist",
     "build": "npm run validate && npm run build:docs && npm run build:sdk",
     "publish:docs": "npm run build:docs && sh ./push-docs.sh",
     "publish:word": "mkdir -p ./dist/word/schemas && cd ./dist/docs && find . -iname \"*.md\" -type f -exec sh -c 'pandoc \"${0}\" -o \"../word/${0%.md}.docx\"' {} \\;"
@@ -35,10 +35,12 @@
     "@babel/core": "^7.14.6",
     "@babel/node": "^7.14.5",
     "@babel/preset-env": "^7.14.5",
-    "@firebolt-js/openrpc": "1.3.0-alpha.2",
+    "@firebolt-js/openrpc": "git+https://github.com/rdkcentral/firebolt-openrpc.git#fix-windows",
     "@firebolt-js/schemas": "0.2.0-alpha.1",
     "ajv": "^6.12.6",
-    "jest": "^27.0.4"
+    "jest": "^27.0.4",
+    "mkdirp": "^0.5.6",
+    "rimraf": "^3.0.2"
   },
   "keywords": [
     "firebolt",
