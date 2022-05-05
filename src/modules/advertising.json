@@ -24,7 +24,6 @@
         "summary": "the ad framework config",
         "schema": {
           "type": "object",
-          "title": "AdConfiguration",
           "description": "An opaque object represneting the AdConfiguration"
         }
       },

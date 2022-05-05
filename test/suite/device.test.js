@@ -17,7 +17,7 @@
  */
 
 import Setup from '../Setup'
-import { Device } from '../../dist/firebolt.js'
+import { Device } from '../../dist/lib/firebolt.mjs'
 
 const version = require('../../package.json').version.split('-')[0].split('.')
 
