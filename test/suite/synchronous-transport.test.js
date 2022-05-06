@@ -78,7 +78,7 @@ beforeAll( () => {
     }
 
     // import Lifecycle (using require was the ony way i could get jest to load it AFTER this `beforeAll` code)
-    const { Lifecycle } = require('../../dist/firebolt.js')    
+    const { Lifecycle } = require('../../dist/lib/firebolt.mjs')    
     Lifecycle.ready()
 })
 
