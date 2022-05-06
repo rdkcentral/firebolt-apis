@@ -20,7 +20,8 @@
 // setup for Firebolt SDK/TL handshake
 const win = globalThis || window
 
-import { Lifecycle, Discovery } from '../../dist/firebolt.js'
+import Setup from '../Setup'
+import { Lifecycle, Discovery } from '../../dist/lib/firebolt.mjs'
 
 // holds test transport layer state, e.g. callback
 const state = {
@@ -36,7 +37,8 @@ const transport = {
     send: function(message) {
         sendCalled = true
         const json = JSON.parse(message)
-        if (json.method.toLowerCase() === 'discovery.onnavigateto') {
+        console.log('transport.send: ' + json.method)
+        if (json.method.toLowerCase() === 'lifecycle.ready') {
             // we'll assert on this later...
             navigateToListenCount++
             if (state.callback) {
@@ -62,22 +64,37 @@ const transport = {
         }
     },
     receive: function(callback) {
+        console.log('transport.receive')
         // store the callback
         state.callback = callback
     }
 }
 
-// listen twice, using event-specific call FIRST
-Discovery.listen("navigateTo", (value) => { callbackWiredUp = true })
-Discovery.listen("navigateTo", (value) => { /* this just adds more listen calls to make sure we don't spam */ })
-Discovery.listen((event, value) => { /* testing both listen signatures */ })
-Discovery.listen((event, value) => { /* testing both listen signatures */ })
-// listen three more times, using wildcard FIRST (from above)
-Discovery.listen("pullEntityInfo", (value) => {  })
-Discovery.listen("pullEntityInfo", (value) => {  })
-Discovery.listen("pullEntityInfo", (value) => {  })
+beforeAll(()=> {
 
-Lifecycle.ready()
+    // listen twice, using event-specific call FIRST
+    Discovery.listen("navigateTo", (value) => { callbackWiredUp = true })
+    Discovery.listen("navigateTo", (value) => { /* this just adds more listen calls to make sure we don't spam */ })
+    Discovery.listen((event, value) => { /* testing both listen signatures */ })
+    Discovery.listen((event, value) => { /* testing both listen signatures */ })
+    // listen three more times, using wildcard FIRST (from above)
+    Discovery.listen("pullEntityInfo", (value) => {  })
+    Discovery.listen("pullEntityInfo", (value) => {  })
+    Discovery.listen("pullEntityInfo", (value) => {  })
+
+    let p = new Promise( (resolve, reject) => {
+        setTimeout( _ => {
+            resolve()
+        }, 4000)
+    })
+
+    Lifecycle.ready()
+    
+    win.__firebolt.setTransportLayer(transport)
+
+    return p
+})
+
 
 test('Transport injected after SDK', () => {
     expect(callbackWiredUp).toBe(true)
@@ -96,5 +113,3 @@ test('Transport was sent each listener only once', () => {
     expect(navigateToListenCount).toBe(1)
     expect(pullEntityInfoListenCount).toBe(1)
 });
-
-win.__firebolt.setTransportLayer(transport)
