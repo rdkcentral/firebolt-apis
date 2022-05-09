@@ -17,7 +17,7 @@
  */
 
 import Setup from '../Setup'
-import { Advertising } from '../../dist/firebolt.js'
+import { Advertising } from '../../dist/lib/firebolt.mjs'
 
 test('policy()', () => {
     return Advertising.policy().then(policy => {

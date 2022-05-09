@@ -16,37 +16,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import Transport from '../Transport'
-import { InternalMetrics } from '../Metrics'
-/* ${IMPORTS} */
-
-/* ${INITIALIZATION} */
-
-function ready() {
-  return Transport.send('metrics', 'ready', {})
-}
-
-function signIn() {
-  return Transport.send('metrics', 'signIn', {})
-}
-
-function signOut() {
-  return Transport.send('metrics', 'signOut', {})
-}
-
-
-/* ${METHODS} */
+import accessibility from '../Accessibility/defaults.mjs'
+import device from '../Device/defaults.mjs'
+import localization from '../Localization/defaults.mjs'
 
 export default {
-
-  /* ${EVENTS} */
-  /* ${ENUMS} */
-  /* ${METHOD_LIST} */
-
-}
-
-export {
-  ready,
-  signIn,
-  signOut
+  localization: localization,
+  device: device,
+  accessibility: accessibility,
 }

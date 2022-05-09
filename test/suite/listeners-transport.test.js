@@ -20,7 +20,7 @@
 // setup for Firebolt SDK/TL handshake
 const win = globalThis || window
 
-import { Lifecycle, Discovery } from '../../dist/firebolt.js'
+import { Lifecycle, Discovery } from '../../dist/lib/firebolt.mjs'
 
 // holds test transport layer state, e.g. callback
 const state = {
