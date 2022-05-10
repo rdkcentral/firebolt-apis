@@ -45,8 +45,7 @@
   "keywords": [
     "firebolt",
     "apps",
-    "sdk",
-    "git://github.com/rdkcentral/firebolt-openrpc.git"
+    "sdk"
   ],
   "license": "Apache-2.0"
 }
