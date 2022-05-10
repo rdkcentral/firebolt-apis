@@ -18,6 +18,7 @@
 
 import Setup from '../Setup'
 import { Events } from '../../dist/lib/firebolt.mjs'
+import { jest } from '@jest/globals';
 
 jest.setTimeout(10000)
 

@@ -39,3 +39,5 @@ export const testHarness = {
 }
 
 win.__firebolt.testHarness = testHarness
+
+export default testHarness
