@@ -16,7 +16,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import MockTransport from '../Transport/mock.mjs'
+import MockTransport from '../Transport/MockTransport.mjs'
 import { default as win } from '../Transport/global.mjs'
 
 let inactive = 0 /* ${EXAMPLE:onInactive} */
