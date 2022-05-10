@@ -28,9 +28,7 @@
           "params": [],
           "result": {
             "name": "Default Result",
-            "value": {
-              "field": "this result is non-conformant"
-            }
+            "value": "This should pass now"
           }
         }
       ]
