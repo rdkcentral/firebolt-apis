@@ -4,6 +4,7 @@
   "description": "The Firebolt JS SDK",
   "main": "./dist/lib/firebolt.mjs",
   "types": "./dist/lib/firebolt.d.ts",
+  "type": "module",
   "scripts": {
     "prepare": "npm run prepare:setup && npm run dist:docs && npm run dist:sdk && npm run dist:d",
     "prepare:setup": "npm run clean && npx mkdirp ./dist/docs ./dist/lib ./build/docs/markdown ./build/sdk/javascript/src",
@@ -16,7 +17,7 @@
     "dist:d": "npm run validate && firebolt-openrpc --task declarations --source ./src/ --output ./dist/lib/firebolt.d.ts --shared-schemas node_modules/@firebolt-js/schemas/src/schemas/",
     "dist:docs": "npm run validate && npm run build:docs asPath && rimraf ./dist/docs && cp -R ./build/docs/markdown ./dist/docs",
     "dist:wiki": "npm run validate && npm run build:wiki && rimraf ./dist/docs && cp -R ./build/docs/markdown ./dist/docs",
-    "test": "jest --config=jest.config.js --detectOpenHandles",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config=jest.config.json --detectOpenHandles",
     "clean": "rimraf build && rimraf dist",
     "build": "npm run validate && npm run build:docs && npm run build:sdk",
     "publish:docs": "npm run build:docs && sh ./push-docs.sh",
@@ -34,9 +35,6 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@babel/core": "^7.14.6",
-    "@babel/node": "^7.14.5",
-    "@babel/preset-env": "^7.14.5",
     "@firebolt-js/openrpc": "git://github.com/rdkcentral/firebolt-openrpc.git",
     "@firebolt-js/schemas": "git://github.com/rdkcentral/firebolt-schemas.git",
     "ajv": "^6.12.6",
