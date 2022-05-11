@@ -513,19 +513,7 @@
         "name": "networkInfo",
         "summary": "the status and type",
         "schema": {
-          "type": "object",
-          "properties": {
-            "state": {
-              "$ref": "#/components/schemas/NetworkState"
-            },
-            "type": {
-              "$ref": "#/components/schemas/NetworkType"
-            }
-          },
-          "required": [
-            "state",
-            "type"
-          ]
+          "$ref": "https://meta.comcast.com/firebolt/network#/definitions/NetworkStatus"
         }
       },
       "examples": [
@@ -558,25 +546,6 @@
         "additionalItems": false,
         "minItems": 2,
         "maxItems": 2
-      },
-      "NetworkType": {
-        "title": "NetworkType",
-        "type": "string",
-        "enum": [
-          "wifi",
-          "ethernet",
-          "hybrid"
-        ],
-        "description": "The type of network that is currently active"
-      },
-      "NetworkState": {
-        "title": "NetworkState",
-        "type": "string",
-        "enum": [
-          "connected",
-          "disconnected"
-        ],
-        "description": "The type of network that is currently active"
       },
       "AudioProfiles": {
         "title": "AudioProfiles",
