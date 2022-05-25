@@ -297,7 +297,7 @@
         "name": "supportedHdcpProfiles",
         "summary": "the supported HDCP profiles",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          "$ref": "#/components/schemas/HdcpProfiles"
         }
       },
       "examples": [
@@ -327,7 +327,7 @@
         "name": "supportedHdrProfiles",
         "summary": "the supported HDR profiles",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          "$ref": "#/components/schemas/HdrProfiles"
         }
       },
       "examples": [
@@ -370,8 +370,8 @@
             "name": "Default Result",
             "value": {
               "stereo": true,
-              "dolbyDigital5.1": true,
-              "dolbyDigital5.1+": true,
+              "dolbyDigital": true,
+              "dolbyDigitalPlus": true,
               "dolbyAtmos": true
             }
           }
@@ -594,6 +594,46 @@
       },
       "AudioProfile": {
         "$ref": "https://meta.comcast.com/firebolt/types#/definitions/AudioProfile"
+      },
+      "HdrProfiles": {
+        "title": "HdrProfiles",
+        "allOf": [
+          {
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          },
+          {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "enum": [
+                "dolbyVision",
+                "hdr10",
+                "hdr10Plus",
+                "hlg",
+                "technicolorPrime"
+              ]
+            }
+          }
+        ]
+      },
+      "HdcpProfiles": {
+        "title": "HdcpProfiles",
+        "allOf": [
+          {
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          },
+          {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "enum": [
+                "hdcp1.4",
+                "hdcp2.2",
+                "hdcp2.3"
+              ]
+            }
+          }
+        ]
       }
     }
   }
