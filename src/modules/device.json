@@ -375,6 +375,16 @@
               "dolbyAtmos": true
             }
           }
+        },
+        {
+          "name": "Single audio profile",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "stereo": true
+            }
+          }
         }
       ]
     },
@@ -582,7 +592,7 @@
         "title": "AudioProfiles",
         "allOf": [
           {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMapWithAtLeastOneTrue"
           },
           {
             "type": "object",
@@ -620,7 +630,7 @@
         "title": "HdcpProfiles",
         "allOf": [
           {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMapWithAtLeastOneTrue"
           },
           {
             "type": "object",
