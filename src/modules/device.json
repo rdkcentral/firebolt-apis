@@ -630,7 +630,7 @@
         "title": "HdcpProfiles",
         "allOf": [
           {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMapWithAtLeastOneTrue"
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
           },
           {
             "type": "object",
