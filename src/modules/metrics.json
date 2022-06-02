@@ -217,6 +217,10 @@
         {
           "name": "Send page metric",
           "params": [
+            {
+              "name": "pageId",
+              "value": "xyz"
+            }
           ],
           "result": {
             "name": "success",
@@ -279,27 +283,22 @@
       },
       "examples": [
         {
-          "name": "Send page metric",
-          "params": [
-          ],
-          "result": {
-            "name": "success",
-            "value": true
-          }
-        },  
-        {
-          "name": "Send startContent metric w/ entity",
+          "name": "Send foo action",
           "params": [
             {
-              "name": "pageId",
-              "value": "home"
+              "name": "category",
+              "value": "user"
+            },
+            {
+              "name": "type",
+              "value": "The user did foo"
             }
           ],
           "result": {
             "name": "success",
             "value": true
           }
-        }         
+        }     
       ]
     }, 
     {
