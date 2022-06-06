@@ -1,5 +1,10 @@
 # Release Notes
 
+## 0.6.2
+
+- Fixed incompatibility with Jest 26 due to [jest/issues/10565](https://github.com/facebook/jest/issues/10565)
+
+
 ## 0.6.1
 
 - Changed Firebolt build to use `.mjs` extension
