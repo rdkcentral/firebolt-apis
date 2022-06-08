@@ -36,9 +36,7 @@ test('Lifecycle.LifecycleState', () => {
 });
 
 test('Device.AudioProfile', () => {
-    expect(Device.AudioProfile.DOLBY_DIGITAL_5_1_PLUS).toBe("dolbyDigital5.1+")
+    expect(Device.AudioProfile.DOLBY_DIGITAL_PLUS).toBe("dolbyDigitalPlus")
     expect(Device.AudioProfile.DOLBY_ATMOS).toBe("dolbyAtmos")
-    expect(Device.AudioProfile.DOLBY_DIGITAL_5_1).toBe("dolbyDigital5.1")
-    expect(Device.AudioProfile.DOLBY_DIGITAL_7_1).toBe("dolbyDigital7.1")
-    expect(Device.AudioProfile.DOLBY_DIGITAL_7_1_PLUS).toBe("dolbyDigital7.1+")
+    expect(Device.AudioProfile.DOLBY_DIGITAL).toBe("dolbyDigital")
 });

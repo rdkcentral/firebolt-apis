@@ -31,11 +31,9 @@
     "url": "https://github.com/rdkcentral/firebolt-core-sdk/issues"
   },
   "homepage": "https://github.com/rdkcentral/firebolt-core-sdk#readme",
-  "dependencies": {
-  },
   "devDependencies": {
-    "@firebolt-js/openrpc": "git://github.com/rdkcentral/firebolt-openrpc.git",
-    "@firebolt-js/schemas": "git://github.com/rdkcentral/firebolt-schemas.git",
+    "@firebolt-js/openrpc": "rdkcentral/firebolt-openrpc",
+    "@firebolt-js/schemas": "rdkcentral/firebolt-schemas#fix/device-enums",
     "ajv": "^6.12.6",
     "jest": "^27.0.4",
     "mkdirp": "^0.5.6",
