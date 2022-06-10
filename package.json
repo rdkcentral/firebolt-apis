@@ -35,7 +35,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@firebolt-js/openrpc": "rdkcentral/firebolt-openrpc#fix/bigint-not-valid-json",
+    "@firebolt-js/openrpc": "git://github.com/rdkcentral/firebolt-openrpc.git",
     "@firebolt-js/schemas": "git://github.com/rdkcentral/firebolt-schemas.git",
     "ajv": "^6.12.6",
     "jest": "^28.1.0",
