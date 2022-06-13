@@ -48,6 +48,13 @@
       "description": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow. Includes information about the program entity and its relevant associated entities, such as extras, previews, and, in the case of TV series, seasons and episodes.\n\nSee the `EntityInfo` and `WayToWatch` data structures below for more information.\n\nThe app only needs to implement Pull support for `entityInfo` at this time.",
       "params": [
         {
+          "name": "correlationId",
+          "required": true,
+          "schema": {
+            "type": [ "string", "null" ]
+          }
+        },
+        {
           "name": "data",
           "required": true,
           "schema": {
@@ -67,6 +74,10 @@
         {
           "name": "Send entity info for a movie to the platform.",
           "params": [
+            {
+              "name": "correlationId",
+              "value": null
+            },
             {
               "name": "data",
               "value": {
@@ -120,6 +131,10 @@
         {
           "name": "Send entity info for a movie with a trailer to the platform.",
           "params": [
+            {
+              "name": "correlationId",
+              "value": null
+            },
             {
               "name": "data",
               "value": {
@@ -196,6 +211,10 @@
         {
           "name": "Send entity info for a TV Series with seasons and episodes to the platform.",
           "params": [
+            {
+              "name": "correlationId",
+              "value": null
+            },
             {
               "name": "data",
               "value": {
@@ -337,6 +356,13 @@
       "summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
       "params": [
         {
+          "name": "correlationId",
+          "required": true,
+          "schema": {
+            "type": [ "string", "null" ]
+          }
+        },
+        {
           "name": "data",
           "required": true,
           "schema": {
@@ -356,6 +382,10 @@
         {
           "name": "Inform the platform of the user's purchased content",
           "params": [
+            {
+              "name": "correlationId",
+              "value": null
+            },
             {
               "name": "data",
               "value": {
