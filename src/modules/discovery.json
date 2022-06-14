@@ -55,7 +55,7 @@
           }
         },
         {
-          "name": "data",
+          "name": "result",
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/EntityInfoResult"
@@ -79,7 +79,7 @@
               "value": null
             },
             {
-              "name": "data",
+              "name": "result",
               "value": {
                 "expires": "2025-01-01T00:00:00.000Z",
                 "entity": {
@@ -136,7 +136,7 @@
               "value": null
             },
             {
-              "name": "data",
+              "name": "result",
               "value": {
                 "expires": "2025-01-01T00:00:00.000Z",
                 "entity": {
@@ -216,7 +216,7 @@
               "value": null
             },
             {
-              "name": "data",
+              "name": "result",
               "value": {
                 "expires": "2025-01-01T00:00:00.000Z",
                 "entity": {
@@ -363,7 +363,7 @@
           }
         },
         {
-          "name": "data",
+          "name": "result",
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/PurchasedContentResult"
@@ -387,7 +387,7 @@
               "value": null
             },
             {
-              "name": "data",
+              "name": "result",
               "value": {
                 "totalCount": 10,
                 "expires": "2025-01-01T00:00:00.000Z",
