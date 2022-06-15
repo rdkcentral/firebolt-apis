@@ -1,5 +1,28 @@
 # Release Notes
 
+## 0.7.0
+
+- Removed all `bigint` types from TypeScript declarations, in favor of `number`, since bigint is not widely supported across browsers. This changes impacts:
+    - Device.screenResolution
+    - Device.videoResolution
+    - Discovery.purchasedContent
+    - Metrics.mediaProgress
+    - Metrics.mediaSeeking
+    - Metrics.mediaSeeked
+    - Parameters.initialization
+
+To upgrade to 0.7.0 simply change the type of any Firebolt Promise resolutions from `bigint` to `number`, e.g.:
+
+```typescript
+const res:[bigint, bigint] = await Device.screenResolution()
+```
+
+Should become:
+
+```typescript
+const res:[number, number] = await Device.screenResolution()
+```
+
 ## 0.6.2
 
 - Fixed incompatibility with Jest 26 due to [jest/issues/10565](https://github.com/facebook/jest/issues/10565)
