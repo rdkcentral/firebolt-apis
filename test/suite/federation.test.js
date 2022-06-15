@@ -95,7 +95,7 @@ const transport = {
             else if (correlationId && (json.params.correlationId === 'this-will-fail')) {
 //                entityInfoReceived = true
             }
-            else if (!json.params.correlationId && json.params.data.entity.identifiers.entityId === "PUSH:345") {
+            else if (!json.params.correlationId && json.params.result.entity.identifiers.entityId === "PUSH:345") {
                 entityInfoPushed = true
             }
             state.callback(JSON.stringify({

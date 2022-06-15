@@ -27,7 +27,7 @@ test('purchaseContent', () => {
         entries: [
         ]
     }).then(() => {
-        let result:Discovery.PurchasedContentResult = sent.find(message => message.method === 'purchasedContent').params.data
+        let result:Discovery.PurchasedContentResult = sent.find(message => message.method === 'purchasedContent').params.result
         expect(result.totalCount).toBe(5)
         expect(typeof result.totalCount).toBe('number')
     })
