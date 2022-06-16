@@ -17,9 +17,10 @@
  */
 
 import Setup from '../Setup'
-import { Device } from '../../dist/firebolt.mjs'
+import { Device } from '../../dist/lib/firebolt.mjs'
+import json from '../../package.json'
 
-const version = require('../../package.json').version.split('-')[0].split('.')
+const version = json.version.split('-')[0].split('.')
 
 test(`Device.version() to be ${version[0]}.${version[1]}.${version[2]}`, () => {
     return Device.version().then( v => {

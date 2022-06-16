@@ -16,37 +16,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import Transport from '../Transport'
-import { InternalMetrics } from '../Metrics'
-/* ${IMPORTS} */
+import { setMockResponses } from './Transport/MockTransport.mjs'
 
-/* ${INITIALIZATION} */
+/* ${MOCK_IMPORTS} */
 
-function ready() {
-  return Transport.send('metrics', 'ready', {})
-}
+setMockResponses({
+  /* ${MOCK_OBJECTS} */
+})
 
-function signIn() {
-  return Transport.send('metrics', 'signIn', {})
-}
-
-function signOut() {
-  return Transport.send('metrics', 'signOut', {})
-}
-
-
-/* ${METHODS} */
-
-export default {
-
-  /* ${EVENTS} */
-  /* ${ENUMS} */
-  /* ${METHOD_LIST} */
-
-}
-
-export {
-  ready,
-  signIn,
-  signOut
-}
+/* ${EXPORTS} */
+export { default as Log } from './Log/index.mjs'
+export { default as Events } from './Events/index.mjs'
+export { default as Settings } from './Settings/index.mjs'

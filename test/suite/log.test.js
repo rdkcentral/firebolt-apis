@@ -17,7 +17,7 @@
  */
 
 import Setup from '../Setup'
-import { Log } from '../../dist/firebolt.mjs'
+import { Log } from '../../dist/lib/firebolt.mjs'
 
 test('locality to be Philadelphia', () => {
     Log.info('test')

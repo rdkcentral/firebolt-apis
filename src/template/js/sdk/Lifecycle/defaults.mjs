@@ -16,9 +16,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Lifecycle } from '..'
-import MockTransport from '../Transport/mock'
-import { default as win } from '../Transport/global'
+import MockTransport from '../Transport/MockTransport.mjs'
+import { default as win } from '../Transport/global.mjs'
 
 let inactive = 0 /* ${EXAMPLE:onInactive} */
 let foreground = 0 /* ${EXAMPLE:onForeground} */
@@ -27,7 +26,6 @@ let suspended = 0 /* ${EXAMPLE:onSuspended} */
 let unloading = 0 /* ${EXAMPLE:onUnloading} */
 
 const emit = (value) => {
-  value.previous = Lifecycle.state()
   MockTransport.event('Lifecycle', value.state, value)
 }
 
@@ -43,13 +41,15 @@ export default {
 
   close: function(params) {
     let reason = params.reason
-    if (reason === Lifecycle.CloseReason.REMOTE_BUTTON) {
+    if (reason === 'remoteButton') {
+      inactive.previous = 'foreground'
       setTimeout(() => emit(inactive), automation ? 1 : 500)
     }
-    else if (Object.values(Lifecycle.CloseReason).includes(reason)) {
+    else if (['userExit', 'error'].includes(reason)) {
+      inactive.previous = 'foreground'
+      unloading.previous = 'inactive'
       setTimeout(() => emit(inactive), automation ? 1 : 500)
       setTimeout(() => emit(unloading), automation ? 2 : 1000)
-      setTimeout(() => Lifecycle.finished(), automation ? 3: 3000)
     }
     else {
       throw "Invalid close reason"

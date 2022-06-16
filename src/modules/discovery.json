@@ -48,7 +48,14 @@
       "description": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow. Includes information about the program entity and its relevant associated entities, such as extras, previews, and, in the case of TV series, seasons and episodes.\n\nSee the `EntityInfo` and `WayToWatch` data structures below for more information.\n\nThe app only needs to implement Pull support for `entityInfo` at this time.",
       "params": [
         {
-          "name": "data",
+          "name": "correlationId",
+          "required": true,
+          "schema": {
+            "type": [ "string", "null" ]
+          }
+        },
+        {
+          "name": "result",
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/EntityInfoResult"
@@ -68,7 +75,11 @@
           "name": "Send entity info for a movie to the platform.",
           "params": [
             {
-              "name": "data",
+              "name": "correlationId",
+              "value": null
+            },
+            {
+              "name": "result",
               "value": {
                 "expires": "2025-01-01T00:00:00.000Z",
                 "entity": {
@@ -121,7 +132,11 @@
           "name": "Send entity info for a movie with a trailer to the platform.",
           "params": [
             {
-              "name": "data",
+              "name": "correlationId",
+              "value": null
+            },
+            {
+              "name": "result",
               "value": {
                 "expires": "2025-01-01T00:00:00.000Z",
                 "entity": {
@@ -197,7 +212,11 @@
           "name": "Send entity info for a TV Series with seasons and episodes to the platform.",
           "params": [
             {
-              "name": "data",
+              "name": "correlationId",
+              "value": null
+            },
+            {
+              "name": "result",
               "value": {
                 "expires": "2025-01-01T00:00:00.000Z",
                 "entity": {
@@ -337,7 +356,14 @@
       "summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
       "params": [
         {
-          "name": "data",
+          "name": "correlationId",
+          "required": true,
+          "schema": {
+            "type": [ "string", "null" ]
+          }
+        },
+        {
+          "name": "result",
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/PurchasedContentResult"
@@ -357,7 +383,11 @@
           "name": "Inform the platform of the user's purchased content",
           "params": [
             {
-              "name": "data",
+              "name": "correlationId",
+              "value": null
+            },
+            {
+              "name": "result",
               "value": {
                 "totalCount": 10,
                 "expires": "2025-01-01T00:00:00.000Z",
