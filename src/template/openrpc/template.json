@@ -10,11 +10,27 @@
             "summary": "Firebolt OpenRPC schema",
             "params": [],
             "result": {
-                "name": "OpenRPC Schema",
+                "name": "schema",
                 "schema": {
-                    "type": "object"
+                    "$ref": "https://raw.githubusercontent.com/open-rpc/meta-schema/master/schema.json"
                 }
-            }
+            },
+            "examples": [
+                {
+                    "params": [],
+                    "result": {
+                        "name": "schema",
+                        "value": {
+                            "openrpc": "1.2.4",
+                            "info": {
+                                "title": "Firebolt",
+                                "version": "0.0.0",
+                                "methods": []
+                            }
+                        }
+                    }
+                }
+            ]
         }
     ],
     "components": {
