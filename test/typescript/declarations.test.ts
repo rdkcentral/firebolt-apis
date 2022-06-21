@@ -32,3 +32,50 @@ test('purchaseContent', () => {
         expect(typeof result.totalCount).toBe('number')
     })
 })
+
+const result: Discovery.EntityInfoResult = {
+    entity: {
+        "entityType": "program",
+        "identifiers": {
+            "entityId": "123"
+        },
+        "programType": "movie",
+        "title": "A title"
+    },
+    "expires": ""
+}
+
+test('entityInfo', () => {
+
+    return Discovery.entityInfo(result).then(() => {
+        let result:Discovery.EntityInfoResult = sent.find(message => message.method === 'entityInfo').params.result
+        expect(result.entity.identifiers.entityId).toBe("123")
+    })
+})
+
+test('entityInfo pull', () => {
+    let resolver
+    const p = new Promise((resolve, reject) =>  {
+        resolver = resolve
+    })
+
+    Discovery.entityInfo( (request: Discovery.EntityInfoParameters) => {
+        setTimeout( _ => {
+            resolver()
+        }, 1000)
+
+        return Promise.resolve(result)
+    })
+
+    Setup.emit('discovery', 'pullEntityInfo', {
+        correlationId: '123',
+        parameters: {
+            entityId: '123'
+        }
+    })
+
+    let result:Discovery.EntityInfoResult = sent.find(message => message.method === 'entityInfo').params.result
+    expect(result.entity.identifiers.entityId).toBe("123")
+
+    return p
+})
