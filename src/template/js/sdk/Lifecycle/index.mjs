@@ -17,6 +17,7 @@
  */
 
 import Transport from '../Transport/index.mjs'
+import { ready as logReady } from '../Metrics/index.mjs'
 /* ${IMPORTS} */
 
 /* ${INITIALIZATION} */
@@ -28,9 +29,15 @@ export const store = {
   }
 }
 
-Events.listen('Lifecycle', (event, value) => {
-  store._current = event
-})
+async function ready() {
+  await Events.listen('Lifecycle', (event, value) => {
+    store._current = event
+  })
+  await Transport.send('lifecycle', 'ready', {})
+  setTimeout(_ => {
+    logReady()
+  })
+}
 
 /* ${METHODS} */
 
@@ -53,9 +60,10 @@ export default {
 
   /* ${ENUMS} */
 
+  ready,
   state,
   finished,
 
   /* ${METHOD_LIST} */
-  
+
 }

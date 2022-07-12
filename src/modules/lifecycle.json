@@ -10,7 +10,7 @@
       "name": "ready",
       "tags": [
         {
-          "name": "calls-metrics"
+          "name": "exclude-from-sdk"
         }
       ],
       "summary": "Notify the platform that the app is ready",
@@ -82,7 +82,11 @@
     },
     {
       "name": "finished",
-      "tags": [ { "name": "exclude-from-sdk" }],
+      "tags": [
+        {
+          "name": "exclude-from-sdk"
+        }
+      ],
       "summary": "Notify the platform that the app is done unloading",
       "params": [],
       "result": {
@@ -246,7 +250,7 @@
               "source": "remote"
             }
           }
-        }        
+        }
       ]
     },
     {
