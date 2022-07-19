@@ -12,11 +12,12 @@
             "result": {
                 "name": "schema",
                 "schema": {
-                    "$ref": "https://raw.githubusercontent.com/open-rpc/meta-schema/master/schema.json"
+                    "$ref": "https://meta.open-rpc.org/"
                 }
             },
             "examples": [
                 {
+                    "name": "default",
                     "params": [],
                     "result": {
                         "name": "schema",
@@ -24,9 +25,9 @@
                             "openrpc": "1.2.4",
                             "info": {
                                 "title": "Firebolt",
-                                "version": "0.0.0",
-                                "methods": []
-                            }
+                                "version": "0.0.0"
+                            },
+                            "methods": []
                         }
                     }
                 }

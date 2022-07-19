@@ -35,7 +35,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@firebolt-js/openrpc": "1.5.0",
+    "@firebolt-js/openrpc": "../firebolt-openrpc",
     "@firebolt-js/schemas": "0.2.0",
     "ajv": "^6.12.6",
     "jest": "^28.1.0",
