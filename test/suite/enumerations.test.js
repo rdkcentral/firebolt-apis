@@ -26,13 +26,13 @@ test('Lifecycle.CloseReason', () => {
     expect(Lifecycle.CloseReason.ERROR).toBe("error")    
 });
 
-test('Lifecycle.LifecycleState', () => {
-    expect(Lifecycle.LifecycleState.INACTIVE).toBe("inactive")
-    expect(Lifecycle.LifecycleState.FOREGROUND).toBe("foreground")
-    expect(Lifecycle.LifecycleState.BACKGROUND).toBe("background")
-    expect(Lifecycle.LifecycleState.INITIALIZING).toBe("initializing")
-    expect(Lifecycle.LifecycleState.SUSPENDED).toBe("suspended")
-    expect(Lifecycle.LifecycleState.UNLOADING).toBe("unloading")
+test('Lifecycle.State', () => {
+    expect(Lifecycle.State.INACTIVE).toBe("inactive")
+    expect(Lifecycle.State.FOREGROUND).toBe("foreground")
+    expect(Lifecycle.State.BACKGROUND).toBe("background")
+    expect(Lifecycle.State.INITIALIZING).toBe("initializing")
+    expect(Lifecycle.State.SUSPENDED).toBe("suspended")
+    expect(Lifecycle.State.UNLOADING).toBe("unloading")
 });
 
 test('Device.AudioProfile', () => {
