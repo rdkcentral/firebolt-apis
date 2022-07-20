@@ -22,21 +22,21 @@ import { Accessibility } from '../../dist/lib/firebolt';
 
 test('listen', () => {
   return Accessibility.listen((event: string, data: object) => { }).then((res: number) => {
-    expect(res).toBe(2);
+    expect(res > 0).toBe(true);
   });
 });
 
 
 test('once', () => {
   return Accessibility.once((event: string, data: object) => { }).then((res: number) => {
-    expect(res).toBe(3);
+    expect(res > 0).toBe(true);
   });
 });
 
 
 test('listen ClosedCaptionsSettings', () => {
   return Accessibility.listen((event: 'closedCaptionsSettingsChanged', listener: { data: Accessibility.ClosedCaptionsSettings }) => { }).then((res: number) => {
-    expect(res > 0).toBe(true)
+    expect(res > 0).toBe(true);
   });
 });
 
@@ -45,19 +45,19 @@ test('listen ClosedCaptionsSettings', () => {
 
 test('once ClosedCaptionsSettings', () => {
   return Accessibility.once((event: 'closedCaptionsSettingsChanged', listener: { data: Accessibility.ClosedCaptionsSettings }) => { }).then((res: number) => {
-    expect(res).toBe(5);
+    expect(res > 0).toBe(true);
   });
 });
 
 test('listen VoiceGuidanceSettings', () => {
   return Accessibility.listen((event: 'closedCaptionsSettingsChanged', listener: { data: Accessibility.VoiceGuidanceSettings }) => { }).then((res: number) => {
-    expect(res).toBe(6);
+    expect(res > 0).toBe(true);
   });
 });
 
 test('once VoiceGuidanceSettings', () => {
   return Accessibility.once((event: 'closedCaptionsSettingsChanged', listener: { data: Accessibility.VoiceGuidanceSettings }) => { }).then((res: number) => {
-    expect(res).toBe(7);
+    expect(res > 0).toBe(true);
   });
 });
 

@@ -58,7 +58,7 @@ test('appBundleId()', () => {
 test('listen()', () => {
   return Advertising.listen((event: string, data: object) => {}).then(
     (res: number) => {
-      expect(res).toBe(2);
+      expect(res > 0).toBe(true);
     }
   );
 });
@@ -66,7 +66,7 @@ test('listen()', () => {
 test('once()', () => {
   return Advertising.once((event: string, data: object) => {}).then(
     (res: number) => {
-      expect(res).toBe(3);
+      expect(res > 0).toBe(true);
     }
   );
 });

@@ -91,7 +91,7 @@ test("Device.hdcp()", () => {
 test("Device.hdcp(subscriber)", () => {
   return Device.hdcp((supportedHdrProfiles: Device.BooleanMap) => {}).then(
     (res: number) => {
-      expect(res).toBe(2);
+      expect(res > 0).toBe(true);
     }
   );
 });
@@ -111,7 +111,7 @@ test("Device.audio(subscriber)", () => {
   return Device.audio(
     (supportedAudioProfiles: Device.AudioProfiles) => {}
   ).then((res: number) => {
-    expect(res).toBe(3);
+    expect(res > 0).toBe(true);
   });
 });
 
@@ -125,7 +125,7 @@ test("Device.screenResolution(subscriber)", () => {
   return Device.screenResolution(
     (screenResolution: [number, number]) => {}
   ).then((res: number) => {
-    expect(res).toBe(4);
+    expect(res > 0).toBe(true);
   });
 });
 
@@ -138,7 +138,7 @@ test("Device.videoResolution()", () => {
 test("Device.videoResolution(subscriber)", () => {
   return Device.videoResolution((videoResolution: [number, number]) => {}).then(
     (res: number) => {
-      expect(res).toBe(5);
+      expect(res > 0).toBe(true);
     }
   );
 });
@@ -151,7 +151,7 @@ test("Device.name()", () => {
 
 test("Device.name(subscriber)", () => {
   return Device.name((value: string) => {}).then((res: number) => {
-    expect(res).toBe(6);
+    expect(res > 0).toBe(true);
   });
 });
 
@@ -163,6 +163,6 @@ test("Device.network()", () => {
 
 test("Device.network(subscriber)", () => {
   return Device.network((networkInfo: object) => {}).then((res: number) => {
-    expect(res).toBe(7);
+    expect(res > 0).toBe(true);
   });
 });
