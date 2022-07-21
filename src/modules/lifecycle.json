@@ -432,12 +432,6 @@
             "description": "The source of the lifecycle change."
           }
         }
-      },
-      "LifecycleState": {
-        "$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/LifecycleState"
-      },
-      "CloseReason": {
-        "$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/CloseReason"
       }
     }
   }
