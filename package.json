@@ -34,8 +34,8 @@
   "homepage": "https://github.com/rdkcentral/firebolt-core-sdk#readme",
   "dependencies": {},
   "devDependencies": {
-    "@firebolt-js/openrpc": "1.6.0-beta.0",
-    "@firebolt-js/schemas": "git://github.com/rdkcentral/firebolt-schemas.git",
+    "@firebolt-js/openrpc": "git://github.com/rdkcentral/firebolt-openrpc.git",
+    "@firebolt-js/schemas": "0.2.0",
     "ajv": "^6.12.6",
     "jest": "^28.1.0",
     "mkdirp": "^0.5.6",
