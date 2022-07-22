@@ -46,7 +46,7 @@ beforeAll(() => {
   });
 
   Lifecycle.once('foreground', () => {
-    Lifecycle.close(Lifecycle.CloseReason.USER_EXIT);
+    Lifecycle.close('userExit');
   });
 
   Lifecycle.once('unloading', () => {
