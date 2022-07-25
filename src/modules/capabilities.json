@@ -219,7 +219,7 @@
                     "params": [
                         {
                             "name": "capability",
-                            "value": "xrn:firebolt:capability:localization:postal-code"
+                            "value": "xrn:firebolt:capability:localization:postalCode"
                         }
                     ],
                     "result": {
@@ -232,7 +232,7 @@
                     "params": [
                         {
                             "name": "capability",
-                            "value": "xrn:firebolt:capability:localization:postal-code"
+                            "value": "xrn:firebolt:capability:localization:postalCode"
                         }
                     ],
                     "result": {
@@ -266,8 +266,8 @@
                 }
             ],
             "result": {
-                "name": "granted",
-                "summary": "Whether or not app is granted to use the given capability and the role",
+                "name": "info",
+                "summary": "Returns an array of CapabilityInfo objects for the passed in capabilities.",
                 "schema": {
                     "type": "array",
                     "items": {
@@ -293,7 +293,7 @@
                                 "xrn:firebolt:capability:token:device",
                                 "xrn:firebolt:capability:token:platform",
                                 "xrn:firebolt:capability:wifi:scan",
-                                "xrn:firebolt:capability:localization:postal-code"
+                                "xrn:firebolt:capability:localization:postalCode"
                             ]
                         }
                     ],
@@ -352,7 +352,111 @@
                                 "details": ["unpermitted"]
                             },
                             {
-                                "capability": "xrn:firebolt:capability:localization:postal-code",
+                                "capability": "xrn:firebolt:capability:localization:postalCode",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": false,
+                                "details": ["ungranted"]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "request",
+            "summary": "Requests grants for all capability/role combinations in the roles array.",
+            "params": [
+                {
+                    "name": "roles",
+                    "required": true,
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                        },
+                        "minItems": 1
+                    }
+                }
+            ],
+            "result": {
+                "name": "Default Result",
+                "summary": "Returns an array of CapabilityInfo objects for the passed in capabilities.",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
+                    },
+                    "minItems": 1
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default result",
+                    "params": [
+                        {
+                            "name": "roles",
+                            "value": ["use"]
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            {
+                                "capability": "xrn:firebolt:capability:device:model",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": true
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:keyboard",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": true
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:protocol:bluetoothle",
+                                "role": "use",
+                                "supported": false,
+                                "available": false,
+                                "permitted": false,
+                                "granted": false,
+                                "details": ["unsupported"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:token:device",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": true
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:token:platform",
+                                "role": "use",
+                                "supported": true,
+                                "available": false,
+                                "permitted": false,
+                                "granted": false,
+                                "details": ["unavailable"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:wifi:scan",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": false,
+                                "granted": false,
+                                "details": ["unpermitted"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:localization:postalCode",
                                 "role": "use",
                                 "supported": true,
                                 "available": true,
