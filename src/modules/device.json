@@ -591,9 +591,6 @@
             }
           }
         ]
-      },
-      "AudioProfile": {
-        "$ref": "https://meta.comcast.com/firebolt/types#/definitions/AudioProfile"
       }
     }
   }
