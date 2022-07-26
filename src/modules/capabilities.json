@@ -292,8 +292,10 @@
                                 "xrn:firebolt:capability:protocol:bluetoothle",
                                 "xrn:firebolt:capability:token:device",
                                 "xrn:firebolt:capability:token:platform",
+                                "xrn:firebolt:capability:protocol:moca",
                                 "xrn:firebolt:capability:wifi:scan",
-                                "xrn:firebolt:capability:localization:postalCode"
+                                "xrn:firebolt:capability:localization:postalCode",
+                                "xrn:firebolt:capability:localization:locality"
                             ]
                         }
                     ],
@@ -343,6 +345,15 @@
                                 "details": ["unavailable"]
                             },
                             {
+                                "capability": "xrn:firebolt:capability:protocol:moca",
+                                "role": "use",
+                                "supported": true,
+                                "available": false,
+                                "permitted": false,
+                                "granted": false,
+                                "details": ["disabled","unavailable"]
+                            },
+                            {
                                 "capability": "xrn:firebolt:capability:wifi:scan",
                                 "role": "use",
                                 "supported": true,
@@ -359,6 +370,24 @@
                                 "permitted": true,
                                 "granted": false,
                                 "details": ["ungranted"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:localization:postalCode",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": false,
+                                "details": ["ungranted"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:localization:locality",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": false,
+                                "details": ["grantDenied","ungranted"]
                             }
                         ]
                     }
