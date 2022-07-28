@@ -23,7 +23,7 @@ test("Device.version()", () => {
   const expectedOutput: object = {
     debug: "",
     os: { major: 0, minor: 1, patch: 0, readable: "Firebolt OS v0.1.0" },
-    sdk: { major: 0, minor: 7, patch: 0, readable: "The Firebolt JS SDK" },
+    sdk: { major: 0, minor: 7, patch: 1, readable: "The Firebolt JS SDK [Beta 0]" },
   };
   return Device.version().then((v: object) => {
     expect(v).toEqual(expectedOutput);

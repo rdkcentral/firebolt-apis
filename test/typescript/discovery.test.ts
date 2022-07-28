@@ -36,7 +36,7 @@ test("policy()", () => {
 test("policy(subscriber)", () => {
   return Discovery.policy((policy: Discovery.DiscoveryPolicy) => {}).then(
     (res: number) => {
-      expect(res).toBe(2);
+      expect(res).toBe(1);
     }
   );
 });
