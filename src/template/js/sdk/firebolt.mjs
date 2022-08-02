@@ -28,3 +28,4 @@ setMockResponses({
 export { default as Log } from './Log/index.mjs'
 export { default as Events } from './Events/index.mjs'
 export { default as Settings } from './Settings/index.mjs'
+export { default as Extensions } from './Extensions/index.mjs'
