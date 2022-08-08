@@ -151,7 +151,36 @@
           }
         }
       ]
-    }
+    },
+    {
+      "name": "audioDescriptionSettings",
+      "summary": "Get the user's preferred audio description settings",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
+      "result": {
+        "name": "settings",
+        "summary": "the audio description settings",
+        "schema": {
+          "$ref": "#/components/schemas/AudioDescriptionSettings"
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the audio description settings",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    }    
   ],
   "components": {
     "schemas": {
@@ -225,7 +254,18 @@
             "description": "The speed at which voice guidance speech will be read back to the user"
           }
         }
-      }
+      },
+      "AudioDescriptionSettings": {
+        "title": "AudioDescriptionSettings",
+        "type": "object",
+        "required": ["enabled"],
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether or not audio descriptions should be enabled by default"
+          }
+        }
+      }      
     }
   }
 }
