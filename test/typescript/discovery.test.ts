@@ -121,3 +121,60 @@ test("purchasedContent()", () => {
     expect(res).toBeTruthy();
   });
 });
+
+test("listen() navigateTo event.", () => {
+  return Discovery.listen("navigateTo", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("once() navigateTo event.", () => {
+  return Discovery.once("navigateTo", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("listen() policyChanged event.", () => {
+  return Discovery.listen("policyChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("once() policyChanged event.", () => {
+  return Discovery.once("policyChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("listen() pullEntityInfo event.", () => {
+  return Discovery.listen("pullEntityInfo", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("once() pullEntityInfo event.", () => {
+  return Discovery.once("pullEntityInfo", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("listen() pullPurchasedContent event.", () => {
+  return Discovery.listen("pullPurchasedContent", () => {}).then(
+    (res: number) => {
+      expect(res > 0).toBe(true);
+    }
+  );
+});
+
+test("once() pullPurchasedContent event.", () => {
+  return Discovery.once("pullPurchasedContent", () => {}).then(
+    (res: number) => {
+      expect(res > 0).toBe(true);
+    }
+  );
+});
+
+test("clear()", () => {
+  const result: boolean = Discovery.clear(2);
+  expect(result).toBeFalsy();
+});

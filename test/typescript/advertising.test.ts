@@ -16,46 +16,46 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { test, expect } from '@jest/globals';
-import { Advertising } from '../../dist/lib/firebolt';
+import { test, expect } from "@jest/globals";
+import { Advertising } from "../../dist/lib/firebolt";
 
-test('policy()', () => {
+test("policy()", () => {
   return Advertising.policy().then((policy: Advertising.AdPolicy) => {
-    expect(policy.skipRestriction).toBe('adsUnwatched');
+    expect(policy.skipRestriction).toBe("adsUnwatched");
     expect(policy.limitAdTracking).toBe(false);
   });
 });
 
-test('config()', () => {
+test("config()", () => {
   return Advertising.config({
     coppa: true,
-    environment: 'test',
-    authenticationEntity: 'Test',
+    environment: "test",
+    authenticationEntity: "Test",
   }).then((res: object) => {
-    expect(typeof res).toBe('object');
+    expect(typeof res).toBe("object");
   });
 });
 
-test('advertisingId()', () => {
+test("advertisingId()", () => {
   return Advertising.advertisingId().then((res: object) => {
-    expect(typeof res).toBe('object');
+    expect(typeof res).toBe("object");
   });
 });
 
-test('deviceAttributes()', () => {
+test("deviceAttributes()", () => {
   return Advertising.deviceAttributes().then((res: object) => {
-    expect(typeof res).toBe('object');
+    expect(typeof res).toBe("object");
   });
 });
 
-test('appBundleId()', () => {
+test("appBundleId()", () => {
   return Advertising.appBundleId().then((res: string) => {
-    expect(res).toBe('operator.app');
-    expect(typeof res).toBe('string');
+    expect(res).toBe("operator.app");
+    expect(typeof res).toBe("string");
   });
 });
 
-test('listen()', () => {
+test("listen()", () => {
   return Advertising.listen((event: string, data: object) => {}).then(
     (res: number) => {
       expect(res > 0).toBe(true);
@@ -63,7 +63,7 @@ test('listen()', () => {
   );
 });
 
-test('once()', () => {
+test("once()", () => {
   return Advertising.once((event: string, data: object) => {}).then(
     (res: number) => {
       expect(res > 0).toBe(true);
@@ -71,7 +71,19 @@ test('once()', () => {
   );
 });
 
-test('clear()', () => {
+test("listen() specific Advertising event.", () => {
+  return Advertising.listen("policyChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("once() specific Advertising event.", () => {
+  return Advertising.once("policyChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("clear()", () => {
   const result: boolean = Advertising.clear(2);
   expect(result).toBeFalsy();
 });

@@ -23,7 +23,12 @@ test("Device.version()", () => {
   const expectedOutput: object = {
     debug: "",
     os: { major: 0, minor: 1, patch: 0, readable: "Firebolt OS v0.1.0" },
-    sdk: { major: 0, minor: 7, patch: 1, readable: "The Firebolt JS SDK [Beta 0]" },
+    sdk: {
+      major: 0,
+      minor: 7,
+      patch: 1,
+      readable: "The Firebolt JS SDK [Beta 0]",
+    },
   };
   return Device.version().then((v: object) => {
     expect(v).toEqual(expectedOutput);
@@ -165,4 +170,111 @@ test("Device.network(subscriber)", () => {
   return Device.network((networkInfo: object) => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
+});
+
+test("listen() audioChanged event.", () => {
+  return Device.listen("audioChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("once() audioChanged event.", () => {
+  return Device.once("audioChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("listen() deviceNameChanged event.", () => {
+  return Device.listen("deviceNameChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("once() deviceNameChanged event.", () => {
+  return Device.once("deviceNameChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("listen() hdcpChanged event.", () => {
+  return Device.listen("hdcpChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("once() hdcpChanged event.", () => {
+  return Device.once("hdcpChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("listen() hdrChanged event.", () => {
+  return Device.listen("hdrChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("once() hdrChanged event.", () => {
+  return Device.once("hdrChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("listen() nameChanged event.", () => {
+  return Device.listen("nameChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("once() nameChanged event.", () => {
+  return Device.once("nameChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("listen() networkChanged event.", () => {
+  return Device.listen("networkChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("once() networkChanged event.", () => {
+  return Device.once("networkChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("listen() screenResolutionChanged event.", () => {
+  return Device.listen("screenResolutionChanged", () => {}).then(
+    (res: number) => {
+      expect(res > 0).toBe(true);
+    }
+  );
+});
+
+test("once() screenResolutionChanged event.", () => {
+  return Device.once("screenResolutionChanged", () => {}).then(
+    (res: number) => {
+      expect(res > 0).toBe(true);
+    }
+  );
+});
+
+test("listen() videoResolutionChanged event.", () => {
+  return Device.listen("videoResolutionChanged", () => {}).then(
+    (res: number) => {
+      expect(res > 0).toBe(true);
+    }
+  );
+});
+
+test("once() videoResolutionChanged event.", () => {
+  return Device.once("videoResolutionChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("clear()", () => {
+  const result: boolean = Device.clear(2);
+  expect(result).toBeFalsy();
 });

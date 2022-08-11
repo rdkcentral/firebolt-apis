@@ -35,3 +35,22 @@ test("latlon", () => {
     expect([39.9549, 75.1699]).toEqual(expect.arrayContaining(res));
   });
 });
+
+test("listen() languageChanged event.", () => {
+  return Localization.listen("languageChanged", () => {}).then(
+    (res: number) => {
+      expect(res > 0).toBe(true);
+    }
+  );
+});
+
+test("once() languageChanged event.", () => {
+  return Localization.once("languageChanged", () => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test("clear()", () => {
+  const result: boolean = Localization.clear(2);
+  expect(result).toBeFalsy();
+});
