@@ -10,7 +10,7 @@
       "name": "ready",
       "tags": [
         {
-          "name": "calls-metrics"
+          "name": "exclude-from-sdk"
         }
       ],
       "summary": "Notify the platform that the app is ready",
@@ -67,7 +67,7 @@
           "summary": "The reason the app is requesting to be closed",
           "required": true,
           "schema": {
-            "$ref": "#/components/schemas/CloseReason"
+            "$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/CloseReason"
           }
         }
       ],
@@ -108,7 +108,11 @@
     },
     {
       "name": "finished",
-      "tags": [ { "name": "exclude-from-sdk" }],
+      "tags": [
+        {
+          "name": "exclude-from-sdk"
+        }
+      ],
       "summary": "Notify the platform that the app is done unloading",
       "params": [],
       "result": {
@@ -144,7 +148,7 @@
         "name": "state",
         "summary": "the current state of the app.",
         "schema": {
-          "$ref": "#/components/schemas/LifecycleState"
+          "$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/LifecycleState"
         }
       },
       "examples": [
@@ -272,7 +276,7 @@
               "source": "remote"
             }
           }
-        }        
+        }
       ]
     },
     {
@@ -438,11 +442,11 @@
         ],
         "properties": {
           "state": {
-            "$ref": "#/components/schemas/LifecycleState",
+            "$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/LifecycleState",
             "description": "The current lifcycle state"
           },
           "previous": {
-            "$ref": "#/components/schemas/LifecycleState",
+            "$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/LifecycleState",
             "description": "The previous lifcycle state"
           },
           "source": {
@@ -454,29 +458,6 @@
             "description": "The source of the lifecycle change."
           }
         }
-      },
-      "LifecycleState": {
-        "title": "LifecycleState",
-        "description": "Valid states in the `Lifecycle` API",
-        "type": "string",
-        "enum": [
-          "initializing",
-          "inactive",
-          "background",
-          "foreground",
-          "suspended",
-          "unloading"
-        ]
-      },
-      "CloseReason": {
-        "title": "CloseReason",
-        "description": "Reasons for calling the `close` method",
-        "type": "string",
-        "enum": [
-          "remoteButton",
-          "userExit",
-          "error"
-        ]
       }
     }
   }
