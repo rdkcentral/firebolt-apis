@@ -33,6 +33,32 @@
       ]
     },
     {
+      "name": "loading",
+      "tags": [
+        {
+          "name": "calls-metrics"
+        }
+      ],
+      "summary": "Notify the platform that the app is rendering its own loading screen",
+      "params": [],
+      "result": {
+        "name": "result",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Notify the platform that the app is rendering its own loading screen",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
       "name": "close",
       "summary": "Request that the platform move your app out of focus",
       "params": [
