@@ -17,11 +17,46 @@
  */
 
 import { setMockResponses } from './Transport/MockTransport.mjs'
+import { registerAPI } from './Extensions/index.mjs'
 
 /* ${MOCK_IMPORTS} */
 
 setMockResponses({
   /* ${MOCK_OBJECTS} */
+})
+
+registerAPI('authorize', (grants) => {
+  return new Promise( (resolve, reject) => {
+      // this will fail until we support capabilities
+      // once it works, this will trigger user grant UIs, and update the FAT
+      Transport.send('capabilities', 'request', { grants })
+      .then(granted => {
+          if (granted && granted.length) {
+              resolve(granted)
+          }
+          else {
+              reject()
+          }
+      })
+      // This is temporary. Will be handled by a user grant policy in future
+      .catch(_ => {
+          // assume all commerce capabilities require a pin prompt
+          if (grants.find(g => g.capability.startsWith('xrn:firebolt:capabilities:commerce:'))) {
+              Transport.send('profile', 'approvePurchase', {})
+                  .then(result => {
+                      if (result) {
+                          resolve(grants)
+                      }
+                      else {
+                          reject()
+                      }
+                  })
+                  .catch(error => {
+                      reject(error)
+                  })
+          }
+      })
+  })
 })
 
 /* ${EXPORTS} */
