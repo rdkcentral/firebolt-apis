@@ -51,64 +51,12 @@
                         "name": "Default Result",
                         "value": [
                             {
-                                "capability": "xrn:firebolt:capability:device:model",
+                                "capability": "xrn:firebolt:capability:commerce:purchase",
                                 "role": "use",
                                 "supported": true,
                                 "available": true,
                                 "permitted": true,
                                 "granted": true
-                            },
-                            {
-                                "capability": "xrn:firebolt:capability:keyboard",
-                                "role": "use",
-                                "supported": true,
-                                "available": true,
-                                "permitted": true,
-                                "granted": true
-                            },
-                            {
-                                "capability": "xrn:firebolt:capability:protocol:bluetoothle",
-                                "role": "use",
-                                "supported": false,
-                                "available": false,
-                                "permitted": false,
-                                "granted": false,
-                                "details": ["unsupported"]
-                            },
-                            {
-                                "capability": "xrn:firebolt:capability:token:device",
-                                "role": "use",
-                                "supported": true,
-                                "available": true,
-                                "permitted": true,
-                                "granted": true
-                            },
-                            {
-                                "capability": "xrn:firebolt:capability:token:platform",
-                                "role": "use",
-                                "supported": true,
-                                "available": false,
-                                "permitted": false,
-                                "granted": false,
-                                "details": ["unavailable"]
-                            },
-                            {
-                                "capability": "xrn:firebolt:capability:wifi:scan",
-                                "role": "use",
-                                "supported": true,
-                                "available": true,
-                                "permitted": false,
-                                "granted": false,
-                                "details": ["unpermitted"]
-                            },
-                            {
-                                "capability": "xrn:firebolt:capability:localization:postalCode",
-                                "role": "use",
-                                "supported": true,
-                                "available": true,
-                                "permitted": true,
-                                "granted": false,
-                                "details": ["ungranted"]
                             }
                         ]
                     }
