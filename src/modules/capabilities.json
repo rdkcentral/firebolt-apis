@@ -1,0 +1,123 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+      "title": "Capabilities",
+      "version": "0.0.0",
+      "description": "The Capabilities module provides information about which discreet unit of functionality is enabled for the apps."
+    },
+    "methods": [
+        {
+            "name": "request",
+            "summary": "Requests grants for all capability/role combinations in the roles array.",
+            "params": [
+                {
+                    "name": "grants",
+                    "required": true,
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Permission"
+                        },
+                        "minItems": 1
+                    }
+                }
+            ],
+            "result": {
+                "name": "Default Result",
+                "summary": "Returns an array of CapabilityInfo objects for the passed in capabilities.",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
+                    },
+                    "minItems": 1
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default result",
+                    "params": [
+                        {
+                            "name": "grants",
+                            "value": [
+                                {
+                                    "role": "use",
+                                    "capability": "xrn:firebolt:capability:commerce:purchase"
+                                }
+                            ]
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            {
+                                "capability": "xrn:firebolt:capability:device:model",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": true
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:keyboard",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": true
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:protocol:bluetoothle",
+                                "role": "use",
+                                "supported": false,
+                                "available": false,
+                                "permitted": false,
+                                "granted": false,
+                                "details": ["unsupported"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:token:device",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": true
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:token:platform",
+                                "role": "use",
+                                "supported": true,
+                                "available": false,
+                                "permitted": false,
+                                "granted": false,
+                                "details": ["unavailable"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:wifi:scan",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": false,
+                                "granted": false,
+                                "details": ["unpermitted"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:localization:postalCode",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": false,
+                                "details": ["ungranted"]
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    "components": {
+      "schemas": {
+      }
+    }
+  }
