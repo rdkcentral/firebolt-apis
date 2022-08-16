@@ -19,7 +19,7 @@
 import { setMockResponses } from './Transport/MockTransport.mjs'
 import { registerAPI } from './Extensions/index.mjs'
 import Authentication from './Authentication/index.mjs'
-import Capabilities from './Capabilities.mjs'
+import Capabilities from './Capabilities/index.mjs'
 
 /* ${MOCK_IMPORTS} */
 
