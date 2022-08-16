@@ -26,10 +26,6 @@ function ready() {
   return Transport.send('metrics', 'ready', {})
 }
 
-function loading() {
-  return Transport.send('metrics', 'loading', {})
-}
-
 function signIn() {
   return Transport.send('metrics', 'signIn', {})
 }
@@ -51,7 +47,6 @@ export default {
 
 export {
   ready,
-  loading,
   signIn,
   signOut
 }
