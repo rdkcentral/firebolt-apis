@@ -17,7 +17,6 @@
  */
 
 import MockTransport from '../Transport/MockTransport.mjs'
-import { default as win } from '../Transport/global.mjs'
 
 let inactive = 0 /* ${EXAMPLE:onInactive} */
 let foreground = 0 /* ${EXAMPLE:onForeground} */
@@ -29,7 +28,7 @@ const emit = (value) => {
   MockTransport.event('Lifecycle', value.state, value)
 }
 
-const automation = win && win.__firebolt ? !!win.__firebolt.automation : false
+const automation = window.__firebolt ? !!window.__firebolt.automation : false
 
 export default {
   ready: function() {
@@ -57,7 +56,7 @@ export default {
   },
 
   finished: function() {
-    if (win.location)
-      win.location.href = "about:blank"
+    if (window.location)
+      window.location.href = "about:blank"
   },
 }

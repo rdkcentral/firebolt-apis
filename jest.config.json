@@ -3,5 +3,8 @@
     "transform": {},
     "testPathIgnorePatterns": ["<rootDir>/build/", "<rootDir>/node_modules/"],
     "moduleFileExtensions": ["js", "jsx", "mjs"],
-    "verbose": true
+    "verbose": true,
+    "setupFiles": [
+      "./node_modules/@firebolt-js/openrpc/test/Browser.js"
+    ]
   }
