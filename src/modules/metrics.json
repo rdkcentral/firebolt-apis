@@ -34,33 +34,6 @@
       ]
     },
     {
-      "name": "loading",
-      "tags": [
-        {
-          "name": "rpc-only"
-        }
-      ],
-      "summary": "Inform the platform that your app has started rendering it's own loading/splash screen. This method is called automatically by `Lifecycle.loading()`",
-      "params": [],
-      "result": {
-        "name": "success",
-        "schema": {
-          "type": "boolean"
-        }
-      },
-      "examples": [
-        {
-          "name": "Send loading metric",
-          "params": [
-          ],
-          "result": {
-            "name": "success",
-            "value": true
-          }
-        }
-      ]
-    },
-    {
       "name": "signIn",
       "tags": [
         {

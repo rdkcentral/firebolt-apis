@@ -16,18 +16,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import Transport from '../Transport/index.mjs'
-
 /* ${IMPORTS} */
 
 /* ${INITIALIZATION} */
 
 function ready() {
   return Transport.send('metrics', 'ready', {})
-}
-
-function loading() {
-  return Transport.send('metrics', 'loading', {})
 }
 
 function signIn() {
@@ -51,7 +45,6 @@ export default {
 
 export {
   ready,
-  loading,
   signIn,
   signOut
 }
