@@ -1,6 +1,6 @@
 {
   "name": "@firebolt-js/sdk",
-  "version": "0.7.1-beta.0",
+  "version": "0.8.0-beta.0",
   "description": "The Firebolt JS SDK",
   "main": "./dist/lib/firebolt.mjs",
   "types": "./dist/lib/firebolt.d.ts",
@@ -34,7 +34,7 @@
   "homepage": "https://github.com/rdkcentral/firebolt-core-sdk#readme",
   "dependencies": {},
   "devDependencies": {
-    "@firebolt-js/openrpc": "git://github.com/rdkcentral/firebolt-openrpc.git",
+    "@firebolt-js/openrpc": "1.6.0-beta.1",
     "@firebolt-js/schemas": "git://github.com/rdkcentral/firebolt-schemas.git",
     "ajv": "^6.12.6",
     "jest": "^28.1.0",
