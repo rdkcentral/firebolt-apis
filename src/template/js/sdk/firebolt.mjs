@@ -19,7 +19,7 @@
 import { setMockResponses } from './Transport/MockTransport.mjs'
 import { registerAPI } from './Extensions/index.mjs'
 import Authentication from './Authentication/index.mjs'
-import Capabilities from './Capabilities/index.mjs'
+import Transport from './Transport/index.mjs'
 
 /* ${MOCK_IMPORTS} */
 
@@ -31,7 +31,7 @@ registerAPI('authorize', (required, optional) => {
   return new Promise( (resolve, reject) => {
     // this will fail until we support capabilities
     // once it works, this will trigger user grant UIs, and update the FAT
-    Capabilities.authorize(required, optional).then(token => {
+    Transport.send("capabilities", "authorize", {required, optional}).then(token => {
       resolve(token)
     })
     // This is temporary. Will be handled by a user grant policy in future
