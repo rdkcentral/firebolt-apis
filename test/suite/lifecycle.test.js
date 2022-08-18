@@ -23,7 +23,6 @@ import { jest } from '@jest/globals';
 let readyResolved = false
 let readyCalled = false
 let readyMetricCalled = false
-let readyMetricCalledAfterResolve = false
 
 testHarness.onSend = function(module, method, params, id) {
     if (module === 'lifecycle' && method === 'ready') {
@@ -31,10 +30,6 @@ testHarness.onSend = function(module, method, params, id) {
     }
     else if (module === 'metrics' && method === 'ready') {
         readyMetricCalled = true
-
-        if (readyResolved) {
-            readyMetricCalledAfterResolve = true
-        }
     }
 }
 
@@ -74,7 +69,6 @@ test('Lifecycle.ready Promise resolved', () => {
 
 test('Lifecycle.ready calls Metrics.ready', () => {
     expect(readyMetricCalled).toBe(true)
-    expect(readyMetricCalledAfterResolve).toBe(true)
 })
 
 
