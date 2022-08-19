@@ -1,6 +1,6 @@
 {
   "name": "@firebolt-js/sdk",
-  "version": "0.8.0-beta.1",
+  "version": "0.8.0-beta.2",
   "description": "The Firebolt JS SDK",
   "main": "./dist/lib/firebolt.mjs",
   "types": "./dist/lib/firebolt.d.ts",
@@ -35,7 +35,7 @@
   "dependencies": {},
   "devDependencies": {
     "@firebolt-js/openrpc": "1.6.0-beta.1",
-    "@firebolt-js/schemas": "0.3.0-beta.0",
+    "@firebolt-js/schemas": "0.3.0-beta.2",
     "ajv": "^6.12.6",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.3",
