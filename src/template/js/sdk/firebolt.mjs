@@ -51,7 +51,7 @@ registerAPI('authorize', (required, optional) => {
             .then(result => {
               if (result) {
                 Authentication.token('platform').then(token => {
-                  resolve(token)
+                  resolve(token.value)
                 })
               }
               else {
