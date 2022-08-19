@@ -18,7 +18,6 @@
 
 // NOTE: this test SHOULD NOT include Setup, since it does it's own
 // setup for Firebolt SDK/TL handshake
-const win = globalThis || window
 
 import { Lifecycle, Discovery } from '../../dist/lib/firebolt.mjs'
 
@@ -67,7 +66,7 @@ const transport = {
     }
 }
 
-win.__firebolt.setTransportLayer(transport)
+window.__firebolt.setTransportLayer(transport)
 
 // listen twice, using event-specific call FIRST
 Discovery.listen("navigateTo", (value) => { callbackWiredUp = true })

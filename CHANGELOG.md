@@ -1,5 +1,14 @@
 # Release Notes
 
+## 0.8.0
+
+- Tune Intents are now supported in `navigateTo` events
+- Added TypeScript declarations for Settings and Events
+- Fixed/Removed test-enabling code from SDK
+- Fixed bug where the SDK would initialize itself even when not being used
+
+
+
 ## 0.7.0
 
 - Removed all `bigint` types from TypeScript declarations, in favor of `number`, since bigint is not widely supported across browsers. This changes impacts:
