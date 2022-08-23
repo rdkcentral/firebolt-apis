@@ -1,7 +1,5 @@
-const win = globalThis || window
-
-if (!win.__firebolt) {
-    win.__firebolt = {}
+if (!window.__firebolt) {
+    window.__firebolt = {}
 }
 
 let sendCallback
@@ -33,11 +31,11 @@ const transport = {
     }
 }
 
-if (!win.__firebolt.setTransportLayer) {
+if (!window.__firebolt.setTransportLayer) {
     first = true
 }
 
-win.__firebolt.getTransportLayer = function() {
+window.__firebolt.getTransportLayer = function() {
     // we'll assert on this later...
     return transport
 }
