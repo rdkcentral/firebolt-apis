@@ -28,5 +28,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    # For the core sdk, simply running npm ci triggers a bunch of valiations to be run
     - run: npm ci
+    - run: npm run fs:setup
+    - run: npm run build:sdk
+    - run: npm run dist:declarations
+    - run: npm run dist:sdk
+    - run: npm run validate:each
+    - run: npm run test
+
