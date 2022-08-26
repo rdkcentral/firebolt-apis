@@ -74,8 +74,8 @@ test('entityInfo pull', () => {
         }
     })
 
-    let result:Discovery.EntityInfoResult = sent.find(message => message.method === 'entityInfo').params.result
-    expect(result.entity.identifiers.entityId).toBe("123")
+    let result2:Discovery.EntityInfoResult = sent.find(message => message.method === 'entityInfo').params.result
+    expect(result2.entity.identifiers.entityId).toBe("123")
 
     return p
 })

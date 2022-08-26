@@ -16,9 +16,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import Transport from '../Transport/index.mjs'
-import { ready as logReady } from '../Metrics/index.mjs'
 /* ${IMPORTS} */
+import { ready as logReady } from '../Metrics/index.mjs'
 
 /* ${INITIALIZATION} */
 
