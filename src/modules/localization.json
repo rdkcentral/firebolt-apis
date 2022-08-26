@@ -92,6 +92,36 @@
       ]
     },
     {
+      "name": "preferredAudioLanguages",
+      "summary": "A prioritized list of ISO 639 1/2 codes for the preferred audio languages on this device.",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        }
+      ],
+      "result": {
+        "name": "languages",
+        "summary": "the preferred audio languages",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": ["es", "en"]
+          }
+        }            
+      ]
+    },
+    {
       "name": "locale",
       "summary": "Get the *full* BCP 47 code, including script, region, variant, etc., for the preferred langauage/locale",
       "params": [],
