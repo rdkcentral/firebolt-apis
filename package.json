@@ -6,6 +6,7 @@
   "types": "./dist/lib/firebolt.d.ts",
   "type": "module",
   "scripts": {
+    "prepare": "npx husky install && npx husky add .husky/commit-msg 'npx --no -- commitlint --edit \"$1\"'",
     "fs:setup": "npm run clean && mkdir -p dist/docs dist/lib build/docs/markdown build/docs/wiki build/sdk/javascript/src",
     "validate:each": "npx firebolt-openrpc --task validate --source src --shared-schemas node_modules/@firebolt-js/schemas/src/schemas",
     "validate:assembled": "npx firebolt-openrpc --task validate --source dist/firebolt-open-rpc.json --shared-schemas node_modules/@firebolt-js/schemas/src/schemas",
@@ -32,9 +33,12 @@
   },
   "homepage": "https://github.com/rdkcentral/firebolt-core-sdk#readme",
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "@firebolt-js/openrpc": "1.6.1",
     "@firebolt-js/schemas": "0.3.0",
     "ajv": "^6.12.6",
+    "husky": "^8.0.1",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.3",
     "semantic-release": "^19.0.5",
