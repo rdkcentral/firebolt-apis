@@ -1,0 +1,29 @@
+{
+  "branches": [
+    "main",
+    {
+      "name": "next",
+      "prerelease": true
+    },
+    {
+      "name": "beta",
+      "prerelease": true
+    }
+  ],
+  "dryRun": true,
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "dist/**",
+            "label": "JavaScript SDK, Markdown Docs, Fully Assembled Firebolt Spec"
+          }
+        ]
+      }
+    ]
+  ]
+}
