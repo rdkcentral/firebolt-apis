@@ -6,7 +6,6 @@
   "types": "./dist/lib/firebolt.d.ts",
   "type": "module",
   "scripts": {
-    "prepare": "npx husky install && npx husky add .husky/commit-msg 'npx --no -- commitlint --edit \"$1\"'",
     "fs:setup": "npm run clean && mkdir -p dist/docs dist/lib build/docs/markdown build/docs/wiki build/sdk/javascript/src",
     "validate:each": "npx firebolt-openrpc --task validate --source src --shared-schemas node_modules/@firebolt-js/schemas/src/schemas",
     "validate:assembled": "npx firebolt-openrpc --task validate --source dist/firebolt-open-rpc.json --shared-schemas node_modules/@firebolt-js/schemas/src/schemas",
@@ -21,7 +20,8 @@
     "test": "npm run test:setup && NODE_OPTIONS=--experimental-vm-modules npx --config=jest.config.json --detectOpenHandles jest",
     "clean": "rm -rf build && rm -rf dist",
     "publish:docs": "npm run build:docs && sh push-docs.sh",
-    "publish:word": "mkdir -p dist/word/schemas && cd dist/docs && find . -iname \"*.md\" -type f -exec sh -c 'pandoc \"${0}\" -o \"../word/${0%.md}.docx\"' {} \\;"
+    "publish:word": "mkdir -p dist/word/schemas && cd dist/docs && find . -iname \"*.md\" -type f -exec sh -c 'pandoc \"${0}\" -o \"../word/${0%.md}.docx\"' {} \\;",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,7 @@
     "@firebolt-js/schemas": "0.3.0",
     "@semantic-release/git": "^10.0.1",
     "ajv": "^6.12.6",
-    "husky": "^8.0.1",
+    "husky": "^8.0.0",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.3",
     "semantic-release": "^19.0.5",
