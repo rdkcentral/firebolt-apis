@@ -12,6 +12,10 @@ on:
       - opened
     branches: [ main ]
 
+env:
+  HUSKY: 0
+  # Turns off installing commit hooks in CI environments
+
 jobs:
   build:
 
