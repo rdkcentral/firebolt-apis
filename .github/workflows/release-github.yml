@@ -18,17 +18,24 @@ jobs:
           node-version: 'lts/*'
       - run: npm ci
         name: Install dependencies
+      - run: npm run fs:setup
+        name: Setup project
+      - run: npm run validate:each
+        name: Validate OpenRPC
       - run: |
-          npm run fs:setup
           npm run build:sdk
-          npm run dist:declarations
           npm run dist:sdk
-          npm run validate:each
-          npm run test
-          npm run build:openrpc
+        name: Build JavaScript SDK
+      - run: npm run dist:declarations
+        name: Generate TypeScript declarations
+      - run: npm run test
+        name: Run JavaScript SDK unit tests
+      - run: npm run build:openrpc
+        name: Build full OpenRPC spec
+      - run: |
           npm run build:docs
           npm run dist:docs
-          npm run dist:declarations
+        name: Build markdown docs
       - name: Release to GitHub
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
