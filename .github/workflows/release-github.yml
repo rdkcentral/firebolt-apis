@@ -1,7 +1,8 @@
 name: Release to GitHub
 on:
   workflow_dispatch:
-
+env:
+  HUSKY: 0
 jobs:
   release:
     name: Release
