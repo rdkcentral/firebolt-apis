@@ -1,7 +1,8 @@
 name: Release to GitHub
 on:
   workflow_dispatch:
-
+env:
+  HUSKY: 0
 jobs:
   release:
     name: Release
@@ -17,16 +18,17 @@ jobs:
           node-version: 'lts/*'
       - name: Install dependencies
         run: npm ci
-      - name: Generate SDK
-      - run: npm run fs:setup
-      - run: npm run build:sdk
-      - run: npm run dist:declarations
-      - run: npm run dist:sdk
+      - name: Generate JavaScript SDK
+        run: |
+          npm run fs:setup
+          npm run build:sdk
+          npm run dist:declarations
+          npm run dist:sdk
       - name: Validate SDK
-      - run: npm run validate:each
+        run: npm run validate:each
       - name: Test SDK
-      - run: npm run test
-      - name: Generate OpenRpc
+        run: npm run test
+      - name: Generate OpenRpc in dist/
         run: npm run build:openrpc
       - name: Generate Docs
         run: npm run build:docs
