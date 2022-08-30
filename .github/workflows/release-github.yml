@@ -15,19 +15,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "lts/*"
+          node-version: 'lts/*'
       - name: Install dependencies
         run: npm ci
-      - name: Setup project
-        run: npm run fs:setup
-      - name: Validate each OpenRPC spec
-        run: npm run validate:each
-      - name: Build fully assembled OpenRPC spec
-        run: npm run build:openrpc
-      - name: Validate fully assembled OpenRPC spec
-        run: npm run validate:assembled
-      - name: Build JavaScript SDK
-        run: |
+      - run: npm run fs:setup
+        name: Setup project
+      - run: npm run validate:each
+        name: Validate OpenRPC
+      - run: |
           npm run build:sdk
           npm run dist:sdk
       - name: Generate TypeScript declarations
