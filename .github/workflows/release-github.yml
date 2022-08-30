@@ -18,11 +18,16 @@ jobs:
           node-version: 'lts/*'
       - name: Install dependencies
         run: npm ci
-      - run: npm run fs:setup
-        name: Setup project
-      - run: npm run validate:each
-        name: Validate OpenRPC
-      - run: |
+      - name: Setup project
+        run: npm run fs:setup
+      - name: Validate each OpenRPC spec
+        run: npm run validate:each
+      - name: Build fully assembled OpenRPC spec
+        run: npm run build:openrpc
+      - name: Validate fully assembled OpenRPC spec
+        run: npm run validate:assembled
+      - name: Build JavaScript SDK
+        run: |
           npm run build:sdk
           npm run dist:sdk
       - name: Generate TypeScript declarations
