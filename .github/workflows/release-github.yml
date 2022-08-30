@@ -20,8 +20,12 @@ jobs:
         run: npm ci
       - name: Setup project
         run: npm run fs:setup
-      - name: Validate OpenRPC
+      - name: Validate each OpenRPC spec
         run: npm run validate:each
+      - name: Build fully assembled OpenRPC spec
+        run: npm run build:openrpc
+      - name: Validate fully assembled OpenRPC spec
+        run: npm run validate:assembled
       - name: Build JavaScript SDK
         run: |
             npm run build:sdk
@@ -30,8 +34,6 @@ jobs:
         run: npm run dist:declarations
       - name: Run JavaScript SDK unit tests
         run: npm run test
-      - name: Build full OpenRPC spec
-        run: npm run build:openrpc
       - name: Build markdown docs
         run: |
           npm run build:docs
