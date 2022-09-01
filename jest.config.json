@@ -3,5 +3,6 @@
     "transform": {},
     "testPathIgnorePatterns": ["<rootDir>/build/", "<rootDir>/node_modules/"],
     "moduleFileExtensions": ["js", "jsx", "mjs"],
-    "verbose": true
+    "verbose": true,
+    "testEnvironment": "jest-environment-jsdom"
   }
