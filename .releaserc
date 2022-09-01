@@ -2,18 +2,15 @@
   "branches": [
     "main",
     {
-      "name": "v0.x"
-    },
-    {
-      "name": "v1.x",
+      "name": "next",
       "prerelease": true
     },
     {
-      "name": "next",
+      "name": "next-major",
       "prerelease": true
     }
   ],
-  "dryRun": true,
+  "dryRun": false,
   "plugins": [
     [
       "@semantic-release/commit-analyzer",
