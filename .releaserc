@@ -2,11 +2,14 @@
   "branches": [
     "main",
     {
-      "name": "next",
+      "name": "v0.x"
+    },
+    {
+      "name": "v1.x",
       "prerelease": true
     },
     {
-      "name": "beta",
+      "name": "next",
       "prerelease": true
     }
   ],
