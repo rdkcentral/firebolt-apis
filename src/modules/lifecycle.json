@@ -144,38 +144,17 @@
         }
       ],
       "summary": "Listen to the inactive event",
-      "params": [
-        {
-          "name": "listen",
-          "required": true,
-          "summary": "whether to listen, or stop listening",
-          "schema": {
-            "type": "boolean"
-          }
-        }
-      ],
+      "params": [],
       "result": {
         "name": "value",
         "schema": {
-          "oneOf": [
-            {
-              "$ref": "#/components/schemas/LifecycleEvent"
-            },
-            {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-            }
-          ]
+          "$ref": "#/components/schemas/LifecycleEvent"
         }
       },
       "examples": [
         {
           "name": "Default Example",
-          "params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
+          "params": [],
           "result": {
             "name": "Default Result",
             "value": {
@@ -194,38 +173,17 @@
         }
       ],
       "summary": "Listen to the foreground event",
-      "params": [
-        {
-          "name": "listen",
-          "required": true,
-          "summary": "whether to listen, or stop listening",
-          "schema": {
-            "type": "boolean"
-          }
-        }
-      ],
+      "params": [],
       "result": {
         "name": "value",
         "schema": {
-          "oneOf": [
-            {
-              "$ref": "#/components/schemas/LifecycleEvent"
-            },
-            {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-            }
-          ]
+          "$ref": "#/components/schemas/LifecycleEvent"
         }
       },
       "examples": [
         {
           "name": "Default Example",
-          "params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
+          "params": [],
           "result": {
             "name": "Default Result",
             "value": {
@@ -236,12 +194,7 @@
         },
         {
           "name": "Move to foreground via remote branded buton",
-          "params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
+          "params": [],
           "result": {
             "name": "value",
             "value": {
@@ -261,38 +214,17 @@
         }
       ],
       "summary": "Listen to the background event",
-      "params": [
-        {
-          "name": "listen",
-          "required": true,
-          "summary": "whether to listen, or stop listening",
-          "schema": {
-            "type": "boolean"
-          }
-        }
-      ],
+      "params": [],
       "result": {
         "name": "value",
         "schema": {
-          "oneOf": [
-            {
-              "$ref": "#/components/schemas/LifecycleEvent"
-            },
-            {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-            }
-          ]
+          "$ref": "#/components/schemas/LifecycleEvent"
         }
       },
       "examples": [
         {
           "name": "Default Example",
-          "params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
+          "params": [],
           "result": {
             "name": "Default Result",
             "value": {
@@ -311,38 +243,17 @@
         }
       ],
       "summary": "Listen to the suspended event",
-      "params": [
-        {
-          "name": "listen",
-          "required": true,
-          "summary": "whether to listen, or stop listening",
-          "schema": {
-            "type": "boolean"
-          }
-        }
-      ],
+      "params": [],
       "result": {
         "name": "value",
         "schema": {
-          "oneOf": [
-            {
-              "$ref": "#/components/schemas/LifecycleEvent"
-            },
-            {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-            }
-          ]
+          "$ref": "#/components/schemas/LifecycleEvent"
         }
       },
       "examples": [
         {
           "name": "Default Example",
-          "params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
+          "params": [],
           "result": {
             "name": "Default Result",
             "value": {
@@ -361,38 +272,17 @@
         }
       ],
       "summary": "Listen to the unloading event",
-      "params": [
-        {
-          "name": "listen",
-          "required": true,
-          "summary": "whether to listen, or stop listening",
-          "schema": {
-            "type": "boolean"
-          }
-        }
-      ],
+      "params": [],
       "result": {
         "name": "value",
         "schema": {
-          "oneOf": [
-            {
-              "$ref": "#/components/schemas/LifecycleEvent"
-            },
-            {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-            }
-          ]
+          "$ref": "#/components/schemas/LifecycleEvent"
         }
       },
       "examples": [
         {
           "name": "Default Example",
-          "params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
+          "params": [],
           "result": {
             "name": "Default Result",
             "value": {
