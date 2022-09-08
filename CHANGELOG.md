@@ -1,3 +1,10 @@
+## [0.8.1-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.8.0...v0.8.1-next.1) (2022-09-08)
+
+
+### Bug Fixes
+
+* **lifecycle:** lifecycle state api returns correct state in all circumstances ([31e405c](https://github.com/rdkcentral/firebolt-core-sdk/commit/31e405c124d29a3e87294dc4b356ff8df9972af8))
+
 # Release Notes
 
 ## 0.8.0
