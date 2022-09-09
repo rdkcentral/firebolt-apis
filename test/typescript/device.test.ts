@@ -20,18 +20,46 @@ import { test, expect } from "@jest/globals";
 import { Device } from "../../dist/lib/firebolt";
 
 test("Device.version()", () => {
-  const expectedOutput: object = {
-    debug: "",
-    os: { major: 0, minor: 1, patch: 0, readable: "Firebolt OS v0.1.0" },
-    sdk: {
-      major: 0,
-      minor: 8,
-      patch: 0,
-      readable: "The Firebolt JS SDK",
-    },
-  };
-  return Device.version().then((v: object) => {
-    expect(v).toEqual(expectedOutput);
+  const debug: string = "Non-parsable build info for error logging only."
+
+  const os:Device.SemanticVersion = {
+    major: 0,
+    minor: 1,
+    patch: 0,
+    readable: "Firebolt OS v0.1.0"
+  }
+
+  const sdk:Device.SemanticVersion = {
+    major: 0,
+    minor: 8,
+    patch: 0,
+    readable: "The Firebolt JS SDK",
+  }
+
+  const firmware:Device.SemanticVersion = {
+    major: 1,
+    minor: 2,
+    patch: 3,
+    readable: "Device Firmware v1.2.3"
+  }
+
+  const api:Device.SemanticVersion = {
+    major: 0,
+    minor: 8,
+    patch: 0,
+    readable: "Firebolt API v0.8.0"
+  }    
+
+  return Device.version().then((v: any) => {
+    expect(v.debug).toBe(debug)
+    expect(v.os).toEqual(os);
+    expect(v.api).toEqual(api);
+    expect(v.firmware).toEqual(firmware);
+    expect(typeof v.sdk.major).toBe('number')
+    expect(typeof v.sdk.minor).toBe('number')
+    expect(typeof v.sdk.patch).toBe('number')
+    expect(typeof v.sdk.readable).toBe('string')
+
   });
 });
 
