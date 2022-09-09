@@ -254,7 +254,7 @@
             },
             "os": {
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "**Deprecated**"
+              "description": "**Deprecated** Use `firmware`, instead."
             },
             "debug": {
               "type": "string",
@@ -264,7 +264,8 @@
           "required": [
             "sdk",
             "api",
-            "firmware"
+            "firmware",
+            "os"
           ]
         }
       },
@@ -293,6 +294,12 @@
                 "patch": 3,
                 "readable": "Device Firmware v1.2.3"
               },
+              "os": {
+                "major": 0,
+                "minor": 1,
+                "patch": 0,
+                "readable": "Firebolt OS v0.1.0"
+              },                
               "debug": "Non-parsable build info for error logging only."
             }
           }
