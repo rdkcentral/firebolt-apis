@@ -254,7 +254,7 @@
             },
             "os": {
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "**Deprecated**"
+              "description": "**Deprecated** Use `firmware`, instead."
             },
             "debug": {
               "type": "string",
@@ -264,7 +264,8 @@
           "required": [
             "sdk",
             "api",
-            "firmware"
+            "firmware",
+            "os"
           ]
         }
       },
