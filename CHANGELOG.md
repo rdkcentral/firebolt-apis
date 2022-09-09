@@ -1,13 +1,17 @@
 # Release Notes
 
+## 0.8.1
+
+- Added Device.version().firmware to surface the underlying hardware firmware version
+- Added Device.version().api to surface the latest Firebolt API supported by this device
+- Deprecated Device.version().os which does not have a formal specification. Use `firmware` instead.
+
 ## 0.8.0
 
 - Tune Intents are now supported in `navigateTo` events
 - Added TypeScript declarations for Settings and Events
 - Fixed/Removed test-enabling code from SDK
 - Fixed bug where the SDK would initialize itself even when not being used
-
-
 
 ## 0.7.0
 
