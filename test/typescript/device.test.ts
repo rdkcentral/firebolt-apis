@@ -21,14 +21,26 @@ import { Device } from "../../dist/lib/firebolt";
 
 test("Device.version()", () => {
   const expectedOutput: object = {
-    debug: "",
-    os: { major: 0, minor: 1, patch: 0, readable: "Firebolt OS v0.1.0" },
+    debug: "Non-parsable build info for error logging only.",
+    firmware: { major: 1, minor: 2, patch: 3, readable: "Device Firmware v1.2.3" },
     sdk: {
       major: 0,
       minor: 8,
       patch: 0,
       readable: "The Firebolt JS SDK",
     },
+    api: {
+      major: 0,
+      minor: 8,
+      patch: 0,
+      readable: "Firebolt API v0.8.0"
+    },
+    os: {
+      major: 0,
+      minor: 1,
+      patch: 0,
+      readable: "Firebolt OS v0.1.0"
+    }    
   };
   return Device.version().then((v: object) => {
     expect(v).toEqual(expectedOutput);
