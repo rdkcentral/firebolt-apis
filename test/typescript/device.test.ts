@@ -34,7 +34,13 @@ test("Device.version()", () => {
       minor: 8,
       patch: 0,
       readable: "Firebolt API v0.8.0"
-    }
+    },
+    os: {
+      major: 0,
+      minor: 1,
+      patch: 0,
+      readable: "Firebolt OS v0.1.0"
+    }    
   };
   return Device.version().then((v: object) => {
     expect(v).toEqual(expectedOutput);
