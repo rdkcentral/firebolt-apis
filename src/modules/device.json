@@ -505,10 +505,7 @@
         "name": "value",
         "summary": "the device friendly-name",
         "schema": {
-          "oneOf": [
-            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
-            { "type": "string" }
-          ]
+          "type": "string"
         }
       },
       "examples": [

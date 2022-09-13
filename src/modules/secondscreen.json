@@ -68,7 +68,7 @@
         {
           "name": "type",
           "summary": "The type of second screen protocol, e.g. \"dial\"",
-          "required": false,
+          "required": true,
           "schema": {
             "type": "string"
           }
@@ -89,7 +89,12 @@
       "examples": [
         {
           "name": "Default Example",
-          "params": [],
+          "params": [
+            {
+              "name": "type",
+              "value": "dial"
+            }
+          ],
           "result": {
             "name": "friendlyName",
             "value": "Living Room"
@@ -105,39 +110,18 @@
         }
       ],
       "summary": "Listen to the launchRequest event",
-      "params": [
-        {
-          "name": "listen",
-          "required": true,
-          "summary": "whether to listen, or stop listening",
-          "schema": {
-            "type": "boolean"
-          }
-        }
-      ],
+      "params": [],
       "result": {
         "name": "launchRequestEvent",
         "summary": "Dispatched when a second screen device on the local network has requested this app to be launched",
         "schema": {
-          "oneOf": [
-            {
-              "$ref": "https://meta.comcast.com/firebolt/secondscreen#/definitions/SecondScreenEvent"
-            },
-            {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-            }
-          ]
+          "$ref": "https://meta.comcast.com/firebolt/secondscreen#/definitions/SecondScreenEvent"
         }
       },
       "examples": [
         {
           "name": "Default Example",
-          "params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
+          "params": [],
           "result": {
             "name": "Default Result",
             "value": {
@@ -157,38 +141,17 @@
         }
       ],
       "summary": "Listen to the closeRequest event",
-      "params": [
-        {
-          "name": "listen",
-          "required": true,
-          "summary": "whether to listen, or stop listening",
-          "schema": {
-            "type": "boolean"
-          }
-        }
-      ],
+      "params": [],
       "result": {
         "name": "closeRequestEvent",
         "schema": {
-          "oneOf": [
-            {
-              "$ref": "https://meta.comcast.com/firebolt/secondscreen#/definitions/SecondScreenEvent"
-            },
-            {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-            }
-          ]
+          "$ref": "https://meta.comcast.com/firebolt/secondscreen#/definitions/SecondScreenEvent"
         }
       },
       "examples": [
         {
           "name": "Default Example",
-          "params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
+          "params": [],
           "result": {
             "name": "Default Result",
             "value": {

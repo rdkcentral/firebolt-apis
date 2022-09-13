@@ -25,7 +25,7 @@ let readyCalled = false
 let readyMetricCalled = false
 let readyMetricCalledAfterResolve = false
 
-testHarness.onSend = function(module, method, params, id) {
+testHarness.onSend = function (module, method, params, id) {
     if (module === 'lifecycle' && method === 'ready') {
         readyCalled = true
     }
@@ -41,26 +41,31 @@ testHarness.onSend = function(module, method, params, id) {
 const callback = jest.fn()
 const startupState = Lifecycle.state()
 
-beforeAll(()=> {
+beforeAll(() => {
     Lifecycle.listen((event, _) => {
+        console.log('Listen ' + JSON.stringify(event))
         callback(event)
     })
 
     Lifecycle.once('foreground', () => {
+        console.log('foreground ')
         Lifecycle.close('userExit')
     })
-    
+
     Lifecycle.once('unloading', () => {
+        console.log('unloading ')
         Lifecycle.finished()
     })
-    
-    let p = new Promise( (resolve, reject) => {
+
+    let p = new Promise((resolve, reject) => {
         Lifecycle.once('unloading', _ => {
+            console.log('unloading2 ')
             resolve()
         })
     })
 
     Lifecycle.ready().then(_ => {
+        console.log('ready ')
         readyResolved = true
     })
 
