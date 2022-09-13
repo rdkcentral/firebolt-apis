@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/rdkcentral/firebolt-core-sdk#readme",
   "devDependencies": {
-    "@firebolt-js/openrpc": "git://github.com/rdkcentral/firebolt-openrpc.git",
+    "@firebolt-js/openrpc": "git://github.com/rdkcentral/firebolt-openrpc.git#feature/extensions-module",
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
     "@firebolt-js/schemas": "0.3.0",
