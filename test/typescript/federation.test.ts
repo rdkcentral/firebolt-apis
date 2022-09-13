@@ -19,11 +19,13 @@
 // NOTE: this test SHOULD NOT include Setup, since it does it's own
 // setup for Firebolt SDK/TL handshake
 
+import { test, expect, beforeAll } from "@jest/globals";
 import { Lifecycle, Discovery } from '../../dist/lib/firebolt.mjs'
 
 // holds test transport layer state, e.g. callback
-const state = {
 
+const state = {
+  callback:(a:string) => {}
 }
 
 let pullEntityInfoListenCount = 0
@@ -32,13 +34,13 @@ let entityInfoReceived = false
 let entityInfoPushed = false
 let callbackWiredUp = false
 let sendCalled = false
-let correlationId
+let correlationId:string
 let secondRegistrationFailed = false
 
 beforeAll(() => {
     return new Promise( (resolve, reject) => {
         const transport = {
-            send: function(message) {
+            send: function(message: string) {
                 sendCalled = true
                 const json = JSON.parse(message)
                 if (json.method.toLowerCase() === 'discovery.onpullentityinfo') {
@@ -47,7 +49,7 @@ beforeAll(() => {
                     if (state.callback) {
                         // we'll assert on this later...
                         callbackWiredUp = true
-                        let response = {
+                        let response:object = {
                             jsonrpc: '2.0',
                             id: json.id,
                             result: {
@@ -65,7 +67,7 @@ beforeAll(() => {
                         }
         
                         setTimeout( _ => {
-                            correlationId = '' + parseInt(Math.random() * 1000)
+                            correlationId = '' + (Math.random() * 1000)
                             try {
                                 response = {
                                     jsonrpc: '2.0',
@@ -96,7 +98,7 @@ beforeAll(() => {
                             }
 
                             // resolve the beforeAll promise
-                            setTimeout(_ => { resolve() }, 500)
+                            setTimeout(_ => { resolve(null) }, 500)
                         })
                     }
                 }
@@ -116,13 +118,14 @@ beforeAll(() => {
                     }))
                 }
             },
-            receive: function(callback) {
+            receive: function(callback: (a:string) => void) {
                 // store the callback
                 state.callback = callback
             }
         }
         
-        window.__firebolt.setTransportLayer(transport)
+        const win:any = window;
+        win.__firebolt.setTransportLayer(transport)
 
         // Setup a callback that returns the correct payload
         Discovery.entityInfo((parameters) => {
