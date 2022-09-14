@@ -36,7 +36,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "@firebolt-js/openrpc": "github:rdkcentral/firebolt-openrpc#feature/extensions-module",
+    "@firebolt-js/openrpc": "github:rdkcentral/firebolt-openrpc#v1.7.0-next.0",
     "@firebolt-js/schemas": "0.3.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
