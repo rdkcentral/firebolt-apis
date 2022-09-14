@@ -26,21 +26,13 @@
       }
     ],
     [
-      "@semantic-release/github",
-      {
-        "assets": [
-          {
-            "path": "dist/**",
-            "label": "JavaScript SDK, Markdown Docs, Fully Assembled Firebolt Spec"
-          }
-        ]
-      }
+      "@semantic-release/github"
     ],
     [
       "@semantic-release/git",
       {
         "assets": [
-          "src/**",
+          "dist/**",
           "package.json",
           "package-lock.json",
           "CHANGELOG.md",
