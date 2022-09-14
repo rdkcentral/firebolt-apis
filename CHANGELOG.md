@@ -1,3 +1,16 @@
+# [0.9.0-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.8.0...v0.9.0-next.1) (2022-09-14)
+
+
+### Bug Fixes
+
+* **device:** add device version firmware property ([ef12ec0](https://github.com/rdkcentral/firebolt-core-sdk/commit/ef12ec083591837e9a0c31d993f4e916810b11bc)), closes [#54](https://github.com/rdkcentral/firebolt-core-sdk/issues/54)
+* **lifecycle:** lifecycle state api returns correct state in all circumstances ([31e405c](https://github.com/rdkcentral/firebolt-core-sdk/commit/31e405c124d29a3e87294dc4b356ff8df9972af8))
+
+
+### Features
+
+* **extensions:** extensions module ([7cf4128](https://github.com/rdkcentral/firebolt-core-sdk/commit/7cf412819de8bc9749d51af2de923556924ae564)), closes [#46](https://github.com/rdkcentral/firebolt-core-sdk/issues/46)
+
 # [0.9.0-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.8.1-next.1...v0.9.0-next.1) (2022-09-14)
 
 
