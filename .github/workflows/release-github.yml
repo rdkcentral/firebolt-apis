@@ -12,6 +12,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          repo-token: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }}
+          persist-credentials: false
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -40,5 +42,5 @@ jobs:
           npm run dist:docs
       - name: Release to GitHub
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
         run: npx semantic-release
