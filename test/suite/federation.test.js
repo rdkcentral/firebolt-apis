@@ -35,196 +35,211 @@ let sendCalled = false
 let correlationId
 let secondRegistrationFailed = false
 
-const transport = {
-    send: function(message) {
-        sendCalled = true
-        const json = JSON.parse(message)
-        if (json.method.toLowerCase() === 'discovery.onpullentityinfo') {
-            // we'll assert on this later...
-            pullEntityInfoListenCount++
-            if (state.callback) {
-                // we'll assert on this later...
-                callbackWiredUp = true
-                let response = {
-                    jsonrpc: '2.0',
-                    id: json.id,
-                    result: true
-                }
-                // catching errors, so all tests don't fail if this breaks
-                try {
-                    state.callback(JSON.stringify(response))
-                }
-                catch (err) {
-                    // fail silenetly (the boolean-based tests below will figure it out...)
-                }
+beforeAll(() => {
+    return new Promise( (resolve, reject) => {
+        const transport = {
+            send: function(message) {
+                sendCalled = true
+                const json = JSON.parse(message)
+                if (json.method.toLowerCase() === 'discovery.onpullentityinfo') {
+                    // we'll assert on this later...
+                    pullEntityInfoListenCount++
+                    if (state.callback) {
+                        // we'll assert on this later...
+                        callbackWiredUp = true
+                        let response = {
+                            jsonrpc: '2.0',
+                            id: json.id,
+                            result: {
+                                listening: true,
+                                event: 'discovery.onPullEntityInfo'
+                            }
+                        }
+                        // catching errors, so all tests don't fail if this breaks
+                        try {
+                            state.callback(JSON.stringify(response))
+                        }
+                        catch (err) {
+                            throw err
+                            // fail silenetly (the boolean-based tests below will figure it out...)
+                        }
+        
+                        setTimeout( _ => {
+                            correlationId = '' + parseInt(Math.random() * 1000)
+                            try {
+                                response = {
+                                    jsonrpc: '2.0',
+                                    id: json.id,
+                                    result: {
+                                        correlationId: correlationId,
+                                        parameters: {
+                                            entityId: "345"
+                                        }
+                                    }
+                                }
+        
+                                state.callback(JSON.stringify(response))
+        
+                                state.callback(JSON.stringify({
+                                    jsonrpc: '2.0',
+                                    id: json.id,
+                                    result: {
+                                        correlationId: 'this-will-fail',
+                                        parameters: {
+                                            entityId: "this-will-fail"
+                                        }
+                                    }
+                                }))
+                            }
+                            catch (err) {
+                                throw err
+                            }
 
-                correlationId = '' + parseInt(Math.random() * 1000)
-                try {
+                            // resolve the beforeAll promise
+                            setTimeout(_ => { resolve() }, 500)
+                        })
+                    }
+                }
+                else if (json.method.toLowerCase() === 'discovery.entityinfo') {
+                    if (correlationId && (json.params.correlationId === correlationId)) {
+                        entityInfoReceived = true
+                    }
+                    else if (correlationId && (json.params.correlationId === 'this-will-fail')) {
+                    }
+                    else if (!json.params.correlationId && json.params.result.entity.identifiers.entityId === "PUSH:345") {
+                        entityInfoPushed = true
+                    }
                     state.callback(JSON.stringify({
                         jsonrpc: '2.0',
                         id: json.id,
-                        result: {
-                            correlationId: correlationId,
-                            parameters: {
-                                entityId: "345"
-                            }
-                        }
-                    }))
-
-                    state.callback(JSON.stringify({
-                        jsonrpc: '2.0',
-                        id: json.id,
-                        result: {
-                            correlationId: 'this-will-fail',
-                            parameters: {
-                                entityId: "this-will-fail"
-                            }
-                        }
+                        result: true
                     }))
                 }
-                catch (err) {
-
-                }
+            },
+            receive: function(callback) {
+                // store the callback
+                state.callback = callback
             }
         }
-        else if (json.method.toLowerCase() === 'discovery.entityinfo') {
-            if (correlationId && (json.params.correlationId === correlationId)) {
-                entityInfoReceived = true
-            }
-            else if (correlationId && (json.params.correlationId === 'this-will-fail')) {
-//                entityInfoReceived = true
-            }
-            else if (!json.params.correlationId && json.params.result.entity.identifiers.entityId === "PUSH:345") {
-                entityInfoPushed = true
-            }
-            state.callback(JSON.stringify({
-                jsonrpc: '2.0',
-                id: json.id,
-                result: true
-            }))
-        }
-    },
-    receive: function(callback) {
-        // store the callback
-        state.callback = callback
-    }
-}
+        
+        window.__firebolt.setTransportLayer(transport)
 
-window.__firebolt.setTransportLayer(transport)
+        // Setup a callback that returns the correct payload
+        Discovery.entityInfo((parameters) => {
 
-// Setup a callback that returns the correct payload
-Discovery.entityInfo((parameters) => {
-    if (parameters.entityId === 'this-will-fail') {
-        throw "Intentional Test failure"
-    }
-
-    entityInfoPulled = true
-    return Promise.resolve({
-        "expires": "2025-01-01T00:00:00.000Z",
-        "entity": {
-            "identifiers": {
-            "entityId": "PULL:345"
-            },
-            "entityType": "program",
-            "programType": "movie",
-            "title": "Cool Runnings",
-            "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
-            "releaseDate": "1993-01-01T00:00:00.000Z",
-            "contentRatings": [
-            {
-                "scheme": "US-Movie",
-                "rating": "PG"
-            },
-            {
-                "scheme": "CA-Movie",
-                "rating": "G"
+            if (parameters.entityId === 'this-will-fail') {
+                throw "Intentional Test failure"
             }
-            ],
-            "waysToWatch": [
-                {
+
+            entityInfoPulled = true
+            return Promise.resolve({
+                "expires": "2025-01-01T00:00:00.000Z",
+                "entity": {
                     "identifiers": {
-                    "assetId": "123"
+                    "entityId": "PULL:345"
                     },
-                    "expires": "2025-01-01T00:00:00.000Z",
-                    "entitled": true,
-                    "entitledExpires": "2025-01-01T00:00:00.000Z",
-                    "offeringType": "buy",
-                    "price": 2.99,
-                    "videoQuality": "UHD",
-                    "audioProfile": "dolbyAtmos",
-                    "audioLanguages": [
-                    "en"
+                    "entityType": "program",
+                    "programType": "movie",
+                    "title": "Cool Runnings",
+                    "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+                    "releaseDate": "1993-01-01T00:00:00.000Z",
+                    "contentRatings": [
+                    {
+                        "scheme": "US-Movie",
+                        "rating": "PG"
+                    },
+                    {
+                        "scheme": "CA-Movie",
+                        "rating": "G"
+                    }
                     ],
-                    "closedCaptions": [
-                    "en"
-                    ],
-                    "subtitles": [
-                    "es"
-                    ],
-                    "audioDescriptions": [
-                    "en"
+                    "waysToWatch": [
+                        {
+                            "identifiers": {
+                            "assetId": "123"
+                            },
+                            "expires": "2025-01-01T00:00:00.000Z",
+                            "entitled": true,
+                            "entitledExpires": "2025-01-01T00:00:00.000Z",
+                            "offeringType": "buy",
+                            "price": 2.99,
+                            "videoQuality": "UHD",
+                            "audioProfile": "dolbyAtmos",
+                            "audioLanguages": [
+                            "en"
+                            ],
+                            "closedCaptions": [
+                            "en"
+                            ],
+                            "subtitles": [
+                            "es"
+                            ],
+                            "audioDescriptions": [
+                            "en"
+                            ]
+                        }
                     ]
                 }
-            ]
-        }
-    })
-})
+            })
+        })
 
-Discovery.entityInfo({
-    "expires": "2025-01-01T00:00:00.000Z",
-    "entity": {
-        "identifiers": {
-        "entityId": "PUSH:345"
-        },
-        "entityType": "program",
-        "programType": "movie",
-        "title": "Cool Runnings",
-        "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
-        "releaseDate": "1993-01-01T00:00:00.000Z",
-        "contentRatings": [
-        {
-            "scheme": "US-Movie",
-            "rating": "PG"
-        },
-        {
-            "scheme": "CA-Movie",
-            "rating": "G"
-        }
-        ],
-        "waysToWatch": [
-            {
+        Discovery.entityInfo({
+            "expires": "2025-01-01T00:00:00.000Z",
+            "entity": {
                 "identifiers": {
-                "assetId": "123"
+                "entityId": "PUSH:345"
                 },
-                "expires": "2025-01-01T00:00:00.000Z",
-                "entitled": true,
-                "entitledExpires": "2025-01-01T00:00:00.000Z",
-                "offeringType": "buy",
-                "price": 2.99,
-                "videoQuality": "UHD",
-                "audioProfile": "dolbyAtmos",
-                "audioLanguages": [
-                "en"
+                "entityType": "program",
+                "programType": "movie",
+                "title": "Cool Runnings",
+                "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+                "releaseDate": "1993-01-01T00:00:00.000Z",
+                "contentRatings": [
+                {
+                    "scheme": "US-Movie",
+                    "rating": "PG"
+                },
+                {
+                    "scheme": "CA-Movie",
+                    "rating": "G"
+                }
                 ],
-                "closedCaptions": [
-                "en"
-                ],
-                "subtitles": [
-                "es"
-                ],
-                "audioDescriptions": [
-                "en"
+                "waysToWatch": [
+                    {
+                        "identifiers": {
+                        "assetId": "123"
+                        },
+                        "expires": "2025-01-01T00:00:00.000Z",
+                        "entitled": true,
+                        "entitledExpires": "2025-01-01T00:00:00.000Z",
+                        "offeringType": "buy",
+                        "price": 2.99,
+                        "videoQuality": "UHD",
+                        "audioProfile": "dolbyAtmos",
+                        "audioLanguages": [
+                        "en"
+                        ],
+                        "closedCaptions": [
+                        "en"
+                        ],
+                        "subtitles": [
+                        "es"
+                        ],
+                        "audioDescriptions": [
+                        "en"
+                        ]
+                    }
                 ]
             }
-        ]
-    }
-})
+        })
 
-Discovery.entityInfo(() => {}).catch(error => {
-    secondRegistrationFailed = true
-})
+        Discovery.entityInfo(() => {}).catch(error => {
+            secondRegistrationFailed = true
+        })
 
-Lifecycle.ready()
+        Lifecycle.ready()
+        })
+})
 
 test('Transport was sent listeners', () => {
     expect(pullEntityInfoListenCount).toBeGreaterThan(0)

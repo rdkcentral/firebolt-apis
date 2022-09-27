@@ -246,7 +246,7 @@
             },
             "api": {
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "The lateset Firebolt API vresion supported by the curent device."
+              "description": "The lateset Firebolt API version supported by the curent device."
             },
             "firmware": {
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
@@ -254,7 +254,7 @@
             },
             "os": {
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "**Deprecated**"
+              "description": "**Deprecated** Use `firmware`, instead."
             },
             "debug": {
               "type": "string",
@@ -505,10 +505,7 @@
         "name": "value",
         "summary": "the device friendly-name",
         "schema": {
-          "oneOf": [
-            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
-            { "type": "string" }
-          ]
+          "type": "string"
         }
       },
       "examples": [

@@ -938,39 +938,18 @@
         }
       ],
       "summary": "listen to `navigateTo` events",
-      "params": [
-        {
-          "name": "listen",
-          "required": true,
-          "summary": "whether to listen, or stop listening",
-          "schema": {
-            "type": "boolean"
-          }
-        }
-      ],
+      "params": [],
       "result": {
         "name": "value",
         "summary": "An object describing where in the app the user intends to navigate to",
         "schema": {
-          "oneOf": [
-            {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-            },
-            {
-              "$ref": "https://meta.comcast.com/firebolt/intents#/definitions/NavigationIntent"
-            }
-          ]
+          "$ref": "https://meta.comcast.com/firebolt/intents#/definitions/NavigationIntent"
         }
       },
       "examples": [
         {
           "name": "Listening for `navigateTo` events",
-          "params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
+          "params": [],
           "result": {
             "name": "event",
             "value": {

@@ -4,12 +4,17 @@
 name: Node.js CI
 
 on:
+  workflow_dispatch:
   push:
     branches-ignore: [ main ]
   pull_request:
     types:
       - opened
     branches: [ main ]
+
+env:
+  HUSKY: 0
+  # Turns off installing commit hooks in CI environments
 
 jobs:
   build:
@@ -18,7 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [lts/*]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -28,5 +33,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    # For the core sdk, simply running npm ci triggers a bunch of valiations to be run
     - run: npm ci
+    - run: npm run fs:setup
+    - run: npm run validate:each
+    - run: npm run build:sdk
+    - run: npm run dist:declarations
+    - run: npm run dist:sdk
+    - run: |
+        npm run build:docs
+        npm run dist:docs
+    - run: npm run test
+
