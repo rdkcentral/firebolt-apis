@@ -1,0 +1,718 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Capabilities",
+        "description": "The Capabilities module provides information about which discreet unit of functionality is enabled for the apps.",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "supported",
+            "summary": "Returns whether the platform supports the passed capability.",
+            "params": [
+                {
+                    "name": "capability",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                    }
+                }
+            ],
+            "result": {
+                "name": "supported",
+                "summary": "Whether or not capability is supported in device.",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Wifi scan supported capability",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:wifi:scan"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                },
+                {
+                    "name": "BLE protocol unsupported capability",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:protocol:bluetoothle"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": false
+                    }
+                }
+            ]
+        },
+        {
+            "name": "available",
+            "summary": "Returns whether a capability is available now.",
+            "params": [
+                {
+                    "name": "capability",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                    }
+                }
+            ],
+            "result": {
+                "name": "available",
+                "summary": "Whether or not capability is available now.",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Device Token.",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:token:device"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                },
+                {
+                    "name": "Unavailable Platform token.",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:token:platform"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": false
+                    }
+                }
+            ]
+        },
+        {
+            "name": "permitted",
+            "summary": "Returns whether the current App has permission to the passed capability and role.",
+            "params": [
+                {
+                    "name": "capability",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                    }
+                },
+                {
+                    "name": "role",
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role",
+                        "default": "use"
+                    }
+                }
+            ],
+            "result": {
+                "name": "permitted",
+                "summary": "Whether or not app is permitted for the given capability and the role",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Keyboard",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:keyboard"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                },
+                {
+                    "name": "Keyboard incorrect manage role capability",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:keyboard"
+                        },
+                        {
+                            "name": "role",
+                            "value": "manage"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": false
+                    }
+                },
+                {
+                    "name": "Wifi scan not permitted capability",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:wifi:scan"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": false
+                    }
+                }
+            ]
+        },
+        {
+            "name": "granted",
+            "summary": "Returns whether the current App has a user grant for passed capability and role.",
+            "params": [
+                {
+                    "name": "capability",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                    }
+                },
+                {
+                    "name": "role",
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role",
+                        "default": "use"
+                    }
+                }
+            ],
+            "result": {
+                "name": "granted",
+                "summary": "Whether or not app is granted to use the given capability and the role",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default capabilities without grants.",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:keyboard"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                },
+                {
+                    "name": "Get Postal code without grants.",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:localization:postalCode"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": false
+                    }
+                },
+                {
+                    "name": "Get Postal code with grants.",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:localization:postalCode"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "info",
+            "summary": "Returns an array of CapabilityInfo objects for the passed in capabilities.",
+            "params": [
+                {
+                    "name": "role",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                    }
+                },
+                {
+                    "name": "capabilities",
+                    "required": true,
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                        },
+                        "minItems": 1
+                    }
+                }
+            ],
+            "result": {
+                "name": "info",
+                "summary": "Returns an array of CapabilityInfo objects for the passed in capabilities.",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
+                    },
+                    "minItems": 1
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default result",
+                    "params": [
+                        {
+                            "name": "role",
+                            "value": "use"
+                        },
+                        {
+                            "name": "capabilities",
+                            "value": [
+                                "xrn:firebolt:capability:device:model",
+                                "xrn:firebolt:capability:keyboard",
+                                "xrn:firebolt:capability:protocol:bluetoothle",
+                                "xrn:firebolt:capability:token:device",
+                                "xrn:firebolt:capability:token:platform",
+                                "xrn:firebolt:capability:protocol:moca",
+                                "xrn:firebolt:capability:wifi:scan",
+                                "xrn:firebolt:capability:localization:postalCode",
+                                "xrn:firebolt:capability:localization:locality"
+                            ]
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            {
+                                "capability": "xrn:firebolt:capability:device:model",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": true
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:keyboard",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": true
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:protocol:bluetoothle",
+                                "role": "use",
+                                "supported": false,
+                                "available": false,
+                                "permitted": false,
+                                "granted": false,
+                                "details": ["unsupported"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:token:device",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": true
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:token:platform",
+                                "role": "use",
+                                "supported": true,
+                                "available": false,
+                                "permitted": false,
+                                "granted": false,
+                                "details": ["unavailable"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:protocol:moca",
+                                "role": "use",
+                                "supported": true,
+                                "available": false,
+                                "permitted": false,
+                                "granted": false,
+                                "details": ["disabled", "unavailable"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:wifi:scan",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": false,
+                                "granted": false,
+                                "details": ["unpermitted"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:localization:postalCode",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": false,
+                                "details": ["ungranted"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:localization:postalCode",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": false,
+                                "details": ["ungranted"]
+                            },
+                            {
+                                "capability": "xrn:firebolt:capability:localization:locality",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": false,
+                                "details": ["grantDenied", "ungranted"]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "request",
+            "summary": "Requests grants for all capability/role combinations in the roles array.",
+            "params": [
+                {
+                    "name": "grants",
+                    "required": true,
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Permission"
+                        },
+                        "minItems": 1
+                    }
+                }
+            ],
+            "result": {
+                "name": "Default Result",
+                "summary": "Returns an array of CapabilityInfo objects for the passed in capabilities.",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
+                    },
+                    "minItems": 1
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default result",
+                    "params": [
+                        {
+                            "name": "grants",
+                            "value": [
+                                {
+                                    "role": "use",
+                                    "capability": "xrn:firebolt:capability:commerce:purchase"
+                                }
+                            ]
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            {
+                                "capability": "xrn:firebolt:capability:commerce:purchase",
+                                "role": "use",
+                                "supported": true,
+                                "available": true,
+                                "permitted": true,
+                                "granted": true
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onAvailable",
+            "tags": [
+                {
+                    "name": "event"
+                }
+            ],
+            "summary": "Listens for all App permitted capabilities to become available.",
+            "params": [
+                {
+                    "name": "capability",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                    }
+                },
+                {
+                    "name": "role",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "summary": "Provides the capability info.",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
+                        },
+                        {
+                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
+                        }
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "name": "Platform token is available",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:token:platform"
+                        },
+                        {
+                            "name": "role",
+                            "value": "use"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default result",
+                        "value": {
+                            "capability": "xrn:firebolt:capability:token:platform",
+                            "role": "use",
+                            "supported": true,
+                            "available": true,
+                            "permitted": false,
+                            "granted": false,
+                            "details": ["unpermitted"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onUnavailable",
+            "tags": [
+                {
+                    "name": "event"
+                }
+            ],
+            "summary": "Listens for all App permitted capabilities to become unavailable.",
+            "params": [
+                {
+                    "name": "capability",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                    }
+                },
+                {
+                    "name": "role",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "summary": "Provides the capability info.",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
+                        },
+                        {
+                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
+                        }
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "name": "Platform token is unavailable.",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:token:platform"
+                        },
+                        {
+                            "name": "role",
+                            "value": "use"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "capability": "xrn:firebolt:capability:token:platform",
+                            "role": "use",
+                            "supported": true,
+                            "available": false,
+                            "permitted": false,
+                            "granted": false,
+                            "details": ["unavailable"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onGranted",
+            "tags": [
+                {
+                    "name": "event"
+                }
+            ],
+            "summary": "Listens for all App permitted capabilities to become granted.",
+            "params": [
+                {
+                    "name": "capability",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                    }
+                },
+                {
+                    "name": "role",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "summary": "Provides the capability info.",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
+                        },
+                        {
+                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
+                        }
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "name": "Postal code granted",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:localization:postalCode"
+                        },
+                        {
+                            "name": "role",
+                            "value": "use"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "capability": "xrn:firebolt:capability:localization:postalCode",
+                            "role": "use",
+                            "supported": true,
+                            "available": true,
+                            "permitted": true,
+                            "granted": true
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onRevoked",
+            "tags": [
+                {
+                    "name": "event"
+                }
+            ],
+            "summary": "Listens for all App permitted capabilities to become revoked.",
+            "params": [
+                {
+                    "name": "capability",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                    }
+                },
+                {
+                    "name": "role",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "summary": "Provides the capability info.",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
+                        },
+                        {
+                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
+                        }
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "name": "Postal code revoked",
+                    "params": [
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:localization:postalCode"
+                        },
+                        {
+                            "name": "role",
+                            "value": "use"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "capability": "xrn:firebolt:capability:localization:postalCode",
+                            "role": "use",
+                            "supported": true,
+                            "available": true,
+                            "permitted": true,
+                            "granted": false,
+                            "details": ["grantDenied"]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -35,7 +35,7 @@
   "dependencies": {},
   "devDependencies": {
     "@firebolt-js/openrpc": "1.6.1",
-    "@firebolt-js/schemas": "0.4.0",
+    "@firebolt-js/schemas": "git://github.com/rdkcentral/firebolt-schemas.git#bumblebee",
     "ajv": "^6.12.6",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.3",
