@@ -466,13 +466,6 @@
                     "schema": {
                         "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
                     }
-                },
-                {
-                    "name": "role",
-                    "required": true,
-                    "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
-                    }
                 }
             ],
             "result": {
@@ -532,13 +525,6 @@
                     "schema": {
                         "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
                     }
-                },
-                {
-                    "name": "role",
-                    "required": true,
-                    "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
-                    }
                 }
             ],
             "result": {
@@ -593,17 +579,17 @@
             "summary": "Listens for all App permitted capabilities to become granted.",
             "params": [
                 {
-                    "name": "capability",
-                    "required": true,
-                    "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
-                    }
-                },
-                {
                     "name": "role",
                     "required": true,
                     "schema": {
                         "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                    }
+                },
+                {
+                    "name": "capability",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
                     }
                 }
             ],
