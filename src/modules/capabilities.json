@@ -519,7 +519,6 @@
                         "value": [
                             {
                                 "capability": "xrn:firebolt:capability:commerce:purchase",
-                                "role": "use",
                                 "supported": true,
                                 "available": true,
                                 "use": {
