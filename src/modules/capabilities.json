@@ -247,13 +247,6 @@
             "summary": "Returns an array of CapabilityInfo objects for the passed in capabilities.",
             "params": [
                 {
-                    "name": "role",
-                    "required": true,
-                    "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
-                    }
-                },
-                {
                     "name": "capabilities",
                     "required": true,
                     "schema": {
@@ -281,10 +274,6 @@
                     "name": "Default result",
                     "params": [
                         {
-                            "name": "role",
-                            "value": "use"
-                        },
-                        {
                             "name": "capabilities",
                             "value": [
                                 "xrn:firebolt:capability:device:model",
@@ -304,89 +293,179 @@
                         "value": [
                             {
                                 "capability": "xrn:firebolt:capability:device:model",
-                                "role": "use",
                                 "supported": true,
                                 "available": true,
-                                "permitted": true,
-                                "granted": true
+                                "use": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "manage": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "provide": {
+                                    "permitted": true,
+                                    "granted": true
+                                }
                             },
                             {
                                 "capability": "xrn:firebolt:capability:keyboard",
-                                "role": "use",
                                 "supported": true,
                                 "available": true,
-                                "permitted": true,
-                                "granted": true
+                                "use": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "manage": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "provide": {
+                                    "permitted": true,
+                                    "granted": true
+                                }
                             },
                             {
                                 "capability": "xrn:firebolt:capability:protocol:bluetoothle",
-                                "role": "use",
                                 "supported": false,
                                 "available": false,
-                                "permitted": false,
-                                "granted": false,
+                                "use": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "manage": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "provide": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
                                 "details": ["unsupported"]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:token:device",
-                                "role": "use",
                                 "supported": true,
                                 "available": true,
-                                "permitted": true,
-                                "granted": true
+                                "use": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "manage": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "provide": {
+                                    "permitted": true,
+                                    "granted": true
+                                }
                             },
                             {
                                 "capability": "xrn:firebolt:capability:token:platform",
-                                "role": "use",
                                 "supported": true,
                                 "available": false,
-                                "permitted": false,
-                                "granted": false,
+                                "use": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "manage": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "provide": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
                                 "details": ["unavailable"]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:protocol:moca",
-                                "role": "use",
                                 "supported": true,
                                 "available": false,
-                                "permitted": false,
-                                "granted": false,
+                                "use": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "manage": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "provide": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
                                 "details": ["disabled", "unavailable"]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:wifi:scan",
-                                "role": "use",
                                 "supported": true,
                                 "available": true,
-                                "permitted": false,
-                                "granted": false,
+                                "use": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "manage": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "provide": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
                                 "details": ["unpermitted"]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:localization:postalCode",
-                                "role": "use",
                                 "supported": true,
                                 "available": true,
-                                "permitted": true,
-                                "granted": false,
+                                "use": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "manage": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "provide": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
                                 "details": ["ungranted"]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:localization:postalCode",
-                                "role": "use",
                                 "supported": true,
                                 "available": true,
-                                "permitted": true,
-                                "granted": false,
+                                "use": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "manage": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "provide": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
                                 "details": ["ungranted"]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:localization:locality",
-                                "role": "use",
                                 "supported": true,
                                 "available": true,
-                                "permitted": true,
-                                "granted": false,
+                                "use": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "manage": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "provide": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
                                 "details": ["grantDenied", "ungranted"]
                             }
                         ]
@@ -443,8 +522,18 @@
                                 "role": "use",
                                 "supported": true,
                                 "available": true,
-                                "permitted": true,
-                                "granted": true
+                                "use": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "manage": {
+                                    "permitted": true,
+                                    "granted": true
+                                },
+                                "provide": {
+                                    "permitted": true,
+                                    "granted": true
+                                }
                             }
                         ]
                     }
@@ -472,14 +561,7 @@
                 "name": "value",
                 "summary": "Provides the capability info.",
                 "schema": {
-                    "oneOf": [
-                        {
-                            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-                        },
-                        {
-                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
-                        }
-                    ]
+                    "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
                 }
             },
             "examples": [
@@ -489,21 +571,26 @@
                         {
                             "name": "capability",
                             "value": "xrn:firebolt:capability:token:platform"
-                        },
-                        {
-                            "name": "role",
-                            "value": "use"
                         }
                     ],
                     "result": {
                         "name": "Default result",
                         "value": {
                             "capability": "xrn:firebolt:capability:token:platform",
-                            "role": "use",
                             "supported": true,
                             "available": true,
-                            "permitted": false,
-                            "granted": false,
+                            "use": {
+                                "permitted": true,
+                                "granted": true
+                            },
+                            "manage": {
+                                "permitted": true,
+                                "granted": true
+                            },
+                            "provide": {
+                                "permitted": true,
+                                "granted": true
+                            },
                             "details": ["unpermitted"]
                         }
                     }
@@ -531,14 +618,7 @@
                 "name": "value",
                 "summary": "Provides the capability info.",
                 "schema": {
-                    "oneOf": [
-                        {
-                            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-                        },
-                        {
-                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
-                        }
-                    ]
+                    "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
                 }
             },
             "examples": [
@@ -548,21 +628,26 @@
                         {
                             "name": "capability",
                             "value": "xrn:firebolt:capability:token:platform"
-                        },
-                        {
-                            "name": "role",
-                            "value": "use"
                         }
                     ],
                     "result": {
                         "name": "Default Result",
                         "value": {
                             "capability": "xrn:firebolt:capability:token:platform",
-                            "role": "use",
                             "supported": true,
                             "available": false,
-                            "permitted": false,
-                            "granted": false,
+                            "use": {
+                                "permitted": true,
+                                "granted": true
+                            },
+                            "manage": {
+                                "permitted": true,
+                                "granted": true
+                            },
+                            "provide": {
+                                "permitted": true,
+                                "granted": true
+                            },
                             "details": ["unavailable"]
                         }
                     }
@@ -597,14 +682,7 @@
                 "name": "value",
                 "summary": "Provides the capability info.",
                 "schema": {
-                    "oneOf": [
-                        {
-                            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-                        },
-                        {
-                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
-                        }
-                    ]
+                    "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
                 }
             },
             "examples": [
@@ -612,23 +690,32 @@
                     "name": "Postal code granted",
                     "params": [
                         {
-                            "name": "capability",
-                            "value": "xrn:firebolt:capability:localization:postalCode"
-                        },
-                        {
                             "name": "role",
                             "value": "use"
+                        },
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:localization:postalCode"
                         }
                     ],
                     "result": {
                         "name": "Default Result",
                         "value": {
                             "capability": "xrn:firebolt:capability:localization:postalCode",
-                            "role": "use",
                             "supported": true,
                             "available": true,
-                            "permitted": true,
-                            "granted": true
+                            "use": {
+                                "permitted": true,
+                                "granted": true
+                            },
+                            "manage": {
+                                "permitted": true,
+                                "granted": true
+                            },
+                            "provide": {
+                                "permitted": true,
+                                "granted": true
+                            }
                         }
                     }
                 }
@@ -644,17 +731,17 @@
             "summary": "Listens for all App permitted capabilities to become revoked.",
             "params": [
                 {
-                    "name": "capability",
-                    "required": true,
-                    "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
-                    }
-                },
-                {
                     "name": "role",
                     "required": true,
                     "schema": {
                         "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                    }
+                },
+                {
+                    "name": "capability",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
                     }
                 }
             ],
@@ -662,14 +749,7 @@
                 "name": "value",
                 "summary": "Provides the capability info.",
                 "schema": {
-                    "oneOf": [
-                        {
-                            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-                        },
-                        {
-                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
-                        }
-                    ]
+                    "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/CapabilityInfo"
                 }
             },
             "examples": [
@@ -677,23 +757,32 @@
                     "name": "Postal code revoked",
                     "params": [
                         {
-                            "name": "capability",
-                            "value": "xrn:firebolt:capability:localization:postalCode"
-                        },
-                        {
                             "name": "role",
                             "value": "use"
+                        },
+                        {
+                            "name": "capability",
+                            "value": "xrn:firebolt:capability:localization:postalCode"
                         }
                     ],
                     "result": {
                         "name": "Default Result",
                         "value": {
                             "capability": "xrn:firebolt:capability:localization:postalCode",
-                            "role": "use",
                             "supported": true,
                             "available": true,
-                            "permitted": true,
-                            "granted": false,
+                            "use": {
+                                "permitted": true,
+                                "granted": true
+                            },
+                            "manage": {
+                                "permitted": true,
+                                "granted": true
+                            },
+                            "provide": {
+                                "permitted": true,
+                                "granted": true
+                            },
                             "details": ["grantDenied"]
                         }
                     }
