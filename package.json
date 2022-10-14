@@ -22,7 +22,8 @@
     "publish:docs": "npm run build:docs && sh push-docs.sh",
     "publish:word": "mkdir -p dist/word/schemas && cd dist/docs && find . -iname \"*.md\" -type f -exec sh -c 'pandoc \"${0}\" -o \"../word/${0%.md}.docx\"' {} \\;",
     "everything": "npm run fs:setup && npm run validate:each && npm run build:openrpc && npm run validate:assembled && npm run build:sdk && npm run dist:sdk && npm run dist:declarations && npm run test && npm run build:docs && npm run dist:docs",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepack": "npm run fs:setup && npm run build:openrpc && npm run build:sdk && npm run dist:sdk && npm run dist:declarations"
   },
   "repository": {
     "type": "git",
