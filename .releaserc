@@ -29,7 +29,6 @@
       "@semantic-release/npm",
       {
         "npmPublish": false,
-        "tarBallDir": "dist"
       }
     ],
     [
@@ -37,7 +36,14 @@
     ],
     [
       "@semantic-release/github", {
-        "assets": "dist/*.tgz"
+        "assets": [
+          "package.json",
+          "README.md",
+          "dist/**/*,
+          "NOTICE",
+          "LICENSE",
+          "CHANGELOG.md"
+         ]
       }
     ]
   ]
