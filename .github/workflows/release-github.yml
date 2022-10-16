@@ -43,6 +43,4 @@ jobs:
       - name: Release to GitHub
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
-        run: |
-          npm pack
-          npx semantic-release
+        run: npx semantic-release
