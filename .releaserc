@@ -39,7 +39,7 @@
         "assets": [
           "package.json",
           "README.md",
-          "dist/**/*,
+          "dist/**/*",
           "NOTICE",
           "LICENSE",
           "CHANGELOG.md"
