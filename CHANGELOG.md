@@ -12,6 +12,13 @@
 
 * Build SDK before npm publish ([#64](https://github.com/rdkcentral/firebolt-core-sdk/issues/64)) ([f221fa3](https://github.com/rdkcentral/firebolt-core-sdk/commit/f221fa34e24e29e86487b1ec98468b64f495d134))
 
+# [0.9.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0-next.1...v0.9.0-next.2) (2022-10-16)
+
+
+### Bug Fixes
+
+* Build SDK before npm publish ([#64](https://github.com/rdkcentral/firebolt-core-sdk/issues/64)) ([f221fa3](https://github.com/rdkcentral/firebolt-core-sdk/commit/f221fa34e24e29e86487b1ec98468b64f495d134))
+
 # [0.9.0-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.8.0...v0.9.0-next.1) (2022-09-14)
 
 ### Bug Fixes
