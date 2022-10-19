@@ -18,6 +18,7 @@
 
 /* ${IMPORTS} */
 import { ready as logReady } from '../Metrics/index.mjs'
+import { prioritize } from '../Events/index.mjs'
 
 /* ${INITIALIZATION} */
 
@@ -29,7 +30,7 @@ export const store = {
 }
 
 async function ready() {
-  await Events.listen('Lifecycle', (event, value) => {
+  await prioritize('Lifecycle', (event, value) => {
     store._current = event
   })
   await Transport.send('lifecycle', 'ready', {})
