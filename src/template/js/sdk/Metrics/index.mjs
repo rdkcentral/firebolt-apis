@@ -16,14 +16,35 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import accessibility from '../Accessibility'
-import device from '../Device'
-import localization from '../Localization'
+/* ${IMPORTS} */
+
+/* ${INITIALIZATION} */
+
+function ready() {
+  return Transport.send('metrics', 'ready', {})
+}
+
+function signIn() {
+  return Transport.send('metrics', 'signIn', {})
+}
+
+function signOut() {
+  return Transport.send('metrics', 'signOut', {})
+}
 
 
-// public API
+/* ${METHODS} */
+
 export default {
-  Localization: localization,
-  Device: device,
-  Accessibility: accessibility,
+
+  /* ${EVENTS} */
+  /* ${ENUMS} */
+  /* ${METHOD_LIST} */
+
+}
+
+export {
+  ready,
+  signIn,
+  signOut
 }

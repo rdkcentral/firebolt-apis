@@ -16,24 +16,25 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import Transport from '../Transport'
-import { InternalMetrics } from '../Metrics'
 /* ${IMPORTS} */
 
 /* ${INITIALIZATION} */
 
-function ready() {
-  return Transport.send('metrics', 'ready', {})
+function version() {
+  return new Promise( (resolve, reject) => {
+      Transport.send('device', 'version').then( v => {
+          v = v || {}
+          v.sdk = v.sdk || {}
+          v.sdk.major = parseInt('${major}')
+          v.sdk.minor = parseInt('${minor}')
+          v.sdk.patch = parseInt('${patch}')
+          v.sdk.readable = '${readable}'
+          resolve(v)    
+      }).catch(error => {
+          reject(error)
+      })
+  })
 }
-
-function signIn() {
-  return Transport.send('metrics', 'signIn', {})
-}
-
-function signOut() {
-  return Transport.send('metrics', 'signOut', {})
-}
-
 
 /* ${METHODS} */
 
@@ -41,12 +42,8 @@ export default {
 
   /* ${EVENTS} */
   /* ${ENUMS} */
+
+  version,
   /* ${METHOD_LIST} */
 
-}
-
-export {
-  ready,
-  signIn,
-  signOut
 }

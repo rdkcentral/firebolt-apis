@@ -16,35 +16,53 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import Transport from '../Transport'
 /* ${IMPORTS} */
+import { ready as logReady } from '../Metrics/index.mjs'
 
 /* ${INITIALIZATION} */
 
-function version() {
-  return new Promise( (resolve, reject) => {
-      Transport.send('device', 'version').then( v => {
-          v = v || {}
-          v.sdk = v.sdk || {}
-          v.sdk.major = parseInt('${major}')
-          v.sdk.minor = parseInt('${minor}')
-          v.sdk.patch = parseInt('${patch}')
-          v.sdk.readable = '${readable}'
-          resolve(v)    
-      }).catch(error => {
-          reject(error)
-      })
+export const store = {
+  _current: 'initializing',
+  get current() {
+    return this._current
+  }
+}
+
+async function ready() {
+  await Events.listen('Lifecycle', (event, value) => {
+    store._current = event
+  })
+  await Transport.send('lifecycle', 'ready', {})
+  setTimeout(_ => {
+    logReady()
   })
 }
 
 /* ${METHODS} */
 
+function state() {
+  return store.current
+}
+
+function finished() {
+  if (store.current === 'unloading') {
+    return Transport.send('lifecycle', 'finished')
+  } else {
+    throw 'Cannot call finished() except when in the unloading transition'
+  }
+}
+
+// public API
 export default {
 
   /* ${EVENTS} */
+
   /* ${ENUMS} */
 
-  version,
+  ready,
+  state,
+  finished,
+
   /* ${METHOD_LIST} */
 
 }

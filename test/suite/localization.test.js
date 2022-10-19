@@ -17,7 +17,7 @@
  */
 
 import Setup from '../Setup'
-import { Localization } from '../../dist/firebolt.js'
+import { Localization } from '../../dist/lib/firebolt.mjs'
 
 test('locality to be Philadelphia', () => {
     return Localization.locality().then( locality => {

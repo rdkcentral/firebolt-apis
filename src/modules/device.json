@@ -298,15 +298,29 @@
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
               "description": "The Firebolt SDK version"
             },
+            "api": {
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+              "description": "The lateset Firebolt API vresion supported by the curent device."
+            },
+            "firmware": {
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+              "description": "The device firmware version."
+            },
             "os": {
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "The Firebolt OS version"
+              "description": "**Deprecated**"
             },
             "debug": {
               "type": "string",
               "description": "Detail version as a string, for debugging purposes"
             }
-          }
+          },
+          "required": [
+            "sdk",
+            "api",
+            "firmware",
+            "os"
+          ]
         }
       },
       "examples": [
@@ -318,9 +332,21 @@
             "value": {
               "sdk": {
                 "major": 0,
-                "minor": 5,
+                "minor": 8,
                 "patch": 0,
-                "readable": "Firebolt JS SDK v0.5.0"
+                "readable": "Firebolt JS SDK v0.8.0"
+              },
+              "api": {
+                "major": 0,
+                "minor": 8,
+                "patch": 0,
+                "readable": "Firebolt API v0.8.0"
+              },
+              "firmware": {
+                "major": 1,
+                "minor": 2,
+                "patch": 3,
+                "readable": "Device Firmware v1.2.3"
               },
               "os": {
                 "major": 0,
@@ -328,7 +354,7 @@
                 "patch": 0,
                 "readable": "Firebolt OS v0.1.0"
               },
-              "debug": ""
+              "debug": "Non-parsable build info for error logging only."
             }
           }
         }
@@ -619,7 +645,11 @@
             "type": {
               "$ref": "#/components/schemas/NetworkType"
             }
-          }
+          },
+          "required": [
+            "state",
+            "type"
+          ]
         }
       },
       "examples": [
@@ -685,9 +715,6 @@
             }
           }
         ]
-      },
-      "AudioProfile": {
-        "$ref": "https://meta.comcast.com/firebolt/types#/definitions/AudioProfile"
       }
     }
   }

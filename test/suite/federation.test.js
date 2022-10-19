@@ -18,9 +18,8 @@
 
 // NOTE: this test SHOULD NOT include Setup, since it does it's own
 // setup for Firebolt SDK/TL handshake
-const win = globalThis || window
 
-import { Lifecycle, Discovery } from '../../dist/firebolt.js'
+import { Lifecycle, Discovery } from '../../dist/lib/firebolt.mjs'
 
 // holds test transport layer state, e.g. callback
 const state = {
@@ -95,7 +94,7 @@ const transport = {
             else if (correlationId && (json.params.correlationId === 'this-will-fail')) {
 //                entityInfoReceived = true
             }
-            else if (!json.params.correlationId && json.params.data.entity.identifiers.entityId === "PUSH:345") {
+            else if (!json.params.correlationId && json.params.result.entity.identifiers.entityId === "PUSH:345") {
                 entityInfoPushed = true
             }
             state.callback(JSON.stringify({
@@ -111,7 +110,7 @@ const transport = {
     }
 }
 
-win.__firebolt.setTransportLayer(transport)
+window.__firebolt.setTransportLayer(transport)
 
 // Setup a callback that returns the correct payload
 Discovery.entityInfo((parameters) => {

@@ -18,15 +18,9 @@
 
 // NOTE: this test SHOULD NOT include Setup, since it does it's own
 // setup for Firebolt SDK/TL handshake
-const win = globalThis || window
-if (!win.__firebolt) {
-    win.__firebolt = {}
-}
 
-// holds test transport layer state, e.g. callback
-const state = {
 
-}
+import transport from '../helpers/synchronous-transport.mjs'
 
 // These all get set synchronously, so we'll update them as they happen
 let getTransportLayerCalled = false
@@ -35,55 +29,45 @@ let inactiveListened = false
 let callbackWiredUp = false
 let postReadyState = null
 
-// Wire up our synchronous transport layer before the SDK loads
-beforeAll( () => {
-    win.__firebolt.getTransportLayer = function() {
+transport.onSend(json => {
+    // we'll assert on this later...
+    sendCalled = true
+    if (json.method.toLowerCase() === 'device.name') {
         // we'll assert on this later...
-        getTransportLayerCalled = true
-        return {
-            send: function(message) {
-                // we'll assert on this later...
-                sendCalled = true
-                const json = JSON.parse(message)
-                if (json.method.toLowerCase() === 'lifecycle.oninactive') {
-                    // we'll assert on this later...
-                    inactiveListened = true
+        inactiveListened = true
 
-                    if (state.callback) {
-                        // we'll assert on this later...
-                        callbackWiredUp = true
-                        let response = {
-                            jsonrpc: '2.0',
-                            id: json.id,
-                            result: {
-                                state: 'inactive'
-                            }
-                        }
-                        // catching errors, so all tests don't fail if this breaks
-                        try {
-                            // send back the onInactive event immediately, to test for race conditions
-                            state.callback(JSON.stringify(response))
-                        }
-                        catch (err) {
-                            // fail silenetly (the boolean-based tests below will figure it out...)
-                        }
-                    }
-                }
-            },
-            receive: function(callback) {
-                // store the callback
-                state.callback = callback
-            }
+        // we'll assert on this later...
+        callbackWiredUp = true
+        let response = {
+            jsonrpc: '2.0',
+            id: json.id,
+            result: "Test Name"
+        }
+        // catching errors, so all tests don't fail if this breaks
+        try {
+            // send back the onInactive event immediately, to test for race conditions
+            transport.response(response)
+        }
+        catch (err) {
+            // fail silenetly (the boolean-based tests below will figure it out...)
         }
     }
+})
 
-    // import Lifecycle (using require was the ony way i could get jest to load it AFTER this `beforeAll` code)
-    const { Lifecycle } = require('../../dist/firebolt.js')    
-    Lifecycle.ready()
+import { Lifecycle } from '../../dist/lib/firebolt.mjs'
+import { Device } from '../../dist/lib/firebolt.mjs'
+
+Lifecycle.ready()
+
+// Wire up our synchronous transport layer before the SDK loads
+beforeAll( () => {
+    return new Promise( (resolve, reject) => {
+        setTimeout(resolve, 1000)
+    })
 })
 
 test('Transport injected before SDK', () => {
-    expect(getTransportLayerCalled).toBe(true)
+    expect(transport.instantiatedBeforeSdk()).toBe(true)
 });
 
 test('Transport send method working', () => {
@@ -91,9 +75,13 @@ test('Transport send method working', () => {
 });
 
 test('Transport was sent `Lifecycle.onInactive` listener', () => {
-    expect(inactiveListened).toBe(true)
+    expect(!!transport.history().find(json => json.method.toLowerCase() === 'lifecycle.oninactive')).toBe(true)
 });
 
 test('Transport `receive` callback wired up', () => {
-    expect(callbackWiredUp).toBe(true)
+    return Device.name().then(name => {
+        expect(name).toBe('Test Name')
+    })
 });
+
+
