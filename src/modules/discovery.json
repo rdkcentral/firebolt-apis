@@ -1532,10 +1532,13 @@
             "type": "string",
             "enum": [
               "channel-lineup",
-              "program-catalog"
+              "program-lineup"
             ]
           },
           "id": {
+            "type": "string"
+          },
+          "catalogId": {
             "type": "string"
           },
           "startTime": {
