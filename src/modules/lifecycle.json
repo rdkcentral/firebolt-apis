@@ -15,7 +15,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:lifecycle:basic"
+            "xrn:firebolt:capability:lifecycle:ready"
           ]
         },
         {
@@ -47,7 +47,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:lifecycle:basic"
+            "xrn:firebolt:capability:lifecycle:state"
           ]
         }
       ],
@@ -106,7 +106,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:lifecycle:basic"
+            "xrn:firebolt:capability:lifecycle:state"
           ]
         }
       ],
@@ -142,7 +142,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:lifecycle:basic"
+            "xrn:firebolt:capability:lifecycle:state"
           ]
         }
       ],
@@ -174,7 +174,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:lifecycle:basic"
+            "xrn:firebolt:capability:lifecycle:state"
           ]
         }
       ],
@@ -209,7 +209,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:lifecycle:basic"
+            "xrn:firebolt:capability:lifecycle:state"
           ]
         }
       ],
@@ -256,7 +256,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:lifecycle:background"
+            "xrn:firebolt:capability:lifecycle:state"
           ]
         }
       ],
@@ -291,7 +291,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:lifecycle:suspend"
+            "xrn:firebolt:capability:lifecycle:state"
           ]
         }
       ],
@@ -326,7 +326,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:lifecycle:basic"
+            "xrn:firebolt:capability:lifecycle:state"
           ]
         }
       ],
