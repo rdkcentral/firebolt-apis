@@ -18,7 +18,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:core:public"
+            "xrn:firebolt:capability:token:platform"
           ]
         }
       ],
@@ -159,8 +159,40 @@
       ]
     },
     {
+      "name": "session",
+      "summary": "Get a destributor session token.",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:token:session"
+          ]
+        }
+      ],
+      "params": [
+      ],
+      "result": {
+        "name": "token",
+        "summary": "the token value",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "name": "Acquire a distributor session token",
+          "params": [
+          ],
+          "result": {
+            "name": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          }
+        }
+      ]
+    },
+    {
       "name": "platform",
-      "summary": "Get a Firebolt platform token.",
+      "summary": "Get a Firebolt Access Token platform token.",
       "tags": [
         {
           "name": "capabilities",
@@ -180,7 +212,7 @@
       },
       "examples": [
         {
-          "name": "Acquire a Firebolt root device identity (XACT) token",
+          "name": "Acquire a Firebolt Access Token",
           "params": [
           ],
           "result": {

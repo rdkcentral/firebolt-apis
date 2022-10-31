@@ -51,9 +51,7 @@
         },
         {
           "name": "capabilities",
-          "x-provides": [
-            "xrn:firebolt:capability:discovery:entity-info"
-          ]
+          "x-provides": "xrn:firebolt:capability:discovery:entity-info"
         }
       ],
       "summary": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow.",
@@ -366,9 +364,7 @@
         },
         {
           "name": "capabilities",
-          "x-provides": [
-            "xrn:firebolt:capability:discovery:purchased-content"
-          ]
+          "x-provides": "xrn:firebolt:capability:discovery:purchased-content"
         }
       ],
       "summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
@@ -469,9 +465,7 @@
         },
         {
           "name": "capabilities",
-          "x-provides": [
-            "xrn:firebolt:capability:discovery:watched"
-          ]
+          "x-provides": "xrn:firebolt:capability:discovery:watched"
         }
       ],
       "params": [
@@ -548,9 +542,7 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-provides": [
-            "xrn:firebolt:capability:discovery:watch-next"
-          ]
+          "x-provides": "xrn:firebolt:capability:discovery:watch-next"
         }
       ],
       "params": [
@@ -639,9 +631,7 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-provides": [
-            "xrn:firebolt:capability:discovery:entitlements"
-          ]
+          "x-provides": "xrn:firebolt:capability:discovery:entitlements"
         }
       ],
       "summary": "Inform the platform of the users latest entitlements w/in this app",
@@ -698,7 +688,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:discovery:launch"
+            "xrn:firebolt:capability:lifecycle:launch"
           ]
         }
       ],
@@ -1028,9 +1018,7 @@
         },
         {
           "name": "capabilities",
-          "x-provides": [
-            "xrn:firebolt:capability:discovery:sign-in-status"
-          ]
+          "x-provides": "xrn:firebolt:capability:discovery:sign-in-status"
         }
       ],
       "summary": "Inform the platform that your user is signed in, for increased visiblity in search & discovery.",
@@ -1091,9 +1079,7 @@
         },
         {
           "name": "capabilities",
-          "x-provides": [
-            "xrn:firebolt:capability:discovery:sign-in-status"
-          ]
+          "x-provides": "xrn:firebolt:capability:discovery:sign-in-status"
         }
       ],
       "summary": "Inform the platform that your user has signed out and that entitlements may no longer be valid.",
