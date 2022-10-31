@@ -1,3 +1,10 @@
+# [0.9.0-next.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0-next.2...v0.9.0-next.3) (2022-10-19)
+
+
+### Bug Fixes
+
+* Don't ignore source files when pulbishing to npm [skip ci] ([cb26ff2](https://github.com/rdkcentral/firebolt-core-sdk/commit/cb26ff2e09416613c5557e76966eccbe0ec66d54))
+
 # [0.9.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0-next.1...v0.9.0-next.2) (2022-10-16)
 
 
