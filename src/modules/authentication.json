@@ -81,7 +81,7 @@
           }
         },
         {
-          "name": "Acquire a Firebolt device identity (XACT) token",
+          "name": "Acquire a Firebolt device identity token",
           "params": [
             {
               "name": "type",
@@ -148,7 +148,7 @@
       },
       "examples": [
         {
-          "name": "Acquire a Firebolt device identity (XACT) token",
+          "name": "Acquire a Firebolt device identity token",
           "params": [
           ],
           "result": {
@@ -212,7 +212,7 @@
       },
       "examples": [
         {
-          "name": "Acquire a Firebolt root device identity (XACT) token",
+          "name": "Acquire a Firebolt root device identity token",
           "params": [
           ],
           "result": {
