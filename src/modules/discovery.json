@@ -465,7 +465,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": "xrn:firebolt:capability:discovery:watched"
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:watched"
+          ]
         }
       ],
       "params": [
@@ -542,7 +544,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": "xrn:firebolt:capability:discovery:watch-next"
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:watch-next"
+          ]
         }
       ],
       "params": [
@@ -631,7 +635,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": "xrn:firebolt:capability:discovery:entitlements"
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:entitlements"
+          ]
         }
       ],
       "summary": "Inform the platform of the users latest entitlements w/in this app",
@@ -1018,7 +1024,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": "xrn:firebolt:capability:discovery:sign-in-status"
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:sign-in-status"
+          ]
         }
       ],
       "summary": "Inform the platform that your user is signed in, for increased visiblity in search & discovery.",
@@ -1079,7 +1087,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": "xrn:firebolt:capability:discovery:sign-in-status"
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:sign-in-status"
+          ]
         }
       ],
       "summary": "Inform the platform that your user has signed out and that entitlements may no longer be valid.",
