@@ -191,38 +191,6 @@
       ]
     },
     {
-      "name": "platform",
-      "summary": "Get a Firebolt Access Token platform token.",
-      "tags": [
-        {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:token:platform"
-          ]
-        }
-      ],
-      "params": [
-      ],
-      "result": {
-        "name": "token",
-        "summary": "the token value",
-        "schema": {
-          "type": "string"
-        }
-      },
-      "examples": [
-        {
-          "name": "Acquire a Firebolt Access Token",
-          "params": [
-          ],
-          "result": {
-            "name": "token",
-            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-          }
-        }
-      ]
-    },
-    {
       "name": "root",
       "summary": "Get a root device token.",
       "tags": [

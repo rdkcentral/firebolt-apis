@@ -21,7 +21,9 @@
       "result": {
         "name": "locality",
         "summary": "the device city",
-        "schema": { "type": "string" }
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Locality"
+        }
       },
       "examples": [
         {
@@ -37,6 +39,9 @@
     {
       "name": "postalCode",
       "tags": [
+        {
+          "name": "property:readonly"
+        },
         {
           "name": "capabilities",
           "x-uses": [
@@ -66,6 +71,9 @@
       "name": "countryCode",
       "tags": [
         {
+          "name": "property:readonly"
+        },
+        {
           "name": "capabilities",
           "x-uses": [
             "xrn:firebolt:capability:localization:country-code"
@@ -77,7 +85,9 @@
       "result": {
         "name": "code",
         "summary": "the device country code",
-        "schema": { "type": "string", "minLength": 2, "maxLength": 3 }
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/CountryCode"
+        }
       },
       "examples": [
         {
@@ -108,7 +118,9 @@
       "result": {
         "name": "lang",
         "summary": "the device language",
-        "schema": { "type": "string" }
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Language"
+        }
       },
       "examples": [
         {
@@ -125,6 +137,9 @@
       "name": "locale",
       "tags": [
         {
+          "name": "property:readonly"
+        },
+        {
           "name": "capabilities",
           "x-uses": [
             "xrn:firebolt:capability:localization:locale"
@@ -136,7 +151,9 @@
       "result": {
         "name": "locale",
         "summary": "the device locale",
-        "schema": { "type": "string" }
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Locale"
+        }
       },
       "examples": [
         {
