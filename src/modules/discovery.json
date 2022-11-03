@@ -653,6 +653,58 @@
       ]
     },
     {
+      "name": "availabilities",
+      "summary": "Inform the platform of the users latest availabilities w/in this app's catalog",
+      "tags": [],
+      "params": [
+        {
+          "name": "availabilities",
+          "summary": "Array of availability objects",
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Availability"
+            }
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Update user's availabilities",
+          "params": [
+            {
+              "name": "availabilities",
+              "value": [
+                {
+                  "type": "channel-lineup",
+                  "id": "partner.com/availability/123",
+                  "startTime": "2021-04-23T18:25:43.511Z",
+                  "endTime": "2021-04-23T18:25:43.511Z"
+                },
+                {
+                  "type": "channel-lineup",
+                  "id": "partner.com/availability/456",
+                  "startTime": "2021-04-23T18:25:43.511Z",
+                  "endTime": "2021-04-23T18:25:43.511Z"
+                }
+              ]
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        }
+      ]
+    },        
+    {
       "name": "launch",
       "summary": "Launch or foreground the specified app, and optionally instructs it to navigate to the specified user action",
       "params": [
@@ -1471,7 +1523,45 @@
         },
         "required": ["expires", "totalCount", "entries"],
         "additionalProperties": false
-      }
+      },
+      "Availability": {
+        "title": "Availability",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "channel-lineup",
+              "program-lineup"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "catalogId": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "type", "id"
+        ]
+      },
+      "TuneChannels": {
+        "title": "TuneChannels",
+        "description": "An enumeration of xrn values for the TuneIntent that have special meaning.",
+        "type": "string",
+        "enum": [
+          "xrn:firebolt:channel:any"
+        ]
+      }  
     }
   }
 }
