@@ -113,7 +113,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:advertising:configuration"
+            "xrn:firebolt:capability:advertising:identifier"
           ]
         }
       ],
