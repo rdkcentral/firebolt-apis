@@ -15,13 +15,19 @@
           "name": "deprecated",
           "x-alternative": "Accessibility.closedCaptionsSettings()",
           "x-since": "0.6.0"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:closedcaptions"
+          ]
         }
       ],
       "result": {
         "name": "closedCaptionsSettings",
         "summary": "the closed captions settings",
         "schema": {
-          "$ref": "#/components/schemas/ClosedCaptionsSettings"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/ClosedCaptionsSettings"
         }
       },
       "examples": [
@@ -56,13 +62,19 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:closedcaptions"
+          ]
         }
       ],
       "result": {
         "name": "closedCaptionsSettings",
         "summary": "the closed captions settings",
         "schema": {
-          "$ref": "#/components/schemas/ClosedCaptionsSettings"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/ClosedCaptionsSettings"
         }
       },
       "examples": [
@@ -99,6 +111,12 @@
           "name": "deprecated",
           "x-alternative": "Accessibility.voiceGuidanceSettings()",
           "x-since": "0.6.0"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:voiceguidance"
+          ]
         }
       ],
       "result": {
@@ -129,7 +147,13 @@
       "tags": [
         {
           "name": "property:readonly"
-        }
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:voiceguidance"
+          ]
+        }        
       ],
       "result": {
         "name": "settings",
@@ -155,62 +179,6 @@
   ],
   "components": {
     "schemas": {
-      "ClosedCaptionsStyles": {
-        "title": "ClosedCaptionsStyles",
-        "type": "object",
-        "description": "The default styles to use when displaying closed-captions",
-        "properties": {
-          "fontFamily": {
-            "type": "string"
-          },
-          "fontSize": {
-            "type": "number",
-            "minimum": 0
-          },
-          "fontColor": {
-            "type": "string"
-          },
-          "fontEdge": {
-            "type": "string"
-          },
-          "fontEdgeColor": {
-            "type": "string"
-          },
-          "fontOpacity": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 100
-          },
-          "backgroundColor": {
-            "type": "string"
-          },
-          "backgroundOpacity": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 100
-          },
-          "textAlign": {
-            "type": "string"
-          },
-          "textAlignVertical": {
-            "type": "string"
-          }
-        }
-      },
-      "ClosedCaptionsSettings": {
-        "title": "ClosedCaptionsSettings",
-        "type": "object",
-        "required": ["enabled", "styles"],
-        "properties": {
-          "enabled": {
-            "type": "boolean",
-            "description": "Whether or not closed-captions should be enabled by default"
-          },
-          "styles": {
-            "$ref": "#/components/schemas/ClosedCaptionsStyles"
-          }
-        }
-      },
       "VoiceGuidanceSettings": {
         "title": "VoiceGuidanceSettings",
         "type": "object",

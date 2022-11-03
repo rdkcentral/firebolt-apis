@@ -9,6 +9,14 @@
     {
       "name": "protocols",
       "summary": "Get the supported second screen discovery protocols",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
       "params": [],
       "result": {
         "name": "protocols",
@@ -32,6 +40,14 @@
     },
     {
       "name": "device",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:protocol:dial"
+          ]
+        }
+      ],
       "summary": "Get the broadcasted id for the device",
       "params": [
         {
@@ -68,6 +84,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:protocol:dial"
+          ]
         }
       ],
       "result": {
@@ -93,6 +115,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:protocol:dial"
+          ]
         }
       ],
       "summary": "Listen to the launchRequest event",
@@ -124,6 +152,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:protocol:dial"
+          ]
         }
       ],
       "summary": "Listen to the closeRequest event",

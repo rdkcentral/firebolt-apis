@@ -8,6 +8,14 @@
   "methods": [
     {
       "name": "approveContentRating",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:approve:content"
+          ]
+        }
+      ],
       "summary": "Verifies that the current profile should have access to mature/adult content.",
       "params": [],
       "result": {
@@ -30,6 +38,14 @@
     },
     {
       "name": "approvePurchase",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:approve:purchase"
+          ]
+        }
+      ],
       "summary": "Verifies that the current profile should have access to making purchases.",
       "params": [],
       "result": {
@@ -52,6 +68,14 @@
     },
     {
       "name": "flags",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:profile:flags"
+          ]
+        }
+      ],
       "summary": "Get a map of profile flags for the current session.",
       "params": [],
       "result": {
