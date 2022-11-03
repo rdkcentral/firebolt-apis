@@ -691,7 +691,14 @@
     {
       "name": "availabilities",
       "summary": "Inform the platform of the users latest availabilities w/in this app's catalog",
-      "tags": [],
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:availabilities"
+          ]
+        }        
+      ],
       "params": [
         {
           "name": "availabilities",
