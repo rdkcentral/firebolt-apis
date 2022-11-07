@@ -1,3 +1,16 @@
+# [0.9.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0-next.3...v0.9.0-next.4) (2022-11-07)
+
+
+### Bug Fixes
+
+* Updating package-lock.json ([40bbf0d](https://github.com/rdkcentral/firebolt-core-sdk/commit/40bbf0db5fa4bfe9b48224333f401bfd755d3350))
+
+
+### Features
+
+* Adding availabilities API ([#65](https://github.com/rdkcentral/firebolt-core-sdk/issues/65)) ([ec940dd](https://github.com/rdkcentral/firebolt-core-sdk/commit/ec940dd1a7a6865f18d64ada69793c87556a172e))
+* Capabilities ([e3b6ee2](https://github.com/rdkcentral/firebolt-core-sdk/commit/e3b6ee2475fbd9157a40bc92490c06df135ebc34))
+
 # [0.9.0-next.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0-next.2...v0.9.0-next.3) (2022-10-19)
 
 
