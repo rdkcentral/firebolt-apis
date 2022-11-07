@@ -13,6 +13,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:account:id"
+          ]
         }
       ],
       "result": {
@@ -40,6 +46,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:account:uid"
+          ]
         }
       ],
       "result": {

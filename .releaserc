@@ -28,14 +28,17 @@
     [
       "@semantic-release/npm",
       {
-        "npmPublish": false
+        "npmPublish": true,
+        "tarballDir": "./"
       }
     ],
     [
-      "@semantic-release/github"
+      "@semantic-release/git"
     ],
     [
-      "@semantic-release/git"
+      "@semantic-release/github", {
+        "assets": "./*.tgz"
+      }
     ]
   ]
 }

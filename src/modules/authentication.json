@@ -9,6 +9,19 @@
     {
       "name": "token",
       "summary": "Get a specific `type` of authentication token",
+      "tags": [
+        {
+          "name": "deprecated",
+          "x-alternative": "Authentication module has individual methods for each token type.",
+          "x-since": "0.9.0"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:token:platform"
+          ]
+        }
+      ],
       "params": [
         {
           "name": "type",
@@ -68,7 +81,7 @@
           }
         },
         {
-          "name": "Acquire a Firebolt device identity (XACT) token",
+          "name": "Acquire a Firebolt device identity token",
           "params": [
             {
               "name": "type",
@@ -109,6 +122,102 @@
                 "scope": "scope"
               }
             }
+          }
+        }
+      ]
+    },
+    {
+      "name": "device",
+      "summary": "Get a device token scoped to the current app.",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:token:device"
+          ]
+        }
+      ],
+      "params": [
+      ],
+      "result": {
+        "name": "token",
+        "summary": "the token value and expiration",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "name": "Acquire a Firebolt device identity token",
+          "params": [
+          ],
+          "result": {
+            "name": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          }
+        }
+      ]
+    },
+    {
+      "name": "session",
+      "summary": "Get a destributor session token.",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:token:session"
+          ]
+        }
+      ],
+      "params": [
+      ],
+      "result": {
+        "name": "token",
+        "summary": "the token value",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "name": "Acquire a distributor session token",
+          "params": [
+          ],
+          "result": {
+            "name": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          }
+        }
+      ]
+    },
+    {
+      "name": "root",
+      "summary": "Get a root device token.",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:token:root"
+          ]
+        }
+      ],
+      "params": [
+      ],
+      "result": {
+        "name": "token",
+        "summary": "the token value",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "name": "Acquire a Firebolt root device identity token",
+          "params": [
+          ],
+          "result": {
+            "name": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
           }
         }
       ]
