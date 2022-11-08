@@ -1,61 +1,15 @@
-# [0.9.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0-next.3...v0.9.0-next.4) (2022-11-07)
-
-
-### Bug Fixes
-
-* Updating package-lock.json ([40bbf0d](https://github.com/rdkcentral/firebolt-core-sdk/commit/40bbf0db5fa4bfe9b48224333f401bfd755d3350))
-
+# 0.9.0
 
 ### Features
 
-* Adding availabilities API ([#65](https://github.com/rdkcentral/firebolt-core-sdk/issues/65)) ([ec940dd](https://github.com/rdkcentral/firebolt-core-sdk/commit/ec940dd1a7a6865f18d64ada69793c87556a172e))
-* Capabilities ([e3b6ee2](https://github.com/rdkcentral/firebolt-core-sdk/commit/e3b6ee2475fbd9157a40bc92490c06df135ebc34))
-
-# [0.9.0-next.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0-next.2...v0.9.0-next.3) (2022-10-19)
-
+* Adding Availabilities API ([#65](https://github.com/rdkcentral/firebolt-core-sdk/issues/65)) ([ec940dd](https://github.com/rdkcentral/firebolt-core-sdk/commit/ec940dd1a7a6865f18d64ada69793c87556a172e))
+* Tagging Capabilities ([e3b6ee2](https://github.com/rdkcentral/firebolt-core-sdk/commit/e3b6ee2475fbd9157a40bc92490c06df135ebc34))
 
 ### Bug Fixes
 
-* Don't ignore source files when pulbishing to npm [skip ci] ([cb26ff2](https://github.com/rdkcentral/firebolt-core-sdk/commit/cb26ff2e09416613c5557e76966eccbe0ec66d54))
-
-# [0.9.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0-next.1...v0.9.0-next.2) (2022-10-16)
-
-
-### Bug Fixes
-
+* Don't ignore source files when publishing to npm [skip ci] ([cb26ff2](https://github.com/rdkcentral/firebolt-core-sdk/commit/cb26ff2e09416613c5557e76966eccbe0ec66d54))
 * Build SDK before npm publish ([#64](https://github.com/rdkcentral/firebolt-core-sdk/issues/64)) ([f221fa3](https://github.com/rdkcentral/firebolt-core-sdk/commit/f221fa34e24e29e86487b1ec98468b64f495d134))
-
-# [0.9.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0-next.1...v0.9.0-next.2) (2022-10-16)
-
-
-### Bug Fixes
-
-* Build SDK before npm publish ([#64](https://github.com/rdkcentral/firebolt-core-sdk/issues/64)) ([f221fa3](https://github.com/rdkcentral/firebolt-core-sdk/commit/f221fa34e24e29e86487b1ec98468b64f495d134))
-
-# [0.9.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0-next.1...v0.9.0-next.2) (2022-10-16)
-
-
-### Bug Fixes
-
-* Build SDK before npm publish ([#64](https://github.com/rdkcentral/firebolt-core-sdk/issues/64)) ([f221fa3](https://github.com/rdkcentral/firebolt-core-sdk/commit/f221fa34e24e29e86487b1ec98468b64f495d134))
-
-# [0.9.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0-next.1...v0.9.0-next.2) (2022-10-16)
-
-
-### Bug Fixes
-
-* Build SDK before npm publish ([#64](https://github.com/rdkcentral/firebolt-core-sdk/issues/64)) ([f221fa3](https://github.com/rdkcentral/firebolt-core-sdk/commit/f221fa34e24e29e86487b1ec98468b64f495d134))
-
-# [0.9.0-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.8.0...v0.9.0-next.1) (2022-09-14)
-
-### Bug Fixes
-
-* **Device:** add device version firmware property ([ef12ec0](https://github.com/rdkcentral/firebolt-core-sdk/commit/ef12ec083591837e9a0c31d993f4e916810b11bc)), closes [#54](https://github.com/rdkcentral/firebolt-core-sdk/issues/54)
 * **Lifecycle:** lifecycle state api returns correct state in all circumstances ([31e405c](https://github.com/rdkcentral/firebolt-core-sdk/commit/31e405c124d29a3e87294dc4b356ff8df9972af8))
-
-### Features
-
-* **Extensions:** extensions module ([7cf4128](https://github.com/rdkcentral/firebolt-core-sdk/commit/7cf412819de8bc9749d51af2de923556924ae564)), closes [#46](https://github.com/rdkcentral/firebolt-core-sdk/issues/46)
 
 # 0.8.1
 
