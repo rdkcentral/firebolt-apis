@@ -9,6 +9,14 @@
     {
       "name": "config",
       "summary": "Build configuration object for Ad Framework initialization",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:advertising:configuration"
+          ]
+        }
+      ],
       "params": [
         {
           "name": "options",
@@ -69,6 +77,13 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:privacy:advertising",
+            "xrn:firebolt:capability:advertising:configuration"
+          ]
         }
       ],
       "result": {
@@ -94,6 +109,14 @@
     },
     {
       "name": "advertisingId",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:advertising:identifier"
+          ]
+        }
+      ],
       "summary": "Get the advertising ID",
       "params": [],
       "result": {
@@ -134,6 +157,14 @@
     },
     {
       "name": "deviceAttributes",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:advertising:configuration"
+          ]
+        }
+      ],
       "summary": "Get the device advertising device attributes",
       "params": [],
       "result": {
@@ -156,6 +187,14 @@
     },
     {
       "name": "appBundleId",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:advertising:configuration"
+          ]
+        }
+      ],
       "summary": "Get the App's Bundle ID",
       "params": [],
       "result": {
@@ -185,19 +224,12 @@
         "type": "object",
         "properties": {
           "skipRestriction": {
-            "$ref": "#/components/schemas/SkipRestriction"
+            "$ref": "https://meta.comcast.com/firebolt/advertising#/definitions/SkipRestriction"
           },
           "limitAdTracking": {
             "type": "boolean"
           }
         }
-      },
-      "SkipRestriction": {
-        "title": "SkipRestriction",
-        "$comment": "xrn:advertising:policy:skipRestriction:",
-        "type": "string",
-        "enum": [ "none", "adsUnwatched", "adsAll", "all" ],
-        "description": "The advertisement skip restriction.\n\nApplies to fast-forward/rewind (e.g. trick mode), seeking over an entire opportunity (e.g. jump), seeking out of what's currently playing, and \"Skip this ad...\" features. Seeking over multiple ad opportunities only requires playback of the _last_ opportunity, not all opportunities, preceding the seek destination.\n\n| Value        | Description                                                                    |\n|--------------|--------------------------------------------------------------------------------|\n| none         |No fast-forward, jump, or skip restrictions                                    |\n| adsUnwatched | Restrict fast-forward, jump, and skip for unwatched ad opportunities only.     |\n| adsAll       | Restrict fast-forward, jump, and skip for all ad opportunities                 |\n| all          | Restrict fast-forward, jump, and skip for all ad opportunities and all content |\n\nNamespace: `xrn:advertising:policy:skipRestriction:`\n\n"
       },
       "AdConfigurationOptions": {
         "title": "AdConfigurationOptions",

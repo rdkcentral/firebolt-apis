@@ -17,6 +17,8 @@
  */
 
 import { setMockResponses } from './Transport/MockTransport.mjs'
+import Authentication from './Authentication/index.mjs'
+import Transport from './Transport/index.mjs'
 
 /* ${MOCK_IMPORTS} */
 

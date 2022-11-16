@@ -1,8 +1,13 @@
-src/*
 util/*
 build/*
 test/*
 node_modules/*
+.github/*
+.husky/*
 .DS_Store
 merge-script-control-flow.svg
-*.config.js
+*.config.js*
+.releaserc
+.commitlintrc.json
+push-docs.sh
+tsconfig.json

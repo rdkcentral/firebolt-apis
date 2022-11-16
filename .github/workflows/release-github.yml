@@ -1,0 +1,54 @@
+name: Release to GitHub
+on:
+  workflow_dispatch:
+env:
+  HUSKY: 0
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          repo-token: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }}
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+      - name: Install dependencies
+        run: npm ci
+      - name: Setup project
+        run: npm run fs:setup
+      - name: Validate each OpenRPC spec
+        run: npm run validate:each
+      - name: Build fully assembled OpenRPC spec
+        run: npm run build:openrpc
+      - name: Validate fully assembled OpenRPC spec
+        run: npm run validate:assembled
+      - name: Build JavaScript SDK
+        run: |
+            npm run build:sdk
+            npm run dist:sdk
+      - name: Generate TypeScript declarations
+        run: npm run dist:declarations
+      - name: Run JavaScript SDK unit tests
+        run: npm run test
+      - name: Build markdown docs
+        run: |
+          npm run build:docs
+          npm run dist:docs
+      - name: Set explicit npm dist-tag default
+        if: github.ref_name == 'main'
+        run: echo "NPM_DIST_TAG=latest" >> $GITHUB_ENV
+      - name: Override npm dist-tag for non-main releases
+        if: github.ref_name != 'main'
+        run: echo "NPM_DIST_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+      - name: Release to GitHub and NPM
+        env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
+          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN  }} # <-- Allows semantic-release to publish to npm without 2 factor auth.
+          npm_config_tag: ${{ env.NPM_DIST_TAG }} # <-- For main, this is `latest.` Otherwise, `next`, `next-major`, etc. See ./.releaserc for release branch config.
+        run: npx semantic-release

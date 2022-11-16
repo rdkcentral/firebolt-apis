@@ -13,6 +13,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:id"
+          ]
         }
       ],
       "result": {
@@ -40,6 +46,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:distributor"
+          ]
         }
       ],
       "result": {
@@ -67,6 +79,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -94,6 +112,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:uid"
+          ]
         }
       ],
       "result": {
@@ -121,6 +145,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -148,6 +178,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:model"
+          ]
         }
       ],
       "result": {
@@ -175,6 +211,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:sku"
+          ]
         }
       ],
       "result": {
@@ -202,6 +244,12 @@
       "tags": [
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:make"
+          ]
         }
       ],
       "result": {
@@ -232,6 +280,12 @@
         },
         {
           "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -244,9 +298,17 @@
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
               "description": "The Firebolt SDK version"
             },
+            "api": {
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+              "description": "The lateset Firebolt API version supported by the curent device."
+            },
+            "firmware": {
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+              "description": "The device firmware version."
+            },
             "os": {
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "The Firebolt OS version"
+              "description": "**Deprecated** Use `firmware`, instead."
             },
             "debug": {
               "type": "string",
@@ -255,6 +317,8 @@
           },
           "required": [
             "sdk",
+            "api",
+            "firmware",
             "os"
           ]
         }
@@ -268,9 +332,21 @@
             "value": {
               "sdk": {
                 "major": 0,
-                "minor": 5,
+                "minor": 8,
                 "patch": 0,
-                "readable": "Firebolt JS SDK v0.5.0"
+                "readable": "Firebolt JS SDK v0.8.0"
+              },
+              "api": {
+                "major": 0,
+                "minor": 8,
+                "patch": 0,
+                "readable": "Firebolt API v0.8.0"
+              },
+              "firmware": {
+                "major": 1,
+                "minor": 2,
+                "patch": 3,
+                "readable": "Device Firmware v1.2.3"
               },
               "os": {
                 "major": 0,
@@ -278,7 +354,7 @@
                 "patch": 0,
                 "readable": "Firebolt OS v0.1.0"
               },
-              "debug": ""
+              "debug": "Non-parsable build info for error logging only."
             }
           }
         }
@@ -291,6 +367,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -321,6 +403,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -353,6 +441,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -385,6 +479,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -415,6 +515,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
         }
       ],
       "result": {
@@ -445,6 +551,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:name"
+          ]
         }
       ],
       "result": {
@@ -475,6 +587,12 @@
           "name": "deprecated",
           "x-since": "0.6.0",
           "x-alternative": "Device.name()"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:name"
+          ]
         }
       ],
       "summary": "Get the human readable name of the device",
@@ -483,10 +601,7 @@
         "name": "value",
         "summary": "the device friendly-name",
         "schema": {
-          "oneOf": [
-            { "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse" },
-            { "type": "string" }
-          ]
+          "type": "string"
         }
       },
       "examples": [
@@ -507,6 +622,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:network:status"
+          ]
         }
       ],
       "result": {

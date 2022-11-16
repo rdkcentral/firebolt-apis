@@ -8,6 +8,14 @@
   "methods": [
     {
       "name": "email",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:input:keyboard"
+          ]
+        }
+      ],
       "summary": "Prompt the user for their email address with a simplified list of choices.",
       "params": [
         {
@@ -73,6 +81,14 @@
     },
     {
       "name": "password",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:input:keyboard"
+          ]
+        }
+      ],
       "summary": "Show the password entry keyboard, with typing obfuscated from visibility",
       "params": [
         {
@@ -109,6 +125,14 @@
     },
     {
       "name": "standard",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:input:keyboard"
+          ]
+        }
+      ],
       "summary": "Show the standard platform keyboard, and return the submitted value",
       "params": [
         {

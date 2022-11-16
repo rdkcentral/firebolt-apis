@@ -11,6 +11,12 @@
       "tags": [
         {
           "name": "rpc-only"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:initialize"
+          ]
         }
       ],
       "summary": "Initialize the SDK / FEE session.",

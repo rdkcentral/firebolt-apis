@@ -13,6 +13,12 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:policy"
+          ]
         }
       ],
       "result": {
@@ -42,6 +48,10 @@
       "tags": [
         {
           "name": "polymorphic-pull"
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:discovery:entity-info"
         }
       ],
       "summary": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow.",
@@ -351,6 +361,10 @@
       "tags": [
         {
           "name": "polymorphic-pull"
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:discovery:purchased-content"
         }
       ],
       "summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
@@ -448,6 +462,12 @@
       "tags": [
         {
           "name": "polymorphic-reducer"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:watched"
+          ]
         }
       ],
       "params": [
@@ -521,6 +541,14 @@
     {
       "name": "watchNext",
       "summary": "Suggest a call-to-action for this app on the platform home screen",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:watch-next"
+          ]
+        }
+      ],
       "params": [
         {
           "name": "title",
@@ -604,6 +632,14 @@
     },
     {
       "name": "entitlements",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:entitlements"
+          ]
+        }
+      ],
       "summary": "Inform the platform of the users latest entitlements w/in this app",
       "params": [
         {
@@ -653,7 +689,74 @@
       ]
     },
     {
+      "name": "availabilities",
+      "summary": "Inform the platform of the users latest availabilities w/in this app's catalog",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:availabilities"
+          ]
+        }        
+      ],
+      "params": [
+        {
+          "name": "availabilities",
+          "summary": "Array of availability objects",
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Availability"
+            }
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Update user's availabilities",
+          "params": [
+            {
+              "name": "availabilities",
+              "value": [
+                {
+                  "type": "channel-lineup",
+                  "id": "partner.com/availability/123",
+                  "startTime": "2021-04-23T18:25:43.511Z",
+                  "endTime": "2021-04-23T18:25:43.511Z"
+                },
+                {
+                  "type": "channel-lineup",
+                  "id": "partner.com/availability/456",
+                  "startTime": "2021-04-23T18:25:43.511Z",
+                  "endTime": "2021-04-23T18:25:43.511Z"
+                }
+              ]
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        }
+      ]
+    },        
+    {
       "name": "launch",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:launch"
+          ]
+        }
+      ],
       "summary": "Launch or foreground the specified app, and optionally instructs it to navigate to the specified user action",
       "params": [
         {
@@ -935,42 +1038,27 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:navigate-to"
+          ]
         }
       ],
       "summary": "listen to `navigateTo` events",
-      "params": [
-        {
-          "name": "listen",
-          "required": true,
-          "summary": "whether to listen, or stop listening",
-          "schema": {
-            "type": "boolean"
-          }
-        }
-      ],
+      "params": [],
       "result": {
         "name": "value",
         "summary": "An object describing where in the app the user intends to navigate to",
         "schema": {
-          "oneOf": [
-            {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ListenResponse"
-            },
-            {
-              "$ref": "https://meta.comcast.com/firebolt/intents#/definitions/NavigationIntent"
-            }
-          ]
+          "$ref": "https://meta.comcast.com/firebolt/intents#/definitions/NavigationIntent"
         }
       },
       "examples": [
         {
           "name": "Listening for `navigateTo` events",
-          "params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
+          "params": [],
           "result": {
             "name": "event",
             "value": {
@@ -992,6 +1080,12 @@
       "tags": [
         {
           "name": "calls-metrics"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:sign-in-status"
+          ]
         }
       ],
       "summary": "Inform the platform that your user is signed in, for increased visiblity in search & discovery.",
@@ -1049,6 +1143,12 @@
       "tags": [
         {
           "name": "calls-metrics"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:sign-in-status"
+          ]
         }
       ],
       "summary": "Inform the platform that your user has signed out and that entitlements may no longer be valid.",
@@ -1492,7 +1592,45 @@
         },
         "required": ["expires", "totalCount", "entries"],
         "additionalProperties": false
-      }
+      },
+      "Availability": {
+        "title": "Availability",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "channel-lineup",
+              "program-lineup"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "catalogId": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "type", "id"
+        ]
+      },
+      "TuneChannels": {
+        "title": "TuneChannels",
+        "description": "An enumeration of xrn values for the TuneIntent that have special meaning.",
+        "type": "string",
+        "enum": [
+          "xrn:firebolt:channel:any"
+        ]
+      }  
     }
   }
 }
