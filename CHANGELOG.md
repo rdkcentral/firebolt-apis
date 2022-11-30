@@ -1,3 +1,10 @@
+## [0.9.1-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0...v0.9.1-next.1) (2022-11-30)
+
+
+### Bug Fixes
+
+* Use new openrpc template code with bug fixes ([#69](https://github.com/rdkcentral/firebolt-core-sdk/issues/69)) ([9fed6fc](https://github.com/rdkcentral/firebolt-core-sdk/commit/9fed6fcb71b9914e91674f5e80f7d61673cc66fe))
+
 # 0.9.0
 
 ### Features
