@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - 'next'
       - 'next-major'
 env:
   HUSKY: 0
