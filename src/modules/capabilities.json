@@ -9,6 +9,14 @@
         {
             "name": "supported",
             "summary": "Returns whether the platform supports the passed capability.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:capabilities:info"
+                    ]
+                }
+            ],
             "params": [
                 {
                     "name": "capability",
@@ -57,6 +65,14 @@
         {
             "name": "available",
             "summary": "Returns whether a capability is available now.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:capabilities:info"
+                    ]
+                }
+            ],
             "params": [
                 {
                     "name": "capability",
@@ -105,6 +121,14 @@
         {
             "name": "permitted",
             "summary": "Returns whether the current App has permission to the passed capability and role.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:capabilities:info"
+                    ]
+                }
+            ],
             "params": [
                 {
                     "name": "capability",
@@ -177,6 +201,14 @@
         {
             "name": "granted",
             "summary": "Returns whether the current App has a user grant for passed capability and role.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:capabilities:info"
+                    ]
+                }
+            ],
             "params": [
                 {
                     "name": "capability",
@@ -245,6 +277,14 @@
         {
             "name": "info",
             "summary": "Returns an array of CapabilityInfo objects for the passed in capabilities.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:capabilities:info"
+                    ]
+                }
+            ],
             "params": [
                 {
                     "name": "capabilities",
@@ -341,7 +381,9 @@
                                     "permitted": true,
                                     "granted": true
                                 },
-                                "details": ["unsupported"]
+                                "details": [
+                                    "unsupported"
+                                ]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:token:device",
@@ -376,7 +418,9 @@
                                     "permitted": true,
                                     "granted": true
                                 },
-                                "details": ["unavailable"]
+                                "details": [
+                                    "unavailable"
+                                ]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:protocol:moca",
@@ -394,7 +438,10 @@
                                     "permitted": true,
                                     "granted": true
                                 },
-                                "details": ["disabled", "unavailable"]
+                                "details": [
+                                    "disabled",
+                                    "unavailable"
+                                ]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:wifi:scan",
@@ -412,7 +459,9 @@
                                     "permitted": true,
                                     "granted": true
                                 },
-                                "details": ["unpermitted"]
+                                "details": [
+                                    "unpermitted"
+                                ]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:localization:postalCode",
@@ -430,7 +479,9 @@
                                     "permitted": true,
                                     "granted": true
                                 },
-                                "details": ["ungranted"]
+                                "details": [
+                                    "ungranted"
+                                ]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:localization:postalCode",
@@ -448,7 +499,9 @@
                                     "permitted": true,
                                     "granted": true
                                 },
-                                "details": ["ungranted"]
+                                "details": [
+                                    "ungranted"
+                                ]
                             },
                             {
                                 "capability": "xrn:firebolt:capability:localization:locality",
@@ -466,7 +519,10 @@
                                     "permitted": true,
                                     "granted": true
                                 },
-                                "details": ["grantDenied", "ungranted"]
+                                "details": [
+                                    "grantDenied",
+                                    "ungranted"
+                                ]
                             }
                         ]
                     }
@@ -476,6 +532,14 @@
         {
             "name": "request",
             "summary": "Requests grants for all capability/role combinations in the roles array.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:capabilities:request"
+                    ]
+                }
+            ],
             "params": [
                 {
                     "name": "grants",
@@ -544,6 +608,12 @@
             "tags": [
                 {
                     "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:capabilities:info"
+                    ]
                 }
             ],
             "summary": "Listens for all App permitted capabilities to become available.",
@@ -590,7 +660,9 @@
                                 "permitted": true,
                                 "granted": true
                             },
-                            "details": ["unpermitted"]
+                            "details": [
+                                "unpermitted"
+                            ]
                         }
                     }
                 }
@@ -601,6 +673,12 @@
             "tags": [
                 {
                     "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:capabilities:info"
+                    ]
                 }
             ],
             "summary": "Listens for all App permitted capabilities to become unavailable.",
@@ -647,7 +725,9 @@
                                 "permitted": true,
                                 "granted": true
                             },
-                            "details": ["unavailable"]
+                            "details": [
+                                "unavailable"
+                            ]
                         }
                     }
                 }
@@ -658,6 +738,12 @@
             "tags": [
                 {
                     "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:capabilities:info"
+                    ]
                 }
             ],
             "summary": "Listens for all App permitted capabilities to become granted.",
@@ -725,6 +811,12 @@
             "tags": [
                 {
                     "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:capabilities:info"
+                    ]
                 }
             ],
             "summary": "Listens for all App permitted capabilities to become revoked.",
@@ -782,7 +874,9 @@
                                 "permitted": true,
                                 "granted": true
                             },
-                            "details": ["grantDenied"]
+                            "details": [
+                                "grantDenied"
+                            ]
                         }
                     }
                 }
