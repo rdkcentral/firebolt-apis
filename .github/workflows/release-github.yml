@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'next'
+      - 'next-major'
 env:
   HUSKY: 0
 jobs:
