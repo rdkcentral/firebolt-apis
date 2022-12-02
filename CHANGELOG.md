@@ -1,4 +1,4 @@
-# [0.10.0-next.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.4...v0.10.0-next.5) (2023-02-01)
+# [0.10.0-next-major.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0...v0.10.0-next-major.1) (2022-12-02)
 
 
 ### Bug Fixes
@@ -44,11 +44,14 @@
 * Word publish scripts ([#78](https://github.com/rdkcentral/firebolt-core-sdk/issues/78)) ([2f2bcc3](https://github.com/rdkcentral/firebolt-core-sdk/commit/2f2bcc3823be1276ea6abdc67aeb8fafc8091b91))
 
 # [0.10.0-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.1-next.1...v0.10.0-next.1) (2022-12-14)
+* Capability module needs capability tags ([#71](https://github.com/rdkcentral/firebolt-core-sdk/issues/71)) ([6f0af1b](https://github.com/rdkcentral/firebolt-core-sdk/commit/6f0af1b9712faab137b1652ea337d5f284196ad4))
+* Use new openrpc template code with bug fixes ([#69](https://github.com/rdkcentral/firebolt-core-sdk/issues/69)) ([9fed6fc](https://github.com/rdkcentral/firebolt-core-sdk/commit/9fed6fcb71b9914e91674f5e80f7d61673cc66fe))
 
 
 ### Features
 
 * Add Secure Storage module ([#77](https://github.com/rdkcentral/firebolt-core-sdk/issues/77)) ([c81fe8c](https://github.com/rdkcentral/firebolt-core-sdk/commit/c81fe8cbc33e6455926431a4dc07936d790383c7))
+* New Capabilities API ([#63](https://github.com/rdkcentral/firebolt-core-sdk/issues/63)) ([0ba5ef5](https://github.com/rdkcentral/firebolt-core-sdk/commit/0ba5ef5e030ce740e40fd5ad30ca5cfd100cf32e))
 
 ## [0.9.1-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0...v0.9.1-next.1) (2022-11-30)
 
