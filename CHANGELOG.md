@@ -4,6 +4,20 @@
 ### chore
 
 * Tag for next-major ([#75](https://github.com/rdkcentral/firebolt-core-sdk/issues/75)) ([a30c424](https://github.com/rdkcentral/firebolt-core-sdk/commit/a30c424442f95015def0ff279b3363383ba0c73b))
+* Tag for next-major ([#76](https://github.com/rdkcentral/firebolt-core-sdk/issues/76)) ([03e735a](https://github.com/rdkcentral/firebolt-core-sdk/commit/03e735a95b755f616402c954de79e20a6424f322))
+
+
+### BREAKING CHANGES
+
+* Capabilities support in firebolt 1.0
+* Capabilities support in firebolt 1.0
+
+# [1.0.0-next-major.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next-major.1...v1.0.0-next-major.1) (2022-12-06)
+
+
+### chore
+
+* Tag for next-major ([#75](https://github.com/rdkcentral/firebolt-core-sdk/issues/75)) ([a30c424](https://github.com/rdkcentral/firebolt-core-sdk/commit/a30c424442f95015def0ff279b3363383ba0c73b))
 
 
 ### BREAKING CHANGES
