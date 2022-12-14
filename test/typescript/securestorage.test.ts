@@ -36,26 +36,26 @@ test("get() for type Account", () => {
 
 test("set() for type device", () => {
   return SecureStorage.set(SecureStorage.StorageScope.DEVICE, authTokenKey, value, {
-    ttlvalue: 600
-  }).then((res: boolean) => {
-    expect(res).toBe(true);
+    ttl: 600
+  }).then((res) => {
+    expect(res).toEqual({});
   });
 });
 
 test("set() for type account", () => {
-  return SecureStorage.set(SecureStorage.StorageScope.ACCOUNT, authTokenKey, value).then((res: boolean) => {
-    expect(res).toBe(true);
+  return SecureStorage.set(SecureStorage.StorageScope.ACCOUNT, authTokenKey, value).then((res) => {
+    expect(res).toEqual({});
   });
 });
 
 test("remove() for type device", () => {
-  return SecureStorage.remove(SecureStorage.StorageScope.DEVICE, authTokenKey).then((res: boolean) => {
-    expect(res).toBe(true);
+  return SecureStorage.remove(SecureStorage.StorageScope.DEVICE, authTokenKey).then((res) => {
+    expect(res).toEqual({});
   });
 });
 
 test("remove() for type account", () => {
-  return SecureStorage.remove(SecureStorage.StorageScope.ACCOUNT, authTokenKey).then((res: boolean) => {
-    expect(res).toBe(true);
+  return SecureStorage.remove(SecureStorage.StorageScope.ACCOUNT, authTokenKey).then((res) => {
+    expect(res).toEqual({});
   });
 });
