@@ -20,7 +20,7 @@
     "test": "npm run test:setup && NODE_OPTIONS=--experimental-vm-modules npx --config=jest.config.json --detectOpenHandles jest",
     "clean": "rm -rf build && rm -rf dist",
     "publish:docs": "npm run build:docs && sh push-docs.sh",
-    "publish:word": "mkdir -p dist/word/schemas && cd dist/docs && find . -iname \"*.md\" -type f -exec sh -c 'pandoc \"${0}\" -o \"../word/${0%.md}.docx\"' {} \\;",
+    "publish:word": "mkdir -p dist/word/schemas && find dist/docs -iname \"*.md\" -type f -exec sh -c 'export fn=`basename ${0}` && pandoc \"${0}\" -o \"dist/word/${fn%.md}.docx\"' {} \\;",
     "everything": "npm run fs:setup && npm run validate:each && npm run build:openrpc && npm run validate:assembled && npm run build:sdk && npm run dist:sdk && npm run dist:declarations && npm run test && npm run build:docs && npm run dist:docs",
     "prepare": "husky install",
     "prepack": "npm run fs:setup && npm run build:openrpc && npm run build:sdk && npm run dist:sdk && npm run dist:declarations"
