@@ -231,7 +231,40 @@
           }
         }            
       ]   
-    } 
+    },
+    {
+      "name": "timeZone",
+      "summary": "Get the IANA timezone the device is located in",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:time-zone"
+          ]
+        }
+      ],
+      "result": {
+        "name": "timezone",
+        "summary": "the device timezone",
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/TimeZone"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "America/New_York"
+          }
+        }            
+      ]
+    }
   ],
   "components": {
     "schemas": {
