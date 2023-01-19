@@ -1,3 +1,11 @@
+# [0.10.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.1...v0.10.0-next.2) (2023-01-19)
+
+
+### Bug Fixes
+
+* FIRESDK-31 returned response from Lifecycle.ready method ([#81](https://github.com/rdkcentral/firebolt-core-sdk/issues/81)) ([b1dd82b](https://github.com/rdkcentral/firebolt-core-sdk/commit/b1dd82b657645c3f9f36bf91e3c02177ea8b55ec))
+* Word publish scripts ([#78](https://github.com/rdkcentral/firebolt-core-sdk/issues/78)) ([2f2bcc3](https://github.com/rdkcentral/firebolt-core-sdk/commit/2f2bcc3823be1276ea6abdc67aeb8fafc8091b91))
+
 # [0.10.0-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.1-next.1...v0.10.0-next.1) (2022-12-14)
 
 
