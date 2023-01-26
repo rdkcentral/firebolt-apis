@@ -1943,22 +1943,6 @@
         "enum": [
           "xrn:firebolt:channel:any"
         ]
-      },
-      "UserInterestProviderParameters": {
-        "title": "UserInterestProviderParameters",
-        "type": "object",
-        "required": [
-          "type",
-          "reason"
-        ],
-        "properties": {
-          "type": {
-            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
-          },
-          "reason": {
-            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
-          }
-        }
       }
     }
   }
