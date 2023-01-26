@@ -61,7 +61,10 @@
           "name": "correlationId",
           "required": true,
           "schema": {
-            "type": [ "string", "null" ]
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         {
@@ -121,12 +124,24 @@
                       "entitledExpires": "2025-01-01T00:00:00.000Z",
                       "offeringType": "buy",
                       "price": 2.99,
-                      "videoQuality": ["UHD"],
-                      "audioProfile": ["dolbyAtmos"],
-                      "audioLanguages": ["en"],
-                      "closedCaptions": ["en"],
-                      "subtitles": ["es"],
-                      "audioDescriptions": ["en"]
+                      "videoQuality": [
+                        "UHD"
+                      ],
+                      "audioProfile": [
+                        "dolbyAtmos"
+                      ],
+                      "audioLanguages": [
+                        "en"
+                      ],
+                      "closedCaptions": [
+                        "en"
+                      ],
+                      "subtitles": [
+                        "es"
+                      ],
+                      "audioDescriptions": [
+                        "en"
+                      ]
                     }
                   ]
                 }
@@ -178,12 +193,24 @@
                       "entitledExpires": "2025-01-01T00:00:00.000Z",
                       "offeringType": "buy",
                       "price": 2.99,
-                      "videoQuality": ["UHD"],
-                      "audioProfile": ["dolbyAtmos"],
-                      "audioLanguages": ["en"],
-                      "closedCaptions": ["en"],
-                      "subtitles": ["es"],
-                      "audioDescriptions": ["en"]
+                      "videoQuality": [
+                        "UHD"
+                      ],
+                      "audioProfile": [
+                        "dolbyAtmos"
+                      ],
+                      "audioLanguages": [
+                        "en"
+                      ],
+                      "closedCaptions": [
+                        "en"
+                      ],
+                      "subtitles": [
+                        "es"
+                      ],
+                      "audioDescriptions": [
+                        "en"
+                      ]
                     }
                   ]
                 },
@@ -202,10 +229,18 @@
                           "entityId": "345"
                         },
                         "entitled": true,
-                        "videoQuality": ["HD"],
-                        "audioProfile": ["dolbyAtmos"],
-                        "audioLanguages": ["en"],
-                        "closedCaptions": ["en"]
+                        "videoQuality": [
+                          "HD"
+                        ],
+                        "audioProfile": [
+                          "dolbyAtmos"
+                        ],
+                        "audioLanguages": [
+                          "en"
+                        ],
+                        "closedCaptions": [
+                          "en"
+                        ]
                       }
                     ]
                   }
@@ -270,10 +305,18 @@
                         },
                         "entitled": true,
                         "offeringType": "free",
-                        "videoQuality": ["SD"],
-                        "audioProfile": ["stereo"],
-                        "audioLanguages": ["en"],
-                        "closedCaptions": ["en"]
+                        "videoQuality": [
+                          "SD"
+                        ],
+                        "audioProfile": [
+                          "stereo"
+                        ],
+                        "audioLanguages": [
+                          "en"
+                        ],
+                        "closedCaptions": [
+                          "en"
+                        ]
                       }
                     ]
                   },
@@ -304,10 +347,18 @@
                         },
                         "entitled": true,
                         "offeringType": "free",
-                        "videoQuality": ["SD"],
-                        "audioProfile": ["stereo"],
-                        "audioLanguages": ["en"],
-                        "closedCaptions": ["en"]
+                        "videoQuality": [
+                          "SD"
+                        ],
+                        "audioProfile": [
+                          "stereo"
+                        ],
+                        "audioLanguages": [
+                          "en"
+                        ],
+                        "closedCaptions": [
+                          "en"
+                        ]
                       }
                     ]
                   },
@@ -338,10 +389,18 @@
                         },
                         "entitled": true,
                         "offeringType": "free",
-                        "videoQuality": ["SD"],
-                        "audioProfile": ["stereo"],
-                        "audioLanguages": ["en"],
-                        "closedCaptions": ["en"]
+                        "videoQuality": [
+                          "SD"
+                        ],
+                        "audioProfile": [
+                          "stereo"
+                        ],
+                        "audioLanguages": [
+                          "en"
+                        ],
+                        "closedCaptions": [
+                          "en"
+                        ]
                       }
                     ]
                   }
@@ -373,7 +432,10 @@
           "name": "correlationId",
           "required": true,
           "schema": {
-            "type": [ "string", "null" ]
+            "type": [
+              "string",
+              "null"
+            ]
           }
         },
         {
@@ -435,12 +497,24 @@
                         "entitledExpires": "2025-01-01T00:00:00.000Z",
                         "offeringType": "buy",
                         "price": 2.99,
-                        "videoQuality": ["UHD"],
-                        "audioProfile": ["dolbyAtmos"],
-                        "audioLanguages": ["en"],
-                        "closedCaptions": ["en"],
-                        "subtitles": ["es"],
-                        "audioDescriptions": ["en"]
+                        "videoQuality": [
+                          "UHD"
+                        ],
+                        "audioProfile": [
+                          "dolbyAtmos"
+                        ],
+                        "audioLanguages": [
+                          "en"
+                        ],
+                        "closedCaptions": [
+                          "en"
+                        ],
+                        "subtitles": [
+                          "es"
+                        ],
+                        "audioDescriptions": [
+                          "en"
+                        ]
                       }
                     ]
                   }
@@ -636,11 +710,16 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:discovery:entitlements"
+            "xrn:firebolt:capability:discovery:content-access"
           ]
+        },
+        {
+          "name": "deprecated",
+          "x-since": "0.10.0",
+          "x-alternative": "Discovery.contentAccess()"
         }
       ],
-      "summary": "Inform the platform of the users latest entitlements w/in this app",
+      "summary": "Inform the platform of the users latest entitlements w/in this app.",
       "params": [
         {
           "name": "entitlements",
@@ -689,25 +768,22 @@
       ]
     },
     {
-      "name": "availabilities",
-      "summary": "Inform the platform of the users latest availabilities w/in this app's catalog",
+      "name": "contentAccess",
+      "summary": "Inform the platform of what content the user can access either by discovering it or consuming it. Availabilities determine which content is discoverable to a user, while entitlements determine if the user can currently consume that content. Content can be available but not entitled, this means that user can see the content but when they try to open it they must gain an entitlement either through purchase or subscription upgrade. In case the access changed off-device, this API should be called any time the app comes to the foreground to refresh the access. This API should also be called any time the availabilities or entitlements change within the app for any reason. Typical reasons may include the user signing into an account or upgrading a subscription. Less common cases can cause availabilities to change, such as moving to a new service location. When availabilities or entitlements are removed from the subscriber (such as when the user signs out), then an empty array should be given. To clear both, use the Discovery.clearContentAccess convenience API.",
       "tags": [
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:discovery:availabilities"
+            "xrn:firebolt:capability:discovery:content-access"
           ]
-        }        
+        }
       ],
       "params": [
         {
-          "name": "availabilities",
-          "summary": "Array of availability objects",
+          "name": "ids",
+          "summary": "A list of identifiers that represent content that is discoverable or consumable for the subscriber",
           "schema": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Availability"
-            }
+            "$ref": "#/components/schemas/ContentAccessIdentifiers"
           },
           "required": true
         }
@@ -720,24 +796,112 @@
       },
       "examples": [
         {
-          "name": "Update user's availabilities",
+          "name": "Update subscriber's availabilities",
           "params": [
             {
-              "name": "availabilities",
-              "value": [
-                {
-                  "type": "channel-lineup",
-                  "id": "partner.com/availability/123",
-                  "startTime": "2021-04-23T18:25:43.511Z",
-                  "endTime": "2021-04-23T18:25:43.511Z"
-                },
-                {
-                  "type": "channel-lineup",
-                  "id": "partner.com/availability/456",
-                  "startTime": "2021-04-23T18:25:43.511Z",
-                  "endTime": "2021-04-23T18:25:43.511Z"
-                }
-              ]
+              "name": "ids",
+              "value": {
+                "availabilities": [
+                  {
+                    "type": "channel-lineup",
+                    "id": "partner.com/availability/123",
+                    "startTime": "2021-04-23T18:25:43.511Z",
+                    "endTime": "2021-04-23T18:25:43.511Z"
+                  },
+                  {
+                    "type": "channel-lineup",
+                    "id": "partner.com/availability/456",
+                    "startTime": "2021-04-23T18:25:43.511Z",
+                    "endTime": "2021-04-23T18:25:43.511Z"
+                  }
+                ]
+              }
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        },
+        {
+          "name": "Update subscriber's availabilities and entitlements",
+          "params": [
+            {
+              "name": "ids",
+              "value": {
+                "availabilities": [
+                  {
+                    "type": "channel-lineup",
+                    "id": "partner.com/availability/123",
+                    "startTime": "2021-04-23T18:25:43.511Z",
+                    "endTime": "2021-04-23T18:25:43.511Z"
+                  },
+                  {
+                    "type": "channel-lineup",
+                    "id": "partner.com/availability/456",
+                    "startTime": "2021-04-23T18:25:43.511Z",
+                    "endTime": "2021-04-23T18:25:43.511Z"
+                  }
+                ],
+                "entitlements": [
+                  {
+                    "entitlementId": "123",
+                    "startTime": "2025-01-01T00:00:00.000Z",
+                    "endTime": "2025-01-01T00:00:00.000Z"
+                  }
+                ]
+              }
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        },
+        {
+          "name": "Update subscriber's entitlements",
+          "params": [
+            {
+              "name": "ids",
+              "value": {
+                "entitlements": [
+                  {
+                    "entitlementId": "123",
+                    "startTime": "2025-01-01T00:00:00.000Z",
+                    "endTime": "2025-01-01T00:00:00.000Z"
+                  }
+                ]
+              }
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        },
+        {
+          "name": "Clear a subscriber's entitlements",
+          "params": [
+            {
+              "name": "ids",
+              "value": {
+                "entitlements": []
+              }
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        },
+        {
+          "name": "Clear a subscriber's availabilities",
+          "params": [
+            {
+              "name": "ids",
+              "value": {
+                "availabilities": []
+              }
             }
           ],
           "result": {
@@ -746,7 +910,36 @@
           }
         }
       ]
-    },        
+    },
+    {
+      "name": "clearContentAccess",
+      "summary": "Clear both availabilities and entitlements from the subscriber. This is equivalent of calling `Discovery.contentAccess({ availabilities: [], entitlements: []})`. This is typically called when the user signs out of an account.",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:discovery:content-access"
+          ]
+        }
+      ],
+      "params": [],
+      "result": {
+        "name": "result",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Clear subscriber's availabilities and entitlements",
+          "params": [],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        }
+      ]
+    },
     {
       "name": "launch",
       "tags": [
@@ -1088,7 +1281,7 @@
           ]
         }
       ],
-      "summary": "Inform the platform that your user is signed in, for increased visiblity in search & discovery.",
+      "summary": "Inform the platform that your user is signed in, for increased visiblity in search & discovery. Sign-in state is used separately from what content can be access through entitlements and availabilities. Sign-in state may be used when deciding whether to choose this app to handle a user intent. For instance, if the user tries to launch something generic like playing music from an artist, only a signed-in app will be chosen. If the user wants to tune to a channel, only a signed-in app will be chosen to handle that intent. While signIn can optionally include entitlements as those typically change at signIn time, it is recommended to make a separate call to Discovery.contentAccess for entitlements. signIn is not only for when a user explicitly enters login credentials. If an app does not require any credentials from the user to consume content, such as in a free app, then the app should call signIn immediately on launch.",
       "params": [
         {
           "name": "entitlements",
@@ -1151,7 +1344,7 @@
           ]
         }
       ],
-      "summary": "Inform the platform that your user has signed out and that entitlements may no longer be valid.",
+      "summary": "Inform the platform that your user has signed out. See `Discovery.signIn` for more details on how the sign-in state is used.signOut will NOT clear entitlements, the app should make a separate call to Discovery.clearContentAccess. Apps should also call signOut when a login token has expired and the user is now in a signed-out state.",
       "params": [],
       "result": {
         "name": "success",
@@ -1202,7 +1395,12 @@
           "$ref": "file:../descriptions/modules/discovery/EntityInfo.md"
         },
         "type": "object",
-        "required": ["identifiers", "entityType", "programType", "title"],
+        "required": [
+          "identifiers",
+          "entityType",
+          "programType",
+          "title"
+        ],
         "properties": {
           "identifiers": {
             "$ref": "#/components/schemas/ContentIdentifiers"
@@ -1254,7 +1452,9 @@
       "WayToWatch": {
         "title": "WayToWatch",
         "type": "object",
-        "required": ["identifiers"],
+        "required": [
+          "identifiers"
+        ],
         "properties": {
           "identifiers": {
             "$ref": "#/components/schemas/ContentIdentifiers"
@@ -1288,7 +1488,11 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["SD", "HD", "UHD"]
+              "enum": [
+                "SD",
+                "HD",
+                "UHD"
+              ]
             },
             "description": "List of the video qualities available via the WayToWatch."
           },
@@ -1333,7 +1537,10 @@
       "ContentRating": {
         "title": "ContentRating",
         "type": "object",
-        "required": ["scheme", "rating"],
+        "required": [
+          "scheme",
+          "rating"
+        ],
         "properties": {
           "scheme": {
             "type": "string",
@@ -1397,9 +1604,14 @@
             "type": "string"
           }
         },
-        "required": ["correlationId"],
+        "required": [
+          "correlationId"
+        ],
         "propertyNames": {
-          "enum": ["correlationId", "parameters"]
+          "enum": [
+            "correlationId",
+            "parameters"
+          ]
         },
         "examples": [
           {
@@ -1415,9 +1627,15 @@
             "type": "string"
           }
         },
-        "required": ["correlationId", "result"],
+        "required": [
+          "correlationId",
+          "result"
+        ],
         "propertyNames": {
-          "enum": ["correlationId", "result"]
+          "enum": [
+            "correlationId",
+            "result"
+          ]
         },
         "examples": [
           {
@@ -1438,7 +1656,10 @@
                 "$ref": "#/components/schemas/EntityInfoParameters"
               }
             },
-            "required": ["correlationId", "parameters"]
+            "required": [
+              "correlationId",
+              "parameters"
+            ]
           }
         ],
         "examples": [
@@ -1461,7 +1682,9 @@
             "type": "string"
           }
         },
-        "required": ["entityId"],
+        "required": [
+          "entityId"
+        ],
         "additionalProperties": false,
         "examples": [
           {
@@ -1504,7 +1727,10 @@
             }
           }
         },
-        "required": ["expires", "entity"],
+        "required": [
+          "expires",
+          "entity"
+        ],
         "additionalProperties": false
       },
       "PurchasedContentFederatedRequest": {
@@ -1520,7 +1746,10 @@
                 "$ref": "#/components/schemas/PurchasedContentParameters"
               }
             },
-            "required": ["correlationId", "parameters"]
+            "required": [
+              "correlationId",
+              "parameters"
+            ]
           }
         ],
         "examples": [
@@ -1547,7 +1776,9 @@
             "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ProgramType"
           }
         },
-        "required": ["limit"],
+        "required": [
+          "limit"
+        ],
         "additionalProperties": false,
         "examples": [
           {
@@ -1590,7 +1821,11 @@
             }
           }
         },
-        "required": ["expires", "totalCount", "entries"],
+        "required": [
+          "expires",
+          "totalCount",
+          "entries"
+        ],
         "additionalProperties": false
       },
       "Availability": {
@@ -1620,8 +1855,30 @@
           }
         },
         "required": [
-          "type", "id"
+          "type",
+          "id"
         ]
+      },
+      "ContentAccessIdentifiers": {
+        "title": "ContentAccessIdentifiers",
+        "type": "object",
+        "properties": {
+          "availabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Availability"
+            },
+            "description": "A list of identifiers that represent what content is discoverable for the subscriber. Excluding availabilities will cause no change to the availabilities that are stored for this subscriber. Providing an empty array will clear the subscriber's availabilities"
+          },
+          "entitlements": {
+            "type": "array",
+            "items": {
+              "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/Entitlement"
+            },
+            "description": "A list of identifiers that represent what content is consumable for the subscriber. Excluding entitlements will cause no change to the entitlements that are stored for this subscriber. Providing an empty array will clear the subscriber's entitlements"
+          }
+        },
+        "required": []
       },
       "TuneChannels": {
         "title": "TuneChannels",
@@ -1630,7 +1887,7 @@
         "enum": [
           "xrn:firebolt:channel:any"
         ]
-      }  
+      }
     }
   }
 }
