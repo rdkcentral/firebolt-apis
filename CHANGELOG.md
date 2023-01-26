@@ -1,3 +1,10 @@
+# [0.10.0-next.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.2...v0.10.0-next.3) (2023-01-26)
+
+
+### Features
+
+* Add content-access api, deprecate entitlements, remove availabi… ([#83](https://github.com/rdkcentral/firebolt-core-sdk/issues/83)) ([878c25b](https://github.com/rdkcentral/firebolt-core-sdk/commit/878c25bd84adf37aee2256acc80d339e5cf99b82))
+
 # [0.10.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.1...v0.10.0-next.2) (2023-01-25)
 
 
