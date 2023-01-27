@@ -39,7 +39,10 @@
         "name": "value",
         "summary": "The retrieved value, if found.",
         "schema": {
-          "type": "string"
+          "oneOf": [
+            {"type": "string"},
+            {"type": "null"}
+          ]
         }
       },
       "examples": [
