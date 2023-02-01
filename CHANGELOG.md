@@ -1,3 +1,10 @@
+# [0.10.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.3...v0.10.0-next.4) (2023-01-27)
+
+
+### Bug Fixes
+
+* Updated secure storage spec to allow null as result value ([#84](https://github.com/rdkcentral/firebolt-core-sdk/issues/84)) ([64588b2](https://github.com/rdkcentral/firebolt-core-sdk/commit/64588b21db7107eff6ffa2029aef045a0359f9ac))
+
 # [0.10.0-next.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.2...v0.10.0-next.3) (2023-01-26)
 
 
