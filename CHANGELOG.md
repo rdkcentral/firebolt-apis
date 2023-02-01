@@ -1,3 +1,10 @@
+# [0.10.0-next.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.4...v0.10.0-next.5) (2023-02-01)
+
+
+### Bug Fixes
+
+* Updated openrpc version to 1.8.0-next.2 ([#85](https://github.com/rdkcentral/firebolt-core-sdk/issues/85)) ([b726a47](https://github.com/rdkcentral/firebolt-core-sdk/commit/b726a4792829c48c615c63492fdcaa2d38b73e85))
+
 # [0.10.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.3...v0.10.0-next.4) (2023-01-27)
 
 
