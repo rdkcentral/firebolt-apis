@@ -138,12 +138,12 @@
                     }
                 },
                 {
-                    "name": "role",
-                    "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role",
-                        "default": "use"
-                    }
-                }
+					"name": "options",
+					"summary": "Capability options",
+					"schema": {
+						"$ref": "#/components/schemas/CapabilityOption"
+					}
+				}
             ],
             "result": {
                 "name": "permitted",
@@ -174,8 +174,10 @@
                             "value": "xrn:firebolt:capability:keyboard"
                         },
                         {
-                            "name": "role",
-                            "value": "manage"
+                            "name": "options",
+                            "value": {
+                                "role": "manage"
+                            }
                         }
                     ],
                     "result": {
@@ -218,12 +220,12 @@
                     }
                 },
                 {
-                    "name": "role",
-                    "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role",
-                        "default": "use"
-                    }
-                }
+					"name": "options",
+					"summary": "Capability options",
+					"schema": {
+						"$ref": "#/components/schemas/CapabilityOption"
+					}
+				}
             ],
             "result": {
                 "name": "granted",
@@ -882,5 +884,19 @@
                 }
             ]
         }
-    ]
+    ],
+    "components": {
+        "schemas": {
+            "CapabilityOption": {
+				"title": "CapabilityOption",
+				"type": "object",
+				"properties": {
+					"role": {
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role",
+						"description": "Whether or not the app requires US COPPA compliance."
+					}
+				}
+			}
+        }
+    }
 }
