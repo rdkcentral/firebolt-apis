@@ -138,12 +138,12 @@
                     }
                 },
                 {
-					"name": "options",
-					"summary": "Capability options",
-					"schema": {
-						"$ref": "#/components/schemas/CapabilityOption"
-					}
-				}
+                    "name": "options",
+                    "summary": "Capability options",
+                    "schema": {
+                        "$ref": "#/components/schemas/CapabilityOption"
+                    }
+                }
             ],
             "result": {
                 "name": "permitted",
@@ -220,12 +220,12 @@
                     }
                 },
                 {
-					"name": "options",
-					"summary": "Capability options",
-					"schema": {
-						"$ref": "#/components/schemas/CapabilityOption"
-					}
-				}
+                    "name": "options",
+                    "summary": "Capability options",
+                    "schema": {
+                        "$ref": "#/components/schemas/CapabilityOption"
+                    }
+                }
             ],
             "result": {
                 "name": "granted",
@@ -888,15 +888,15 @@
     "components": {
         "schemas": {
             "CapabilityOption": {
-				"title": "CapabilityOption",
-				"type": "object",
-				"properties": {
-					"role": {
+                "title": "CapabilityOption",
+                "type": "object",
+                "properties": {
+                    "role": {
                         "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role",
-						"description": "Whether or not the app requires US COPPA compliance."
-					}
-				}
-			}
+                        "description": "Whether capability is associated with Role or not"
+                    }
+                }
+            }
         }
     }
 }
