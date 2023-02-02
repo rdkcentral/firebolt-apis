@@ -1,3 +1,20 @@
+# [1.0.0-next-major.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v1.0.0-next-major.1...v1.0.0-next-major.2) (2023-02-02)
+
+
+### Bug Fixes
+
+* Change doc examples to https ([#79](https://github.com/rdkcentral/firebolt-core-sdk/issues/79)) ([a75f9be](https://github.com/rdkcentral/firebolt-core-sdk/commit/a75f9be48ea296c54f18a5da063c3e83301d624c))
+* FIRESDK-31 returned response from Lifecycle.ready method ([#81](https://github.com/rdkcentral/firebolt-core-sdk/issues/81)) ([b1dd82b](https://github.com/rdkcentral/firebolt-core-sdk/commit/b1dd82b657645c3f9f36bf91e3c02177ea8b55ec))
+* Updated openrpc version to 1.8.0-next.2 ([#85](https://github.com/rdkcentral/firebolt-core-sdk/issues/85)) ([b726a47](https://github.com/rdkcentral/firebolt-core-sdk/commit/b726a4792829c48c615c63492fdcaa2d38b73e85))
+* Updated secure storage spec to allow null as result value ([#84](https://github.com/rdkcentral/firebolt-core-sdk/issues/84)) ([64588b2](https://github.com/rdkcentral/firebolt-core-sdk/commit/64588b21db7107eff6ffa2029aef045a0359f9ac))
+* Word publish scripts ([#78](https://github.com/rdkcentral/firebolt-core-sdk/issues/78)) ([2f2bcc3](https://github.com/rdkcentral/firebolt-core-sdk/commit/2f2bcc3823be1276ea6abdc67aeb8fafc8091b91))
+
+
+### Features
+
+* Add content-access api, deprecate entitlements, remove availabi… ([#83](https://github.com/rdkcentral/firebolt-core-sdk/issues/83)) ([878c25b](https://github.com/rdkcentral/firebolt-core-sdk/commit/878c25bd84adf37aee2256acc80d339e5cf99b82))
+* Add Secure Storage module ([#77](https://github.com/rdkcentral/firebolt-core-sdk/issues/77)) ([c81fe8c](https://github.com/rdkcentral/firebolt-core-sdk/commit/c81fe8cbc33e6455926431a4dc07936d790383c7))
+
 # [1.0.0-next-major.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next-major.1...v1.0.0-next-major.1) (2022-12-06)
 
 
