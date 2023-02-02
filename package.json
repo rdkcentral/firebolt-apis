@@ -1,6 +1,6 @@
 {
   "name": "@firebolt-js/sdk",
-  "version": "1.0.0-next-major.1",
+  "version": "0.10.0-next.5",
   "description": "The Firebolt JS SDK",
   "main": "./dist/lib/firebolt.mjs",
   "types": "./dist/lib/firebolt.d.ts",
@@ -20,7 +20,7 @@
     "test": "npm run test:setup && NODE_OPTIONS=--experimental-vm-modules npx --config=jest.config.json --detectOpenHandles jest",
     "clean": "rm -rf build && rm -rf dist",
     "publish:docs": "npm run build:docs && sh push-docs.sh",
-    "publish:word": "mkdir -p dist/word/schemas && cd dist/docs && find . -iname \"*.md\" -type f -exec sh -c 'pandoc \"${0}\" -o \"../word/${0%.md}.docx\"' {} \\;",
+    "publish:word": "mkdir -p dist/word/schemas && find dist/docs -iname \"*.md\" -type f -exec sh -c 'export fn=`basename ${0}` && pandoc \"${0}\" -o \"dist/word/${fn%.md}.docx\"' {} \\;",
     "everything": "npm run fs:setup && npm run validate:each && npm run build:openrpc && npm run validate:assembled && npm run build:sdk && npm run dist:sdk && npm run dist:declarations && npm run test && npm run build:docs && npm run dist:docs",
     "prepare": "husky install",
     "prepack": "npm run fs:setup && npm run build:openrpc && npm run build:sdk && npm run dist:sdk && npm run dist:declarations"
@@ -37,7 +37,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "@firebolt-js/openrpc": "^1.8.0-next.1",
+    "@firebolt-js/openrpc": "^1.8.0-next.2",
     "@firebolt-js/schemas": "^0.5.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
