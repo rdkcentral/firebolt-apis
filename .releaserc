@@ -10,7 +10,7 @@
       "prerelease": true
     }
   ],
-  "dryRun": false,
+  "dryRun": true,
   "plugins": [
     [
       "@semantic-release/commit-analyzer",
@@ -36,7 +36,8 @@
       "@semantic-release/git"
     ],
     [
-      "@semantic-release/github", {
+      "@semantic-release/github",
+      {
         "assets": "./*.tgz"
       }
     ]
