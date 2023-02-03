@@ -1,3 +1,25 @@
+# [0.10.0-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.1-next.1...v0.10.0-next.1) (2023-02-03)
+
+
+### Bug Fixes
+
+* Capability module needs capability tags ([#71](https://github.com/rdkcentral/firebolt-core-sdk/issues/71)) ([6f0af1b](https://github.com/rdkcentral/firebolt-core-sdk/commit/6f0af1b9712faab137b1652ea337d5f284196ad4))
+* Change doc examples to https ([#79](https://github.com/rdkcentral/firebolt-core-sdk/issues/79)) ([c7047af](https://github.com/rdkcentral/firebolt-core-sdk/commit/c7047af9f3fa47e8cd7d252c3bbd321fa8f3d125))
+* FIRESDK-31 returned response from Lifecycle.ready method ([#81](https://github.com/rdkcentral/firebolt-core-sdk/issues/81)) ([efc740f](https://github.com/rdkcentral/firebolt-core-sdk/commit/efc740f7899897981cc840f12efe30f3e9543be4))
+* Updated openrpc version to 1.8.0-next.2 ([#85](https://github.com/rdkcentral/firebolt-core-sdk/issues/85)) ([b988c41](https://github.com/rdkcentral/firebolt-core-sdk/commit/b988c4159b154f8c041b766f794618250448bce0))
+* Updated package json version ([cb6a7f3](https://github.com/rdkcentral/firebolt-core-sdk/commit/cb6a7f30331cbbe6bb4390b756e3e7a1948940dc))
+* Updated secure storage spec to allow null as result value ([#84](https://github.com/rdkcentral/firebolt-core-sdk/issues/84)) ([4117ad7](https://github.com/rdkcentral/firebolt-core-sdk/commit/4117ad79322c8a3decd59f5ad52d5dfe6cf2f2a4))
+* Word publish scripts ([#78](https://github.com/rdkcentral/firebolt-core-sdk/issues/78)) ([a3846e0](https://github.com/rdkcentral/firebolt-core-sdk/commit/a3846e0db22e1221547ad97a019aba3850c51f6a))
+
+
+### Features
+
+* Add content-access api, deprecate entitlements, remove availabi… ([#83](https://github.com/rdkcentral/firebolt-core-sdk/issues/83)) ([f3c8017](https://github.com/rdkcentral/firebolt-core-sdk/commit/f3c8017eb391119e47d810426fdae4b11d8e0c38))
+* Add Secure Storage module ([#77](https://github.com/rdkcentral/firebolt-core-sdk/issues/77)) ([f62e4ae](https://github.com/rdkcentral/firebolt-core-sdk/commit/f62e4aeb9325df00c6a2484cf3aaa0b756bd8113))
+* New Capabilities API ([#63](https://github.com/rdkcentral/firebolt-core-sdk/issues/63)) ([0ba5ef5](https://github.com/rdkcentral/firebolt-core-sdk/commit/0ba5ef5e030ce740e40fd5ad30ca5cfd100cf32e))
+* Trigger ([607825b](https://github.com/rdkcentral/firebolt-core-sdk/commit/607825bd5547c74a8a7707f751446ab0e069d9f9))
+* Turn on dryRun ([dcddc60](https://github.com/rdkcentral/firebolt-core-sdk/commit/dcddc6068f91505d97457ed04eb8e2996dab9278))
+
 # [0.10.0-next.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.4...v0.10.0-next.5) (2023-02-01)
 
 
