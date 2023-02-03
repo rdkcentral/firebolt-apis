@@ -1,3 +1,10 @@
+# [0.10.0-next.6](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.5...v0.10.0-next.6) (2023-02-03)
+
+
+### Features
+
+* Trigger ([9bcea8f](https://github.com/rdkcentral/firebolt-core-sdk/commit/9bcea8f8cf936c2cc295c0c415cb2b5f32b8862a))
+
 # [0.10.0-next.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.4...v0.10.0-next.5) (2023-02-03)
 
 
