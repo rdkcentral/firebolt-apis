@@ -4,10 +4,6 @@
     {
       "name": "next",
       "prerelease": true
-    },
-    {
-      "name": "next-major",
-      "prerelease": true
     }
   ],
   "dryRun": false,
