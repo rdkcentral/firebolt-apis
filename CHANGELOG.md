@@ -18,16 +18,6 @@
 * Add content-access api, deprecate entitlements, remove availabi… ([#83](https://github.com/rdkcentral/firebolt-core-sdk/issues/83)) ([f3c8017](https://github.com/rdkcentral/firebolt-core-sdk/commit/f3c8017eb391119e47d810426fdae4b11d8e0c38))
 * Add Secure Storage module ([#77](https://github.com/rdkcentral/firebolt-core-sdk/issues/77)) ([f62e4ae](https://github.com/rdkcentral/firebolt-core-sdk/commit/f62e4aeb9325df00c6a2484cf3aaa0b756bd8113))
 * New Capabilities API ([#63](https://github.com/rdkcentral/firebolt-core-sdk/issues/63)) ([0ba5ef5](https://github.com/rdkcentral/firebolt-core-sdk/commit/0ba5ef5e030ce740e40fd5ad30ca5cfd100cf32e))
-* Trigger ([2cd78c4](https://github.com/rdkcentral/firebolt-core-sdk/commit/2cd78c449b1660d5e5779a94b7510ff7c0631ec3))
-* Trigger ([90bf4df](https://github.com/rdkcentral/firebolt-core-sdk/commit/90bf4df618259e786d30edab0add0ade0111ce36))
-* Trigger ([9bcea8f](https://github.com/rdkcentral/firebolt-core-sdk/commit/9bcea8f8cf936c2cc295c0c415cb2b5f32b8862a))
-* Trigger ([84f7a35](https://github.com/rdkcentral/firebolt-core-sdk/commit/84f7a353fd8c8991d4c5681ac063eac9f99095be))
-* Trigger ([4d24430](https://github.com/rdkcentral/firebolt-core-sdk/commit/4d2443039e4e194846512b0844e19d95aa61a838))
-* Trigger ([58ee909](https://github.com/rdkcentral/firebolt-core-sdk/commit/58ee909ee8e82a0b0e18cc659bd04a4937d0f98d))
-* Trigger ([2cd905a](https://github.com/rdkcentral/firebolt-core-sdk/commit/2cd905a6b9476c02796c1dad18779f8e96319372))
-* Trigger ([607825b](https://github.com/rdkcentral/firebolt-core-sdk/commit/607825bd5547c74a8a7707f751446ab0e069d9f9))
-* Turn on dryRun ([927babd](https://github.com/rdkcentral/firebolt-core-sdk/commit/927babd98bdbb73918d3379e7769b3db0dd5b3c6))
-* Turn on dryRun ([dcddc60](https://github.com/rdkcentral/firebolt-core-sdk/commit/dcddc6068f91505d97457ed04eb8e2996dab9278))
 
 # [0.10.0-next.9](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.8...v0.10.0-next.9) (2023-02-06)
 
