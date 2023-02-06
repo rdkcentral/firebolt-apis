@@ -7,7 +7,6 @@
 * Change doc examples to https ([#79](https://github.com/rdkcentral/firebolt-core-sdk/issues/79)) ([c7047af](https://github.com/rdkcentral/firebolt-core-sdk/commit/c7047af9f3fa47e8cd7d252c3bbd321fa8f3d125))
 * FIRESDK-31 returned response from Lifecycle.ready method ([#81](https://github.com/rdkcentral/firebolt-core-sdk/issues/81)) ([efc740f](https://github.com/rdkcentral/firebolt-core-sdk/commit/efc740f7899897981cc840f12efe30f3e9543be4))
 * Updated openrpc version to 1.8.0-next.2 ([#85](https://github.com/rdkcentral/firebolt-core-sdk/issues/85)) ([b988c41](https://github.com/rdkcentral/firebolt-core-sdk/commit/b988c4159b154f8c041b766f794618250448bce0))
-* Updated package json version ([cb6a7f3](https://github.com/rdkcentral/firebolt-core-sdk/commit/cb6a7f30331cbbe6bb4390b756e3e7a1948940dc))
 * Updated secure storage spec to allow null as result value ([#84](https://github.com/rdkcentral/firebolt-core-sdk/issues/84)) ([4117ad7](https://github.com/rdkcentral/firebolt-core-sdk/commit/4117ad79322c8a3decd59f5ad52d5dfe6cf2f2a4))
 * Use new openrpc template code with bug fixes ([#69](https://github.com/rdkcentral/firebolt-core-sdk/issues/69)) ([9fed6fc](https://github.com/rdkcentral/firebolt-core-sdk/commit/9fed6fcb71b9914e91674f5e80f7d61673cc66fe))
 * Word publish scripts ([#78](https://github.com/rdkcentral/firebolt-core-sdk/issues/78)) ([a3846e0](https://github.com/rdkcentral/firebolt-core-sdk/commit/a3846e0db22e1221547ad97a019aba3850c51f6a))
