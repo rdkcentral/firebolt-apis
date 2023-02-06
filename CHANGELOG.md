@@ -1,3 +1,10 @@
+# [0.10.0-next.9](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.8...v0.10.0-next.9) (2023-02-06)
+
+
+### Features
+
+* Turn on dryRun ([927babd](https://github.com/rdkcentral/firebolt-core-sdk/commit/927babd98bdbb73918d3379e7769b3db0dd5b3c6))
+
 # [0.10.0-next.8](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.7...v0.10.0-next.8) (2023-02-03)
 
 
