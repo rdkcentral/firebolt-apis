@@ -4,10 +4,6 @@
     {
       "name": "next",
       "prerelease": true
-    },
-    {
-      "name": "next-major",
-      "prerelease": true
     }
   ],
   "dryRun": false,
@@ -36,7 +32,8 @@
       "@semantic-release/git"
     ],
     [
-      "@semantic-release/github", {
+      "@semantic-release/github",
+      {
         "assets": "./*.tgz"
       }
     ]
