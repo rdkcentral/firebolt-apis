@@ -138,10 +138,10 @@
                     }
                 },
                 {
-                    "name": "options",
-                    "summary": "Capability options",
+                    "name": "role",
                     "schema": {
-                        "$ref": "#/components/schemas/CapabilityOption"
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role",
+                        "default": "use"
                     }
                 }
             ],
@@ -174,10 +174,8 @@
                             "value": "xrn:firebolt:capability:input:keyboard"
                         },
                         {
-                            "name": "options",
-                            "value": {
-                                "role": "manage"
-                            }
+                            "name": "role",
+                            "value": "manage"
                         }
                     ],
                     "result": {
@@ -220,10 +218,10 @@
                     }
                 },
                 {
-                    "name": "options",
-                    "summary": "Capability options",
+                    "name": "role",
                     "schema": {
-                        "$ref": "#/components/schemas/CapabilityOption"
+                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role",
+                        "default": "use"
                     }
                 }
             ],

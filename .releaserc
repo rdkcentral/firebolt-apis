@@ -18,6 +18,10 @@
       "name": "proposed",
       "channel": "proposed",
       "prerelease": true
+    },
+    {
+      "name": "next-major",
+      "prerelease": true
     }
   ],
   "dryRun": false,
@@ -49,8 +53,7 @@
       }
     ],
     [
-      "@semantic-release/github",
-      {
+      "@semantic-release/github", {
         "assets": "./*.tgz"
       }
     ],
