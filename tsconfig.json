@@ -1,5 +1,6 @@
 {
     "include": [
-        "test/typescript/*"
+        "src/sdks/core/test/suite/*",
+        "src/sdks/manage/test/suite/*"
     ]
 }

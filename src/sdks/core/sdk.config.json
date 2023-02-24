@@ -1,0 +1,62 @@
+{
+    "info": {
+        "title": "Firebolt Core SDK"
+    },
+    "methods": [
+        {
+            "module": "*",
+            "use": [
+                "xrn:firebolt:capability:lifecycle:initialize",
+                "xrn:firebolt:capability:lifecycle:ready",
+                "xrn:firebolt:capability:lifecycle:state",
+                "xrn:firebolt:capability:advertising:configuration",
+                "xrn:firebolt:capability:account:id",
+                "xrn:firebolt:capability:advertising:identifier",
+                "xrn:firebolt:capability:discovery:availabilities",
+                "xrn:firebolt:capability:discovery:content-access",
+                "xrn:firebolt:capability:discovery:sign-in-status",
+                "xrn:firebolt:capability:discovery:watch-next",
+                "xrn:firebolt:capability:discovery:watched",
+                "xrn:firebolt:capability:input:keyboard",
+                "xrn:firebolt:capability:localization:locality",
+                "xrn:firebolt:capability:localization:location",
+                "xrn:firebolt:capability:localization:postal-code",
+                "xrn:firebolt:capability:protocol:dial",
+                "xrn:firebolt:capability:token:device",
+                "xrn:firebolt:capability:token:platform",
+                "xrn:firebolt:capability:token:root",
+                "xrn:firebolt:capability:token:session",
+                "xrn:firebolt:capability:accessibility:closedcaptions",
+                "xrn:firebolt:capability:accessibility:voiceguidance",
+                "xrn:firebolt:capability:account:uid",
+                "xrn:firebolt:capability:approve:content",
+                "xrn:firebolt:capability:approve:purchase",
+                "xrn:firebolt:capability:device:distributor",
+                "xrn:firebolt:capability:device:id",
+                "xrn:firebolt:capability:device:info",
+                "xrn:firebolt:capability:device:make",
+                "xrn:firebolt:capability:device:model",
+                "xrn:firebolt:capability:device:name",
+                "xrn:firebolt:capability:device:sku",
+                "xrn:firebolt:capability:device:uid",
+                "xrn:firebolt:capability:discovery:navigate-to",
+                "xrn:firebolt:capability:discovery:policy",
+                "xrn:firebolt:capability:lifecycle:launch",
+                "xrn:firebolt:capability:localization:country-code",
+                "xrn:firebolt:capability:localization:language",
+                "xrn:firebolt:capability:localization:locale",
+                "xrn:firebolt:capability:metrics:general",
+                "xrn:firebolt:capability:metrics:media",
+                "xrn:firebolt:capability:network:status",
+                "xrn:firebolt:capability:privacy:advertising",
+                "xrn:firebolt:capability:profile:flags",
+                "xrn:firebolt:capability:storage:secure"
+            ],
+            "manage": [],
+            "provide": [
+                "xrn:firebolt:capability:discovery:entity-info",
+                "xrn:firebolt:capability:discovery:purchased-content"
+            ]
+        }
+    ]
+}
