@@ -6,7 +6,7 @@
 	"types": "./dist/lib/firebolt.d.ts",
 	"type": "module",
 	"scripts": {
-		"validate": "npm firebolt-openrpc validate --input ./dist/firebolt-core-open-rpc.json",
+		"validate": "npx firebolt-openrpc validate --input ./dist/firebolt-core-open-rpc.json",
 		"sdk": "npx firebolt-openrpc sdk --input ./dist/firebolt-core-open-rpc.json --template ./src/js --output ./build/javascript/src --static-module Platform",
 		"slice": "npx firebolt-openrpc slice -i ../../../dist/firebolt-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-core-open-rpc.json",
 		"declarations": "npx firebolt-openrpc declarations --input ./dist/firebolt-core-open-rpc.json --output build/javascript/src/firebolt.d.ts",

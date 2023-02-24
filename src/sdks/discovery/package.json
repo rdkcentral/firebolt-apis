@@ -1,0 +1,41 @@
+{
+	"name": "@firebolt-js/discovery-sdk",
+	"version": "0.10.0-next.9",
+	"description": "The Firebolt Discovery JS SDK",
+	"main": "./dist/lib/firebolt-discovery.mjs",
+	"types": "./dist/lib/firebolt-discovery.d.ts",
+	"type": "module",
+	"scripts": {
+		"validate": "npx firebolt-openrpc validate --input ./dist/firebolt-discovery-open-rpc.json",
+		"sdk": "npx firebolt-openrpc sdk --input ./dist/firebolt-discovery-open-rpc.json --template ./src/js --output ./build/javascript/src",
+		"slice": "npx firebolt-openrpc slice -i ../../../dist/firebolt-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-discovery-open-rpc.json",
+		"declarations": "npx firebolt-openrpc declarations --input ./dist/firebolt-discovery-open-rpc.json --output build/javascript/src/firebolt-discovery.d.ts",
+		"docs": "npx firebolt-openrpc docs --input ./dist/firebolt-discovery-open-rpc.json --output build/docs/markdown --as-path",
+		"wiki": "npx firebolt-openrpc docs --input ./dist/firebolt-discovery-open-rpc.json --output build/docs/markdown",
+		"dist": "npm run clean && npm run slice && npm run sdk && npm run declarations && npm run docs && npm run test && mkdir -p ./dist && cp -R build/javascript/src dist/lib && cp -R build/docs/markdown dist/docs && echo 'Firebolt Discovery SDK /dist/ is ready.\n'",
+		"clean": "rm -rf ./build && rm -rf ./dist",
+		"test:setup": "rm -rf test/transpiled-suite && npx tsc --target es6 --moduleResolution node --outDir test/transpiled-suite",
+		"test": "npm run test:setup && NODE_OPTIONS=--experimental-vm-modules npx --config=jest.config.json --detectOpenHandles jest",
+		"prepack": "cd ../../.. && npm run dist"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/rdkcentral/firebolt-core-sdk"
+	},
+	"author": "",
+	"bugs": {
+		"url": "https://github.com/rdkcentral/firebolt-core-sdk/issues"
+	},
+	"homepage": "https://github.com/rdkcentral/firebolt-core-sdk#readme",
+	"devDependencies": {
+		"jest": "^28.1.0",
+		"jest-environment-jsdom": "^28.1.3",
+		"typescript": "^4.6.4"
+	},
+	"keywords": [
+		"firebolt",
+		"apps",
+		"sdk"
+	],
+	"license": "Apache-2.0"
+}

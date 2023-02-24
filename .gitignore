@@ -1,5 +1,14 @@
 build/*
 dist/*
+sdks/core/build/*
+sdks/core/dist/*
+sdks/core/test/transpiled-suite/*
+sdks/discovery/build/*
+sdks/discovery/dist/*
+sdks/discovery/test/transpiled-suite/*
+sdks/manage/build/*
+sdks/manage/dist/*
+sdks/manage/test/transpiled-suite/*
 node_modules/*
-.DS_Store
 test/transpiled-suite/*
+.DS_Store

@@ -1,7 +1,7 @@
 {
     "openrpc": "1.2.4",
     "info": {
-        "title": "Firebolt SDK",
+        "title": "Firebolt JSON-RPC API",
         "version": ""
     },
     "methods": [
