@@ -7,52 +7,163 @@
     },
     "methods": [
         {
-            "module": "*",
+            "module": "Accessory",
             "use": [
                 "xrn:firebolt:capability:accessory:pair",
-                "xrn:firebolt:capability:developer:tools",
+                "xrn:firebolt:capability:accessory:list"
+            ]
+        },
+        {
+            "module": "DeveloperTools",
+            "use": [
+                "xrn:firebolt:capability:developer:tools"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:developer:tools"
+            ]
+        },
+        {
+            "module": "Localization",
+            "use": [
                 "xrn:firebolt:capability:localization:locality",
                 "xrn:firebolt:capability:localization:postal-code",
-                "xrn:firebolt:capability:protocol:wifi",
-                "xrn:firebolt:capability:accessibility:closedcaptions",
-                "xrn:firebolt:capability:accessibility:voiceguidance",
-                "xrn:firebolt:capability:accessory:list",
-                "xrn:firebolt:capability:device:name",
-                "xrn:firebolt:capability:grants:state",
                 "xrn:firebolt:capability:localization:country-code",
                 "xrn:firebolt:capability:localization:language",
                 "xrn:firebolt:capability:localization:locale",
-                "xrn:firebolt:capability:localization:time-zone",
+                "xrn:firebolt:capability:localization:time-zone"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:localization:locality",
+                "xrn:firebolt:capability:localization:postal-code",
+                "xrn:firebolt:capability:localization:country-code",
+                "xrn:firebolt:capability:localization:language",
+                "xrn:firebolt:capability:localization:locale",
+                "xrn:firebolt:capability:localization:time-zone"
+            ]
+        },
+        {
+            "module": "Wifi",
+            "use": [
+                "xrn:firebolt:capability:protocol:wifi"
+            ]
+        },
+        {
+            "module": "ClosedCaptions",
+            "use": [
+                "xrn:firebolt:capability:accessibility:closedcaptions"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:accessibility:closedcaptions"
+            ]
+        },
+        {
+            "module": "VoiceGuidance",
+            "use": [
+                "xrn:firebolt:capability:accessibility:voiceguidance"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:accessibility:voiceguidance"
+            ]
+        },
+        {
+            "module": "Device",
+            "use": [
+                "xrn:firebolt:capability:device:name"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:device:distributor",
+                "xrn:firebolt:capability:device:id",
+                "xrn:firebolt:capability:device:name"
+            ]
+        },
+        {
+            "module": "UserGrants",
+            "use": [
+                "xrn:firebolt:capability:grants:state"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:grants:state"
+            ]
+        },
+        {
+            "module": "Privacy",
+            "use": [
                 "xrn:firebolt:capability:privacy:settings"
             ],
             "manage": [
-                "xrn:firebolt:capability:lifecycle:state",
-                "xrn:firebolt:capability:advertising:configuration",
-                "xrn:firebolt:capability:account:id",
-                "xrn:firebolt:capability:developer:tools",
-                "xrn:firebolt:capability:localization:locality",
-                "xrn:firebolt:capability:localization:postal-code",
-                "xrn:firebolt:capability:accessibility:closedcaptions",
-                "xrn:firebolt:capability:accessibility:voiceguidance",
-                "xrn:firebolt:capability:device:distributor",
-                "xrn:firebolt:capability:device:id",
-                "xrn:firebolt:capability:device:name",
-                "xrn:firebolt:capability:grants:state",
-                "xrn:firebolt:capability:localization:country-code",
-                "xrn:firebolt:capability:localization:language",
-                "xrn:firebolt:capability:localization:locale",
-                "xrn:firebolt:capability:localization:time-zone",
-                "xrn:firebolt:capability:privacy:settings",
-                "xrn:firebolt:capability:token:account",
-                "xrn:firebolt:capability:token:session"
+                "xrn:firebolt:capability:privacy:settings"
+            ]
+        },
+        {
+            "module": "Lifecycle",
+            "manage": [
+                "xrn:firebolt:capability:lifecycle:state"
             ],
             "provide": [
                 "xrn:firebolt:capability:lifecycle:state",
-                "xrn:firebolt:capability:input:keyboard",
-                "xrn:firebolt:capability:token:session",
-                "xrn:firebolt:capability:usergrant:acknowledgechallenge",
-                "xrn:firebolt:capability:usergrant:pinchallenge",
                 "xrn:firebolt:capability:lifecycle:launch"
+            ]
+        },
+        {
+            "module": "Advertising",
+            "manage": [
+                "xrn:firebolt:capability:advertising:configuration"
+            ]
+        },
+        {
+            "module": "Account",
+            "manage": [
+                "xrn:firebolt:capability:account:id",
+                "xrn:firebolt:capability:token:session"
+            ],
+            "provide": [
+                "xrn:firebolt:capability:token:session"
+            ]
+        },
+        {
+            "module": "Authentication",
+            "use": [
+                "xrn:firebolt:capability:token:account",
+                "xrn:firebolt:capability:token:session",
+                "xrn:firebolt:capability:token:platform",
+                "xrn:firebolt:capability:token:root"
+            ]
+        },
+        {
+            "module": "Authentication",
+            "use": [
+                "xrn:firebolt:capability:token:account",
+                "xrn:firebolt:capability:token:session",
+                "xrn:firebolt:capability:token:platform",
+                "xrn:firebolt:capability:token:root"
+            ]
+        },
+        {
+            "module": "Keyboard",
+            "provide": [
+                "xrn:firebolt:capability:input:keyboard"
+            ]
+        },
+        {
+            "module": "*",
+            "manage": [
+            ],
+            "provide": [
+                "xrn:firebolt:capability:input:keyboard",
+                "xrn:firebolt:capability:usergrant:acknowledgechallenge",
+                "xrn:firebolt:capability:usergrant:pinchallenge"
+            ]
+        },
+        {
+            "module": "AcknowledgeChallenge",
+            "provide": [
+                "xrn:firebolt:capability:usergrant:acknowledgechallenge"
+            ]
+        },
+        {
+            "module": "PinChallenge",
+            "provide": [
+                "xrn:firebolt:capability:usergrant:pinchallenge"
             ]
         }
     ]
