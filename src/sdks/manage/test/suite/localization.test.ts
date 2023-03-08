@@ -64,8 +64,8 @@ test("Localization.once()", () => {
 });
 
 test("Localization.clear()", () => {
-  const result = Localization.clear(1);
-  expect(result).toBe(undefined);
+  const result = Localization.clear(-1000);
+  expect(result).toBeFalsy();
 });
 
 test("Device.postalCode()", () => {

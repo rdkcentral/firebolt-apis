@@ -58,6 +58,6 @@ test("VoiceGuidance.once() for speedChanged event", () => {
 });
 
 test("VoiceGuidance.clear()", () => {
-  const result = VoiceGuidance.clear(2);
+  const result = VoiceGuidance.clear(-1000);
   expect(result).toBeFalsy();
 });

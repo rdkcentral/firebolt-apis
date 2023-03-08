@@ -63,11 +63,18 @@
                 "xrn:firebolt:capability:discovery:content-access",
                 "xrn:firebolt:capability:discovery:sign-in-status",
                 "xrn:firebolt:capability:discovery:watch-next",
-                "xrn:firebolt:capability:discovery:watched"
+                "xrn:firebolt:capability:discovery:watched",
+                "xrn:firebolt:capability:lifecycle:launch"
             ],
             "provide": [
                 "xrn:firebolt:capability:discovery:entity-info",
                 "xrn:firebolt:capability:discovery:purchased-content"
+            ]
+        },
+        {
+            "module": "Internal",
+            "use": [
+                "xrn:firebolt:capability:lifecycle:initialize"        
             ]
         },
         {
@@ -79,10 +86,8 @@
         {
             "module": "Lifecycle",
             "use": [
-                "xrn:firebolt:capability:lifecycle:initialize",
                 "xrn:firebolt:capability:lifecycle:ready",
-                "xrn:firebolt:capability:lifecycle:state",
-                "xrn:firebolt:capability:lifecycle:launch"
+                "xrn:firebolt:capability:lifecycle:state"
             ]
         },
         {

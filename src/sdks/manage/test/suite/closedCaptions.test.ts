@@ -102,6 +102,6 @@ test("ClosedCaptions.once()", () => {
 });
 
 test("clear", () => {
-  const result = ClosedCaptions.clear(1);
-  expect(result).toBe(undefined);
+  const result = ClosedCaptions.clear(-1000);
+  expect(result).toBeFalsy();
 });

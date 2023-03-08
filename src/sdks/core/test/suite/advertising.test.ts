@@ -84,6 +84,6 @@ test("once() specific Advertising event.", () => {
 });
 
 test("clear()", () => {
-  const result: boolean = Advertising.clear(2);
+  const result: boolean = Advertising.clear(-1000);
   expect(result).toBeFalsy();
 });

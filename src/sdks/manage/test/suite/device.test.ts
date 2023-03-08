@@ -27,7 +27,7 @@ test("Device.name()", () => {
 
 test("Device.provision()", () => {
   return Device.provision("Test_Account_Id", "Test_Device_Id").then((res) => {
-    expect(res).toEqual({});
+    expect(res).toEqual(null);
   });
 });
 

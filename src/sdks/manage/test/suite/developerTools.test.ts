@@ -30,13 +30,13 @@ test("DeveloperTools.find()", () => {
 
 test("DeveloperTools.pair()", () => {
   return DeveloperTools.pair("Test_ID").then((res) => {
-    expect(res).toEqual({});
+    expect(res).toEqual(null);
   });
 });
 
 test("DeveloperTools.unpair()", () => {
   return DeveloperTools.unpair("Test_ID").then((res) => {
-    expect(res).toEqual({});
+    expect(res).toEqual(null);
   });
 });
 

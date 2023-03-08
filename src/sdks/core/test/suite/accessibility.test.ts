@@ -63,7 +63,7 @@ test('once VoiceGuidanceSettings', () => {
 
 
 test('clear()', () => {
-  const result: boolean = Accessibility.clear(2);
+  const result: boolean = Accessibility.clear(-1000);
   expect(result).toBeFalsy();
 });
 

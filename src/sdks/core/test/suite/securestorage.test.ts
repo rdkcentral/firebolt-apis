@@ -38,24 +38,24 @@ test("set() for type device", () => {
   return SecureStorage.set(SecureStorage.StorageScope.DEVICE, authTokenKey, value, {
     ttl: 600
   }).then((res) => {
-    expect(res).toEqual({});
+    expect(res).toEqual(null);
   });
 });
 
 test("set() for type account", () => {
   return SecureStorage.set(SecureStorage.StorageScope.ACCOUNT, authTokenKey, value).then((res) => {
-    expect(res).toEqual({});
+    expect(res).toEqual(null);
   });
 });
 
 test("remove() for type device", () => {
   return SecureStorage.remove(SecureStorage.StorageScope.DEVICE, authTokenKey).then((res) => {
-    expect(res).toEqual({});
+    expect(res).toEqual(null);
   });
 });
 
 test("remove() for type account", () => {
   return SecureStorage.remove(SecureStorage.StorageScope.ACCOUNT, authTokenKey).then((res) => {
-    expect(res).toEqual({});
+    expect(res).toEqual(null);
   });
 });

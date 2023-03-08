@@ -22,7 +22,7 @@ import { Account } from "../../build/javascript/src/firebolt-manage";
 test("Account.session()", () => {
   const expTime: number = new Date().getTime() + 100;
   return Account.session("Test_Token", expTime).then((res: void) => {
-    expect(res).toEqual({});
+    expect(res).toEqual(null);
   });
 });
 

@@ -1566,7 +1566,7 @@
             "description": "Optional list of subratings or content advisories."
           }
         },
-        "description": "A ContentRating represents an age or content based of an entity. Supported rating schemes and associated types are below.\n\n## United States\n\n`US-Movie` (MPAA):\n\nRatings: `NR`, `G`, `PG`, `PG13`, `R`, `NC17`\n\nAdvisories: `AT`, `BN`, `SL`, `SS`, `N`, `V`\n\n`US-TV` (Vchip):\n\nRatings: `TVY`, `TVY7`, `TVG`, `TVPG`, `TV14`, `TVMA`\n\nAdvisories: `FV`, `D`, `L`, `S`, `V`\n\n## Canada\n\n`CA-Movie` (OFRB):\n\nRatings: `G`, `PG`, `14A`, `18A`, `R`, `E`\n\n`CA-TV` (AGVOT)\n\nRatings: `E`, `C`, `C8`, `G`, `PG`, `14+`, `18+`\n\nAdvisories: `C`, `C8`, `G`, `PG`, `14+`, `18+`\n\n`CA-Movie-Fr` (Canadian French language movies):\n\nRatings: `G`, `8+`, `13+`, `16+`, `18+`\n\n`CA-TV-Fr` (Canadian French language TV):\n\nRatings: `G`, `8+`, `13+`, `16+`, `18+`\n"
+        "description": "A ContentRating represents an age or content based of an entity. Supported rating schemes and associated types are below.\n\n#### United States\n\n`US-Movie` (MPAA):\n\nRatings: `NR`, `G`, `PG`, `PG13`, `R`, `NC17`\n\nAdvisories: `AT`, `BN`, `SL`, `SS`, `N`, `V`\n\n`US-TV` (Vchip):\n\nRatings: `TVY`, `TVY7`, `TVG`, `TVPG`, `TV14`, `TVMA`\n\nAdvisories: `FV`, `D`, `L`, `S`, `V`\n\n#### Canada\n\n`CA-Movie` (OFRB):\n\nRatings: `G`, `PG`, `14A`, `18A`, `R`, `E`\n\n`CA-TV` (AGVOT)\n\nRatings: `E`, `C`, `C8`, `G`, `PG`, `14+`, `18+`\n\nAdvisories: `C`, `C8`, `G`, `PG`, `14+`, `18+`\n\n`CA-Movie-Fr` (Canadian French language movies):\n\nRatings: `G`, `8+`, `13+`, `16+`, `18+`\n\n`CA-TV-Fr` (Canadian French language TV):\n\nRatings: `G`, `8+`, `13+`, `16+`, `18+`\n"
       },
       "ContentIdentifiers": {
         "title": "ContentIdentifiers",

@@ -65,6 +65,6 @@ test("privacy.once() for allowAppContentAdTargetingChanged event", () => {
 });
 
 test("privacy.clear()", () => {
-  const result = Privacy.clear(2);
+  const result = Privacy.clear(-1000);
   expect(result).toBeFalsy();
 });

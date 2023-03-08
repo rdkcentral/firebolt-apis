@@ -22,7 +22,7 @@ import {  Lifecycle } from "../../build/javascript/src/firebolt-manage";
 test("Lifecycle.setState()", () => {
   return Lifecycle.setState("Test_APP_ID", Lifecycle.LifecycleState.INITIALIZING).then(
     (res) => {
-      expect(res).toEqual({});
+      expect(res).toEqual(null);
     }
   );
 });

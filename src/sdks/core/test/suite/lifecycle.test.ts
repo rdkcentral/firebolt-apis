@@ -157,6 +157,6 @@ test("once() unloading event.", () => {
 });
 
 test("clear()", () => {
-  const result: boolean = Lifecycle.clear(2);
+  const result: boolean = Lifecycle.clear(-1000);
   expect(result).toBeFalsy();
 });

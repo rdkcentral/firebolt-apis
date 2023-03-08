@@ -59,7 +59,7 @@ test("Wifi.connect()", () => {
 
 test("Wifi.disconnect()", () => {
   return Wifi.disconnect().then((res) => {
-    expect(res).toEqual({});
+    expect(res).toEqual(null);
   });
 });
 

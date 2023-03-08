@@ -37,7 +37,7 @@ function signOut() {
 
 export default {
 
-  /* ${EVENTS} */
+  /* ${EVENTS_ENUM} */
   /* ${ENUMS} */
   /* ${METHOD_LIST} */
 

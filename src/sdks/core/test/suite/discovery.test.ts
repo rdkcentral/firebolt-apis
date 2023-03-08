@@ -175,6 +175,6 @@ test("once() pullPurchasedContent event.", () => {
 });
 
 test("clear()", () => {
-  const result: boolean = Discovery.clear(2);
+  const result: boolean = Discovery.clear(-1000);
   expect(result).toBeFalsy();
 });

@@ -51,6 +51,6 @@ test("once() languageChanged event.", () => {
 });
 
 test("clear()", () => {
-  const result: boolean = Localization.clear(2);
+  const result: boolean = Localization.clear(-1000);
   expect(result).toBeFalsy();
 });

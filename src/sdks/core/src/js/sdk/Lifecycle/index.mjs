@@ -58,7 +58,7 @@ function finished() {
 // public API
 export default {
 
-  /* ${EVENTS} */
+  /* ${EVENTS_ENUM} */
 
   /* ${ENUMS} */
 

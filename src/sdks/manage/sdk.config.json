@@ -68,7 +68,8 @@
         {
             "module": "Device",
             "use": [
-                "xrn:firebolt:capability:device:name"
+                "xrn:firebolt:capability:device:name",
+                "xrn:firebolt:capability:developer:tools"
             ],
             "manage": [
                 "xrn:firebolt:capability:device:distributor",

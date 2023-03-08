@@ -40,7 +40,7 @@ function version() {
 
 export default {
 
-  /* ${EVENTS} */
+  /* ${EVENTS_ENUM} */
   /* ${ENUMS} */
 
   version,
