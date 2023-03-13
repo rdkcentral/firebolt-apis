@@ -27,7 +27,6 @@ const state = {
 };
 
 let navigateToListenCount: number = 0;
-let pullEntityInfoListenCount: number = 0;
 let callbackWiredUp: boolean = false;
 let sendCalled: boolean = false;
 
@@ -54,8 +53,6 @@ const transport = {
           // fail silenetly (the boolean-based tests below will figure it out...)
         }
       }
-    } else if (json.method.toLowerCase() === "discovery.onpullentityinfo") {
-      pullEntityInfoListenCount++;
     }
   },
   receive: function (callback: FunctionConstructor) {
@@ -80,19 +77,6 @@ Discovery.listen((event: string, value: object) => {
 Discovery.listen((event: string, value: object) => {
   /* testing both listen signatures */
 });
-// listen three more times, using wildcard FIRST (from above)
-Discovery.listen(
-  "pullEntityInfo",
-  (value: Discovery.EntityInfoFederatedRequest) => {}
-);
-Discovery.listen(
-  "pullEntityInfo",
-  (value: Discovery.EntityInfoFederatedRequest) => {}
-);
-Discovery.listen(
-  "pullEntityInfo",
-  (value: Discovery.EntityInfoFederatedRequest) => {}
-);
 
 Lifecycle.ready();
 
@@ -106,10 +90,8 @@ test("Transport send method working", () => {
 
 test("Transport was sent listeners", () => {
   expect(navigateToListenCount).toBeGreaterThan(0);
-  expect(pullEntityInfoListenCount).toBeGreaterThan(0);
 });
 
 test("Transport was sent each listener only once", () => {
   expect(navigateToListenCount).toBe(1);
-  expect(pullEntityInfoListenCount).toBe(1);
 });

@@ -40,9 +40,6 @@ test('listen ClosedCaptionsSettings', () => {
   });
 });
 
-
-
-
 test('once ClosedCaptionsSettings', () => {
   return Accessibility.once((event: 'closedCaptionsSettingsChanged', listener: { data: Accessibility.ClosedCaptionsSettings }) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
