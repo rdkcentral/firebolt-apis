@@ -15,7 +15,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:general"
+            "xrn:firebolt:capability:metrics:general",
+            "xrn:firebolt:capability:data:operational"
           ]
         }
       ],
@@ -30,8 +31,7 @@
       "examples": [
         {
           "name": "Send ready metric",
-          "params": [
-          ],
+          "params": [],
           "result": {
             "name": "success",
             "value": true
@@ -48,7 +48,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:general"
+            "xrn:firebolt:capability:metrics:general",
+            "xrn:firebolt:capability:data:app-account"
           ]
         }
       ],
@@ -63,8 +64,7 @@
       "examples": [
         {
           "name": "Send signIn metric",
-          "params": [
-          ],
+          "params": [],
           "result": {
             "name": "success",
             "value": true
@@ -88,7 +88,7 @@
             "name": "success",
             "value": true
           }
-        }        
+        }
       ]
     },
     {
@@ -100,7 +100,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:general"
+            "xrn:firebolt:capability:metrics:general",
+            "xrn:firebolt:capability:data:app-account"
           ]
         }
       ],
@@ -115,13 +116,12 @@
       "examples": [
         {
           "name": "Send signOut metric",
-          "params": [
-          ],
+          "params": [],
           "result": {
             "name": "success",
             "value": true
           }
-        }        
+        }
       ]
     },
     {
@@ -130,7 +130,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:general"
+            "xrn:firebolt:capability:metrics:general",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -154,13 +155,12 @@
       "examples": [
         {
           "name": "Send startContent metric",
-          "params": [
-          ],
+          "params": [],
           "result": {
             "name": "success",
             "value": true
           }
-        },  
+        },
         {
           "name": "Send startContent metric w/ entity",
           "params": [
@@ -173,7 +173,7 @@
             "name": "success",
             "value": true
           }
-        } 
+        }
       ]
     },
     {
@@ -182,7 +182,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:general"
+            "xrn:firebolt:capability:metrics:general",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -206,13 +207,12 @@
       "examples": [
         {
           "name": "Send stopContent metric",
-          "params": [
-          ],
+          "params": [],
           "result": {
             "name": "success",
             "value": true
           }
-        },  
+        },
         {
           "name": "Send stopContent metric w/ entity",
           "params": [
@@ -225,7 +225,7 @@
             "name": "success",
             "value": true
           }
-        }         
+        }
       ]
     },
     {
@@ -234,7 +234,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:general"
+            "xrn:firebolt:capability:metrics:general",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -268,7 +269,7 @@
             "name": "success",
             "value": true
           }
-        },  
+        },
         {
           "name": "Send startContent metric w/ entity",
           "params": [
@@ -281,7 +282,7 @@
             "name": "success",
             "value": true
           }
-        }         
+        }
       ]
     },
     {
@@ -290,7 +291,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:general"
+            "xrn:firebolt:capability:metrics:general",
+            "xrn:firebolt:capability:data:operational"
           ]
         }
       ],
@@ -348,16 +350,17 @@
             "name": "success",
             "value": true
           }
-        }     
+        }
       ]
-    }, 
+    },
     {
       "name": "error",
       "tags": [
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:general"
+            "xrn:firebolt:capability:metrics:general",
+            "xrn:firebolt:capability:data:operational"
           ]
         }
       ],
@@ -401,7 +404,7 @@
           "schema": {
             "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
           },
-          "required": false          
+          "required": false
         }
       ],
       "result": {
@@ -435,7 +438,7 @@
             "name": "success",
             "value": true
           }
-        }      
+        }
       ]
     },
     {
@@ -444,7 +447,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:media"
+            "xrn:firebolt:capability:metrics:media",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -479,7 +483,7 @@
             "value": true
           }
         }
-      ]      
+      ]
     },
     {
       "name": "mediaPlay",
@@ -487,7 +491,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:media"
+            "xrn:firebolt:capability:metrics:media",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -522,7 +527,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaPlaying",
@@ -530,7 +535,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:media"
+            "xrn:firebolt:capability:metrics:media",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -565,7 +571,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaPause",
@@ -573,7 +579,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:media"
+            "xrn:firebolt:capability:metrics:media",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -608,7 +615,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaWaiting",
@@ -616,7 +623,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:media"
+            "xrn:firebolt:capability:metrics:media",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -651,7 +659,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaProgress",
@@ -659,7 +667,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:media"
+            "xrn:firebolt:capability:metrics:media",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -706,7 +715,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaSeeking",
@@ -714,7 +723,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:media"
+            "xrn:firebolt:capability:metrics:media",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -761,7 +771,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaSeeked",
@@ -769,7 +779,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:media"
+            "xrn:firebolt:capability:metrics:media",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -816,7 +827,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaRateChange",
@@ -824,7 +835,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:media"
+            "xrn:firebolt:capability:metrics:media",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -871,7 +883,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaRenditionChange",
@@ -879,7 +891,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:media"
+            "xrn:firebolt:capability:metrics:media",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -962,7 +975,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaEnded",
@@ -970,7 +983,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:metrics:media"
+            "xrn:firebolt:capability:metrics:media",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],

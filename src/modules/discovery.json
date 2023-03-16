@@ -423,7 +423,10 @@
         },
         {
           "name": "capabilities",
-          "x-provides": "xrn:firebolt:capability:discovery:purchased-content"
+          "x-provides": "xrn:firebolt:capability:discovery:purchased-content",
+          "x-uses": [
+            "xrn:firebolt:capability:data:app-usage"
+          ]
         }
       ],
       "summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
@@ -540,7 +543,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:discovery:watched"
+            "xrn:firebolt:capability:discovery:watched",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -619,7 +623,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:discovery:watch-next"
+            "xrn:firebolt:capability:discovery:watch-next",
+            "xrn:firebolt:capability:data:app-usage"
           ]
         }
       ],
@@ -710,7 +715,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:discovery:content-access"
+            "xrn:firebolt:capability:discovery:content-access",
+            "xrn:firebolt:capability:data:app-account"
           ]
         },
         {
@@ -774,7 +780,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:discovery:content-access"
+            "xrn:firebolt:capability:discovery:content-access",
+            "xrn:firebolt:capability:data:app-account"
           ]
         }
       ],
@@ -918,7 +925,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:discovery:content-access"
+            "xrn:firebolt:capability:discovery:content-access",
+            "xrn:firebolt:capability:data:app-account"
           ]
         }
       ],
@@ -1277,7 +1285,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:discovery:sign-in-status"
+            "xrn:firebolt:capability:discovery:sign-in-status",
+            "xrn:firebolt:capability:data:app-account"
           ]
         }
       ],
@@ -1340,7 +1349,8 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:discovery:sign-in-status"
+            "xrn:firebolt:capability:discovery:sign-in-status",
+            "xrn:firebolt:capability:data:app-account"
           ]
         }
       ],
