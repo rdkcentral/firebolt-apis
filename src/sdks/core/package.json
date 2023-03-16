@@ -13,7 +13,7 @@
 		"slice": "npx firebolt-openrpc slice -i ../../../dist/firebolt-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-core-open-rpc.json",
 		"docs": "npx firebolt-openrpc docs --input ./dist/firebolt-core-open-rpc.json --output build/docs/markdown --as-path",
 		"wiki": "npx firebolt-openrpc docs --input ./dist/firebolt-core-open-rpc.json --output build/docs/markdown",
-		"dist:notest": "npm run clean && npm run slice && npm run sdk && npm run docs && mkdir -p ./dist && cp -R build/javascript/src dist/lib && cp -R build/docs/markdown dist/docs && echo 'Firebolt Manage SDK /dist/ is ready.\n'",
+		"dist:notest": "npm run clean && npm run slice && npm run validate && npm run sdk && npm run docs && mkdir -p ./dist && cp -R build/javascript/src dist/lib && cp -R build/docs/markdown dist/docs && echo 'Firebolt Manage SDK /dist/ is ready.\n'",
 		"dist": "npm run dist:notest && npm run test",
 		"clean": "rm -rf ./build && rm -rf ./dist",
 		"test:setup": "rm -rf test/transpiled-suite && npx tsc --target es6 --moduleResolution node --outDir test/transpiled-suite",
