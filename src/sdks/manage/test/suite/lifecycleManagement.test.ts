@@ -17,10 +17,10 @@
  */
 
 import { test, expect } from "@jest/globals";
-import {  Lifecycle } from "../../build/javascript/src/firebolt-manage";
+import {  LifecycleManagement } from "../../build/javascript/src/firebolt-manage";
 
 test("Lifecycle.setState()", () => {
-  return Lifecycle.setState("Test_APP_ID", Lifecycle.LifecycleState.INITIALIZING).then(
+  return LifecycleManagement.setState("Test_APP_ID", LifecycleManagement.LifecycleState.INITIALIZING).then(
     (res) => {
       expect(res).toEqual(null);
     }
@@ -29,12 +29,12 @@ test("Lifecycle.setState()", () => {
 
 test("Lifecycle.provide() with blank object", () => {
   expect(() => {
-    Lifecycle.provide("xrn:firebolt:capability:lifecycle:state", {});
+    LifecycleManagement.provide("xrn:firebolt:capability:lifecycle:state", {});
   }).toThrow();
 });
 
 test("Lifecycle.session()", () => {
-  const dummyData: Lifecycle.AppSession = {
+  const dummyData: LifecycleManagement.AppSession = {
     app: {
       id: "123",
       url: "test_url",
@@ -45,7 +45,7 @@ test("Lifecycle.session()", () => {
       id: "123",
     },
   };
-  return Lifecycle.session(dummyData).then((res: Object) => {
+  return LifecycleManagement.session(dummyData).then((res: Object) => {
     expect(res).not.toBeNull();
   });
 });

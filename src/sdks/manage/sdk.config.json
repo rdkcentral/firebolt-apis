@@ -96,7 +96,7 @@
             ]
         },
         {
-            "module": "Lifecycle",
+            "module": "LifecycleManagement",
             "manage": [
                 "xrn:firebolt:capability:lifecycle:state"
             ],

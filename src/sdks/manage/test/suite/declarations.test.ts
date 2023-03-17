@@ -3,7 +3,7 @@ import {
   ClosedCaptions,
   Account,
   Device,
-  Lifecycle,
+  LifecycleManagement,
 } from "../../build/javascript/src/firebolt-manage";
 
 class AccPovider implements Account.SessionProvider {
@@ -15,22 +15,22 @@ class AccPovider implements Account.SessionProvider {
   }
 }
 
-class LCMProvider implements Lifecycle.StateProvider {
+class LCMProvider implements LifecycleManagement.StateProvider {
   ready(
-    parameters: Lifecycle.LifecycleReadyParameters,
-    session: Lifecycle.ProviderSession
+    parameters: LifecycleManagement.LifecycleReadyParameters,
+    session: LifecycleManagement.ProviderSession
   ): Promise<void> {
     return Promise.resolve(null);
   }
   close(
-    parameters: Lifecycle.LifecycleCloseParameters,
-    session: Lifecycle.ProviderSession
+    parameters: LifecycleManagement.LifecycleCloseParameters,
+    session: LifecycleManagement.ProviderSession
   ): Promise<void> {
     return Promise.resolve(null);
   }
   finished(
-    parameters: Lifecycle.LifecycleFinishedParameters,
-    session: Lifecycle.ProviderSession
+    parameters: LifecycleManagement.LifecycleFinishedParameters,
+    session: LifecycleManagement.ProviderSession
   ): Promise<void> {
     return Promise.resolve(null);
   }
@@ -42,7 +42,7 @@ test("Account.provide() declarations", () => {
 });
 
 test("Lifecycle.provide() declarations", () => {
-  Lifecycle.provide(
+  LifecycleManagement.provide(
     "xrn:firebolt:capability:lifecycle:state",
     new LCMProvider()
   );
