@@ -131,28 +131,9 @@
             ]
         },
         {
-            "module": "Authentication",
-            "use": [
-                "xrn:firebolt:capability:token:account",
-                "xrn:firebolt:capability:token:session",
-                "xrn:firebolt:capability:token:platform",
-                "xrn:firebolt:capability:token:root"
-            ]
-        },
-        {
             "module": "Keyboard",
             "provide": [
                 "xrn:firebolt:capability:input:keyboard"
-            ]
-        },
-        {
-            "module": "*",
-            "manage": [
-            ],
-            "provide": [
-                "xrn:firebolt:capability:input:keyboard",
-                "xrn:firebolt:capability:usergrant:acknowledgechallenge",
-                "xrn:firebolt:capability:usergrant:pinchallenge"
             ]
         },
         {
