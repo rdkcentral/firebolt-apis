@@ -24,26 +24,8 @@ jobs:
           node-version: 'lts/*'
       - name: Install dependencies
         run: npm ci
-      - name: Setup project
-        run: npm run fs:setup
-      - name: Validate each OpenRPC spec
-        run: npm run validate:each
-      - name: Build fully assembled OpenRPC spec
-        run: npm run build:openrpc
-      - name: Validate fully assembled OpenRPC spec
-        run: npm run validate:assembled
-      - name: Build JavaScript SDK
-        run: |
-            npm run build:sdk
-            npm run dist:sdk
-      - name: Generate TypeScript declarations
-        run: npm run dist:declarations
-      - name: Run JavaScript SDK unit tests
-        run: npm run test
-      - name: Build markdown docs
-        run: |
-          npm run build:docs
-          npm run dist:docs
+      - name: Build Release Distribution
+        run: npm run dist
       - name: Set explicit npm dist-tag default
         if: github.ref_name == 'main'
         run: echo "NPM_DIST_TAG=latest" >> $GITHUB_ENV
