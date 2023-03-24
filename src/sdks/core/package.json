@@ -1,6 +1,6 @@
 {
 	"name": "@firebolt-js/sdk",
-	"version": "0.10.0-next.10",
+	"version": "0.11.0-next.0",
 	"description": "The Firebolt JS SDK",
 	"main": "./dist/lib/firebolt.mjs",
 	"types": "./dist/lib/firebolt.d.ts",
@@ -8,12 +8,13 @@
 	"scripts": {
 		"validate": "npx firebolt-openrpc validate --input ./dist/firebolt-core-open-rpc.json",
 		"sdk": "npx firebolt-openrpc sdk --input ./dist/firebolt-core-open-rpc.json --template ./src/js --output ./build/javascript/src --static-module Platform",
-		"native": "npx firebolt-openrpc sdk --input ./dist/firebolt-core-open-rpc.json --template ./src/js --output ./build/c/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/c",
+		"native": "npx firebolt-openrpc sdk --input ./dist/firebolt-core-open-rpc.json --template ./src/cpp --output ./build/c/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/c",
 		"preslice": "cd ../../.. && npm run compile",
 		"slice": "npx firebolt-openrpc slice -i ../../../dist/firebolt-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-core-open-rpc.json",
 		"docs": "npx firebolt-openrpc docs --input ./dist/firebolt-core-open-rpc.json --output build/docs/markdown --as-path",
 		"wiki": "npx firebolt-openrpc docs --input ./dist/firebolt-core-open-rpc.json --output build/docs/markdown",
-		"dist:notest": "npm run clean && npm run slice && npm run validate && npm run sdk && npm run docs && mkdir -p ./dist && cp -R build/javascript/src dist/lib && cp -R build/docs/markdown dist/docs && echo 'Firebolt Manage SDK /dist/ is ready.\n'",
+		"dist:notest": "npm run clean && npm run slice && npm run validate && npm run sdk && npm run docs && npm run dist:copy && echo 'Firebolt Core SDK /dist/ is ready.\n'",
+		"dist:copy": "mkdirp ./dist && cp -R build/javascript/src dist/lib && cp -R build/docs/markdown dist/docs && cp -r ./dist ../../../dist/core && mv ../../../dist/core/firebolt-core-open-rpc.json ../../../dist/firebolt-core-open-rpc.json",
 		"dist": "npm run dist:notest && npm run test",
 		"clean": "rm -rf ./build && rm -rf ./dist",
 		"test:setup": "rm -rf test/transpiled-suite && npx tsc --target es6 --moduleResolution node --outDir test/transpiled-suite",
