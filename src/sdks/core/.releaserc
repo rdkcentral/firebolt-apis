@@ -1,0 +1,23 @@
+{
+  "branches": [
+    "main",
+    {
+      "name": "next",
+      "prerelease": true
+    },
+    "refactor/one-repository",
+    {
+      "name": "test",
+      "prerelease": true
+    }
+  ],
+  "dryRun": false,
+  "plugins": [
+    [
+      "@semantic-release/github",
+      {
+        "assets": "./*.tgz"
+      }
+    ]
+  ]
+}
