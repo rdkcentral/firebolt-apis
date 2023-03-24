@@ -3,15 +3,15 @@
   "version": "0.11.0-next.0",
   "description": "The Firebolt JS SDK",
   "exports": {
-    ".": "./src/sdks/core/dist/lib/firebolt.mjs",
-    "./discovery": "./src/sdks/discovery/dist/lib/firebolt-discovery.mjs",
-    "./manage": "./src/sdks/manage/dist/lib/firebolt-manage.mjs"
+    ".": "./dist/core/lib/firebolt.mjs",
+    "./discovery": "./dist/discovery/lib/firebolt-discovery.mjs",
+    "./manage": "./dist/manage/lib/firebolt-manage.mjs"
   },
   "typesVersions": {
     "*": {
-      "discovery": ["./src/sdks/discovery/dist/lib/firebolt-discovery.d.ts"],
-      "manage": ["./src/sdks/manage/dist/lib/firebolt-manage.d.ts"],
-      "*": ["./src/sdks/core/dist/lib/firebolt.d.ts"]
+      "discovery": ["./dist/discovery/lib/firebolt-discovery.d.ts"],
+      "manage": ["./dist/manage/lib/firebolt-manage.d.ts"],
+      "*": ["./dist/core/lib/firebolt.d.ts"]
     }
   },
   "type": "module",
