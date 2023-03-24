@@ -4,6 +4,9 @@
 	"description": "The Firebolt JS SDK",
 	"main": "./dist/lib/firebolt.mjs",
 	"types": "./dist/lib/firebolt.d.ts",
+	"exports": {
+		".": "./dist/lib/firebolt.mjs"
+	},
 	"type": "module",
 	"scripts": {
 		"validate": "npx firebolt-openrpc validate --input ./dist/firebolt-core-open-rpc.json",
