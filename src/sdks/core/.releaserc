@@ -19,12 +19,6 @@
         "npmPublish": true,
         "tarballDir": "./"
       }
-    ],
-    [
-      "@semantic-release/github",
-      {
-        "assets": "./*.tgz"
-      }
     ]
   ]
 }
