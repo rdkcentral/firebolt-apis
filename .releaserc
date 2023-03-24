@@ -7,7 +7,7 @@
     },
     "refactor/one-repository",
     {
-      "name": "test",
+      "name": "beta",
       "prerelease": true
     }
   ],
