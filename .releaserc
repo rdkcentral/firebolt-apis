@@ -4,6 +4,11 @@
     {
       "name": "next",
       "prerelease": true
+    },
+    "refactor/one-repository",
+    {
+      "name": "test",
+      "prerelease": true
     }
   ],
   "dryRun": false,
