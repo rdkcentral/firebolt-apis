@@ -39,7 +39,7 @@
     "dist": "npm run fs:setup && npm run compile && npm run version && npm run dist:notest --workspaces && npm run test",
     "version": "node ./src/js/version.mjs sync",
     "dev:setup": "husky install",
-    "preinstall": "npm run sdks && npm run dist:copy --workspaces",
+    "preinstall": "npm run compile && npm run slice && npm run sdks && npm run dist:copy:sdk --workspaces",
     "prepack": "npm run dist"
   },
   "repository": {
