@@ -16,3 +16,5 @@ export module Events {
     function once(...args: any[]): Promise<number>
     function clear(...args: any[]): boolean
 }
+
+/* ${DECLARATIONS} */

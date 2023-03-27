@@ -1,5 +1,4 @@
 {
-    "$schema": "https://meta.comcast.com/firebolt/secondscreen",
     "$id": "https://meta.comcast.com/firebolt/secondscreen",
     "title": "SecondScreen",
     "anyOf": [

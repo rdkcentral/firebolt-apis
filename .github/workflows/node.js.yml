@@ -36,11 +36,8 @@ jobs:
     - run: npm ci
     - run: npm run fs:setup
     - run: npm run validate:each
-    - run: npm run build:sdk
-    - run: npm run dist:declarations
-    - run: npm run dist:sdk
-    - run: |
-        npm run build:docs
-        npm run dist:docs
+    - run: npm run compile
+    - run: npm run slice
+    - run: npm run validate:compiled
+    - run: npm run sdks
     - run: npm run test
-

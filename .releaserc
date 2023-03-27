@@ -5,8 +5,9 @@
       "name": "next",
       "prerelease": true
     },
+    "refactor/one-repository",
     {
-      "name": "next-major",
+      "name": "beta",
       "prerelease": true
     }
   ],
@@ -28,7 +29,7 @@
     [
       "@semantic-release/npm",
       {
-        "npmPublish": true,
+        "npmPublish": false,
         "tarballDir": "./"
       }
     ],
@@ -36,7 +37,8 @@
       "@semantic-release/git"
     ],
     [
-      "@semantic-release/github", {
+      "@semantic-release/github",
+      {
         "assets": "./*.tgz"
       }
     ]
