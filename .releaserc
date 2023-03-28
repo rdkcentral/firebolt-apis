@@ -1,13 +1,17 @@
 {
   "branches": [
-    "main",
+    {
+      "name": "main",
+      "prerelease": false
+    },
     {
       "name": "next",
+      "channel": "next",
       "prerelease": true
     },
-    "refactor/one-repository",
     {
-      "name": "beta",
+      "name": "one-repository",
+      "channel": "test",
       "prerelease": true
     }
   ],
