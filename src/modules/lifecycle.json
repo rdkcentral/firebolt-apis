@@ -10,6 +10,15 @@
       "name": "ready",
       "tags": [
         {
+          "name": "calls-metrics"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:ready"
+          ]
+        },
+        {
           "name": "exclude-from-sdk"
         }
       ],
@@ -34,6 +43,14 @@
     },
     {
       "name": "close",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:state"
+          ]
+        }
+      ],
       "summary": "Request that the platform move your app out of focus",
       "params": [
         {
@@ -85,6 +102,12 @@
       "tags": [
         {
           "name": "exclude-from-sdk"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:state"
+          ]
         }
       ],
       "summary": "Notify the platform that the app is done unloading",
@@ -115,6 +138,12 @@
         },
         {
           "name": "exclude-from-sdk"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:state"
+          ]
         }
       ],
       "params": [],
@@ -141,6 +170,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:state"
+          ]
         }
       ],
       "summary": "Listen to the inactive event",
@@ -170,6 +205,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:state"
+          ]
         }
       ],
       "summary": "Listen to the foreground event",
@@ -211,6 +252,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:state"
+          ]
         }
       ],
       "summary": "Listen to the background event",
@@ -240,6 +287,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:state"
+          ]
         }
       ],
       "summary": "Listen to the suspended event",
@@ -269,6 +322,12 @@
       "tags": [
         {
           "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:lifecycle:state"
+          ]
         }
       ],
       "summary": "Listen to the unloading event",

@@ -8,12 +8,22 @@
   "methods": [
     {
       "name": "locality",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:locality"
+          ]
+        }
+      ],
       "summary": "Get the locality/city the device is located in",
       "params": [],
       "result": {
         "name": "locality",
         "summary": "the device city",
-        "schema": { "type": "string" }
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Locality"
+        }
       },
       "examples": [
         {
@@ -28,6 +38,17 @@
     },
     {
       "name": "postalCode",
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:postal-code"
+          ]
+        }
+      ],
       "summary": "Get the postal code the device is located in",
       "params": [],
       "result": {
@@ -48,12 +69,25 @@
     },
     {
       "name": "countryCode",
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:country-code"
+          ]
+        }
+      ],
       "summary": "Get the ISO 3166 code for the counrty device is located in",
       "params": [],
       "result": {
         "name": "code",
         "summary": "the device country code",
-        "schema": { "type": "string", "minLength": 2, "maxLength": 3 }
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/CountryCode"
+        }
       },
       "examples": [
         {
@@ -73,12 +107,20 @@
       "tags": [
         {
           "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:language"
+          ]
         }
       ],
       "result": {
         "name": "lang",
         "summary": "the device language",
-        "schema": { "type": "string" }
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Language"
+        }
       },
       "examples": [
         {
@@ -93,12 +135,25 @@
     },
     {
       "name": "locale",
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:locale"
+          ]
+        }
+      ],
       "summary": "Get the *full* BCP 47 code, including script, region, variant, etc., for the preferred langauage/locale",
       "params": [],
       "result": {
         "name": "locale",
         "summary": "the device locale",
-        "schema": { "type": "string" }
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Locale"
+        }
       },
       "examples": [
         {
@@ -113,6 +168,14 @@
     },
     {
       "name": "latlon",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:location"
+          ]
+        }
+      ],
       "summary": "Get the approximate latitude and longitude coordinates of the device location",
       "params": [],
       "result": {
@@ -135,6 +198,14 @@
     },
     {
       "name": "additionalInfo",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:localization:language"
+          ]
+        }
+      ],
       "summary": "Get any platform-specific localization information, in an Map<string, string>",
       "params": [],
       "result": {

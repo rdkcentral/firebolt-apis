@@ -16,8 +16,3 @@ export module Events {
     function once(...args: any[]): Promise<number>
     function clear(...args: any[]): boolean
 }
-
-export module Extensions {
-    function initialize(id: string, config: object): Promise<void>
-    function active():Promise<string[]>
-}
