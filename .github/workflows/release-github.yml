@@ -5,7 +5,7 @@ on:
     branches:
       - 'next'
       - 'next-major'
-      - 'refactor/one-repository'
+      - 'one-repository'
 env:
   HUSKY: 0
 jobs:
