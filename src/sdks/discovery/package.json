@@ -1,6 +1,6 @@
 {
 	"name": "@firebolt-js/discovery-sdk",
-	"version": "0.11.0-next.0",
+	"version": "0.11.0-one-repository.1",
 	"description": "The Firebolt Discovery JS SDK",
 	"main": "./dist/lib/firebolt-discovery.mjs",
 	"types": "./dist/lib/firebolt-discovery.d.ts",
@@ -27,7 +27,8 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/rdkcentral/firebolt-core-sdk"
+		"url": "git+https://github.com/rdkcentral/firebolt-core-sdk",
+		"directory": "src/sdks/discovery"
 	},
 	"author": "",
 	"bugs": {
