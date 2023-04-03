@@ -26,3 +26,13 @@ if (task === 'sync') {
 
     console.log()
 }
+else if (task === 'channel') {
+    const branch = process.argv.shift()
+    const releaserc = await readFile(path.join('.', '.releaserc'))
+                            .then(bytes => bytes.toString())
+                            .then(JSON.parse)
+
+    const config = releaserc.branches.find(b => b.name === branch) || { channel: 'test' }
+
+    console.log(config.channel)
+}
