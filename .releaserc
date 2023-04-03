@@ -15,7 +15,7 @@
       "prerelease": true
     }
   ],
-  "dryRun": false,
+  "dryRun": true,
   "plugins": [
     [
       "@semantic-release/commit-analyzer",
