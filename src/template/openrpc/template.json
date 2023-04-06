@@ -12,7 +12,7 @@
             "tags": [
                 {
                     "name": "capabilities",
-                    "x-uses": ["xrn:firebolt:capability:foo:bar"]
+                    "x-uses": [ "xrn:firebolt:capability:rpc:discover" ]
                 }
             ],
             "result": {
