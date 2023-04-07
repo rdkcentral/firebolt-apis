@@ -158,7 +158,7 @@
                     "params": [
                         {
                             "name": "capability",
-                            "value": "xrn:firebolt:capability:keyboard"
+                            "value": "xrn:firebolt:capability:input:keyboard"
                         }
                     ],
                     "result": {
@@ -171,7 +171,7 @@
                     "params": [
                         {
                             "name": "capability",
-                            "value": "xrn:firebolt:capability:keyboard"
+                            "value": "xrn:firebolt:capability:input:keyboard"
                         },
                         {
                             "name": "options",
@@ -240,7 +240,7 @@
                     "params": [
                         {
                             "name": "capability",
-                            "value": "xrn:firebolt:capability:keyboard"
+                            "value": "xrn:firebolt:capability:input:keyboard"
                         }
                     ],
                     "result": {
@@ -253,7 +253,7 @@
                     "params": [
                         {
                             "name": "capability",
-                            "value": "xrn:firebolt:capability:localization:postalCode"
+                            "value": "xrn:firebolt:capability:localization:postal-code"
                         }
                     ],
                     "result": {
@@ -266,7 +266,7 @@
                     "params": [
                         {
                             "name": "capability",
-                            "value": "xrn:firebolt:capability:localization:postalCode"
+                            "value": "xrn:firebolt:capability:localization:postal-code"
                         }
                     ],
                     "result": {
@@ -319,13 +319,13 @@
                             "name": "capabilities",
                             "value": [
                                 "xrn:firebolt:capability:device:model",
-                                "xrn:firebolt:capability:keyboard",
+                                "xrn:firebolt:capability:input:keyboard",
                                 "xrn:firebolt:capability:protocol:bluetoothle",
                                 "xrn:firebolt:capability:token:device",
                                 "xrn:firebolt:capability:token:platform",
                                 "xrn:firebolt:capability:protocol:moca",
                                 "xrn:firebolt:capability:wifi:scan",
-                                "xrn:firebolt:capability:localization:postalCode",
+                                "xrn:firebolt:capability:localization:postal-code",
                                 "xrn:firebolt:capability:localization:locality"
                             ]
                         }
@@ -351,7 +351,7 @@
                                 }
                             },
                             {
-                                "capability": "xrn:firebolt:capability:keyboard",
+                                "capability": "xrn:firebolt:capability:input:keyboard",
                                 "supported": true,
                                 "available": true,
                                 "use": {
@@ -466,7 +466,7 @@
                                 ]
                             },
                             {
-                                "capability": "xrn:firebolt:capability:localization:postalCode",
+                                "capability": "xrn:firebolt:capability:localization:postal-code",
                                 "supported": true,
                                 "available": true,
                                 "use": {
@@ -486,7 +486,7 @@
                                 ]
                             },
                             {
-                                "capability": "xrn:firebolt:capability:localization:postalCode",
+                                "capability": "xrn:firebolt:capability:localization:postal-code",
                                 "supported": true,
                                 "available": true,
                                 "use": {
@@ -782,13 +782,13 @@
                         },
                         {
                             "name": "capability",
-                            "value": "xrn:firebolt:capability:localization:postalCode"
+                            "value": "xrn:firebolt:capability:localization:postal-code"
                         }
                     ],
                     "result": {
                         "name": "Default Result",
                         "value": {
-                            "capability": "xrn:firebolt:capability:localization:postalCode",
+                            "capability": "xrn:firebolt:capability:localization:postal-code",
                             "supported": true,
                             "available": true,
                             "use": {
@@ -855,13 +855,13 @@
                         },
                         {
                             "name": "capability",
-                            "value": "xrn:firebolt:capability:localization:postalCode"
+                            "value": "xrn:firebolt:capability:localization:postal-code"
                         }
                     ],
                     "result": {
                         "name": "Default Result",
                         "value": {
-                            "capability": "xrn:firebolt:capability:localization:postalCode",
+                            "capability": "xrn:firebolt:capability:localization:postal-code",
                             "supported": true,
                             "available": true,
                             "use": {

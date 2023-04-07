@@ -39,7 +39,7 @@
             "value": {
               "correlationId": "abc",
               "parameters": {
-                "capability": "xrn:firebolt:capability:localization::postalcode",
+                "capability": "xrn:firebolt:capability:localization::postal-code",
                 "requestor": {
                   "id": "ReferenceApp",
                   "name": "Firebolt Reference App"

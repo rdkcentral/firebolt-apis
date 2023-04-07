@@ -30,11 +30,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowResumePoints to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowResumePoints not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]
@@ -63,11 +71,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowUnentitledResumePoints to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowUnentitledResumePoints not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]
@@ -96,11 +112,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowWatchHistory to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowWatchHistory not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]
@@ -129,11 +153,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowProductAnalytics to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowProductAnalytics not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]
@@ -162,11 +194,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowPersonalization to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowPersonalization not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]
@@ -195,11 +235,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowUnentitledPersonalization to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowUnentitledPersonalization not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]
@@ -228,11 +276,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowRemoteDiagnostics to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowRemoteDiagnostics not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]
@@ -261,11 +317,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowPrimaryContentAdTargeting to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowPrimaryContentAdTargeting not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]
@@ -294,11 +358,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowPrimaryBrowseAdTargeting to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowPrimaryBrowseAdTargeting not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]
@@ -327,11 +399,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowAppContentAdTargeting to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowAppContentAdTargeting not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]
@@ -360,11 +440,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowACRCollection to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowACRCollection not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]
@@ -393,11 +481,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "AllowCameraAnalytics to allow",
                     "params": [],
                     "result": {
                         "name": "allow",
                         "value": true
+                    }
+                },
+                {
+                    "name": "AllowCameraAnalytics not to allow",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
                 }
             ]

@@ -29,11 +29,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Enable closed captions",
                     "params": [],
                     "result": {
                         "name": "enabled",
                         "value": true
+                    }
+                },
+                {
+                    "name": "Disable closed captions",
+                    "params": [],
+                    "result": {
+                        "name": "enabled",
+                        "value": false
                     }
                 }
             ]
@@ -61,11 +69,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Fontfamily changed to monospace",
                     "params": [],
                     "result": {
                         "name": "family",
-                        "value": "Monospace sans-serif"
+                        "value": "monospace"
+                    }
+                },
+                {
+                    "name": "Fontfamily changed to cursive",
+                    "params": [],
+                    "result": {
+                        "name": "family",
+                        "value": "cursive"
                     }
                 }
             ]
@@ -93,7 +109,15 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Fontsize to 1",
+                    "params": [],
+                    "result": {
+                        "name": "size",
+                        "value": 1
+                    }
+                },
+                {
+                    "name": "Fontsize to 2",
                     "params": [],
                     "result": {
                         "name": "size",
@@ -125,11 +149,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Fontcolor to white",
                     "params": [],
                     "result": {
                         "name": "color",
                         "value": "#ffffff"
+                    }
+                },
+                {
+                    "name": "Fontcolor to black",
+                    "params": [],
+                    "result": {
+                        "name": "color",
+                        "value": "#000000"
                     }
                 }
             ]
@@ -157,11 +189,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Fontedge to none",
                     "params": [],
                     "result": {
                         "name": "edge",
                         "value": "none"
+                    }
+                },
+                {
+                    "name": "Fontedge to solid",
+                    "params": [],
+                    "result": {
+                        "name": "edge",
+                        "value": "solid"
                     }
                 }
             ]
@@ -189,11 +229,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Fontedge color to black",
                     "params": [],
                     "result": {
                         "name": "color",
                         "value": "#000000"
+                    }
+                },
+                {
+                    "name": "Fontedge color to white",
+                    "params": [],
+                    "result": {
+                        "name": "color",
+                        "value": "#ffffff"
                     }
                 }
             ]
@@ -221,7 +269,15 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Fontopacity to 99",
+                    "params": [],
+                    "result": {
+                        "name": "opacity",
+                        "value": 99
+                    }
+                },
+                {
+                    "name": "Fontopacity to 100",
                     "params": [],
                     "result": {
                         "name": "opacity",
@@ -253,11 +309,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Background color to black",
                     "params": [],
                     "result": {
                         "name": "color",
                         "value": "#000000"
+                    }
+                },
+                {
+                    "name": "Background color to white",
+                    "params": [],
+                    "result": {
+                        "name": "color",
+                        "value": "#ffffff"
                     }
                 }
             ]
@@ -285,7 +349,15 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Background opacity to 99",
+                    "params": [],
+                    "result": {
+                        "name": "opacity",
+                        "value": 99
+                    }
+                },
+                {
+                    "name": "Background opacity to 100",
                     "params": [],
                     "result": {
                         "name": "opacity",
@@ -317,11 +389,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Text align to center",
                     "params": [],
                     "result": {
                         "name": "aligment",
                         "value": "center"
+                    }
+                },
+                {
+                    "name": "Text align to left",
+                    "params": [],
+                    "result": {
+                        "name": "aligment",
+                        "value": "left"
                     }
                 }
             ]
@@ -349,11 +429,19 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Textalign Vertical to middle",
                     "params": [],
                     "result": {
                         "name": "alignement",
                         "value": "middle"
+                    }
+                },
+                {
+                    "name": "Textalign Vertical to top",
+                    "params": [],
+                    "result": {
+                        "name": "alignement",
+                        "value": "top"
                     }
                 }
             ]
