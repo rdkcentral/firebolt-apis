@@ -568,7 +568,7 @@
       },
       "examples": [
         {
-          "name": "Device name to Living Room",
+          "name": "Default example #1",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -576,7 +576,7 @@
           }
         },
         {
-          "name": "Device name to Kitchen",
+          "name": "Default example #2",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -779,7 +779,7 @@
       },
       "examples": [
         {
-          "name": "Enable developer mode",
+          "name": "Default example #1",
           "params": [],
           "result": {
             "name": "developerMode",
@@ -787,7 +787,7 @@
           }
         },
         {
-          "name": "Disable developer mode",
+          "name": "Default example #2",
           "params": [],
           "result": {
             "name": "developerMode",

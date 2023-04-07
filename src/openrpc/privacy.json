@@ -30,7 +30,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowResumePoints to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "name": "AllowResumePoints not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -71,7 +71,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowUnentitledResumePoints to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -79,7 +79,7 @@
                     }
                 },
                 {
-                    "name": "AllowUnentitledResumePoints not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -112,7 +112,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowWatchHistory to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -120,7 +120,7 @@
                     }
                 },
                 {
-                    "name": "AllowWatchHistory not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -153,7 +153,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowProductAnalytics to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -161,7 +161,7 @@
                     }
                 },
                 {
-                    "name": "AllowProductAnalytics not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -194,7 +194,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowPersonalization to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -202,7 +202,7 @@
                     }
                 },
                 {
-                    "name": "AllowPersonalization not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -235,7 +235,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowUnentitledPersonalization to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -243,7 +243,7 @@
                     }
                 },
                 {
-                    "name": "AllowUnentitledPersonalization not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -276,7 +276,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowRemoteDiagnostics to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -284,7 +284,7 @@
                     }
                 },
                 {
-                    "name": "AllowRemoteDiagnostics not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -317,7 +317,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowPrimaryContentAdTargeting to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -325,7 +325,7 @@
                     }
                 },
                 {
-                    "name": "AllowPrimaryContentAdTargeting not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -358,7 +358,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowPrimaryBrowseAdTargeting to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -366,7 +366,7 @@
                     }
                 },
                 {
-                    "name": "AllowPrimaryBrowseAdTargeting not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -399,7 +399,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowAppContentAdTargeting to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -407,7 +407,7 @@
                     }
                 },
                 {
-                    "name": "AllowAppContentAdTargeting not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -440,7 +440,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowACRCollection to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -448,7 +448,7 @@
                     }
                 },
                 {
-                    "name": "AllowACRCollection not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -481,7 +481,7 @@
             },
             "examples": [
                 {
-                    "name": "AllowCameraAnalytics to allow",
+                    "name": "Default example #1",
                     "params": [],
                     "result": {
                         "name": "allow",
@@ -489,7 +489,7 @@
                     }
                 },
                 {
-                    "name": "AllowCameraAnalytics not to allow",
+                    "name": "Default example #2",
                     "params": [],
                     "result": {
                         "name": "allow",

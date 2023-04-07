@@ -30,7 +30,7 @@
             },
             "examples": [
                 {
-                    "name": "Enable voice-guidance",
+                    "name": "Default example #1",
                     "params": [
                     ],
                     "result": {
@@ -39,7 +39,7 @@
                     }
                 },
                 {
-                    "name": "Disable voice-guidance",
+                    "name": "Default example #2",
                     "params": [
                     ],
                     "result": {
