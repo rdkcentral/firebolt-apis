@@ -115,19 +115,12 @@
             "module": "Account",
             "manage": [
                 "xrn:firebolt:capability:account:id",
-                "xrn:firebolt:capability:token:session"
+                "xrn:firebolt:capability:token:session",
+                "xrn:firebolt:capability:token:account"
             ],
             "provide": [
-                "xrn:firebolt:capability:token:session"
-            ]
-        },
-        {
-            "module": "Authentication",
-            "use": [
-                "xrn:firebolt:capability:token:account",
                 "xrn:firebolt:capability:token:session",
-                "xrn:firebolt:capability:token:platform",
-                "xrn:firebolt:capability:token:root"
+                "xrn:firebolt:capability:token:account"
             ]
         },
         {

@@ -37,7 +37,7 @@ class LCMProvider implements LifecycleManagement.StateProvider {
 }
 
 test("Account.provide() declarations", () => {
-  Account.provide("xrn:firebolt:capability:token:session", new AccPovider());
+  Account.provide("xrn:firebolt:capability:token:account", new AccPovider());
   expect(1).toBe(1);
 });
 
