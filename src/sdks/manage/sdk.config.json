@@ -115,11 +115,9 @@
             "module": "Account",
             "manage": [
                 "xrn:firebolt:capability:account:id",
-                "xrn:firebolt:capability:token:session",
                 "xrn:firebolt:capability:token:account"
             ],
             "provide": [
-                "xrn:firebolt:capability:token:session",
                 "xrn:firebolt:capability:token:account"
             ]
         },
