@@ -27,7 +27,7 @@ test("ClosedCaptions.enabled()", () => {
 
 test("ClosedCaptions.fontFamily()", () => {
   return ClosedCaptions.fontFamily().then((res: string) => {
-    expect(res).toEqual("Monospace sans-serif");
+    expect(res).toEqual("monospace");
   });
 });
 
@@ -57,7 +57,7 @@ test("ClosedCaptions.fontEdgeColor()", () => {
 
 test("ClosedCaptions.fontOpacity()", () => {
   return ClosedCaptions.fontOpacity().then((res: number) => {
-    expect(res).toBe(100);
+    expect(res).toBe(99);
   });
 });
 
@@ -69,7 +69,7 @@ test("ClosedCaptions.backgroundColor()", () => {
 
 test("ClosedCaptions.backgroundOpacity()", () => {
   return ClosedCaptions.backgroundOpacity().then((res: number) => {
-    expect(res).toBe(100);
+    expect(res).toBe(99);
   });
 });
 

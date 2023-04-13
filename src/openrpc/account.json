@@ -79,7 +79,7 @@
         {
           "name": "capabilities",
           "x-manages": [
-            "xrn:firebolt:capability:token:session"
+            "xrn:firebolt:capability:token:account"
           ]
         }
       ],
@@ -142,7 +142,7 @@
         },
         {
           "name": "capabilities",
-          "x-provides": "xrn:firebolt:capability:token:session",
+          "x-provides": "xrn:firebolt:capability:token:account",
           "x-allow-focus": true
         }
       ],

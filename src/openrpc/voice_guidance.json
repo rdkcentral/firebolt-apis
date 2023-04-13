@@ -30,12 +30,21 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Default example #1",
                     "params": [
                     ],
                     "result": {
                         "name": "enabled",
                         "value": true
+                    }
+                },
+                {
+                    "name": "Default example #2",
+                    "params": [
+                    ],
+                    "result": {
+                        "name": "enabled",
+                        "value": false
                     }
                 }
             ]
@@ -64,12 +73,21 @@
             },
             "examples": [
                 {
-                    "name": "Default Example",
+                    "name": "Voice guidance speed to 1",
                     "params": [
                     ],
                     "result": {
                         "name": "speed",
                         "value": 1
+                    }
+                },
+                {
+                    "name": "Voice guidance speed to 2",
+                    "params": [
+                    ],
+                    "result": {
+                        "name": "speed",
+                        "value": 2
                     }
                 }
             ]

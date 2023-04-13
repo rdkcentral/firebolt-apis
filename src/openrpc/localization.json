@@ -30,11 +30,19 @@
       },
       "examples": [
         {
-          "name": "Default Example",
+          "name": "Default example #1",
           "params": [],
           "result": {
             "name": "Default Result",
             "value": "Philadelphia"
+          }
+        },
+        {
+          "name": "Default example #2",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "Rockville"
           }
         }            
       ] 
@@ -61,13 +69,21 @@
       },
       "examples": [
         {
-          "name": "Default Example",
+          "name": "Default example #1",
           "params": [],
           "result": {
             "name": "Default Result",
             "value": "19103"
           }
-        }            
+        },
+        {
+          "name": "Default example #2",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "20850"
+          }
+        }        
       ]
     },
     {
@@ -94,13 +110,21 @@
       },
       "examples": [
         {
-          "name": "Default Example",
+          "name": "Default example #1",
           "params": [],
           "result": {
             "name": "Default Result",
             "value": "US"
           }
-        }            
+        },
+        {
+          "name": "Default example #2",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "UK"
+          }
+        }      
       ]    
     },
     {
@@ -127,11 +151,19 @@
       },
       "examples": [
         {
-          "name": "Default Example",
+          "name": "Default example #1",
           "params": [],
           "result": {
             "name": "Default Result",
             "value": "en"
+          }
+        },
+        {
+          "name": "Default example #2",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "es"
           }
         }            
       ]
@@ -160,13 +192,21 @@
       },
       "examples": [
         {
-          "name": "Default Example",
+          "name": "Default example #1",
           "params": [],
           "result": {
             "name": "Default Result",
             "value": "en-US"
           }
-        }            
+        },
+        {
+          "name": "Default example #2",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "es-US"
+          }
+        }       
       ]   
     },
     {
