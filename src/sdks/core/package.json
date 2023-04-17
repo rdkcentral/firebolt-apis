@@ -18,7 +18,7 @@
 		"wiki": "npx firebolt-openrpc docs --input ./dist/firebolt-core-open-rpc.json --output build/docs/markdown",
 		"dist:notest": "npm run clean && npm run slice && npm run validate && npm run sdk && npm run docs && npm run dist:copy && echo 'Firebolt Core SDK /dist/ is ready.\n'",
 		"dist:copy": "npm run dist:copy:sdk && npm run dist:copy:docs",
-		"dist:copy:sdk": "mkdirp ./dist && cp -R build/javascript/src dist/lib && cp -R ./dist ../../../dist/core && mv ../../../dist/core/firebolt-core-open-rpc.json ../../../dist/firebolt-core-open-rpc.json",
+		"dist:copy:sdk": "mkdirp ./dist && cp -R build/javascript/src dist/lib && mv ../../../dist/core/firebolt-core-open-rpc.json ../../../dist/firebolt-core-open-rpc.json",
 		"dist:copy:docs": "mkdirp ./dist && cp -R build/docs/markdown dist/docs",
 		"dist": "npm run dist:notest && npm run test",
 		"clean": "rm -rf ./build && rm -rf ./dist",
