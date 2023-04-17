@@ -6,11 +6,13 @@ const getConfig = ({ changelogFile, changelogTitle }) => ({
     changelogTitle,
 });
 
-async function prepare(config, { cwd, nextRelease: { notes }, logger }) {
+async function prepare(config, { cwd, nextRelease, logger }) {
+    const notes = nextRelease.notes
     const { changelogFile, changelogTitle } = getConfig(config)
     const logPath = path.resolve(cwd, changelogFile)
 
-    if (notes) {
+    // scrub prerelease notes if this release is not a prerelease
+    if (notes && nextRelease.channel === 'latest') {
         await ensureFile(logPath)
         const currentFile = (await readFile(logPath)).toString().trim()
 
