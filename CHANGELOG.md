@@ -1,9 +1,9 @@
-# [0.11.0-one-repository.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-one-repository.1...v0.11.0-one-repository.2) (2023-04-17)
+# [0.11.0-one-repository.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-one-repository.2...v0.11.0-one-repository.3) (2023-04-17)
 
 
 ### Bug Fixes
 
-* **README:** Update Readme ([0b8c20a](https://github.com/rdkcentral/firebolt-core-sdk/commit/0b8c20a1f25824b6647a553a1c05a6a8cfac47e8))
+* **release:** Stop pushing mono-artifact to npm ([a7c772e](https://github.com/rdkcentral/firebolt-core-sdk/commit/a7c772e143662f8b7650280eea12262e70bc3f2a))
 
 
 # [0.10.0](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0...v0.10.0) (2023-02-06)
