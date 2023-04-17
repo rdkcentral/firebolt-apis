@@ -1,5 +1,5 @@
 ---
-title: Firebolt Core SDK
+title: Firebolt SDKs
 ---
 
 [![semantic-release: conventional](https://img.shields.io/badge/semantic--release-conventional-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
