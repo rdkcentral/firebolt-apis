@@ -1,4 +1,4 @@
-name: Release to GitHub
+name: Release to GitHub and NPM
 on:
   workflow_dispatch:
   push:
