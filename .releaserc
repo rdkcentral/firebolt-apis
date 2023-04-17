@@ -31,6 +31,13 @@
       }
     ],
     [
+      "@semantic-release/npm",
+      {
+        "npmPublish": false,
+        "tarballDir": "./"
+      }
+    ],    
+    [
       "@semantic-release/git"
     ],
     [
