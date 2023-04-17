@@ -24,7 +24,8 @@
 		"clean": "rm -rf ./build && rm -rf ./dist",
 		"test:setup": "rm -rf test/transpiled-suite && npx tsc --target es6 --moduleResolution node --outDir test/transpiled-suite",
 		"test": "npm run test:setup && NODE_OPTIONS=--experimental-vm-modules npx --config=jest.config.json --detectOpenHandles jest",
-		"prepack": "node ../../js/version.mjs validate"
+		"prepack": "node ../../js/version.mjs validate && npm run broilerplate",
+		"broilerplate": "rm ./CHANGELOG.md && cp ../../../CHANGELOG.md ./CHANGELOG.md && rm ./CONTRIBUTING.md && cp ../../../CONTRIBUTING.md ./CONTRIBUTING.md && rm ./LICENSE && cp ../../../LICENSE ./LICENSE && rm ./NOTICE && cp ../../../NOTICE ./NOTICE"
 	},
 	"repository": {
 		"type": "git",

@@ -29,8 +29,6 @@ jobs:
         run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc'
       - name: Install dependencies
         run: npm ci
-      - name: Build Release Distribution
-        run: npm run dist
       - name: Set explicit npm dist-tag default
         if: github.ref_name == 'main'
         run: echo "NPM_DIST_TAG=latest" >> $GITHUB_ENV
