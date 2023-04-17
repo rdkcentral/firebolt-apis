@@ -45,9 +45,10 @@ else if (task === 'channel') {
 
     // default to 'test' channel if branch is unknown
     const config = releaserc.branches.find(b => b.name === branch) || { channel: 'test' }
+    const channel = config.channel || (!config.prerelease ? 'latest' : config.name)
 
     // return the configured channel name for the branch, otherwise return the branch name, unless it's the main branch, then return 'latest'
-    console.log(config.channel || !config.prerelease ? 'latest' : config.name)
+    console.log(channel)
 }
 else if (task === 'validate') {
     // Check all workspaces for:
