@@ -1,33 +1,38 @@
 {
-  "name": "@firebolt-js/sdk",
-  "version": "0.10.0-next.0",
+  "name": "@firebolt-js/sdks",
+  "version": "0.11.0-one-repository.10",
   "description": "The Firebolt JS SDK",
-  "main": "./dist/lib/firebolt.mjs",
-  "types": "./dist/lib/firebolt.d.ts",
   "type": "module",
+  "bin": {
+    "firebolt-version": "./src/js/version.mjs"
+  },
+  "workspaces": [
+    "src/sdks/core",
+    "src/sdks/manage"
+  ],
   "scripts": {
-    "fs:setup": "npm run clean && mkdir -p dist/docs dist/lib build/docs/markdown build/docs/wiki build/sdk/javascript/src",
-    "validate:each": "npx firebolt-openrpc --task validate --source src --shared-schemas node_modules/@firebolt-js/schemas/src/schemas",
-    "validate:assembled": "npx firebolt-openrpc --task validate --source dist/firebolt-open-rpc.json --shared-schemas node_modules/@firebolt-js/schemas/src/schemas",
-    "build:openrpc": "npx firebolt-openrpc --task openrpc --source src --template src/template/openrpc/template.json --output ./dist/firebolt-open-rpc.json --shared-schemas node_modules/@firebolt-js/schemas/src/schemas",
-    "build:sdk": "npx firebolt-openrpc --task sdk --source src --template src/template/js --output build/sdk/javascript/src --static-modules Platform --shared-schemas node_modules/@firebolt-js/schemas/src/schemas",
-    "build:docs": "npx firebolt-openrpc --task docs --source src --template src/template/markdown --output build/docs/markdown --shared-schemas node_modules/@firebolt-js/schemas/src/schemas --as-path",
-    "build:wiki": "npx firebolt-openrpc --task docs --source src --template src/template/markdown --output build/docs/wiki --shared-schemas node_modules/@firebolt-js/schemas/src/schemas",
-    "dist:sdk": "cp -R build/sdk/javascript/src/* dist/lib",
-    "dist:declarations": "npx firebolt-openrpc --task declarations --source src --template src/template/declarations/template.d.ts --output dist/lib/firebolt.d.ts --shared-schemas node_modules/@firebolt-js/schemas/src/schemas",
-    "dist:docs": "cp -R build/docs/markdown dist/docs",
-    "test:setup": "rm -rf test/transpiled-suite && npx tsc --target es6 --moduleResolution node --outDir test/transpiled-suite",
+    "fs:setup": "npm run clean && mkdir -p dist",
+    "validate:each": "npx firebolt-openrpc validate --input src/openrpc --schemas node_modules/@firebolt-js/schemas/src/schemas --schemas src/schemas --transformations",
+    "validate:compiled": "npx firebolt-openrpc validate --input dist/firebolt-open-rpc.json && npm run validate --workspaces",
+    "validate": "npm run validate:each && npm run validate:compiled ",
+    "compile": "npx firebolt-openrpc openrpc --input src --template src/template/openrpc/template.json --output ./dist/firebolt-open-rpc.json --schemas src/schemas --schemas node_modules/@firebolt-js/schemas/src/schemas",
+    "slice": "npm run slice --workspaces",
+    "sdks": "npm run sdk --workspaces",
+    "docs": "npm run docs --workspaces",
+    "wiki": "npm run wiki --workspaces",
+    "test:setup": "npm run test:setup --workspaces",
     "test": "npm run test:setup && NODE_OPTIONS=--experimental-vm-modules npx --config=jest.config.json --detectOpenHandles jest",
-    "clean": "rm -rf build && rm -rf dist",
-    "publish:docs": "npm run build:docs && sh push-docs.sh",
-    "publish:word": "mkdir -p dist/word/schemas && find dist/docs -iname \"*.md\" -type f -exec sh -c 'export fn=`basename ${0}` && pandoc \"${0}\" -o \"dist/word/${fn%.md}.docx\"' {} \\;",
-    "everything": "npm run fs:setup && npm run validate:each && npm run build:openrpc && npm run validate:assembled && npm run build:sdk && npm run dist:sdk && npm run dist:declarations && npm run test && npm run build:docs && npm run dist:docs",
-    "prepare": "husky install",
-    "prepack": "npm run fs:setup && npm run build:openrpc && npm run build:sdk && npm run dist:sdk && npm run dist:declarations"
+    "clean": "rm -rf dist && npm run clean --workspaces",
+    "dist": "npm run fs:setup && npm run compile && npm run version && npm run dist:notest --workspaces && npm run test",
+    "specification": "node ./src/js/version-specification/index.mjs --source ./src/json/firebolt-specification.json",
+    "specification:report": "node ./src/js/version-specification/index.mjs --source ./dist/firebolt-specification.json --report",
+    "version": "node ./src/js/version.mjs sync",
+    "dev:setup": "husky install",
+    "prepack": "npm run dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rdkcentral/firebolt-core-sdk"
+    "url": "ssh://github.com/rdkcentral/firebolt-core-sdk.git"
   },
   "author": "",
   "bugs": {
@@ -37,15 +42,18 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "@firebolt-js/openrpc": "^1.8.0-next.2",
-    "@firebolt-js/schemas": "^0.5.0",
+    "@firebolt-js/openrpc": "rdkcentral/firebolt-openrpc#next",
+    "@firebolt-js/schemas": "rdkcentral/firebolt-schemas",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.1",
     "ajv": "^6.12.6",
+    "production-changelog": "./src/js/production-changelog/",
     "husky": "^8.0.0",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.3",
+    "mkdirp": "^2.1.6",
     "semantic-release": "^19.0.5",
     "typescript": "^4.6.4"
   },

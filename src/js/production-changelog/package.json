@@ -1,0 +1,21 @@
+{
+    "name": "production-changelog",
+    "description": "semantic-release plugin that scrubs pre-release notes from changelog before writing current release notes.",
+    "version": "0.0.0-development",
+    "author": "Jeremy LaCivita",
+    "dependencies": {
+    },
+    "devDependencies": {
+    },
+    "engines": {
+      "node": ">=14.17"
+    },
+    "files": [
+      "index.js"
+    ],
+    "main": "index.js",
+    "peerDependencies": {
+      "semantic-release": ">=18.0.0-beta.1"
+    }
+  }
+  

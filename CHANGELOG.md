@@ -1,3 +1,11 @@
+# [0.11.0-one-repository.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-one-repository.4...v0.11.0-one-repository.5) (2023-04-17)
+
+
+### Bug Fixes
+
+* **release:** Bring back npm plugin, turn of publish ([2fc9196](https://github.com/rdkcentral/firebolt-core-sdk/commit/2fc91962d85e050350415dd628d6144e8569299d))
+
+
 # [0.10.0](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0...v0.10.0) (2023-02-06)
 
 
@@ -17,6 +25,10 @@
 * Add content-access api, deprecate entitlements, remove availabi… ([#83](https://github.com/rdkcentral/firebolt-core-sdk/issues/83)) ([f3c8017](https://github.com/rdkcentral/firebolt-core-sdk/commit/f3c8017eb391119e47d810426fdae4b11d8e0c38))
 * Add Secure Storage module ([#77](https://github.com/rdkcentral/firebolt-core-sdk/issues/77)) ([f62e4ae](https://github.com/rdkcentral/firebolt-core-sdk/commit/f62e4aeb9325df00c6a2484cf3aaa0b756bd8113))
 * New Capabilities API ([#63](https://github.com/rdkcentral/firebolt-core-sdk/issues/63)) ([0ba5ef5](https://github.com/rdkcentral/firebolt-core-sdk/commit/0ba5ef5e030ce740e40fd5ad30ca5cfd100cf32e))
+* Trigger ([607825b](https://github.com/rdkcentral/firebolt-core-sdk/commit/607825bd5547c74a8a7707f751446ab0e069d9f9))
+* Turn on dryRun ([dcddc60](https://github.com/rdkcentral/firebolt-core-sdk/commit/dcddc6068f91505d97457ed04eb8e2996dab9278))
+
+
 
 
 # 0.9.0
