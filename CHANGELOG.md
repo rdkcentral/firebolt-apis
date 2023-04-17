@@ -1,14 +1,9 @@
-# [0.11.0-one-repository.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-one-repository.3...v0.11.0-one-repository.4) (2023-04-17)
+# [0.11.0-one-repository.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-one-repository.4...v0.11.0-one-repository.5) (2023-04-17)
 
 
 ### Bug Fixes
 
-* **READMEs:** Add various READMEs, remove Discovery SDK ([80365af](https://github.com/rdkcentral/firebolt-core-sdk/commit/80365afad63faf3a67a8f679047c3fc618aaa413))
-
-
-### Features
-
-* **specification:** Add script to generate Firebolt Version Specification JSON ([d417ac4](https://github.com/rdkcentral/firebolt-core-sdk/commit/d417ac4b7f96b314476401d20bf2e2b71bce5de5))
+* **release:** Bring back npm plugin, turn of publish ([2fc9196](https://github.com/rdkcentral/firebolt-core-sdk/commit/2fc91962d85e050350415dd628d6144e8569299d))
 
 
 # [0.10.0](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0...v0.10.0) (2023-02-06)
