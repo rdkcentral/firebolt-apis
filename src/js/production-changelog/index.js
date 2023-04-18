@@ -12,7 +12,7 @@ async function prepare(config, { cwd, nextRelease, logger }) {
     const logPath = path.resolve(cwd, changelogFile)
 
     // scrub prerelease notes if this release is not a prerelease
-    if (notes && nextRelease.channel === 'latest') {
+    if (notes) {
         await ensureFile(logPath)
         const currentFile = (await readFile(logPath)).toString().trim()
 
@@ -21,13 +21,15 @@ async function prepare(config, { cwd, nextRelease, logger }) {
                 ? currentFile.slice(changelogTitle.length).trim()
                 : currentFile;
 
-        logger.log(`Scrubbing prerelease notes from ${logPath}.`)
+        if (nextRelease.channel === 'latest') {
+            logger.log(`Scrubbing prerelease notes from ${logPath}.`)
 
-        // Looking for things like:
-        //# [0.10.0-next.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.4...v0.10.0-next.5) (2023-02-01)
-        const regex = /\# \[[0-9]+\.[0-9]+\.[0-9]+\-[^\]]+\].*?\n+\# /gms
-        while (content.match(regex)) {
-            content = content.replace(regex, '\n# ')
+            // Looking for things like:
+            //# [0.10.0-next.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0-next.4...v0.10.0-next.5) (2023-02-01)
+            const regex = /\# \[[0-9]+\.[0-9]+\.[0-9]+\-[^\]]+\].*?\n+\# /gms
+            while (content.match(regex)) {
+                content = content.replace(regex, '\n# ')
+            }
         }
 
         content = `${notes.trim()}\n${content ? `\n${content}\n` : ''}`;
