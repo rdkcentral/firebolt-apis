@@ -1,3 +1,10 @@
+# [0.11.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.1...v0.11.0-next.2) (2023-04-18)
+
+
+### Bug Fixes
+
+* **release:** Fix bug where CHANGELOG.md only updated in [@latest](https://github.com/latest) channel ([9d96665](https://github.com/rdkcentral/firebolt-core-sdk/commit/9d96665616dd6d644f9c47411b8a41f8c33d8e30))
+
 # [0.11.0-one-repository.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-one-repository.4...v0.11.0-one-repository.5) (2023-04-17)
 
 
