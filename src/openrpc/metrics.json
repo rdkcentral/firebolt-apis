@@ -1054,7 +1054,7 @@
             {
               "name": "data",
               "value": {
-                "foo": "bar"
+                "foo": "foo"
               }
             }
           ],
@@ -1132,7 +1132,14 @@
               "type": "array",
               "maxItems": 256,
               "items": {
-                "$ref": "#/components/schemas/EventObjectPrimatives"                
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/EventObjectPrimatives"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EventObject"
+                  }
+                ]
               }
             },
             {
