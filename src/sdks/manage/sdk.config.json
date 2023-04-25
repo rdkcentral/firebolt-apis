@@ -14,15 +14,6 @@
             ]
         },
         {
-            "module": "DeveloperTools",
-            "use": [
-                "xrn:firebolt:capability:developer:tools"
-            ],
-            "manage": [
-                "xrn:firebolt:capability:developer:tools"
-            ]
-        },
-        {
             "module": "Localization",
             "use": [
                 "xrn:firebolt:capability:localization:locality",
@@ -68,8 +59,7 @@
         {
             "module": "Device",
             "use": [
-                "xrn:firebolt:capability:device:name",
-                "xrn:firebolt:capability:developer:tools"
+                "xrn:firebolt:capability:device:name"
             ],
             "manage": [
                 "xrn:firebolt:capability:device:distributor",
@@ -93,16 +83,6 @@
             ],
             "manage": [
                 "xrn:firebolt:capability:privacy:settings"
-            ]
-        },
-        {
-            "module": "LifecycleManagement",
-            "manage": [
-                "xrn:firebolt:capability:lifecycle:state"
-            ],
-            "provide": [
-                "xrn:firebolt:capability:lifecycle:state",
-                "xrn:firebolt:capability:lifecycle:launch"
             ]
         },
         {
