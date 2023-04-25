@@ -755,7 +755,47 @@
           }
         }
       ]
-    }
+    },
+    {
+      "name": "developerMode",
+      "tags": [
+        {
+          "name": "property"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:developer:tools"
+          ]
+        }
+      ],
+      "summary": "Whether or not developer mode is enabled.",
+      "params": [],
+      "result": {
+        "name": "developerMode",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [],
+          "result": {
+            "name": "developerMode",
+            "value": true
+          }
+        },
+        {
+          "name": "Default example #2",
+          "params": [],
+          "result": {
+            "name": "developerMode",
+            "value": true
+          }
+        }
+      ]
+    }    
   ],
   "components": {
     "schemas": {
