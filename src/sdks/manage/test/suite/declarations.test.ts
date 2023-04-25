@@ -6,15 +6,6 @@ import {
   LifecycleManagement,
 } from "../../build/javascript/src/firebolt-manage";
 
-class AccPovider implements Account.SessionProvider {
-  session(
-    parameters: void,
-    session: Account.FocusableProviderSession
-  ): Promise<object> {
-    return Promise.resolve(null);
-  }
-}
-
 class LCMProvider implements LifecycleManagement.StateProvider {
   ready(
     parameters: LifecycleManagement.LifecycleReadyParameters,
@@ -35,11 +26,6 @@ class LCMProvider implements LifecycleManagement.StateProvider {
     return Promise.resolve(null);
   }
 }
-
-test("Account.provide() declarations", () => {
-  Account.provide("xrn:firebolt:capability:token:account", new AccPovider());
-  expect(1).toBe(1);
-});
 
 test("Lifecycle.provide() declarations", () => {
   LifecycleManagement.provide(
