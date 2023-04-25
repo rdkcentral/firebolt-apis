@@ -1006,7 +1006,65 @@
           }
         }
       ]
-    }
+    },
+    {
+      "name": "event",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:distributor"
+          ]
+        }
+      ],
+      "summary": "Inform the platform of 1st party distributor metrics.",
+      "params": [
+        {
+          "name": "schema",
+          "summary": "The schema URI of the metric type",
+          "schema": {
+            "type": "string",
+            "format": "uri"
+          },
+          "required": true
+        },
+        {
+          "name": "data",
+          "summary": "A JSON payload conforming the the provided schema",
+          "schema": {
+            "$ref": "#/components/schemas/EventObject"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "results",
+        "schema": {
+          "type": "null"
+        }
+      },
+      "examples": [
+        {
+          "name": "Send foo event",
+          "params": [
+            {
+              "name": "schema",
+              "value": "http://meta.rdkcentral.com/some/schema"
+            },
+            {
+              "name": "data",
+              "value": {
+                "foo": "bar"
+              }
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        }     
+      ]
+    }    
   ],
   "components": {
     "schemas": {
@@ -1039,6 +1097,49 @@
           "entitlement",
           "other"
         ]
+      },
+      "EventObjectPrimatives": {
+        "title": "EventObjectPrimatives",
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 256
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "EventObject": {
+        "title": "EventObject",
+        "type": "object",
+        "maxProperties": 256,
+        "additionalProperties": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/EventObjectPrimatives"
+            },
+            {
+              "type": "array",
+              "maxItems": 256,
+              "items": {
+                "$ref": "#/components/schemas/EventObjectPrimatives"                
+              }
+            },
+            {
+              "$ref": "#/components/schemas/EventObject"
+            }
+          ]
+        }
       }
     }
   }
