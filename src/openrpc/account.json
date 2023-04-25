@@ -122,55 +122,6 @@
           }
         }
       ]
-    },
-    {
-      "name": "onRequestSession",
-      "summary": "Registers as a provider for when device needs a session",
-      "params": [],
-      "tags": [
-        {
-          "name": "event",
-          "x-response": {
-            "$ref": "#/components/schemas/Session",
-            "examples": [
-              {
-                "token": "RmlyZWJvbHQgTWFuYWdlIFNESyBSb2NrcyEhIQ==",
-                "expiresIn": 84000
-              }
-            ]
-          }
-        },
-        {
-          "name": "capabilities",
-          "x-provides": "xrn:firebolt:capability:token:account",
-          "x-allow-focus": true
-        }
-      ],
-      "result": {
-        "name": "session",
-        "summary": "The request to get a new session",
-        "schema": {
-          "type": "object",
-          "properties": {
-            "parameters": {
-              "const": null
-            }
-          }
-        }
-      },
-      "examples": [
-        {
-          "name": "Default Example",
-          "params": [],
-          "result": {
-            "name": "Default Result",
-            "value": {
-              "correlationId": "abc",
-              "parameters": null
-            }
-          }
-        }
-      ]
     }
   ],
   "components": {
@@ -183,18 +134,6 @@
         "type": "integer",
         "description": "Number of secs before the token expires",
         "minimum": 1
-      },
-      "Session": {
-        "description": "Session Token from the distributor.",
-        "type": "object",
-        "properties": {
-          "token": {
-            "$ref": "#/components/schemas/Token"
-          },
-          "expiresIn": {
-            "$ref": "#/components/schemas/Expiry"
-          }
-        }
       }
     }
   }
