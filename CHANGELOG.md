@@ -1,3 +1,18 @@
+# [0.11.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.3...v0.11.0-next.4) (2023-04-25)
+
+
+### Bug Fixes
+
+* **Lifecycle:** Remove private LifecycleManagement API ([a3208ea](https://github.com/rdkcentral/firebolt-core-sdk/commit/a3208ea8cc9cc9d818fb2bc7e70453f2d368c4dd))
+
+# [0.11.0-next.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.2...v0.11.0-next.3) (2023-04-25)
+
+
+### Bug Fixes
+
+* **api:** Removing future APIs ([bac48f5](https://github.com/rdkcentral/firebolt-core-sdk/commit/bac48f5bd0223b765d896d11766b049450c3f37d))
+* **tests:** Update tests per previous commit ([8010c5b](https://github.com/rdkcentral/firebolt-core-sdk/commit/8010c5b4c52d4b02e0ac33a3eabd0a460f1ce39a))
+
 # [0.11.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.1...v0.11.0-next.2) (2023-04-18)
 
 

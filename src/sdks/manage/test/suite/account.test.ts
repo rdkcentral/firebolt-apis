@@ -26,11 +26,6 @@ test("Account.session()", () => {
   });
 });
 
-test("Account.provide() with blank object", () => {
-  expect(() => {
-    Account.provide("xrn:firebolt:capability:token:account", {});
-  }).toThrow();
-});
 
 // Events Test cases
 
