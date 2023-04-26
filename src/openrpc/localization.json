@@ -274,7 +274,105 @@
           }
         }            
       ]   
-    } 
+    },
+    {
+      "name": "addAdditionalInfo",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:localization:language"
+          ]
+        }
+      ],
+      "summary": "Add any platform-specific localization information in key/value pair",
+      "params": [
+        {
+          "name": "key",
+          "summary": "Key to add additionalInfo",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "value",
+          "summary": "Value to be set for additionalInfo",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "success",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Add an additionalInfo for localization",
+          "params": [
+            {
+              "name": "key",
+              "value": "defaultKey"
+            },
+            {
+              "name": "value",
+              "value": "defaultValue="
+            }
+          ],
+          "result": {
+            "name": "defaultResult",
+            "value": null
+          }
+        }            
+      ]   
+    },
+    {
+      "name": "removeAdditionalInfo",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:localization:language"
+          ]
+        }
+      ],
+      "summary": "Remove any platform-specific localization information from map",
+      "params": [
+        {
+          "name": "key",
+          "summary": "Key to remove additionalInfo",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "success",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Remove an additionalInfo for localization",
+          "params": [
+            {
+              "name": "key",
+              "value": "defaultKey"
+            }
+          ],
+          "result": {
+            "name": "defaultResult",
+            "value": null
+          }
+        }            
+      ]   
+    }
   ],
   "components": {
     "schemas": {
