@@ -98,7 +98,8 @@
                 "xrn:firebolt:capability:localization:locale",
                 "xrn:firebolt:capability:localization:locality",
                 "xrn:firebolt:capability:localization:location",
-                "xrn:firebolt:capability:localization:postal-code"
+                "xrn:firebolt:capability:localization:postal-code",
+                "xrn:firebolt:capability:localization:additional-info"
             ]
         },
         {
