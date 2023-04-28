@@ -126,7 +126,8 @@
         {
             "module": "SecondScreen",
             "use": [
-                "xrn:firebolt:capability:protocol:dial"
+                "xrn:firebolt:capability:protocol:dial",
+                "xrn:firebolt:capability:device:info"
             ]
         },
         {

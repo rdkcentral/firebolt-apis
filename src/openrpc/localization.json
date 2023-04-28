@@ -305,7 +305,7 @@
         }
       ],
       "result": {
-        "name": "success",
+        "name": "result",
         "schema": {
           "const": null
         }
@@ -352,7 +352,7 @@
         }
       ],
       "result": {
-        "name": "success",
+        "name": "result",
         "schema": {
           "const": null
         }

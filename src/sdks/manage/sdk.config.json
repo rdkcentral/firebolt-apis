@@ -21,7 +21,8 @@
                 "xrn:firebolt:capability:localization:country-code",
                 "xrn:firebolt:capability:localization:language",
                 "xrn:firebolt:capability:localization:locale",
-                "xrn:firebolt:capability:localization:time-zone"
+                "xrn:firebolt:capability:localization:time-zone",
+                "xrn:firebolt:capability:localization:additional-info"
             ],
             "manage": [
                 "xrn:firebolt:capability:localization:locality",
