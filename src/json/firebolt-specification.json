@@ -137,6 +137,36 @@
     },
     "xrn:firebolt:capability:usergrant:pinchallenge": {
       "level": "should"
+    },
+    "xrn:firebolt:capability:capabilities:info": {
+      "level": "must",
+      "use": {
+        "public": true,
+        "negotiable": false
+      },
+      "manage": {
+        "public": false,
+        "negotiable": false
+      },
+      "provide": {
+        "public": false,
+        "negotiable": false
+      }
+    },
+    "xrn:firebolt:capability:capabilities:request": {
+      "level": "must",
+      "use": {
+        "public": true,
+        "negotiable": false
+      },
+      "manage": {
+        "public": false,
+        "negotiable": false
+      },
+      "provide": {
+        "public": false,
+        "negotiable": false
+      }
     }
   },
   "apis": {}
