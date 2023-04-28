@@ -372,6 +372,38 @@
           }
         }            
       ]   
+    },
+    {
+      "name": "timeZone",
+      "tags": [
+          {
+              "name": "property"
+          },
+          {
+              "name": "capabilities",
+              "x-uses": [
+                  "xrn:firebolt:capability:localization:time-zone"
+              ]
+          }
+      ],
+      "summary": "Set the IANA timezone for the device",
+      "params": [],
+      "result": {
+          "name": "result",
+          "schema": {
+              "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/TimeZone"
+          }
+      },
+      "examples": [
+          {
+              "name": "Default Example",
+              "params": [],
+              "result": {
+                  "name": "Default Result",
+                  "value": "America/New_York"
+              }
+          }
+      ]
     }
   ],
   "components": {
