@@ -1,3 +1,10 @@
+# [0.11.0-next.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.4...v0.11.0-next.5) (2023-04-28)
+
+
+### Features
+
+* Make capabilities:info and capabilities:request non-negotiable ([e79ff5a](https://github.com/rdkcentral/firebolt-core-sdk/commit/e79ff5a88aa41eaaa37c7ad2a717b234500df1b5))
+
 # [0.11.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.3...v0.11.0-next.4) (2023-04-25)
 
 
