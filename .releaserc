@@ -2,7 +2,8 @@
   "branches": [
     {
       "name": "main",
-      "prerelease": false
+      "prerelease": true,
+      "channel": "release-candidate"
     },
     {
       "name": "next",
@@ -15,7 +16,7 @@
       "prerelease": true
     }
   ],
-  "dryRun": false,
+  "dryRun": true,
   "plugins": [
     [
       "@semantic-release/commit-analyzer",
