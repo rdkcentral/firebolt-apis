@@ -245,7 +245,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:localization:language"
+            "xrn:firebolt:capability:localization:additional-info"
           ]
         }
       ],
@@ -274,7 +274,137 @@
           }
         }            
       ]   
-    } 
+    },
+    {
+      "name": "addAdditionalInfo",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:localization:additional-info"
+          ]
+        }
+      ],
+      "summary": "Add any platform-specific localization information in key/value pair",
+      "params": [
+        {
+          "name": "key",
+          "summary": "Key to add additionalInfo",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "value",
+          "summary": "Value to be set for additionalInfo",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Add an additionalInfo for localization",
+          "params": [
+            {
+              "name": "key",
+              "value": "defaultKey"
+            },
+            {
+              "name": "value",
+              "value": "defaultValue="
+            }
+          ],
+          "result": {
+            "name": "defaultResult",
+            "value": null
+          }
+        }            
+      ]   
+    },
+    {
+      "name": "removeAdditionalInfo",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:localization:additional-info"
+          ]
+        }
+      ],
+      "summary": "Remove any platform-specific localization information from map",
+      "params": [
+        {
+          "name": "key",
+          "summary": "Key to remove additionalInfo",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Remove an additionalInfo for localization",
+          "params": [
+            {
+              "name": "key",
+              "value": "defaultKey"
+            }
+          ],
+          "result": {
+            "name": "defaultResult",
+            "value": null
+          }
+        }            
+      ]   
+    },
+    {
+      "name": "timeZone",
+      "tags": [
+          {
+              "name": "property"
+          },
+          {
+              "name": "capabilities",
+              "x-uses": [
+                  "xrn:firebolt:capability:localization:time-zone"
+              ]
+          }
+      ],
+      "summary": "Set the IANA timezone for the device",
+      "params": [],
+      "result": {
+          "name": "result",
+          "schema": {
+              "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/TimeZone"
+          }
+      },
+      "examples": [
+          {
+              "name": "Default Example",
+              "params": [],
+              "result": {
+                  "name": "Default Result",
+                  "value": "America/New_York"
+              }
+          }
+      ]
+    }
   ],
   "components": {
     "schemas": {
