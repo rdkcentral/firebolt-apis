@@ -31,12 +31,14 @@ jobs:
         run: npm ci
       - name: Set explicit npm dist-tag default
         if: github.ref_name == 'main'
-        run: echo "NPM_DIST_TAG=latest" >> $GITHUB_ENV
+        run: |
+          echo "NPM_DIST_TAG=latest" >> $GITHUB_ENV
+          echo "RELEASE_CHANNEL=latest" >> $GITHUB_ENV
       - name: Override npm dist-tag for non-main releases
         if: github.ref_name != 'main'
-        run: echo "NPM_DIST_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
-      - name: Get release channel
-        run: echo "RELEASE_CHANNEL=$(node ./src/js/version.mjs channel $NPM_DIST_TAG)" >> $GITHUB_ENV
+        run: |
+          echo "NPM_DIST_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "RELEASE_CHANNEL=$(node ./src/js/version.mjs channel $NPM_DIST_TAG)" >> $GITHUB_ENV
       - name: Release mono-artifact to GitHub
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
