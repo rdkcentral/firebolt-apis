@@ -1,0 +1,62 @@
+{
+    "$id": "https://meta.comcast.com/firebolt/discovery",
+    "title": "Discovery",
+    "anyOf": [
+      {
+        "$ref": "#/definitions/PurchasedContentResult"
+      }
+    ],
+    "definitions": {
+      "PurchasedContentResult": {
+        "title": "PurchasedContentResult",
+        "type": "object",
+        "properties": {
+          "expires": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "totalCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
+            }
+          }
+        },
+        "required": [
+          "expires",
+          "totalCount",
+          "entries"
+        ],
+        "additionalProperties": false
+      },
+      "EntityInfoResult": {
+        "title": "EntityInfoResult",
+        "description": "The result for an `entityInfo()` push or pull.",
+        "type": "object",
+        "properties": {
+          "expires": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "entity": {
+            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
+          },
+          "related": {
+            "type": "array",
+            "items": {
+              "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
+            }
+          }
+        },
+        "required": [
+          "expires",
+          "entity"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }

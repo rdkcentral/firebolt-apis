@@ -1,0 +1,34 @@
+{
+  "$id": "https://meta.comcast.com/firebolt/network",
+  "title": "Network",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/NetworkType"
+    },
+    {
+      "$ref": "#/definitions/NetworkStatus"
+    }
+  ],
+  "definitions": {
+    "NetworkType": {
+      "title": "NetworkType",
+      "description": "Type of Network connected to the device.",
+      "type": "string",
+      "enum": ["wifi", "ethernet", "none"]
+    },
+    "NetworkStatus": {
+        "title": "NetworkStatus",
+        "description": "Current Network status of the device.",
+        "type": "object",
+        "properties": {
+          "connection": {
+            "type": "boolean",
+            "description": "Connection status to the router."
+          },
+          "interface": {
+            "$ref": "#/definitions/NetworkType"
+          }
+        }
+    }
+  }
+}

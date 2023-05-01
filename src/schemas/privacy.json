@@ -1,0 +1,41 @@
+{
+  "$id": "https://meta.comcast.com/firebolt/privacy",
+  "title": "Privacy",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/ContentPolicy"
+    }
+  ],
+  "definitions": {
+    "ContentPolicy": {
+      "title": "ContentPolicy",
+      "type": "object",
+      "required": [
+        "enableRecommendations",
+        "shareWatchHistory",
+        "rememberWatchedPrograms"
+      ],
+      "properties": {
+        "enableRecommendations": {
+          "type": "boolean",
+          "description": "Whether or not to the user has enabled history-based recommendations"
+        },
+        "shareWatchHistory": {
+          "type": "boolean",
+          "description": "Whether or not the user has enabled app watch history data to be shared with the platform"
+        },
+        "rememberWatchedPrograms": {
+          "type": "boolean",
+          "description": "Whether or not the user has enabled watch history"
+        }
+      },
+      "examples": [
+        {
+          "enableRecommendations": true,
+          "shareWatchHistory": false,
+          "rememberWatchedPrograms": true
+        }
+      ]
+    }
+  }
+}
