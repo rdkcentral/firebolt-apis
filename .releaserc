@@ -1,8 +1,17 @@
 {
   "branches": [
-    "main",
+    {
+      "name": "main",
+      "prerelease": false
+    },
     {
       "name": "next",
+      "channel": "next",
+      "prerelease": true
+    },
+    {
+      "name": "one-repository",
+      "channel": "test",
       "prerelease": true
     }
   ],
@@ -16,7 +25,7 @@
     ],
     "@semantic-release/release-notes-generator",
     [
-      "@semantic-release/changelog",
+      "production-changelog",
       {
         "changelogFile": "CHANGELOG.md"
       }
@@ -24,10 +33,10 @@
     [
       "@semantic-release/npm",
       {
-        "npmPublish": true,
+        "npmPublish": false,
         "tarballDir": "./"
       }
-    ],
+    ],    
     [
       "@semantic-release/git"
     ],

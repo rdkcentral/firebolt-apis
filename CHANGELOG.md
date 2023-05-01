@@ -1,3 +1,67 @@
+# [0.11.0-next.8](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.7...v0.11.0-next.8) (2023-05-01)
+
+
+### Bug Fixes
+
+* **specification:** Removing unused capabilities ([befcba4](https://github.com/rdkcentral/firebolt-core-sdk/commit/befcba40cd70f95de59c3d7ceb5d25c82c7b7926))
+
+# [0.11.0-next.7](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.6...v0.11.0-next.7) (2023-05-01)
+
+
+### Bug Fixes
+
+* Support arrays of EventObjects ([67f561d](https://github.com/rdkcentral/firebolt-core-sdk/commit/67f561d52a4d8aa0ef8cdabe6fadb91c6af00d65))
+* **typo:** Fixed misspelled "primitives" ([c3403c9](https://github.com/rdkcentral/firebolt-core-sdk/commit/c3403c9fba7ee037acb1aa53d3b866898689ed04))
+
+
+### Features
+
+* **Metrics:** Add distributor Metrics.event API ([e5b87bd](https://github.com/rdkcentral/firebolt-core-sdk/commit/e5b87bd2fa8f0f3be8d17b5fadd657a88491a974))
+
+# [0.11.0-next.6](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.5...v0.11.0-next.6) (2023-05-01)
+
+
+### Features
+
+* Added new methods for additionaInfo ([fe3c488](https://github.com/rdkcentral/firebolt-core-sdk/commit/fe3c48878f4c18550174c8de416335c2a7f8316f))
+
+# [0.11.0-next.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.4...v0.11.0-next.5) (2023-04-28)
+
+
+### Features
+
+* Make capabilities:info and capabilities:request non-negotiable ([e79ff5a](https://github.com/rdkcentral/firebolt-core-sdk/commit/e79ff5a88aa41eaaa37c7ad2a717b234500df1b5))
+
+# [0.11.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.3...v0.11.0-next.4) (2023-04-25)
+
+
+### Bug Fixes
+
+* **Lifecycle:** Remove private LifecycleManagement API ([a3208ea](https://github.com/rdkcentral/firebolt-core-sdk/commit/a3208ea8cc9cc9d818fb2bc7e70453f2d368c4dd))
+
+# [0.11.0-next.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.2...v0.11.0-next.3) (2023-04-25)
+
+
+### Bug Fixes
+
+* **api:** Removing future APIs ([bac48f5](https://github.com/rdkcentral/firebolt-core-sdk/commit/bac48f5bd0223b765d896d11766b049450c3f37d))
+* **tests:** Update tests per previous commit ([8010c5b](https://github.com/rdkcentral/firebolt-core-sdk/commit/8010c5b4c52d4b02e0ac33a3eabd0a460f1ce39a))
+
+# [0.11.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.1...v0.11.0-next.2) (2023-04-18)
+
+
+### Bug Fixes
+
+* **release:** Fix bug where CHANGELOG.md only updated in [@latest](https://github.com/latest) channel ([9d96665](https://github.com/rdkcentral/firebolt-core-sdk/commit/9d96665616dd6d644f9c47411b8a41f8c33d8e30))
+
+# [0.11.0-one-repository.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-one-repository.4...v0.11.0-one-repository.5) (2023-04-17)
+
+
+### Bug Fixes
+
+* **release:** Bring back npm plugin, turn of publish ([2fc9196](https://github.com/rdkcentral/firebolt-core-sdk/commit/2fc91962d85e050350415dd628d6144e8569299d))
+
+
 # [0.10.0](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.9.0...v0.10.0) (2023-02-06)
 
 
@@ -17,6 +81,10 @@
 * Add content-access api, deprecate entitlements, remove availabi… ([#83](https://github.com/rdkcentral/firebolt-core-sdk/issues/83)) ([f3c8017](https://github.com/rdkcentral/firebolt-core-sdk/commit/f3c8017eb391119e47d810426fdae4b11d8e0c38))
 * Add Secure Storage module ([#77](https://github.com/rdkcentral/firebolt-core-sdk/issues/77)) ([f62e4ae](https://github.com/rdkcentral/firebolt-core-sdk/commit/f62e4aeb9325df00c6a2484cf3aaa0b756bd8113))
 * New Capabilities API ([#63](https://github.com/rdkcentral/firebolt-core-sdk/issues/63)) ([0ba5ef5](https://github.com/rdkcentral/firebolt-core-sdk/commit/0ba5ef5e030ce740e40fd5ad30ca5cfd100cf32e))
+* Trigger ([607825b](https://github.com/rdkcentral/firebolt-core-sdk/commit/607825bd5547c74a8a7707f751446ab0e069d9f9))
+* Turn on dryRun ([dcddc60](https://github.com/rdkcentral/firebolt-core-sdk/commit/dcddc6068f91505d97457ed04eb8e2996dab9278))
+
+
 
 
 # 0.9.0
