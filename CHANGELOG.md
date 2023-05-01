@@ -1,3 +1,10 @@
+# [0.11.0-next.8](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.7...v0.11.0-next.8) (2023-05-01)
+
+
+### Bug Fixes
+
+* **specification:** Removing unused capabilities ([befcba4](https://github.com/rdkcentral/firebolt-core-sdk/commit/befcba40cd70f95de59c3d7ceb5d25c82c7b7926))
+
 # [0.11.0-next.7](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.6...v0.11.0-next.7) (2023-05-01)
 
 
