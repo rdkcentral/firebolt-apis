@@ -2,8 +2,7 @@
   "branches": [
     {
       "name": "main",
-      "prerelease": true,
-      "channel": "release-candidate"
+      "prerelease": false
     },
     {
       "name": "next",
