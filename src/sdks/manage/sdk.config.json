@@ -35,6 +35,12 @@
             ]
         },
         {
+            "module": "Metrics",
+            "use": [
+                "xrn:firebolt:capability:metrics:distributor"
+            ]
+        },
+        {
             "module": "Wifi",
             "use": [
                 "xrn:firebolt:capability:protocol:wifi"

@@ -201,9 +201,9 @@
                 }
             ],
             "result": {
-                "name": "voice",
+                "name": "result",
                 "schema": {
-                    "const": "null"
+                    "const": null
                 }
             },
             "examples": [
@@ -266,9 +266,9 @@
                 }
             ],
             "result": {
-                "name": "voice",
+                "name": "result",
                 "schema": {
-                    "const": "null"
+                    "const": null
                 }
             },
             "examples": [
@@ -331,9 +331,9 @@
                 }
             ],
             "result": {
-                "name": "voice",
+                "name": "result",
                 "schema": {
-                    "const": "null"
+                    "const": null
                 }
             },
             "examples": [
