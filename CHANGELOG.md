@@ -1,3 +1,10 @@
+# [0.11.0-next.6](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.5...v0.11.0-next.6) (2023-05-01)
+
+
+### Features
+
+* Added new methods for additionaInfo ([fe3c488](https://github.com/rdkcentral/firebolt-core-sdk/commit/fe3c48878f4c18550174c8de416335c2a7f8316f))
+
 # [0.11.0-next.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.4...v0.11.0-next.5) (2023-04-28)
 
 
