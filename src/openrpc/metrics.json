@@ -1098,8 +1098,8 @@
           "other"
         ]
       },
-      "EventObjectPrimatives": {
-        "title": "EventObjectPrimatives",
+      "EventObjectPrimitives": {
+        "title": "EventObjectPrimitives",
         "anyOf": [
           {
             "type": "string",
@@ -1126,7 +1126,7 @@
         "additionalProperties": {
           "anyOf": [
             {
-              "$ref": "#/components/schemas/EventObjectPrimatives"
+              "$ref": "#/components/schemas/EventObjectPrimitives"
             },
             {
               "type": "array",
@@ -1134,7 +1134,7 @@
               "items": {
                 "anyOf": [
                   {
-                    "$ref": "#/components/schemas/EventObjectPrimatives"
+                    "$ref": "#/components/schemas/EventObjectPrimitives"
                   },
                   {
                     "$ref": "#/components/schemas/EventObject"
