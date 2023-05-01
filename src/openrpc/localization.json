@@ -402,6 +402,14 @@
                   "name": "Default Result",
                   "value": "America/New_York"
               }
+          },
+          {
+              "name": "Additional Example",
+              "params": [],
+              "result": {
+                  "name": "Default Result",
+                  "value": "America/Los_Angeles"
+              }
           }
       ]
     }
