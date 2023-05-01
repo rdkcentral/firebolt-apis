@@ -1,3 +1,16 @@
+# [0.11.0-next.7](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.6...v0.11.0-next.7) (2023-05-01)
+
+
+### Bug Fixes
+
+* Support arrays of EventObjects ([67f561d](https://github.com/rdkcentral/firebolt-core-sdk/commit/67f561d52a4d8aa0ef8cdabe6fadb91c6af00d65))
+* **typo:** Fixed misspelled "primitives" ([c3403c9](https://github.com/rdkcentral/firebolt-core-sdk/commit/c3403c9fba7ee037acb1aa53d3b866898689ed04))
+
+
+### Features
+
+* **Metrics:** Add distributor Metrics.event API ([e5b87bd](https://github.com/rdkcentral/firebolt-core-sdk/commit/e5b87bd2fa8f0f3be8d17b5fadd657a88491a974))
+
 # [0.11.0-next.6](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0-next.5...v0.11.0-next.6) (2023-05-01)
 
 
