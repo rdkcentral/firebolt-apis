@@ -28,6 +28,7 @@
     "specification:report": "node ./src/js/version-specification/index.mjs --source ./dist/firebolt-specification.json --report",
     "version": "node ./src/js/version.mjs sync",
     "dev:setup": "husky install",
+    "release-notes": "npx semantic-release --dry-run --repository-url git@github.com:rdkcentral/firebolt-core-sdk.git --plugins @semantic-release/commit-analyzer,@semantic-release/release-notes-generator",
     "prepack": "npm run dist"
   },
   "repository": {
