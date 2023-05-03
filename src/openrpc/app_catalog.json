@@ -9,6 +9,14 @@
     {
       "name": "apps",
       "summary": "Get apps in the catalog, can use pagination",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:app-catalog:catalog"
+          ]
+        }
+      ],
       "params": [
         {
           "name": "request",
@@ -144,6 +152,14 @@
     {
       "name": "metadata",
       "summary": "Get the metadata for this catalog",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:app-catalog:catalog"
+          ]
+        }
+      ],
       "params": [
       ],
       "result": {
@@ -171,6 +187,14 @@
     {
       "name": "app",
       "summary": "Get a single app from the catalog",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:app-catalog:apps"
+          ]
+        }
+      ],
       "params": [
         {
           "name": "appId",
