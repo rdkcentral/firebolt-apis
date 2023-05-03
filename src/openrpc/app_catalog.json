@@ -1,0 +1,345 @@
+{
+  "openrpc": "1.2.4",
+  "info": {
+    "title": "AppCatalog",
+    "description": "A module for querying what apps are in the catalog for this device",
+    "version": "0.0.0"
+  },
+  "methods": [
+    {
+      "name": "apps",
+      "summary": "Get apps in the catalog, can use pagination",
+      "params": [
+        {
+          "name": "request",
+          "summary": "The request parameters for getting the catalog",
+          "schema": {
+            "$ref": "#/components/schemas/AppCatalogRequest"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "apps",
+        "summary": "The list of apps in the catalog",
+        "schema": {
+          "$ref": "#/components/schemas/AppCatalogAppsPage"
+        }
+      },
+      "examples": [
+        {
+          "name": "Get first page of catalog",
+          "params": [
+            {
+              "name": "request",
+              "value": {
+              }
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "nextPageToken": "abc",
+              "apps": [
+                {
+                  "appId": "app-1",
+                  "appSoftwareVersion": "1.0",
+                  "added": "2021-04-23T18:25:43.511Z",
+                  "updated": "2021-04-23T18:25:43.511Z",
+                  "cloud": true,
+                  "location": "https://app-1.com",
+                  "title": "Application 1",
+                  "icons": [
+                    {
+                      "width": 256,
+                      "height": 256,
+                      "locale": "en",
+                      "format": "png",
+                      "uri": "https://app-1.com/images/icons/en/256x256.png"
+                    },
+                    {
+                      "width": 256,
+                      "height": 256,
+                      "locale": "default",
+                      "format": "png",
+                      "uri": "https://app-1.com/images/icons/default/256x256.png"
+                    }
+                  ]
+                },
+                {
+                  "appId": "app-2",
+                  "appSoftwareVersion": "1.0",
+                  "added": "2021-04-23T18:25:43.511Z",
+                  "updated": "2021-04-23T18:25:43.511Z",
+                  "cloud": true,
+                  "location": "https://app-2.com",
+                  "title": "Application 2",
+                  "icons": [
+                    {
+                      "width": 1080,
+                      "height": 1080,
+                      "locale": "es",
+                      "format": "png",
+                      "uri": "https://app-2.com/images/icons/es/1080x1080.png"
+                    },
+                    {
+                      "width": 1080,
+                      "height": 1080,
+                      "locale": "default",
+                      "format": "png",
+                      "uri": "https://app-2.com/images/icons/default/1080x1080.png"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get subsequent page of catalog",
+          "params": [
+            {
+              "name": "request",
+              "value": {
+                "pageToken": "2"
+              }
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "nextPageToken": "def",
+              "apps": [
+                {
+                  "appId": "app-2",
+                  "appSoftwareVersion": "1.0",
+                  "added": "2021-04-23T18:25:43.511Z",
+                  "updated": "2021-04-23T18:25:43.511Z",
+                  "cloud": true,
+                  "location": "https://app-2.com",
+                  "title": "Application 2",
+                  "icons": [
+                    {
+                      "width": 256,
+                      "height": 256,
+                      "locale": "en",
+                      "format": "png",
+                      "uri": "https://app-1.com/images/icons/en/256x256.png"
+                    },
+                    {
+                      "width": 256,
+                      "height": 256,
+                      "locale": "default",
+                      "format": "png",
+                      "uri": "https://app-1.com/images/icons/default/256x256.png"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "metadata",
+      "summary": "Get the metadata for this catalog",
+      "params": [
+      ],
+      "result": {
+        "name": "catalog",
+        "summary": "The catalog",
+        "schema": {
+          "$ref": "#/components/schemas/AppCatalogMetadata"
+        }
+      },
+      "examples": [
+        {
+          "name": "Get catalog metadata",
+          "params": [
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "version": "0.1",
+              "updated": "2021-04-23T18:25:43.511Z"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "app",
+      "summary": "Get a single app from the catalog",
+      "params": [
+        {
+          "name": "appId",
+          "summary": "The id of the app to get from the catalog",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "catalogItem",
+        "summary": "The item in the catalog representing the app",
+        "schema": {
+          "$ref": "#/components/schemas/AppCatalogItem"
+        }
+      },
+      "examples": [
+        {
+          "name": "Get app-1's catalog item",
+          "params": [
+            {
+              "name": "appId",
+              "value": "xrn:firebolt:application:comcast_default_app"
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "appId": "app-1",
+              "appSoftwareVersion": "1.0",
+              "added": "2021-04-23T18:25:43.511Z",
+              "updated": "2021-04-23T18:25:43.511Z",
+              "cloud": true,
+              "location": "https://app-1.com",
+              "title": "Application 1",
+              "icons": [
+                {
+                  "width": 256,
+                  "height": 256,
+                  "locale": "en",
+                  "format": "png",
+                  "uri": "https://app-1.com/images/icons/en/256x256.png"
+                },
+                {
+                  "width": 256,
+                  "height": 256,
+                  "locale": "default",
+                  "format": "png",
+                  "uri": "https://app-1.com/images/icons/default/256x256.png"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "components": {
+    "schemas": {
+      "AppCatalogRequest": {
+        "title": "AppCatalogRequest",
+        "type": "object",
+        "description": "Parameters to customize how an app catalog is returned",
+        "properties": {
+          "pageToken": {
+            "type": "string"
+          }
+        }
+      },
+      "AppCatalogMetadata": {
+        "title": "AppCatalogMetadata",
+        "type": "object",
+        "description": "The metadata for a catalog",
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AppCatalogAppsPage": {
+        "title": "AppCatalogAppsPage",
+        "type": "object",
+        "description": "The list of apps",
+        "properties": {
+          "apps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppCatalogItem"
+            }
+          },
+          "nextPageToken": {
+            "type": "string"
+          }
+        },
+        "required": [ "apps" ]
+      },
+      "AppCatalogItem": {
+        "title": "AppCatalogItem",
+        "type": "object",
+        "description": "Object representing a single app in a catalog",
+        "properties": {
+          "appId": {
+            "type": "string"
+          },
+          "appSoftwareVersion": {
+            "type": "string"
+          },
+          "appReleaseKey": {
+            "type": "string"
+          },
+          "added": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cloud": {
+            "type": "boolean"
+          },
+          "location": {
+            "type": "string"
+          },
+          "catalogHidden": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          },
+          "icons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Icon"
+            }
+          }
+        },
+        "required": [
+          "appId"
+        ]
+      },
+      "Icon": {
+        "title": "Icon",
+        "type": "object",
+        "description": "Icon image metadata",
+        "properties": {
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          },
+          "locale": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          }
+        },
+        "required": [ "width", "height", "locale", "format" ]
+      }
+    }
+  }
+}
