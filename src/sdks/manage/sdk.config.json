@@ -7,13 +7,6 @@
     },
     "methods": [
         {
-            "module": "Accessory",
-            "use": [
-                "xrn:firebolt:capability:accessory:pair",
-                "xrn:firebolt:capability:accessory:list"
-            ]
-        },
-        {
             "module": "Localization",
             "use": [
                 "xrn:firebolt:capability:localization:locality",
