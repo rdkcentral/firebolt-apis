@@ -156,7 +156,7 @@
     "xrn:firebolt:capability:protocol:bluetoothle": {
       "level": "could",
       "use": {
-        "public": true,
+        "public": false,
         "negotiable": false
       },
       "manage": {
@@ -171,7 +171,7 @@
     "xrn:firebolt:capability:protocol:rf4ce": {
       "level": "could",
       "use": {
-        "public": true,
+        "public": false,
         "negotiable": false
       },
       "manage": {
@@ -183,10 +183,10 @@
         "negotiable": false
       }
     },
-    "xrn:firebolt:capability:accessory:bluetoothle-remote": {
+    "xrn:firebolt:capability:accessory:speaker": {
       "level": "could",
       "use": {
-        "public": true,
+        "public": false,
         "negotiable": false
       },
       "manage": {
@@ -198,25 +198,10 @@
         "negotiable": false
       }
     },
-    "xrn:firebolt:capability:accessory:bluetoothle-speaker": {
+    "xrn:firebolt:capability:accessory:remote": {
       "level": "could",
       "use": {
-        "public": true,
-        "negotiable": false
-      },
-      "manage": {
         "public": false,
-        "negotiable": false
-      },
-      "provide": {
-        "public": false,
-        "negotiable": false
-      }
-    },
-    "xrn:firebolt:capability:accessory:rf4ce-remote": {
-      "level": "could",
-      "use": {
-        "public": true,
         "negotiable": false
       },
       "manage": {
