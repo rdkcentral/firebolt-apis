@@ -1,3 +1,10 @@
+# [0.12.0-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0...v0.12.0-next.1) (2023-05-04)
+
+
+### Features
+
+* Add capabilities for protocol and types of accessories ([#114](https://github.com/rdkcentral/firebolt-core-sdk/issues/114)) ([7bd4114](https://github.com/rdkcentral/firebolt-core-sdk/commit/7bd41146cc6b6146d5e60b57cbbcc9e80497b50b))
+
 # [0.11.0](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0...v0.11.0) (2023-05-01)
 
 
