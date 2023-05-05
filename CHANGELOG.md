@@ -1,3 +1,15 @@
+# [0.12.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.1...v0.12.0-next.2) (2023-05-05)
+
+
+### Bug Fixes
+
+* **Accessory:** Removing extra accessory capabilities ([7a00971](https://github.com/rdkcentral/firebolt-core-sdk/commit/7a009718702a6b5250f0a3e9160bc25d6e91fb93))
+
+
+### Reverts
+
+* Revert "feat: Add capabilities for protocol and types of accessories (#114)" ([0d9b1c9](https://github.com/rdkcentral/firebolt-core-sdk/commit/0d9b1c92f0f5949c6771712c9cad4c8b2cde5e09)), closes [#114](https://github.com/rdkcentral/firebolt-core-sdk/issues/114)
+
 # [0.12.0-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0...v0.12.0-next.1) (2023-05-04)
 
 
