@@ -556,8 +556,7 @@
                 "type": "string",
                 "enum": [
                     "usb",
-                    "local",
-                    "all"
+                    "local"
                 ]
             },
             "MediaFile": {
