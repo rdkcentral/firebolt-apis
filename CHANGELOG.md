@@ -1,3 +1,10 @@
+# [0.12.0-main-ci-test.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.1...v0.12.0-main-ci-test.2) (2023-05-17)
+
+
+### Bug Fixes
+
+* imports relative to node_modules, not local filesystem ([a1b07ad](https://github.com/rdkcentral/firebolt-core-sdk/commit/a1b07ad99c9b32c766c47c3a26d0fd91b44d9724))
+
 # [0.12.0-main-ci-test.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0...v0.12.0-main-ci-test.1) (2023-05-17)
 
 
