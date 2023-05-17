@@ -1,3 +1,10 @@
+# [0.12.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.3...v0.12.0-next.4) (2023-05-17)
+
+
+### Bug Fixes
+
+* **advertising:** Use correct capability for resetIdentifier ([47e730c](https://github.com/rdkcentral/firebolt-core-sdk/commit/47e730c4572ca2b8b9fdc3b2062121ef802914aa))
+
 # [0.12.0-next.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.2...v0.12.0-next.3) (2023-05-11)
 
 
