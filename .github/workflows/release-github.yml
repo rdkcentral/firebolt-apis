@@ -84,5 +84,7 @@ jobs:
         run: |
           npm run publish:docs /tmp/firebolt-docs/apis
           cd /tmp/firebolt-docs
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
           git commit -m "chore: Publish $RELEASE_CHANNEL"
           git push
