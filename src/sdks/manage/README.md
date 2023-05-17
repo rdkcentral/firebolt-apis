@@ -1,23 +1,23 @@
 ---
-title: Firebolt SDKs
+title: Firebolt Manage SDK
 ---
 
 [![semantic-release: conventional](https://img.shields.io/badge/semantic--release-conventional-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
-# Firebolt JS SDK
+# Firebolt Manage SDK
 For building Firebolt compliant apps.
 
 ## Usage
 To install, run:
 
 ```
-npm install @firebolt-js/sdk
+npm install @firebolt-js/manage-sdk
 ```
 
 To use the package, import one of it's modules, e.g.:
 
 ```js
-import { Lifecycle } from '@firebolt-js/sdk'
+import { Accessory } from '@firebolt-js/manage-sdk'
 ```
 
 ## Contributing
