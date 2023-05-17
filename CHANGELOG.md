@@ -1,3 +1,18 @@
+# [0.12.0-main-ci-test.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0...v0.12.0-main-ci-test.1) (2023-05-17)
+
+
+### Bug Fixes
+
+* **Accessory:** Removing extra accessory capabilities ([7a00971](https://github.com/rdkcentral/firebolt-core-sdk/commit/7a009718702a6b5250f0a3e9160bc25d6e91fb93))
+* **advertising:** Use correct capability for resetIdentifier ([47e730c](https://github.com/rdkcentral/firebolt-core-sdk/commit/47e730c4572ca2b8b9fdc3b2062121ef802914aa))
+* Cleaned up some docs ([1067826](https://github.com/rdkcentral/firebolt-core-sdk/commit/1067826c9e65b735afe479aeb84fb7b7a2bd988d))
+* **fake:** Fake change to test semantic-release ([2c209cd](https://github.com/rdkcentral/firebolt-core-sdk/commit/2c209cd6a8a7ce7a8b52edb985eb7e3e101eeda4))
+
+
+### Features
+
+* **Advertising:** Add the skipRestriction API and include in Manage SDK ([#122](https://github.com/rdkcentral/firebolt-core-sdk/issues/122)) ([da9d75f](https://github.com/rdkcentral/firebolt-core-sdk/commit/da9d75f8c29bf04674e3de692874888796665a9a))
+
 # [0.12.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.3...v0.12.0-next.4) (2023-05-17)
 
 
