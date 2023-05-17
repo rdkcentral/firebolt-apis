@@ -1,3 +1,10 @@
+# [0.12.0-main-ci-test.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.2...v0.12.0-main-ci-test.3) (2023-05-17)
+
+
+### Bug Fixes
+
+* adding name/email to docs commit ([9f0b1cb](https://github.com/rdkcentral/firebolt-core-sdk/commit/9f0b1cbd3ece06c3a9fdc73193ed1f5bf3458a76))
+
 # [0.12.0-main-ci-test.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.1...v0.12.0-main-ci-test.2) (2023-05-17)
 
 
