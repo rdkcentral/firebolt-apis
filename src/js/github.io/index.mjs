@@ -1,7 +1,8 @@
 import nopt from 'nopt'
 import path from 'path'
-import { readJson, readDir, readFiles } from '../../../node_modules/@firebolt-js/openrpc/src/shared/filesystem.mjs'
+import { readJson, readDir, readFiles, readText } from '../../../node_modules/@firebolt-js/openrpc/src/shared/filesystem.mjs'
 import { writeFiles } from '../../../../firebolt-openrpc/src/shared/filesystem.mjs'
+import { writeText } from '../../../../firebolt-openrpc/src/shared/filesystem.mjs'
 
 const knownOpts = {
     'output': [String]
@@ -17,8 +18,6 @@ const shortHands = {
 // Last 2 arguments are the defaults.
 const parsedArgs = Object.assign(defaultOpts, nopt(knownOpts, shortHands, process.argv, 2))
 
-console.dir(parsedArgs)
-
 const signOff = () => console.log('\nThis has been a presentation of \x1b[38;5;202mFirebolt\x1b[0m \u{1F525} \u{1F529}\n')
 
 const packageJson = await readJson(process.env.npm_package_json)
@@ -28,7 +27,10 @@ packageJson.workspaces.forEach(async workspace => {
     Object.entries(docs).forEach( ([path, data]) => {
         data = frontmatter(path, data, packageJson) + '\n' + data
     })
-    
+
+    docs['index.md'] = (await readText(path.join(workspace, 'README.md')))
+    docs['changelog.md'] = '---\ntitle: Change Log\n---' + (await readText(path.join(workspace, 'CHANGELOG.md')))
+
     // point to new output location
     Object.keys(docs).forEach(ref => {
         const version = channel(packageJson.version)
@@ -44,6 +46,9 @@ packageJson.workspaces.forEach(async workspace => {
 
     writeFiles(docs)
 })
+
+const index = frontmatter(await readText(path.join('README.md')), null, null)
+writeText(path.join(parsedArgs.output, 'index.md'), index)
 
 function channel(version) {
     const parts = version.split("-")
@@ -74,11 +79,11 @@ function frontmatter(data, version, sdk) {
 
     matter = '---\n' + matter + '\n'
 
-    if (matter.indexOf('Title:') === -1) {
-        matter += `Title: Title\n`
+    if (matter.indexOf('title:') === -1) {
+        matter += `title: Title\n`
     }
 
-    if (matter.indexOf('Version:') === -1) {
+    if (version && matter.indexOf('Version:') === -1) {
         matter += `version: ${version}\n`
     }
 
@@ -86,7 +91,7 @@ function frontmatter(data, version, sdk) {
         matter += `layout: default\n`
     }
 
-    if (matter.indexOf('sdk:') === -1) {
+    if (sdk && matter.indexOf('sdk:') === -1) {
         matter += `sdk: ${sdk}\n`
     }
 
