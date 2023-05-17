@@ -76,6 +76,7 @@ jobs:
         run: |
           cd /tmp
           git clone https://github.com/rdkcentral/firebolt ./firebolt-docs
+          cd ./firebolt-docs
           git remote set-url origin git@github.com:rdkcentral/firebolt.git
       - name: Release docs to GitHub.io
         if: steps.check_build.outputs.files_exists == 'true'
