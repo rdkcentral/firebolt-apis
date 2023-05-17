@@ -1,8 +1,6 @@
 import nopt from 'nopt'
 import path from 'path'
-import { readJson, readDir, readFiles, readText } from '../../../node_modules/@firebolt-js/openrpc/src/shared/filesystem.mjs'
-import { writeFiles } from '../../../../firebolt-openrpc/src/shared/filesystem.mjs'
-import { writeText } from '../../../../firebolt-openrpc/src/shared/filesystem.mjs'
+import { readJson, readDir, readFiles, readText, writeFiles, writeText } from '../../../node_modules/@firebolt-js/openrpc/src/shared/filesystem.mjs'
 
 const knownOpts = {
     'output': [String]
