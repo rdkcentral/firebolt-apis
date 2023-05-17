@@ -629,14 +629,16 @@
           "summary": "The title of this call to action",
           "schema": {
             "$ref": "https://meta.comcast.com/firebolt/types#/definitions/LocalizedString"
-          }
+          },
+          "required": true
         },
         {
           "name": "identifiers",
           "summary": "A set of content identifiers for this call to action",
           "schema": {
             "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ContentIdentifiers"
-          }
+          },
+          "required": true
         },
         {
           "name": "expires",
@@ -694,6 +696,25 @@
                 "16x9": {
                   "en": "https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg"
                 }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Suggest a watch-next tile for the home screen",
+          "params": [
+            {
+              "name": "title",
+              "value": "A Mediocre Show"
+            },
+            {
+              "name": "identifiers",
+              "value": {
+                "entityId": "partner.com/entity/456"
               }
             }
           ],
