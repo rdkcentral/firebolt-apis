@@ -262,7 +262,7 @@
         {
           "name": "capabilities",
           "x-manages": [
-            "xrn:firebolt:capability:advertising:configuration"
+            "xrn:firebolt:capability:advertising:identifier"
           ]
         }
       ],
