@@ -1,3 +1,10 @@
+# [0.12.0-main-ci-test.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.3...v0.12.0-main-ci-test.4) (2023-05-17)
+
+
+### Bug Fixes
+
+* add new files when commiting docs [skip ci] ([bb1ffd8](https://github.com/rdkcentral/firebolt-core-sdk/commit/bb1ffd84f81d7bfa98369b4a2210f3c18c334aab))
+
 # [0.12.0-main-ci-test.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.2...v0.12.0-main-ci-test.3) (2023-05-17)
 
 
