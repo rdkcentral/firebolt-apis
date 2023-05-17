@@ -1,6 +1,5 @@
 # [0.12.0-main-ci-test.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.4...v0.12.0-main-ci-test.5) (2023-05-17)
 
-
 ### Bug Fixes
 
 * Use git@github.com clone syntax ([e2cb217](https://github.com/rdkcentral/firebolt-core-sdk/commit/e2cb217212d1892121006c8e73845a9b23d9f15b))
