@@ -49,11 +49,11 @@ packageJson.workspaces.forEach(async workspace => {
 })
 
 // This is the main README, and goes in a few places...
-console.log(`Will copy ${path.join(workspace, 'README.md')} to ${path.join(parsedArgs.output, 'index.md')}`)
+console.log(`Will copy ${path.join('.', 'README.md')} to ${path.join(parsedArgs.output, 'index.md')}`)
 const index = frontmatter(await readText(path.join('README.md')), null, null)
 writeText(path.join(parsedArgs.output, 'index.md'), index)
 if (version === 'latest') {
-    console.log(`Will copy ${path.join(workspace, 'README.md')} to ${path.join(parsedArgs.output, packageJson.version, 'index.md')}`)
+    console.log(`Will copy ${path.join('.', 'README.md')} to ${path.join(parsedArgs.output, packageJson.version, 'index.md')}`)
     writeText(path.join(parsedArgs.output, packageJson.version, 'index.md'), index)
 }
 
