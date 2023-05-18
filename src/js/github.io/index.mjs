@@ -23,9 +23,6 @@ const version = channel(packageJson.version)
 
 packageJson.workspaces.forEach(async workspace => {
     const docs = await readFiles(await readDir(path.join(workspace, 'build', 'docs', 'markdown'), { recursive: true }), path.join(workspace, 'build', 'docs', 'markdown'))
-    Object.entries(docs).forEach( ([path, data]) => {
-        data = frontmatter(path, data, packageJson) + '\n' + data
-    })
 
     docs['index.md'] = (await readText(path.join(workspace, 'README.md')))
     docs['changelog.md'] = '---\ntitle: Change Log\n---' + (await readText(path.join(workspace, 'CHANGELOG.md')))
@@ -37,8 +34,11 @@ packageJson.workspaces.forEach(async workspace => {
         delete docs[ref]
         docs[path.join(parsedArgs.output, version, sdk, ref)] = frontmatter(data, version, sdk)
 
+        console.log(`Will copy ${path.join(ref)} to ${path.join(parsedArgs.output, version, sdk, ref)}`)
+
         if (version === 'latest') {
             docs[path.join(parsedArgs.output, packageJson.version, sdk, ref)] = frontmatter(data, packageJson.version, sdk)
+            console.log(`Will copy ${path.join(ref)} to ${path.join(parsedArgs.output, packageJson.version, sdk, ref)}`)
         }
     })
 
@@ -46,13 +46,13 @@ packageJson.workspaces.forEach(async workspace => {
 })
 
 // This is the main README, and goes in a few places...
+console.log(`Will copy ${path.join('README.md')} to ${path.join(parsedArgs.output, 'index.md')}`)
 const index = frontmatter(await readText(path.join('README.md')), null, null)
 writeText(path.join(parsedArgs.output, 'index.md'), index)
-writeText(path.join(parsedArgs.output, 'index.md'), index)
 if (version === 'latest') {
+    console.log(`Will copy ${path.join('README.md')} to ${path.join(parsedArgs.output, packageJson.version, 'index.md')}`)
     writeText(path.join(parsedArgs.output, packageJson.version, 'index.md'), index)
 }
-
 
 function channel(version) {
     const parts = version.split("-")

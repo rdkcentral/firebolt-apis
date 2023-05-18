@@ -34,6 +34,8 @@ async function prepare(config, { cwd, nextRelease, logger }) {
 
         content = `${notes.trim()}\n${content ? `\n${content}\n` : ''}`;
 
+        logger.log(`Writing changelog file: ${logPath}`)
+
         await writeFile(logPath, changelogTitle ? `${changelogTitle}\n\n${content}` : content);
     }
 }
