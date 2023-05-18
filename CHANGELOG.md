@@ -1,3 +1,10 @@
+# [0.12.0-main-ci-test.8](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.7...v0.12.0-main-ci-test.8) (2023-05-18)
+
+
+### Bug Fixes
+
+* trigger CI docs push ([0ea7c9c](https://github.com/rdkcentral/firebolt-core-sdk/commit/0ea7c9c5086dfd546ca1e247ffa90944a8b99c4d))
+
 # [0.12.0-main-ci-test.7](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.6...v0.12.0-main-ci-test.7) (2023-05-17)
 
 
