@@ -1,3 +1,10 @@
+# [0.12.0-main-ci-test.7](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.6...v0.12.0-main-ci-test.7) (2023-05-17)
+
+
+### Bug Fixes
+
+* cd into cloned dir before changing URL ([db3e584](https://github.com/rdkcentral/firebolt-core-sdk/commit/db3e584f3fef1828fd5be67f5664d7ea5504607e))
+
 # [0.12.0-main-ci-test.6](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.5...v0.12.0-main-ci-test.6) (2023-05-17)
 
 ### Bug Fixes
