@@ -27,6 +27,9 @@ packageJson.workspaces.forEach(async workspace => {
     docs['index.md'] = (await readText(path.join(workspace, 'README.md')))
     docs['changelog.md'] = '---\ntitle: Change Log\n---' + (await readText(path.join(workspace, 'CHANGELOG.md')))
 
+    console.dir('CHANGELOG:')
+    console.dir(docs['changelog.md'])
+
     // point to new output location
     Object.keys(docs).forEach(ref => {
         const data = docs[ref]
@@ -34,11 +37,11 @@ packageJson.workspaces.forEach(async workspace => {
         delete docs[ref]
         docs[path.join(parsedArgs.output, version, sdk, ref)] = frontmatter(data, version, sdk)
 
-        console.log(`Will copy ${path.join(ref)} to ${path.join(parsedArgs.output, version, sdk, ref)}`)
+        console.log(`Will copy ${path.join(workspace, 'build', 'docs', 'markdown', ref)} to ${path.join(parsedArgs.output, version, sdk, ref)}`)
 
         if (version === 'latest') {
             docs[path.join(parsedArgs.output, packageJson.version, sdk, ref)] = frontmatter(data, packageJson.version, sdk)
-            console.log(`Will copy ${path.join(ref)} to ${path.join(parsedArgs.output, packageJson.version, sdk, ref)}`)
+            console.log(`Will copy ${path.join(workspace, 'build', 'docs', 'markdown', ref)} to ${path.join(parsedArgs.output, packageJson.version, sdk, ref)}`)
         }
     })
 
@@ -46,11 +49,11 @@ packageJson.workspaces.forEach(async workspace => {
 })
 
 // This is the main README, and goes in a few places...
-console.log(`Will copy ${path.join('README.md')} to ${path.join(parsedArgs.output, 'index.md')}`)
+console.log(`Will copy ${path.join(workspace, 'README.md')} to ${path.join(parsedArgs.output, 'index.md')}`)
 const index = frontmatter(await readText(path.join('README.md')), null, null)
 writeText(path.join(parsedArgs.output, 'index.md'), index)
 if (version === 'latest') {
-    console.log(`Will copy ${path.join('README.md')} to ${path.join(parsedArgs.output, packageJson.version, 'index.md')}`)
+    console.log(`Will copy ${path.join(workspace, 'README.md')} to ${path.join(parsedArgs.output, packageJson.version, 'index.md')}`)
     writeText(path.join(parsedArgs.output, packageJson.version, 'index.md'), index)
 }
 
