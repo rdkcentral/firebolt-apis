@@ -1,3 +1,10 @@
+# [0.12.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.12...v0.12.0-next.13) (2023-05-18)
+
+
+### Bug Fixes
+
+* Removed old logic to copy main CHANGELOG into each SDK ([f384972](https://github.com/rdkcentral/firebolt-apis/commit/f3849727bbb378871455c4f287763fda8dfc815b))
+
 # [0.12.0-next.12](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.11...v0.12.0-next.12) (2023-05-18)
 
 
