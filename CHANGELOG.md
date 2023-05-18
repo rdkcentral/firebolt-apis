@@ -1,3 +1,10 @@
+# [0.12.0-main-ci-test.9](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.8...v0.12.0-main-ci-test.9) (2023-05-18)
+
+
+### Bug Fixes
+
+* Testing different auth method ([9ad896c](https://github.com/rdkcentral/firebolt-core-sdk/commit/9ad896ce2edc3cefe79dec1eb5ab2271814ebd18))
+
 # [0.12.0-main-ci-test.8](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.7...v0.12.0-main-ci-test.8) (2023-05-18)
 
 
