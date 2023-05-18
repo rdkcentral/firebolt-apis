@@ -1,3 +1,10 @@
+# [0.12.0-main-ci-test.10](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.9...v0.12.0-main-ci-test.10) (2023-05-18)
+
+
+### Bug Fixes
+
+* Adding additional docs ([c915b94](https://github.com/rdkcentral/firebolt-core-sdk/commit/c915b9451048fd7b31268b83efb3bc1a577243c6))
+
 # [0.12.0-main-ci-test.9](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.8...v0.12.0-main-ci-test.9) (2023-05-18)
 
 
