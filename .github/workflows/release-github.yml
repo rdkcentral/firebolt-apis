@@ -39,6 +39,9 @@ jobs:
         run: |
           echo "Setting NPM_DIST_TAG to '${{ github.ref_name }}'"
           echo "NPM_DIST_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+      - name: Override release channel for non-main releases
+        if: github.ref_name != 'main'
+        run: |
           echo "Setting RELEASE_CHANNEL to '$(node ./src/js/version.mjs channel $NPM_DIST_TAG)' using branch name '$NPM_DIST_TAG'"
           echo "RELEASE_CHANNEL=$(node ./src/js/version.mjs channel $NPM_DIST_TAG)" >> $GITHUB_ENV
       - name: Release mono-artifact to GitHub
