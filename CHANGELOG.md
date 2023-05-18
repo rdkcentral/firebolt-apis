@@ -1,6 +1,5 @@
 # [0.12.0-main-ci-test.6](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.5...v0.12.0-main-ci-test.6) (2023-05-17)
 
-
 ### Bug Fixes
 
 * Trigger docs ([595eec1](https://github.com/rdkcentral/firebolt-core-sdk/commit/595eec18ca036ad090e2f7eed0f08b29635b4ca0))
