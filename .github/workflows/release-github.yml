@@ -37,7 +37,9 @@ jobs:
       - name: Override npm dist-tag for non-main releases
         if: github.ref_name != 'main'
         run: |
+          echo "Setting NPM_DIST_TAG to '${{ gethub.ref_name }}'"
           echo "NPM_DIST_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "Setting RELEASE_CHANNEL to '$(node ./src/js/version.mjs channel $NPM_DIST_TAG)' using branch name '$NPM_DIST_TAG'"
           echo "RELEASE_CHANNEL=$(node ./src/js/version.mjs channel $NPM_DIST_TAG)" >> $GITHUB_ENV
       - name: Release mono-artifact to GitHub
         if: github.ref_name != 'main' || github.event_name == 'workflow_dispatch'
