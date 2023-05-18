@@ -30,8 +30,7 @@
       "examples": [
         {
           "name": "Send ready metric",
-          "params": [
-          ],
+          "params": [],
           "result": {
             "name": "success",
             "value": true
@@ -63,8 +62,7 @@
       "examples": [
         {
           "name": "Send signIn metric",
-          "params": [
-          ],
+          "params": [],
           "result": {
             "name": "success",
             "value": true
@@ -88,7 +86,7 @@
             "name": "success",
             "value": true
           }
-        }        
+        }
       ]
     },
     {
@@ -115,13 +113,12 @@
       "examples": [
         {
           "name": "Send signOut metric",
-          "params": [
-          ],
+          "params": [],
           "result": {
             "name": "success",
             "value": true
           }
-        }        
+        }
       ]
     },
     {
@@ -154,13 +151,12 @@
       "examples": [
         {
           "name": "Send startContent metric",
-          "params": [
-          ],
+          "params": [],
           "result": {
             "name": "success",
             "value": true
           }
-        },  
+        },
         {
           "name": "Send startContent metric w/ entity",
           "params": [
@@ -173,7 +169,7 @@
             "name": "success",
             "value": true
           }
-        } 
+        }
       ]
     },
     {
@@ -206,13 +202,12 @@
       "examples": [
         {
           "name": "Send stopContent metric",
-          "params": [
-          ],
+          "params": [],
           "result": {
             "name": "success",
             "value": true
           }
-        },  
+        },
         {
           "name": "Send stopContent metric w/ entity",
           "params": [
@@ -225,7 +220,7 @@
             "name": "success",
             "value": true
           }
-        }         
+        }
       ]
     },
     {
@@ -268,7 +263,7 @@
             "name": "success",
             "value": true
           }
-        },  
+        },
         {
           "name": "Send startContent metric w/ entity",
           "params": [
@@ -281,7 +276,7 @@
             "name": "success",
             "value": true
           }
-        }         
+        }
       ]
     },
     {
@@ -348,9 +343,9 @@
             "name": "success",
             "value": true
           }
-        }     
+        }
       ]
-    }, 
+    },
     {
       "name": "error",
       "tags": [
@@ -401,7 +396,7 @@
           "schema": {
             "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
           },
-          "required": false          
+          "required": false
         }
       ],
       "result": {
@@ -435,7 +430,7 @@
             "name": "success",
             "value": true
           }
-        }      
+        }
       ]
     },
     {
@@ -479,7 +474,7 @@
             "value": true
           }
         }
-      ]      
+      ]
     },
     {
       "name": "mediaPlay",
@@ -522,7 +517,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaPlaying",
@@ -565,7 +560,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaPause",
@@ -608,7 +603,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaWaiting",
@@ -651,7 +646,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaProgress",
@@ -706,7 +701,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaSeeking",
@@ -761,7 +756,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaSeeked",
@@ -816,7 +811,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaRateChange",
@@ -871,7 +866,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaRenditionChange",
@@ -962,7 +957,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaEnded",
@@ -1062,9 +1057,105 @@
             "name": "result",
             "value": null
           }
-        }     
+        }
       ]
-    }    
+    },
+    {
+      "name": "addContext",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:metrics:context"
+          ]
+        }
+      ],
+      "summary": "Add context that can be applied to all metrics reporting",
+      "params": [
+        {
+          "name": "context",
+          "summary": "The context to add for metrics",
+          "schema": {
+            "$ref": "#/components/schemas/MetricsContext"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "results",
+        "schema": {
+          "type": "null"
+        }
+      },
+      "examples": [
+        {
+          "name": "Set the deviceSessionId",
+          "params": [
+            {
+              "name": "context",
+              "value": {
+                "deviceSessionId": "ccccc-cccc-cccc-cccc-cccccccc"
+              }
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "removeContext",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:metrics:context"
+          ]
+        }
+      ],
+      "summary": "Remove context that was previously added by Metrics.addContext",
+      "params": [
+        {
+          "name": "keys",
+          "summary": "The list of keys to clear context for",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "deviceSessionId"
+              ]
+            }
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "type": "null"
+        }
+      },
+      "examples": [
+        {
+          "name": "Remove the override for deviceSessionId",
+          "params": [
+            {
+              "name": "keys",
+              "value": [
+                "deviceSessionId"
+              ]
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        }
+      ]
+    }
   ],
   "components": {
     "schemas": {
@@ -1147,6 +1238,18 @@
             }
           ]
         }
+      },
+      "MetricsContext": {
+        "title": "MetricsContext",
+        "description": "Context that is used when the platform sends any metrics",
+        "type": "object",
+        "properties": {
+          "deviceSessionId": {
+            "description": "A unique id that identifies a sessionId correlating to the scope of when the user has interacted with the device. This sessionId should be reset any time the device goes to the active power state",
+            "type": "string"
+          }
+        },
+        "required": []
       }
     }
   }

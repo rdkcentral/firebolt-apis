@@ -31,6 +31,9 @@
             "module": "Metrics",
             "use": [
                 "xrn:firebolt:capability:metrics:distributor"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:metrics:context"
             ]
         },
         {
