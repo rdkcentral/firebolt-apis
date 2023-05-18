@@ -1,3 +1,11 @@
+# [0.12.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.6...v0.12.0-next.7) (2023-05-18)
+
+
+### Bug Fixes
+
+* **CI:** Log various env variables for debuggability ([b8b65a7](https://github.com/rdkcentral/firebolt-apis/commit/b8b65a7a4808c83001ebde56bcbef7ee32f3ffbf))
+* typo ([dfeebab](https://github.com/rdkcentral/firebolt-apis/commit/dfeebabe42fdf4a4692c0414b8cde268d66a4b24))
+
 # [0.12.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.5...v0.12.0-next.6) (2023-05-18)
 
 
