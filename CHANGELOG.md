@@ -1,3 +1,10 @@
+# [0.12.0-next.14](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.13...v0.12.0-next.14) (2023-05-18)
+
+
+### Bug Fixes
+
+* Newline in changelog frontmatter ([cc35849](https://github.com/rdkcentral/firebolt-apis/commit/cc358490eafd0cfcdd6e622455f0174a9f43d046))
+
 # [0.12.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.12...v0.12.0-next.13) (2023-05-18)
 
 
