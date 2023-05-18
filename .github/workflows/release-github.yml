@@ -75,9 +75,7 @@ jobs:
           npm_config_tag: ${{ env.NPM_DIST_TAG }} # <-- For main, this is `latest.` Otherwise, `next`, `next-major`, etc. See ./.releaserc for release branch config.
         run: |
           cd /tmp
-          git clone https://github.com/rdkcentral/firebolt ./firebolt-docs
-          cd ./firebolt-docs
-          git remote set-url origin git@github.com:rdkcentral/firebolt.git
+          git clone https://rdkcentral:$GITHUB_TOKEN@github.com/rdkcentral/firebolt.git ./firebolt-docs
       - name: Release docs to GitHub.io
         if: steps.check_build.outputs.files_exists == 'true'
         env:
