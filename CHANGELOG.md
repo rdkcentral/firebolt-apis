@@ -1,6 +1,7 @@
 # [0.12.0-main-ci-test.10](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.9...v0.12.0-main-ci-test.10) (2023-05-18)
 
 
+
 ### Bug Fixes
 
 * Adding additional docs ([c915b94](https://github.com/rdkcentral/firebolt-core-sdk/commit/c915b9451048fd7b31268b83efb3bc1a577243c6))
@@ -73,6 +74,7 @@
 ### Features
 
 * **Advertising:** Add the skipRestriction API and include in Manage SDK ([#122](https://github.com/rdkcentral/firebolt-core-sdk/issues/122)) ([da9d75f](https://github.com/rdkcentral/firebolt-core-sdk/commit/da9d75f8c29bf04674e3de692874888796665a9a))
+* Make title and identifier fields required for watchNext ([#124](https://github.com/rdkcentral/firebolt-core-sdk/issues/124)) ([96d7b2b](https://github.com/rdkcentral/firebolt-core-sdk/commit/96d7b2bb7464d6044346440d37feecba9dbc7899))
 
 # [0.12.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.3...v0.12.0-next.4) (2023-05-17)
 
