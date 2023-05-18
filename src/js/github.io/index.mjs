@@ -19,6 +19,7 @@ const parsedArgs = Object.assign(defaultOpts, nopt(knownOpts, shortHands, proces
 const signOff = () => console.log('\nThis has been a presentation of \x1b[38;5;202mFirebolt\x1b[0m \u{1F525} \u{1F529}\n')
 
 const packageJson = await readJson(process.env.npm_package_json)
+const version = channel(packageJson.version)
 
 packageJson.workspaces.forEach(async workspace => {
     const docs = await readFiles(await readDir(path.join(workspace, 'build', 'docs', 'markdown'), { recursive: true }), path.join(workspace, 'build', 'docs', 'markdown'))
@@ -31,7 +32,6 @@ packageJson.workspaces.forEach(async workspace => {
 
     // point to new output location
     Object.keys(docs).forEach(ref => {
-        const version = channel(packageJson.version)
         const data = docs[ref]
         const sdk = workspace.split(path.sep).pop()
         delete docs[ref]
@@ -45,8 +45,14 @@ packageJson.workspaces.forEach(async workspace => {
     writeFiles(docs)
 })
 
+// This is the main README, and goes in a few places...
 const index = frontmatter(await readText(path.join('README.md')), null, null)
 writeText(path.join(parsedArgs.output, 'index.md'), index)
+writeText(path.join(parsedArgs.output, 'index.md'), index)
+if (version === 'latest') {
+    writeText(path.join(parsedArgs.output, packageJson.version, 'index.md'), index)
+}
+
 
 function channel(version) {
     const parts = version.split("-")
@@ -76,10 +82,6 @@ function frontmatter(data, version, sdk) {
     }
 
     matter = '---\n' + matter + '\n'
-
-    if (matter.indexOf('title:') === -1) {
-        matter += `title: Title\n`
-    }
 
     if (version && matter.indexOf('Version:') === -1) {
         matter += `version: ${version}\n`
