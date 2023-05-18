@@ -1,3 +1,10 @@
+# [0.12.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.7...v0.12.0-next.8) (2023-05-18)
+
+
+### Bug Fixes
+
+* Move release channel env into separate step ([2b86918](https://github.com/rdkcentral/firebolt-apis/commit/2b8691883bbdddb88672e00459608fe6296e7934))
+
 # [0.12.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.6...v0.12.0-next.7) (2023-05-18)
 
 
