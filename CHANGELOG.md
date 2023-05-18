@@ -1,3 +1,10 @@
+# [0.12.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.9...v0.12.0-next.10) (2023-05-18)
+
+
+### Bug Fixes
+
+* Adding better CI logging ([5fab187](https://github.com/rdkcentral/firebolt-apis/commit/5fab18757885d8be870d862867e3385bdfd93356))
+
 # [0.12.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.8...v0.12.0-next.9) (2023-05-18)
 
 
