@@ -10,8 +10,8 @@
       "prerelease": true
     },
     {
-      "name": "main-ci-test",
-      "channel": "test",
+      "name": "next-major",
+      "channel": "next-major",
       "prerelease": true
     }
   ],
