@@ -25,7 +25,7 @@ packageJson.workspaces.forEach(async workspace => {
     const docs = await readFiles(await readDir(path.join(workspace, 'build', 'docs', 'markdown'), { recursive: true }), path.join(workspace, 'build', 'docs', 'markdown'))
 
     docs['index.md'] = (await readText(path.join(workspace, 'README.md')))
-    docs['changelog.md'] = '---\ntitle: Change Log\n---' + (await readText(path.join(workspace, 'CHANGELOG.md')))
+    docs['changelog.md'] = '---\ntitle: Change Log\n---\n' + (await readText(path.join(workspace, 'CHANGELOG.md')))
 
     // point to new output location
     Object.keys(docs).forEach(ref => {
