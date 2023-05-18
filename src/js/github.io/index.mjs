@@ -27,9 +27,6 @@ packageJson.workspaces.forEach(async workspace => {
     docs['index.md'] = (await readText(path.join(workspace, 'README.md')))
     docs['changelog.md'] = '---\ntitle: Change Log\n---' + (await readText(path.join(workspace, 'CHANGELOG.md')))
 
-    console.dir('CHANGELOG:')
-    console.dir(docs['changelog.md'])
-
     // point to new output location
     Object.keys(docs).forEach(ref => {
         const data = docs[ref]
