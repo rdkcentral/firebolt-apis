@@ -1,3 +1,10 @@
+# [0.12.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.5...v0.12.0-next.6) (2023-05-18)
+
+
+### Bug Fixes
+
+* Update package.json repository URL ([568df4d](https://github.com/rdkcentral/firebolt-apis/commit/568df4d4e9e840f9c9d15553fd95d9d430cc4f30))
+
 # [0.12.0-main-ci-test.10](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.9...v0.12.0-main-ci-test.10) (2023-05-18)
 
 
