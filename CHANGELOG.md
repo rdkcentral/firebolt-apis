@@ -1,8 +1,79 @@
-# [0.12.0-next.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.4...v0.12.0-next.5) (2023-05-18)
+# [0.12.0-main-ci-test.10](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.9...v0.12.0-main-ci-test.10) (2023-05-18)
+
 
 
 ### Bug Fixes
 
+* Adding additional docs ([c915b94](https://github.com/rdkcentral/firebolt-core-sdk/commit/c915b9451048fd7b31268b83efb3bc1a577243c6))
+
+# [0.12.0-main-ci-test.9](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.8...v0.12.0-main-ci-test.9) (2023-05-18)
+
+
+### Bug Fixes
+
+* Testing different auth method ([9ad896c](https://github.com/rdkcentral/firebolt-core-sdk/commit/9ad896ce2edc3cefe79dec1eb5ab2271814ebd18))
+
+# [0.12.0-main-ci-test.8](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.7...v0.12.0-main-ci-test.8) (2023-05-18)
+
+
+### Bug Fixes
+
+* trigger CI docs push ([0ea7c9c](https://github.com/rdkcentral/firebolt-core-sdk/commit/0ea7c9c5086dfd546ca1e247ffa90944a8b99c4d))
+
+# [0.12.0-main-ci-test.7](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.6...v0.12.0-main-ci-test.7) (2023-05-17)
+
+
+### Bug Fixes
+
+* cd into cloned dir before changing URL ([db3e584](https://github.com/rdkcentral/firebolt-core-sdk/commit/db3e584f3fef1828fd5be67f5664d7ea5504607e))
+
+# [0.12.0-main-ci-test.6](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.5...v0.12.0-main-ci-test.6) (2023-05-17)
+
+### Bug Fixes
+
+* Trigger docs ([595eec1](https://github.com/rdkcentral/firebolt-core-sdk/commit/595eec18ca036ad090e2f7eed0f08b29635b4ca0))
+
+# [0.12.0-main-ci-test.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.4...v0.12.0-main-ci-test.5) (2023-05-17)
+
+### Bug Fixes
+
+* Use git@github.com clone syntax ([e2cb217](https://github.com/rdkcentral/firebolt-core-sdk/commit/e2cb217212d1892121006c8e73845a9b23d9f15b))
+
+# [0.12.0-main-ci-test.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.3...v0.12.0-main-ci-test.4) (2023-05-17)
+
+
+### Bug Fixes
+
+* add new files when commiting docs [skip ci] ([bb1ffd8](https://github.com/rdkcentral/firebolt-core-sdk/commit/bb1ffd84f81d7bfa98369b4a2210f3c18c334aab))
+
+# [0.12.0-main-ci-test.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.2...v0.12.0-main-ci-test.3) (2023-05-17)
+
+
+### Bug Fixes
+
+* adding name/email to docs commit ([9f0b1cb](https://github.com/rdkcentral/firebolt-core-sdk/commit/9f0b1cbd3ece06c3a9fdc73193ed1f5bf3458a76))
+
+# [0.12.0-main-ci-test.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.1...v0.12.0-main-ci-test.2) (2023-05-17)
+
+
+### Bug Fixes
+
+* imports relative to node_modules, not local filesystem ([a1b07ad](https://github.com/rdkcentral/firebolt-core-sdk/commit/a1b07ad99c9b32c766c47c3a26d0fd91b44d9724))
+
+# [0.12.0-main-ci-test.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0...v0.12.0-main-ci-test.1) (2023-05-17)
+
+
+### Bug Fixes
+
+* **Accessory:** Removing extra accessory capabilities ([7a00971](https://github.com/rdkcentral/firebolt-core-sdk/commit/7a009718702a6b5250f0a3e9160bc25d6e91fb93))
+* **advertising:** Use correct capability for resetIdentifier ([47e730c](https://github.com/rdkcentral/firebolt-core-sdk/commit/47e730c4572ca2b8b9fdc3b2062121ef802914aa))
+* Cleaned up some docs ([1067826](https://github.com/rdkcentral/firebolt-core-sdk/commit/1067826c9e65b735afe479aeb84fb7b7a2bd988d))
+* **fake:** Fake change to test semantic-release ([2c209cd](https://github.com/rdkcentral/firebolt-core-sdk/commit/2c209cd6a8a7ce7a8b52edb985eb7e3e101eeda4))
+
+
+### Features
+
+* **Advertising:** Add the skipRestriction API and include in Manage SDK ([#122](https://github.com/rdkcentral/firebolt-core-sdk/issues/122)) ([da9d75f](https://github.com/rdkcentral/firebolt-core-sdk/commit/da9d75f8c29bf04674e3de692874888796665a9a))
 * Make title and identifier fields required for watchNext ([#124](https://github.com/rdkcentral/firebolt-core-sdk/issues/124)) ([96d7b2b](https://github.com/rdkcentral/firebolt-core-sdk/commit/96d7b2bb7464d6044346440d37feecba9dbc7899))
 
 # [0.12.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.3...v0.12.0-next.4) (2023-05-17)
