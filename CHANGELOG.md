@@ -1,3 +1,10 @@
+# [0.12.0-next.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.4...v0.12.0-next.5) (2023-05-18)
+
+
+### Bug Fixes
+
+* Make title and identifier fields required for watchNext ([#124](https://github.com/rdkcentral/firebolt-core-sdk/issues/124)) ([96d7b2b](https://github.com/rdkcentral/firebolt-core-sdk/commit/96d7b2bb7464d6044346440d37feecba9dbc7899))
+
 # [0.12.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.3...v0.12.0-next.4) (2023-05-17)
 
 
