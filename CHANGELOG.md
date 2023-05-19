@@ -1,3 +1,29 @@
+# [0.12.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.11.0...v0.12.0) (2023-05-19)
+
+
+### Bug Fixes
+
+* **Accessory:** Removing extra accessory capabilities ([7a00971](https://github.com/rdkcentral/firebolt-apis/commit/7a009718702a6b5250f0a3e9160bc25d6e91fb93))
+* Added Changelog note about accessory removal ([02e81c0](https://github.com/rdkcentral/firebolt-apis/commit/02e81c0f0233862e2d2386989943a840eddc5b6a))
+* Adding better CI logging ([5fab187](https://github.com/rdkcentral/firebolt-apis/commit/5fab18757885d8be870d862867e3385bdfd93356))
+* **advertising:** Use correct capability for resetIdentifier ([47e730c](https://github.com/rdkcentral/firebolt-apis/commit/47e730c4572ca2b8b9fdc3b2062121ef802914aa))
+* **CI:** Log various env variables for debuggability ([b8b65a7](https://github.com/rdkcentral/firebolt-apis/commit/b8b65a7a4808c83001ebde56bcbef7ee32f3ffbf))
+* Make title and identifier fields required for watchNext ([#124](https://github.com/rdkcentral/firebolt-apis/issues/124)) ([96d7b2b](https://github.com/rdkcentral/firebolt-apis/commit/96d7b2bb7464d6044346440d37feecba9dbc7899))
+* More logs ([afb9fb2](https://github.com/rdkcentral/firebolt-apis/commit/afb9fb260ef41984f6b9472ee5f641f4c1c64ad8))
+* Move release channel env into separate step ([2b86918](https://github.com/rdkcentral/firebolt-apis/commit/2b8691883bbdddb88672e00459608fe6296e7934))
+* Newline in changelog frontmatter ([cc35849](https://github.com/rdkcentral/firebolt-apis/commit/cc358490eafd0cfcdd6e622455f0174a9f43d046))
+* Point to `firebolt-openrpc` 2.0.1 ([c57cb21](https://github.com/rdkcentral/firebolt-apis/commit/c57cb218343fd058e2e6e676d52d9d0c904ad9a8))
+* Readmes ([092ce31](https://github.com/rdkcentral/firebolt-apis/commit/092ce3163f3f3749b8aa1acc551126152e99c363))
+* Removed old logic to copy main CHANGELOG into each SDK ([f384972](https://github.com/rdkcentral/firebolt-apis/commit/f3849727bbb378871455c4f287763fda8dfc815b))
+* typo ([650e53c](https://github.com/rdkcentral/firebolt-apis/commit/650e53c19bfd433eb290c929f8f2f85f90772266))
+* typo ([dfeebab](https://github.com/rdkcentral/firebolt-apis/commit/dfeebabe42fdf4a4692c0414b8cde268d66a4b24))
+* Update package.json repository URL ([568df4d](https://github.com/rdkcentral/firebolt-apis/commit/568df4d4e9e840f9c9d15553fd95d9d430cc4f30))
+
+
+### Features
+
+* **Advertising:** Add the skipRestriction API and include in Manage SDK ([#122](https://github.com/rdkcentral/firebolt-apis/issues/122)) ([da9d75f](https://github.com/rdkcentral/firebolt-apis/commit/da9d75f8c29bf04674e3de692874888796665a9a))
+
 # [0.12.0-next.16](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.15...v0.12.0-next.16) (2023-05-19)
 
 
