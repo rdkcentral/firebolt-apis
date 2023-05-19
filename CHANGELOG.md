@@ -1,3 +1,10 @@
+# [0.12.0-next.15](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.14...v0.12.0-next.15) (2023-05-19)
+
+
+### Bug Fixes
+
+* Added Changelog note about accessory removal ([02e81c0](https://github.com/rdkcentral/firebolt-apis/commit/02e81c0f0233862e2d2386989943a840eddc5b6a))
+
 # [0.12.0-next.14](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.13...v0.12.0-next.14) (2023-05-18)
 
 
