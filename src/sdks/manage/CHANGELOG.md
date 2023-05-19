@@ -24,6 +24,7 @@ This is the first release of the Firebolt Manage SDK, which is used by first par
 * Device module
 * Keyboard module
 * Localization module
+* Metrics module
 * PinChallenge module
 * Privacy module
 * UserGrants module
