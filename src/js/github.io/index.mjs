@@ -97,7 +97,7 @@ function frontmatter(data, version, sdk) {
 
     matter += '---\n'
 
-    return matter + data
+    return matter + data.replace(/\<details(.*?)\>/g, '<details markdown="1" $1>')
 }
 
 signOff()

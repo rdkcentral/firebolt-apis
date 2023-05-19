@@ -3,6 +3,7 @@
 ### Bug Fixes
 
 * Updated `Advertising.resetIdentifier` capability ([47e730c](https://github.com/rdkcentral/firebolt-core-sdk/commit/47e730c4572ca2b8b9fdc3b2062121ef802914aa))
+* Removed `Accessory` module, which was not finished or ready for release ([6bcbb3f](https://github.com/rdkcentral/firebolt-apis/commit/6bcbb3fa347cb412e0d973beb6ecff7fe966607a))
 
 ### Features
 
