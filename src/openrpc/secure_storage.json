@@ -271,7 +271,7 @@
       "params": [
         {
           "name": "appId",
-          "summary": "Value to set",
+          "summary": "appId for which value is being set",
           "schema": {
             "type": "string"
           },
@@ -389,7 +389,7 @@
       "params": [
         {
           "name": "appId",
-          "summary": "Key to remove",
+          "summary": "appId for which values are removed",
           "schema": {
             "type": "string"
           },
