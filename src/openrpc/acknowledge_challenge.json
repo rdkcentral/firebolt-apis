@@ -117,13 +117,26 @@
         ],
         "properties": {
           "granted": {
-            "type": "boolean",
-            "description": "Whether the user approved or denied the challenge"
+            "oneOf": [
+              {
+                "type": "boolean",
+                "description": "Whether the user approved or denied the challenge"
+              },
+              {
+                "const": null
+              }
+            ]
           }
         },
         "examples": [
           {
             "granted": true
+          },
+          {
+            "granted": false
+          },
+          {
+            "granted": null
           }
         ]
       }
