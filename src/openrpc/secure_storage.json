@@ -258,7 +258,7 @@
       ]
     },
     {
-      "name": "seed",
+      "name": "setForApp",
       "summary": "Set or update a secure data value from distributor for an appId",
       "tags": [
         {
