@@ -1,3 +1,10 @@
+# [0.12.0-next.17](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.16...v0.12.0-next.17) (2023-06-02)
+
+
+### Bug Fixes
+
+* Grant providers should allow null responses for deferred challenges ([#128](https://github.com/rdkcentral/firebolt-apis/issues/128)) ([0ddd11a](https://github.com/rdkcentral/firebolt-apis/commit/0ddd11af282aed85112fb739993ae58cfc1c4910))
+
 # [0.12.0-next.16](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.15...v0.12.0-next.16) (2023-05-19)
 
 
