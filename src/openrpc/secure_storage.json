@@ -461,6 +461,14 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "scope",
+          "summary": "The scope of the key/value",
+          "schema": {
+            "$ref": "#/components/schemas/StorageScope"
+          },
+          "required": true
         }
       ],
       "result": {
@@ -477,6 +485,10 @@
             {
               "name": "appId",
               "value": "foo"
+            },
+            {
+              "name": "scope",
+              "value": "account"
             }
           ],
           "result": {
@@ -497,7 +509,16 @@
           ]
         }
       ],
-      "params": [],
+      "params": [
+        {
+          "name": "scope",
+          "summary": "The scope of the key/value",
+          "schema": {
+            "$ref": "#/components/schemas/StorageScope"
+          },
+          "required": true
+        }
+      ],
       "result": {
         "name": "success",
         "summary": "",
@@ -508,7 +529,12 @@
       "examples": [
         {
           "name": "Clears all the data values of storage",
-          "params": [],
+          "params": [
+            {
+              "name": "scope",
+              "value": "account"
+            }
+          ],
           "result": {
             "name": "defaultResult",
              "value": null
