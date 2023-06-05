@@ -259,7 +259,7 @@
     },
     {
       "name": "setForApp",
-      "summary": "Set or update a secure data value from distributor for an appId",
+      "summary": "Set or update a secure data value for a specific app.",
       "tags": [
         {
           "name": "capabilities",
@@ -376,8 +376,75 @@
       ]
     },
     {
-      "name": "removeAll",
-      "summary": "Remove all secure data values by distributor for an appId",
+      "name": "removeForApp",
+      "summary": "Removes single data value for a specific app.",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:storage:secure"
+          ]
+        }
+      ],
+      "params": [
+        {
+          "name": "appId",
+          "summary": "appId for which values are removed",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "scope",
+          "summary": "The scope of the key/value",
+          "schema": {
+            "$ref": "#/components/schemas/StorageScope"
+          },
+          "required": true
+        },
+        {
+          "name": "key",
+          "summary": "Key to remove",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "result": {
+        "name": "success",
+        "summary": "",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Removes authRefreshToken for appId foo",
+          "params": [
+            {
+              "name": "appId",
+              "value": "foo"
+            },
+            {
+              "name": "scope",
+              "value": "account"
+            },
+            {
+              "name": "key",
+              "value": "authRefreshToken"
+            }
+          ],
+          "result": {
+            "name": "defaultResult",
+             "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "clearForApp",
+      "summary": "Clears all the secure data values for a specific app",
       "tags": [
         {
           "name": "capabilities",
@@ -405,13 +472,43 @@
       },
       "examples": [
         {
-          "name": "Remove all the values for appId foo",
+          "name": "Clears all the secure data values for appId foo",
           "params": [
             {
               "name": "appId",
               "value": "foo"
             }
           ],
+          "result": {
+            "name": "defaultResult",
+             "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "clear",
+      "summary": "Clears all the secure data values",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:storage:secure"
+          ]
+        }
+      ],
+      "params": [],
+      "result": {
+        "name": "success",
+        "summary": "",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Clears all the data values of storage",
+          "params": [],
           "result": {
             "name": "defaultResult",
              "value": null

@@ -146,6 +146,9 @@
         "public": false,
         "negotiable": false
       }
+    },
+    "xrn:firebolt:capability:privacy:advertising": {
+      "level": "could"
     }
   },
   "apis": {}
