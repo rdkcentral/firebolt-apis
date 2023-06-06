@@ -1,6 +1,6 @@
 # User Grants
 
-Document status: **Candidate Specification**
+Document status: Candidate Specification
 
 See [Firebolt Requirements Governance](../governance.md) for more info.
 
