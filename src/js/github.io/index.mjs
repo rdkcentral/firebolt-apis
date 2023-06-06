@@ -24,7 +24,8 @@ const requirements = await readFiles(await readDir(path.join('.', 'requirements'
 
 const processFiles = (docs, base, dir, subdir, category, setType) => {
     Object.keys(docs).forEach(ref => {
-        const data = docs[ref]
+        let data = docs[ref]
+        const source = ref
         delete docs[ref]
         let type = ''
 
@@ -36,13 +37,28 @@ const processFiles = (docs, base, dir, subdir, category, setType) => {
         }
 
         if (ref.endsWith('.md')) {
+            const filename = ref.split(path.sep).pop()
+            if (filename !== 'index.md') {
+                const dirname = filename.split('.').shift()
+                const parts = ['index.md']
+                // if the dirname is the same as parent dir, don't insert it
+                if (dirname != ref.split(path.sep).slice(-2, -1)[0]) {
+                    parts.unshift(dirname)
+                    data = data.replace(/\]\(\.\.\//g, '](../../')
+                    data = data.replace(/\]\(\.\//g, '](../')
+                }
+                data = data.replace(/\]\((.*?)\.md([\)#])/g, ']($1$2')
+                data = data.replace(/\]\((.*?)\/(.*?)\/\2([\)#])/g, ']($1/$2$3')
+            ref = ref.split(path.sep).slice(0, -1).concat(parts).join(path.sep)
+            }
+
             docs[path.join(parsedArgs.output, dir, version, subdir, ref)] = frontmatter(data, version, subdir, category, type)
         }
         else {
             docs[path.join(parsedArgs.output, dir, version, subdir, ref)] = data
         }
     
-        console.log(`Will copy ${path.join(base, ref)} to ${path.join(parsedArgs.output, dir, version, subdir, ref)}`)
+        console.log(`Will copy ${path.join(base, source)} to ${path.join(parsedArgs.output, dir, version, subdir, ref)}`)
     
         if (version === 'latest') {
             if (ref.endsWith('.md')) {
@@ -51,7 +67,7 @@ const processFiles = (docs, base, dir, subdir, category, setType) => {
             else {
                 docs[path.join(parsedArgs.output, dir, packageJson.version, subdir, ref)] = data
             }
-            console.log(`Will copy ${path.join(base, ref)} to ${path.join(parsedArgs.output, dir, packageJson.version, subdir, ref)}`)
+            console.log(`Will copy ${path.join(base, source)} to ${path.join(parsedArgs.output, dir, packageJson.version, subdir, ref)}`)
         }    
     })
 }

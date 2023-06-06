@@ -4,6 +4,8 @@ Document Status: Working Draft
 
 See [Firebolt Requirements Governance](./governance.md) for more info.
 
+**NOTE**: Update this link based on your directory depth ^^
+
 | Contributor    | Organization   |
 | -------------- | -------------- |
 | TBD            | TBD            |

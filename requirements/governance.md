@@ -4,7 +4,7 @@ This document outlines the governance model for the Firebolt&reg; Open-Source Pr
 ## 1. Overview
 The Firebolt Open-Source Project is governed by an Advisory Committee that creates and delegates work to Working Groups, which then create proposals for Requirements Specifications and Architectural Decision Records.
 
-![Governance Structure](images/governance/structure.png)
+![Governance Structure](./images/governance/structure.png)
 
 ## 2. Table of Contents
 - [1. Overview](#1-overview)
@@ -121,7 +121,7 @@ ADRs move through the same [stages](#48-approval-stages) as Requirements Specifi
 ### 4.8. Approval Stages
 Requirements specifications and ADRs are written by working groups and go through several stages of approval before becoming official requirements documents.
 
-![Approval Track](images/governance/approval-track.png)
+![Approval Track](./images/governance/approval-track.png)
 
 #### 4.8.1. Draft
 This is any first draft of a requirements specification submitted by an individual or individuals to a Working Group.
@@ -200,7 +200,7 @@ Working Drafts and Candidate Specification Drafts **MUST** be housed in a named 
 
 Branches are merged based on the approval process:
  
-![Branching](images/governance/branching.png)
+![Branching](./images/governance/branching.png)
 
 ### 4.11. Sanctioned Forks
 From time to time an organization with access to the Requirements Repository may want to spearhead a new feature without going through the formal approval process.

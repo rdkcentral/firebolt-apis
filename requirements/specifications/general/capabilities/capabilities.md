@@ -2,7 +2,7 @@
 
 Document Status: Candidate Specification
 
-See [Firebolt Requirements Governance](./governance.md) for more info.
+See [Firebolt Requirements Governance](../../../governance.md) for more info.
 
 | Contributor    | Organization   |
 | -------------- | -------------- |
