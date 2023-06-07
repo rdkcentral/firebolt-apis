@@ -1,3 +1,10 @@
+# [0.12.0-next.18](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.17...v0.12.0-next.18) (2023-06-07)
+
+
+### Features
+
+* Manage-SDK, removeForApp, clear and clearForApp for secure storage ([#127](https://github.com/rdkcentral/firebolt-apis/issues/127)) ([4422c79](https://github.com/rdkcentral/firebolt-apis/commit/4422c79122fc35e7b35180254be52bf33c64ab5b))
+
 # [0.12.0-next.17](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.16...v0.12.0-next.17) (2023-06-02)
 
 
