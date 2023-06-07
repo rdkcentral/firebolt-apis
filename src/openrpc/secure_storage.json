@@ -408,7 +408,8 @@
           "summary": "Key to remove",
           "schema": {
             "type": "string"
-          }
+          },
+          "required": true
         }
       ],
       "result": {
@@ -504,7 +505,7 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-manages": [
+          "x-uses": [
             "xrn:firebolt:capability:storage:secure"
           ]
         }
