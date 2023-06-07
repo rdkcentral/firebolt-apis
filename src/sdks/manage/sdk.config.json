@@ -119,6 +119,12 @@
             "provide": [
                 "xrn:firebolt:capability:usergrant:pinchallenge"
             ]
+        },
+        {
+            "module": "SecureStorage",
+            "manage": [
+                "xrn:firebolt:capability:storage:secure"
+            ]
         }
     ]
 }
