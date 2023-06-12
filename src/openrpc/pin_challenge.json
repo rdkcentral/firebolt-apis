@@ -22,6 +22,10 @@
               },
               {
                 "granted": false,
+                "reason": "exceededPinFailures"
+              },
+              {
+                "granted": null,
                 "reason": "cancelled"
               }
             ]
@@ -149,8 +153,15 @@
         ],
         "properties": {
           "granted": {
-            "type": "boolean",
-            "description": "Whether the user succeeded in the pin challenge"
+            "oneOf": [
+              {
+                "type": "boolean",
+                "description": "Whether the user succeeded in the pin challenge"
+              },
+              {
+                "const": null
+              }
+            ]
           },
           "reason": {
             "$ref": "#/components/schemas/ResultReason",
