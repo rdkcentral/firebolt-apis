@@ -1,3 +1,16 @@
+# [0.13.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0...v0.13.0) (2023-06-12)
+
+
+### Bug Fixes
+
+* Grant providers should allow null responses for deferred challenges ([#128](https://github.com/rdkcentral/firebolt-apis/issues/128)) ([0ddd11a](https://github.com/rdkcentral/firebolt-apis/commit/0ddd11af282aed85112fb739993ae58cfc1c4910))
+* SDK Release Notes ([cf1089f](https://github.com/rdkcentral/firebolt-apis/commit/cf1089f77fbccdf998d4bc810528b7056932f0bb))
+
+
+### Features
+
+* Manage-SDK, removeForApp, clear and clearForApp for secure storage ([#127](https://github.com/rdkcentral/firebolt-apis/issues/127)) ([4422c79](https://github.com/rdkcentral/firebolt-apis/commit/4422c79122fc35e7b35180254be52bf33c64ab5b))
+
 # [0.13.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.0-next.1...v0.13.0-next.2) (2023-06-09)
 
 
