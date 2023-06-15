@@ -1,3 +1,10 @@
+# [0.14.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.1-next.2...v0.14.0-next.1) (2023-06-15)
+
+
+### Features
+
+* Add an event when apps call signIn or signOut ([#133](https://github.com/rdkcentral/firebolt-apis/issues/133)) ([8ba2515](https://github.com/rdkcentral/firebolt-apis/commit/8ba2515948c433ccc38662f223f5fb399cf34841))
+
 ## [0.13.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.1-next.1...v0.13.1-next.2) (2023-06-15)
 
 
