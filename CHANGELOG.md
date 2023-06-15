@@ -1,3 +1,10 @@
+## [0.13.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.1-next.1...v0.13.1-next.2) (2023-06-15)
+
+
+### Bug Fixes
+
+* Update path in publish docs ([9881383](https://github.com/rdkcentral/firebolt-apis/commit/98813833a074a6e25b012d2aac376377d8c5d5a9))
+
 ## [0.13.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.0...v0.13.1-next.1) (2023-06-15)
 
 
