@@ -40,8 +40,6 @@ Firebolt uses method templates in order to code-generate consistent APIs. For ex
 
 This enables both consistent APIs (all properties have a recongnizable pattern) and consistent SDK implementation, which reduces the code that needs to be tested.
 
-Firebolt also uses [Capabilities](./general/capabilities/capabilities.md) to map APIs to availablity and permissions. Capabilities and methods are not required to be 1:1.
-
 ### 3.1. General Style Requirements
 All headers **MUST** be numbered, and have the parent header as the prefix, separated with '.'
 

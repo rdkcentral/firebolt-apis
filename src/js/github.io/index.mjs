@@ -1,6 +1,6 @@
 import nopt from 'nopt'
 import path from 'path'
-import { readJson, readDir, readFiles, readText, writeFiles, writeText } from '../../../node_modules/@firebolt-js/openrpc/src/shared/filesystem.mjs'
+import { readJson, readDir, readFiles, readText, writeFiles, writeText, writeJson } from '../../../node_modules/@firebolt-js/openrpc/src/shared/filesystem.mjs'
 
 const knownOpts = {
     'output': [String]
@@ -94,6 +94,20 @@ writeText(path.join(parsedArgs.output, 'apis', 'index.md'), index)
 if (version === 'latest') {
     console.log(`Will copy ${path.join('.', 'README.md')} to ${path.join(parsedArgs.output, packageJson.version, 'index.md')}`)
     writeText(path.join(parsedArgs.output, 'apis', packageJson.version, 'index.md'), index)
+}
+
+// this is the firebolt spec JSON
+const specification = await readJson(path.join('dist', 'firebolt-specification.json'))
+writeJson(path.join(parsedArgs.output, 'requirements', version, 'specifications', 'firebolt-specification.json'), specification)
+if (version === 'latest') {
+    writeJson(path.join(parsedArgs.output, 'requirements', packageJson.version, 'specifications', 'firebolt-specification.json'), specification)
+}
+
+// this is the firebolt OpenRPC spec JSON
+const openrpc = await readJson(path.join('dist', 'firebolt-open-rpc.json'))
+writeJson(path.join(parsedArgs.output, 'requirements', version, 'specifications', 'firebolt-open-rpc.json'), openrpc)
+if (version === 'latest') {
+    writeJson(path.join(parsedArgs.output, 'requirements', packageJson.version, 'specifications', 'firebolt-open-rpc.json'), openrpc)
 }
 
 function channel(version) {
