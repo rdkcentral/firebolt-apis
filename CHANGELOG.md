@@ -1,3 +1,10 @@
+## [0.13.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.0...v0.13.1-next.1) (2023-06-15)
+
+
+### Bug Fixes
+
+* **governance:** Add governance process docs ([a80ab53](https://github.com/rdkcentral/firebolt-apis/commit/a80ab53c5cdd914b5acbce1effbdb464475bed63))
+
 # [0.13.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0...v0.13.0) (2023-06-12)
 
 
