@@ -11,7 +11,7 @@
 	"scripts": {
 		"validate": "npx firebolt-openrpc validate --input ./dist/firebolt-core-open-rpc.json",
 		"sdk": "npx firebolt-openrpc sdk --input ./dist/firebolt-core-open-rpc.json --template ./src/js --output ./build/javascript/src --static-module Platform",
-		"native": "npx firebolt-openrpc sdk --input ./dist/firebolt-core-open-rpc.json --template ./src/cpp --output ./build/c/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/c",
+		"native": "npx firebolt-openrpc sdk --input ./dist/firebolt-core-open-rpc.json --template ./src/cpp --output ./build/cpp/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/cpp",
 		"compile": "cd ../../.. && npm run compile",
 		"slice": "npx firebolt-openrpc slice -i ../../../dist/firebolt-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-core-open-rpc.json",
 		"docs": "npx firebolt-openrpc docs --input ./dist/firebolt-core-open-rpc.json --output build/docs/markdown --as-path",

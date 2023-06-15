@@ -27,7 +27,6 @@
     "specification": "node ./src/js/version-specification/index.mjs --source ./src/json/firebolt-specification.json",
     "specification:report": "node ./src/js/version-specification/index.mjs --source ./dist/firebolt-specification.json --report",
     "version": "node ./src/js/version.mjs sync",
-    "dev:setup": "husky install",
     "publish:docs": "node ./src/js/github.io/index.mjs --output",
     "release-notes": "npx semantic-release --dry-run --repository-url git@github.com:rdkcentral/firebolt-apis.git --plugins @semantic-release/commit-analyzer,@semantic-release/release-notes-generator",
     "prepack": "npm run dist"
@@ -44,7 +43,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "@firebolt-js/openrpc": "2.0.1",
+    "@firebolt-js/openrpc": "rdkcentral/firebolt-openrpc#feature/progressive-update",
     "@firebolt-js/schemas": "0.9.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",

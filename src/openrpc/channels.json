@@ -1,0 +1,74 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Channels",
+        "description": "Module for linear channels.",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "scan",
+            "tags": [
+                {
+                    "name": "progressive-update",
+                    "x-errors": [
+                        {
+                            "code": 1350,
+                            "message": "Scan canceled."
+                        }
+                    ]
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:broadcast:scan"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "result",
+                "schema": {
+                    "$ref": "#/components/schemas/ScanResult"
+                }
+            },
+            "errors": [
+                {
+                    "code": 1300,
+                    "message": "Scan already in progress."
+                },
+                {
+                    "code": 1301,
+                    "message": "Scanning for channels requires a cable provider to be selected."
+                },
+                {
+                    "code": 1302,
+                    "message": "Scanning for channels requires a region to be set."
+                }
+            ],
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "result",
+                        "value": {}
+                    }
+                }
+            ]
+        }
+    ],
+    "components": {
+        "schemas": {
+            "ScanResult": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "minimum": 0
+                    }
+                }
+            }
+        }
+    }
+}
