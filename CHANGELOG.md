@@ -1,3 +1,10 @@
+# [0.14.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.1...v0.14.0-next.2) (2023-06-16)
+
+
+### Bug Fixes
+
+* Add Capabilities ToC to github.io docs ([0d23136](https://github.com/rdkcentral/firebolt-apis/commit/0d23136bfa4976686795158bdfe179430598af9e))
+
 # [0.14.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.1-next.2...v0.14.0-next.1) (2023-06-15)
 
 
