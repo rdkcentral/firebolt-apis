@@ -1,3 +1,10 @@
+# [0.14.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.3...v0.14.0-next.4) (2023-06-16)
+
+
+### Features
+
+* Allow granted in capability.info and capability.granted to be null ([#134](https://github.com/rdkcentral/firebolt-apis/issues/134)) ([c5c31ee](https://github.com/rdkcentral/firebolt-apis/commit/c5c31ee3c744ec018a57232d2e7b1caf41158ed6))
+
 # [0.14.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.2...v0.14.0-next.3) (2023-06-16)
 
 
