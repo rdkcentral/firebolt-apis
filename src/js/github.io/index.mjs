@@ -113,7 +113,7 @@ const capabilities = () => {
 
     let manifest = '\n'
     
-    const linkify = (method) => `[${method}](./${corerpc.methods.find(m => m.name === method) ? 'core' : 'manage'}/${method.split('.').shift()}/#${method.split('.').pop().toLowerCase()})`
+    const linkify = (method) => `[${method}](./${corerpc.methods.find(m => m.name === method) ? 'core' : 'manage'}/${method.split('.').shift()}/#${method.match(/\.on[A-Z]/) ? method.split('.').pop().charAt(2).toLowerCase() + method.split('.').pop().substring(3).toLowerCase() : method.split('.').pop().toLowerCase()})`
     Object.keys(capabilities).sort().forEach(c => {
         manifest += `## \`${c}\`\n`
 
@@ -145,12 +145,12 @@ const capabilities = () => {
 
 // This is the main README, and goes in a few places...
 console.log(`Will copy ${path.join('.', 'README.md')} to ${path.join(parsedArgs.output, 'apis', 'index.md')}`)
-const index = frontmatter(await readText(path.join('README.md')), null, null)
-writeText(path.join(parsedArgs.output, version, 'apis', 'index.md'), index)
+const index = frontmatter(await readText(path.join('README.md')), null, null) + capabilities()
+writeText(path.join(parsedArgs.output, 'apis', version, 'index.md'), index)
 if (version === 'latest') {
     console.log(`Will copy ${path.join('.', 'README.md')} to ${path.join(parsedArgs.output, packageJson.version, 'index.md')}`)
     writeText(path.join(parsedArgs.output, 'apis', 'index.md'), index)
-    writeText(path.join(parsedArgs.output, 'apis', version, 'index.md'), index)
+    writeText(path.join(parsedArgs.output, 'apis', packageJson.version, 'index.md'), index)
 }
 
 // this is the firebolt spec JSON
