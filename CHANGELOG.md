@@ -1,3 +1,10 @@
+# [0.14.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.2...v0.14.0-next.3) (2023-06-16)
+
+
+### Bug Fixes
+
+* event links in capability toc ([31a8a85](https://github.com/rdkcentral/firebolt-apis/commit/31a8a85c0749ebfa872f2a158975697396ebdf8c))
+
 # [0.14.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.1...v0.14.0-next.2) (2023-06-16)
 
 
