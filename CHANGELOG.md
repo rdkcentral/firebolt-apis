@@ -1,3 +1,45 @@
+# [0.14.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.3...v0.14.0-next.4) (2023-06-16)
+
+
+### Features
+
+* Allow granted in capability.info and capability.granted to be null ([#134](https://github.com/rdkcentral/firebolt-apis/issues/134)) ([c5c31ee](https://github.com/rdkcentral/firebolt-apis/commit/c5c31ee3c744ec018a57232d2e7b1caf41158ed6))
+
+# [0.14.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.2...v0.14.0-next.3) (2023-06-16)
+
+
+### Bug Fixes
+
+* event links in capability toc ([31a8a85](https://github.com/rdkcentral/firebolt-apis/commit/31a8a85c0749ebfa872f2a158975697396ebdf8c))
+
+# [0.14.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.1...v0.14.0-next.2) (2023-06-16)
+
+
+### Bug Fixes
+
+* Add Capabilities ToC to github.io docs ([0d23136](https://github.com/rdkcentral/firebolt-apis/commit/0d23136bfa4976686795158bdfe179430598af9e))
+
+# [0.14.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.1-next.2...v0.14.0-next.1) (2023-06-15)
+
+
+### Features
+
+* Add an event when apps call signIn or signOut ([#133](https://github.com/rdkcentral/firebolt-apis/issues/133)) ([8ba2515](https://github.com/rdkcentral/firebolt-apis/commit/8ba2515948c433ccc38662f223f5fb399cf34841))
+
+## [0.13.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.1-next.1...v0.13.1-next.2) (2023-06-15)
+
+
+### Bug Fixes
+
+* Update path in publish docs ([9881383](https://github.com/rdkcentral/firebolt-apis/commit/98813833a074a6e25b012d2aac376377d8c5d5a9))
+
+## [0.13.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.0...v0.13.1-next.1) (2023-06-15)
+
+
+### Bug Fixes
+
+* **governance:** Add governance process docs ([a80ab53](https://github.com/rdkcentral/firebolt-apis/commit/a80ab53c5cdd914b5acbce1effbdb464475bed63))
+
 # [0.13.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0...v0.13.0) (2023-06-12)
 
 

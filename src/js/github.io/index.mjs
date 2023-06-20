@@ -87,24 +87,79 @@ packageJson.workspaces.forEach(async workspace => {
     writeFiles(docs)
 })
 
+const specification = await readJson(path.join('dist', 'firebolt-specification.json'))
+const openrpc = await readJson(path.join('dist', 'firebolt-open-rpc.json'))
+const corerpc = await readJson(path.join('dist', 'firebolt-core-open-rpc.json'))
+
+const capabilities = () => {
+    const getOrCreateCapMethodList = (capabilities, c) => capabilities[c] = capabilities[c] || { uses: [], manages: [], provides: [] }
+    const capabilities = {}
+    openrpc.methods.forEach(method => {
+        const caps = method.tags.find(t => t.name === "capabilities");
+        (caps['x-uses'] || []).forEach(c => {
+          getOrCreateCapMethodList(capabilities, c)
+          capabilities[c].uses.push(method.name)
+        });
+        (caps['x-manages'] || []).forEach(c => {
+          getOrCreateCapMethodList(capabilities, c)
+          capabilities[c].manages.push(method.name)
+        });
+        if (caps['x-provides']) {
+          const c = caps['x-provides']
+          getOrCreateCapMethodList(capabilities, c)
+          capabilities[caps['x-provides']].provides.push(method.name)
+        }
+    })
+
+    let manifest = '\n'
+    
+    const linkify = (method) => `[${method}](./${corerpc.methods.find(m => m.name === method) ? 'core' : 'manage'}/${method.split('.').shift()}/#${method.match(/\.on[A-Z]/) ? method.split('.').pop().charAt(2).toLowerCase() + method.split('.').pop().substring(3).toLowerCase() : method.split('.').pop().toLowerCase()})`
+    Object.keys(capabilities).sort().forEach(c => {
+        manifest += `## \`${c}\`\n`
+
+        if (capabilities[c].uses.length) {
+            manifest += '\n| Uses |\n'
+            manifest += '| ---- |\n'
+            manifest += `| ${capabilities[c].uses.map(linkify).join('<br/>')} |\n`
+            manifest += '\n\n'
+        }
+
+        if (capabilities[c].manages.length) {
+            manifest += '\n| Manages |\n'
+            manifest += '| ------- |\n'
+            manifest += `| ${capabilities[c].manages.map(linkify).join('<br/>')} |\n`
+            manifest += '\n\n'
+        }
+
+        if (capabilities[c].provides.length) {
+            manifest += '\n| Provides |\n'
+            manifest += '| -------- |\n'
+            manifest += `| ${capabilities[c].provides.map(linkify).join('<br/>')} |\n`
+            manifest += '\n\n'
+        }
+
+    })
+
+    return manifest
+}
+
 // This is the main README, and goes in a few places...
 console.log(`Will copy ${path.join('.', 'README.md')} to ${path.join(parsedArgs.output, 'apis', 'index.md')}`)
-const index = frontmatter(await readText(path.join('README.md')), null, null)
-writeText(path.join(parsedArgs.output, 'apis', 'index.md'), index)
+const index = frontmatter(await readText(path.join('README.md')), null, null) + capabilities()
+writeText(path.join(parsedArgs.output, 'apis', version, 'index.md'), index)
 if (version === 'latest') {
     console.log(`Will copy ${path.join('.', 'README.md')} to ${path.join(parsedArgs.output, packageJson.version, 'index.md')}`)
+    writeText(path.join(parsedArgs.output, 'apis', 'index.md'), index)
     writeText(path.join(parsedArgs.output, 'apis', packageJson.version, 'index.md'), index)
 }
 
 // this is the firebolt spec JSON
-const specification = await readJson(path.join('dist', 'firebolt-specification.json'))
 writeJson(path.join(parsedArgs.output, 'requirements', version, 'specifications', 'firebolt-specification.json'), specification)
 if (version === 'latest') {
     writeJson(path.join(parsedArgs.output, 'requirements', packageJson.version, 'specifications', 'firebolt-specification.json'), specification)
 }
 
 // this is the firebolt OpenRPC spec JSON
-const openrpc = await readJson(path.join('dist', 'firebolt-open-rpc.json'))
 writeJson(path.join(parsedArgs.output, 'requirements', version, 'specifications', 'firebolt-open-rpc.json'), openrpc)
 if (version === 'latest') {
     writeJson(path.join(parsedArgs.output, 'requirements', packageJson.version, 'specifications', 'firebolt-open-rpc.json'), openrpc)
