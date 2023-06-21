@@ -1,3 +1,10 @@
+# [0.14.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.4...v0.14.0-next.5) (2023-06-21)
+
+
+### Features
+
+* Change voice guidance limits to 0.5 and 2 ([#137](https://github.com/rdkcentral/firebolt-apis/issues/137)) ([b8f1944](https://github.com/rdkcentral/firebolt-apis/commit/b8f19449efd808639599b162aba61c08ec089c41))
+
 # [0.14.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.3...v0.14.0-next.4) (2023-06-16)
 
 
