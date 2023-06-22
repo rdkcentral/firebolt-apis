@@ -46,7 +46,6 @@
                         {
                             "name": "query",
                             "value": {
-                                "type": "all"
                             }
                         }
                     ],
@@ -115,7 +114,6 @@
                         {
                             "name": "volumes",
                             "value": {
-                                "type": "all"
                             }
                         }
                     ],
@@ -192,7 +190,6 @@
                         {
                             "name": "volumes",
                             "value": {
-                                "type": "all"
                             }
                         }
                     ],
@@ -269,7 +266,6 @@
                         {
                             "name": "volumes",
                             "value": {
-                                "type": "all"
                             }
                         }
                     ],
@@ -346,7 +342,6 @@
                         {
                             "name": "volumes",
                             "value": {
-                                "type": "all"
                             }
                         }
                     ],
@@ -459,7 +454,6 @@
                         {
                             "name": "volumes",
                             "value": {
-                                "type": "all"
                             }
                         }
                     ],
