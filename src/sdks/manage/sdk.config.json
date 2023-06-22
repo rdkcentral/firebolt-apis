@@ -89,7 +89,8 @@
         {
             "module": "Advertising",
             "manage": [
-                "xrn:firebolt:capability:advertising:configuration"
+                "xrn:firebolt:capability:advertising:configuration",
+                "xrn:firebolt:capability:advertising:identifier"
             ]
         },
         {
@@ -124,6 +125,12 @@
             "module": "SecureStorage",
             "manage": [
                 "xrn:firebolt:capability:storage:secure"
+            ]
+        },
+        {
+            "module": "Discovery",
+            "manage": [
+                "xrn:firebolt:capability:discovery:sign-in-status"
             ]
         }
     ]
