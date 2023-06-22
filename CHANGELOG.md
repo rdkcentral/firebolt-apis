@@ -1,3 +1,10 @@
+# [0.14.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.5...v0.14.0-next.6) (2023-06-22)
+
+
+### Bug Fixes
+
+* **Advertising:** put resetAdvertisingIdentifier back in manage sdk ([ce92ae7](https://github.com/rdkcentral/firebolt-apis/commit/ce92ae7bfff58fa1d3e4bee78c88d5edf0266473))
+
 # [0.14.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.4...v0.14.0-next.5) (2023-06-21)
 
 
