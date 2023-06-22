@@ -82,23 +82,44 @@ interface Channels {
     function 
 }
 
-// 
+// initiate a new scan and return the process
 const scan = Channels.scan();
 
-scan.onProgress(progress => {
-    console.log(progress.percent)
-    console.log(progress.data.count)
-});
+// get the current ScanResult (error if none active)
+const status = await Channels.status() // 'uninitiated' | 'scanning' | 'stopped' | 'complete'
 
-scan.onError(error => {
-    console.error(error)    
-})
+let scan, data
 
-scan.onComplete(data => {
-    console.log(data.count)
-    console.log(data.conflicts)
-    const resolutions = data.conflicts.map(c => ( { c.channel, c.ids.pop() }))
-    data.save(resolutions)
-})
+if (status.state === 'uninitiated') {
+    scan = Channels.scan();
+}
+else if (status.state === 'scanning') {
+    scan = Channels.getScan() // throws error if no active scan
+}
+else if (status.state === 'complete') {
+    doSomethingWithScanData(status)
+}
+
+if (scan) {
+
+    // display progress UI
+
+    scan.onProgress(progress => {
+        console.log(progress.percent)
+        console.log(progress.data.count)
+    });
+
+    scan.onError(error => {
+        console.error(error)    
+    })
+
+    scan.onComplete(data => {
+        doSomethingWithScanData(data)
+        console.log(data.count)
+    })
+}
+else {
+
+}
 
 ```

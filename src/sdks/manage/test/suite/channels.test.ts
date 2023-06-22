@@ -4,9 +4,21 @@ import { test, expect } from "@jest/globals";
 
 //TODO: rename ScanProgress -> ScanStatus
 //TODO: rename percent -> progress
+
 //TODO: add onStop() subscriber 
 //TODO: Maybe?? rename stop -> cancel in both temporal-set and progressive-update methods
 //TODO, probably want error or event for onStopped()
+// add stop scan
+
+Channels.scan()
+Channels.status()
+Channels.stopScan()
+
+Channels.listen('start', 'complete', 'stop', 'error', 'progress')
+
+Channels.listen('progressUpdate', ()=>{
+    // show updates
+})
 
 const worker = new Promise( (resolve, reject) => {
     const process:Channels.ScanProcess = Channels.scan()
@@ -15,6 +27,11 @@ const worker = new Promise( (resolve, reject) => {
     let updates = 0
     let increasing = true
     let error
+
+    process.onStop( (status:Channels.ScanStatus) => {
+        status.progress
+        status.data.count
+    })
 
     process.onProgress((status:Channels.ScanStatus) => {
         console.dir(status)
