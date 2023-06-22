@@ -1,3 +1,21 @@
+# [0.13.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0...v0.13.0) (2023-06-09)
+
+### Bug Fixes
+
+* Point to `firebolt-openrpc` 2.0.1 ([c57cb21](https://github.com/rdkcentral/firebolt-apis/commit/c57cb218343fd058e2e6e676d52d9d0c904ad9a8))
+
+### Features
+
+* Add SecureStorage.clear method. ([#127](https://github.com/rdkcentral/firebolt-apis/issues/127)) ([4422c79](https://github.com/rdkcentral/firebolt-apis/commit/4422c79122fc35e7b35180254be52bf33c64ab5b))
+
+
+# [0.12.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.11.0...v0.12.0) (2023-05-18)
+
+### Bug Fixes
+
+* The `title` and `identifiers` parameters are now required for `Discovery.watchNext()` ([#124](https://github.com/rdkcentral/firebolt-core-sdk/issues/124)) ([96d7b2b](https://github.com/rdkcentral/firebolt-core-sdk/commit/96d7b2bb7464d6044346440d37feecba9dbc7899))
+* Fixed handling of context parameters for `Capabilities.listen()`.
+
 # [0.11.0](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0...v0.11.0) (2023-05-01)
 
 

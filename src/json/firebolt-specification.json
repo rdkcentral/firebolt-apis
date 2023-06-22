@@ -54,12 +54,6 @@
     "xrn:firebolt:capability:advertising:configuration": {
       "level": "could"
     },
-    "xrn:firebolt:capability:accessory:pair": {
-      "level": "could"
-    },
-    "xrn:firebolt:capability:accessory:list": {
-      "level": "should"
-    },
     "xrn:firebolt:capability:account:id": {
       "level": "could"
     },
@@ -152,6 +146,9 @@
         "public": false,
         "negotiable": false
       }
+    },
+    "xrn:firebolt:capability:privacy:advertising": {
+      "level": "could"
     }
   },
   "apis": {}

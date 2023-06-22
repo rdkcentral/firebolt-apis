@@ -629,14 +629,16 @@
           "summary": "The title of this call to action",
           "schema": {
             "$ref": "https://meta.comcast.com/firebolt/types#/definitions/LocalizedString"
-          }
+          },
+          "required": true
         },
         {
           "name": "identifiers",
           "summary": "A set of content identifiers for this call to action",
           "schema": {
             "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ContentIdentifiers"
-          }
+          },
+          "required": true
         },
         {
           "name": "expires",
@@ -694,6 +696,25 @@
                 "16x9": {
                   "en": "https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg"
                 }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Suggest a watch-next tile for the home screen",
+          "params": [
+            {
+              "name": "title",
+              "value": "A Fantastic Show"
+            },
+            {
+              "name": "identifiers",
+              "value": {
+                "entityId": "partner.com/entity/456"
               }
             }
           ],
@@ -1359,6 +1380,90 @@
           "result": {
             "name": "success",
             "value": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "onSignIn",
+      "tags": [
+        {
+          "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:discovery:sign-in-status"
+          ]
+        }
+      ],
+      "summary": "Listen to events from all apps that call Discovery.signIn",
+      "params": [],
+      "result": {
+        "name": "event",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "appId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "appId"
+          ]
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Event",
+            "value": {
+              "appId": "firecert"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onSignOut",
+      "tags": [
+        {
+          "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:discovery:sign-in-status"
+          ]
+        }
+      ],
+      "summary": "Listen to events from all apps that call Discovery.signOut",
+      "params": [],
+      "result": {
+        "name": "event",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "appId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "appId"
+          ]
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Event",
+            "value": {
+              "appId": "firecert"
+            }
           }
         }
       ]

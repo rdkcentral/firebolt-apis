@@ -1,6 +1,6 @@
 {
 	"name": "@firebolt-js/sdk",
-	"version": "0.11.0",
+	"version": "0.14.0-next.5",
 	"description": "The Firebolt JS SDK",
 	"main": "./dist/lib/firebolt.mjs",
 	"types": "./dist/lib/firebolt.d.ts",
@@ -25,18 +25,18 @@
 		"test:setup": "rm -rf test/transpiled-suite && npx tsc --target es6 --moduleResolution node --outDir test/transpiled-suite",
 		"test": "npm run test:setup && NODE_OPTIONS=--experimental-vm-modules npx --config=jest.config.json --detectOpenHandles jest",
 		"prepack": "node ../../js/version.mjs validate && npm run broilerplate",
-		"broilerplate": "rm ./CHANGELOG.md && cp ../../../CHANGELOG.md ./CHANGELOG.md && rm ./CONTRIBUTING.md && cp ../../../CONTRIBUTING.md ./CONTRIBUTING.md && rm ./LICENSE && cp ../../../LICENSE ./LICENSE && rm ./NOTICE && cp ../../../NOTICE ./NOTICE"
+		"broilerplate": "rm ./CONTRIBUTING.md && cp ../../../CONTRIBUTING.md ./CONTRIBUTING.md && rm ./LICENSE && cp ../../../LICENSE ./LICENSE && rm ./NOTICE && cp ../../../NOTICE ./NOTICE"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/rdkcentral/firebolt-core-sdk",
+		"url": "git+https://github.com/rdkcentral/firebolt-apis",
 		"directory": "src/sdks/core"
 	},
 	"author": "",
 	"bugs": {
-		"url": "https://github.com/rdkcentral/firebolt-core-sdk/issues"
+		"url": "https://github.com/rdkcentral/firebolt-apis/issues"
 	},
-	"homepage": "https://github.com/rdkcentral/firebolt-core-sdk#readme",
+	"homepage": "https://github.com/rdkcentral/firebolt-apis#readme",
 	"devDependencies": {
 		"jest": "^28.1.0",
 		"jest-environment-jsdom": "^28.1.3",

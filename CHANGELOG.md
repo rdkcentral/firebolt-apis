@@ -1,3 +1,287 @@
+# [0.14.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.4...v0.14.0-next.5) (2023-06-21)
+
+
+### Features
+
+* Change voice guidance limits to 0.5 and 2 ([#137](https://github.com/rdkcentral/firebolt-apis/issues/137)) ([b8f1944](https://github.com/rdkcentral/firebolt-apis/commit/b8f19449efd808639599b162aba61c08ec089c41))
+
+# [0.14.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.3...v0.14.0-next.4) (2023-06-16)
+
+
+### Features
+
+* Allow granted in capability.info and capability.granted to be null ([#134](https://github.com/rdkcentral/firebolt-apis/issues/134)) ([c5c31ee](https://github.com/rdkcentral/firebolt-apis/commit/c5c31ee3c744ec018a57232d2e7b1caf41158ed6))
+
+# [0.14.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.2...v0.14.0-next.3) (2023-06-16)
+
+
+### Bug Fixes
+
+* event links in capability toc ([31a8a85](https://github.com/rdkcentral/firebolt-apis/commit/31a8a85c0749ebfa872f2a158975697396ebdf8c))
+
+# [0.14.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.1...v0.14.0-next.2) (2023-06-16)
+
+
+### Bug Fixes
+
+* Add Capabilities ToC to github.io docs ([0d23136](https://github.com/rdkcentral/firebolt-apis/commit/0d23136bfa4976686795158bdfe179430598af9e))
+
+# [0.14.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.1-next.2...v0.14.0-next.1) (2023-06-15)
+
+
+### Features
+
+* Add an event when apps call signIn or signOut ([#133](https://github.com/rdkcentral/firebolt-apis/issues/133)) ([8ba2515](https://github.com/rdkcentral/firebolt-apis/commit/8ba2515948c433ccc38662f223f5fb399cf34841))
+
+## [0.13.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.1-next.1...v0.13.1-next.2) (2023-06-15)
+
+
+### Bug Fixes
+
+* Update path in publish docs ([9881383](https://github.com/rdkcentral/firebolt-apis/commit/98813833a074a6e25b012d2aac376377d8c5d5a9))
+
+## [0.13.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.0...v0.13.1-next.1) (2023-06-15)
+
+
+### Bug Fixes
+
+* **governance:** Add governance process docs ([a80ab53](https://github.com/rdkcentral/firebolt-apis/commit/a80ab53c5cdd914b5acbce1effbdb464475bed63))
+
+# [0.13.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0...v0.13.0) (2023-06-12)
+
+
+### Bug Fixes
+
+* Grant providers should allow null responses for deferred challenges ([#128](https://github.com/rdkcentral/firebolt-apis/issues/128)) ([0ddd11a](https://github.com/rdkcentral/firebolt-apis/commit/0ddd11af282aed85112fb739993ae58cfc1c4910))
+* SDK Release Notes ([cf1089f](https://github.com/rdkcentral/firebolt-apis/commit/cf1089f77fbccdf998d4bc810528b7056932f0bb))
+
+
+### Features
+
+* Manage-SDK, removeForApp, clear and clearForApp for secure storage ([#127](https://github.com/rdkcentral/firebolt-apis/issues/127)) ([4422c79](https://github.com/rdkcentral/firebolt-apis/commit/4422c79122fc35e7b35180254be52bf33c64ab5b))
+
+# [0.13.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.0-next.1...v0.13.0-next.2) (2023-06-09)
+
+
+### Bug Fixes
+
+* SDK Release Notes ([cf1089f](https://github.com/rdkcentral/firebolt-apis/commit/cf1089f77fbccdf998d4bc810528b7056932f0bb))
+
+# [0.13.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0...v0.13.0-next.1) (2023-06-09)
+
+
+### Bug Fixes
+
+* Grant providers should allow null responses for deferred challenges ([#128](https://github.com/rdkcentral/firebolt-apis/issues/128)) ([0ddd11a](https://github.com/rdkcentral/firebolt-apis/commit/0ddd11af282aed85112fb739993ae58cfc1c4910))
+
+
+### Features
+
+* Manage-SDK, removeForApp, clear and clearForApp for secure storage ([#127](https://github.com/rdkcentral/firebolt-apis/issues/127)) ([4422c79](https://github.com/rdkcentral/firebolt-apis/commit/4422c79122fc35e7b35180254be52bf33c64ab5b))
+
+# [0.12.0-next.18](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.17...v0.12.0-next.18) (2023-06-07)
+
+
+### Features
+
+* Manage-SDK, removeForApp, clear and clearForApp for secure storage ([#127](https://github.com/rdkcentral/firebolt-apis/issues/127)) ([4422c79](https://github.com/rdkcentral/firebolt-apis/commit/4422c79122fc35e7b35180254be52bf33c64ab5b))
+
+# [0.12.0-next.17](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.16...v0.12.0-next.17) (2023-06-02)
+
+
+### Bug Fixes
+
+* Grant providers should allow null responses for deferred challenges ([#128](https://github.com/rdkcentral/firebolt-apis/issues/128)) ([0ddd11a](https://github.com/rdkcentral/firebolt-apis/commit/0ddd11af282aed85112fb739993ae58cfc1c4910))
+
+# [0.12.0-next.16](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.15...v0.12.0-next.16) (2023-05-19)
+
+
+### Bug Fixes
+
+* Point to `firebolt-openrpc` 2.0.1 ([c57cb21](https://github.com/rdkcentral/firebolt-apis/commit/c57cb218343fd058e2e6e676d52d9d0c904ad9a8))
+
+# [0.12.0-next.15](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.14...v0.12.0-next.15) (2023-05-19)
+
+
+### Bug Fixes
+
+* Added Changelog note about accessory removal ([02e81c0](https://github.com/rdkcentral/firebolt-apis/commit/02e81c0f0233862e2d2386989943a840eddc5b6a))
+
+# [0.12.0-next.14](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.13...v0.12.0-next.14) (2023-05-18)
+
+
+### Bug Fixes
+
+* Newline in changelog frontmatter ([cc35849](https://github.com/rdkcentral/firebolt-apis/commit/cc358490eafd0cfcdd6e622455f0174a9f43d046))
+
+# [0.12.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.12...v0.12.0-next.13) (2023-05-18)
+
+
+### Bug Fixes
+
+* Removed old logic to copy main CHANGELOG into each SDK ([f384972](https://github.com/rdkcentral/firebolt-apis/commit/f3849727bbb378871455c4f287763fda8dfc815b))
+
+# [0.12.0-next.12](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.11...v0.12.0-next.12) (2023-05-18)
+
+
+### Bug Fixes
+
+* typo ([650e53c](https://github.com/rdkcentral/firebolt-apis/commit/650e53c19bfd433eb290c929f8f2f85f90772266))
+
+# [0.12.0-next.11](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.10...v0.12.0-next.11) (2023-05-18)
+
+
+### Bug Fixes
+
+* More logs ([afb9fb2](https://github.com/rdkcentral/firebolt-apis/commit/afb9fb260ef41984f6b9472ee5f641f4c1c64ad8))
+
+# [0.12.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.9...v0.12.0-next.10) (2023-05-18)
+
+
+### Bug Fixes
+
+* Adding better CI logging ([5fab187](https://github.com/rdkcentral/firebolt-apis/commit/5fab18757885d8be870d862867e3385bdfd93356))
+
+# [0.12.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.8...v0.12.0-next.9) (2023-05-18)
+
+
+### Bug Fixes
+
+* Readmes ([092ce31](https://github.com/rdkcentral/firebolt-apis/commit/092ce3163f3f3749b8aa1acc551126152e99c363))
+
+# [0.12.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.7...v0.12.0-next.8) (2023-05-18)
+
+
+### Bug Fixes
+
+* Move release channel env into separate step ([2b86918](https://github.com/rdkcentral/firebolt-apis/commit/2b8691883bbdddb88672e00459608fe6296e7934))
+
+# [0.12.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.6...v0.12.0-next.7) (2023-05-18)
+
+
+### Bug Fixes
+
+* **CI:** Log various env variables for debuggability ([b8b65a7](https://github.com/rdkcentral/firebolt-apis/commit/b8b65a7a4808c83001ebde56bcbef7ee32f3ffbf))
+* typo ([dfeebab](https://github.com/rdkcentral/firebolt-apis/commit/dfeebabe42fdf4a4692c0414b8cde268d66a4b24))
+
+# [0.12.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v0.12.0-next.5...v0.12.0-next.6) (2023-05-18)
+
+
+### Bug Fixes
+
+* Update package.json repository URL ([568df4d](https://github.com/rdkcentral/firebolt-apis/commit/568df4d4e9e840f9c9d15553fd95d9d430cc4f30))
+
+# [0.12.0-main-ci-test.10](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.9...v0.12.0-main-ci-test.10) (2023-05-18)
+
+
+
+### Bug Fixes
+
+* Adding additional docs ([c915b94](https://github.com/rdkcentral/firebolt-core-sdk/commit/c915b9451048fd7b31268b83efb3bc1a577243c6))
+
+# [0.12.0-main-ci-test.9](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.8...v0.12.0-main-ci-test.9) (2023-05-18)
+
+
+### Bug Fixes
+
+* Testing different auth method ([9ad896c](https://github.com/rdkcentral/firebolt-core-sdk/commit/9ad896ce2edc3cefe79dec1eb5ab2271814ebd18))
+
+# [0.12.0-main-ci-test.8](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.7...v0.12.0-main-ci-test.8) (2023-05-18)
+
+
+### Bug Fixes
+
+* trigger CI docs push ([0ea7c9c](https://github.com/rdkcentral/firebolt-core-sdk/commit/0ea7c9c5086dfd546ca1e247ffa90944a8b99c4d))
+
+# [0.12.0-main-ci-test.7](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.6...v0.12.0-main-ci-test.7) (2023-05-17)
+
+
+### Bug Fixes
+
+* cd into cloned dir before changing URL ([db3e584](https://github.com/rdkcentral/firebolt-core-sdk/commit/db3e584f3fef1828fd5be67f5664d7ea5504607e))
+
+# [0.12.0-main-ci-test.6](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.5...v0.12.0-main-ci-test.6) (2023-05-17)
+
+### Bug Fixes
+
+* Trigger docs ([595eec1](https://github.com/rdkcentral/firebolt-core-sdk/commit/595eec18ca036ad090e2f7eed0f08b29635b4ca0))
+
+# [0.12.0-main-ci-test.5](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.4...v0.12.0-main-ci-test.5) (2023-05-17)
+
+### Bug Fixes
+
+* Use git@github.com clone syntax ([e2cb217](https://github.com/rdkcentral/firebolt-core-sdk/commit/e2cb217212d1892121006c8e73845a9b23d9f15b))
+
+# [0.12.0-main-ci-test.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.3...v0.12.0-main-ci-test.4) (2023-05-17)
+
+
+### Bug Fixes
+
+* add new files when commiting docs [skip ci] ([bb1ffd8](https://github.com/rdkcentral/firebolt-core-sdk/commit/bb1ffd84f81d7bfa98369b4a2210f3c18c334aab))
+
+# [0.12.0-main-ci-test.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.2...v0.12.0-main-ci-test.3) (2023-05-17)
+
+
+### Bug Fixes
+
+* adding name/email to docs commit ([9f0b1cb](https://github.com/rdkcentral/firebolt-core-sdk/commit/9f0b1cbd3ece06c3a9fdc73193ed1f5bf3458a76))
+
+# [0.12.0-main-ci-test.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-main-ci-test.1...v0.12.0-main-ci-test.2) (2023-05-17)
+
+
+### Bug Fixes
+
+* imports relative to node_modules, not local filesystem ([a1b07ad](https://github.com/rdkcentral/firebolt-core-sdk/commit/a1b07ad99c9b32c766c47c3a26d0fd91b44d9724))
+
+# [0.12.0-main-ci-test.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0...v0.12.0-main-ci-test.1) (2023-05-17)
+
+
+### Bug Fixes
+
+* **Accessory:** Removing extra accessory capabilities ([7a00971](https://github.com/rdkcentral/firebolt-core-sdk/commit/7a009718702a6b5250f0a3e9160bc25d6e91fb93))
+* **advertising:** Use correct capability for resetIdentifier ([47e730c](https://github.com/rdkcentral/firebolt-core-sdk/commit/47e730c4572ca2b8b9fdc3b2062121ef802914aa))
+* Cleaned up some docs ([1067826](https://github.com/rdkcentral/firebolt-core-sdk/commit/1067826c9e65b735afe479aeb84fb7b7a2bd988d))
+* **fake:** Fake change to test semantic-release ([2c209cd](https://github.com/rdkcentral/firebolt-core-sdk/commit/2c209cd6a8a7ce7a8b52edb985eb7e3e101eeda4))
+
+
+### Features
+
+* **Advertising:** Add the skipRestriction API and include in Manage SDK ([#122](https://github.com/rdkcentral/firebolt-core-sdk/issues/122)) ([da9d75f](https://github.com/rdkcentral/firebolt-core-sdk/commit/da9d75f8c29bf04674e3de692874888796665a9a))
+* Make title and identifier fields required for watchNext ([#124](https://github.com/rdkcentral/firebolt-core-sdk/issues/124)) ([96d7b2b](https://github.com/rdkcentral/firebolt-core-sdk/commit/96d7b2bb7464d6044346440d37feecba9dbc7899))
+
+# [0.12.0-next.4](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.3...v0.12.0-next.4) (2023-05-17)
+
+
+### Bug Fixes
+
+* **advertising:** Use correct capability for resetIdentifier ([47e730c](https://github.com/rdkcentral/firebolt-core-sdk/commit/47e730c4572ca2b8b9fdc3b2062121ef802914aa))
+
+# [0.12.0-next.3](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.2...v0.12.0-next.3) (2023-05-11)
+
+
+### Features
+
+* **Advertising:** Add the skipRestriction API and include in Manage SDK ([#122](https://github.com/rdkcentral/firebolt-core-sdk/issues/122)) ([da9d75f](https://github.com/rdkcentral/firebolt-core-sdk/commit/da9d75f8c29bf04674e3de692874888796665a9a))
+
+# [0.12.0-next.2](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.12.0-next.1...v0.12.0-next.2) (2023-05-05)
+
+
+### Bug Fixes
+
+* **Accessory:** Removing extra accessory capabilities ([7a00971](https://github.com/rdkcentral/firebolt-core-sdk/commit/7a009718702a6b5250f0a3e9160bc25d6e91fb93))
+
+
+### Reverts
+
+* Revert "feat: Add capabilities for protocol and types of accessories (#114)" ([0d9b1c9](https://github.com/rdkcentral/firebolt-core-sdk/commit/0d9b1c92f0f5949c6771712c9cad4c8b2cde5e09)), closes [#114](https://github.com/rdkcentral/firebolt-core-sdk/issues/114)
+
+# [0.12.0-next.1](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.11.0...v0.12.0-next.1) (2023-05-04)
+
+
+### Features
+
+* Add capabilities for protocol and types of accessories ([#114](https://github.com/rdkcentral/firebolt-core-sdk/issues/114)) ([7bd4114](https://github.com/rdkcentral/firebolt-core-sdk/commit/7bd41146cc6b6146d5e60b57cbbcc9e80497b50b))
+
 # [0.11.0](https://github.com/rdkcentral/firebolt-core-sdk/compare/v0.10.0...v0.11.0) (2023-05-01)
 
 

@@ -108,6 +108,46 @@
       ]
     },
     {
+      "name": "skipRestriction",
+      "summary": "Set the value for AdPolicy.skipRestriction",
+      "tags": [
+        {
+          "name": "property"
+        },
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:advertising:configuration"
+          ]
+        }
+      ],
+      "params": [],
+      "result": {
+        "name": "result",
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/advertising#/definitions/SkipRestriction"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "result",
+            "value": "none"
+          }
+        },
+        {
+          "name": "Additional Example",
+          "params": [],
+          "result": {
+            "name": "result",
+            "value": "all"
+          }
+        }        
+      ]
+    },
+    {
       "name": "advertisingId",
       "tags": [
         {
@@ -222,7 +262,7 @@
         {
           "name": "capabilities",
           "x-manages": [
-            "xrn:firebolt:capability:advertising:configuration"
+            "xrn:firebolt:capability:advertising:identifier"
           ]
         }
       ],

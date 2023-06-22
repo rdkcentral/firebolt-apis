@@ -34,7 +34,7 @@ test("policy()", () => {
 });
 
 test("policy(subscriber)", () => {
-  return Discovery.policy((policy: Discovery.DiscoveryPolicy) => {}).then(
+  return Discovery.policy((policy: Discovery.DiscoveryPolicy) => { }).then(
     (res: number) => {
       expect(res).toBe(1);
     }
@@ -58,8 +58,8 @@ test("entityInfo(EntityInfoResult)", () => {
   });
 });
 
-test("watchNext(title?: LocalizedString, identifiers?: ContentIdentifiers, expires?: string, images?: object)", () => {
-  return Discovery.watchNext("abc").then((success: boolean) => {
+test("watchNext(title?: LocalizedString, identifiers: ContentIdentifiers, expires?: string, images?: object)", () => {
+  return Discovery.watchNext("abc", { entityId: "partner.com/entity/123" }).then((success: boolean) => {
     expect(success).toBe(true);
   });
 });
@@ -123,25 +123,25 @@ test("purchasedContent()", () => {
 });
 
 test("listen() navigateTo event.", () => {
-  return Discovery.listen("navigateTo", () => {}).then((res: number) => {
+  return Discovery.listen("navigateTo", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() navigateTo event.", () => {
-  return Discovery.once("navigateTo", () => {}).then((res: number) => {
+  return Discovery.once("navigateTo", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() policyChanged event.", () => {
-  return Discovery.listen("policyChanged", () => {}).then((res: number) => {
+  return Discovery.listen("policyChanged", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() policyChanged event.", () => {
-  return Discovery.once("policyChanged", () => {}).then((res: number) => {
+  return Discovery.once("policyChanged", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });

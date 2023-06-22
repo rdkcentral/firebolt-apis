@@ -7,13 +7,6 @@
     },
     "methods": [
         {
-            "module": "Accessory",
-            "use": [
-                "xrn:firebolt:capability:accessory:pair",
-                "xrn:firebolt:capability:accessory:list"
-            ]
-        },
-        {
             "module": "Localization",
             "use": [
                 "xrn:firebolt:capability:localization:locality",
@@ -125,6 +118,18 @@
             "module": "PinChallenge",
             "provide": [
                 "xrn:firebolt:capability:usergrant:pinchallenge"
+            ]
+        },
+        {
+            "module": "SecureStorage",
+            "manage": [
+                "xrn:firebolt:capability:storage:secure"
+            ]
+        },
+        {
+            "module": "Discovery",
+            "manage": [
+                "xrn:firebolt:capability:discovery:sign-in-status"
             ]
         }
     ]
