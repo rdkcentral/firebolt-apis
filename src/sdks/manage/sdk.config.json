@@ -89,7 +89,8 @@
         {
             "module": "Advertising",
             "manage": [
-                "xrn:firebolt:capability:advertising:configuration"
+                "xrn:firebolt:capability:advertising:configuration",
+                "xrn:firebolt:capability:advertising:identifier"
             ]
         },
         {
