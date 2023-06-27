@@ -1,8 +1,8 @@
 # Requirements Governance
-This document outlines the governance model for the Firebolt&reg; Open-Source Project, including the structure of an Advisory Committee and Working Groups, as well as the process used to codify Requirements Specifications and Architectural Decision Records.
+This document outlines the governance model for the Firebolt&reg; Open-Source Project, including the structure of an Advisory Board and Working Groups, as well as the process used to codify Requirements Specifications and Architectural Decision Records.
 
 ## 1. Overview
-The Firebolt Open-Source Project is governed by an Advisory Committee that creates and delegates work to Working Groups, which then create proposals for Requirements Specifications and Architectural Decision Records.
+The Firebolt Open-Source Project is governed by an Advisory Board that creates and delegates work to Working Groups, which then create proposals for Requirements Specifications and Architectural Decision Records.
 
 ![Governance Structure](./images/governance/structure.png)
 
@@ -13,8 +13,8 @@ The Firebolt Open-Source Project is governed by an Advisory Committee that creat
 - [4. Governance](#4-governance)
   - [4.1. Scope](#41-scope)
   - [4.2. Firebolt Version](#42-firebolt-version)
-  - [4.3. Advisory Committee](#43-advisory-committee)
-  - [4.4. Advisory Committee Members](#44-advisory-committee-members)
+  - [4.3. Advisory Board](#43-advisory-board)
+  - [4.4. Advisory Board Members](#44-advisory-board-members)
   - [4.5. Working Group](#45-working-group)
   - [4.6. Requirements Specification](#46-requirements-specification)
   - [4.7. Architectural Decision Record](#47-architectural-decision-record)
@@ -53,9 +53,9 @@ While enabling Distributors to:
  - Negotiate access to features and APIs with each app
 
 ## 4. Governance
-The Firebolt Open-Source Project is governed by an Advisory Committee. The purpose of the Advisory Committee is to ensure that each major, minor, and patch version of the Firebolt Requirements is aligned with the goals of the Firebolt Open-Source Project.
+The Firebolt Open-Source Project is governed by an Advisory Board. The purpose of the Advisory Board is to ensure that each major, minor, and patch version of the Firebolt Requirements is aligned with the goals of the Firebolt Open-Source Project.
 
-The Firebolt Requirements are the collection of all Requirements Specifications and all Architectural Decision Records that are ratified by the Advisory Committee (and contained in this repository).
+The Firebolt Requirements are the collection of all Requirements Specifications and all Architectural Decision Records that are ratified by the Advisory Board (and contained in this repository).
 	
 ### 4.1. Scope
 This document describes the governance model for the following components:
@@ -69,12 +69,12 @@ A Firebolt Version is a snapshot of the Firebolt Requirements that has been rati
 
 Firebolt Versions **MUST** follow Semantic Versioning.
 
-### 4.3. Advisory Committee
-The Advisory Committee oversees all aspects of Firebolt Requirements Governance.
+### 4.3. Advisory Board
+The Advisory Board oversees all aspects of Firebolt Requirements Governance.
 
-Advisory Committee decisions should aim to be unanimous whenever possible, but in cases of deadlock, may be decided by simple majority.
+Advisory Board decisions should aim to be unanimous whenever possible, but in cases of deadlock, may be decided by simple majority.
 
-The Advisory Committee is responsible for:
+The Advisory Board is responsible for:
 
  - Prioritization of Working Groups needed
  - Creation of balanced Working Groups with relevant subject matter experts
@@ -84,19 +84,19 @@ The Advisory Committee is responsible for:
  - Determination of when to tag a new major version release of the Firebolt Requirements
  - Determination of when a sanctioned fork is warranted
 
-### 4.4. Advisory Committee Members
-The Firebolt Advisory Committee is currently being formed and will be published soon.
+### 4.4. Advisory Board Members
+The Firebolt Advisory Board is currently being formed and will be published soon.
 
-Contact the `rdkcentral/firebolt-apis` maintainer, [Jeremy LaCivita](https://github.com/jlacivita), to submit proposals to the Advisory Committee.
+Contact the `rdkcentral/firebolt-apis` maintainer, [Jeremy LaCivita](https://github.com/jlacivita), to submit proposals to the Advisory Board.
 
 ### 4.5. Working Group
-Working Groups build consensus on requirements for Firebolt features or architectural solutions. They should ideally be three to five individuals spanning technical and product experts. Further recommendations on working group composition are left to the Advisory Committee.
+Working Groups build consensus on requirements for Firebolt features or architectural solutions. They should ideally be three to five individuals spanning technical and product experts. Further recommendations on working group composition are left to the Advisory Board.
 
-As new features are prioritized, Working Groups should be formed to gather and document requirements for those features. Working groups may be self-forming or selected by the Advisory Committee, but all working groups must have their membership reviewed and approved by the committee to ensure that they are well balanced.
+As new features are prioritized, Working Groups should be formed to gather and document requirements for those features. Working groups may be self-forming or selected by the Advisory Board, but all working groups must have their membership reviewed and approved by the board to ensure that they are well balanced.
 
-The Advisory Committee **MAY** appoint a Working Group Chair or instruct the Working Group to select a chair amongst themselves.
+The Advisory Board **MAY** appoint a Working Group Chair or instruct the Working Group to select a chair amongst themselves.
 
-The Working Group Chair is responsible for driving consensus and reporting back to the Advisory Committee
+The Working Group Chair is responsible for driving consensus and reporting back to the Advisory Board
 
 ### 4.6. Requirements Specification
 A Requirements Specification includes all details necessary for multiple, disassociated teams to build a consistent implementation of a feature, including API signatures, validation, and functionality, as well as functional and behavioral requirements of the feature that are not directly exposed by an API.
@@ -114,7 +114,7 @@ Requirements Specification move through several [stages](#48-approval-stages) fr
 ### 4.7. Architectural Decision Record
 An Architectural Decision Record includes all details necessary to ensure that Firebolt Requirements are fulfilled with an architecturally sound design. This is often used in cases where listing out explicit requirements, e.g. performance or operational requirements, is not possible or realistic, e.g. Requiring use of a well-known open source component to fulfill some aspect of the platform, or requiring adherence to a high level modular breakdown of concerns to keep platform maintenance manageable.
 
-Since ADRs included in the Firebolt Requirements **MUST** be adhered to, not every architectural decision made in order to fulfill the Firebolt Requirements needs to have a formal ADR in the Firebolt Requirements repository. It is up to the Advisory Committee which ADRs warrent a formal inclusion in the Firebolt Requirements.
+Since ADRs included in the Firebolt Requirements **MUST** be adhered to, not every architectural decision made in order to fulfill the Firebolt Requirements needs to have a formal ADR in the Firebolt Requirements repository. It is up to the Advisory Board which ADRs warrent a formal inclusion in the Firebolt Requirements.
 
 ADRs move through the same [stages](#48-approval-stages) as Requirements Specifications.
 
@@ -162,7 +162,7 @@ Artifacts:
  - Previous Candidate Specification does not include changes until approved by W.G.
 
 #### 4.8.5. Proposed Specification
-A version of the requirements specification that is considered, by the Working Group, to be the final Candidate Specification, and has been submitted to the Advisory Committee for final approval. This version may be used for experimental implementations and final peer-review by the larger community.
+A version of the requirements specification that is considered, by the Working Group, to be the final Candidate Specification, and has been submitted to the Advisory Board for final approval. This version may be used for experimental implementations and final peer-review by the larger community.
 
 Artifacts:
 
@@ -205,21 +205,21 @@ Branches are merged based on the approval process:
 ### 4.11. Sanctioned Forks
 From time to time an organization with access to the Requirements Repository may want to spearhead a new feature without going through the formal approval process.
 
-In this case the member may submit a request to the Approval Committee for a sanctioned fork inside the Requirements Repository, so that research and development can be done on the feature.
+In this case the member may submit a request to the Approval Board for a sanctioned fork inside the Requirements Repository, so that research and development can be done on the feature.
 
-The Approval Committee **MAY** grant or deny the request for a sanctioned fork.
+The Approval Board **MAY** grant or deny the request for a sanctioned fork.
 
 After the R&D is complete, the forking organization **MUST** submit the resulting requirements to the formal process and work to have them approved.
 
 The organization requesting the fork **MUST** be willing to migrate to the approved APIs, which may be different than the API in the fork.
 
-The Advisory Committee, and selected Working Group, **SHOULD** be willing to avoid unnecessary changes to make migration as easy as possible, without sacrificing the integrity of the Firebolt Open-Source Project’s goals.
+The Advisory Board, and selected Working Group, **SHOULD** be willing to avoid unnecessary changes to make migration as easy as possible, without sacrificing the integrity of the Firebolt Open-Source Project’s goals.
 
 ### 4.12. Release Versions
-The Advisory Committee has ownership of when to do major, minor, and patch releases of the Firebolt Requirements.
+The Advisory Board has ownership of when to do major, minor, and patch releases of the Firebolt Requirements.
 
 Releases **MUST** follow Semantic Versioning.
 
-Approved changes are all housed in the next branch until the Advisory Committee decides that the next branch warrants an officially released version of the requirements.
+Approved changes are all housed in the next branch until the Advisory Board decides that the next branch warrants an officially released version of the requirements.
 
-If a feature that requires a major version increment, i.e. a breaking change, is proposed, the Advisory Committee may decide to keep it unapproved so that any features requiring a minor version change can be pushed through the process. Management of this is the responsibility of the Advisory Committee.
+If a feature that requires a major version increment, i.e. a breaking change, is proposed, the Advisory Board may decide to keep it unapproved so that any features requiring a minor version change can be pushed through the process. Management of this is the responsibility of the Advisory Board.
