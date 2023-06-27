@@ -1,3 +1,10 @@
+# [0.14.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.7...v0.14.0-next.8) (2023-06-27)
+
+
+### Bug Fixes
+
+* Rename Advisory "Committee" to "Board" ([#135](https://github.com/rdkcentral/firebolt-apis/issues/135)) ([ef410c4](https://github.com/rdkcentral/firebolt-apis/commit/ef410c43bbb32414c3aa1d11b43093565cc90edf))
+
 # [0.14.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.6...v0.14.0-next.7) (2023-06-22)
 
 
