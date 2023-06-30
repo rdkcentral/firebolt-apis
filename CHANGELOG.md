@@ -1,3 +1,25 @@
+# [0.14.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.7...v0.14.0-next.8) (2023-06-27)
+
+
+### Bug Fixes
+
+* Rename Advisory "Committee" to "Board" ([#135](https://github.com/rdkcentral/firebolt-apis/issues/135)) ([ef410c4](https://github.com/rdkcentral/firebolt-apis/commit/ef410c43bbb32414c3aa1d11b43093565cc90edf))
+
+# [0.14.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.6...v0.14.0-next.7) (2023-06-22)
+
+
+### Bug Fixes
+
+* Move to `firebolt-openrpc` 2.0.2 ([52fe2a7](https://github.com/rdkcentral/firebolt-apis/commit/52fe2a78b17f1e36ec854fedd52d136cfa60b4e2))
+* package-lock.json ([dd8025c](https://github.com/rdkcentral/firebolt-apis/commit/dd8025c637a5ae58ce2e0355b995d55feeab9713))
+
+# [0.14.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.5...v0.14.0-next.6) (2023-06-22)
+
+
+### Bug Fixes
+
+* **Advertising:** put resetAdvertisingIdentifier back in manage sdk ([ce92ae7](https://github.com/rdkcentral/firebolt-apis/commit/ce92ae7bfff58fa1d3e4bee78c88d5edf0266473))
+
 # [0.14.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.4...v0.14.0-next.5) (2023-06-21)
 
 
