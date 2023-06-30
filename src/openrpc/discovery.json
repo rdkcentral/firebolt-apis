@@ -1383,6 +1383,90 @@
           }
         }
       ]
+    },
+    {
+      "name": "onSignIn",
+      "tags": [
+        {
+          "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:discovery:sign-in-status"
+          ]
+        }
+      ],
+      "summary": "Listen to events from all apps that call Discovery.signIn",
+      "params": [],
+      "result": {
+        "name": "event",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "appId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "appId"
+          ]
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Event",
+            "value": {
+              "appId": "firecert"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onSignOut",
+      "tags": [
+        {
+          "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-manages": [
+            "xrn:firebolt:capability:discovery:sign-in-status"
+          ]
+        }
+      ],
+      "summary": "Listen to events from all apps that call Discovery.signOut",
+      "params": [],
+      "result": {
+        "name": "event",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "appId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "appId"
+          ]
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Event",
+            "value": {
+              "appId": "firecert"
+            }
+          }
+        }
+      ]
     }
   ],
   "components": {

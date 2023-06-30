@@ -231,7 +231,14 @@
                 "name": "granted",
                 "summary": "Whether or not app is granted to use the given capability and the role",
                 "schema": {
-                    "type": "boolean"
+                    "oneOf": [
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "const": null
+                        }
+                    ]
                 }
             },
             "examples": [
@@ -271,7 +278,7 @@
                     ],
                     "result": {
                         "name": "Default Result",
-                        "value": true
+                        "value": null
                     }
                 }
             ]
@@ -471,7 +478,7 @@
                                 "available": true,
                                 "use": {
                                     "permitted": true,
-                                    "granted": true
+                                    "granted": null
                                 },
                                 "manage": {
                                     "permitted": true,
