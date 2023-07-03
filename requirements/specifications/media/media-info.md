@@ -27,7 +27,7 @@ of the media in the app itself.
 
 To solve this, Firebolt APIs will be created to detect the formats and
 codecs currently being decoded by the [Media
-Pipeline](https://comcastcorp.sharepoint.com/:w:/r/sites/hqppa/Shared%20Documents/Global%20App%20Platform/Firebolt/Requirements/Core/Media/Media%20Pipeline%20Requirements.docx?d=wd7548d7c54fc443098a5dc6c0e63a4f9&csf=1&web=1&e=Sq9Ihj).
+Pipeline](./media-pipeline.md).
 
 ## 2. Table of Contents
 - [1. Overview](#1-overview)
@@ -43,8 +43,8 @@ Pipeline](https://comcastcorp.sharepoint.com/:w:/r/sites/hqppa/Shared%20Document
   - [3.4. Core SDK APIs](#34-core-sdk-apis)
   - [3.5. Manage SDK APIs](#35-manage-sdk-apis)
 - [4. Media Capabilities](#4-media-capabilities)
-    - [4.0.1. Dynamic Range](#401-dynamic-range)
-    - [4.0.2. Immersive Audio](#402-immersive-audio)
+  - [4.1. Dynamic Range](#41-dynamic-range)
+  - [4.2. Immersive Audio](#42-immersive-audio)
 
 ## 3. Media Info
 
@@ -63,13 +63,13 @@ returns the dynamic range profile, e.g., SDR, HDR, HDR10, etc., of the
 media currently playing. This API **MUST** return one of the following
 values:
 
--   `"sdr"`
+-   `"none"`
 -   `"hdr10"`
 -   `"hdr10plus"`
 -   `"dolbyVision"`
 -   `"slHdr1"`
--   `“hlg” `
--   `“invalid” (Android is using this)`
+-   `"hlg" `
+-   `"unknown"`
 
 The dynamicRangeProfile API **MUST** be a Firebolt `property:readonly`
 API, and have a corresponding `onDynamicRangeProfileChanged`
@@ -77,43 +77,33 @@ notification.
 
 The `MediaInfo` module **MUST** have an `isHDR` API that returns true if
 the value of `dynamicRangeProfile` is currently any of the values
-excluding `sdr`.
+excluding `none` and `unknown`.
 
 The `isHDR` API **MUST** be a Firebolt `property:readonly` API, and have
 a corresponding `onIsHDRChanged` notification.
 
 Use of the `dynamicRangeProfile` and `isHDR` APIs requires access to the
-`use` role of the `xrn:firebolt:capability:media-info:``hdr`
+`use` role of the `xrn:firebolt:capability:media-info:hdr`
 capability.
 
 #### 3.1.2. Video Codec
 
 The `MediaInfo` module **MUST** have a `videoCodec` API that returns the
-video codec, e.g., H.265, VP9, etc., of the [media currently in the
-media pipeline (I.e playing or paused).]{.mark} This API **MUST** return
+video codec, e.g., H.265, VP9, etc., of the media currently in the
+media pipeline (either playing or paused). This API **MUST** return
 one of the following values:
 
+-   `"av1"`
 -   `"h263"`
-
 -   `"h264"`
-
 -   `"h265"`
-
--   `"h265_10bit"`
-
 -   `"mpeg"`
-
 -   `"vp8"`
-
 -   `"vp9"`
-
 -   `"vp10"`
-
+-   `"vc1"`
 -   `"unknown"`
-
--   `“av1”`
-
--   `“vc1”`
+-   `"none"`
 
 The videoCodec API **MUST** be a Firebolt `property:readonly` API, and
 have a corresponding `onVideoCodecChanged` notification.
@@ -129,13 +119,10 @@ media currently playing. This API **MUST** return one of the following
 values:
 
 -   `"auro3d"`
-
 -   `"dolbyAtmos"`
-
 -   `"dtsx"`
-
 -   `"mpegh"`
-
+-   `"unknown"`
 -   `"none"`
 
 The audioProfile API **MUST** be a Firebolt `property:readonly` API, and
@@ -157,39 +144,25 @@ to the `use` role of the
 
 The `MediaInfo` module **MUST** have an `audioCodec` API that returns
 the audio codec, e.g., ac3, ac4, ogg, etc., of the media currently
-playing. This API **MUST** return one of the following values: [Can we
-cover all of Tonys use cases (I.e. showing dolby logo /
-<https://ccp.sys.comcast.net/browse/OTT-1851)> by using the codec? Pick
-this back up.]{.mark}
+playing. This API **MUST** return one of the following values:
 
 -   `"aac"`
-
 -   `"ac3"`
-
 -   `"ac3plus"`
-
 -   `"eac3"`
-
 -   `"ac4"`
-
 -   `"dts"`
-
 -   `"mpeg1"`
-
 -   `"mpeg2"`
-
 -   `"mpeg3"`
-
 -   `"mpeg4"`
-
 -   `"opus"`
-
 -   `"ogg"`
-
 -   `"trueHd"`
-
 -   `"wav"`
-
+-   `"unknown"`
+-   `"none"`
+  
 The audioCodec API **MUST** be a Firebolt `property:readonly` API, and
 have a corresponding `onAudioCodecChanged` notification.
 
@@ -204,15 +177,10 @@ being played by *any* app.
 The following APIs **MUST** exist:
 
 -   `dynamicRangeProfileForApp`
-
 -   `videoCodecForApp`
-
 -   `isHdrForApp`
-
 -   `audioProfileForApp`
-
 -   `audioCodecForApp`
-
 -   `isImmersiveAudioForApp`
 
 These APIs **MUST** all be Firebolt `property:readonly` APIs with the
@@ -230,7 +198,7 @@ capabilities required by the corresponding methods above, i.e.:
 | media-info:audio-codec   | audioCodec          | audioCodecForApp          |
 | media-info:audio-profile | isImmersiveAudio    | isImmersiveAudioForApp    |
 
-\*Capability names truncated for legibility
+*Capability names truncated for legibility
 
 ### 3.3. Media Info and the Media Pipeline
 
@@ -260,21 +228,17 @@ capable of.
 To facilitate this, the Device module will have similar methods that
 return all possible values supported on the device.
 
-#### 4.0.1. Dynamic Range
+### 4.1. Dynamic Range
 
 The `Device` module **MUST** have a `dynamicRangeProfiles` API that
 returns the dynamic range profiles, e.g., SDR, HDR, HDR10, etc., that
 are supported on the device. This API **MUST** return an array with one
 or more of the following values:
 
--   `"sdr"`
-
+-   `"none"`
 -   `"hdr10"`
-
 -   `"hdr10plus"`
-
 -   `"dolbyVision"`
-
 -   `"slHdr1"`
 
 The dynamicRangeProfiles API **MUST** be a Firebolt
@@ -285,7 +249,7 @@ role of the `xrn:firebolt:capability:device:info` capability.
 
 This method deprecates the `Device.hdr` API.
 
-#### 4.0.2. Immersive Audio
+### 4.2. Immersive Audio
 
 The `Device` module **MUST** have an `audioProfiles` API that returns
 the immersive (or not) audio profiles, e.g., Dolby Atmos, etc., that are
@@ -293,18 +257,14 @@ supported on the device. This API **MUST** return an array with one or
 more of the following values:
 
 -   `"auro3d"`
-
 -   `"dolbyAtmos"`
-
 -   `"dtsx"`
-
 -   `"mpegh"`
-
 -   `"none"`
 
 The audioProfiles API **MUST** be a Firebolt `property:immutable` API.
 
 Use of the `audioProfiles` API requires access to the `use` role of
-the `xrn:firebolt:capability:device:``info` capability.
+the `xrn:firebolt:capability:device:info` capability.
 
 This method deprecates the `Device.audio` API.
