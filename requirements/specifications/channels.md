@@ -67,28 +67,44 @@ Given an OpenRPC method tagged with `progressive-update`, e.g. `scan`, Firebolt 
 
 The formal OpenRPC result of any `progressive-update` method should re
 
+```c
+#include Channels.h
+
+Channels_scan()
+
+```
+
 ```typescript
 
 interface ScanProcess {
     function stop(): void;
-    function onProgress(callback: (progress) => void): void;
-    function onComplete(callback: (data) => void): void;
-    function onError(callback: (error) => void): void
+    function onProgress(callback: (progress: ScanProgress) => void): void;
+    function onComplete(callback: (data: ScanStatus) => void): void;
+    function onStop()callback: (data: ScanStatus)=> void): void;
+    function onError(callback: (error) => void): void;
 }
 
 interface Channels {
-    function scan(): ScanProcess; // scan for tunable channels, other stuff, meant to run in background.
-    function startScan(): ChannelProcess;        // thre's a difference? worry about it later. meant to drive a progres UI (progress, number for channels, etc.)
-    function 
+    function scan(): ScanProcess;
+    function status(): ScanStatus;
+    function getScan(): ScanProcess;
+    function get(...): Channel[] // need some queries here...
 }
 
 // initiate a new scan and return the process
 const scan = Channels.scan();
 
 // get the current ScanResult (error if none active)
-const status = await Channels.status() // 'uninitiated' | 'scanning' | 'stopped' | 'complete'
+const status = await Channels.status() // 
 
-let scan, data
+{
+    state; //'uninitiated' | 'scanning' | 'stopped' | 'complete'
+    count;
+}
+
+// example
+
+let scan: ScanProcess, data: ScanResult
 
 if (status.state === 'uninitiated') {
     scan = Channels.scan();
@@ -119,7 +135,7 @@ if (scan) {
     })
 }
 else {
-
+    doSomethingWithScanData(status)
 }
 
 ```
