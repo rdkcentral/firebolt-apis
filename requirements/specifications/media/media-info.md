@@ -337,3 +337,4 @@ the `xrn:firebolt:capability:device:info` capability.
 This method deprecates the `Device.audio` API.
 
 TODO: check if this needs to be mutable for STB devices (and TVs)
+TODO: get actual contract requirements for when to show dolby vision & dolby atmos badges
