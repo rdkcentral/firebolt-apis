@@ -1,0 +1,147 @@
+{
+    "$id": "https://meta.comcast.com/firebolt/accessibility",
+    "title": "Accessibility",
+    "anyOf": [
+        {
+            "$ref": "#/definitions/ClosedCaptionsStyles"
+        },
+        {
+            "$ref": "#/definitions/ClosedCaptionsSettings"
+        }
+    ],
+    "definitions": {
+        "FontFamily": {
+            "type": "string"
+        },
+        "FontSize": {
+            "type": "number",
+            "minimum": 0
+        },
+        "FontEdge": {
+            "type": "string"
+        },
+        "Color": {
+            "type": "string"
+        },
+        "Opacity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+        },
+        "HorizontalAlignment": {
+            "type": "string"
+        },
+        "VerticalAlignment": {
+            "type": "string"
+        },
+        "ClosedCaptionsStyles": {
+            "title": "ClosedCaptionsStyles",
+            "type": "object",
+            "description": "The default styles to use when displaying closed-captions",
+            "properties": {
+                "fontFamily": {
+                    "$ref": "#/definitions/FontFamily"
+                },
+                "fontSize": {
+                    "$ref": "#/definitions/FontSize"
+                },
+                "fontColor": {
+                    "$ref": "#/definitions/Color"
+                },
+                "fontEdge": {
+                    "$ref": "#/definitions/FontEdge"
+                },
+                "fontEdgeColor": {
+                    "$ref": "#/definitions/Color"
+                },
+                "fontOpacity": {
+                    "$ref": "#/definitions/Opacity"
+                },
+                "backgroundColor": {
+                    "$ref": "#/definitions/Color"
+                },
+                "backgroundOpacity": {
+                    "$ref": "#/definitions/Opacity"
+                },
+                "textAlign": {
+                    "$ref": "#/definitions/HorizontalAlignment"
+                },
+                "textAlignVertical": {
+                    "$ref": "#/definitions/VerticalAlignment"
+                },
+                "windowColor": {
+                    "$ref": "#/definitions/Color"
+                },
+                "windowOpacity": {
+                    "$ref": "#/definitions/Opacity"
+                }
+            }
+        },
+        "ClosedCaptionsSettings": {
+            "title": "ClosedCaptionsSettings",
+            "type": "object",
+            "required": [
+                "enabled",
+                "styles"
+            ],
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether or not closed-captions should be enabled by default"
+                },
+                "styles": {
+                    "$ref": "#/definitions/ClosedCaptionsStyles"
+                }
+            },
+            "examples": [
+                {
+                    "enabled": true,
+                    "styles": {
+                        "fontFamily": "Monospace sans-serif",
+                        "fontSize": 1,
+                        "fontColor": "#ffffff",
+                        "fontEdge": "none",
+                        "fontEdgeColor": "#7F7F7F",
+                        "fontOpacity": 100,
+                        "backgroundColor": "#000000",
+                        "backgroundOpacity": 100,
+                        "textAlign": "center",
+                        "textAlignVertical": "middle",
+                        "windowColor": "white",
+                        "windowOpacity": 50
+                    }
+                }
+            ]
+        },
+        "VoiceSpeed": {
+            "title": "VoiceSpeed",
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 2
+        },
+        "VoiceGuidanceSettings": {
+            "title": "VoiceGuidanceSettings",
+            "type": "object",
+            "required": [
+                "enabled",
+                "speed"
+            ],
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Whether or not voice guidance should be enabled by default"
+                },
+                "speed": {
+                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VoiceSpeed",
+                    "description": "The speed at which voice guidance speech will be read back to the user"
+                }
+            },
+            "examples": [
+                {
+                    "enabled": true,
+                    "speed": 2
+                }
+            ]
+        }
+    }
+}
