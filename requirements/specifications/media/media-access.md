@@ -56,17 +56,15 @@ new `MediaFile` Volumes are available.
 The following APIs are used to return a list of `MediaFile` objects:
 
 -   `MediaAccess.audio()`
-
 -   `MediaAccess.images()`
-
 -   `MediaAccess.video()`
-
 -   `MediaAccess.media()`
-
 -   `MediaAccess.files()`
 
 These APIs **MUST** support an optional `volume` parameter of type
 `Volume`.
+
+TODO: Add capability strings
 
 If `volume` is provided, then these APIs **MUST** return all *matching*
 (see below) `MediaFile` objects on user-granted volumes that match the
@@ -156,14 +154,14 @@ The default Firebolt `GrantPolicy` **MUST** be:
 
 ```json
 {
-    scope: "app",
-    lifespan: "forever",
-    overridable: true,
-    options: [
+    "scope": "app",
+    "lifespan": "forever",
+    "overridable": true,
+    "options": [
         {
-            steps: [
+            "steps": [
                 {
-                    capability: "xrn:firebolt:capability:usergrant:acknowledge",
+                    "capability": "xrn:firebolt:capability:usergrant:acknowledge",
                 }
             ]
         }
@@ -251,12 +249,19 @@ The following APIs are added to the Core SDK.
 
 #### 3.5.1. Volumes
 
-The `volumes` method can be called in one of three ways.
+The `volumes` method can be called in one of four ways.
+
+```typescript
+function volumes(): Promise<Volume[]>
+```
+
 
 The get the currently cached list of Volumes w/out scanning call the
 method with just a `query` parameter:
 
-function volumes(query: Volume): Promise\<Volume[]\>
+```typescript
+function volumes(query: Volume): Promise<Volume[]>
+```
 
 This returns the Volumes that the device is aware or, that match the
 query, without checking if there are any new volumes.
@@ -265,15 +270,19 @@ To find the first volume that matches a query, pass in a `query` and a
 `timeout`, in milliseconds, representing how long the app is willing to
 wait.
 
+```typescript
 function volumes(query: Volume, timeout: number): Promise\<Volume\>
+```
 
 This returns a `Volume` object if a match is found before the `timeout`.
 
 To initiate a live temporal set that updates continuously, call the
 method with a `query`, an `add` callback and a `remove` callback:
 
-function volumes(query: Volume, add: (item: Volume) =\> void, remove:
-(item: Volume) =\> void): VolumeProcess
+```typescript
+function volumes(query: Volume, add: (item: Volume) => void, remove:
+(item: Volume) => void): VolumeProcess
+```
 
 This will initiate an open-ended scan for volumes matching the query and
 call the callbacks when a device becomes available or unavailable.
@@ -287,20 +296,22 @@ session.
 These APIs return all the files that match the associated capability,
 and the Volume query parameter:
 
+```typescript
 function audio(volumes?: Volume, files?: MediaFile):
-Promise\<MediaFile[]\>
+Promise<MediaFile[]>
 
 function video(volumes?: Volume, files?: MediaFile):
-Promise\<MediaFile[]\>
+Promise<MediaFile[]>
 
 function images(volumes?: Volume, files?: MediaFile):
-Promise\<MediaFile[]\>
+Promise<MediaFile[]>
 
 function media(volumes?: Volume, files?: MediaFile):
-Promise\<MediaFile[]\>
+Promise<MediaFile[]>
 
 function files(volumes?: Volume, files?: MediaFile):
-Promise\<MediaFile[]\>
+Promise<MediaFile[]>
+```
 
 The `volumes` and `files` parameters can be sparsely populated, e.g.
 passing in `{ type: "usb" }` to the `audio` method would return
@@ -336,5 +347,4 @@ MediaFiles.
 An enumeration of strings representing possible Volume types:
 
 -   `'usb'`
-
 -   `'local'`
