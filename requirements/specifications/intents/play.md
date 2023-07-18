@@ -19,10 +19,10 @@ The existing Firebolt `playback` intent does not meet these requirements. This d
 - [1. Overview](#1-overview)
 - [2. Table of Contents](#2-table-of-contents)
 - [3. Play Intent](#3-play-intent)
-- [4. Play Options](#4-play-options)
-  - [4.1. Play Options for Entity](#41-play-options-for-entity)
-  - [4.2. Play Options for Query](#42-play-options-for-query)
-- [Core APIs](#core-apis)
+  - [3.1. Play Options](#31-play-options)
+    - [3.1.1. Play Options for Entity](#311-play-options-for-entity)
+    - [3.1.2. Play Options for Query](#312-play-options-for-query)
+- [4. Core APIs](#4-core-apis)
 
 ## 3. Play Intent
 The Firebolt `navigateTo` notification **MUST** support a `play` intent, which tells an app to initiate playback of either a specific entity or to find content that matches a query and play that content.
@@ -35,7 +35,7 @@ The `play` intent **MUST** have `data` property, which is an object conforming t
 >
 > The `entity` object, if present, **MUST** have an `entityId` string property.
 > 
-> The `data` object **MAY** have an `options` object property that conforms to [Play Options](#4-play-options).
+> The `data` object **MAY** have an `options` object property that conforms to [Play Options](#31-play-options).
 
 The `play` intent **MUST** have a `context` object property that conforms to the [Intent Context](./context.md).
 
@@ -55,10 +55,10 @@ An example play intent:
 
 Which would instruct an app to search for content matching the query "Ed Sheeran" and then play the results.
 
-## 4. Play Options
+### 3.1. Play Options
 The available options depend on what type of play intent they are attached to.
 
-### 4.1. Play Options for Entity
+#### 3.1.1. Play Options for Entity
 For `play` intents with an `entity`, e.g.:
 
  ```json
@@ -89,7 +89,7 @@ identify a larger playlist to contine playing after the entity, e.g.:
  }
  ```
 
-### 4.2. Play Options for Query
+#### 3.1.2. Play Options for Query
 For `play` intents with an `query`, e.g.:
 
  ```json
@@ -120,7 +120,7 @@ filter which entity typess, e.g. `[ "music", "program" ]` should be included, e.
 
  **TODO**: need to confirm with Merlin team that we're okay calling "music" an entity type.
 
-## Core APIs
+## 4. Core APIs
 The Firebolt Core SDK will support listening to `play` intents via the `Discovery.navigateTo` notification.
 
 ```javascript
