@@ -1,3 +1,10 @@
+# [0.14.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.8...v0.14.0-next.9) (2023-07-20)
+
+
+### Features
+
+* Added windowColor and windowOpacity to closedCaptions style ([#145](https://github.com/rdkcentral/firebolt-apis/issues/145)) ([f65b901](https://github.com/rdkcentral/firebolt-apis/commit/f65b9019bda22400df9b9634c332e720db38118d))
+
 # [0.14.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.7...v0.14.0-next.8) (2023-06-27)
 
 
