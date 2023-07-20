@@ -48,7 +48,9 @@
                 "backgroundColor": "#000000",
                 "backgroundOpacity": 100,
                 "textAlign": "center",
-                "textAlignVertical": "middle"
+                "textAlignVertical": "middle",
+                "windowColor": "white",
+                "windowOpacity": 50
               }
             }
           }
@@ -95,7 +97,9 @@
                 "backgroundColor": "#000000",
                 "backgroundOpacity": 100,
                 "textAlign": "center",
-                "textAlignVertical": "middle"
+                "textAlignVertical": "middle",
+                "windowColor": "white",
+                "windowOpacity": 50
               }
             }
           }
