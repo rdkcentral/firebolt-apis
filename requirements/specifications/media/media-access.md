@@ -49,7 +49,7 @@ agnostic, storage-agnostic way.
 
 The Firebolt `MediaAccess` module consists of APIs to list and read
 various types of `MediaFile`. It also contains APIs for detecting when
-new `MediaFile` Volumes are available.
+new media file `Volumes` are available.
 
 ### 3.1. Listing Media Files
 
@@ -64,17 +64,12 @@ The following APIs are used to return a list of `MediaFile` objects:
 These APIs **MUST** support an optional `volume` parameter of type
 `Volume`.
 
-TODO: Add capability strings
-
 If `volume` is provided, then these APIs **MUST** return all *matching*
 (see below) `MediaFile` objects on user-granted volumes that match the
 `volume` parameter. The if the `volume` parameter has `undefined` or
 `null` properties, then those properties are not used to filter out
 volumes from the list. For example a value of `{ type: "usb" }`
 would return all matching `MediaFile` objects on any USB volumes.
-
-If `volume` is not provided, then these APIs **MUST** return all
-*matching* `MediaFiles` on all user-granted volumes.
 
 These APIs **MUST** support an optional `files` parameter of type
 `MediaFile`.
@@ -95,8 +90,12 @@ If both `volume` and `files` are provided, then these APIs **MUST**
 return all `MediaFiles` that match the volume parameter **AND** the
 files parameter.
 
-Each `MediaFile` includes the full URI, so that Apps may present them in
-a manner that matches the directory structure on the `Volume`.
+If neither `volume` nor `files` is provided, then these APIs **MUST**
+return all *matching* `MediaFiles` on all user-granted volumes.
+
+Each `MediaFile` includes the full URI, relative to the Volume, so
+that Apps may present them in a manner that matches the directory
+structure on the `Volume`.
 
 In order to call the `MediaAccess.audio()` API an app **MUST** have
 permission to use the `xrn:firebolt:capability:media-access:audio`
@@ -123,6 +122,8 @@ In order to call the `MediaAccess.media()` API an app **MUST** have
 permission to use at least one of the the
 `xrn:firebolt:capability:media-access:` capabilities for `audio`,
 `images`, or `video`.
+
+**TODO**: Need Ripple team input on this... it breaks our standard pattern.
 
 The `MediaAccess.media()` API only matches `MediaFile` objects that
 the app has permission to, i.e. files that would have been returned from
@@ -169,6 +170,10 @@ The default Firebolt `GrantPolicy` **MUST** be:
 }
 ```
 
+**TODO**: I think we updated grant policies to allow sharing them across
+multiple capabilities. If so, we can drop this new `volume:read` cap, and
+put the individual capabilities from the section above into one policy.
+
 This grant policy allows distributors to configure the `GrantPolicy` in
 whatever way they want, including automatically granting.
 
@@ -181,11 +186,13 @@ passed when checking the grant status, and the resources that have been
 granted **MUST** be persisted in the grant status.
 
 For the `MediaAccess` APIs, the `resource` string will be the `uri` of
-the media file to be played on a specific **Volume**.
+the specific **Volume** being accessed.
 
 This results in the first time an app wants to access MediaFiles on a
 volume, the platform will check if the app not only has access to the
 API used, but also the device being queried.
+
+**TODO** need to review this with Ripple team.
 
 ### 3.3. Volume Availability
 
@@ -195,11 +202,14 @@ volumes become available or unavailable.
 This is accomplished with a temporal-set API called `volumes()`.
 
 The volumes API **MUST** support a context parameter of type for the
-Volume Type, e.g. `usb`, `local`, or `all`.
+Volume Type, e.g. `usb`.
 
 See [Temporal Sets](../openrpc-extensions/temporal-set.md) for more info.
 
 ### 3.4. Accessing Files
+
+**TODO**: this is still in review
+**TODO**: Add some details on the HTTP Server thunder plugin
 
 In order to do something with the file, apps will need access to the
 file contents.
@@ -239,9 +249,6 @@ using appropriate API names.
 ![Diagram Description automatically
 generated](../../images/specifications/media/access/media/image1.png)
 
-NOTE: This is (currently in XumoTV) handled by the ECMAScript `fetch`
-method by passing a `file://` URI containing the `MediaFile` path. We
-need to fix this!!
 
 ### 3.5. Core APIs
 
@@ -347,4 +354,3 @@ MediaFiles.
 An enumeration of strings representing possible Volume types:
 
 -   `'usb'`
--   `'local'`
