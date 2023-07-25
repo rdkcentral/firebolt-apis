@@ -83,6 +83,14 @@
                         "name": "family",
                         "value": "cursive"
                     }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "family",
+                        "value": null
+                    }
                 }
             ]
         },
@@ -122,6 +130,14 @@
                     "result": {
                         "name": "size",
                         "value": 1
+                    }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "size",
+                        "value": null
                     }
                 }
             ]
@@ -163,6 +179,14 @@
                         "name": "color",
                         "value": "#000000"
                     }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "color",
+                        "value": null
+                    }
                 }
             ]
         },
@@ -202,6 +226,14 @@
                     "result": {
                         "name": "edge",
                         "value": "solid"
+                    }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "edge",
+                        "value": null
                     }
                 }
             ]
@@ -243,6 +275,14 @@
                         "name": "color",
                         "value": "#ffffff"
                     }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "color",
+                        "value": null
+                    }
                 }
             ]
         },
@@ -282,6 +322,14 @@
                     "result": {
                         "name": "opacity",
                         "value": 100
+                    }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "opacity",
+                        "value": null
                     }
                 }
             ]
@@ -323,6 +371,14 @@
                         "name": "color",
                         "value": "#ffffff"
                     }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "color",
+                        "value": null
+                    }
                 }
             ]
         },
@@ -362,6 +418,14 @@
                     "result": {
                         "name": "opacity",
                         "value": 100
+                    }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "opacity",
+                        "value": null
                     }
                 }
             ]
@@ -403,6 +467,14 @@
                         "name": "aligment",
                         "value": "left"
                     }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "aligment",
+                        "value": null
+                    }
                 }
             ]
         },
@@ -442,6 +514,14 @@
                     "result": {
                         "name": "alignement",
                         "value": "top"
+                    }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "aligment",
+                        "value": null
                     }
                 }
             ]
