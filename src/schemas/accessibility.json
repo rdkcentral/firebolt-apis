@@ -11,28 +11,28 @@
     ],
     "definitions": {
         "FontFamily": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "FontSize": {
-            "type": "number",
+            "type": ["number", "null"],
             "minimum": 0
         },
         "FontEdge": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "Color": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "Opacity": {
-            "type": "number",
+            "type": ["number", "null"],
             "minimum": 0,
             "maximum": 100
         },
         "HorizontalAlignment": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "VerticalAlignment": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "ClosedCaptionsStyles": {
             "title": "ClosedCaptionsStyles",
