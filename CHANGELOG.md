@@ -1,3 +1,10 @@
+# [0.14.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.9...v0.14.0-next.10) (2023-07-26)
+
+
+### Features
+
+* Added support to set and get null in ClosedCaptions style fields ([#150](https://github.com/rdkcentral/firebolt-apis/issues/150)) ([9c511e4](https://github.com/rdkcentral/firebolt-apis/commit/9c511e4fddebcdf5dfc04e9e8e31f98ab7eef680))
+
 # [0.14.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.8...v0.14.0-next.9) (2023-07-20)
 
 
