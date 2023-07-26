@@ -59,7 +59,7 @@
                     ]
                 }
             ],
-            "summary": "The prefered font family for displaying closed-captions.",
+            "summary": "The preferred font family for displaying closed-captions.",
             "params": [],
             "result": {
                 "name": "family",
@@ -107,7 +107,7 @@
                     ]
                 }
             ],
-            "summary": "The prefered font size for displaying closed-captions.",
+            "summary": "The preferred font size for displaying closed-captions.",
             "params": [],
             "result": {
                 "name": "size",
@@ -155,7 +155,7 @@
                     ]
                 }
             ],
-            "summary": "The prefered font color for displaying closed-captions.",
+            "summary": "The preferred font color for displaying closed-captions.",
             "params": [],
             "result": {
                 "name": "color",
@@ -203,7 +203,7 @@
                     ]
                 }
             ],
-            "summary": "The prefered font edge style for displaying closed-captions.",
+            "summary": "The preferred font edge style for displaying closed-captions.",
             "params": [],
             "result": {
                 "name": "edge",
@@ -251,7 +251,7 @@
                     ]
                 }
             ],
-            "summary": "The prefered font edge color for displaying closed-captions.",
+            "summary": "The preferred font edge color for displaying closed-captions.",
             "params": [],
             "result": {
                 "name": "color",
@@ -299,7 +299,7 @@
                     ]
                 }
             ],
-            "summary": "The prefered opacity for displaying closed-captions characters.",
+            "summary": "The preferred opacity for displaying closed-captions characters.",
             "params": [],
             "result": {
                 "name": "opacity",
@@ -347,7 +347,7 @@
                     ]
                 }
             ],
-            "summary": "The prefered background color for displaying closed-captions, .",
+            "summary": "The preferred background color for displaying closed-captions, .",
             "params": [],
             "result": {
                 "name": "color",
@@ -395,7 +395,7 @@
                     ]
                 }
             ],
-            "summary": "The prefered opacity for displaying closed-captions backgrounds.",
+            "summary": "The preferred opacity for displaying closed-captions backgrounds.",
             "params": [],
             "result": {
                 "name": "opacity",
@@ -443,10 +443,10 @@
                     ]
                 }
             ],
-            "summary": "The prefered horizontal alignment for displaying closed-captions characters.",
+            "summary": "The preferred horizontal alignment for displaying closed-captions characters.",
             "params": [],
             "result": {
-                "name": "opacity",
+                "name": "alignment",
                 "schema": {
                     "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/HorizontalAlignment"
                 }
@@ -456,7 +456,7 @@
                     "name": "Default example #1",
                     "params": [],
                     "result": {
-                        "name": "aligment",
+                        "name": "alignment",
                         "value": "center"
                     }
                 },
@@ -464,7 +464,7 @@
                     "name": "Default example #2",
                     "params": [],
                     "result": {
-                        "name": "aligment",
+                        "name": "alignment",
                         "value": "left"
                     }
                 },
@@ -472,7 +472,7 @@
                     "name": "Default example #3",
                     "params": [],
                     "result": {
-                        "name": "aligment",
+                        "name": "alignment",
                         "value": null
                     }
                 }
@@ -491,10 +491,10 @@
                     ]
                 }
             ],
-            "summary": "The prefered horizontal alignment for displaying closed-captions characters.",
+            "summary": "The preferred horizontal alignment for displaying closed-captions characters.",
             "params": [],
             "result": {
-                "name": "opacity",
+                "name": "alignment",
                 "schema": {
                     "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VerticalAlignment"
                 }
@@ -504,7 +504,7 @@
                     "name": "Default example #1",
                     "params": [],
                     "result": {
-                        "name": "alignement",
+                        "name": "alignment",
                         "value": "middle"
                     }
                 },
@@ -512,7 +512,7 @@
                     "name": "Default example #2",
                     "params": [],
                     "result": {
-                        "name": "alignement",
+                        "name": "alignment",
                         "value": "top"
                     }
                 },
@@ -520,7 +520,7 @@
                     "name": "Default example #3",
                     "params": [],
                     "result": {
-                        "name": "aligment",
+                        "name": "alignment",
                         "value": null
                     }
                 }
