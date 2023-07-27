@@ -1,23 +1,31 @@
-# [0.14.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.9...v0.14.0-next.10) (2023-07-26)
+# [0.14.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.8...v0.14.0-next.10) (2023-07-26)
 
 
 ### Features
 
 * Added support to set and get null in ClosedCaptions style fields ([#150](https://github.com/rdkcentral/firebolt-apis/issues/150)) ([9c511e4](https://github.com/rdkcentral/firebolt-apis/commit/9c511e4fddebcdf5dfc04e9e8e31f98ab7eef680))
-
-# [0.14.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.8...v0.14.0-next.9) (2023-07-20)
-
-
-### Features
-
 * Added windowColor and windowOpacity to closedCaptions style ([#145](https://github.com/rdkcentral/firebolt-apis/issues/145)) ([f65b901](https://github.com/rdkcentral/firebolt-apis/commit/f65b9019bda22400df9b9634c332e720db38118d))
-
-# [0.14.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.7...v0.14.0-next.8) (2023-06-27)
-
 
 ### Bug Fixes
 
 * Rename Advisory "Committee" to "Board" ([#135](https://github.com/rdkcentral/firebolt-apis/issues/135)) ([ef410c4](https://github.com/rdkcentral/firebolt-apis/commit/ef410c43bbb32414c3aa1d11b43093565cc90edf))
+
+# [0.14.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.0...v0.14.0) (2023-06-22)
+
+* Add Capabilities ToC to github.io docs ([0d23136](https://github.com/rdkcentral/firebolt-apis/commit/0d23136bfa4976686795158bdfe179430598af9e))
+* **Advertising:** put resetAdvertisingIdentifier back in manage sdk ([ce92ae7](https://github.com/rdkcentral/firebolt-apis/commit/ce92ae7bfff58fa1d3e4bee78c88d5edf0266473))
+* event links in capability toc ([31a8a85](https://github.com/rdkcentral/firebolt-apis/commit/31a8a85c0749ebfa872f2a158975697396ebdf8c))
+* **governance:** Add governance process docs ([a80ab53](https://github.com/rdkcentral/firebolt-apis/commit/a80ab53c5cdd914b5acbce1effbdb464475bed63))
+* Move to `firebolt-openrpc` 2.0.2 ([52fe2a7](https://github.com/rdkcentral/firebolt-apis/commit/52fe2a78b17f1e36ec854fedd52d136cfa60b4e2))
+* package-lock.json ([dd8025c](https://github.com/rdkcentral/firebolt-apis/commit/dd8025c637a5ae58ce2e0355b995d55feeab9713))
+* Update path in publish docs ([9881383](https://github.com/rdkcentral/firebolt-apis/commit/98813833a074a6e25b012d2aac376377d8c5d5a9))
+
+
+### Features
+
+* Add an event when apps call signIn or signOut ([#133](https://github.com/rdkcentral/firebolt-apis/issues/133)) ([8ba2515](https://github.com/rdkcentral/firebolt-apis/commit/8ba2515948c433ccc38662f223f5fb399cf34841))
+* Allow granted in capability.info and capability.granted to be null ([#134](https://github.com/rdkcentral/firebolt-apis/issues/134)) ([c5c31ee](https://github.com/rdkcentral/firebolt-apis/commit/c5c31ee3c744ec018a57232d2e7b1caf41158ed6))
+* Change voice guidance limits to 0.5 and 2 ([#137](https://github.com/rdkcentral/firebolt-apis/issues/137)) ([b8f1944](https://github.com/rdkcentral/firebolt-apis/commit/b8f19449efd808639599b162aba61c08ec089c41))
 
 # [0.14.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.6...v0.14.0-next.7) (2023-06-22)
 
