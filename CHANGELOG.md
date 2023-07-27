@@ -1,3 +1,10 @@
+# [0.14.0-next.11](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.10...v0.14.0-next.11) (2023-07-27)
+
+
+### Bug Fixes
+
+* window fix from firebolt-openrpc 2.0.3-next.1 ([8c06dd1](https://github.com/rdkcentral/firebolt-apis/commit/8c06dd1432822719f5634e2877b36efdf02a4809))
+
 # [0.14.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.9...v0.14.0-next.10) (2023-07-26)
 
 
