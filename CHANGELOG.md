@@ -1,5 +1,4 @@
-# [0.14.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.8...v0.14.0-next.10) (2023-07-26)
-
+# [0.14.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.8...v0.14.0-next.11) (2023-07-26)
 
 ### Features
 
@@ -8,6 +7,7 @@
 
 ### Bug Fixes
 
+* window fix from firebolt-openrpc 2.0.3-next.1 ([8c06dd1](https://github.com/rdkcentral/firebolt-apis/commit/8c06dd1432822719f5634e2877b36efdf02a4809))
 * Rename Advisory "Committee" to "Board" ([#135](https://github.com/rdkcentral/firebolt-apis/issues/135)) ([ef410c4](https://github.com/rdkcentral/firebolt-apis/commit/ef410c43bbb32414c3aa1d11b43093565cc90edf))
 
 # [0.14.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.0...v0.14.0) (2023-06-22)
