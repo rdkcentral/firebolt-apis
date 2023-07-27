@@ -33,12 +33,12 @@ extern "C" {
 
 uint32_t test_generated_properties_get_device_id()
 {
-    FireboltTypes_String_t handle;
+    Firebolt_String_t handle;
     uint32_t result = Device_GetId(&handle);
 
     if (result == FireboltSDKErrorNone) {
-        printf("\nDevice: Id:%s\n", FireboltTypes_String(handle));
-        FireboltTypes_StringHandle_Release(handle);
+        printf("\nDevice: Id:%s\n", Firebolt_String(handle));
+        Firebolt_String_Release(handle);
     }
 
     EXPECT_EQ(result, FireboltSDKErrorNone);
@@ -51,30 +51,30 @@ uint32_t test_generated_properties_get_device_version()
     uint32_t result = Device_GetVersion(&handle);
 
     if (result == FireboltSDKErrorNone) {
-        if (Device_VersionsHandle_IsValid(handle)) {
+        if (Device_Versions_IsValid(handle)) {
             Types_SemanticVersion_t sdkHandle = Device_Versions_Get_Sdk(handle);
-            if (Types_SemanticVersionHandle_IsValid(sdkHandle)) {
+            if (Types_SemanticVersion_IsValid(sdkHandle)) {
                 uint32_t major = Types_SemanticVersion_Get_Major(sdkHandle);
                 uint32_t minor = Types_SemanticVersion_Get_Minor(sdkHandle);
                 uint32_t patch = Types_SemanticVersion_Get_Patch(sdkHandle);
                 char* readable = Types_SemanticVersion_Get_Readable(sdkHandle);
                 printf("\nDevice:SDK Version major:%d minor:%d patch:%d readable:%s\n",
                 major, minor, patch, readable);
-                Types_SemanticVersionHandle_Release(sdkHandle);
+                Types_SemanticVersion_Release(sdkHandle);
                 result = FireboltSDKErrorNone;
             }
             Types_SemanticVersion_t osHandle = Device_Versions_Get_Os(handle);
-            if (Types_SemanticVersionHandle_IsValid(osHandle)) {
+            if (Types_SemanticVersion_IsValid(osHandle)) {
                 uint32_t major = Types_SemanticVersion_Get_Major(osHandle);
                 uint32_t minor = Types_SemanticVersion_Get_Minor(osHandle);
                 uint32_t patch = Types_SemanticVersion_Get_Patch(osHandle);
                 const char* readable = Types_SemanticVersion_Get_Readable(osHandle);
                 printf("\nDevice:OS  Version major:%d minor:%d patch:%d readable:%s\n",
                 major, minor, patch, readable);
-                Types_SemanticVersionHandle_Release(osHandle);
+                Types_SemanticVersion_Release(osHandle);
                 result = FireboltSDKErrorNone;
             }
-            Device_VersionsHandle_Release(handle);
+            Device_Versions_Release(handle);
         } else {
             result = FireboltSDKErrorUnavailable;
         }
@@ -90,10 +90,10 @@ uint32_t test_generated_properties_get_accessibility_closedcaption()
     uint32_t result = Accessibility_GetClosedCaptionsSettings(&handle);
 
     if (result == FireboltSDKErrorNone) {
-        if (Accessibility_ClosedCaptionsSettingsHandle_IsValid(handle) == true) {
+        if (Accessibility_ClosedCaptionsSettings_IsValid(handle) == true) {
             printf("ClosedCaption Settings ------------------\n");
             Accessibility_ClosedCaptionsStyles_t styleHandle = Accessibility_ClosedCaptionsSettings_Get_Styles(handle);
-            if (Accessibility_ClosedCaptionsStylesHandle_IsValid(styleHandle)) {
+            if (Accessibility_ClosedCaptionsStyles_IsValid(styleHandle)) {
                 printf("ClosedCaptionStyles:\n");
                 char* fontFamily = Accessibility_ClosedCaptionsStyles_Get_FontFamily(styleHandle);
                 printf("\tFontFamily : %s\n", fontFamily);
@@ -115,11 +115,11 @@ uint32_t test_generated_properties_get_accessibility_closedcaption()
                 printf("\tTextAlign : %s\n", txAlign);
                 char* txAlignVertical = Accessibility_ClosedCaptionsStyles_Get_TextAlignVertical(styleHandle);
                 printf("\tTextAlignVertical : %s\n", txAlignVertical);
-                Accessibility_ClosedCaptionsStylesHandle_Release(styleHandle);
+                Accessibility_ClosedCaptionsStyles_Release(styleHandle);
             }
             bool enabled = Accessibility_ClosedCaptionsSettings_Get_Enabled(handle);
             printf("Enabled: %d\n", enabled);
-            Accessibility_ClosedCaptionsSettingsHandle_Release(handle);
+            Accessibility_ClosedCaptionsSettings_Release(handle);
         } else {
             result = FireboltSDKErrorUnavailable;
         }
@@ -134,11 +134,11 @@ uint32_t test_generated_properties_get_accessibility_voiceguidancesettings()
     uint32_t result = Accessibility_GetVoiceGuidanceSettings(&handle);
 
     if (result == FireboltSDKErrorNone) {
-        if (Accessibility_VoiceGuidanceSettingsHandle_IsValid(handle) == true) {
+        if (Accessibility_VoiceGuidanceSettings_IsValid(handle) == true) {
             bool enabled = Accessibility_VoiceGuidanceSettings_Get_Enabled(handle);
             uint32_t speed = Accessibility_VoiceGuidanceSettings_Get_Speed(handle);
             printf("VoiceGuidanceSettings: Enabled : %d, Speed : %d\n", enabled, speed);
-            Accessibility_VoiceGuidanceSettingsHandle_Release(handle);
+            Accessibility_VoiceGuidanceSettings_Release(handle);
         } else {
             result = FireboltSDKErrorUnavailable;
         }
@@ -174,13 +174,13 @@ uint32_t test_generated_properties_get_advertising_policy()
     Advertising_AdPolicy_t handle;
     uint32_t result = Advertising_GetPolicy(&handle);
     if (result == FireboltSDKErrorNone) {
-        if (Advertising_AdPolicyHandle_IsValid(handle) == true) {
+        if (Advertising_AdPolicy_IsValid(handle) == true) {
             printf("AdPolicy: ");
             Advertising_SkipRestriction skipRestriction = Advertising_AdPolicy_Get_SkipRestriction(handle);
             printf("SkipRestriction = %s ", get_skiprestriction_enum_string(skipRestriction));
             bool limitAdTracking = Advertising_AdPolicy_Get_LimitAdTracking(handle);
             printf("LimitAdTracking = %s \n", limitAdTracking? "true" : "false");
-            Advertising_AdPolicyHandle_Release(handle);
+            Advertising_AdPolicy_Release(handle);
         } else {
             result = FireboltSDKErrorUnavailable;
         }
@@ -195,12 +195,12 @@ pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 static const char deviceNameTestStr[] = "DeviceNameTestStr";
-static void NotifyDeviceNameChange(const void* userData, FireboltTypes_String_t handle)
+static void NotifyDeviceNameChange(const void* userData, Firebolt_String_t handle)
 {
     EXPECT_NE(handle, NULL);
     if (handle) {
-        printf("\nGot new device.name :%s\n", FireboltTypes_String(handle));
-        FireboltTypes_StringHandle_Release(handle);
+        printf("\nGot new device.name :%s\n", Firebolt_String(handle));
+        Firebolt_String_Release(handle);
     }
     EXPECT_EQ(strncmp((const char*)userData, deviceNameTestStr, strlen(deviceNameTestStr)), 0);
     pthread_cond_signal(&cond);
@@ -247,14 +247,14 @@ uint32_t test_generated_event_device_name_with_register_same_callback()
 static const char deviceScreenResolutionTestStr[] = "deviceScreenResolutionTestStr";
 static void NotifyDeviceScreenResolutionChange(const void* userData, Device_ResolutionArray_t handle)
 {
-    EXPECT_EQ(Device_ResolutionArrayHandle_IsValid(handle), true);
-    if (Device_ResolutionArrayHandle_IsValid(handle) == true) {
+    EXPECT_EQ(Device_ResolutionArray_IsValid(handle), true);
+    if (Device_ResolutionArray_IsValid(handle) == true) {
         uint32_t size = Device_ResolutionArray_Size(handle);
         printf("Device ScreenResolutions changed for %d numbers\n", size);
         for (uint32_t i = 0; i < size; ++i) {
             printf("New reslution[%d] = %d\n", i, Device_ResolutionArray_Get(handle, i));
         }
-        Device_ResolutionArrayHandle_Release(handle);
+        Device_ResolutionArray_Release(handle);
     }
     EXPECT_EQ(strncmp((const char*)userData, deviceScreenResolutionTestStr, strlen(deviceScreenResolutionTestStr)), 0);
     pthread_cond_signal(&cond);
@@ -282,12 +282,12 @@ uint32_t test_generated_event_device_screenresolution()
 static const char accessibilityVoiceGuidanceTestStr[] = "AccessibilityVoiceGuidanceTestStr";
 static void NotifyAccessibilityVoiceGuidanceChange(const void* userData, Accessibility_VoiceGuidanceSettings_t handle)
 {
-    EXPECT_EQ(Accessibility_VoiceGuidanceSettingsHandle_IsValid(handle), true);
-    if (Accessibility_VoiceGuidanceSettingsHandle_IsValid(handle) == true) {
+    EXPECT_EQ(Accessibility_VoiceGuidanceSettings_IsValid(handle), true);
+    if (Accessibility_VoiceGuidanceSettings_IsValid(handle) == true) {
         bool enabled = Accessibility_VoiceGuidanceSettings_Get_Enabled(handle);
         uint32_t speed = Accessibility_VoiceGuidanceSettings_Get_Speed(handle);
         printf("VoiceGuidanceSettings: Enabled : %d, Speed : %d\n", enabled, speed);
-        Accessibility_VoiceGuidanceSettingsHandle_Release(handle);
+        Accessibility_VoiceGuidanceSettings_Release(handle);
     }
     EXPECT_EQ(strncmp((const char*)userData, accessibilityVoiceGuidanceTestStr, strlen(accessibilityVoiceGuidanceTestStr)), 0);
     pthread_cond_signal(&cond);

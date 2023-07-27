@@ -49,7 +49,6 @@ set_target_properties(${TESTLIB} PROPERTIES
     LINK_WHAT_YOU_USE TRUE
     FRAMEWORK FALSE
 )
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
 
 set(TESTAPP FireboltCoreSDKTestApp)
 
@@ -71,20 +70,16 @@ target_include_directories(${TESTAPP}
 
 install(
     TARGETS ${TESTLIB} EXPORT ${TESTLIB}Targets
-    LIBRARY DESTINATION lib COMPONENT libs
-     PUBLIC_HEADER DESTINATION include/${FIREBOLT_NAMESPACE}Test COMPONENT devel   # headers for mac (note the different component -> different package)
-        INCLUDES DESTINATION include/${FIREBOLT_NAMESPACE}Test # headers
+    ARCHIVE DESTINATION lib COMPONENT libs  # static lib
+    LIBRARY DESTINATION lib COMPONENT libs  # shared lib
 )
 
 InstallCMakeConfig(TARGETS ${TESTLIB})
-InstallCMakeConfigs(TARGET ${TESTLIB} DESTINATION ${FIREBOLT_NAMESPACE})
-InstallHeaders(TARGET ${TESTLIB} HEADERS . NAMESPACE ${FIREBOLT_NAMESPACE} DESTINATION FireboltTest)
-InstallLibraries(TARGET ${TESTLIB} LIBRARIES ${TESTLIB} DESTINATION ${FIREBOLT_NAMESPACE})
 
 add_custom_command(
     TARGET ${TESTAPP}
     POST_BUILD
     COMMENT "=================== Installing TestApp ======================"
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${TESTAPP} ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${TESTAPP} ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
 )
