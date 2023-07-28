@@ -1,3 +1,11 @@
+# [0.15.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0-next.1...v0.15.0-next.2) (2023-07-28)
+
+
+### Bug Fixes
+
+* CI weirdness ([b72990f](https://github.com/rdkcentral/firebolt-apis/commit/b72990f5363b5ce37aa09e80a2b2daffc209216a))
+* Updating package.json ([dd438b7](https://github.com/rdkcentral/firebolt-apis/commit/dd438b77c18c4565fd91a88e3394e5ce7c2cecff))
+
 # [0.15.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0...v0.15.0-next.1) (2023-07-27)
 
 
