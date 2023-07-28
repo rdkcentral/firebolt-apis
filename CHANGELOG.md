@@ -1,3 +1,17 @@
+# [0.15.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0...v0.15.0-next.1) (2023-07-27)
+
+
+### Bug Fixes
+
+* Rename Advisory "Committee" to "Board" ([#135](https://github.com/rdkcentral/firebolt-apis/issues/135)) ([ef410c4](https://github.com/rdkcentral/firebolt-apis/commit/ef410c43bbb32414c3aa1d11b43093565cc90edf))
+* window fix from firebolt-openrpc 2.0.3-next.1 ([8c06dd1](https://github.com/rdkcentral/firebolt-apis/commit/8c06dd1432822719f5634e2877b36efdf02a4809))
+
+
+### Features
+
+* Added support to set and get null in ClosedCaptions style fields ([#150](https://github.com/rdkcentral/firebolt-apis/issues/150)) ([9c511e4](https://github.com/rdkcentral/firebolt-apis/commit/9c511e4fddebcdf5dfc04e9e8e31f98ab7eef680))
+* Added windowColor and windowOpacity to closedCaptions style ([#145](https://github.com/rdkcentral/firebolt-apis/issues/145)) ([f65b901](https://github.com/rdkcentral/firebolt-apis/commit/f65b9019bda22400df9b9634c332e720db38118d))
+
 # [0.14.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0-next.8...v0.14.0-next.11) (2023-07-26)
 
 ### Features
