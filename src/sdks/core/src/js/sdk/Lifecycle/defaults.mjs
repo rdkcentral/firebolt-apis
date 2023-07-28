@@ -61,3 +61,4 @@ export default {
       win.location.href = "about:blank"
   },
 }
+
