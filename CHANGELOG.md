@@ -1,3 +1,10 @@
+# [0.15.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0-next.4...v0.15.0-next.5) (2023-07-31)
+
+
+### Bug Fixes
+
+* Upgrade to `firebolt-js/openrpc` version 2.0.3 ([c0a2647](https://github.com/rdkcentral/firebolt-apis/commit/c0a26475dba5059f9fc6ceb11bcb103bb355cceb))
+
 # [0.15.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0-next.3...v0.15.0-next.4) (2023-07-31)
 
 
