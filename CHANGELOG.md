@@ -1,3 +1,10 @@
+# [0.15.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0-next.2...v0.15.0-next.3) (2023-07-31)
+
+
+### Features
+
+* Audio Description and Preferred Audio Languages Settings ([#45](https://github.com/rdkcentral/firebolt-apis/issues/45)) ([58f6ea1](https://github.com/rdkcentral/firebolt-apis/commit/58f6ea1dde7a819883eb3da24f879b6a9ecc9a41))
+
 # [0.15.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0-next.1...v0.15.0-next.2) (2023-07-28)
 
 
