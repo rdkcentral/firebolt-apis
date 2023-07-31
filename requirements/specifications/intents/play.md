@@ -33,7 +33,7 @@ The `play` intent **MUST** have `data` property, which is an object conforming t
 
 > The `data` object **MUST** have either an `entity` object property or a `query` string property and **MUST NOT** have both.
 >
-> The `entity` object, if present, **MUST** have an `entityId` string property.
+> The `entity` object, if present, **MUST** be an [Entity](../entities/index.md).
 > 
 > The `data` object **MAY** have an `options` object property that conforms to [Play Options](#31-play-options).
 
@@ -41,7 +41,7 @@ The `play` intent **MUST** have a `context` object property that conforms to the
 
 An example play intent:
 
-```json
+```json 
 {
     "action": "play",
     "data": {
