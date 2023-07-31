@@ -1,3 +1,11 @@
+# [0.15.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0-next.3...v0.15.0-next.4) (2023-07-31)
+
+
+### Bug Fixes
+
+* CHANGELOGs for 0.15 ([#152](https://github.com/rdkcentral/firebolt-apis/issues/152)) ([667f7a4](https://github.com/rdkcentral/firebolt-apis/commit/667f7a4620b3726a48e9071af6f5a9cfaf1c3ec8))
+* Update package-lock.json ([767fc65](https://github.com/rdkcentral/firebolt-apis/commit/767fc658b5ac2020f5d6eca82c8734baf0200fd8))
+
 # [0.15.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0-next.2...v0.15.0-next.3) (2023-07-31)
 
 
