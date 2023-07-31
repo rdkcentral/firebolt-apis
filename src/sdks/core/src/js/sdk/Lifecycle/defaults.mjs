@@ -28,7 +28,8 @@ const emit = (value) => {
   MockTransport.event('Lifecycle', value.state, value)
 }
 
-const automation = window.__firebolt ? !!window.__firebolt.automation : false
+const win = typeof window !== 'undefined' ? window : {}
+const automation = win.__firebolt ? !!win.__firebolt.automation : false
 
 export default {
   ready: function() {
@@ -56,7 +57,8 @@ export default {
   },
 
   finished: function() {
-    if (window.location)
-      window.location.href = "about:blank"
+    if (win.location)
+      win.location.href = "about:blank"
   },
 }
+
