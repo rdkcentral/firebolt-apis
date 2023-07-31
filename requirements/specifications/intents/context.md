@@ -1,4 +1,4 @@
-# Play Intent
+# Intent Context
 
 Document Status: Working Draft
 
