@@ -1,3 +1,23 @@
+# [0.15.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0...v0.15.0) (2023-07-31)
+
+
+### Bug Fixes
+
+* CHANGELOGs for 0.15 ([#152](https://github.com/rdkcentral/firebolt-apis/issues/152)) ([667f7a4](https://github.com/rdkcentral/firebolt-apis/commit/667f7a4620b3726a48e9071af6f5a9cfaf1c3ec8))
+* CI weirdness ([b72990f](https://github.com/rdkcentral/firebolt-apis/commit/b72990f5363b5ce37aa09e80a2b2daffc209216a))
+* Rename Advisory "Committee" to "Board" ([#135](https://github.com/rdkcentral/firebolt-apis/issues/135)) ([ef410c4](https://github.com/rdkcentral/firebolt-apis/commit/ef410c43bbb32414c3aa1d11b43093565cc90edf))
+* Update package-lock.json ([767fc65](https://github.com/rdkcentral/firebolt-apis/commit/767fc658b5ac2020f5d6eca82c8734baf0200fd8))
+* Updating package.json ([dd438b7](https://github.com/rdkcentral/firebolt-apis/commit/dd438b77c18c4565fd91a88e3394e5ce7c2cecff))
+* Upgrade to `firebolt-js/openrpc` version 2.0.3 ([c0a2647](https://github.com/rdkcentral/firebolt-apis/commit/c0a26475dba5059f9fc6ceb11bcb103bb355cceb))
+* window fix from firebolt-openrpc 2.0.3-next.1 ([8c06dd1](https://github.com/rdkcentral/firebolt-apis/commit/8c06dd1432822719f5634e2877b36efdf02a4809))
+
+
+### Features
+
+* Added support to set and get null in ClosedCaptions style fields ([#150](https://github.com/rdkcentral/firebolt-apis/issues/150)) ([9c511e4](https://github.com/rdkcentral/firebolt-apis/commit/9c511e4fddebcdf5dfc04e9e8e31f98ab7eef680))
+* Added windowColor and windowOpacity to closedCaptions style ([#145](https://github.com/rdkcentral/firebolt-apis/issues/145)) ([f65b901](https://github.com/rdkcentral/firebolt-apis/commit/f65b9019bda22400df9b9634c332e720db38118d))
+* Audio Description and Preferred Audio Languages Settings ([#45](https://github.com/rdkcentral/firebolt-apis/issues/45)) ([58f6ea1](https://github.com/rdkcentral/firebolt-apis/commit/58f6ea1dde7a819883eb3da24f879b6a9ecc9a41))
+
 # [0.15.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0-next.3...v0.15.0-next.4) (2023-07-31)
 
 
