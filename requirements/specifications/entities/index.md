@@ -15,7 +15,8 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [1. Overview](#1-overview)
 - [2. Table of Contents](#2-table-of-contents)
 - [3. Entities](#3-entities)
-- [4. Entity Specifications](#4-entity-specifications)
+- [4. Playlist Entities](#4-playlist-entities)
+- [5. Entity Specifications](#5-entity-specifications)
 
 ## 3. Entities
 Every Entity **MUST** be of type `object`.
@@ -43,7 +44,20 @@ Another example Entity:
 
 Firebolt platforms **MUST NOT** infer anything from the values of these fields, although back-office systems operated by Firebolt distributors may.
 
-## 4. Entity Specifications
+## 4. Playlist Entities
+A playlist is a type of entity that points to a list of other entities.
+
+Since entity IDs are in the target app's scope, it is up to each app to know what to do with the contents of a given playlist.
+
+
+```json
+{
+    "entityType": "playlist",
+    "entityId": "playlist/xyz"
+}
+```
+
+## 5. Entity Specifications
 
 - [Program Entities](./programs.md)
 - [Channel Entities](./channels.md)

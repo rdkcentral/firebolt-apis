@@ -4,9 +4,10 @@ Document Status: Working Draft
 
 See [Firebolt Requirements Governance](../../governance.md) for more info.
 
-| Contributor    | Organization   |
-| -------------- | -------------- |
-| Jeremy LaCivita       | Comcast |
+| Contributor     | Organization   |
+| --------------- | -------------- |
+| Jeremy LaCivita | Comcast        |
+| Liz Sheffield   | Comcast        |
 
 ## 1. Overview
 TBD...
@@ -21,7 +22,7 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 
 
 ## 3. Music Entities
-Every Music Entity **MUST** be an [Entity](./index.md#3-entities).
+Every Music Entity **MUST** be an [Entity](../index#3-entities).
 
 Every Music Entity **MUST** have a `const` property named `entityType`, which **MUST** have the value `"music"`.
 
@@ -29,7 +30,6 @@ Every Music Entity **MUST** have a `string` property named `musicType`, whose va
 
  - `"song"`
  - `"album"`
- - `"playlist"`
 
 An example Music Entity:
 
