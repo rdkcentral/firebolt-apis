@@ -77,7 +77,7 @@ The `edidVersion` property **MUST** be on of the following values:
 
 If the `edidVersion` is `"2.0"` then the `HDMIPort` object **MUST** have an `autoLowLatencyMode` boolean property, which is true if the E-EDID has ALLM support advertised.
 
-If the `editVersion` is `"1.4"` or `"unknown"` then the `HDMIPort` object **MUST NOT** have an `autoLowLatencyMode` boolean property.
+If the `editdersion` is `"1.4"` or `"unknown"` then the `HDMIPort` object **MUST NOT** have an `autoLowLatencyMode` boolean property.
 
 **TODO**: do we want to leave it out or set to false?
 
