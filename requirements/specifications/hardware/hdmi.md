@@ -1,4 +1,4 @@
-# HDMI
+# HDMIInput
 
 Document Status: Working Draft
 
@@ -11,7 +11,6 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 
 ## 1. Overview
 
-
 This document is written using the [IETF Best Common Practice 14](https://www.rfc-editor.org/rfc/rfc2119.txt), specifically:
 
 The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL NOT**", "**SHOULD**", "**SHOULD NOT**", "**RECOMMENDED**", "**NOT RECOMMENDED**", "**MAY**", and "**OPTIONAL**" in this document are to be interpreted as described in [BCP 14](https://www.rfc-editor.org/rfc/rfc2119.txt) [RFC2119] [RFC8174] when, and only when, they appear in all capitals, as shown here.
@@ -19,84 +18,206 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 ## 2. Table of Contents
 - [1. Overview](#1-overview)
 - [2. Table of Contents](#2-table-of-contents)
-- [3. HDMI Ports](#3-hdmi-ports)
-- [4. HDMI Inputs](#4-hdmi-inputs)
+- [3. HDMI Input Ports](#3-hdmi-input-ports)
+- [4. HDMI Input Devices](#4-hdmi-input-devices)
 - [5. Low Latency Mode](#5-low-latency-mode)
-  - [5.1. Auto Low Latency Mode](#51-auto-low-latency-mode)
-- [6. CEC Events](#6-cec-events)
+  - [5.1. Low Latency Mode Notification](#51-low-latency-mode-notification)
+- [6. Auto Low Latency Mode Notification](#6-auto-low-latency-mode-notification)
+- [7. Auto Low Latency Mode Support](#7-auto-low-latency-mode-support)
+  - [7.1. Auto Low Latency Mode Support Changed Notification](#71-auto-low-latency-mode-support-changed-notification)
+- [8. HDMI CEC Events](#8-hdmi-cec-events)
+- [9. CEC Commands](#9-cec-commands)
 
-## 3. HDMI Ports
-List HDMI ports. All attributes are imlpicit to the port, and the input signal has no effect on these values.
+## 3. HDMI Input Ports
+Lists HDMI input ports. HDMIInput.ports() lists all attributes that are implicit to the port and not dependent on any connected HDMI input device.
 
 ```json
 [
     {
         "port": "HDMI1",
-        "title": "PlayStation 4",
-        "available": true,
-        "version": "2.1",
-        "cec": true,
+        "arc": true,
+        "edidVersion": "2.0",
+        "autoLowLatencyMode": true
+    }
+]
+```
+
+`port` - the unique ID of the port.
+
+`arc` - true if this HDMI port supports ARC and/or eARC device connections.
+
+`edidVersion` - the selected E-EDID version "1.4" or "2.0" for the port.
+
+`autoLowLatencyMode` - true if the E-EDID has ALLM support advertised. Only valid for >= v2.0 E-EDID configured ports.
+
+**NOTE** API to get allowed values in edidVersion
+
+## 4. HDMI Input Devices
+Lists HDMI input devices. 
+All attributes are the cross product of the port the input is plugged into and the input device itself.
+
+Most frequent operations will leverage HDMIInput.devices(), but occassionally it might be useful to use HDMIInput.ports(), 
+e.g. to let the user know that they plugged their Soundbar into the wrong port.
+
+Luc> Where the HDMI standard uses values-as-enums, is the best approach to surface these values in Firebolt or convert to string enums?
+Where a new version of HDMI appears, the values hold, but we won't be able to represent it as a string enum.
+e.g. [CEC Version] is encoded as a byte, but shown below as a string "Version 2.0"
+
+```json
+[
+    {
+        "port": "HDMI1",
+        "signal": "unknown",
+        "osdName": "PlayStation 4",
+        "cecVersion": "Version 2.0"
+        "logicalAddress": 4,
+        "physicalAddress": "a.b.c.d",
         "arc": true,
         "autoLowLatencyMode": true
     }
 ]
 ```
 
-## 4. HDMI Inputs
-List HDMI inputs. All attributes are the cross product of the port the input is plugged into and the input device itself.
+`port` - the unique ID of the port.
 
-Most frequent opperations will leverage HDMI.inputs(), but occaisionaly it might be useful to use HDMI.ports, e.g. to let the user know that they plugged their Soundbar into the wrong port.
+`signal` - can be one of these enumerated values:
+* "unknown" - the HDMI input port is not switched, so the signal state is presently unknown.
+* "none" - no signal from the HDMI input device.
+* "stable" - good signal.
+* "unstable" - the signal is unstable and could exhibit broken audio and video.
+* "unsupported" - the signal is not at a supported speed/resolution.
 
-```json
-[
-    {
-        "port": "HDMI1",
-        "title": "PlayStation 4",
-        "version": "2.0",
-        "cec": true,
-        "arc": true,
-        "autoLowLatencyMode": true
-    }
-]
-```
+`osdName` - the display name of the HDMI input device.
 
-Input.version is the negotiated version between the conntected device and the port.
-Input.cec, arc, and autoLowLatency are true only if both the connected device and the port support them.
+`cecVersion` - the version of the CEC protocol advertised by the HDMI input device, can be one of:
+* "" - unknown version
+* "Version 1.3a"
+* "Version 1.4" - Version 1.4, 1.4a or 1.4b.
+* "Version 2.0"
+``
 
 **NOTE**: is it useful (or even possible) to know if a port does not support cec, arc, or allm?
 
+
 ## 5. Low Latency Mode
-A property named `HDMI.lowLatencyMode`, with a getter, setter, and notification subscriber.
+A property named `HDMIInput.lowLatencyMode`, with a getter, setter, and notification subscriber.
 
-Changing this property turns on the underlying low latency mode feature.
+Enabling this property turns on the underlying low latency mode feature.
+Low latency mode switches the device to shorten the overall processing time of HDMI A/V signals.
+Depending on the platform some video processing features may be dropped such as MPEG noise reduction.
 
-When this property changes, the notification should also fire to all listening apps.
+### 5.1. Low Latency Mode Notification
+Whenever the underlying HDMI implementation executes an LLM change (either on or off), this notification must fire:
 
-**NOTE**: is the low latency mode only supported by HDMI? (not talking ALLM, just manual LLM).
-
-### 5.1. Auto Low Latency Mode
-Whenever the underlying HDMI implementation executes an ALLM (either on or off), this notification must fire:
-
-`HDMI.onLowLatencyModeChanged`
+`HDMIInput.onLowLatencyModeChanged`
 
 payload:
 
 ```json
   {
-      "lowLatencyMode": true,
-      "reason": "auto",
+      "lowLatencyMode": true
+  }
+```
+
+`lowLatencyMode` - whether or not LLM is enabled.
+
+## 6. Auto Low Latency Mode Notification
+When a HDMIInput.devices() property named `autoLowLatencyMode` changes then this notification must fire:
+
+`HDMI.onDeviceAutoLowLatencyModeChanged`
+
+payload:
+
+```json
+  {
+      "autoLowLatencyMode": true,
       "port": "HDMI1"
   }
 ```
 
-`lowLatencyMode` - whether or not llm is enabled.
-`reason` - whether this change was done via an ALLM message over HDMI, or some other manual means. ('auto' or 'manual')
-`port` - the HDMI port that sent the ALLM if reason is 'auto'
+`autoLowLatencyMode` - whether or not ALLM is signalled on the port from the HDMI input device.
 
-## 6. CEC Events
-Not quite clear to me which CEC events need to bubble up to the Firebolt layer, and which ones should be silently handled by RDK. need more research, perhaps a separate working group...
+`port` - the HDMI port that detected a change to ALLM signalling.
+
+**NOTE** Add events for signal and osdName
+
+## 7. Auto Low Latency Mode Support
+The property `HDMIInput.ports() autoLowLatencyModeSupport` reflects the HDMI port setting for advertising ALLM support in its E-EDID.
+
+Changing this property turns on/off the underlying auto low latency mode advertisement in any HDMI port E-EDID of version >= v2.0.
+
+To change the property:
+
+```javascript
+function setPortAutoLowLatencyMode(port: string, autoLowLatencyMode: boolean)
+```
+
+### 7.1. Auto Low Latency Mode Support Changed Notification
+**NOTE** Is this needed, if there is a change notify for HDMIInputs.devices() ?
+
+Whenever the underlying HDMI implementation executes an ALLM support change (either on or off), this notification must fire:
+
+`HDMIInput.onPortAutoLowLatencyModeChanged`
+
+payload:
+
+```json
+  {
+      "autoLowLatencyMode": true,
+      "port": "HDMI1"
+  }
+```
+
+`autoLowLatencyModeSupport` - whether or not ALLM is advertised as supported in the E-EDID for the port.
+
+`port` - the HDMI port that had an E-EDID ALLM advertisement change.
+
+## 8. HDMI CEC Events
+AS has a very basic model compared to the HDMI 2.1 spec...
 
 i'm thinking we want a specific event for each CEC message, so that we can define separate schemas for the operands of each message.
 
 More to come... but maybe not top priority?
 
+CEC relates to both HDMIInput and HDMIOutput, because CEC is a bus mechanism where all devices share the same command set.
+
+Should we have 3 Firebolt APIs: HDMIInput, HDMIOutput, HDMICEC?
+
+
+Source LA = logical address, 4-bit unsigned int
+Destination LA is omitted, but could be directly addressed to device or broadcast.
+
+```
+// CEC control, mapped from Thunder event notifications
+* onCECEnabled
+* onWakeupFromStandby - needs some thought because of interaction with standby mode
+
+// CEC incoming messages, mapped from Thunder event notifications
+* onActiveSource [Source LA], [Physical Address]
+* onInactiveSource [Source LA], [Physical Address]
+* onImageViewOn [Source LA]
+* onTextViewOn [Source LA]
+* onReportAudioStatus ?? or through DisplaySettings??
+* onFeatureAbort [Source LA], [Dest LA], [Feature Opcode], [Abort Reason]
+* onStandby [Source LA]
+* ...
+
+// CEC incoming messages, handled internally by Thunder today, but could be exposed up to app if we modify Thunder API
+* onLogicalAddress [Source LA], [Physical Address], [Device Type]
+* onSetOSDName [Source LA], [ASCII up to 14 chars]
+* onCECVersion [Source LA], [CEC Version]
+* onDeviceVendorID [Source LA], [Vendor ID]
+* onReportPowerStatus [Source LA], [Power Status]
+```
+
+## 9. CEC Commands
+
+```
+// Commands mapped from Thunder API
+* getActiveRoute
+* 
+
+// New commands coming as part of HDMI ARC volume control press-and-hold functionality
+    * sendUserControlPressed [Dest LA], [UI Command]
+    * sendUserControlReleased [Dest LA], [UI Command]
+```
