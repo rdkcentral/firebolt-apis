@@ -1,0 +1,14 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+      "title": "HDMIInput",
+      "description": "Methods for managing HDMI inputs on an HDMI sink device.",
+      "version": "0.0.0"
+    },
+    "methods": [
+    ],
+    "components": {
+      "schemas": {    
+      }
+    }
+  }
