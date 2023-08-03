@@ -63,6 +63,8 @@ Luc> Where the HDMI standard uses values-as-enums, is the best approach to surfa
 Where a new version of HDMI appears, the values hold, but we won't be able to represent it as a string enum.
 e.g. [CEC Version] is encoded as a byte, but shown below as a string "Version 2.0"
 
+JL> JanP. recently proposed that all enums that identify techniclogies have an UNKNOWN value, which would be used if we don't recognize one. This also allows older SDKs to get newer values and map to something. I suggest we adopt that here.
+
 ```json
 [
     {
@@ -124,7 +126,7 @@ payload:
 ## 6. Auto Low Latency Mode Notification
 When a HDMIInput.devices() property named `autoLowLatencyMode` changes then this notification must fire:
 
-`HDMI.onDeviceAutoLowLatencyModeChanged`
+`HDMIInput.onDeviceAutoLowLatencyModeChanged`
 
 payload:
 
@@ -183,6 +185,14 @@ CEC relates to both HDMIInput and HDMIOutput, because CEC is a bus mechanism whe
 
 Should we have 3 Firebolt APIs: HDMIInput, HDMIOutput, HDMICEC?
 
+JL> I think splitting Input & Output is a great idea, as it removes a likely source of momentary confusion / headaches for our users
+JL> Is there such a thing as a port that is both an input and output port on the same device? If so, is this ARC, or different, or both?
+JL> for CEC, don't the devices attached to input ports send most commands, and devices attached to output ports receive them?
+JL> I suppose if that is true, we can still have it all in the HDMICEC module, so i'm fine with three modules (and we can always do four if need be)
+JL> Proposal: remove CEC so we can upgrade the status of this doc to Candidate Spec and get feedback
+
+TODO: split output & input APIs into separate docs
+TODO: do we need to do output requirements now, or can we do them later?
 
 Source LA = logical address, 4-bit unsigned int
 Destination LA is omitted, but could be directly addressed to device or broadcast.
