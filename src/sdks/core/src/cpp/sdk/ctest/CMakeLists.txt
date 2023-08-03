@@ -38,6 +38,7 @@ else ()
 endif ()
 
 find_package(WPEFramework CONFIG REQUIRED)
+find_package(${NAMESPACE}Core CONFIG REQUIRED)
 find_package(Firebolt CONFIG REQUIRED)
 find_package(${FIREBOLT_NAMESPACE}SDK CONFIG REQUIRED)
 
@@ -49,6 +50,7 @@ add_executable(${TESTAPP} main.c)
 
 target_link_libraries(${TESTAPP}
     PRIVATE
+        ${NAMESPACE}Core::${NAMESPACE}Core
         ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
 )
 
