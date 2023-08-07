@@ -525,6 +525,102 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "windowColor",
+            "tags": [
+                {
+                    "name": "property"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:accessibility:closedcaptions"
+                    ]
+                }
+            ],
+            "summary": "The preferred window color for displaying closed-captions, .",
+            "params": [],
+            "result": {
+                "name": "color",
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/Color"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default example #1",
+                    "params": [],
+                    "result": {
+                        "name": "color",
+                        "value": "#000000"
+                    }
+                },
+                {
+                    "name": "Default example #2",
+                    "params": [],
+                    "result": {
+                        "name": "color",
+                        "value": "white"
+                    }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "color",
+                        "value": null
+                    }
+                }
+            ]
+        },
+        {
+            "name": "windowOpacity",
+            "tags": [
+                {
+                    "name": "property"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:accessibility:closedcaptions"
+                    ]
+                }
+            ],
+            "summary": "The preferred window opacity for displaying closed-captions backgrounds.",
+            "params": [],
+            "result": {
+                "name": "opacity",
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/Opacity"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default example #1",
+                    "params": [],
+                    "result": {
+                        "name": "opacity",
+                        "value": 99
+                    }
+                },
+                {
+                    "name": "Default example #2",
+                    "params": [],
+                    "result": {
+                        "name": "opacity",
+                        "value": 100
+                    }
+                },
+                {
+                    "name": "Default example #3",
+                    "params": [],
+                    "result": {
+                        "name": "opacity",
+                        "value": null
+                    }
+                }
+            ]
         }
     ],
     "components": {
