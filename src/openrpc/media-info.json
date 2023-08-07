@@ -27,6 +27,7 @@
                     "name": "sessionId",
                     "schema": {
                         "type": "integer",
+                        "default": 0,
                         "minimum": 0,
                         "maximum": 15
                     },

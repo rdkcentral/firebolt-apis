@@ -12,7 +12,7 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 ## 1. Overview
 
 In some cases, an app will need to be aware of what media formats and
-codecs are playing, even for media files were cultivated outside of the
+codecs are playing, even for media files which were cultivated outside of the
 app provider's purview, e.g. playing MP3 files in a generic media player
 app (see [Media Access
 Requirements](https://comcastcorp.sharepoint.com/:w:/r/sites/hqppa/Shared%20Documents/Global%20App%20Platform/Firebolt/Requirements/Core/Media/Media%20Access%20Requirements.docx?d=w4185f84db06746b2b4564068e57937cb&csf=1&web=1&e=5vUs9I)
@@ -27,7 +27,7 @@ of the media in the app itself.
 
 To solve this, Firebolt APIs will be created to detect the formats and
 codecs currently being decoded by the [Media
-Pipeline](./media-pipeline.md).
+Pipeline](./media-pipeline.md) or an active HDMI input.
 
 ## 2. Table of Contents
 - [1. Overview](#1-overview)
@@ -41,21 +41,14 @@ Pipeline](./media-pipeline.md).
     - [4.1.4. Immersive Audio](#414-immersive-audio)
     - [4.1.5. Frame Rate](#415-frame-rate)
     - [4.1.6. Resolution](#416-resolution)
-  - [4.2. MediaInfo any Media Pipeline](#42-mediainfo-any-media-pipeline)
-  - [4.3. MediaInfo an HDMI Input](#43-mediainfo-an-hdmi-input)
+  - [4.2. MediaInfo for any App](#42-mediainfo-for-any-app)
+  - [4.3. MediaInfo for an HDMI Input](#43-mediainfo-for-an-hdmi-input)
 - [5. Device Media Capabilities](#5-device-media-capabilities)
-  - [5.1. Dynamic Range](#51-dynamic-range)
-  - [5.2. Video Codec](#52-video-codec)
-  - [5.3. Immersive Audio](#53-immersive-audio)
-  - [5.4. Audio Codec](#54-audio-codec)
+  - [5.1. Video Codec](#51-video-codec)
+  - [5.2. Audio Codec](#52-audio-codec)
+  - [5.3. Dynamic Range](#53-dynamic-range)
+  - [5.4. Immersive Audio](#54-immersive-audio)
   - [5.5. Resolution](#55-resolution)
-- [6. APIs](#6-apis)
-  - [6.1. Core SDK APIs](#61-core-sdk-apis)
-  - [6.2. Manage SDK APIs](#62-manage-sdk-apis)
-- [7. API PoC](#7-api-poc)
-  - [7.1. App detecting it's own media info](#71-app-detecting-its-own-media-info)
-  - [7.2. App w/ PiP detecting it's own media info](#72-app-w-pip-detecting-its-own-media-info)
-  - [7.3. EPG detecting when Ogg codec is used](#73-epg-detecting-when-ogg-codec-is-used)
 
 ## 3. MimeTypes
 The Firebolt `MimeTypes` module consists of static enumeration of all codecs, formats, etc., and their mime-types.
@@ -100,7 +93,7 @@ The Firebolt `MimeTypes` module consists of static enumeration of all codecs, fo
 ## 4. Media Info
 
 The Firebolt `MediaInfo` module consists of APIs to get information
-about any media actively being decoded by the Media Pipeline.
+about any media actively being decoded by the Media Pipeline or an active HDMI input.
 
 ### 4.1. MediaInfo for current app
 
@@ -110,13 +103,21 @@ parameter, which identifies the Media Pipeline in the current app's scope
 that is being queried, e.g.:
 
 ```javascript
-import { Media Info } from '@firebolt-js/sdk'
+import { MediaInfo } from '@firebolt-js/sdk'
 
-MediaInfo.videoCodec('1') // return the video codec in the current app's media pipeline 1
-MediaInfo.videoCodec('2') // return the video codec in the current app's media pipeline 2
+MediaInfo.videoCodec(1) // return the video codec in the current app's media pipeline 1
+MediaInfo.videoCodec(2) // return the video codec in the current app's media pipeline 2
 ```
 
-**TODO**: look at Rialto's Manage APIs to check on semantics of pipeline/app IDs.
+The `pipeline` parameter is required for the JSON-RPC request, however, the Firebolt SDK **SHOULD** provide a default value of `1` if it is not provided by the calling app.
+
+For example:
+
+```javascript
+MediaInfo.videoCodec()
+```
+
+Would query the video codec for the app's pipeline `1` in JavaScript, which supports default values for parameters.
 
 #### 4.1.1. Video Codec
 
@@ -258,7 +259,7 @@ have a corresponding `onResolutionChanged` notification.
 Use of the `resolution` APIs require access to the `use` role of the
 `xrn:firebolt:capability:media-info:resolution` capability.
 
-### 4.2. MediaInfo any Media Pipeline
+### 4.2. MediaInfo for any App
 
 First party apps need a way to query the media info for media currently
 being played by *any* app.
@@ -277,7 +278,11 @@ The following APIs **MUST** exist:
 These APIs **MUST** all be Firebolt `property:readonly` APIs with the
 corresponding notifications.
 
-These APIs take an `appId` parameter and a `pipeline` parameter identifying for which Media Pipeline the info is being requested.
+These APIs take an `appId` parameter and a `pipeline` parameter identifying for which Media Pipeline the info is being requested, e.g.:
+
+```javascript
+MediaInfo.videoCodecForApp('someapp', 1)
+```
 
 These APIs **MUST** all be gated by `manage` role of the same
 capabilities required by the corresponding methods above, i.e.:
@@ -294,7 +299,7 @@ capabilities required by the corresponding methods above, i.e.:
 
 *Capability names truncated for legibility
 
-### 4.3. MediaInfo an HDMI Input
+### 4.3. MediaInfo for an HDMI Input
 
 First party apps need a way to query the media info for media currently
 being played via an HDMI input.
@@ -313,7 +318,11 @@ The following APIs **MUST** exist:
 These APIs **MUST** all be Firebolt `property:readonly` APIs with the
 corresponding notifications.
 
-These APIs take an `inputId` parameter identifying for which Media Pipeline the info is being requested.
+These APIs take an `portId` parameter identifying for which HDMI input the info is being requested, e.g:
+
+```javascript
+MediaInfo.videoCodecForInput('hdmi1')
+```
 
 These APIs **MUST** all be gated by `manage` role of the same
 capabilities required by the corresponding methods above, i.e.:
@@ -351,7 +360,60 @@ import { Device } from '@firebolt-js/sdk'
 Device.videoCodecs() // return the supported video codecs
 ```
 
-### 5.1. Dynamic Range
+### 5.1. Video Codec
+
+The `Device` module **MUST** have a `videoCodecs` API that returns the
+video codecs, e.g., H.265, VP9, etc., that are currently supported by the
+device. This API **MUST** return an Array with one or more of the following
+values:
+
+-   `"av1"`
+-   `"h263"`
+-   `"h264"`
+-   `"h265"`
+-   `"mpeg"`
+-   `"vp8"`
+-   `"vp9"`
+-   `"vp10"`
+-   `"vc1"`
+-   `"unknown"`
+-   `"none"`
+
+The videoCodecs API **MUST** be a Firebolt `property:immutable` API.
+
+Use of the `videoCodecs` API requires access to the `use` role of the
+`xrn:firebolt:capability:device:info` capability.
+
+### 5.2. Audio Codec
+
+The `Device` module **MUST** have an `audioCodecs` API that returns
+the audio codecs, e.g., ac3, ac4, ogg, etc., currently supported by the
+device. This API **MUST** return an Array with one or more of the
+following values:
+
+-   `"aac"`
+-   `"ac3"`
+-   `"ac3plus"`
+-   `"eac3"`
+-   `"ac4"`
+-   `"dts"`
+-   `"mpeg1"`
+-   `"mpeg2"`
+-   `"mpeg3"`
+-   `"mpeg4"`
+-   `"opus"`
+-   `"ogg"`
+-   `"trueHd"`
+-   `"wav"`
+-   `"unknown"`
+-   `"none"`
+  
+The audioCodecs API **MUST** be a Firebolt `property:immutable` API.
+
+Use of the `audioCodecs` API requires access to the `use` role of the
+`xrn:firebolt:capability:device:info` capability.
+
+### 5.3. Dynamic Range
 
 The `Device` module **MUST** have a `dynamicRangeProfiles` API that
 returns the dynamic range profiles, e.g., HDR, HDR10, etc., that are
@@ -381,31 +443,7 @@ Use of the `dynamicRangeProfiles` and `supportsHDR` APIs require access to the
 `use` role of the `xrn:firebolt:capability:device:info`
 capability.
 
-### 5.2. Video Codec
-
-The `Device` module **MUST** have a `videoCodecs` API that returns the
-video codecs, e.g., H.265, VP9, etc., that are currently supported by the
-device. This API **MUST** return an Array with one or more of the following
-values:
-
--   `"av1"`
--   `"h263"`
--   `"h264"`
--   `"h265"`
--   `"mpeg"`
--   `"vp8"`
--   `"vp9"`
--   `"vp10"`
--   `"vc1"`
--   `"unknown"`
--   `"none"`
-
-The videoCodecs API **MUST** be a Firebolt `property:immutable` API.
-
-Use of the `videoCodecs` API requires access to the `use` role of the
-`xrn:firebolt:capability:device:info` capability.
-
-### 5.3. Immersive Audio
+### 5.4. Immersive Audio
 
 The `Device` module **MUST** have an `audioProfiles` API that returns
 the immersive (or not) audio profiles, e.g., Dolby Atmos, etc., that are
@@ -433,35 +471,6 @@ notification.
 Use of the `audioProfiles` and `supportsImmersiveAudio` APIs require access
 to the `use` role of the `xrn:firebolt:capability:device:info` capability.
 
-### 5.4. Audio Codec
-
-The `Device` module **MUST** have an `audioCodecs` API that returns
-the audio codecs, e.g., ac3, ac4, ogg, etc., currently supported by the
-device. This API **MUST** return an Array with one or more of the
-following values:
-
--   `"aac"`
--   `"ac3"`
--   `"ac3plus"`
--   `"eac3"`
--   `"ac4"`
--   `"dts"`
--   `"mpeg1"`
--   `"mpeg2"`
--   `"mpeg3"`
--   `"mpeg4"`
--   `"opus"`
--   `"ogg"`
--   `"trueHd"`
--   `"wav"`
--   `"unknown"`
--   `"none"`
-  
-The audioCodecs API **MUST** be a Firebolt `property:immutable` API.
-
-Use of the `audioCodecs` API requires access to the `use` role of the
-`xrn:firebolt:capability:device:info` capability.
-
 ### 5.5. Resolution
 
 The `Device` module **MUST** have a `resolution` API that returns
@@ -476,99 +485,3 @@ have a corresponding `onResolutionChanged` notification.
 
 Use of the `resolution` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
-
-## 6. APIs
-
-### 6.1. Core SDK APIs
-
-The JavaScript Core SDK will have a generated, client-side method, `getPipeline`. This method takes a single paramter, which represents a Media Pipeline session id for the current app.
-
-It returns a wrapped up interface of all `xrn:firebolt:capability:media-info:*` use capabilities, and caches the session ID so there is no need to pass it to every method call.
-
-Example:
-
-```javascript
-import { MediaInfo } from '@firebolt-js/sdk'
-
-const mediaInfo = MediaInfo.getPipeline('1')
-
-console.log(mediaInfo.dynamicRangeProfile())
-```
-
-### 6.2. Manage SDK APIs
-The JavaScript manage SDK will have a generated, client-side method, `getHDMI`. This method takes a single paramter, which represents an HDMI input id.
-
-It returns a wrapped up interface of all `xrn:firebolt:capability:media-info:*` use capabilities, and caches the session ID so there is no need to pass it to every method call.
-
-**TODO**:
-
-Write up a sample of each API style we are considering for Core, Manage, and Manage-HDMI, so we can compare.
-
-
-Example:
-
-```javascript
-import { MediaInfo } from '@firebolt-js/manage-sdk'
-
-const hdmiInfo = MediaInfo.getHdmi('hdmi1')
-
-console.log(hdmiInfo.dynamicRangeProfile())
-
-const appInfo = MediaInfo.getPipelineForApp('hulu', '1')
-
-await MediaInfo.videoCodecs().forEach(pipeline => {
-  console.log(pipeline.videoCodecs())
-})
-
-MediaInfo.dynamicRangeProfile((profile) => {
-  if (profile === 'dolbyVision') {
-
-  }
-})
-
-console.log(appInfo.audioProfile())
-```
-
-## 7. API PoC
-
-### 7.1. App detecting it's own media info
-
-```javascript
-import { MediaInfo, Device, Codecs } from '@firebolt-js/sdk'
-
-if (MediaInfo.videoCodec() === Codecs.VIDEO_OGG) {
-  console.log('why do i use this codec?')
-}
-```
-
-### 7.2. App w/ PiP detecting it's own media info
-
-```javascript
-import { MediaInfo, Device, Codecs } from '@firebolt-js/sdk'
-
-if (MediaInfo.videoCodec('2') === Codecs.VIDEO_OGG) {
-  console.log('why do i use this codec?')
-}
-```
-
-### 7.3. EPG detecting when Ogg codec is used
-
-```javascript
-import { MediaInfo, Device, Codecs } from '@firebolt-js/manage-sdk'
-
-MediaInfo.listen('videoCodecForPipelineChanged', (event) => {
-  if (event.type === 'hdmi' {
-    console.log('HDMI codec changed to: ' + event.codec)
-    if (event.codec === Codecs.VIDEO_OGG) {
-      console.log('why am i using this codec?')
-    } 
-  }
-  else if (event.type === 'streaming') {
-    console.log('App id ' + event.appId + ' codec changed to: ' + event.codec + ' on pipeline ' + event.pipeline)
-    if (event.codec === Codecs.VIDEO_OGG) {
-      console.log('why am i using this codec?')
-    } 
-  }
-})
-```
-
