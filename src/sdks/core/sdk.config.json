@@ -7,7 +7,8 @@
             "module": "Accessibility",
             "use": [
                 "xrn:firebolt:capability:accessibility:closedcaptions",
-                "xrn:firebolt:capability:accessibility:voiceguidance"
+                "xrn:firebolt:capability:accessibility:voiceguidance",
+                "xrn:firebolt:capability:accessibility:audiodescriptions"
             ]
         },
         {

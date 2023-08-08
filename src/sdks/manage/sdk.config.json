@@ -55,6 +55,15 @@
             ]
         },
         {
+            "module": "AudioDescriptions",
+            "use": [
+                "xrn:firebolt:capability:accessibility:audiodescriptions"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:accessibility:audiodescriptions"
+            ]
+        },
+        {
             "module": "VoiceGuidance",
             "use": [
                 "xrn:firebolt:capability:accessibility:voiceguidance"
@@ -95,7 +104,8 @@
         {
             "module": "Advertising",
             "manage": [
-                "xrn:firebolt:capability:advertising:configuration"
+                "xrn:firebolt:capability:advertising:configuration",
+                "xrn:firebolt:capability:advertising:identifier"
             ]
         },
         {
@@ -130,6 +140,12 @@
             "module": "SecureStorage",
             "manage": [
                 "xrn:firebolt:capability:storage:secure"
+            ]
+        },
+        {
+            "module": "Discovery",
+            "manage": [
+                "xrn:firebolt:capability:discovery:sign-in-status"
             ]
         }
     ]
