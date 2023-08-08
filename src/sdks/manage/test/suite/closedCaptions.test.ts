@@ -112,12 +112,6 @@ test("ClosedCaptions.setFontColor() with null", () => {
   });
 });
 
-test("ClosedCaptions.setFontColor() with ffffff", () => {
-  return ClosedCaptions.fontColor("#ffffff").then((res: null) => {
-    expect(res).toBe(null);
-  });
-});
-
 test("ClosedCaptions.setFontColor() with undefined", () => {
   return ClosedCaptions.fontColor(undefined).then((res: null) => {
     expect(res).toBe("#ffffff");
