@@ -1,13 +1,14 @@
 # Requirements Style Guide
 
-Document Status: Working Draft
+Document Status: Candidate Specification
 
 See [Firebolt Requirements Governance](../../governance.md) for more info.
 
-| Contributor    | Organization   |
-| -------------- | -------------- |
-| Anthony Borzota            | Comcast            |
-| Jeremy LaCivita | Comcast |
+| Contributor     | Organization   |
+| --------------- | -------------- |
+| Anthony Borzota | Comcast        |
+| Jeremy LaCivita | Comcast        |
+| Stuart Harris   | Sky            |
 
 ## 1. Overview
 
