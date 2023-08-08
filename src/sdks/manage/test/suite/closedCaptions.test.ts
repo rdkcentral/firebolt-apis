@@ -105,3 +105,21 @@ test("clear", () => {
   const result = ClosedCaptions.clear(-1000);
   expect(result).toBeFalsy();
 });
+
+test("ClosedCaptions.setFontColor() with null", () => {
+  return ClosedCaptions.fontColor(null).then((res: null) => {
+    expect(res).toBe(null);
+  });
+});
+
+test("ClosedCaptions.setFontColor() with ffffff", () => {
+  return ClosedCaptions.fontColor("#ffffff").then((res: null) => {
+    expect(res).toBe(null);
+  });
+});
+
+test("ClosedCaptions.setFontColor() with undefined", () => {
+  return ClosedCaptions.fontColor(undefined).then((res: string) => {
+    expect(res).toBe("#ffffff");
+  });
+});
