@@ -1,4 +1,4 @@
-# Requirements Style Guide
+# Media Info Requirements
 
 Document Status: Candidate Specification
 
