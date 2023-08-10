@@ -25,8 +25,8 @@
 extern "C" {
 #endif
 
-uint32_t test_firebolt_core_main();
-uint32_t test_properties_get_policy();
+int32_t test_firebolt_core_main();
+int32_t test_properties_get_policy();
 
 #ifdef __cplusplus
 }

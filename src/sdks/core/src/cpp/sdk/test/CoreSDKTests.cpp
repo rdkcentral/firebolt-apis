@@ -27,11 +27,11 @@ namespace FireboltSDK {
                              std::forward_as_tuple(&GetDiscoveryPolicy));
     }
 
-    /* static */ uint32_t CoreTests::GetDiscoveryPolicy()
+    /* static */ int32_t CoreTests::GetDiscoveryPolicy()
     {
         const string method = _T("discovery.policy");
         WPEFramework::Core::ProxyType<Policy> response;
-        uint32_t status = FireboltSDK::Properties::Get(method, response);
+        int32_t status = FireboltSDK::Properties::Get(method, response);
 
         EXPECT_EQ(status, FireboltSDKErrorNone);
         if (status == FireboltSDKErrorNone) {
@@ -54,16 +54,16 @@ namespace FireboltSDK {
 extern "C" {
 #endif
 
-uint32_t test_firebolt_core_main()
+int32_t test_firebolt_core_main()
 {
     return FireboltSDK::Tests::Main<FireboltSDK::CoreTests>();
 }
 
-uint32_t test_properties_get_policy()
+int32_t test_properties_get_policy()
 {
     const string method = _T("discovery.policy");
     WPEFramework::Core::ProxyType<FireboltSDK::Policy> response;
-    uint32_t status = FireboltSDK::Properties::Get(method, response);
+    int32_t status = FireboltSDK::Properties::Get(method, response);
 
     EXPECT_EQ(status, FireboltSDKErrorNone);
     if (status == FireboltSDKErrorNone) {

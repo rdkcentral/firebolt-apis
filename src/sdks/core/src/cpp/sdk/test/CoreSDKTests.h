@@ -57,6 +57,6 @@ namespace FireboltSDK {
         CoreTests();
         ~CoreTests() override = default;
 
-        static uint32_t GetDiscoveryPolicy();
+        static int32_t GetDiscoveryPolicy();
     };
 }

@@ -24,16 +24,16 @@
 extern "C" {
 #endif
 
-//uint32_t test_generated_properties_get_device_version();
-uint32_t test_generated_properties_get_device_id();
-uint32_t test_generated_properties_get_accessibility_closedcaption();
-uint32_t test_generated_properties_get_accessibility_voiceguidancesettings();
-uint32_t test_generated_properties_get_advertising_policy();
-uint32_t test_generated_event_device_name();
-uint32_t test_generated_event_device_name_with_register_same_callback();
-uint32_t test_generated_event_device_screenresolution();
-uint32_t test_generated_event_accessibility_voice_guidance_settings();
-//uint32_t test_generated_calls_metrics_lifecycle_ready();
+//int32_t test_generated_properties_get_device_version();
+int32_t test_generated_properties_get_device_id();
+int32_t test_generated_properties_get_accessibility_closedcaption();
+int32_t test_generated_properties_get_accessibility_voiceguidancesettings();
+int32_t test_generated_properties_get_advertising_policy();
+int32_t test_generated_event_device_name();
+int32_t test_generated_event_device_name_with_register_same_callback();
+int32_t test_generated_event_device_screenresolution();
+int32_t test_generated_event_accessibility_voice_guidance_settings();
+//int32_t test_generated_calls_metrics_lifecycle_ready();
 
 #ifdef __cplusplus
 }

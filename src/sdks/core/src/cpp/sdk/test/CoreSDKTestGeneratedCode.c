@@ -31,10 +31,10 @@
 extern "C" {
 #endif
 
-uint32_t test_generated_properties_get_device_id()
+int32_t test_generated_properties_get_device_id()
 {
     Firebolt_String_t handle;
-    uint32_t result = Device_GetId(&handle);
+    int32_t result = Device_GetId(&handle);
 
     if (result == FireboltSDKErrorNone) {
         printf("\nDevice: Id:%s\n", Firebolt_String(handle));
@@ -45,10 +45,10 @@ uint32_t test_generated_properties_get_device_id()
     return result;
 }
 #if 0
-uint32_t test_generated_properties_get_device_version()
+int32_t test_generated_properties_get_device_version()
 {
     Device_Versions_t handle;
-    uint32_t result = Device_GetVersion(&handle);
+    int32_t result = Device_GetVersion(&handle);
 
     if (result == FireboltSDKErrorNone) {
         if (Device_Versions_IsValid(handle)) {
@@ -84,10 +84,10 @@ uint32_t test_generated_properties_get_device_version()
     return result;
 }
 #endif
-uint32_t test_generated_properties_get_accessibility_closedcaption()
+int32_t test_generated_properties_get_accessibility_closedcaption()
 {
     Accessibility_ClosedCaptionsSettings_t handle;
-    uint32_t result = Accessibility_GetClosedCaptionsSettings(&handle);
+    int32_t result = Accessibility_GetClosedCaptionsSettings(&handle);
 
     if (result == FireboltSDKErrorNone) {
         if (Accessibility_ClosedCaptionsSettings_IsValid(handle) == true) {
@@ -128,10 +128,10 @@ uint32_t test_generated_properties_get_accessibility_closedcaption()
     EXPECT_EQ(result, FireboltSDKErrorNone);
     return result;
 }
-uint32_t test_generated_properties_get_accessibility_voiceguidancesettings()
+int32_t test_generated_properties_get_accessibility_voiceguidancesettings()
 {
     Accessibility_VoiceGuidanceSettings_t handle;
-    uint32_t result = Accessibility_GetVoiceGuidanceSettings(&handle);
+    int32_t result = Accessibility_GetVoiceGuidanceSettings(&handle);
 
     if (result == FireboltSDKErrorNone) {
         if (Accessibility_VoiceGuidanceSettings_IsValid(handle) == true) {
@@ -169,10 +169,10 @@ const char* get_skiprestriction_enum_string(Advertising_SkipRestriction skipRest
     return strSkipRestriction;
 }
 
-uint32_t test_generated_properties_get_advertising_policy()
+int32_t test_generated_properties_get_advertising_policy()
 {
     Advertising_AdPolicy_t handle;
-    uint32_t result = Advertising_GetPolicy(&handle);
+    int32_t result = Advertising_GetPolicy(&handle);
     if (result == FireboltSDKErrorNone) {
         if (Advertising_AdPolicy_IsValid(handle) == true) {
             printf("AdPolicy: ");
@@ -205,9 +205,9 @@ static void NotifyDeviceNameChange(const void* userData, Firebolt_String_t handl
     EXPECT_EQ(strncmp((const char*)userData, deviceNameTestStr, strlen(deviceNameTestStr)), 0);
     pthread_cond_signal(&cond);
 }
-uint32_t test_generated_event_device_name()
+int32_t test_generated_event_device_name()
 {
-    uint32_t result = Device_Register_OnNameChanged((const void*)&NotifyDeviceNameChange, deviceNameTestStr);
+    int32_t result = Device_Register_OnNameChanged((const void*)&NotifyDeviceNameChange, deviceNameTestStr);
     EXPECT_EQ(result, FireboltSDKErrorNone);
     if (result != FireboltSDKErrorNone) {
         printf("Set event device.name status = %d \n", result);
@@ -225,9 +225,9 @@ uint32_t test_generated_event_device_name()
     return result;
 }
 
-uint32_t test_generated_event_device_name_with_register_same_callback()
+int32_t test_generated_event_device_name_with_register_same_callback()
 {
-    uint32_t result = Device_Register_OnNameChanged((const void*)NotifyDeviceNameChange, deviceNameTestStr);
+    int32_t result = Device_Register_OnNameChanged((const void*)NotifyDeviceNameChange, deviceNameTestStr);
     EXPECT_EQ(result, FireboltSDKErrorNone);
     if (result != FireboltSDKErrorNone) {
         printf("Set event device.name status = %d \n", result);
@@ -259,9 +259,9 @@ static void NotifyDeviceScreenResolutionChange(const void* userData, Device_Reso
     EXPECT_EQ(strncmp((const char*)userData, deviceScreenResolutionTestStr, strlen(deviceScreenResolutionTestStr)), 0);
     pthread_cond_signal(&cond);
 }
-uint32_t test_generated_event_device_screenresolution()
+int32_t test_generated_event_device_screenresolution()
 {
-    uint32_t result = Device_Register_OnScreenResolutionChanged((const void*)NotifyDeviceScreenResolutionChange, deviceScreenResolutionTestStr);
+    int32_t result = Device_Register_OnScreenResolutionChanged((const void*)NotifyDeviceScreenResolutionChange, deviceScreenResolutionTestStr);
     EXPECT_EQ(result, FireboltSDKErrorNone);
     if (result != FireboltSDKErrorNone) {
         printf("Set event device.screenresolution status = %d \n", result);
@@ -292,9 +292,9 @@ static void NotifyAccessibilityVoiceGuidanceChange(const void* userData, Accessi
     EXPECT_EQ(strncmp((const char*)userData, accessibilityVoiceGuidanceTestStr, strlen(accessibilityVoiceGuidanceTestStr)), 0);
     pthread_cond_signal(&cond);
 }
-uint32_t test_generated_event_accessibility_voice_guidance_settings()
+int32_t test_generated_event_accessibility_voice_guidance_settings()
 {
-    uint32_t result = Accessibility_Register_OnVoiceGuidanceSettingsChanged((const void*)NotifyAccessibilityVoiceGuidanceChange, accessibilityVoiceGuidanceTestStr);
+    int32_t result = Accessibility_Register_OnVoiceGuidanceSettingsChanged((const void*)NotifyAccessibilityVoiceGuidanceChange, accessibilityVoiceGuidanceTestStr);
     EXPECT_EQ(result, FireboltSDKErrorNone);
     if (result != FireboltSDKErrorNone) {
         printf("Set event device.name status = %d \n", result);
@@ -312,9 +312,9 @@ uint32_t test_generated_event_accessibility_voice_guidance_settings()
     return result;
 }
 #if 0
-uint32_t test_generated_calls_metrics_lifecycle_ready()
+int32_t test_generated_calls_metrics_lifecycle_ready()
 {
-    uint32_t result = Lifecycle_Ready();
+    int32_t result = Lifecycle_Ready();
     if (result != FireboltSDKErrorNone) {
         printf("Lifecycle.ready call status = %d \n", result);
     } else {

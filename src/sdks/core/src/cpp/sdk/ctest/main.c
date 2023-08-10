@@ -46,7 +46,7 @@ void ShowEventMenu()
         opt = toupper(getchar()); \
         switch (opt) { \
         case 'R': { \
-            uint32_t result = Module##_Register_On##eventFuncName((const void*)Callback, eventTestStr); \
+            int32_t result = Module##_Register_On##eventFuncName((const void*)Callback, eventTestStr); \
             if (result != FireboltSDKErrorNone) { \
                 printf("Register event %s is failed, status = %d \n", eventName, result); \
             } else { \
@@ -55,7 +55,7 @@ void ShowEventMenu()
             break; \
         } \
         case 'U': { \
-            uint32_t result = Module##_Unregister_On##eventFuncName((const void*)Callback); \
+            int32_t result = Module##_Unregister_On##eventFuncName((const void*)Callback); \
             if (result != FireboltSDKErrorNone) { \
                 printf("Unregister event %s is failed, status = %d \n", eventName, result); \
             } else { \
@@ -181,7 +181,7 @@ int main (int argc, char* argv[])
         case 'I': {
             //Lets get the Device ID
             Firebolt_String_t handle;
-            uint32_t result = Device_GetId(&handle);
+            int32_t result = Device_GetId(&handle);
             if (result == FireboltSDKErrorNone) {
                 printf("Device: Id:%s\n\n", Firebolt_String(handle));
                 Firebolt_String_Release(handle);
@@ -193,7 +193,7 @@ int main (int argc, char* argv[])
         }
         case 'C': {
             Accessibility_ClosedCaptionsSettings_t handle;
-            uint32_t result = Accessibility_GetClosedCaptionsSettings(&handle);
+            int32_t result = Accessibility_GetClosedCaptionsSettings(&handle);
 
             if (result == FireboltSDKErrorNone) {
                 if (Accessibility_ClosedCaptionsSettings_IsValid(handle) == true) {
@@ -236,7 +236,7 @@ int main (int argc, char* argv[])
         }
         case 'G': {
             Accessibility_VoiceGuidanceSettings_t handle;
-            uint32_t result = Accessibility_GetVoiceGuidanceSettings(&handle);
+            int32_t result = Accessibility_GetVoiceGuidanceSettings(&handle);
 
             if (result == FireboltSDKErrorNone) {
                 if (Accessibility_VoiceGuidanceSettings_IsValid(handle) == true) {
@@ -254,7 +254,7 @@ int main (int argc, char* argv[])
         }
         case 'P': {
             Advertising_AdPolicy_t handle;
-            uint32_t result = Advertising_GetPolicy(&handle);
+            int32_t result = Advertising_GetPolicy(&handle);
             if (result == FireboltSDKErrorNone) {
                 if (Advertising_AdPolicy_IsValid(handle) == true) {
                     printf("AdPolicy: ");
@@ -273,7 +273,7 @@ int main (int argc, char* argv[])
         }
         case 'U': {
             Firebolt_String_t handle;
-            uint32_t result = Account_GetUid(&handle);
+            int32_t result = Account_GetUid(&handle);
             if (result == FireboltSDKErrorNone) {
                 printf("Account: Uid:%s\n\n", Firebolt_String(handle));
                 Firebolt_String_Release(handle);
@@ -427,7 +427,7 @@ int main (int argc, char* argv[])
                 Entertainment_EntityInfo_Release(entityInfo);
 
                 //All Set, Call the Push
-                uint32_t result = Discovery_PushEntityInfo(entityInfoResult);
+                int32_t result = Discovery_PushEntityInfo(entityInfoResult);
                 if (result == FireboltSDKErrorNone) {
                     printf("\nSuccessfully Pushed entityInfo\n");
 
