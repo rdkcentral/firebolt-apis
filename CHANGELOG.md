@@ -1,3 +1,12 @@
+# [0.16.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0-next.1...v0.16.0-next.2) (2023-08-10)
+
+
+### Bug Fixes
+
+* Unit test cases for setting null value ([#159](https://github.com/rdkcentral/firebolt-apis/issues/159)) ([7e011e2](https://github.com/rdkcentral/firebolt-apis/commit/7e011e2937842902c6b111646492b33a057b23c8))
+* Update firebolt-openrpc, fix tests ([9480984](https://github.com/rdkcentral/firebolt-apis/commit/948098490595ffa374df08f3f44157d70beb7990))
+* Update firebolt-openrpc, fix tests ([312b5ec](https://github.com/rdkcentral/firebolt-apis/commit/312b5ec627e9b494ac455475efe7851bed70c34e))
+
 # [0.16.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0...v0.16.0-next.1) (2023-08-07)
 
 
