@@ -1,3 +1,26 @@
+# [0.16.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0-next.2...v0.16.0-next.3) (2023-08-14)
+
+
+### Bug Fixes
+
+* Update package.json to point to release 2.0.4 of `firebolt-openrpc` ([9e3cf55](https://github.com/rdkcentral/firebolt-apis/commit/9e3cf55d465d3b429ebcba0167e888eb7d7f0588))
+
+# [0.16.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0-next.1...v0.16.0-next.2) (2023-08-10)
+
+
+### Bug Fixes
+
+* Unit test cases for setting null value ([#159](https://github.com/rdkcentral/firebolt-apis/issues/159)) ([7e011e2](https://github.com/rdkcentral/firebolt-apis/commit/7e011e2937842902c6b111646492b33a057b23c8))
+* Update firebolt-openrpc, fix tests ([9480984](https://github.com/rdkcentral/firebolt-apis/commit/948098490595ffa374df08f3f44157d70beb7990))
+* Update firebolt-openrpc, fix tests ([312b5ec](https://github.com/rdkcentral/firebolt-apis/commit/312b5ec627e9b494ac455475efe7851bed70c34e))
+
+# [0.16.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0...v0.16.0-next.1) (2023-08-07)
+
+
+### Features
+
+* Added manage apis for windlowColor and windowOpacity ([#157](https://github.com/rdkcentral/firebolt-apis/issues/157)) ([f508358](https://github.com/rdkcentral/firebolt-apis/commit/f508358aeb2f58bb3893bbfaf09e2340fcadac8f))
+
 # [0.15.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0...v0.15.0) (2023-07-31)
 
 
