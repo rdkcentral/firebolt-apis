@@ -1,3 +1,10 @@
+# [0.16.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0-next.2...v0.16.0-next.3) (2023-08-14)
+
+
+### Bug Fixes
+
+* Update package.json to point to release 2.0.4 of `firebolt-openrpc` ([9e3cf55](https://github.com/rdkcentral/firebolt-apis/commit/9e3cf55d465d3b429ebcba0167e888eb7d7f0588))
+
 # [0.16.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0-next.1...v0.16.0-next.2) (2023-08-10)
 
 
