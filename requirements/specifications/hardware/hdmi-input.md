@@ -230,18 +230,18 @@ function autoLowLatencyModeCapable(port: string, autoLowLatencyMode: boolean)
 #### 7.3.1. Port Auto Low Latency Mode Capable Changed Notification
 Whenever the underlying HDMI implementation executes an ALLM support change (either on or off), this notification must fire:
 
-`HDMIInput.onAutoLowLatencyModelCapableChanged`
+`HDMIInput.onAutoLowLatencyModeCapableChanged`
 
 To listen for port ALLM notifications:
 
 ```javascript
-HDMIInput.autoLowLatencyModelCapableChanged((data) => {
-  console.log('Port ' + data.port + ' ALLM changed to ' + data.autoLowLatencyMode)
+HDMIInput.autoLowLatencyModeCapableChanged((data) => {
+  console.log('Port ' + data.port + ' ALLM changed to ' + data.autoLowLatencyModeCapable)
 })
 ```
 
 **TODO**: This is different than how we currently do context parameters on events. Will need some Firebolt SDK work to generate this API.
 
-`autoLowLatencyModeSupport` - whether or not ALLM is advertised as supported in the E-EDID for the port.
+`autoLowLatencyModeCapable` - whether or not ALLM is advertised as supported in the E-EDID for the port.
 
 `port` - the HDMI port that had an E-EDID ALLM advertisement change.
