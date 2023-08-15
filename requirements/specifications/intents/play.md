@@ -39,11 +39,11 @@ The `play-entity` intent **MUST** have a `data` object property, which is an obj
 
 > The `data` object **MUST** have an `entity` object property.
 >
-> The `entity` object, **MUST** be an [Entity](../entities/index.md).
+> The `entity` object, **MUST** be an [Entity](../entities/).
 > 
 > The `data` object **MAY** have an `options` object property that conforms to [Play Entity Options](#31-play-entity-options).
 
-The `play-entity` intent **MUST** have a `context` object property that conforms to the [Intent Context](./context.md).
+The `play-entity` intent **MUST** have a `context` object property that conforms to the [Intent Context](./#5-intent-context).
 
 An example play-entity intent:
 
@@ -146,7 +146,7 @@ The `play-query` intent **MUST** have `data` property, which is an object confor
 > 
 > The `data` object **MAY** have an `options` object property that conforms to [Play Options](#41-play-options-for-query).
 
-The `play-query` intent **MUST** have a `context` object property that conforms to the [Intent Context](./context.md).
+The `play-query` intent **MUST** have a `context` object property that conforms to the [Intent Context](./index.md#5-intent-context).
 
 An example play intent:
 
