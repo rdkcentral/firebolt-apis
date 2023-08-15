@@ -24,11 +24,10 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [5. Low Latency](#5-low-latency)
   - [5.1. Low Latency Mode](#51-low-latency-mode)
     - [5.1.1. Low Latency Mode Notification](#511-low-latency-mode-notification)
-  - [5.2. Input Source Device Auto Low Latency Mode Notification](#52-input-source-device-auto-low-latency-mode-notification)
-  - [5.3. Input Port Auto Low Latency Mode Support](#53-input-port-auto-low-latency-mode-support)
-    - [5.3.1. Input Port Auto Low Latency Mode Support Changed Notification](#531-input-port-auto-low-latency-mode-support-changed-notification)
+  - [5.2. Auto Low Latency Mode Signalled](#52-auto-low-latency-mode-signalled)
+  - [5.3. Port Auto Low Latency Model Capable](#53-port-auto-low-latency-model-capable)
+    - [5.3.1. Port Auto Low Latency Model Capable Changed Notification](#531-port-auto-low-latency-model-capable-changed-notification)
 - [6. Port Signal Notification](#6-port-signal-notification)
-- [7. Input Source OSD Name Notification](#7-input-source-osd-name-notification)
 
 ## 3. HDMI Input Ports
 The `HDMIInput` module **MUST** have a `ports` method that lists all physical HDMI input ports on the device.
@@ -132,14 +131,12 @@ Whenever the underlying HDMI implementation executes an LLM change (either on or
 `HDMIInput.onLowLatencyModeChanged`
 
 
-### 5.2. Input Source Device Auto Low Latency Mode Notification
-The `HDMIInput` module **MUST** have an `onSourceAutoLowLatencyModeChanged` notification that fires when any HDMI input device changes its advertising for ALLM.
+### 5.2. Auto Low Latency Mode Signalled
+The `HDMIInput` module **MUST** have an `onAutoLowLatencyModeSignalChanged` notification that fires when the ALLM signal from the source connected to a port changes.
 
 This notification **MUST** have an object payload.
 
-The object payload **MUST** have a `port` string property that denotes which input port has detected a change to the ALLM advertising.
-
-**TODO**: is advertising appropriate for the device or just the port? Signalling was confusing, since we also have a signal proprty.
+The object payload **MUST** have a `port` string property that denotes which input port has detected a change to the ALLM signal.
 
 The `port` property **MUST** match the pattern:
 
@@ -154,14 +151,14 @@ Example payload:
 ```json
   {
       "port": "HDMI1",
-      "autoLowLatencyMode": true
+      "autoLowLatencyModeSignalled": true
   }
 ```
 
-### 5.3. Input Port Auto Low Latency Mode Support
-The `HDMIInput` module **MUST** have a boolean property `portAutoLowLatencyMode` reflects the HDMI port setting for advertising ALLM support in its E-EDID.
+### 5.3. Port Auto Low Latency Model Capable
+The `HDMIInput` module **MUST** have a boolean property `autoLowLatencyModeCapable` which reflects the HDMI port setting for advertising ALLM support in its E-EDID.
 
-The `portAutoLowLatencyMode` property takes a string context parameter, `port` to identify the HDMI port.
+The `autoLowLatencyModeCapable` property takes a string context parameter, `port` to identify the HDMI port.
 
 The `port` parameter must match the pattern:
 
@@ -174,18 +171,18 @@ Changing this property turns on/off the underlying auto low latency mode adverti
 To change the property:
 
 ```javascript
-function portAutoLowLatencyMode(port: string, autoLowLatencyMode: boolean)
+function autoLowLatencyModeCapable(port: string, autoLowLatencyMode: boolean)
 ```
 
-#### 5.3.1. Input Port Auto Low Latency Mode Support Changed Notification
+#### 5.3.1. Port Auto Low Latency Model Capable Changed Notification
 Whenever the underlying HDMI implementation executes an ALLM support change (either on or off), this notification must fire:
 
-`HDMIInput.onPortAutoLowLatencyModeChanged`
+`HDMIInput.onAutoLowLatencyModelCapableChanged`
 
 To listen for port ALLM notifications:
 
 ```javascript
-HDMIInput.portAutoLowLatencyModeChanged() (data) => {
+HDMIInput.autoLowLatencyModelCapableChanged((data) => {
   console.log('Port ' + data.port + ' ALLM changed to ' + data.autoLowLatencyMode)
 })
 ```
@@ -197,7 +194,7 @@ HDMIInput.portAutoLowLatencyModeChanged() (data) => {
 `port` - the HDMI port that had an E-EDID ALLM advertisement change.
 
 ## 6. Port Signal Notification
-The `HDMIInput` module **MUST** have an `onPortSignalChanged` notification that fires when any HDMI port signal changes status.
+The `HDMIInput` module **MUST** have an `onSignalChanged` notification that fires when any HDMI port signal changes status.
 
 This notification **MUST** have an object payload.
 
@@ -225,29 +222,5 @@ Example payload:
   {
       "port": "HDMI1",
       "signal": "stable"
-  }
-```
-
-## 7. Input Source OSD Name Notification
-The `HDMIInput` module **MUST** have an `onSourceOSDNameChanged` notification that fires when any HDMI input device changes its OSD Name.
-
-This notification **MUST** have an object payload.
-
-The object payload **MUST** have a `port` string property that denotes which input port has detected a change to the ALLM signaling.
-
-The `port` property **MUST** match the pattern:
-
- ```regexp
- /^HDMI[0-9]+$/
- ```
-
-The object payload **MUST** have an `osdName` string property that denotes the updated value of the input device OSD Name.
-
-Example payload:
-
-```json
-  {
-      "port": "HDMI1",
-      "osdName": "XBox"
   }
 ```
