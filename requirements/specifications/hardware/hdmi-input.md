@@ -35,8 +35,6 @@ The `HDMIInput` module **MUST** have a `ports` method that lists all physical HD
 
 The `ports` API **MUST** return an array of `HDMIPort` objects.
 
-The properties of each `HDMIPort` object **MUST** have values that are implicit to the physical port itself, and not not dependent on any connected HDMI device.
-
 An example response:
 
 ```json
