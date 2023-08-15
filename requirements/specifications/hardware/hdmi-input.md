@@ -21,14 +21,14 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [2. Table of Contents](#2-table-of-contents)
 - [3. All Ports](#3-all-ports)
 - [4. Single Port](#4-single-port)
-- [5. Port Conntection Notification](#5-port-conntection-notification)
+- [5. Port Connection Notification](#5-port-connection-notification)
 - [6. Port Signal Notification](#6-port-signal-notification)
 - [7. Low Latency](#7-low-latency)
   - [7.1. Low Latency Mode](#71-low-latency-mode)
     - [7.1.1. Low Latency Mode Notification](#711-low-latency-mode-notification)
   - [7.2. Auto Low Latency Mode Signalled](#72-auto-low-latency-mode-signalled)
-  - [7.3. Port Auto Low Latency Model Capable](#73-port-auto-low-latency-model-capable)
-    - [7.3.1. Port Auto Low Latency Model Capable Changed Notification](#731-port-auto-low-latency-model-capable-changed-notification)
+  - [7.3. Port Auto Low Latency Mode Capable](#73-port-auto-low-latency-mode-capable)
+    - [7.3.1. Port Auto Low Latency Mode Capable Changed Notification](#731-port-auto-low-latency-mode-capable-changed-notification)
 
 ## 3. All Ports
 The `HDMIInput` module **MUST** have a `ports` method that lists all physical HDMI input ports on the device.
@@ -62,7 +62,7 @@ The `port` property **MUST** match the pattern:
 
 The `HDMIPort` object **MUST** have a `connected` boolean property, which is true if that port has a device connected, false otherwise.
 
-The `HDMIPort` object **MUST** have a `signal` string property, which denotes the signal strength and validity.
+The `HDMIPort` object **MUST** have a `signal` string property, which denotes the signal validity.
 
 The `signal` property **MUST** be one of the following values:
 
@@ -88,13 +88,13 @@ If the `edidVersion` is `"2.0"` then the `HDMIPort` object:
 
 > **MUST** have an `autoLowLatencyModeCapable` boolean property, which is true if the E-EDID has ALLM support advertised and false otherwise.
 >
-> **MUST** have an `autoLowLatencyModelSignalled` boolean proeprty, which is true if the port is receiving an ALLM signal from a downstream source device, and false otherwise.
+> **MUST** have an `autoLowLatencyModelSignalled` boolean property, which is true if the port is receiving an ALLM signal from a downstream source device, and false otherwise.
 
-If the `ediddersion` is `"1.4"` or `"unknown"` then the `HDMIPort` object:
+If the `edidVersion` is `"1.4"` or `"unknown"` then the `HDMIPort` object:
 
  > **MUST** have the `autoLowLatencyModeCapable` boolean property set to `false`.
  >
- > **MUST** have the `autoLowLatencyModelSignaled` boolean proeprty set to `false`
+ > **MUST** have the `autoLowLatencyModelSignaled` boolean property set to `false`
 
 The `"unknown"` value of the `edidVersion` property **SHOULD** be reserved for edge cases, such as a test device with a newer version of HDMI ports than the device software supports.
 
@@ -106,7 +106,7 @@ The `port` API **MUST** return an `HDMIPort` object that corresponds to the prov
 ```javascript
 HDMIInput.port('HDMI1')
 ```
-## 5. Port Conntection Notification
+## 5. Port Connection Notification
 The `HDMIInput` module **MUST** have an `onConnectionChanged` notification that fires when any HDMI port has a connection physically engaged or disengaged.
 
 This notification **MUST** have an object payload.
@@ -135,7 +135,7 @@ The `HDMIInput` module **MUST** have an `onSignalChanged` notification that fire
 
 This notification **MUST** have an object payload.
 
-The object payload **MUST** have a `port` string property that denotes which input port has detected a change to the ALLM signaling.
+The object payload **MUST** have a `port` string property that denotes which input port has detected a change to the signal validity.
 
 The `port` property **MUST** match the pattern:
 
@@ -164,7 +164,7 @@ Example payload:
 
 
 ## 7. Low Latency
-Low Latency refers to a set of functionaly that combines to provide manual or automatic activation of HDMI Low Latency Mode.
+Low Latency refers to a set of functionally that combines to provide manual or automatic activation of HDMI Low Latency Mode.
 
 Low latency mode switches the device to shorten the overall processing time of HDMI A/V signals.
 
@@ -208,7 +208,7 @@ Example payload:
   }
 ```
 
-### 7.3. Port Auto Low Latency Model Capable
+### 7.3. Port Auto Low Latency Mode Capable
 The `HDMIInput` module **MUST** have a boolean property `autoLowLatencyModeCapable` which reflects the HDMI port setting for advertising ALLM support in its E-EDID.
 
 The `autoLowLatencyModeCapable` property takes a string context parameter, `port` to identify the HDMI port.
@@ -227,7 +227,7 @@ To change the property:
 function autoLowLatencyModeCapable(port: string, autoLowLatencyMode: boolean)
 ```
 
-#### 7.3.1. Port Auto Low Latency Model Capable Changed Notification
+#### 7.3.1. Port Auto Low Latency Mode Capable Changed Notification
 Whenever the underlying HDMI implementation executes an ALLM support change (either on or off), this notification must fire:
 
 `HDMIInput.onAutoLowLatencyModelCapableChanged`
