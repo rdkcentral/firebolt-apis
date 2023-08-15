@@ -12,10 +12,6 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 ## 1. Overview
 This document describes the requirements for managing HDMI inputs on a Firebolt device. These APIs are generally useful for managing an HDMI sink device, e.g. a TV.
 
-APIs for both HDMI input ports and HDMI input devices are covered.
-
-Most frequent operations will leverage `HDMIInput.devices()`, but occassionally it might be useful to leverage `HDMIInput.ports()`, e.g. to let the user know that they plugged their Soundbar into the wrong port.
-
 This document is written using the [IETF Best Common Practice 14](https://www.rfc-editor.org/rfc/rfc2119.txt), specifically:
 
 The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL NOT**", "**SHOULD**", "**SHOULD NOT**", "**RECOMMENDED**", "**NOT RECOMMENDED**", "**MAY**", and "**OPTIONAL**" in this document are to be interpreted as described in [BCP 14](https://www.rfc-editor.org/rfc/rfc2119.txt) [RFC2119] [RFC8174] when, and only when, they appear in all capitals, as shown here.
@@ -24,15 +20,15 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [1. Overview](#1-overview)
 - [2. Table of Contents](#2-table-of-contents)
 - [3. HDMI Input Ports](#3-hdmi-input-ports)
-- [4. HDMI Input Devices](#4-hdmi-input-devices)
+  - [3.1. Get Port](#31-get-port)
 - [5. Low Latency](#5-low-latency)
   - [5.1. Low Latency Mode](#51-low-latency-mode)
     - [5.1.1. Low Latency Mode Notification](#511-low-latency-mode-notification)
-  - [5.2. Input Device Auto Low Latency Mode Notification](#52-input-device-auto-low-latency-mode-notification)
+  - [5.2. Input Source Device Auto Low Latency Mode Notification](#52-input-source-device-auto-low-latency-mode-notification)
   - [5.3. Input Port Auto Low Latency Mode Support](#53-input-port-auto-low-latency-mode-support)
     - [5.3.1. Input Port Auto Low Latency Mode Support Changed Notification](#531-input-port-auto-low-latency-mode-support-changed-notification)
-- [6. Input Device Signal Notification](#6-input-device-signal-notification)
-- [7. Input Device OSD Name Notification](#7-input-device-osd-name-notification)
+- [6. Port Signal Notification](#6-port-signal-notification)
+- [7. Input Source OSD Name Notification](#7-input-source-osd-name-notification)
 
 ## 3. HDMI Input Ports
 The `HDMIInput` module **MUST** have a `ports` method that lists all physical HDMI input ports on the device.
@@ -48,12 +44,18 @@ An example response:
     {
         "port": "HDMI1",
         "connected": true,
-        "arc": true,
-        "edidVersion": "2.0",
-        "autoLowLatencyMode": true
+        "signal": "unknown",
+        "arcCapable": true,
+        "arcConnected": true,
+        "autoLowLatencyModeCapable": true,
+        "autoLowLatencyModeSignalled": true,
+        "edidVersion": "2.0"
     }
 ]
 ```
+
+**TODO**: rename all the events to match ^^
+**TODO**: move sources() to CEC branch
 
 The `HDMIPort` object **MUST** have a `port` string property, which is the unique ID of that port.
 
@@ -65,58 +67,7 @@ The `port` property **MUST** match the pattern:
 
 The `HDMIPort` object **MUST** have a `connected` boolean property, which is true if that port has a device connected, false otherwise.
 
-The `HDMIPort` object **MUST** have an `arc` boolean property, which is true if this HDMI port supports ARC and/or eARC device connections.
-
-The `HDMIPort` object **MUST** have an `edidVersion` string property which is the selected E-EDID version "1.4" or "2.0" for the port.
-
-The `edidVersion` property **MUST** be on of the following values:
-
-- `"1.4"`
-- `"2.0"`
-- `"unknown"`
-
-If the `edidVersion` is `"2.0"` then the `HDMIPort` object **MUST** have an `autoLowLatencyMode` boolean property, which is true if the E-EDID has ALLM support advertised.
-
-If the `editdersion` is `"1.4"` or `"unknown"` then the `HDMIPort` object **MUST NOT** have an `autoLowLatencyMode` boolean property.
-
-**TODO**: do we want to leave it out or set to false?
-
-The `"unknown"` value **SHOULD** be reserved for edge cases, such as a test device with a newer version of HDMI ports than the device software supports.
-
-
-## 4. HDMI Input Devices
-The `HDMIInput` module **MUST** have a `devices` method that lists all HDMI input devices on the device.
-
-The `devices` API **MUST** return an array of `HDMIDevice` objects.
-
-The properties of each `HDMIDevice` object **MUST** have values that represent the cross product of the physical port and the input device plugged into it.
-
-An example response:
-
-```json
-[
-    {
-        "port": "HDMI1",
-        "signal": "unknown",
-        "osdName": "PlayStation 4",
-        "cecVersion": "Version 2.0",
-        "logicalAddress": 4,
-        "physicalAddress": "1.2.3.4",
-        "arc": true,
-        "autoLowLatencyMode": true
-    }
-]
-```
-
-The `HDMIDevice` object **MUST** have a `port` string property, which is the unique ID of the port the device is connected through.
-
-The `port` property **MUST** match the pattern:
-
- ```regexp
- /^HDMI[0-9]+$/
- ```
-
-The `HDMIDevice` object **MUST** have a `signal` string property, which denotes the signal strength and validity.
+The `HDMIPort` object **MUST** have a `signal` string property, which denotes the signal strength and validity.
 
 The `signal` property **MUST** be one of the following values:
 
@@ -126,33 +77,40 @@ The `signal` property **MUST** be one of the following values:
 - `"unstable"` - the signal is unstable and could exhibit broken audio and video.
 - `"unsupported"` - the signal is not at a supported speed/resolution.
 
-The `HDMIDevice` object **MUST** have an `osdName` string property, which is the display name of the HDMI input device.
+The `HDMIPort` object **MUST** have an `arcCapable` boolean property, which is true if this HDMI port supports ARC and/or eARC device connections.
 
-The `HDMIDevice` object **MUST** have a `cecVersion` string proeprty, which is the CEC version protocol advertised by the HDMI input device.
+The `HDMIPort` object **MUST** have an `arcConnected` boolean property, which is true if the connected HDMI device supports ARC and/or eARC device connections.
 
-The `cecVersion` property **MUST** be one of the following values:
+The `HDMIPort` object **MUST** have an `edidVersion` string property which is the selected E-EDID version "1.4" or "2.0" for the port.
 
-- `""` - unknown version
-- `"Version 1.3a"`
-- `"Version 1.4"` - Version 1.4, 1.4a or 1.4b.
-- `"Version 2.0"`
+The `edidVersion` property **MUST** be on of the following values:
 
-The `HDMIDevice` object **MUST** have a `logicalAddress` integer property, which is the logical HDMI address of the input source device within the scope of this output sink device.
+- `"1.4"`
+- `"2.0"`
+- `"unknown"`
 
+If the `edidVersion` is `"2.0"` then the `HDMIPort` object:
 
-The `HDMIDevice` object **MUST** have a `physicalAddress` string property, which is the physical HDMI address of the input source device across the entire HDMI bus.
+> **MUST** have an `autoLowLatencyModeCapable` boolean property, which is true if the E-EDID has ALLM support advertised and false otherwise.
+>
+> **MUST** have an `autoLowLatencyModelSignalled` boolean proeprty, which is true if the port is receiving an ALLM signal from a downstream source device, and false otherwise.
 
-**TODO**: Is "bus" the best word?
+If the `ediddersion` is `"1.4"` or `"unknown"` then the `HDMIPort` object:
 
-The `physicalAddress` property **MUST** match the pattern:
+ > **MUST** have the `autoLowLatencyModeCapable` boolean property set to `false`.
+ >
+ > **MUST** have the `autoLowLatencyModelSignaled` boolean proeprty set to `false`
 
- ```regexp
- /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/
- ```
+The `"unknown"` value of the `edidVersion` property **SHOULD** be reserved for edge cases, such as a test device with a newer version of HDMI ports than the device software supports.
 
-The `HDMIDevice` object **MUST** have an `arc` boolean property, which is true if this HDMI port and the connected HDMI device both support ARC and/or eARC device connections.
+### 3.1. Get Port
+The `HDMIInput` module **MUST** have a `port` method that returns info on a single HDMI port.
 
-The `HDMIDevice` object **MUST** have an `autoLowLatencyMode` boolean property, which is true if this HDMI port supports ALLM and the connected HDMI device is advertising support for ALLM.
+The `port` API **MUST** return an `HDMIPort` object that corresponds to the provided `portId` parameter.
+
+```javascript
+HDMIInput.port('HDMI1')
+```
 
 ## 5. Low Latency
 Low Latency refers to a set of functionaly that combine to provide manual or automatic activation of HDMI Low Latency Mode.
@@ -174,8 +132,8 @@ Whenever the underlying HDMI implementation executes an LLM change (either on or
 `HDMIInput.onLowLatencyModeChanged`
 
 
-### 5.2. Input Device Auto Low Latency Mode Notification
-The `HDMIInput` module **MUST** have an `onInputAutoLowLatencyModeChanged` notification that fires when any HDMI input device changes its advertising for ALLM.
+### 5.2. Input Source Device Auto Low Latency Mode Notification
+The `HDMIInput` module **MUST** have an `onSourceAutoLowLatencyModeChanged` notification that fires when any HDMI input device changes its advertising for ALLM.
 
 This notification **MUST** have an object payload.
 
@@ -238,8 +196,8 @@ HDMIInput.portAutoLowLatencyModeChanged() (data) => {
 
 `port` - the HDMI port that had an E-EDID ALLM advertisement change.
 
-## 6. Input Device Signal Notification
-The `HDMIInput` module **MUST** have an `onInputSignalChanged` notification that fires when any HDMI input device changes its signal status.
+## 6. Port Signal Notification
+The `HDMIInput` module **MUST** have an `onPortSignalChanged` notification that fires when any HDMI port signal changes status.
 
 This notification **MUST** have an object payload.
 
@@ -270,8 +228,8 @@ Example payload:
   }
 ```
 
-## 7. Input Device OSD Name Notification
-The `HDMIInput` module **MUST** have an `onInputOSDNameChanged` notification that fires when any HDMI input device changes its OSD Name.
+## 7. Input Source OSD Name Notification
+The `HDMIInput` module **MUST** have an `onSourceOSDNameChanged` notification that fires when any HDMI input device changes its OSD Name.
 
 This notification **MUST** have an object payload.
 
