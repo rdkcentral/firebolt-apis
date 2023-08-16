@@ -1,5 +1,4 @@
 {
-  "$schema": "https://meta.comcast.com/firebolt/errors",
   "$id": "https://meta.comcast.com/firebolt/errors",
   "title": "Errors",
   "oneOf": [
@@ -35,9 +34,14 @@
       "allOf": [
         { "$ref": "#/definitions/FireboltError" },
         {
-          "const": {
-            "code": 401,
-            "message": "User is not authenticated."
+          "type": "object",
+          "properties": {
+            "code": {
+              "const": 401
+            },
+            "message": {
+              "const": "User is not authenticated."
+            }
           }
         }
       ],

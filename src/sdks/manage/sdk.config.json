@@ -1,0 +1,146 @@
+{
+    "info": {
+        "title": "Firebolt Manage SDK",
+        "x-interface-names": {
+            "xrn:firebolt:capability:lifecycle:state": "StateProvider"
+        }
+    },
+    "methods": [
+        {
+            "module": "Localization",
+            "use": [
+                "xrn:firebolt:capability:localization:locality",
+                "xrn:firebolt:capability:localization:postal-code",
+                "xrn:firebolt:capability:localization:country-code",
+                "xrn:firebolt:capability:localization:language",
+                "xrn:firebolt:capability:localization:locale",
+                "xrn:firebolt:capability:localization:time-zone",
+                "xrn:firebolt:capability:localization:additional-info"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:localization:locality",
+                "xrn:firebolt:capability:localization:postal-code",
+                "xrn:firebolt:capability:localization:country-code",
+                "xrn:firebolt:capability:localization:language",
+                "xrn:firebolt:capability:localization:locale",
+                "xrn:firebolt:capability:localization:time-zone",
+                "xrn:firebolt:capability:localization:additional-info"
+            ]
+        },
+        {
+            "module": "Metrics",
+            "use": [
+                "xrn:firebolt:capability:metrics:distributor"
+            ]
+        },
+        {
+            "module": "Wifi",
+            "use": [
+                "xrn:firebolt:capability:protocol:wifi"
+            ]
+        },
+        {
+            "module": "ClosedCaptions",
+            "use": [
+                "xrn:firebolt:capability:accessibility:closedcaptions"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:accessibility:closedcaptions"
+            ]
+        },
+        {
+            "module": "AudioDescriptions",
+            "use": [
+                "xrn:firebolt:capability:accessibility:audiodescriptions"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:accessibility:audiodescriptions"
+            ]
+        },
+        {
+            "module": "VoiceGuidance",
+            "use": [
+                "xrn:firebolt:capability:accessibility:voiceguidance"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:accessibility:voiceguidance"
+            ]
+        },
+        {
+            "module": "Device",
+            "use": [
+                "xrn:firebolt:capability:device:name"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:device:distributor",
+                "xrn:firebolt:capability:device:id",
+                "xrn:firebolt:capability:device:name"
+            ]
+        },
+        {
+            "module": "UserGrants",
+            "use": [
+                "xrn:firebolt:capability:grants:state"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:grants:state"
+            ]
+        },
+        {
+            "module": "Privacy",
+            "use": [
+                "xrn:firebolt:capability:privacy:settings"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:privacy:settings"
+            ]
+        },
+        {
+            "module": "Advertising",
+            "manage": [
+                "xrn:firebolt:capability:advertising:configuration",
+                "xrn:firebolt:capability:advertising:identifier"
+            ]
+        },
+        {
+            "module": "Account",
+            "manage": [
+                "xrn:firebolt:capability:account:id",
+                "xrn:firebolt:capability:token:account"
+            ],
+            "provide": [
+                "xrn:firebolt:capability:token:account"
+            ]
+        },
+        {
+            "module": "Keyboard",
+            "provide": [
+                "xrn:firebolt:capability:input:keyboard"
+            ]
+        },
+        {
+            "module": "AcknowledgeChallenge",
+            "provide": [
+                "xrn:firebolt:capability:usergrant:acknowledgechallenge"
+            ]
+        },
+        {
+            "module": "PinChallenge",
+            "provide": [
+                "xrn:firebolt:capability:usergrant:pinchallenge"
+            ]
+        },
+        {
+            "module": "SecureStorage",
+            "manage": [
+                "xrn:firebolt:capability:storage:secure"
+            ]
+        },
+        {
+            "module": "Discovery",
+            "manage": [
+                "xrn:firebolt:capability:discovery:sign-in-status"
+            ]
+        }
+    ]
+}

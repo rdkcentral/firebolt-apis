@@ -1,0 +1,53 @@
+{
+  "branches": [
+    {
+      "name": "main",
+      "prerelease": false
+    },
+    {
+      "name": "next",
+      "channel": "next",
+      "prerelease": true
+    },
+    {
+      "name": "next-major",
+      "channel": "next-major",
+      "prerelease": true
+    }
+  ],
+  "dryRun": false,
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits"
+      }
+    ],
+    "@semantic-release/release-notes-generator",
+    [
+      "production-changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "npmPublish": false,
+        "tarballDir": "./"
+      }
+    ],    
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["CHANGELOG.md", "package.json", "package-lock.json", "npm-shrinkwrap.json", "src/sdks/core/package.json", "src/sdks/manage/package.json"]
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": "./*.tgz"
+      }
+    ]
+  ]
+} 
