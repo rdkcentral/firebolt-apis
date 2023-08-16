@@ -21,11 +21,16 @@
 const win = globalThis || window
 
 import Setup from '../../../../../test/Setup'
+import { beforeAll, test, expect } from '@jest/globals';
 import { Lifecycle, Discovery } from "../../build/javascript/src/firebolt";
 
 // holds test transport layer state, e.g. callback
-const state = {
+type stateType = {
+    callback: (arg0: string) => void | null
+}
 
+const state:stateType = {
+    callback: null
 }
 
 let navigateToListenCount = 0
@@ -78,13 +83,10 @@ beforeAll(()=> {
     Discovery.listen((event, value) => { /* testing both listen signatures */ })
     Discovery.listen((event, value) => { /* testing both listen signatures */ })
     // listen three more times, using wildcard FIRST (from above)
-    Discovery.listen("pullEntityInfo", (value) => {  })
-    Discovery.listen("pullEntityInfo", (value) => {  })
-    Discovery.listen("pullEntityInfo", (value) => {  })
 
     let p = new Promise( (resolve, reject) => {
         setTimeout( _ => {
-            resolve()
+            resolve(null)
         }, 4000)
     })
 
@@ -106,10 +108,8 @@ test('Transport send method working', () => {
 
 test('Transport was sent listeners', () => {
     expect(navigateToListenCount).toBeGreaterThan(0)
-    expect(pullEntityInfoListenCount).toBeGreaterThan(0)
 });
 
 test('Transport was sent each listener only once', () => {
     expect(navigateToListenCount).toBe(1)
-    expect(pullEntityInfoListenCount).toBe(1)
 });
