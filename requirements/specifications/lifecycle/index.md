@@ -58,10 +58,17 @@ reclaiming any memory, CPU, etc. that it was consuming.
   - [3.8. Terminating an app](#38-terminating-an-app)
 - [4. Core SDK APIs](#4-core-sdk-apis)
   - [4.1. Ready](#41-ready)
-  - [4.2. Close](#42-close)
-  - [4.3. Finished](#43-finished)
-  - [4.4. State](#44-state)
-- [5. Lifecycle Configuration](#5-lifecycle-configuration)
+  - [4.2. Loading](#42-loading)
+  - [4.3. Close](#43-close)
+  - [4.4. Background](#44-background)
+  - [4.5. Finished](#45-finished)
+  - [4.6. State](#46-state)
+  - [4.7. ResourceDeallocator Interface](#47-resourcedeallocator-interface)
+- [5. Manage SDK APIs](#5-manage-sdk-apis)
+  - [5.1. Terminate](#51-terminate)
+  - [5.2. Suspend](#52-suspend)
+  - [5.3. Unsuspend](#53-unsuspend)
+- [6. Lifecycle Configuration](#6-lifecycle-configuration)
 
 
 ## 2. Lifecycle States
@@ -159,8 +166,10 @@ previous states.
 This state allows an app to be present as the secondary experience to
 the user, e.g. when a system settings UI is overlayed on top of the app.
 
-Different platforms **MAY** support differing numbers of backgrounded
-apps.
+Different platforms **MAY** support differing numbers of background
+apps. See [Background App
+Requirements](https://comcastcorp.sharepoint.com/:w:/r/sites/hqppa/Shared%20Documents/Global%20App%20Platform/Firebolt/Requirements/Core/Lifecycle/Background%20App%20Requirements.docx?d=w185d9112bcd44376bb0635dad816919b&csf=1&web=1&e=cjmuSJ)
+for more info.
 
 Apps in this state **MUST** either be partially visible **OR** have
 access to an audio decoder, e.g. an app playing music in the background.
@@ -170,7 +179,9 @@ platforms **MAY** forward certain keys to the app, e.g. play/pause keys.
 
 Apps in this state **MAY** have access to the audio-video decoder. How
 many decoders are available is a decision for each device based on
-resources.g
+resources. See [Background App
+Requirements](https://comcastcorp.sharepoint.com/:w:/r/sites/hqppa/Shared%20Documents/Global%20App%20Platform/Firebolt/Requirements/Core/Lifecycle/Background%20App%20Requirements.docx?d=w185d9112bcd44376bb0635dad816919b&csf=1&web=1&e=cjmuSJ)
+for more info.
 
 Apps in this state **SHOULD NOT** have performance negatively impacted
 by other processes on the device.
@@ -178,6 +189,12 @@ by other processes on the device.
 When an app transitions to this state, the platform **MUST** dispatch
 the Lifecycle.onBackground notification with the current state and
 previous states.
+
+If an app is in the inactive state and successfully calls
+Lifecycle.loading(), the platform **MAY** transition the app to the
+background state with the previous state set to inactive so that the app
+may present a custom loading screen. See *Loading an App* for more
+details.
 
 ### 2.5. Unloading
 
@@ -227,6 +244,9 @@ unloaded.
 Finally, the app and its container **MUST** be removed from memory and
 have other resources released as well.
 
+Apps may optionally implement the Lifecycle.ResourceDeallocator API for
+more control over app suspension.
+
 ## 3. Lifecycle State Transitions
 
 Firebolt platforms **MUST** support the app lifecycle states and
@@ -274,6 +294,13 @@ If the app begins listening for the onInactive event during the
 initializing state, then the platform **MUST** transition the app into
 the inactive state.
 
+Next, if the app has permission to use the
+xrn:firebolt:capability:lifecycle:loading-screen capability (and the
+device supports it) then, if the app calls the Lifecycle.loading() API,
+the platform **MUST** transition the app into the background state. This
+enables apps to display a custom loading screen on devices that support
+it. Supporting this capability is optional.
+
 The loading() API may only be called during an apps first time in the
 inactive state. This API returns an error at all other times.
 
@@ -285,7 +312,9 @@ inactive state within 500 milliseconds. See Launching an App for more
 info.
 
 The ready() API may only be called during the initializing state, or
-during an apps first time in the inactive state.
+during an apps first time in the inactive state, or by an app that is
+displaying a custom loading screen after its first cycle from
+initializing to inactive to background.
 
 ### 3.2. Launching an app
 
@@ -298,9 +327,9 @@ scope for this document.
 
 One app **MAY** request to launch another app, via the
 Discovery.launch() API method, see
-[Discovery](#).
-
-**TODO**: Add this spec so we can link to it!
+[Discovery](https://comcastcorp.sharepoint.com/:w:/r/sites/hqppa/Shared%20Documents/Global%20App%20Platform/Firebolt/Requirements/Core/Discovery/Discovery%20Requirements.docx?d=w81397bb577d149b995636834c4c3a302&csf=1&web=1&e=bdLI4q)
+in [Core
+Requirements](https://comcastcorp.sharepoint.com/:f:/r/sites/hqppa/Shared%20Documents/Global%20App%20Platform/Firebolt/Requirements/Core/Discovery?csf=1&web=1&e=qtZhFJ).
 
 To launch an app, platforms **MUST** use the following process.
 
@@ -354,6 +383,10 @@ is no longer the user experience.
 The platform may background apps for any number of reasons that are out
 of scope for this document.
 
+Apps that are in the foreground state **MAY** request to be
+backgrounded, via the Lifecycle.background() API method. See the
+Background API below.
+
 To background an app, platforms **MUST** use the following process.
 
 If an app is already in the background state, then it is already
@@ -395,7 +428,17 @@ happen.
 
 At this point, the app **MUST** be in the inactive state.
 
-Finally the platform **MUST** transition the app to the
+Next, if the app has permission to use the
+xrn:firebolt:capability:lifecycle:deallocation capability **and** the
+app has registered its implementation of the
+Lifecycle.ResourceDeallocator interface, then the platform **MUST** call
+the apps ResourceDeallocator.suspend method via the onRequestSuspend RPC
+call and wait for either the onSuspendResponse or onSuspendError
+handshake before proceeding.
+
+Finally, if the app does not have a permitted ResourceDeallocator
+implementation, or if the app's implementation has responded with a
+success handshake, the platform **MUST** transition the app to the
 suspended state (see '[Suspended](#26-suspended)' above).
 
 ### 3.6. Unsuspending an app
@@ -444,7 +487,18 @@ does not need to happen.
 
 At this point, the app **MUST** be in the inactive state.
 
-Finally the platform **MUST** transition the app to the
+Next, if the app has permission to use the
+xrn:firebolt:capability:lifecycle:deallocation capability **and** the
+app has registered its implementation of the
+Lifecycle.ResourceDeallocator interface, then the platform **MUST** call
+the apps ResourceDeallocator.unload method via the onRequestUnload RPC
+call and wait for either the onUnloadResponse or onUnloadError handshake
+before proceeding. The finished API has no effect for apps with a valid
+ResourceDeallocator implementation.
+
+Finally, if the app does not have a permitted ResourceDeallocator
+implementation, or if the app's implementation has responded with a
+success handshake,, the platform **MUST** transition the app to the
 unloading state (see '[Unloading](#25-unloading)' above).
 
 ### 3.8. Terminating an app
@@ -475,7 +529,14 @@ The Lifecycle.ready() API allows an app to notify the platform that it
 is initialized and ready to be displayed to the end user. This method
 **MUST NOT** be called more than once.
 
-### 4.2. Close
+### 4.2. Loading
+
+The Lifecycle.loading() API allows an app to notify the platform that it
+is presenting a custom loading screen and would like to be moved into
+the background state so the user can see the loading screen. This method
+**MUST NOT** be called more than once.
+
+### 4.3. Close
 
 The Lifecycle.close() API allows an app to request that it be closed by
 the platform.
@@ -504,8 +565,36 @@ provided. For example, apps closed due to the RCU are less likely to be
 unloaded since it may be an accidental RCU press, whereas an explicit
 user exit is more likely to be intentional.
 
+### 4.4. Background
 
-### 4.3. Finished
+The Lifecycle.background() API allow an app to request that it be moved
+to the background state.
+
+An app **MUST** have the
+xrn:firebolt:capability:lifecycle:request-background capability to call
+this API, otherwise an error **MUST** be returned.
+
+This method requires a target parameter, which tells the platform which
+app should be brought to the foreground:
+
+| Target                       | Description                                                                                                                                              |
+|------------------------------------|------------------------------------|
+| ForegroundTarget.LAST_APP    | The next app on the stack, i.e. the most recently used app before this one, will be promoted to the foreground when this app is moved to the background. |
+| ForegroundTarget.DEFAULT_APP | The platform's default app for this operation will be moved to the foreground when this app is moved to the background.                                  |
+
+The default app **SHOULD** be the main experience that users expect when
+they start up their device. Platforms **MAY** use a different default
+app within reason.
+
+Platforms generally **SHOULD** respect this call and move the app to the
+background state, but there may be edge cases where this is not
+possible, e.g. the app is considered to be the default experience for
+the device, and hiding it would leave no other UX present.
+
+When the request to background an app is not respected, the
+Lifecycle.background() method **MUST** return an error.
+
+### 4.5. Finished
 
 The Lifecycle.finished() API allows an app to notify the platform that
 it is done preparing to be unloaded.
@@ -520,13 +609,55 @@ This method results in an error if it is called while the app is in any
 other state than unloading, or called more than once while in that
 state.
 
-### 4.4. State
+### 4.6. State
 
 The Lifecycle.state() method provides convenient access to the current
 state, and is implemented by the Core SDK listening to all state
 notifications. This method **MUST NOT** be asynchronous.
 
-## 5. Lifecycle Configuration
+### 4.7. ResourceDeallocator Interface
+
+An app may provide a ResourceDeallocator implementation in order to
+support more efficient resource usage in the various lifecycle states.
+
+| Method     | Return | Description                                                                                                                                                                              |
+|----------|--------|------------------------------------------------------|
+| inactive() | void   | Called when the platform wants to transition the app to the inactive state. The transition will not occur until the method returns, errors, or times out (see appInactiveTimeout, below) |
+| supend()   | void   | Called when the platform wants to transition the app to the suspended state. The transition will not occur until the method returns, errors, or times out (see appSuspendTimeout, below) |
+
+Note that these methods are implemented by the App, not the platform.
+The platform requests them via onRequest\<method\> events.
+
+## 5. Manage SDK APIs
+
+The following APIs are exposed by the Firebolt Manage SDK.
+
+See the Firebolt Manage SDK documentation for details around syntax,
+etc.
+
+### 5.1. Terminate
+
+The terminate() API requests that the platform terminate a specific app.
+
+This method requires an appId parameter, which tells the platform which
+app to terminate.
+
+### 5.2. Suspend
+
+The suspend() API requests that the platform suspends a specific app.
+
+This method requires an appId parameter, which tells the platform which
+app to suspend.
+
+### 5.3. Unsuspend
+
+The unsuspend() API requests that the platform unsuspends a specific
+app.
+
+This method requires an appId parameter, which tells the platform which
+app to unsuspend.
+
+## 6. Lifecycle Configuration
 
 In order to enable Firebolt Certification of a device's Lifecycle
 Management features, the device **MUST** support the following
