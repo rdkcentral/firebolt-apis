@@ -51,7 +51,11 @@
                 "textAlignVertical": "middle",
                 "windowColor": "white",
                 "windowOpacity": 50
-              }
+              },
+              "preferredLanguages": [
+                "eng",
+                "esp"
+              ]              
             }
           }
         }
@@ -100,7 +104,11 @@
                 "textAlignVertical": "middle",
                 "windowColor": "white",
                 "windowOpacity": 50
-              }
+              },
+              "preferredLanguages": [
+                "eng",
+                "esp"
+              ]
             }
           }
         }

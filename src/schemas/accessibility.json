@@ -91,6 +91,12 @@
                 },
                 "styles": {
                     "$ref": "#/definitions/ClosedCaptionsStyles"
+                },
+                "preferredLanguages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639Language"
+                    }
                 }
             },
             "examples": [
@@ -109,7 +115,11 @@
                         "textAlignVertical": "middle",
                         "windowColor": "white",
                         "windowOpacity": 50
-                    }
+                    },
+                    "preferredLanguages": [
+                        "eng",
+                        "esp"
+                      ]        
                 }
             ]
         },
