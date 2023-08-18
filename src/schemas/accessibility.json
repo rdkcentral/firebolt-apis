@@ -95,7 +95,7 @@
                 "preferredLanguages": {
                     "type": "array",
                     "items": {
-                        "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639Language"
+                        "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639_2Language"
                     }
                 }
             },
@@ -118,7 +118,7 @@
                     },
                     "preferredLanguages": [
                         "eng",
-                        "esp"
+                        "spa"
                       ]        
                 }
             ]

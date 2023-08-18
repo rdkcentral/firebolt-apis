@@ -27,7 +27,7 @@
             "type": "string",
             "pattern": "^[A-Za-z]{2}$"
         },
-        "ISO639Language": {
+        "ISO639_2Language": {
             "type": "string",
             "pattern": "^[a-z]{3}$"
         },
