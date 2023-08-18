@@ -55,11 +55,11 @@ track of which apps are using them separately.
 - [4. User Interest from a platform UX](#4-user-interest-from-a-platform-ux)
 - [5. User Interest Bulk Updates](#5-user-interest-bulk-updates)
 - [6. Core SDK APIs](#6-core-sdk-apis)
-- [7. Discovery.interested](#7-discoveryinterested)
-- [8. InterestIntent](#8-interestintent)
-- [9. Manage SDK APIs](#9-manage-sdk-apis)
-- [10. Content.onInterestedIn](#10-contentoninterestedin)
-- [11. InterestedInIntent](#11-interestedinintent)
+  - [6.1. Discovery.interested](#61-discoveryinterested)
+  - [6.2. InterestIntent](#62-interestintent)
+- [7. Manage SDK APIs](#7-manage-sdk-apis)
+  - [7.1. Content.onInterestedIn](#71-contentoninterestedin)
+  - [7.2. InterestedInIntent](#72-interestedinintent)
 
 
 ## 3. User Interest from an in-app UX
@@ -211,7 +211,7 @@ See the [Firebolt API
 Documentation](https://developer.comcast.com/firebolt/core/sdk/latest/api/)
 for details around syntax, errors, and permissions.
 
-## 7. Discovery.interested
+### 6.1. Discovery.interested
 
 This is a push/pull API that allows Apps to either push entities that
 the user has expressed interest in to the platform, or respond to pull
@@ -235,7 +235,7 @@ Discovery.interested((intent:InterestIntent) => EntityInfo): Promise<void>
 The callback takes an `InterestIntent` that provides any context about
 the user\'s intention.
 
-## 8. InterestIntent
+### 6.2. InterestIntent
 
 An `InterestIntent` denotes that the user has expressed interest in the
 currently displayed and/or selected content:
@@ -253,7 +253,7 @@ type InterestIntent {
 ```
 
 
-## 9. Manage SDK APIs
+## 7. Manage SDK APIs
 
 The following APIs are exposed by the Firebolt Core SDK as part of the
 `manage:content `domain/module.
@@ -262,7 +262,7 @@ See the [Firebolt API
 Documentation](https://developer.comcast.com/firebolt/core/sdk/latest/api/)
 for details around syntax, errors, and permissions.
 
-## 10. Content.onInterestedIn
+### 7.1. Content.onInterestedIn
 
 This notification allows Aggregated Experience Apps to be informed when
 a user expresses interest in some Content, and the content resolves to a
@@ -273,7 +273,7 @@ valid Entity from some App.
 The callback will be passed an `InterestedEventData` object with
 information about the entity that the user expressed interest in.
 
-## 11. InterestedInIntent
+### 7.2. InterestedInIntent
 
 `InterestedInIntent` provides information about what the user has
 expressed interest in:
