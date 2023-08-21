@@ -17,11 +17,19 @@
  */
 
 import { setMockResponses } from './Transport/MockTransport.mjs'
+import { initialize } from './Transport/index.mjs'
 
 /* ${MOCK_IMPORTS} */
 
 setMockResponses({
   /* ${MOCK_OBJECTS} */
+})
+
+initialize({
+  major: ${major},
+  minor: ${minor},
+  patch: ${patch},
+  readable: "${readable}"
 })
 
 /* ${EXPORTS} */
