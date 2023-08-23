@@ -23,6 +23,8 @@ Every Entity **MUST** be of type `object`.
 
 Every Entity object **MUST** have a `string` property named `entityId`, which identifies the entity. The scope of entity identifiers **SHOULD** be defined by the app providing or receiving the Entity, so that the App may work across Firebolt distrubutions without mapping IDs from a distributor space to the App's space.
 
+Every Entity object **MAY** have a `string` property named `assetId`, which disambiguates the asset from the entity, if needed. The scope of asset identifiers **SHOULD** be defined by the app providing or receiving the Entity, so that the App may work across Firebolt distrubutions without mapping IDs from a distributor space to the App's space.
+
 Every Entity object **MAY** have a `string` property named `appContentData`, limited to 256 characters, which provides additional information useful for targeting that Entity, e.g. a deeplink path.
 
 An example Entity:
@@ -38,6 +40,7 @@ Another example Entity:
 ```json
 {
     "entityId": "entity/abc",
+    "assetId": "asset/123",
     "appContentData": "xyz"
 }
 ```

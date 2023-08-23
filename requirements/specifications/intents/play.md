@@ -1,6 +1,6 @@
 # Play Intent
 
-Document Status: Working Draft
+Document Status: Candidate Specification
 
 See [Firebolt Requirements Governance](../../governance.md) for more info.
 
@@ -17,8 +17,6 @@ There are many use cases where a Firebolt device will need to inform an app of a
 Apps will need to be able to play specific entities from a back-office meta-data integration, entities from a federated meta-data integration, or non-specific entities based on a query.
 
 The existing Firebolt `playback` intent does not meet these requirements. This document outlines a more flexible `play-entity` and `play-query` intent to replace it.
-
-TODO: 
 
 ## 2. Table of Contents
 - [1. Overview](#1-overview)
