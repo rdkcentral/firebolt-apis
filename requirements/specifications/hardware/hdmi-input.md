@@ -1,6 +1,6 @@
 # HDMIInput
 
-Document Status: Candidate Specification
+Document Status: Proposed Specification
 
 See [Firebolt Requirements Governance](../../governance.md) for more info.
 
@@ -239,8 +239,6 @@ HDMIInput.autoLowLatencyModeCapableChanged((data) => {
   console.log('Port ' + data.port + ' ALLM changed to ' + data.autoLowLatencyModeCapable)
 })
 ```
-
-**TODO**: This is different than how we currently do context parameters on events. Will need some Firebolt SDK work to generate this API.
 
 `autoLowLatencyModeCapable` - whether or not ALLM is advertised as supported in the E-EDID for the port.
 
