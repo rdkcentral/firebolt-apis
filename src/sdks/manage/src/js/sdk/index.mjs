@@ -25,12 +25,12 @@ setMockResponses({
   /* ${MOCK_OBJECTS} */
 })
 
-initialize({
+initialize("", "initialize", { version: {
   major: ${major},
   minor: ${minor},
   patch: ${patch},
   readable: "${readable}"
-})
+}})
 
 /* ${EXPORTS} */
 export { default as Log } from './Log/index.mjs'

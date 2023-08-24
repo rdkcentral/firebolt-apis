@@ -1,7 +1,7 @@
 {
   "openrpc": "1.2.4",
   "info": {
-    "title": "Internal",
+    "title": "",
     "description": "Internal methods for SDK / FEE integration",
     "version": "0.0.0"
   },
@@ -32,18 +32,9 @@
         }
       ],
       "result": {
-        "name": "session",
-        "summary": "Info about the SDK/FEE session",
+        "name": "result",
         "schema": {
-          "type": "object",
-          "required": ["version"],
-          "properties": {
-            "version": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "The semantic version of the FEE."
-            }
-          },
-          "additionalProperties": false
+          "const": null
         }
       },
       "examples": [
@@ -60,17 +51,7 @@
               }
             }
           ],
-          "result": {
-            "name": "Default Result",
-            "value": {
-              "version": {
-                "major": 1,
-                "minor": 0,
-                "patch": 0,
-                "readable": "Firebolt FEE 1.0.0"                
-              }
-            }
-          }
+          "result": null
         }            
       ]    
     }

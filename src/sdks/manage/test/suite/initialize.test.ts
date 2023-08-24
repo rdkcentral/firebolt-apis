@@ -20,9 +20,9 @@ const win = globalThis || window;
 
 import { testHarness } from "../../../../../test/Setup";
 import { beforeAll, test, expect } from "@jest/globals";
-import { Device, Lifecycle } from "../../build/javascript/src/firebolt";
+import { Device } from "../../build/javascript/src/firebolt-manage";
 
-let version: Device.SemanticVersion
+let version: any
 let initCalled:boolean = false
 
 beforeAll( () => {
@@ -34,7 +34,7 @@ beforeAll( () => {
                 resolve(version)
             }
         }
-        Lifecycle.ready()
+        Device.name()
     })
 })
 
