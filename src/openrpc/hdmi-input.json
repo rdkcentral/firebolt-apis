@@ -281,7 +281,8 @@
                     ]
                 },
                 {
-                    "name": "property"
+                    "name": "property",
+                    "x-subscriber-type": "global"
                 }
             ],
             "params": [
