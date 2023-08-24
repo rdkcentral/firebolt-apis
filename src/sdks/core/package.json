@@ -23,7 +23,7 @@
 		"dist": "npm run dist:notest && npm run test",
 		"clean": "rm -rf ./build && rm -rf ./dist",
 		"test:setup": "rm -rf test/transpiled-suite && npx tsc --target es6 --moduleResolution node --outDir test/transpiled-suite",
-		"test": "npm run test:setup && NODE_OPTIONS=--experimental-vm-modules npx --config=jest.config.json --detectOpenHandles jest",
+		"test": "npm run test:setup && NODE_OPTIONS=--experimental-vm-modules npx --config=jest.config.json --detectOpenHandles jest && node ./test/no-dom-test.js",
 		"prepack": "node ../../js/version.mjs validate && npm run broilerplate",
 		"broilerplate": "rm ./CONTRIBUTING.md && cp ../../../CONTRIBUTING.md ./CONTRIBUTING.md && rm ./LICENSE && cp ../../../LICENSE ./LICENSE && rm ./NOTICE && cp ../../../NOTICE ./NOTICE"
 	},

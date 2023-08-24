@@ -17,12 +17,20 @@
  */
 
 import { setMockResponses } from './Transport/MockTransport.mjs'
+import { initialize } from './Transport/index.mjs'
 
 /* ${MOCK_IMPORTS} */
 
 setMockResponses({
   /* ${MOCK_OBJECTS} */
 })
+
+initialize("", "initialize", { version: {
+  major: ${major},
+  minor: ${minor},
+  patch: ${patch},
+  readable: "${readable}"
+}})
 
 /* ${EXPORTS} */
 export { default as Log } from './Log/index.mjs'
