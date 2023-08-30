@@ -10,7 +10,7 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Lucien Kennedy-Lamb | Sky            |
 
 ## 1. Overview
-This document describes the requirements for managing HDMI inputs on a Firebolt device. These APIs are generally useful for managing an HDMI sink device, e.g. a TV.
+This document describes the requirements for managing HDMI inputs on a Firebolt device. hese APIs are for managing the HMDI inputs of a device. All TVs have HDMI inputs, whereas only certain STBs have HDMI inputs.
 
 This document is written using the [IETF Best Common Practice 14](https://www.rfc-editor.org/rfc/rfc2119.txt), specifically:
 
@@ -23,17 +23,18 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [4. Single Port](#4-single-port)
 - [5. Port Connection Notification](#5-port-connection-notification)
 - [6. Port Signal Notification](#6-port-signal-notification)
-- [7. Low Latency](#7-low-latency)
-  - [7.1. Low Latency Mode](#71-low-latency-mode)
-    - [7.1.1. Low Latency Mode Notification](#711-low-latency-mode-notification)
-  - [7.2. Auto Low Latency Mode Signalled](#72-auto-low-latency-mode-signalled)
-  - [7.3. Port Auto Low Latency Mode Capable](#73-port-auto-low-latency-mode-capable)
-    - [7.3.1. Port Auto Low Latency Mode Capable Changed Notification](#731-port-auto-low-latency-mode-capable-changed-notification)
+- [7. EDID Version](#7-edid-version)
+- [8. Low Latency](#8-low-latency)
+  - [8.1. Low Latency Mode](#81-low-latency-mode)
+    - [8.1.1. Low Latency Mode Notification](#811-low-latency-mode-notification)
+  - [8.2. Auto Low Latency Mode Signalled](#82-auto-low-latency-mode-signalled)
+  - [8.3. Port Auto Low Latency Mode Capable](#83-port-auto-low-latency-mode-capable)
+    - [8.3.1. Port Auto Low Latency Mode Capable Changed Notification](#831-port-auto-low-latency-mode-capable-changed-notification)
 
 ## 3. All Ports
 The `HDMIInput` module **MUST** have a `ports` method that lists all physical HDMI input ports on the device.
 
-The `ports` API **MUST** return an array of `HDMIPort` objects.
+The `ports` API **MUST** return an array of `HDMIInputPort` objects.
 
 An example response:
 
@@ -52,7 +53,7 @@ An example response:
 ]
 ```
 
-The `HDMIPort` object **MUST** have a `port` string property, which is the unique ID of that port.
+The `HDMIInputPort` object **MUST** have a `port` string property, which is the unique ID of that port. This is usually formatted and printed on the device near the port.
 
 The `port` property **MUST** match the pattern:
 
@@ -60,9 +61,9 @@ The `port` property **MUST** match the pattern:
  /^HDMI[0-9]+$/
  ```
 
-The `HDMIPort` object **MUST** have a `connected` boolean property, which is true if that port has a device connected, false otherwise.
+The `HDMIInputPort` object **MUST** have a `connected` boolean property, which is true if that port has a device connected, false otherwise.
 
-The `HDMIPort` object **MUST** have a `signal` string property, which denotes the signal validity.
+The `HDMIInputPort` object **MUST** have a `signal` string property, which denotes the signal validity.
 
 The `signal` property **MUST** be one of the following values:
 
@@ -72,25 +73,25 @@ The `signal` property **MUST** be one of the following values:
 - `"unstable"` - the signal is unstable and could exhibit broken audio and video.
 - `"unsupported"` - the signal is not at a supported speed/resolution.
 
-The `HDMIPort` object **MUST** have an `arcCapable` boolean property, which is true if this HDMI port supports ARC and/or eARC device connections.
+The `HDMIInputPort` object **MUST** have an `arcCapable` boolean property, which is true if this HDMI port supports ARC and/or eARC device connections.
 
-The `HDMIPort` object **MUST** have an `arcConnected` boolean property, which is true if the connected HDMI device supports ARC and/or eARC device connections.
+The `HDMIInputPort` object **MUST** have an `arcConnected` boolean property, which is true if the attached device supports ARC and/or eARC, regardless of whether the input port supports ARC.
 
-The `HDMIPort` object **MUST** have an `edidVersion` string property which is the selected E-EDID version "1.4" or "2.0" for the port.
+The `HDMIInputPort` object **MUST** have an `edidVersion` string property which is the selected E-EDID version "1.4" or "2.0" for the port.
 
-The `edidVersion` property **MUST** be on of the following values:
+The `edidVersion` property **MUST** be one of the following values:
 
 - `"1.4"`
 - `"2.0"`
 - `"unknown"`
 
-If the `edidVersion` is `"2.0"` then the `HDMIPort` object:
+If the `edidVersion` is `"2.0"` then the `HDMIInputPort` object:
 
-> **MUST** have an `autoLowLatencyModeCapable` boolean property, which is true if the E-EDID has ALLM support advertised and false otherwise.
+> **MUST** have an `autoLowLatencyModeCapable` boolean property, which is true if the device has ALLM support in the EDID on this HDMI input, false otherwise.
 >
 > **MUST** have an `autoLowLatencyModelSignalled` boolean property, which is true if the port is receiving an ALLM signal from a downstream source device, and false otherwise.
 
-If the `edidVersion` is `"1.4"` or `"unknown"` then the `HDMIPort` object:
+If the `edidVersion` is `"1.4"` or `"unknown"` then the `HDMIInputPort` object:
 
  > **MUST** have the `autoLowLatencyModeCapable` boolean property set to `false`.
  >
@@ -98,14 +99,19 @@ If the `edidVersion` is `"1.4"` or `"unknown"` then the `HDMIPort` object:
 
 The `"unknown"` value of the `edidVersion` property **SHOULD** be reserved for edge cases, such as a test device with a newer version of HDMI ports than the device software supports.
 
+The `ports` API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
 ## 4. Single Port
 The `HDMIInput` module **MUST** have a `port` method that returns info on a single HDMI port.
 
-The `port` API **MUST** return an `HDMIPort` object that corresponds to the provided `portId` parameter.
+The `port` API **MUST** return an `HDMIInputPort` object that corresponds to the provided `portId` parameter.
 
 ```javascript
 HDMIInput.port('HDMI1')
 ```
+
+The `port` API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
 ## 5. Port Connection Notification
 The `HDMIInput` module **MUST** have an `onConnectionChanged` notification that fires when any HDMI port has a connection physically engaged or disengaged.
 
@@ -129,6 +135,9 @@ Example payload:
       "contected": true
   }
 ```
+
+The `onConnectionChanged` API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
 
 ## 6. Port Signal Notification
 The `HDMIInput` module **MUST** have an `onSignalChanged` notification that fires when any HDMI port signal changes status.
@@ -162,29 +171,55 @@ Example payload:
   }
 ```
 
+The `onSignalChanged` API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
 
-## 7. Low Latency
+## 7. EDID Version
+Extended Display Identification Data enables HDMI devices to communicate which set of features are supported.
+
+The `HDMIInput` module **MUST** have a boolean property named `edidVersion`, with a getter, setter, and notification subscriber.
+
+The `edidVersion` property **MUST** have a `port` parameter to specify which port.
+
+The `edidVersion` property requires access to the `use` role of the `xrn:firebolt:capability:inputs:hdmi` capability.
+
+The `edidVersion` property **MUST** have a notification for when a port's edid value changes.
+
+The `edidVersion` property **MUST** have a setter that requires access to the `manage` role.
+
+Setting this property changes the specified port's EDID version, that is broadcast to other devices.
+
+Low latency mode switches the device to shorten the overall processing time of HDMI A/V signals.
+Depending on the platform some video processing features may be disabled such as MPEG noise reduction.
+
+## 8. Low Latency
 Low Latency refers to a set of functionally that combines to provide manual or automatic activation of HDMI Low Latency Mode.
 
 Low latency mode switches the device to shorten the overall processing time of HDMI A/V signals.
 
-Depending on the platform some video processing features may be dropped such as MPEG noise reduction.
+Depending on the platform some video processing features may be disabled such as MPEG noise reduction.
 
-### 7.1. Low Latency Mode
+### 8.1. Low Latency Mode
 The `HDMIInput` module **MUST** have a boolean property named `lowLatencyMode`, with a getter, setter, and notification subscriber.
 
-Enabling this property turns on the underlying low latency mode feature for the Firebolt device.
+Enabling this property turns on the underlying low latency mode feature for the Firebolt device, which affects all HDMI ports,
+but not other media sources.
 
 Low latency mode switches the device to shorten the overall processing time of HDMI A/V signals.
-Depending on the platform some video processing features may be dropped such as MPEG noise reduction.
+Depending on the platform some video processing features may be disabled such as MPEG noise reduction.
 
-#### 7.1.1. Low Latency Mode Notification
+The `lowLatencyMode` API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
+The `lowLatencyMode` API **MUST** have a corresponding setter that requires `manage` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
+
+#### 8.1.1. Low Latency Mode Notification
 Whenever the underlying HDMI implementation executes an LLM change (either on or off), this notification **MUST** fire:
 
 `HDMIInput.onLowLatencyModeChanged`
 
+The `onLowLatencyModeChanged` API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
 
-### 7.2. Auto Low Latency Mode Signalled
+### 8.2. Auto Low Latency Mode Signalled
 The `HDMIInput` module **MUST** have an `onAutoLowLatencyModeSignalChanged` notification that fires when the ALLM signal from the source connected to a port changes.
 
 This notification **MUST** have an object payload.
@@ -208,7 +243,9 @@ Example payload:
   }
 ```
 
-### 7.3. Port Auto Low Latency Mode Capable
+The `onAutoLowLatencyModeSignalChanged` API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
+### 8.3. Port Auto Low Latency Mode Capable
 The `HDMIInput` module **MUST** have a boolean property `autoLowLatencyModeCapable` which reflects the HDMI port setting for advertising ALLM support in its E-EDID.
 
 The `autoLowLatencyModeCapable` property takes a string context parameter, `port` to identify the HDMI port.
@@ -219,6 +256,8 @@ The `port` parameter must match the pattern:
  /^HDMI[0-9]+$/
  ```
 
+The `autoLowLatencyModeCapable`  API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
 Changing this property turns on/off the underlying auto low latency mode advertisement in any HDMI port E-EDID of version >= v2.0.
 
 To change the property:
@@ -227,7 +266,9 @@ To change the property:
 function autoLowLatencyModeCapable(port: string, autoLowLatencyMode: boolean)
 ```
 
-#### 7.3.1. Port Auto Low Latency Mode Capable Changed Notification
+The `autoLowLatencyModeCapable` setter API requires `manage` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
+#### 8.3.1. Port Auto Low Latency Mode Capable Changed Notification
 Whenever the underlying HDMI implementation executes an ALLM support change (either on or off), this notification must fire:
 
 `HDMIInput.onAutoLowLatencyModeCapableChanged`
@@ -243,3 +284,5 @@ HDMIInput.autoLowLatencyModeCapableChanged((data) => {
 `autoLowLatencyModeCapable` - whether or not ALLM is advertised as supported in the E-EDID for the port.
 
 `port` - the HDMI port that had an E-EDID ALLM advertisement change.
+
+The `onAutoLowLatencyModeCapableChanged`  API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
