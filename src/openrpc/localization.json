@@ -99,7 +99,7 @@
           ]
         }
       ],
-      "summary": "Get the ISO 3166-1 alpha-2 code for the counrty device is located in",
+      "summary": "Get the ISO 3166-1 alpha-2 code for the country device is located in",
       "params": [],
       "result": {
         "name": "code",
