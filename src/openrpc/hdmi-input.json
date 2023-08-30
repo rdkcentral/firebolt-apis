@@ -328,7 +328,65 @@
                     }
                 }                
             ]            
-        }     
+        },
+        {
+            "name": "edidVersion",
+            "summary": "Property for each port's active EDID version.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:inputs:hdmi"
+                    ]
+                },
+                {
+                    "name": "property"
+                }
+            ],
+            "params": [
+                {
+                    "name": "port",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/HDMIPortId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "edidVersion",
+                "schema": {
+                    "$ref": "#/components/schemas/EDIDVersion"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "port",
+                            "value": "HDMI1"
+                        }
+                    ],
+                    "result": {
+                        "name": "edidVersion",
+                        "value": "2.0"
+                    }
+                },
+                {
+                    "name": "Default Example #2",
+                    "params": [
+                        {
+                            "name": "port",
+                            "value": "HDMI1"
+                        }                        
+                    ],
+                    "result": {
+                        "name": "edidVersion",
+                        "value": "1.4"
+                    }
+                }                
+            ]            
+        }             
     ],
     "components": {
         "schemas": {
@@ -336,7 +394,15 @@
                 "type": "string",
                 "pattern": "^HDMI[0-9]+$"
             },
-            "HDMIPort": {
+            "EDIDVersion": {
+                "type": "string",
+                "enum": [
+                    "1.4",
+                    "2.0",
+                    "unknown"
+                ]
+            },
+            "HDMIInputPort": {
                 "type": "object",
                 "additionalProperties": false,
                 "properties": {
@@ -356,12 +422,7 @@
                         "type": "boolean"
                     },
                     "edidVersion": {
-                        "type": "string",
-                        "enum": [
-                            "1.4",
-                            "2.0",
-                            "UNKNOWN"
-                        ]
+                        "$ref": "#/components/schemas/EDIDVersion"
                     },
                     "autoLowLatencyModeCapable": {
                         "type": "boolean"
