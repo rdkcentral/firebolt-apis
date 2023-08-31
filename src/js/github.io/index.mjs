@@ -115,7 +115,7 @@ const capabilities = () => {
     
     const linkify = (method) => `[${method}](./${corerpc.methods.find(m => m.name === method) ? 'core' : 'manage'}/${method.split('.').shift()}/#${method.match(/\.on[A-Z]/) ? method.split('.').pop().charAt(2).toLowerCase() + method.split('.').pop().substring(3).toLowerCase() : method.split('.').pop().toLowerCase()})`
     Object.keys(capabilities).sort().forEach(c => {
-        manifest += `## \`${c}\`\n`
+        manifest += `### \`${c}\`\n`
 
         if (capabilities[c].uses.length) {
             manifest += '\n| Uses |\n'
