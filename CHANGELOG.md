@@ -1,3 +1,10 @@
+# [0.16.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0...v0.16.0) (2023-08-14)
+
+
+### Features
+
+* Added Manage APIs for `windowColor` and `windowOpacity` ([#164](https://github.com/rdkcentral/firebolt-apis/issues/164)) ([99b9fa6](https://github.com/rdkcentral/firebolt-apis/commit/99b9fa60d3987e7a8d5e7230e7401cae7d2d352c)), closes [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159)
+
 # [0.16.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0-next.2...v0.16.0-next.3) (2023-08-14)
 
 
