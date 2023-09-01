@@ -1,3 +1,12 @@
+# [0.16.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0-next.3...v0.16.0-next.4) (2023-09-01)
+
+
+### Bug Fixes
+
+* Reduce font size on capability index headers ([6c1487b](https://github.com/rdkcentral/firebolt-apis/commit/6c1487bf65ac005028c60759bcace8550156e987))
+* **transport:** Add test for lazy-loading the transport layer ([#10](https://github.com/rdkcentral/firebolt-apis/issues/10)) ([168fcaf](https://github.com/rdkcentral/firebolt-apis/commit/168fcaf4e6264cc0c2498f02c16523fb4a51cdd3)), closes [#164](https://github.com/rdkcentral/firebolt-apis/issues/164) [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159)
+* Using 3 letter ISO639 language codes ([#173](https://github.com/rdkcentral/firebolt-apis/issues/173)) ([b341dee](https://github.com/rdkcentral/firebolt-apis/commit/b341deedd9ac8ab00f3e762622fda29872f83932))
+
 # [0.16.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0-next.2...v0.16.0-next.3) (2023-08-14)
 
 
