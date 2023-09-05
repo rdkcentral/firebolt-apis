@@ -1,3 +1,10 @@
+# [0.17.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.0-next.1...v0.17.0-next.2) (2023-09-05)
+
+
+### Bug Fixes
+
+* update to firebolt-openrpc, c tests ([#176](https://github.com/rdkcentral/firebolt-apis/issues/176)) ([3984a78](https://github.com/rdkcentral/firebolt-apis/commit/3984a781d871ab9b35aecbab77157b635e4f638f)), closes [#140](https://github.com/rdkcentral/firebolt-apis/issues/140)
+
 # [0.17.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0...v0.17.0-next.1) (2023-09-01)
 
 
