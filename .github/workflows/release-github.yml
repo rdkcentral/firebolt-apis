@@ -104,5 +104,5 @@ jobs:
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
           git add --all
-          git commit -m "chore: Publish $RELEASE_CHANNEL"
+          git diff-index --quiet HEAD || git commit -m "chore: Publish $RELEASE_CHANNEL"
           git push
