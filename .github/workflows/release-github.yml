@@ -101,10 +101,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
           npm_config_tag: ${{ env.NPM_DIST_TAG }} # <-- For main, this is `latest.` Otherwise, `next`, `next-major`, etc. See ./.releaserc for release branch config.
         run: |
+          echo 1
           npm run publish:docs /tmp/firebolt-docs $RELEASE_CHANNEL"
+          echo 2
           cd /tmp/firebolt-docs
+          echo 3
           git config --global user.email "you@example.com"
+          echo 4
           git config --global user.name "Your Name"
+          echo 5
           git add --all
+          echo 6
           git commit -m "chore: Publish $RELEASE_CHANNEL"
+          echo 7
           git push
