@@ -563,7 +563,7 @@
                 }
             ],
             "result": {
-                "name": "Default Result",
+                "name": "request",
                 "summary": "Returns an array of CapabilityInfo objects for the passed in capabilities.",
                 "schema": {
                     "type": "array",
