@@ -321,7 +321,7 @@
         "name": "playRequest",
         "summary": "The request to start playing media",
         "schema": {
-          "$ref": "#/components/schemas/PlayerProviderRequest"
+          "$ref": "https://meta.comcast.com/firebolt/player#/definitions/PlayerProviderRequest"
         }
       },
       "examples": [
@@ -366,7 +366,7 @@
         "name": "stopRequest",
         "summary": "The request to stop playing media",
         "schema": {
-          "$ref": "#/components/schemas/PlayerProviderRequest"
+          "$ref": "https://meta.comcast.com/firebolt/player#/definitions/PlayerProviderRequest"
         }
       },
       "examples": [
@@ -412,7 +412,7 @@
         "name": "statusRequest",
         "summary": "The request to get the status of a player",
         "schema": {
-          "$ref": "#/components/schemas/PlayerProviderRequest"
+          "$ref": "https://meta.comcast.com/firebolt/player#/definitions/PlayerProviderRequest"
         }
       },
       "examples": [
@@ -461,7 +461,7 @@
         "name": "progressRequest",
         "summary": "The request to stop playing media",
         "schema": {
-          "$ref": "#/components/schemas/PlayerProviderRequest"
+          "$ref": "https://meta.comcast.com/firebolt/player#/definitions/PlayerProviderRequest"
         }
       },
       "examples": [
@@ -767,27 +767,6 @@
           }
         ]
       },
-      "PlayerRequest": {
-        "title": "PlayerRequest",
-        "type": "object",
-        "required": [
-          "playerId"
-        ],
-        "properties": {
-          "playerId": {
-            "description": "The id of the player instance to play in",
-            "type": "string"
-          }
-        },
-        "examples": [
-          {
-            "playerId": "app1:123"
-          },
-          {
-            "playerId": "app2:345"
-          }
-        ]
-      },
       "PlayerLoadProviderRequest": {
         "title": "PlayerLoadProviderRequest",
         "type": "object",
@@ -803,24 +782,6 @@
           "parameters": {
             "description": "The request to load media in the player",
             "$ref": "#/components/schemas/PlayerLoadRequest"
-          }
-        }
-      },
-      "PlayerProviderRequest": {
-        "title": "PlayerProviderRequest",
-        "type": "object",
-        "required": [
-          "correlationId",
-          "parameters"
-        ],
-        "properties": {
-          "correlationId": {
-            "type": "string",
-            "description": "An id to correlate the provider response with this request"
-          },
-          "parameters": {
-            "description": "The player request",
-            "$ref": "#/components/schemas/PlayerRequest"
           }
         }
       }

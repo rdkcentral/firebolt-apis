@@ -197,7 +197,7 @@
         "name": "statusRequest",
         "summary": "The request to get the status of a player",
         "schema": {
-          "$ref": "#/components/schemas/PlayerProviderRequest"
+          "$ref": "https://meta.comcast.com/firebolt/player#/definitions/PlayerProviderRequest"
         }
       },
       "examples": [
