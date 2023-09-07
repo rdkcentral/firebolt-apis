@@ -11,6 +11,7 @@ on:
     branches: 
       - 'next'
       - 'chore/pr-ci'
+      - 'test-pr-ci'
 env:
   HUSKY: 0
 jobs:
