@@ -98,7 +98,7 @@
             "name": "playerStatus",
             "value": {
               "locked": false,
-              "frequency": 1,
+              "frequency": 695000000,
               "signalStrength": 90,
               "signalQuality": 90
             }
@@ -116,7 +116,7 @@
             "name": "playerStatus",
             "value": {
               "locked": true,
-              "frequency": 2,
+              "frequency": 695000000,
               "signalStrength": 23,
               "signalQuality": 55
             }
@@ -180,7 +180,7 @@
             "examples": [
               {
                 "locked": false,
-                "frequency": 1,
+                "frequency": 695000000,
                 "signalStrength": 90,
                 "signalQuality": 90
               }
@@ -263,7 +263,7 @@
               "name": "status",
               "value": {
                 "locked": false,
-                "frequency": 1,
+                "frequency": 695000000,
                 "signalStrength": 90,
                 "signalQuality": 90
               }
