@@ -11,6 +11,7 @@ on:
     branches: 
       - 'next'
       - 'chore/pr-ci'
+      - 'test-pr-ci'
 env:
   HUSKY: 0
 jobs:
@@ -66,6 +67,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
           npm_config_tag: ${{ env.NPM_DIST_TAG }} # <-- For main, this is `latest.` Otherwise, `next`, `next-major`, etc. See ./.releaserc for release branch config.
         run: npx semantic-release --dry-run
+      - name: Build artifacts for PRs
+        if: github.event_name == 'pull_request'
+        run: npm run dist
       - name: Check if semantic-release created a build
         id: check_build
         uses: andstor/file-existence-action@v2
@@ -97,7 +101,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
           npm_config_tag: ${{ env.NPM_DIST_TAG }} # <-- For main, this is `latest.` Otherwise, `next`, `next-major`, etc. See ./.releaserc for release branch config.
         run: |
-          npm run publish:docs /tmp/firebolt-docs $RELEASE_CHANNEL"
+          npm run publish:docs /tmp/firebolt-docs $RELEASE_CHANNEL
           cd /tmp/firebolt-docs
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
