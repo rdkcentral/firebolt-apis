@@ -1,3 +1,10 @@
+## [0.17.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.0...v0.17.1-next.1) (2023-09-08)
+
+
+### Bug Fixes
+
+* Deploy GitHub.io docs for PRs ([#180](https://github.com/rdkcentral/firebolt-apis/issues/180)) ([7ef7d9d](https://github.com/rdkcentral/firebolt-apis/commit/7ef7d9dac20d73591b6c3391a8afbbfd55a717e7))
+
 # [0.17.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0...v0.17.0) (2023-09-07)
 
 
