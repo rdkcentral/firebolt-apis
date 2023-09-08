@@ -734,15 +734,15 @@
           },
           "startPosition": {
             "description": "The position that the media starts at in milliseconds",
-            "type": "number"
+            "type": "integer"
           },
           "position": {
             "description": "The current position in milliseconds",
-            "type": "number"
+            "type": "integer"
           },
           "endPosition": {
             "description": "The position that the media stops at in milliseconds",
-            "type": "number"
+            "type": "integer"
           },
           "liveSyncTime": {
             "description": "The time to sync to live",

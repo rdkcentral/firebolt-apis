@@ -352,18 +352,18 @@
             "type": "boolean"
           },
           "frequency": {
-            "description": "",
-            "type": "number"
+            "description": "The signal frequency in hertz",
+            "type": "integer"
           },
           "signalStrength": {
             "description": "The strength of the signal from 0-100",
-            "type": "number",
+            "type": "integer",
             "minimum": 0,
             "maximum": 100
           },
           "signalQuality": {
             "description": "The quality of the signal from 0-100",
-            "type": "number",
+            "type": "integer",
             "minimum": 0,
             "maximum": 100
           }
