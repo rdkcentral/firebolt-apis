@@ -118,15 +118,7 @@
             "result": {
                 "name": "info",
                 "schema": {
-                    "type": "object",
-                    "properties": {
-                        "port": {
-                            "$ref": "#/components/schemas/HDMIPortId"
-                        },
-                        "connected": {
-                            "type": "boolean"
-                        }
-                    }
+                    "$ref": "#/components/schemas/ConnectionChangedInfo"
                 }
             },
             "examples": [
@@ -161,15 +153,7 @@
             "result": {
                 "name": "info",
                 "schema": {
-                    "type": "object",
-                    "properties": {
-                        "port": {
-                            "$ref": "#/components/schemas/HDMIPortId"
-                        },
-                        "signal": {
-                            "$ref": "#/components/schemas/HDMISignalStatus"
-                        }
-                    }
+                    "$ref": "#/components/schemas/SignalChangedInfo"
                 }
             },
             "examples": [
@@ -245,15 +229,7 @@
             "result": {
                 "name": "info",
                 "schema": {
-                    "type": "object",
-                    "properties": {
-                        "port": {
-                            "$ref": "#/components/schemas/HDMIPortId"
-                        },
-                        "autoLowLatencyModeSignalled": {
-                            "type": "boolean"
-                        }
-                    }
+                    "$ref": "#/components/schemas/AutoLowLatencyModeSignalChangedInfo"
                 }
             },
             "examples": [
@@ -395,6 +371,7 @@
                 "pattern": "^HDMI[0-9]+$"
             },
             "EDIDVersion": {
+                "title": "EDIDVersion",
                 "type": "string",
                 "enum": [
                     "1.4",
@@ -403,6 +380,7 @@
                 ]
             },
             "HDMIInputPort": {
+                "title": "HDMIInputPort",
                 "type": "object",
                 "additionalProperties": false,
                 "properties": {
@@ -471,6 +449,46 @@
                     "unsupported",
                     "unknown"
                 ]
+            },
+            "SignalChangedInfo": {
+                "title": "SignalChangedInfo",
+                "type": "object",
+                "properties": {
+                    "port": {
+                        "$ref": "#/components/schemas/HDMIPortId"
+                    },
+                    "signal": {
+                        "$ref": "#/components/schemas/HDMISignalStatus"
+                    }
+                },
+                "required": [
+                    "port",
+                    "signal"
+                ]
+            },
+            "ConnectionChangedInfo": {
+                "title": "ConnectionChangedInfo",
+                "type": "object",
+                "properties": {
+                    "port": {
+                        "$ref": "#/components/schemas/HDMIPortId"
+                    },
+                    "connected": {
+                        "type": "boolean"
+                    }
+                }                
+            },
+            "AutoLowLatencyModeSignalChangedInfo": {
+                "title": "AutoLowLatencyModeSignalChangedInfo",
+                "type": "object",
+                "properties": {
+                    "port": {
+                        "$ref": "#/components/schemas/HDMIPortId"
+                    },
+                    "autoLowLatencyModeSignalled": {
+                        "type": "boolean"
+                    }
+                }
             }
         }
     }
