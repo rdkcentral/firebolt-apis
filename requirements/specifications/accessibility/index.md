@@ -111,26 +111,17 @@ The styles field is an instance of ClosedCaptionsStyles:
 The fontFamily denotes which typeface to be used for rendering closed
 captions fonts. This **MUST** be one of:
 
--   serif
 
--   sans-serif
+- `"monospaced_serif"`
+- `"proportional_serif"`
+- `"monospaced_sanserif"`
+- `"proportional_sanserif"`
+- `"smallcaps"`
+- `"cursive"`
+- `"casual"`
+- `null`
 
--   monospace
-
--   cursive
-
--   fantasy
-
-These values are taken from the W3C generic font names to ensure future
-compatibility. However, Firebolt devices **MUST** support this subset,
-not the entire range of W3C font-family spec.
-
-Firebolt devices **MAY** support additional fontFamily values.
-Additional fontFamily values MUST conform to the W3C font-family spec.
-
-Firebolt devices **MUST** fall back to the sans-serif value if the value
-specified by fontFamily is not one of the five above, and not supported
-on the device.
+Firebolt devices **MUST** support all of these values.
 
 ##### 1.3.0.3. Font Size
 
@@ -168,15 +159,13 @@ The fontEdge denotes the type of font outline that closed captions fonts
 will be rendered with, e.g. a drop-shadow. This is an enumeration that
 **MUST** be one of the following values:
 
--   none
-
--   raised
-
--   depressed
-
--   uniform
-
--   dropShadow
+- `"none"`
+- `"raised"`
+- `"depressed"`
+- `"uniform"`
+- `"drop_shadow_left"`
+- `"drop_shadow_right"`
+- `null`
 
 ##### 1.3.0.6. Font Edge Color
 
