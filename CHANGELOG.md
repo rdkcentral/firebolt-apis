@@ -1,3 +1,10 @@
+## [0.17.1-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1-next.2...v0.17.1-next.3) (2023-09-12)
+
+
+### Bug Fixes
+
+* Add proposed branch to .releaserc ([e65e43f](https://github.com/rdkcentral/firebolt-apis/commit/e65e43f47113e72b79c09d9fa89b2d9d3dad9e9d))
+
 ## [0.17.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1-next.1...v0.17.1-next.2) (2023-09-12)
 
 
