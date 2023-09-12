@@ -122,7 +122,7 @@
                 {
                     "enabled": true,
                     "styles": {
-                        "fontFamily": "Monospace sans-serif",
+                        "fontFamily": "monospaced_serif",
                         "fontSize": 1,
                         "fontColor": "#ffffff",
                         "fontEdge": "none",
