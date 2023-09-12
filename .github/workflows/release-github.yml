@@ -6,6 +6,7 @@ on:
       - 'main'
       - 'next'
       - 'next-major'
+      - 'proposed'
   pull_request:
     types: [opened, synchronize]
     branches: 
