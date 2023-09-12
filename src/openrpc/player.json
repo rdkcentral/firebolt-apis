@@ -513,9 +513,7 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-provides": [
-            "xrn:firebolt:capability:player:base"
-          ]
+          "x-provides": "xrn:firebolt:capability:player:base"
         }
       ],
       "summary": "Tells listeners the current status of a player",
@@ -572,9 +570,7 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-provides": [
-            "xrn:firebolt:capability:player:base"
-          ]
+          "x-provides": "xrn:firebolt:capability:player:base"
         }
       ],
       "summary": "Tells listeners the current progress of a player",
