@@ -68,7 +68,7 @@
       "params": [
         {
           "name": "playerId",
-          "summary": "The id of the player to stop",
+          "summary": "The id of the player to start playing",
           "schema": {
             "type": "string"
           },
