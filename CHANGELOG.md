@@ -1,3 +1,10 @@
+## [0.17.1-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1-next.3...v0.17.1-next.4) (2023-09-12)
+
+
+### Bug Fixes
+
+* Add enumerated values for fontFamily/fontEdge ([#181](https://github.com/rdkcentral/firebolt-apis/issues/181)) ([de35cb8](https://github.com/rdkcentral/firebolt-apis/commit/de35cb8073438f945bb4b7a8e8f420b8d6ba2358))
+
 ## [0.17.1-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1-next.2...v0.17.1-next.3) (2023-09-12)
 
 
