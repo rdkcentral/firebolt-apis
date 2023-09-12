@@ -170,7 +170,7 @@
     },
     {
       "name": "onRequestStatus",
-      "summary": "Registers as a provider for when broadcast player status needs to be reported",
+      "summary": "Registers as a provider for when broadcast player status needs to be provided",
       "params": [],
       "tags": [
         {
@@ -217,7 +217,7 @@
       ]
     },
     {
-      "name": "reportStatus",
+      "name": "provideStatus",
       "tags": [
         {
           "name": "capabilities",
@@ -238,7 +238,7 @@
         },
         {
           "name": "status",
-          "summary": "The status report",
+          "summary": "The status",
           "schema": {
             "$ref": "#/components/schemas/BroadcastPlayerStatus"
           },
@@ -246,7 +246,7 @@
         }
       ],
       "result": {
-        "name": "reportResponse",
+        "name": "providedResponse",
         "schema": {
           "const": null
         }
@@ -270,7 +270,7 @@
             }
           ],
           "result": {
-            "name": "reportResponse",
+            "name": "providedResponse",
             "value": null
           }
         }
