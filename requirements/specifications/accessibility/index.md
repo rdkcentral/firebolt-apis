@@ -42,33 +42,33 @@ or other text tracks.
 The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL NOT**", "**SHOULD**", "**SHOULD NOT**", "**RECOMMENDED**", "**NOT RECOMMENDED**", "**MAY**", and "**OPTIONAL**" in this document are to be interpreted as described in [BCP 14](https://www.rfc-editor.org/rfc/rfc2119.txt) [RFC2119] [RFC8174] when, and only when, they appear in all capitals, as shown here.
 
 - [1. Overview](#1-overview)
-  - [1.2. Settings Scope](#12-settings-scope)
-  - [1.3. Closed Captions Settings](#13-closed-captions-settings)
-      - [1.3.0.2. Font Family](#1302-font-family)
-      - [1.3.0.3. Font Size](#1303-font-size)
-      - [1.3.0.4. Font Color](#1304-font-color)
-      - [1.3.0.5. Font Edge](#1305-font-edge)
-      - [1.3.0.6. Font Edge Color](#1306-font-edge-color)
-      - [1.3.0.7. Background Color](#1307-background-color)
-      - [1.3.0.8. Font Opacity](#1308-font-opacity)
-      - [1.3.0.9. Background Color](#1309-background-color)
-      - [1.3.0.10. Background Opacity](#13010-background-opacity)
-      - [1.3.0.11. Text Align](#13011-text-align)
-      - [1.3.0.12. Text Align Vertical](#13012-text-align-vertical)
-    - [1.3.1. Toggling closed captions](#131-toggling-closed-captions)
-    - [1.3.2. Changing closed captions styles](#132-changing-closed-captions-styles)
-  - [1.4. Voice Guidance Settings](#14-voice-guidance-settings)
-    - [1.4.1. Toggling voice guidance](#141-toggling-voice-guidance)
-    - [1.4.2. Changing voice guidance speed](#142-changing-voice-guidance-speed)
-  - [1.5. Audio Description Settings](#15-audio-description-settings)
-    - [1.5.1. Toggling audio descriptions](#151-toggling-audio-descriptions)
-  - [1.6. Core SDK APIs](#16-core-sdk-apis)
-    - [1.6.1. Closed Captions Settings](#161-closed-captions-settings)
-    - [1.6.2. Voice Guidance Settings](#162-voice-guidance-settings)
-    - [1.6.3. Audio Description Settings](#163-audio-description-settings)
-  - [1.7. Manage SDK APIs](#17-manage-sdk-apis)
+  - [1.1. Settings Scope](#11-settings-scope)
+  - [1.2. Closed Captions Settings](#12-closed-captions-settings)
+    - [1.2.1. Font Family](#121-font-family)
+    - [1.2.2. Font Size](#122-font-size)
+    - [1.2.3. Font Color](#123-font-color)
+    - [1.2.4. Font Edge](#124-font-edge)
+    - [1.2.5. Font Edge Color](#125-font-edge-color)
+    - [1.2.6. Background Color](#126-background-color)
+    - [1.2.7. Font Opacity](#127-font-opacity)
+    - [1.2.8. Background Color](#128-background-color)
+    - [1.2.9. Background Opacity](#129-background-opacity)
+    - [1.2.10. Text Align](#1210-text-align)
+    - [1.2.11. Text Align Vertical](#1211-text-align-vertical)
+    - [1.2.12. Toggling closed captions](#1212-toggling-closed-captions)
+    - [1.2.13. Changing closed captions styles](#1213-changing-closed-captions-styles)
+  - [1.3. Voice Guidance Settings](#13-voice-guidance-settings)
+    - [1.3.1. Toggling voice guidance](#131-toggling-voice-guidance)
+    - [1.3.2. Changing voice guidance speed](#132-changing-voice-guidance-speed)
+  - [1.4. Audio Description Settings](#14-audio-description-settings)
+    - [1.4.1. Toggling audio descriptions](#141-toggling-audio-descriptions)
+  - [1.5. Core SDK APIs](#15-core-sdk-apis)
+    - [1.5.1. Closed Captions Settings](#151-closed-captions-settings)
+    - [1.5.2. Voice Guidance Settings](#152-voice-guidance-settings)
+    - [1.5.3. Audio Description Settings](#153-audio-description-settings)
+  - [1.6. Manage SDK APIs](#16-manage-sdk-apis)
 
-### 1.2. Settings Scope
+### 1.1. Settings Scope
 
 Accessibility settings **MUST** be scoped to the current device. If a
 user, household, or account has multiple devices, then changing an
@@ -78,7 +78,7 @@ another device.
 If a device supports profiles accessibility settings **MAY** be managed
 separately for each profile, but only on a per-device basis.
 
-### 1.3. Closed Captions Settings
+### 1.2. Closed Captions Settings
 
 Closed captions settings describe whether closed captions are enabled,
 as well as the user's preferred style settings for rendering captions.
@@ -106,7 +106,7 @@ The styles field is an instance of ClosedCaptionsStyles:
 | textAlign         | The horizontal alignment for captions - left, center, right.          |
 | textAlignVertical | The vertical alignment for captions - top, middle, bottom.            |
 
-##### 1.3.0.2. Font Family
+#### 1.2.1. Font Family
 
 The fontFamily denotes which typeface to be used for rendering closed
 captions fonts. This **MUST** be one of:
@@ -123,7 +123,7 @@ captions fonts. This **MUST** be one of:
 
 Firebolt devices **MUST** support all of these values.
 
-##### 1.3.0.3. Font Size
+#### 1.2.2. Font Size
 
 The fontSize denotes the size that closed captions will be rendered.
 This is a numeric value that specifies a relative multiplier for the
@@ -143,7 +143,7 @@ Apps **SHOULD** use two-thirds of the physically rendered video height,
 divided by fourteen as the default font-size. While not all Apps will
 conform to this standard, it clarifies the range of values supported.
 
-##### 1.3.0.4. Font Color
+#### 1.2.3. Font Color
 
 The fontColor denotes the color that closed captions fonts will be
 rendered in. This is a hexadecimal RGB color, without opacity, per the
@@ -153,7 +153,7 @@ spec. For example \"#FF0000\" for red.
 The value of this **MUST** be a six-digit, case-insensitive hexadecimal
 string preceded by the \'#\' character.
 
-##### 1.3.0.5. Font Edge
+#### 1.2.4. Font Edge
 
 The fontEdge denotes the type of font outline that closed captions fonts
 will be rendered with, e.g. a drop-shadow. This is an enumeration that
@@ -167,7 +167,7 @@ will be rendered with, e.g. a drop-shadow. This is an enumeration that
 - `"drop_shadow_right"`
 - `null`
 
-##### 1.3.0.6. Font Edge Color
+#### 1.2.5. Font Edge Color
 
 The fontEdgeColor denotes the color that any closed captions font
 outline will be rendered in. This is a hexadecimal RGB color, without
@@ -178,7 +178,7 @@ opacity, per the [CSS Color Module Level
 The value of this **MUST** be a six-digit, case-insensitive hexadecimal
 string preceded by the \'#\' character.
 
-##### 1.3.0.7. Background Color
+#### 1.2.6. Background Color
 
 The backgroundColor denotes the color of any background the closed
 captions fonts will be rendered with. This is a hexadecimal RGB color,
@@ -186,12 +186,12 @@ without opacity, per the [CSS Color Module Level
 3](https://www.w3.org/TR/css-color-3/#rgb-color) spec. For example
 \"#FF0000\" for red.
 
-##### 1.3.0.8. Font Opacity
+#### 1.2.7. Font Opacity
 
 The fontOpacity denotes transparency that closed captions fonts will be
 rendered with. This **MUST** be a numeric value from 0 to 100.
 
-##### 1.3.0.9. Background Color
+#### 1.2.8. Background Color
 
 The backgroundColor denotes the color of any background the closed
 captions fonts will be rendered with. This is a hexadecimal RGB color,
@@ -202,13 +202,13 @@ without opacity, per the [CSS Color Module Level
 The value of this **MUST** be a six-digit, case-insensitive hexadecimal
 string preceded by the \'#\' character.
 
-##### 1.3.0.10. Background Opacity
+#### 1.2.9. Background Opacity
 
 The backgroundOpacity denotes transparency that any closed captions
 background will be rendered with. This **MUST** be a numeric value from
 0 to 100.
 
-##### 1.3.0.11. Text Align
+#### 1.2.10. Text Align
 
 The textAlign denotes horizontal alignment for any closed captions. This
 **MUST** be one of the following values:
@@ -222,7 +222,7 @@ The textAlign denotes horizontal alignment for any closed captions. This
 This is a default value that should only be used for rendering closed
 captions that don't have any position or alignment data.
 
-##### 1.3.0.12. Text Align Vertical
+#### 1.2.11. Text Align Vertical
 
 The textAlignVertical denotes vertical alignment for any closed
 captions. This **MUST** be one of the following values:
@@ -236,7 +236,7 @@ captions. This **MUST** be one of the following values:
 This is a default value that should only be used for rendering closed
 captions that don't have any position or alignment data.
 
-#### 1.3.1. Toggling closed captions
+#### 1.2.12. Toggling closed captions
 
 Enabling closed captions puts the device in a state where Apps
 **SHOULD** be displaying closed captions. The language to be used is up
@@ -272,7 +272,7 @@ text track from this list:
 
 -   Other text track with language matching the video content
 
-#### 1.3.2. Changing closed captions styles
+#### 1.2.13. Changing closed captions styles
 
 Changing closed captions styles updates the various style preferences
 that Apps **MUST** respect when rendering captions. These styles are the
@@ -289,7 +289,7 @@ that have registered for the onClosedCaptionsSettingsChanged
 notification **MUST** be notified with the entire updated
 ClosedCaptionsSettings object.
 
-### 1.4. Voice Guidance Settings
+### 1.3. Voice Guidance Settings
 
 Voice guidance settings describe whether voice guidance is enabled, as
 well as the user's preferred speed for the guidance voice.
@@ -302,7 +302,7 @@ has two fields:
 | enabled | Whether voice guidance should be enabled. |
 | speed   | The preferred speed for guidance voice.   |
 
-#### 1.4.1. Toggling voice guidance
+#### 1.3.1. Toggling voice guidance
 
 Enabling voice guidance puts the device in a state where Apps **SHOULD**
 be playing voice-overs for interactive UI elements as they are
@@ -320,7 +320,7 @@ running Apps that have registered for the onVoiceGuidanceSettingsChanged
 notification **MUST** be notified with the entire updated
 VoiceGuidanceSettings object.
 
-#### 1.4.2. Changing voice guidance speed
+#### 1.3.2. Changing voice guidance speed
 
 Changing the voice guidance speed updates how fast any accessibility
 voice-over speech should be played Apps **SHOULD** respect this when
@@ -338,7 +338,7 @@ that have registered for the onVoiceGuidanceSettingsChanged notification
 **MUST** be notified with the entire updated VoiceGuidanceSettings
 object.
 
-### 1.5. Audio Description Settings
+### 1.4. Audio Description Settings
 
 Audio description settings determine whether descriptive audio tracks,
 which generally describe the video content, are enabled.
@@ -353,7 +353,7 @@ which has one field:
 If the enabled value has never been set, then it **MUST** default to
 false.
 
-#### 1.5.1. Toggling audio descriptions
+#### 1.4.1. Toggling audio descriptions
 
 Enabling audio descriptions puts the device in a state where Apps
 **SHOULD** be playing descriptive audio tracks for any content that has
@@ -375,7 +375,7 @@ all running Apps that have registered for the
 onAudioDescriptionSettingsChanged notification **MUST** be notified with
 the entire updated AudioDescriptionSettings object.
 
-### 1.6. Core SDK APIs
+### 1.5. Core SDK APIs
 
 The following APIs are exposed by the Firebolt Core SDK as part of the
 core:accessibility domain/module.
@@ -384,7 +384,7 @@ See the [Firebolt API
 Documentation](https://developer.comcast.com/firebolt/core/sdk/latest/api/)
 for details around syntax, errors, and permissions.
 
-#### 1.6.1. Closed Captions Settings
+#### 1.5.1. Closed Captions Settings
 
 This is a property API that exposes a getter and subscriber for a
 mutable system property.
@@ -399,7 +399,7 @@ When called with a single callback as a parameter, the SDK **MUST**
 register to receive Accessibility.onClosedCaptionsSettingsChanged
 notifications, and proxy them to the callback as they occur.
 
-#### 1.6.2. Voice Guidance Settings
+#### 1.5.2. Voice Guidance Settings
 
 This is a property API that exposes a getter and subscriber for a
 mutable system property.
@@ -414,7 +414,7 @@ When called with a single callback as a parameter, the SDK **MUST**
 register to receive Accessibility.onVoiceGuidanceSettingsChanged
 notifications, and proxy them to the callback as they occur.
 
-#### 1.6.3. Audio Description Settings
+#### 1.5.3. Audio Description Settings
 
 This is a property API that exposes a getter and subscriber for a
 mutable system property.
@@ -429,7 +429,7 @@ When called with a single callback as a parameter, the SDK **MUST**
 register to receive Accessibility.onAudioDescriptionSettingsChanged
 notifications, and proxy them to the callback as they occur.
 
-### 1.7. Manage SDK APIs
+### 1.6. Manage SDK APIs
 
 The following APIs are exposed by the Firebolt Manage SDK as part of the
 manage domain.
