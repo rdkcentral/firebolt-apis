@@ -39,7 +39,7 @@
             "value": {
               "enabled": true,
               "styles": {
-                "fontFamily": "Monospace sans-serif",
+                "fontFamily": "monospaced_sanserif",
                 "fontSize": 1,
                 "fontColor": "#ffffff",
                 "fontEdge": "none",
@@ -92,7 +92,7 @@
             "value": {
               "enabled": true,
               "styles": {
-                "fontFamily": "Monospace sans-serif",
+                "fontFamily": "monospaced_sanserif",
                 "fontSize": 1,
                 "fontColor": "#ffffff",
                 "fontEdge": "none",

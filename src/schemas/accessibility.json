@@ -11,14 +11,33 @@
     ],
     "definitions": {
         "FontFamily": {
-            "type": ["string", "null"]
+            "type": ["string", "null"],
+            "enum": [
+                "monospaced_serif",
+                "proportional_serif",
+                "monospaced_sanserif",
+                "proportional_sanserif",
+                "smallcaps",
+                "cursive",
+                "casual",
+                null
+            ]
         },
         "FontSize": {
             "type": ["number", "null"],
             "minimum": 0
         },
         "FontEdge": {
-            "type": ["string", "null"]
+            "type": ["string", "null"],
+            "enum": [
+                "none",
+                "raised",
+                "depressed",
+                "uniform",
+                "drop_shadow_left",
+                "drop_shadow_right",
+                null
+            ]
         },
         "Color": {
             "type": ["string", "null"]
