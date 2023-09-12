@@ -73,7 +73,7 @@
                     "params": [],
                     "result": {
                         "name": "family",
-                        "value": "monospace"
+                        "value": "monospaced_sanserif"
                     }
                 },
                 {
@@ -225,7 +225,7 @@
                     "params": [],
                     "result": {
                         "name": "edge",
-                        "value": "solid"
+                        "value": "uniform"
                     }
                 },
                 {
