@@ -12,18 +12,13 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Farhan Mood     | Liberty Global            |
 
 ## 1. Overview
+Apps may need to know what media format, e.g. HDR profile or video codec, is currently playing.
 
-**TODO**: needs a refresh based on all the changes we've made
+An app may need to check IP video playback that it has initiated to see if Dolby Audio is in fact active (as opposed to just present in the encoded data) in order to display metadata or badges to the user. Apps may also be playing [user-cultivated media](./media-access.md), and therefor have no metadata about the format of the files.
 
-In some cases, an app will need to be aware of what media formats and
-codecs are playing, even for media files which were cultivated outside of the
-app provider's purview, e.g. playing MP3 files in a generic media player
-app (see [Media Access
-Requirements](./media-access.md)
-for more info).
+A first-party app may need to check all [Media Pipelines](./media-pipeline.md) for media format characteristics to display a global badge.
 
-In cases like this, the app may have a requirement to display the type
-of media being displayed, e.g., "Dolby Audio."
+Additionally, apps may need to know what is supported by the device, *before* initiating any media playback.
 
 As a W3C-based platform, there is no standard API for detecting media
 formats or codecs that works in all cases, short of inspecting the bytes
@@ -31,34 +26,32 @@ of the media in the app itself.
 
 To solve this, Firebolt APIs will be created to detect the formats and
 codecs currently being decoded by the [Media
-Pipeline](./media-pipeline.md) or an active HDMI input.
+Pipeline](./media-pipeline.md) and Firebolt APIs will be created to query device support for those formats.
 
 ## 2. Table of Contents
 - [1. Overview](#1-overview)
 - [2. Table of Contents](#2-table-of-contents)
 - [3. MimeTypes](#3-mimetypes)
-- [4. Media Capabilities](#4-media-capabilities)
-  - [4.1. Video Codec](#41-video-codec)
-  - [4.2. Audio Codec](#42-audio-codec)
-  - [4.3. Dynamic Range](#43-dynamic-range)
-  - [4.4. Immersive Audio](#44-immersive-audio)
-  - [4.5. Resolution](#45-resolution)
-- [5. Media Info](#5-media-info)
-  - [5.1. MediaInfo for current app](#51-mediainfo-for-current-app)
-    - [5.1.1. Video Codec](#511-video-codec)
-    - [5.1.2. Audio Codec](#512-audio-codec)
+- [4. Media Info](#4-media-info)
+  - [4.1. MediaInfo for current app](#41-mediainfo-for-current-app)
+    - [4.1.1. Video Codec](#411-video-codec)
+    - [4.1.2. Audio Codec](#412-audio-codec)
+    - [4.1.3. Dynamic Range](#413-dynamic-range)
+    - [4.1.4. Immersive Audio](#414-immersive-audio)
+    - [4.1.5. Frame Rate](#415-frame-rate)
+    - [4.1.6. Resolution](#416-resolution)
+    - [4.1.7. Resolution (Alternative)](#417-resolution-alternative)
+  - [4.2. MediaInfo for Pipeline](#42-mediainfo-for-pipeline)
+  - [4.3. Global MediaInfo](#43-global-mediainfo)
+- [5. Device Media Support](#5-device-media-support)
+  - [5.1. Negotiated Media Support](#51-negotiated-media-support)
+    - [5.1.1. Video Codecs](#511-video-codecs)
+    - [5.1.2. Audio Codecs](#512-audio-codecs)
     - [5.1.3. Dynamic Range](#513-dynamic-range)
     - [5.1.4. Immersive Audio](#514-immersive-audio)
-    - [5.1.5. Frame Rate](#515-frame-rate)
-    - [5.1.6. Resolution](#516-resolution)
-  - [5.2. MediaInfo for Pipeline](#52-mediainfo-for-pipeline)
-  - [5.3. Global MediaInfo](#53-global-mediainfo)
-- [6. Device Media Capabilities](#6-device-media-capabilities)
-  - [6.1. Video Codec](#61-video-codec)
-  - [6.2. Audio Codec](#62-audio-codec)
-  - [6.3. Dynamic Range](#63-dynamic-range)
-  - [6.4. Immersive Audio](#64-immersive-audio)
-  - [6.5. Resolutions](#65-resolutions)
+    - [5.1.5. Resolutions](#515-resolutions)
+    - [5.1.6. Resolutions (Alternative)](#516-resolutions-alternative)
+  - [5.2. Implicit Media Support](#52-implicit-media-support)
 
 ## 3. MimeTypes
 The Firebolt `MimeTypes` module consists of static enumeration of all codecs, formats, etc., and their mime-types.
@@ -100,157 +93,12 @@ The Firebolt `MimeTypes` module consists of static enumeration of all codecs, fo
 | `UNKNOWN`        | `unknown`              |
 | `NONE`           | `none`                 |
 
-## 4. Media Capabilities
-
-Apps need to know what types of media capabilities the current *device configuration*,
-e.g. a Firebolt STB connected to an HDMI television, is capable of.
-
-To facilitate this, the `MediaInfo` module will have a set of methods that
-return all possible values supported by the current device configuration.
-
-These values change and different AV inputs are activated or conntected.
-
-Note that many, but not all, of these methods are pluralized to illustrate that they
-return all possible values, rather than a single active value, e.g.:
-
-```javascript
-import { Device } from '@firebolt-js/sdk'
-
-MediaInfo.videoCodecs() // return the supported video codecs
-```
-
-### 4.1. Video Codec
-
-The `MediaInfo` module **MUST** have a `videoCodecs` API that returns the
-video codecs, e.g., H.265, VP9, etc., that are supported by the current
-device configuration. This API **MUST** return an Array with one or more
-of the following values:
-
--   `"av1"`
--   `"h263"`
--   `"h264"`
--   `"h265"`
--   `"mpeg"`
--   `"vp8"`
--   `"vp9"`
--   `"vp10"`
--   `"vc1"`
--   `"unknown"`
--   `"none"`
-
-The videoCodecs API **MUST** be a Firebolt `property:immutable` API.
-
-Use of the `videoCodecs` API requires access to the `use` role of the
-`xrn:firebolt:capability:device:info` capability.
-
-### 4.2. Audio Codec
-
-The `MediaInfo` module **MUST** have an `audioCodecs` API that returns
-the audio codecs, e.g., ac3, ac4, ogg, etc., that are supported by the current
-device configuration. This API **MUST** return an Array with one or more of the
-following values:
-
--   `"aac"`
--   `"ac3"`
--   `"ac3plus"`
--   `"eac3"`
--   `"ac4"`
--   `"dts"`
--   `"mpeg1"`
--   `"mpeg2"`
--   `"mpeg3"`
--   `"mpeg4"`
--   `"opus"`
--   `"ogg"`
--   `"trueHd"`
--   `"wav"`
--   `"unknown"`
--   `"none"`
-  
-The audioCodecs API **MUST** be a Firebolt `property:immutable` API.
-
-Use of the `audioCodecs` API requires access to the `use` role of the
-`xrn:firebolt:capability:device:info` capability.
-
-### 4.3. Dynamic Range
-
-The `MediaInfo` module **MUST** have a `dynamicRangeProfiles` API that
-returns the dynamic range profiles, e.g., HDR, HDR10, etc., tthat are
-supported by the current device configuration. This API **MUST** return
-an Array with one or more of the following values:
-
--   `"none"`
--   `"hdr10"`
--   `"hdr10plus"`
--   `"dolbyVision"`
--   `"slHdr1"`
--   `"hlg" `
--   `"unknown"`
-
-The dynamicRangeProfiles API **MUST** be a Firebolt `property:readonly`
-API, and have a corresponding `onDynamicRangeProfilesChanged`
-notification.
-
-The `MediaInfo` module **MUST** have an `supportsHDR` API that returns true if
-the value of `dynamicRangeProfiles` contains any of the values beyond `none`
-and `unknown`.
-
-The `supportsHDR` API **MUST** be a Firebolt `property:readonly` API, and have
-a corresponding `onSupportsHDRChanged` notification.
-
-Use of the `dynamicRangeProfiles` and `supportsHDR` APIs require access to the
-`use` role of the `xrn:firebolt:capability:device:info`
-capability.
-
-### 4.4. Immersive Audio
-
-The `MediaInfo` module **MUST** have an `audioProfiles` API that returns
-the immersive (or not) audio profiles, e.g., Dolby Atmos, etc., that are
-supported by the current device configuration. This API **MUST** return an
-Array with one ore more of the following values:
-
--   `"auro3d"`
--   `"dolbyAtmos"`
--   `"dtsx"`
--   `"mpegh"`
--   `"unknown"`
--   `"none"`
-
-The audioProfile API **MUST** be a Firebolt `property:readonly` API, and
-have a corresponding `onAudioProfilesChanged` notification.
-
-The `MediaInfo` module **MUST** have an `supportsImmersiveAudio` API that
-returns true if the value of `audioProfiles` contains any of the
-values beyond `none`.
-
-The `supportsImmersiveAudio` API **MUST** be a Firebolt `property:readonly`
-API, and have a corresponding `onSupportsImmersiveAudioChanged`
-notification.
-
-Use of the `audioProfiles` and `supportsImmersiveAudio` APIs require access
-to the `use` role of the `xrn:firebolt:capability:device:info` capability.
-
-### 4.5. Resolution
-
-The `MediaInfo` module **MUST** have a `resolution` API that returns
-the native dimensions, e.g., `{ "width": 4096, "height": 2160 }`, the
-device is currently rasterizing (if the device has a screen) or outputting
-(if the device does not).
-
-This API **MUST** return an object with two integers greater than or equal to `0`.
-  
-The resolution API **MUST** be a Firebolt `property:readonly` API, and
-have a corresponding `onResolutionChanged` notification.
-
-Use of the `resolution` API requires access to the `use` role of the
-`xrn:firebolt:capability:device:info` capability.
-
-## 5. Media Info
+## 4. Media Info
 
 The Firebolt `MediaInfo` module consists of APIs to get information
 about any media actively being decoded by the Media Pipeline or an active HDMI input.
 
-### 5.1. MediaInfo for current app
+### 4.1. MediaInfo for current app
 
 Apps need a way to query the media info for media currently being played  
 by the app. All of the following methods take a single `pipeline`
@@ -274,7 +122,7 @@ MediaInfo.videoCodec()
 
 Would query the video codec for the app's pipeline `1` in JavaScript, which supports default values for parameters.
 
-#### 5.1.1. Video Codec
+#### 4.1.1. Video Codec
 
 The `MediaInfo` module **MUST** have a `videoCodec` API that returns the
 video codec, e.g., H.265, VP9, etc., of the media currently in the
@@ -299,7 +147,7 @@ have a corresponding `onVideoCodecChanged` notification.
 Use of the `videoCodec` APIs require access to the `use` role of the
 `xrn:firebolt:capability:media-info:video-codec` capability.
 
-#### 5.1.2. Audio Codec
+#### 4.1.2. Audio Codec
 
 The `MediaInfo` module **MUST** have an `audioCodec` API that returns
 the audio codec, e.g., ac3, ac4, ogg, etc., of the media currently
@@ -327,7 +175,7 @@ have a corresponding `onAudioCodecChanged` notification.
 Use of the `audioCodec` APIs require access to the `use` role of the
 `xrn:firebolt:capability:media-info:audio-codec` capability.
 
-#### 5.1.3. Dynamic Range
+#### 4.1.3. Dynamic Range
 
 The `MediaInfo` module **MUST** have a `dynamicRangeProfile` API that
 returns the dynamic range profile, e.g., HDR, HDR10, etc., of the
@@ -357,7 +205,7 @@ Use of the `dynamicRangeProfile` and `isHDR` APIs require access to the
 `use` role of the `xrn:firebolt:capability:media-info:hdr`
 capability.
 
-#### 5.1.4. Immersive Audio
+#### 4.1.4. Immersive Audio
 
 The `MediaInfo` module **MUST** have an `audioProfile` API that returns
 the immersive (or not) audio profile, e.g., Dolby Atmos, etc., of the
@@ -387,11 +235,11 @@ Use of the `audioProfile` and `isImmersiveAudio` APIs require access
 to the `use` role of the
 `xrn:firebolt:capability:media-info:audio-profile` capability.
 
-#### 5.1.5. Frame Rate
+#### 4.1.5. Frame Rate
 
 The `MediaInfo` module **MUST** have a `frameRate` API that returns
 the frame rate, e.g., 24, of the media currently
-playing. This API **MUST** return an number greater than or equal to `0`.
+playing. This API **MUST** return a number greater than or equal to `0`.
 
 If no video is playing, then this API **MUST** return `0`.
   
@@ -401,7 +249,7 @@ have a corresponding `onFrameRateChanged` notification.
 Use of the `frameRate` APIs require access to the `use` role of the
 `xrn:firebolt:capability:media-info:frame-rate` capability.
 
-#### 5.1.6. Resolution
+#### 4.1.6. Resolution
 
 The `MediaInfo` module **MUST** have a `resolution` API that returns
 the encoded dimensions, e.g., `{ "width": 4096, "height": 2160 }`, of the media currently
@@ -414,16 +262,31 @@ have a corresponding `onResolutionChanged` notification.
 Use of the `resolution` APIs require access to the `use` role of the
 `xrn:firebolt:capability:media-info:resolution` capability.
 
-**TODO**: should resolution be an enum, rather than unbounded integers?
+#### 4.1.7. Resolution (Alternative)
 
-### 5.2. MediaInfo for Pipeline
+**TODO**: pick one
 
-```typescript
-MediaInfo.dynamicRangeProfileActive(DOLBY_ATMOS): Promise<boolean>
-MediaInfo.dynamicRangeProfileActive(DOLBY_ATMOS): Promise<boolean>
-MediaInfo.dynamicRangeProfile<TBD>(pipelineId: integer): Promise<string>
-```
+The `MediaInfo` module **MUST** have a `resolution` API that returns
+the encoded dimensions as a string enumeration, e.g., `"1020p"`, of the media currently
+playing. Note that this has nothing to do with the dimensions rasterized on the screen (see the Device [Resolution](#312-resolution) API for that).
 
+This API **MUST** return a string with one of the following values:
+
+- `"720p"`
+- `"1080p"`
+- `"1440p"`
+- `"1800p"`
+- `"2160p"`
+
+ **Note**: do we want interlaced versions?
+  
+The resolution API **MUST** be a Firebolt `property:readonly` API, and
+have a corresponding `onResolutionChanged` notification.
+
+Use of the `resolution` APIs require access to the `use` role of the
+`xrn:firebolt:capability:media-info:resolution` capability.
+
+### 4.2. MediaInfo for Pipeline
 First party apps need a way to query the media info for media currently
 being played by *any* pipeline, regardless of which app owns the pipeline.
 
@@ -464,7 +327,7 @@ capabilities required by the corresponding methods above, i.e.:
 
 *Capability names truncated for legibility
 
-### 5.3. Global MediaInfo
+### 4.3. Global MediaInfo
 
 First party apps need a way to query if a given media info type is currently active, without caring about which pipeline.
 
@@ -513,20 +376,36 @@ capabilities required by the corresponding methods above, i.e.:
 
 *Capability names truncated for legibility
 
-## 6. Device Media Capabilities
+## 5. Device Media Support
+Apps need to know what types of media the device supports.
 
-In addition to surfacing capabilities about the currently device configuration,
-an app may also want to know what types of media capabilities the *device* is
-possibly capable of, regardless of what inputs and outputs may be connected.
+There are two sets of supported media in question:
 
-To facilitate this, the `Device` module will have similar methods that
-return all possible values supported on the device.
+- What the device has negotiated as supported with other connected devices, e.g. an HDMI Soundbar
+- What the device is implicitly supports
+
+For example, a Firebolt device capable of Dolby Atmos connected to a soundbar that is only capable of Dolby Audio might want to display a notification to the user, e.g.:
+
+```javascript
+const device = await Device.allAudioProfiles().includes(MimeType.IA_DOLBYATMOS)
+const negotiated = await Device.audioProfiles().includes(MimeType.IA_DOLBYATMOS)
+
+if (device && !negotiated) {
+  console.log("Warning, your soundbar does not support Dolby Atmos!")
+}
+```
+
+### 5.1. Negotiated Media Support
+Apps need to know what types of media support the current *device configuration*,
+e.g. a Firebolt STB connected to an HDMI television, is capable of.
+
+To facilitate this, the `Device` module will have a set of methods that
+return all possible values supported by the current device configuration.
+
+These values change and different AV inputs are activated or connected.
 
 Note that many, but not all, of these methods are pluralized to illustrate that they
-return all possible values, rather than a single active value.
-
-The APIs in this section do not need any parameters to identify
-pipeline, etc, e.g.:
+return all possible values, rather than a single active value, e.g.:
 
 ```javascript
 import { Device } from '@firebolt-js/sdk'
@@ -534,12 +413,12 @@ import { Device } from '@firebolt-js/sdk'
 Device.videoCodecs() // return the supported video codecs
 ```
 
-### 6.1. Video Codec
+#### 5.1.1. Video Codecs
 
 The `Device` module **MUST** have a `videoCodecs` API that returns the
-video codecs, e.g., H.265, VP9, etc., that are currently supported by the
-device. This API **MUST** return an Array with one or more of the following
-values:
+video codecs, e.g., H.265, VP9, etc., that are supported by the current
+device configuration. This API **MUST** return an Array with one or more
+of the following values:
 
 -   `"av1"`
 -   `"h263"`
@@ -555,14 +434,16 @@ values:
 
 The videoCodecs API **MUST** be a Firebolt `property:immutable` API.
 
+**TODO**: Can plugging in a new TV to a STB change videoCodecs support?
+
 Use of the `videoCodecs` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
 
-### 6.2. Audio Codec
+#### 5.1.2. Audio Codecs
 
 The `Device` module **MUST** have an `audioCodecs` API that returns
-the audio codecs, e.g., ac3, ac4, ogg, etc., currently supported by the
-device. This API **MUST** return an Array with one or more of the
+the audio codecs, e.g., ac3, ac4, ogg, etc., that are supported by the current
+device configuration. This API **MUST** return an Array with one or more of the
 following values:
 
 -   `"aac"`
@@ -584,15 +465,17 @@ following values:
   
 The audioCodecs API **MUST** be a Firebolt `property:immutable` API.
 
+**TODO**: Can plugging in a new soundbar change audioCodecs support?
+
 Use of the `audioCodecs` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
 
-### 6.3. Dynamic Range
+#### 5.1.3. Dynamic Range
 
 The `Device` module **MUST** have a `dynamicRangeProfiles` API that
 returns the dynamic range profiles, e.g., HDR, HDR10, etc., that are
-currently supported by the device. This API **MUST** return an Array
-with one or more of the following values:
+supported by the current device configuration. This API **MUST** return
+an Array with one or more of the following values:
 
 -   `"none"`
 -   `"hdr10"`
@@ -606,7 +489,7 @@ The dynamicRangeProfiles API **MUST** be a Firebolt `property:readonly`
 API, and have a corresponding `onDynamicRangeProfilesChanged`
 notification.
 
-The `Device` module **MUST** have an `supportsHDR` API that returns true if
+The `MediaInfo` module **MUST** have an `supportsHDR` API that returns true if
 the value of `dynamicRangeProfiles` contains any of the values beyond `none`
 and `unknown`.
 
@@ -617,12 +500,12 @@ Use of the `dynamicRangeProfiles` and `supportsHDR` APIs require access to the
 `use` role of the `xrn:firebolt:capability:device:info`
 capability.
 
-### 6.4. Immersive Audio
+#### 5.1.4. Immersive Audio
 
 The `Device` module **MUST** have an `audioProfiles` API that returns
 the immersive (or not) audio profiles, e.g., Dolby Atmos, etc., that are
-currently supported by the device. This API **MUST** return an Array with
-one ore more of the following values:
+supported by the current device configuration. This API **MUST** return an
+Array with one ore more of the following values:
 
 -   `"auro3d"`
 -   `"dolbyAtmos"`
@@ -645,7 +528,7 @@ notification.
 Use of the `audioProfiles` and `supportsImmersiveAudio` APIs require access
 to the `use` role of the `xrn:firebolt:capability:device:info` capability.
 
-### 6.5. Resolutions
+#### 5.1.5. Resolutions
 
 The `Device` module **MUST** have a `resolutions` API that returns an array
 of the native dimensions the device is capable of rasterizing (if the device
@@ -666,3 +549,58 @@ have a corresponding `onResolutionChanged` notification.
 
 Use of the `resolution` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
+
+Note that this API is not part of the `MediaInfo` module, but is documented here for completeness.
+
+#### 5.1.6. Resolutions (Alternative)
+
+**TODO**: pick one
+
+The `Device` module **MUST** have a `resolutions` API that returns
+an array
+of the native dimensions the device is capable of rasterizing (if the device
+has a screen) or outputting (if the device does not).
+
+This API **MUST** return an Array of strings with one or more of the following values:
+
+- `"720p"`
+- `"1080p"`
+- `"1440p"`
+- `"1800p"`
+- `"2160p"`
+
+ **Note**: do we want interlaced versions?
+  
+The resolution API **MUST** be a Firebolt `property:readonly` API, and
+have a corresponding `onResolutionChanged` notification.
+
+Use of the `resolution` APIs require access to the `use` role of the
+`xrn:firebolt:capability:device:info` capability.
+
+### 5.2. Implicit Media Support
+Apps may also need to know what types of media support the device implicitly has,
+regardless of other connected devices.
+
+To facilitate this, the `Device` module will have a set of methods that
+return all possible values supported by the device. These APIs will have the same names as [Negotiated Media Support APIs](#41-negotiated-media-support) prefixed with the word `all` to denote that all device supported values are returned, not just the currently negotiated values.
+
+These APIs require the same capability permissions as their [Negotiated Media Support APIs](#41-negotiated-media-support) counterparts.
+
+These values never change without a restart, and **MUST** all be `property:immutable` APIs with no `on<Property>Changed` notification API.
+
+Note that many, but not all, of these methods are pluralized to illustrate that they
+return all possible values, rather than a single active value, e.g.:
+
+```javascript
+import { Device } from '@firebolt-js/sdk'
+
+Device.allVideoCodecs() // return the supported video codecs
+```
+
+The APIs are as follows:
+
+ - `allVideoCodecs`
+ - `allAudioCodecs`
+ - `allDynamicRanges`
+ - `allImmersiveAudioProfiles`
+ - `allResolutions`
