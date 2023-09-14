@@ -1,0 +1,814 @@
+{
+  "openrpc": "1.2.4",
+  "info": {
+    "title": "Player",
+    "description": "A module for providing and using media player capabilities. This handles operations that would be associated with any player generically",
+    "version": "0.0.0"
+  },
+  "methods": [
+    {
+      "name": "load",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:player:base"
+          ]
+        }
+      ],
+      "summary": "Loads content in a player and starts a media session",
+      "params": [
+        {
+          "name": "request",
+          "summary": "The load request",
+          "schema": {
+            "$ref": "#/components/schemas/PlayerLoadRequest"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "mediaSession",
+        "schema": {
+          "$ref": "#/components/schemas/PlayerMediaSession"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "request",
+              "value": {
+                "playerId": "app1:123",
+                "locator": "https://cdn.rdkcentral.com/media/assets/asset.hls"
+              }
+            }
+          ],
+          "result": {
+            "name": "mediaSession",
+            "value": {
+              "mediaSessionId": "sess1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "play",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:player:base"
+          ]
+        }
+      ],
+      "summary": "Starts playing the content that was last loaded",
+      "params": [
+        {
+          "name": "playerId",
+          "summary": "The id of the player to start playing",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "playResponse",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            }
+          ],
+          "result": {
+            "name": "playResponse",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "stop",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:player:base"
+          ]
+        }
+      ],
+      "summary": "Stops playing the content that was last loaded",
+      "params": [
+        {
+          "name": "playerId",
+          "summary": "The id of the player to stop",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "stopResponse",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            }
+          ],
+          "result": {
+            "name": "stopResponse",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:player:base"
+          ]
+        }
+      ],
+      "summary": "Gets the latest status for the given player",
+      "params": [
+        {
+          "name": "playerId",
+          "summary": "The id of the player to get the status for",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "playerStatus",
+        "schema": {
+          "$ref": "#/components/schemas/PlayerStatus"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            }
+          ],
+          "result": {
+            "name": "playerStatus",
+            "value": {
+              "mediaSessionId": "sess1",
+              "state": "PLAYING"
+            }
+          }
+        },
+        {
+          "name": "Default example #2",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app2:456"
+            }
+          ],
+          "result": {
+            "name": "playerStatus",
+            "value": {
+              "mediaSessionId": "sess1",
+              "state": "BLOCKED",
+              "blockedReason": "CONTENT_NOT_FOUND"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:player:base"
+          ]
+        }
+      ],
+      "summary": "Gets the latest progress for the given player",
+      "params": [
+        {
+          "name": "playerId",
+          "summary": "The id of the player to get the progress for",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "playerProgress",
+        "schema": {
+          "$ref": "#/components/schemas/PlayerProgress"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            }
+          ],
+          "result": {
+            "name": "playerProgress",
+            "value": {
+              "speed": 1,
+              "startPosition": 0,
+              "position": 5000,
+              "endPosition": 3600000,
+              "liveSyncTime": "2021-04-23T18:25:43.511Z"
+            }
+          }
+        },
+        {
+          "name": "Default example #2",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app2:456"
+            }
+          ],
+          "result": {
+            "name": "playerProgress",
+            "value": {
+              "speed": 3,
+              "startPosition": 5000,
+              "position": 10000,
+              "endPosition": 3600000,
+              "liveSyncTime": "2021-05-23T18:25:43.511Z"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onRequestLoad",
+      "summary": "Registers as a provider for when new media should be loaded into the player",
+      "params": [],
+      "tags": [
+        {
+          "name": "event",
+          "x-response": {
+            "$ref": "#/components/schemas/PlayerMediaSession",
+            "examples": [
+              {
+                "mediaSessionId": "sess1"
+              }
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base",
+          "x-allow-focus": false
+        }
+      ],
+      "result": {
+        "name": "loadRequest",
+        "summary": "The request to load new media",
+        "schema": {
+          "$ref": "#/components/schemas/PlayerLoadProviderRequest"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "app1:123",
+                "locator": "https://cdn.rdkcentral.com/media/assets/asset.hls"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onRequestPlay",
+      "summary": "Registers as a provider for when media should start playing",
+      "params": [],
+      "tags": [
+        {
+          "name": "event",
+          "x-response": {
+            "$ref": "#/components/schemas/PlayerMediaSession",
+            "examples": [
+              {
+                "mediaSessionId": "sess1"
+              }
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base",
+          "x-allow-focus": false
+        }
+      ],
+      "result": {
+        "name": "playRequest",
+        "summary": "The request to start playing media",
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/player#/definitions/PlayerProviderRequest"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "app1:123"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onRequestStop",
+      "summary": "Registers as a provider for when media should stop playing",
+      "params": [],
+      "tags": [
+        {
+          "name": "event",
+          "x-response": {
+            "$ref": "#/components/schemas/PlayerMediaSession",
+            "examples": [
+              {
+                "mediaSessionId": "sess1"
+              }
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base",
+          "x-allow-focus": false
+        }
+      ],
+      "result": {
+        "name": "stopRequest",
+        "summary": "The request to stop playing media",
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/player#/definitions/PlayerProviderRequest"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "app1:123"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onRequestStatus",
+      "summary": "Registers as a provider for when player status needs to be provided",
+      "params": [],
+      "tags": [
+        {
+          "name": "event",
+          "x-response": {
+            "$ref": "#/components/schemas/PlayerStatus",
+            "examples": [
+              {
+                "mediaSessionId": "sess1",
+                "state": "IDLE"
+              }
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base",
+          "x-allow-focus": false
+        }
+      ],
+      "result": {
+        "name": "statusRequest",
+        "summary": "The request to get the status of a player",
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/player#/definitions/PlayerProviderRequest"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "123"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onRequestProgress",
+      "summary": "Registers as a provider for when player progress needs to be provided",
+      "params": [],
+      "tags": [
+        {
+          "name": "event",
+          "x-response": {
+            "$ref": "#/components/schemas/PlayerProgress",
+            "examples": [
+              {
+                "speed": 1,
+                "startPosition": 0,
+                "position": 5000,
+                "endPosition": 3600000,
+                "liveSyncTime": "2021-04-23T18:25:43.511Z"
+              }
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base",
+          "x-allow-focus": false
+        }
+      ],
+      "result": {
+        "name": "progressRequest",
+        "summary": "The request to stop playing media",
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/player#/definitions/PlayerProviderRequest"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "123"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "provideStatus",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base"
+        }
+      ],
+      "summary": "Tells listeners the current status of a player",
+      "params": [
+        {
+          "name": "playerId",
+          "summary": "The id of the player the status is for",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "status",
+          "summary": "The status",
+          "schema": {
+            "$ref": "#/components/schemas/PlayerStatus"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "providedResponse",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "123"
+            },
+            {
+              "name": "status",
+              "value": {
+                "mediaSessionId": "sess2",
+                "state": "BLOCKED",
+                "blockedReason": "CONTENT_NOT_FOUND"
+              }
+            }
+          ],
+          "result": {
+            "name": "providedResponse",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "provideProgress",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base"
+        }
+      ],
+      "summary": "Tells listeners the current progress of a player",
+      "params": [
+        {
+          "name": "playerId",
+          "summary": "The id of the player the progress is for",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "progress",
+          "summary": "The progress",
+          "schema": {
+            "$ref": "#/components/schemas/PlayerProgress"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "providedResponse",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "123"
+            },
+            {
+              "name": "progress",
+              "value": {
+                "speed": 1,
+                "startPosition": 0,
+                "position": 5000,
+                "endPosition": 3600000,
+                "liveSyncTime": "2021-04-23T18:25:43.511Z"
+              }
+            }
+          ],
+          "result": {
+            "name": "providedResponse",
+            "value": null
+          }
+        }
+      ]
+    }
+  ],
+  "components": {
+    "schemas": {
+      "PlayerLoadRequest": {
+        "title": "PlayerLoadRequest",
+        "type": "object",
+        "required": [
+          "playerId",
+          "locator"
+        ],
+        "properties": {
+          "playerId": {
+            "description": "The id of the player instance to load the locator into",
+            "type": "string"
+          },
+          "locator": {
+            "description": "A locator to the content to load",
+            "type": "string",
+            "format": "uri"
+          },
+          "metadata": {
+            "description": "An opaque set of metadata that will be relevant to the player.",
+            "type": "object"
+          },
+          "autoPlay": {
+            "description": "Start playing immediately on load without needing to call Player.play",
+            "type": "boolean"
+          }
+        },
+        "examples": [
+          {
+            "playerId": "app1:123",
+            "locator": "https://cdn.rdkcentral.com/media/assets/asset.hls"
+          },
+          {
+            "playerId": "app2:345",
+            "locator": "https://cdn.rdkcentral.com/media/assets/asset-2.hls",
+            "metadata": {
+              "assetType": "linear"
+            },
+            "autoPlay": true
+          }
+        ]
+      },
+      "PlayerMediaSession": {
+        "title": "PlayerMediaSession",
+        "type": "object",
+        "required": [
+          "mediaSessionId"
+        ],
+        "properties": {
+          "mediaSessionId": {
+            "description": "The id of media session that was started, when the content was loaded. This should be a new value on each load",
+            "type": "string"
+          }
+        },
+        "examples": [
+          {
+            "mediaSessionId": "sess1"
+          },
+          {
+            "mediaSessionId": "sess2"
+          }
+        ]
+      },
+      "PlayerStatus": {
+        "title": "PlayerStatus",
+        "type": "object",
+        "required": [
+          "mediaSessionId",
+          "state"
+        ],
+        "properties": {
+          "mediaSessionId": {
+            "description": "The id of media session that is currently loaded",
+            "type": "string"
+          },
+          "state": {
+            "description": "The state of the player",
+            "type": "string",
+            "enum": [
+              "IDLE",
+              "PENDING",
+              "PLAYING",
+              "BLOCKED",
+              "FAILED"
+            ]
+          },
+          "blockedReason": {
+            "description": "The state of the player",
+            "type": "string",
+            "enum": [
+              "NO_NETWORK",
+              "CONTENT_NOT_FOUND",
+              "DRM_ERROR",
+              "NOT_ENTITLED",
+              "GEO_BLOCKED",
+              "CHANNEL_NOT_SCANNED",
+              "NO_SIGNAL",
+              "TECHNICAL_FAULT",
+              "CHANNEL_OFF_AIR",
+              "PLAYER_FAILURE"
+            ]
+          }
+        },
+        "examples": [
+          {
+            "mediaSessionId": "sess1",
+            "state": "IDLE"
+          },
+          {
+            "mediaSessionId": "sess2",
+            "state": "BLOCKED",
+            "blockedReason": "CONTENT_NOT_FOUND"
+          }
+        ]
+      },
+      "PlayerProgress": {
+        "title": "PlayerProgress",
+        "type": "object",
+        "required": [
+          "speed",
+          "startPosition",
+          "position",
+          "endPosition",
+          "liveSyncTime"
+        ],
+        "properties": {
+          "speed": {
+            "description": "The playback speed as a multiplier",
+            "type": "number"
+          },
+          "startPosition": {
+            "description": "The position that the media starts at in milliseconds",
+            "type": "integer"
+          },
+          "position": {
+            "description": "The current position in milliseconds",
+            "type": "integer"
+          },
+          "endPosition": {
+            "description": "The position that the media stops at in milliseconds",
+            "type": "integer"
+          },
+          "liveSyncTime": {
+            "description": "The time to sync to live",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "examples": [
+          {
+            "speed": 1,
+            "startPosition": 0,
+            "position": 5000,
+            "endPosition": 3600000,
+            "liveSyncTime": "2021-04-23T18:25:43.511Z"
+          },
+          {
+            "speed": 3,
+            "startPosition": 5000,
+            "position": 10000,
+            "endPosition": 3600000,
+            "liveSyncTime": "2021-04-23T18:25:43.511Z"
+          }
+        ]
+      },
+      "PlayerLoadProviderRequest": {
+        "title": "PlayerLoadProviderRequest",
+        "type": "object",
+        "required": [
+          "correlationId",
+          "parameters"
+        ],
+        "properties": {
+          "correlationId": {
+            "type": "string",
+            "description": "An id to correlate the provider response with this request"
+          },
+          "parameters": {
+            "description": "The request to load media in the player",
+            "$ref": "#/components/schemas/PlayerLoadRequest"
+          }
+        }
+      }
+    }
+  }
+}
