@@ -1,3 +1,104 @@
+## [0.17.1-proposed.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.0...v0.17.1-proposed.1) (2023-09-12)
+
+
+### Bug Fixes
+
+* Add proposed branch to .releaserc ([e65e43f](https://github.com/rdkcentral/firebolt-apis/commit/e65e43f47113e72b79c09d9fa89b2d9d3dad9e9d))
+* Add proposed branch to CI builds ([8a5c142](https://github.com/rdkcentral/firebolt-apis/commit/8a5c142def4b50a2f83836bf85b8c51889793890))
+* Deploy GitHub.io docs for PRs ([#180](https://github.com/rdkcentral/firebolt-apis/issues/180)) ([7ef7d9d](https://github.com/rdkcentral/firebolt-apis/commit/7ef7d9dac20d73591b6c3391a8afbbfd55a717e7))
+
+## [0.17.1-proposed.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.0...v0.17.1-proposed.1) (2023-09-12)
+
+
+### Bug Fixes
+
+* Add proposed branch to .releaserc ([e65e43f](https://github.com/rdkcentral/firebolt-apis/commit/e65e43f47113e72b79c09d9fa89b2d9d3dad9e9d))
+* Add proposed branch to CI builds ([8a5c142](https://github.com/rdkcentral/firebolt-apis/commit/8a5c142def4b50a2f83836bf85b8c51889793890))
+* Deploy GitHub.io docs for PRs ([#180](https://github.com/rdkcentral/firebolt-apis/issues/180)) ([7ef7d9d](https://github.com/rdkcentral/firebolt-apis/commit/7ef7d9dac20d73591b6c3391a8afbbfd55a717e7))
+
+## [0.17.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1-next.1...v0.17.1-next.2) (2023-09-12)
+
+
+### Bug Fixes
+
+* Add proposed branch to CI builds ([8a5c142](https://github.com/rdkcentral/firebolt-apis/commit/8a5c142def4b50a2f83836bf85b8c51889793890))
+
+## [0.17.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.0...v0.17.1-next.1) (2023-09-08)
+
+
+### Bug Fixes
+
+* Deploy GitHub.io docs for PRs ([#180](https://github.com/rdkcentral/firebolt-apis/issues/180)) ([7ef7d9d](https://github.com/rdkcentral/firebolt-apis/commit/7ef7d9dac20d73591b6c3391a8afbbfd55a717e7))
+
+# [0.17.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0...v0.17.0) (2023-09-07)
+
+
+### Bug Fixes
+
+* Manual merge of main to next ([6a11710](https://github.com/rdkcentral/firebolt-apis/commit/6a11710d3c8028ebbe70b39a27f4944184b93181))
+* Point to production firebolt-openrpc ([a367307](https://github.com/rdkcentral/firebolt-apis/commit/a367307d45dbdebfd3d1bf17a87113bc220ea93f))
+* Reduce font size on capability index headers ([6c1487b](https://github.com/rdkcentral/firebolt-apis/commit/6c1487bf65ac005028c60759bcace8550156e987))
+* **transport:** Add test for lazy-loading the transport layer ([#10](https://github.com/rdkcentral/firebolt-apis/issues/10)) ([168fcaf](https://github.com/rdkcentral/firebolt-apis/commit/168fcaf4e6264cc0c2498f02c16523fb4a51cdd3)), closes [#164](https://github.com/rdkcentral/firebolt-apis/issues/164) [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159)
+* Unit test cases for setting null value ([#159](https://github.com/rdkcentral/firebolt-apis/issues/159)) ([7e011e2](https://github.com/rdkcentral/firebolt-apis/commit/7e011e2937842902c6b111646492b33a057b23c8))
+* Update firebolt-openrpc, fix tests ([9480984](https://github.com/rdkcentral/firebolt-apis/commit/948098490595ffa374df08f3f44157d70beb7990))
+* Update firebolt-openrpc, fix tests ([312b5ec](https://github.com/rdkcentral/firebolt-apis/commit/312b5ec627e9b494ac455475efe7851bed70c34e))
+* Update package.json to point to release 2.0.4 of `firebolt-openrpc` ([9e3cf55](https://github.com/rdkcentral/firebolt-apis/commit/9e3cf55d465d3b429ebcba0167e888eb7d7f0588))
+* update to firebolt-openrpc, c tests ([#176](https://github.com/rdkcentral/firebolt-apis/issues/176)) ([3984a78](https://github.com/rdkcentral/firebolt-apis/commit/3984a781d871ab9b35aecbab77157b635e4f638f)), closes [#140](https://github.com/rdkcentral/firebolt-apis/issues/140)
+* Using 3 letter ISO639 language codes ([#173](https://github.com/rdkcentral/firebolt-apis/issues/173)) ([b341dee](https://github.com/rdkcentral/firebolt-apis/commit/b341deedd9ac8ab00f3e762622fda29872f83932))
+
+
+### Features
+
+* Added manage apis for windlowColor and windowOpacity ([#157](https://github.com/rdkcentral/firebolt-apis/issues/157)) ([f508358](https://github.com/rdkcentral/firebolt-apis/commit/f508358aeb2f58bb3893bbfaf09e2340fcadac8f))
+
+# [0.17.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.0-next.2...v0.17.0-next.3) (2023-09-07)
+
+
+### Bug Fixes
+
+* Point to production firebolt-openrpc ([a367307](https://github.com/rdkcentral/firebolt-apis/commit/a367307d45dbdebfd3d1bf17a87113bc220ea93f))
+
+# [0.17.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.0-next.1...v0.17.0-next.2) (2023-09-05)
+
+
+### Bug Fixes
+
+* update to firebolt-openrpc, c tests ([#176](https://github.com/rdkcentral/firebolt-apis/issues/176)) ([3984a78](https://github.com/rdkcentral/firebolt-apis/commit/3984a781d871ab9b35aecbab77157b635e4f638f)), closes [#140](https://github.com/rdkcentral/firebolt-apis/issues/140)
+
+# [0.17.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0...v0.17.0-next.1) (2023-09-01)
+
+
+### Bug Fixes
+
+* Manual merge of main to next ([6a11710](https://github.com/rdkcentral/firebolt-apis/commit/6a11710d3c8028ebbe70b39a27f4944184b93181))
+* Reduce font size on capability index headers ([6c1487b](https://github.com/rdkcentral/firebolt-apis/commit/6c1487bf65ac005028c60759bcace8550156e987))
+* **transport:** Add test for lazy-loading the transport layer ([#10](https://github.com/rdkcentral/firebolt-apis/issues/10)) ([168fcaf](https://github.com/rdkcentral/firebolt-apis/commit/168fcaf4e6264cc0c2498f02c16523fb4a51cdd3)), closes [#164](https://github.com/rdkcentral/firebolt-apis/issues/164) [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159)
+* Unit test cases for setting null value ([#159](https://github.com/rdkcentral/firebolt-apis/issues/159)) ([7e011e2](https://github.com/rdkcentral/firebolt-apis/commit/7e011e2937842902c6b111646492b33a057b23c8))
+* Update firebolt-openrpc, fix tests ([9480984](https://github.com/rdkcentral/firebolt-apis/commit/948098490595ffa374df08f3f44157d70beb7990))
+* Update firebolt-openrpc, fix tests ([312b5ec](https://github.com/rdkcentral/firebolt-apis/commit/312b5ec627e9b494ac455475efe7851bed70c34e))
+* Update package.json to point to release 2.0.4 of `firebolt-openrpc` ([9e3cf55](https://github.com/rdkcentral/firebolt-apis/commit/9e3cf55d465d3b429ebcba0167e888eb7d7f0588))
+* Using 3 letter ISO639 language codes ([#173](https://github.com/rdkcentral/firebolt-apis/issues/173)) ([b341dee](https://github.com/rdkcentral/firebolt-apis/commit/b341deedd9ac8ab00f3e762622fda29872f83932))
+
+
+### Features
+
+* Added manage apis for windlowColor and windowOpacity ([#157](https://github.com/rdkcentral/firebolt-apis/issues/157)) ([f508358](https://github.com/rdkcentral/firebolt-apis/commit/f508358aeb2f58bb3893bbfaf09e2340fcadac8f))
+
+# [0.16.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0...v0.16.0) (2023-08-14)
+
+
+### Features
+
+* Added Manage APIs for `windowColor` and `windowOpacity` ([#164](https://github.com/rdkcentral/firebolt-apis/issues/164)) ([99b9fa6](https://github.com/rdkcentral/firebolt-apis/commit/99b9fa60d3987e7a8d5e7230e7401cae7d2d352c)), closes [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159)
+# [0.16.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0-next.3...v0.16.0-next.4) (2023-09-01)
+
+
+### Bug Fixes
+
+* Reduce font size on capability index headers ([6c1487b](https://github.com/rdkcentral/firebolt-apis/commit/6c1487bf65ac005028c60759bcace8550156e987))
+* **transport:** Add test for lazy-loading the transport layer ([#10](https://github.com/rdkcentral/firebolt-apis/issues/10)) ([168fcaf](https://github.com/rdkcentral/firebolt-apis/commit/168fcaf4e6264cc0c2498f02c16523fb4a51cdd3)), closes [#164](https://github.com/rdkcentral/firebolt-apis/issues/164) [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#157](https://github.com/rdkcentral/firebolt-apis/issues/157) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159) [#159](https://github.com/rdkcentral/firebolt-apis/issues/159)
+* Using 3 letter ISO639 language codes ([#173](https://github.com/rdkcentral/firebolt-apis/issues/173)) ([b341dee](https://github.com/rdkcentral/firebolt-apis/commit/b341deedd9ac8ab00f3e762622fda29872f83932))
+
 # [0.16.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0-next.2...v0.16.0-next.3) (2023-08-14)
 
 
