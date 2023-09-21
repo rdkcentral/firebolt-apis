@@ -149,6 +149,9 @@
     },
     "xrn:firebolt:capability:privacy:advertising": {
       "level": "could"
+    },
+    "xrn:firebolt:capability:metrics:distributor": {
+      "level": "could"
     }
   },
   "apis": {}
