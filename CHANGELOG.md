@@ -1,3 +1,10 @@
+# [0.18.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1...v0.18.0-next.1) (2023-09-26)
+
+
+### Features
+
+* Added optional parameter 'force' in usergrants.request ([#186](https://github.com/rdkcentral/firebolt-apis/issues/186)) ([31801ca](https://github.com/rdkcentral/firebolt-apis/commit/31801caec6bea0e8b295ea6a9ec54ca1d8e08d16))
+
 ## [0.17.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.0...v0.17.1) (2023-09-15)
 
 
