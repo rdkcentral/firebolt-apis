@@ -1,3 +1,10 @@
+# [0.18.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.1...v0.18.0-next.2) (2023-09-26)
+
+
+### Bug Fixes
+
+* Updated metrics:distributor capability to could ([#185](https://github.com/rdkcentral/firebolt-apis/issues/185)) ([9ca2206](https://github.com/rdkcentral/firebolt-apis/commit/9ca2206a2dca7149dcf93df3d303806d136785ed))
+
 # [0.18.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1...v0.18.0-next.1) (2023-09-26)
 
 
