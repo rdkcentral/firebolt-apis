@@ -394,9 +394,9 @@
                 },
                 {
                     "name": "options",
-                    "summary": "Usergrant options",
+                    "summary": "Request options",
                     "schema": {
-                        "$ref": "#/components/schemas/UserGrantOption"
+                        "$ref": "#/components/schemas/RequestOptions"
                     },
                     "required": false
                 }
@@ -576,8 +576,8 @@
                 "additionalProperties": false,
                 "required": []
             },
-            "UserGrantOption": {
-                "title": "UserGrantOption",
+            "RequestOptions": {
+                "title": "RequestOptions",
                 "type": "object",
                 "properties": {
                     "force": {
