@@ -971,7 +971,7 @@
           ]
         }
       ],
-      "summary": "Launch or foreground the specified app, and optionally instructs it to navigate to the specified user action",
+      "summary": "Launch or foreground the specified app, and optionally instructs it to navigate to the specified user action. \n For the Primary Experience, the appId can any one of <br/> urn:firebolt:apps:main <br/> xrn:firebolt:application-type:main <br/> or xrn:firebolt:application-type:settings",
       "params": [
         {
           "name": "appId",
@@ -1175,7 +1175,7 @@
           "params": [
             {
               "name": "appId",
-              "value": "urn:firebolt:apps:main"
+              "value": "xrn:firebolt:application-type:settings "
             },
             {
               "name": "intent",
@@ -1225,7 +1225,7 @@
           "params": [
             {
               "name": "appId",
-              "value": "urn:firebolt:apps:main"
+              "value": "xrn:firebolt:application-type:main "
             },
             {
               "name": "intent",
