@@ -1,16 +1,20 @@
 # App Lifecycle Management
 
-Document Status: Proposed Specification
+Document Status: Working Draft
 
 See [Firebolt Requirements Governance](../../governance.md) for more info.
 
 | Contributor    | Organization   |
 | -------------- | -------------- |
 | Andrew Bennet            | Sky            |
+| Cody Bonney   | Charter |
+| Bart Catrysse            | Liberty           |
 | Tim Dibben            | Sky            |
 | Jeremy LaCivita            | Comcast            |
+| Ramprasad Lakshminarayana | Sky |
 | Kevin Pearson            | Comcast            |
 | Peter Yu            | Comcast           |
+
 
 ## 1. Overview
 
@@ -24,9 +28,10 @@ app-manifest and index.html, and loading them into a container capable
 of running the app, e.g. a web browser.
 
 *Launching* an app refers to the process of getting an app into a state
-where it is some part of the user experience (e.g. visible, audible, or
-responding to input). This may include *loading* the app first, if
-needed.
+where it is presented as a primary part of the user experience (e.g.
+visible, audible, or responding to input). This may include *loading*
+the app first, if needed. For details on presentation, see [App
+Presentation](./presentation.md).
 
 *Closing* an app refers to the process of getting an app out of a state
 where it is the primary user experience (e.g not visible, not audible,
@@ -39,31 +44,39 @@ needed clean up, and then *terminating* it.
 *Terminating* an app refers to shutting down the app's container and
 reclaiming any memory, CPU, etc. that it was consuming.
 
+*Suspending* an app refers to copying the app's memory stack out of
+RAM and terminated it's CPU process so that it stops consuming
+resources, but may be revived later.
+
+*Resuming* an app refers to copying a suspended app back into the
+memory space of a compatible process so that it resumes where it left
+off.
+
 - [1. Overview](#1-overview)
 - [2. Lifecycle States](#2-lifecycle-states)
-  - [2.1. Initializing](#21-initializing)
-  - [2.2. Inactive](#22-inactive)
-  - [2.3. Foreground](#23-foreground)
-  - [2.4. Background](#24-background)
-  - [2.5. Unloading](#25-unloading)
-  - [2.6. Suspended](#26-suspended)
+  - [2.1. Started](#21-started)
+  - [2.2. Foreground](#22-foreground)
+  - [2.3. Background](#23-background)
+  - [2.4. Suspended](#24-suspended)
 - [3. Lifecycle State Transitions](#3-lifecycle-state-transitions)
   - [3.1. Loading an app](#31-loading-an-app)
-  - [3.2. Launching an app](#32-launching-an-app)
-  - [3.3. Closing an app](#33-closing-an-app)
-  - [3.4. Backgrounding an app](#34-backgrounding-an-app)
-  - [3.5. Suspending an app](#35-suspending-an-app)
-  - [3.6. Unsuspending an app](#36-unsuspending-an-app)
-  - [3.7. Unloading an app](#37-unloading-an-app)
-  - [3.8. Terminating an app](#38-terminating-an-app)
+  - [3.2. Initializing an app](#32-initializing-an-app)
+  - [3.3. Activating an app](#33-activating-an-app)
+  - [3.4. Deactivating an app](#34-deactivating-an-app)
+  - [3.5. Backgrounding an app](#35-backgrounding-an-app)
+  - [3.6. Suspending an app](#36-suspending-an-app)
+  - [3.7. Resuming an app](#37-resuming-an-app)
+  - [3.8. Unloading an app](#38-unloading-an-app)
+  - [3.9. Terminating an app](#39-terminating-an-app)
 - [4. Core SDK APIs](#4-core-sdk-apis)
-  - [4.1. Ready](#41-ready)
-  - [4.2. Loading](#42-loading)
-  - [4.3. Close](#43-close)
-  - [4.4. Background](#44-background)
-  - [4.5. Finished](#45-finished)
-  - [4.6. State](#46-state)
-  - [4.7. ResourceDeallocator Interface](#47-resourcedeallocator-interface)
+  - [4.1. LifecycleManagement Interface](#41-lifecyclemanagement-interface)
+  - [4.2. Ready](#42-ready)
+  - [4.3. Loading](#43-loading)
+  - [4.4. Close](#44-close)
+  - [4.5. Background](#45-background)
+  - [4.6. Finished](#46-finished)
+  - [4.7. State](#47-state)
+  - [4.8. ResourceDeallocator Interface](#48-resourcedeallocator-interface)
 - [5. Manage SDK APIs](#5-manage-sdk-apis)
   - [5.1. Terminate](#51-terminate)
   - [5.2. Suspend](#52-suspend)
@@ -72,74 +85,50 @@ reclaiming any memory, CPU, etc. that it was consuming.
 
 
 ## 2. Lifecycle States
-
 Firebolt platforms **MUST** support running one or more apps
 concurrently. The platform **MUST** manage transition of apps from state
 to state.
 
-A Firebolt app, once running, **MAY** be in one of several states and
+A Firebolt app, once running, **MUST** be in one of several states and
 **MUST NOT** be in more than one state at a time.
 
-|              | CPU | Active | Visible | RCU | AV  | Description                                                                   |
-|-----------|-------|-------|-------|-------|-------|---------------------------|
-| Initializing | ✔   |        |         |     |     | App is preparing to be minimally usable.                                      |
-| Inactive     | ✔   |        |         |     |     | App is ready for use, but not part of the user experience.                    |
-| Foreground   | ✔   | ✔      | ✔       | ✔   | ✔   | App is the primary user experience.                                           |
-| Background   | ✔   | ✔      | ✔\*     | ✔\* | ✔   | App is a secondary user experience, e.g. covered by a system modal.           |
-| Unloading    | ✔   |        |         |     |     | App will be unloaded soon.                                                    |
-| Suspended    |     |        |         |     |     | App state is being persisted to storage and will be stop running immediately. |
+![Lifecycle States](../../images/specifications/lifecycle/lifecycle-states.png)
 
-*\*Background apps may or may not be visible and/or receive input*
 
-### 2.1. Initializing
+|            | CPU | RAM | GFX | A/V | RCU | Description                                                                    |
+|------------|-----|-----|-----|-----|-----|--------------------------------------------------------------------------------|
+| Started    | ✔   | ✔   |     |     |     | App is loaded, initialized, and ready for use but consuming limited resources. |
+| Foreground | ✔   | ✔   | ✔   | ✔   | ✔   | App has full access to CPU, RAM, and RCU input focus. |
+| Background | ✔   | ✔   | ✔   | ✔   |     | App has full access to CPU and RAM, but not RCU input focus. |
+| Suspended  |     |     |     |     |     | App state is persisted to storage and removed from CPU & RAM. |
 
-This state allows apps to do whatever initialization is required in
-order to be a Firebolt compliant app, e.g. register for event listeners,
-etc.
 
-When an app is first loaded the platform **MUST** consider it to be in
-the initializing state. Apps **MUST** remain in this state until they
-register with the platform via Lifecycle.ready(), or
-Lifecycle.onInactive(), or are unloaded by the platform.
-
-The platform **MUST NOT** ever put an app back into this state once it
-has left unless it has been unloaded and then loaded again.
-
-There is no notification for this state, it just is.
-
-### 2.2. Inactive
+### 2.1. Started
 
 This state allows an app to be running, but not in one of the two active
-states, i.e. foreground and background. Inactive apps can execute code,
-but are not visible, do not receive any input from RCUs, and cannot use
-the video decoder. Apps should free up memory and other resources in
-this state.
+states, i.e. `FOREGROUND` and `BACKGROUND`. Started apps can execute code,
+but are not [Presented](./presentation.md) to the user, do not receive
+any input from RCUs, and cannot use the video decoder or graphics plan.
+
+Apps in this state **MUST NOT** be visible.
+
+Apps in this state **MUST NOT** receive RCU key presses.
+
+Apps in this state **MUST NOT** have access to the audio-video decoder.
+
+Apps in this state **MUST NOT** have access to the graphics plane.
+
+Apps in this state **SHOULD** use a low profile footprint for memory and other resources
+in this state.
 
 When an app transitions to this state, the platform **MUST** dispatch
-the Lifecycle.onInactive notification with the current state and
+the `Lifecycle.onStarted` notification with the current state and
 previous states.
 
-Apps in this state **MUST** not use the media pipeline and the platform
+Apps in this state **MUST NOT** use the media pipeline and the platform
 **MUST** tear down any Media Pipeline sessions associated with this app.
 
-When an app is initializing, and registers for Lifecycle.onInactive
-notifications, the platform **MUST** transition the app to the inactive
-state with the previous state set to initializing, since it is now able
-to execute any code related to that transition.
-
-If an app is still initializing, and calls Lifecycle.ready(), the
-platform **MUST** transition the app to the inactive state with the
-previous state set to initializing.
-
-When an app is in either *active* state and is *closed* then the
-platform **MUST** transition the app to the inactive state with the
-previous and current state set correctly.
-
-When an app is in the suspended state and is then unsuspended, then the
-platform **MUST** transition the app to the inactive state with the
-previous state set to suspended.
-
-### 2.3. Foreground
+### 2.2. Foreground
 
 This state allows an app to be presented as the primary experience to
 the user.
@@ -154,22 +143,19 @@ permissions for.
 
 Apps in this state **MUST** have access to the audio-video decoder.
 
+Apps in this state **MUST** have access to the graphics plane.
+
 Apps in this state **SHOULD NOT** have performance negatively impacted
 by other processes on the device.
 
 When an app transitions to this state, the platform **MUST** dispatch
-the Lifecycle.onForeground notification with the current state and
+the `Lifecycle.onForeground` notification with the current state and
 previous states.
 
-### 2.4. Background
+### 2.3. Background
 
 This state allows an app to be present as the secondary experience to
 the user, e.g. when a system settings UI is overlayed on top of the app.
-
-Different platforms **MAY** support differing numbers of background
-apps. See [Background App
-Requirements](https://comcastcorp.sharepoint.com/:w:/r/sites/hqppa/Shared%20Documents/Global%20App%20Platform/Firebolt/Requirements/Core/Lifecycle/Background%20App%20Requirements.docx?d=w185d9112bcd44376bb0635dad816919b&csf=1&web=1&e=cjmuSJ)
-for more info.
 
 Apps in this state **MUST** either be partially visible **OR** have
 access to an audio decoder, e.g. an app playing music in the background.
@@ -177,41 +163,18 @@ access to an audio decoder, e.g. an app playing music in the background.
 Apps in this state **SHOULD NOT** receive most RCU key presses, although
 platforms **MAY** forward certain keys to the app, e.g. play/pause keys.
 
-Apps in this state **MAY** have access to the audio-video decoder. How
-many decoders are available is a decision for each device based on
-resources. See [Background App
-Requirements](https://comcastcorp.sharepoint.com/:w:/r/sites/hqppa/Shared%20Documents/Global%20App%20Platform/Firebolt/Requirements/Core/Lifecycle/Background%20App%20Requirements.docx?d=w185d9112bcd44376bb0635dad816919b&csf=1&web=1&e=cjmuSJ)
-for more info.
+Apps in this state **MUST** have access to the audio-video decoder.
+
+Apps in this state **MUST** have access to the graphics plane.
 
 Apps in this state **SHOULD NOT** have performance negatively impacted
 by other processes on the device.
 
 When an app transitions to this state, the platform **MUST** dispatch
-the Lifecycle.onBackground notification with the current state and
+the `Lifecycle.onBackground` notification with the current state and
 previous states.
 
-If an app is in the inactive state and successfully calls
-Lifecycle.loading(), the platform **MAY** transition the app to the
-background state with the previous state set to inactive so that the app
-may present a custom loading screen. See *Loading an App* for more
-details.
-
-### 2.5. Unloading
-
-This state allows apps to do whatever cleanup is required in order to be
-a Firebolt compliant app, e.g. unregister for event listeners, clean up
-timers, post any final business analytics, etc.
-
-When an app is about to be unloaded the platform **MUST** transition it
-to this state. Apps **MUST** remain in this state until they notify the
-platform via Lifecycle.finished(), or are unloaded by the platform after
-appFinishedTimeout milliseconds have passed.
-
-The platform **MUST NOT** ever put an app into any other state once it
-is in the unloading state unless it has been unloaded and then loaded
-again.
-
-### 2.6. Suspended
+### 2.4. Suspended
 
 This state allows an app to be copied from memory to local storage and
 then terminated to save resources. Subsequently, the app may be copied
@@ -230,7 +193,7 @@ non-compliant version of the app suspending feature.
 *If* a platform supports suspending apps, then the following
 requirements **MUST** be fulfilled.
 
-Apps **MUST** only enter this state from the inactive state.
+Apps **MUST** only enter this state from the started state.
 
 *Immediately before* an app transitions to this state, the platform
 **MUST** dispatch the Lifecycle.onSuspended notification with the
@@ -248,21 +211,14 @@ Apps may optionally implement the Lifecycle.ResourceDeallocator API for
 more control over app suspension.
 
 ## 3. Lifecycle State Transitions
+There are several state transitions where the app and the platform need
+to interact to ensure the transition goes smoothly.
 
-Firebolt platforms **MUST** support the app lifecycle states and
-transitions denoted in blue.
+By providing an implementation of the
+`xrn:firebolt:capability:lifecycle:management` interface, an app can
+influence how resources are managed during these state transitions. See [LifecycleManagement Interface](#41-lifecyclemanagement-interface) for more info.
 
-Platforms **MAY** support the app lifecycle states and transitions
-denoted in gray.
-
-Platforms **MUST NOT** support any other states or transitions not in
-this diagram.
-
-Platforms **MAY** terminate an app and/or it's container process at any
-time for operational reasons, e.g. an app becomes non-responsive. This
-is left out of the diagram for simplicity.
-
-![Lifecycle States](../../images/specifications/lifecycle/lifecycle.png)
+![Lifecycle States](../../images/specifications/lifecycle/lifecycle-transitions.png)
 
 ### 3.1. Loading an app
 
@@ -287,36 +243,46 @@ manifest's releaseStatus is not developer.
 Next, if the app is an HTML/JavaScript app, then load the app's initial
 URL (from the app manifest) into the browser.
 
-The Firebolt SDK will enforce that the app is in the initializing state
-when the app first loads.
+### 3.2. Initializing an app
+Once an app is loaded it **MUST** be initialized immediately.
 
-If the app begins listening for the onInactive event during the
-initializing state, then the platform **MUST** transition the app into
-the inactive state.
+If an app provides the `xrn:firebolt:capability:lifecycle:management`
+capability, then the platform **MUST** call the app's implementation of
+`LifecycleManagement.initialize()`:
 
-Next, if the app has permission to use the
-xrn:firebolt:capability:lifecycle:loading-screen capability (and the
-device supports it) then, if the app calls the Lifecycle.loading() API,
-the platform **MUST** transition the app into the background state. This
-enables apps to display a custom loading screen on devices that support
-it. Supporting this capability is optional.
+> The platform **MUST** dispatch the `Lifecycle.onRequestInitialize`
+> notification to the app, and wait for `appReadyTimeout` milliseconds
+> for either a `Lifecycle.ready` or `Lifecycle.initializeError` call in
+> response.
+>
+> **NOTE**: this requires a minor change to our code-generate to customize
+> a provider result method name.
+>
+> Once the platform receives the `initializeResult` call, then the app
+> is considered "ready" to be activated and presented to the user.
+>
+> If the app times out or makes an `initializeError` call, then the app
+> **MUST** be terminated.
 
-The loading() API may only be called during an apps first time in the
-inactive state. This API returns an error at all other times.
+If an app does not provide the capability, then the app is doing a
+synchronous initialization and needs to let the platform know when it
+is complete:
 
-Finally, wait for up to appReadyTimeout milliseconds for the app to call
-the ready() API. Apps that do not call Lifecycle.ready() within the
-timeout **MUST** be terminated. Once the app calls Lifecycle.ready(),
-apps that are in the initializing state **MUST** be transitioned to the
-inactive state within 500 milliseconds. See Launching an App for more
-info.
+> The platform **MUST** wait `appReadyTimeout` milliseconds for the app
+> to call `Lifecycle.ready()`, at which point the app is considered
+> "ready" to be activated and presented to the user.
+>
+> If the app times out, then the app **MUST** be terminated.
 
-The ready() API may only be called during the initializing state, or
-during an apps first time in the inactive state, or by an app that is
-displaying a custom loading screen after its first cycle from
-initializing to inactive to background.
+Once an app is "ready" it **MUST** be transitioned to the `STARTED`
+state within 500 milliseconds.
 
-### 3.2. Launching an app
+If an app provides the `xrn:firebolt:capability:lifecycle:management`
+capability and calls `Lifecycle.ready` when the platform is not waiting
+for the app to finish initializing, then the platform **MUST** return 
+and error, and terminate the app.
+
+### 3.3. Activating an app
 
 Launching an app transitions it to one of the *active* states
 (foreground or background) so that it becomes part of the user's
@@ -325,89 +291,149 @@ experience.
 The platform may launch apps for any number of reasons that are out of
 scope for this document.
 
-One app **MAY** request to launch another app, via the
-Discovery.launch() API method, see
-[Discovery](https://comcastcorp.sharepoint.com/:w:/r/sites/hqppa/Shared%20Documents/Global%20App%20Platform/Firebolt/Requirements/Core/Discovery/Discovery%20Requirements.docx?d=w81397bb577d149b995636834c4c3a302&csf=1&web=1&e=bdLI4q)
-in [Core
-Requirements](https://comcastcorp.sharepoint.com/:f:/r/sites/hqppa/Shared%20Documents/Global%20App%20Platform/Firebolt/Requirements/Core/Discovery?csf=1&web=1&e=qtZhFJ).
-
 To launch an app, platforms **MUST** use the following process.
 
-If the app is already in the foreground state, then it is already
+If the app is already in the `FOREGROUND` state, then it is already
 launched and there is no need to do anything else. The platform **MUST
 NOT** dispatch any *additional* lifecycle notifications when attempting
 to launch an app that is already in the foreground state and the
-remainder of this section does not need to happen.
+remainder of this section does not apply.
 
-If the app is not loaded, then it **MUST** be fully *loaded*, i.e.
-Lifecycle.ready() has been called, first.
+If the app is not loaded, then the platform **MUST** [load](#31-loading-an-app) it first.
 
-If the app is suspended, then it **MUST** be *unsuspended* first.
+If the app is not initialized, the platform **MUST** [initialize](#32-initializing-an-app) it first.
 
-At this point, the app **MUST** be in either the inactive or background
+If the app is suspended, then it **MUST** be [resumed](#37-resuming-an-app) first.
+
+At this point, the app **MUST** be in either the `STARTED` or `BACKGROUND`
 state.
 
-Finally, the platform **MUST** transition the app to intended state,
-either the foreground or background state (see
-'[Foreground](#23-foreground)' and 'Background' above).
+If an app provides the `xrn:firebolt:capability:lifecycle:management`
+capability, then the platform **MUST** call the app's implementation of
+`LifecycleManagement.activate()`:
 
-### 3.3. Closing an app
+> The platform **MUST** dispatch the `Lifecycle.onRequestActivate`
+> notification to the app, and wait for `appActivateTimeout` milliseconds
+> for either a `Lifecycle.activateResult` or `Lifecycle.activateError`
+> call in response.
+>
+> The `onRequestActivate` call **MUST** include a `NavigationIntent`.
+>
+> Once the platform receives the `activateResult` call, then the app
+> may be moved to the target state, `FOREGROUND` or `BACKGROUND`
+> and presented to the user.
+>
+> If the app times out or makes an `activateError` call, then the app
+> **MUST** be terminated.
 
-Closing an app transitions it to the inactive state, so that it is no
+If an app does not provide the capability, then:
+
+> The platform **MUST** move the app to the target state, `FOREGROUND`
+> or `BACKGROUND` and presented to the user.
+>
+> Then, the platform **MUST** dispatch a `Discovery.onNavigateTo`
+> notification to the platform with a `NavigationIntent`.
+
+### 3.4. Deactivating an app
+
+Closing an app transitions it to the `STARTED` state, so that it is no
 longer part of the user's experience.
 
 The platform may close apps for any number of reasons that are out of
 scope for this document.
 
-Apps **MAY** request to be closed, via the Lifecycle.close() API method.
+Apps **MAY** request to be closed, via the `Lifecycle.close()` API method.
 
 To close an app, platforms **MUST** use the following process.
 
-If an app is already in the inactive state, then it is already closed
+If an app is already in the `STARTED` state, then it is already closed
 and there is no need to do anything else. The platform **MUST NOT**
 dispatch any *additional* lifecycle notifications when attempting to
-close an app that is already in the inactive state and the remainder of
-this section does not need to happen.
+close an app that is already in the `STARTED` state and the remainder of
+this section does not apply.
 
-If the app is not loaded, or is in the unloading, suspended, or
-initializing state, then it cannot be closed, and the remainder of this
-section does not need to happen.
+If an app is already performing a `deactivate()` transition, the platform
+**MUST** ignore the new attempt to close the app, allow the pending
+closure to complete, and the remainder of this section does not apply.
 
-Finally the platform transitions the app to the inactive state.
+If an app is already performing an `activate()` transition, the platform
+**MUST** wait for the activate call to succeed or fail and then skip the
+remaining [activation steps](#33-activating-an-app).
 
-### 3.4. Backgrounding an app
+If an app is currently [initializing](#32-initializing-an-app), the
+platform **MUST** wait for initialization to succeed or fail.
 
-Backgrounding an app transitions it to the background state, so that it
-is no longer the user experience.
+If an app is currently in the `SUSPENDED` state, is [unloading](#38-unloading-an-app),
+or is performing a `suspend()` or `resume()` transition, then the app 
+cannot be closed and the platform **MUST NOT** close it, and the
+remainder of this section does not apply.
+
+At this point, the app **MUST** be in one of the active states.
+
+If an app provides the `xrn:firebolt:capability:lifecycle:management`
+capability, then the platform **MUST** call the app's implementation of
+`LifecycleManagement.deactivate()`:
+
+> The platform **MUST** dispatch the `Lifecycle.onRequestDeactivate`
+> notification to the app, and wait for `appDeactivateTimeout` milliseconds
+> for either a `Lifecycle.deactivateResult` or `Lifecycle.deactivateError`
+> call in response.
+>
+> Once the platform receives the `deactivateResult` call, then the app
+> may be moved to the `STARTED` state.
+>
+> If the app times out or makes a `deactivateError` call, then the app
+> **MUST** be terminated.
+
+If an app does not provide the capability, then it will not provide any
+resource management:
+
+> The platform **MUST** move the app to the `STARTED` state.
+>
+> The platform **SHOULD** prioritize this app for unloading if it is not
+> reactivated within `appLegacyUnloadTimeout` milliseconds.
+
+### 3.5. Backgrounding an app
+
+Backgrounding an app transitions it to the `BACKGROUND` state, so that it
+is no longer the primary user experience.
 
 The platform may background apps for any number of reasons that are out
 of scope for this document.
 
-Apps that are in the foreground state **MAY** request to be
-backgrounded, via the Lifecycle.background() API method. See the
+Apps that are in the `FOREGROUND` state **MAY** request to be
+backgrounded, via the `Lifecycle.background()` API method. See the
 Background API below.
 
 To background an app, platforms **MUST** use the following process.
 
-If an app is already in the background state, then it is already
+If an app is already in the `BACKGROUND` state, then it is already
 backgrounded and there is no need to do anything else. The platform
 **MUST NOT** dispatch any *additional* lifecycle notifications when
-attempting to background an app that is already in the background state
-and the remainder of this section does not need to happen.
+attempting to background an app that is already in the `BACKGROUND` state
+and the remainder of this section does not apply.
 
-If the app is not loaded, or is in the unloading, suspended, or
-initializing state, then it cannot be backgrounded, and the remainder of
-this section does not need to happen.
+If an app is already performing a `activate()` transition, the platform
+**MUST** ignore the new attempt to activate the app, allow the pending
+activation to complete, and the remainder of this section does not apply.
 
-At this point, the app **MUST** be in either the foreground or inactive
+If an app is currently [initializing](#32-initializing-an-app), the
+platform **MUST** wait for initialization to succeed or fail.
+
+If an app is currently in the `SUSPENDED` state, is [unloading](#38-unloading-an-app),
+or is performing a `suspend()` or `resume()` transition, then the app 
+cannot be backgrounded and the platform **MUST NOT** try to, and the
+remainder of this section does not apply.
+
+At this point, the app **MUST** be in either the `FOREGROUND` or `STARTED`
 state.
 
 Finally, the platform **MUST** transition the app to the background
 state (see '[Background](#24-background)' above).
 
-### 3.5. Suspending an app
+### 3.6. Suspending an app
 
-Suspending an app transitions it to the suspended state, so that it is
+Suspending an app transitions it to the `SUSPENDED` state, so that it is
 no longer using resources on the device.
 
 The platform may suspend apps for any number of reasons that are out of
@@ -416,35 +442,40 @@ suspend an app, not the app itself.
 
 To suspend an app, platforms **MUST** use the following process.
 
-If an app is already in the suspended state, then it is already
+If an app is already in the `SUSPENDED` state, then it is already
 suspended and there is no need to do anything else. The platform **MUST
 NOT** dispatch any *additional* lifecycle notifications when attempting
 to suspend an app that is already in the suspended state and the
-remainder of this section does not need to happen.
+remainder of this section does not apply.
 
-If the app is not loaded, or is not in the inactive state, then it
+If the app is not loaded, or is not in the `STARTED` state, then it
 cannot be suspended, and the remainder of this section does not need to
 happen.
 
-At this point, the app **MUST** be in the inactive state.
+At this point, the app **MUST** be in the `STARTED` state.
 
-Next, if the app has permission to use the
-xrn:firebolt:capability:lifecycle:deallocation capability **and** the
-app has registered its implementation of the
-Lifecycle.ResourceDeallocator interface, then the platform **MUST** call
-the apps ResourceDeallocator.suspend method via the onRequestSuspend RPC
-call and wait for either the onSuspendResponse or onSuspendError
-handshake before proceeding.
+If an app provides the `xrn:firebolt:capability:lifecycle:management`
+capability, then the platform **MUST** call the app's implementation of
+`LifecycleManagement.suspend()`:
 
-Finally, if the app does not have a permitted ResourceDeallocator
-implementation, or if the app's implementation has responded with a
-success handshake, the platform **MUST** transition the app to the
-suspended state (see '[Suspended](#26-suspended)' above).
+> The platform **MUST** dispatch the `Lifecycle.onRequestSuspend`
+> notification to the app, and wait for `appSuspendTimeout` milliseconds
+> for either a `Lifecycle.suspendResult` or `Lifecycle.suspendError`
+> call in response.
+>
+> Once the platform receives the `suspendResult` call, then the app
+> may be moved to the `SUSPENDED` state.
+>
+> If the app times out or makes a `suspendError` call, then the app
+> **MUST** be [unloaded](#38-unloading-an-app).
 
-### 3.6. Unsuspending an app
+If an app does not provide the capability, then it cannot be suspended
+and the platform **MUST NOT** attempt to.
+
+### 3.7. Resuming an app
 
 Unsuspending an app loads it's previous state back into memory and
-transitions it to the inactive state, so that it may be launched back
+transitions it to the started state, so that it may be launched back
 into its original state.
 
 The platform may unsuspend apps for any number of reasons that are out
@@ -452,24 +483,36 @@ of scope for this document.
 
 To unsuspend an app, platforms **MUST** use the following process.
 
-If an app is not in the suspended state, then it cannot be unsuspended
+If an app is not in the `SUSPENDED` state, then it cannot be unsuspended
 and there is no need to do anything else. The platform **MUST NOT**
 dispatch any *additional* lifecycle notifications when attempting to
-unsuspend an app that is not in the suspended state and the remainder of
-this section does not need to happen.
+unsuspend an app that is not in the `SUSPENDED` state and the remainder of
+this section does not apply.
 
-At this point, the app **MUST** be in the suspended state.
+At this point, the app **MUST** be in the `SUSPENDED` state.
 
 Next, the platform **MUST** load the app's saved memory state back into
-a browser container. If this fails for any reason then the unsuspend
+an appropriate container. If this fails for any reason then the unsuspend
 operation failed and should error out and the app **MUST** be considered
 unloaded. Additionally, the app **MUST** be removed from the list of
 suspended apps, so that an unsuspend operation is not attempted again.
 
-Finally, the platform **MUST** transition the app to the inactive state
-(see '[Inactive](#22-inactive)' above).
+Suspended apps **MUST** provide the  `xrn:firebolt:capability:lifecycle:management`
+capability, so the platform **MUST** call the app's implementation of
+`LifecycleManagement.resume()`:
 
-### 3.7. Unloading an app
+The platform **MUST** dispatch the `Lifecycle.onRequestResume`
+notification to the app, and wait for `appResumeTimeout` milliseconds
+for either a `Lifecycle.resumeResult` or `Lifecycle.resumeError`
+call in response.
+
+Once the platform receives the `resumeResult` call, then the app
+may be moved to the `STARTED` state.
+
+If the app times out or makes a `resumeError` call, then the app
+**MUST** be terminated.
+
+### 3.8. Unloading an app
 
 Unloading an app transitions it out of memory, so that it is no longer
 using resources on the device.
@@ -479,64 +522,86 @@ scope for this document.
 
 To unload an app, platforms **MUST** use the following process.
 
-If an app is not in the inactive state, then it cannot be unloaded and
+If an app is not in the `STARTED` state, then it cannot be unloaded and
 there is no need to do anything else. The platform **MUST NOT** dispatch
 any *additional* lifecycle notifications when attempting to unload an
-app that is not in the inactive state and the remainder of this section
+app that is not in the `STARTED` state and the remainder of this section
 does not need to happen.
 
-At this point, the app **MUST** be in the inactive state.
+At this point, the app **MUST** be in the `STARTED` state.
 
-Next, if the app has permission to use the
-xrn:firebolt:capability:lifecycle:deallocation capability **and** the
-app has registered its implementation of the
-Lifecycle.ResourceDeallocator interface, then the platform **MUST** call
-the apps ResourceDeallocator.unload method via the onRequestUnload RPC
-call and wait for either the onUnloadResponse or onUnloadError handshake
-before proceeding. The finished API has no effect for apps with a valid
-ResourceDeallocator implementation.
+If an app provides the `xrn:firebolt:capability:lifecycle:management`
+capability, then the platform **MUST** call the app's implementation of
+`LifecycleManagement.unload()`:
 
-Finally, if the app does not have a permitted ResourceDeallocator
-implementation, or if the app's implementation has responded with a
-success handshake,, the platform **MUST** transition the app to the
-unloading state (see '[Unloading](#25-unloading)' above).
+> The platform **MUST** dispatch the `Lifecycle.onRequestUnload`
+> notification to the app, and wait for `appUnloadTimeout` milliseconds
+> for either a `Lifecycle.finished` or `Lifecycle.unloadError`
+> call in response.
+>
+> Once the platform receives the `finished` call, then the platform
+> may proceed with app unloading.
+>
+> If the app times out or makes an `activateError` call, then the app
+> **MUST** be terminated.
 
-### 3.8. Terminating an app
+If an app does not provide the capability, then:
+
+> The platform **MUST** dispatch the `onUnloading` notification and
+> wait `appUnloadTimeout` milliseconds for the app to call `Lifecycle.finished`
+>
+> When the `finished` call occurs, or the timeout is reached, the platform
+> **MUST** unload and terminate the app.
+
+### 3.9. Terminating an app
 
 Terminating an app removes it from memory without dispatching any state
 changes.
 
-The platform may terminate apps for any number of reasons that are out
-of scope for this document, e.g. an app becomes non-responsive.
+The platform **SHOULD** terminate apps when one of the transitions outlined
+here fails for some reason, or if an app becomes non-responsesive.
 
 Terminating an app results in removing it from memory and all resources
 held by the app and it's container being freed up.
 
 Platforms **MAY** terminate an app when needed but **SHOULD NOT** do
-this in place of graceful unloading.
+this in place of graceful [unloading](#38-unloading-an-app).
 
 ## 4. Core SDK APIs
 
 The following APIs are exposed by the Firebolt Core SDK.
 
+### 4.1. LifecycleManagement Interface
+The `LifeCycleManagement` interface is implemented by Apps to provide resource management.
+
+```typescript
+interface LifecycleManagement {
+  function initialize(): Promise<void>;
+  function activate(intent: NavigationIntent): Promise<void>;
+  function deactivate(): Promise<void>;
+  function suspend(): Promise<void>;
+  function resume(): Promise<void>;
+}
+```
+
 See the [Firebolt API
 Documentation](https://developer.comcast.com/firebolt/core/sdk/latest/api/)
 for details around syntax, etc.
 
-### 4.1. Ready
+### 4.2. Ready
 
 The Lifecycle.ready() API allows an app to notify the platform that it
 is initialized and ready to be displayed to the end user. This method
 **MUST NOT** be called more than once.
 
-### 4.2. Loading
+### 4.3. Loading
 
 The Lifecycle.loading() API allows an app to notify the platform that it
 is presenting a custom loading screen and would like to be moved into
 the background state so the user can see the loading screen. This method
 **MUST NOT** be called more than once.
 
-### 4.3. Close
+### 4.4. Close
 
 The Lifecycle.close() API allows an app to request that it be closed by
 the platform.
@@ -553,7 +618,7 @@ Lifecycle.appReadyTimeout
 | CloseReason.ERROR         | The app is experiencing unrecoverable issues and needs to be closed and unloaded.                                                                                        |
 
 Platforms generally **SHOULD** respect this call and move the app to the
-inactive state, but there may be edge cases where this is not possible,
+started state, but there may be edge cases where this is not possible,
 e.g. the app is considered to be the default experience for the device,
 and closing it would leave no other UX present.
 
@@ -565,7 +630,7 @@ provided. For example, apps closed due to the RCU are less likely to be
 unloaded since it may be an accidental RCU press, whereas an explicit
 user exit is more likely to be intentional.
 
-### 4.4. Background
+### 4.5. Background
 
 The Lifecycle.background() API allow an app to request that it be moved
 to the background state.
@@ -594,7 +659,7 @@ the device, and hiding it would leave no other UX present.
 When the request to background an app is not respected, the
 Lifecycle.background() method **MUST** return an error.
 
-### 4.5. Finished
+### 4.6. Finished
 
 The Lifecycle.finished() API allows an app to notify the platform that
 it is done preparing to be unloaded.
@@ -609,20 +674,20 @@ This method results in an error if it is called while the app is in any
 other state than unloading, or called more than once while in that
 state.
 
-### 4.6. State
+### 4.7. State
 
 The Lifecycle.state() method provides convenient access to the current
 state, and is implemented by the Core SDK listening to all state
 notifications. This method **MUST NOT** be asynchronous.
 
-### 4.7. ResourceDeallocator Interface
+### 4.8. ResourceDeallocator Interface
 
 An app may provide a ResourceDeallocator implementation in order to
 support more efficient resource usage in the various lifecycle states.
 
 | Method     | Return | Description                                                                                                                                                                              |
 |----------|--------|------------------------------------------------------|
-| inactive() | void   | Called when the platform wants to transition the app to the inactive state. The transition will not occur until the method returns, errors, or times out (see appInactiveTimeout, below) |
+| started() | void   | Called when the platform wants to transition the app to the started state. The transition will not occur until the method returns, errors, or times out (see appStartedTimeout, below) |
 | supend()   | void   | Called when the platform wants to transition the app to the suspended state. The transition will not occur until the method returns, errors, or times out (see appSuspendTimeout, below) |
 
 Note that these methods are implemented by the App, not the platform.
@@ -672,4 +737,4 @@ The LifecyclePolicy fields are:
 | appReadyTimeout    | bigint | Yes      | Number of milliseconds the platform should wait before terminating a loaded app that did not call ready().                                                                                       |
 | appFinishedTimeout | bigint | Yes      | Number of milliseconds the platform should wait after dispatching the onUnloading notification before finally unloading an app that did not call finished().                                     |
 | appSuspendTimeout  | bigint | Yes      | Number of milliseconds the platform should wait after dispatching the onRequestSuspend notification before finally suspending (or terminating) an app that did not call onSuspendResponse().     |
-| appInactiveTimeout | bigint | Yes      | Number of milliseconds the platform should wait after dispatching the onRequestInactive notification before finally inactivating (or terminating) an app that did not call onInactiveResponse(). |
+| appStartedTimeout | bigint | Yes      | Number of milliseconds the platform should wait after dispatching the onRequestStarted notification before finally inactivating (or terminating) an app that did not call onStartedResponse(). |
