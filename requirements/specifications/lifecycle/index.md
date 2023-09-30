@@ -126,6 +126,10 @@ Apps in this state **MUST NOT** have access to the graphics plane.
 Apps in this state **SHOULD** use a low profile footprint for memory and other resources
 in this state.
 
+Apps in this state **SHOULD** use less than XXX megabytes of RAM.
+
+**TODO**: do we want tiers of apps? per-app config?
+
 When an app transitions to this state, the platform **MUST** dispatch
 the `Lifecycle.onStarted` notification with the current state and
 previous states.
@@ -153,6 +157,10 @@ Apps in this state **MUST** have access to the graphics plane.
 Apps in this state **SHOULD NOT** have performance negatively impacted
 by other processes on the device.
 
+Apps in this state **SHOULD** use less than XXX megabytes of RAM.
+
+**TODO**: do we want tiers of apps? per-app config?
+
 When an app transitions to this state, the platform **MUST** dispatch
 the `Lifecycle.onForeground` notification with the current state and
 previous states.
@@ -174,6 +182,10 @@ Apps in this state **MUST** have access to the graphics plane.
 
 Apps in this state **SHOULD NOT** have performance negatively impacted
 by other processes on the device.
+
+Apps in this state **SHOULD** use less than XXX megabytes of RAM.
+
+**TODO**: do we want tiers of apps? per-app config?
 
 When an app transitions to this state, the platform **MUST** dispatch
 the `Lifecycle.onBackground` notification with the current state and
@@ -247,6 +259,8 @@ manifest's releaseStatus is not developer.
 
 Next, if the app is an HTML/JavaScript app, then load the app's initial
 URL (from the app manifest) into the browser.
+
+**TODO**: add more details here, e.g. contains, graphics, media pipeline, ram
 
 ### 3.2. Initializing an app
 Once an app is loaded it **MUST** be initialized immediately.
