@@ -627,13 +627,6 @@ The Lifecycle.ready() API allows an app to notify the platform that it
 is initialized and ready to be displayed to the end user. This method
 **MUST NOT** be called more than once.
 
-### 4.3. Loading
-
-The Lifecycle.loading() API allows an app to notify the platform that it
-is presenting a custom loading screen and would like to be moved into
-the background state so the user can see the loading screen. This method
-**MUST NOT** be called more than once.
-
 ### 4.4. Close
 
 The Lifecycle.close() API allows an app to request that it be closed by
