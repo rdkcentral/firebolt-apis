@@ -274,6 +274,20 @@ is complete:
 >
 > If the app times out, then the app **MUST** be terminated.
 
+Apps **SHOULD** set up any Firebolt event listeners during
+initialization, since the platform will wait until the app is ready
+before dispatching many critical events such as Lifecycle and
+Presentation events.
+
+Apps **SHOULD** acquire any important authentication needed for the
+app to function during initialization.
+
+Apps **MAY** load a limited set of global display resources, e.g. a
+global style sheet or a logo used throughout the experience, during
+initialization.
+
+**TODO**: discuss this ^^
+
 Once an app is "ready" it **MUST** be transitioned to the `STARTED`
 state within 500 milliseconds.
 
