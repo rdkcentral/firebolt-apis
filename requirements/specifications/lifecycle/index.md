@@ -92,6 +92,11 @@ to state.
 A Firebolt app, once running, **MUST** be in one of several states and
 **MUST NOT** be in more than one state at a time.
 
+As an app changes states, events are dispatched notifying the app of
+it's current and previous state. These events are for reacting to each state.
+
+For information on *influencing* state transitions, see [State Transitions](#3-lifecycle-state-transitions).
+
 ![Lifecycle States](../../images/specifications/lifecycle/lifecycle-states.png)
 
 
