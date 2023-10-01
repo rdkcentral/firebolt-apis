@@ -1,19 +1,43 @@
 # App Presentation
 need to write this up...
 
-## 1. States
+## 1. Display
+The `Presentation` module **MUST** have a `display` string property that returns one of the following values:
 
-- fullscreen
-- obscured
-- offscreen
-- scaled
-- thumbnail
-- loading
+| Value | Description |
+|-------|-------------|
+| `FULLSCREEN` | The app is displayed such that the dimensions fill the entire screen |
+| `OFFSCREEN`  | The app is not displayed on the screen at all |
+| `SCALED`     | The app is displayed at a size smaller than the entire screen but at least 25% of the width or height |
+| `THUMBNAIL` | The app is displayed at a size smaller than 25% of the width or height of the entire screen |
+| `LOADING` | The platform is displaying a loading screen while  the app loads | 
+
+### 1.1 Display vs Lifecycle
+Each Lifecycle state only supports certain display states:
+
+| Lifecycle | Supported Displays |
+|-------|-------------|
+| `FOREGROUND` | `FULLSCREEN`, `SCALED` |
+| `BACKGROUND` | `FULLSCREEN`, `SCALED`, `THUMBNAIL` |
+| `STARTED`    | `OFFSCREEN` |
+| `SUSPENDED`  |             |
+
+See [Off-screen Video](#2-offscreen-video) for an exception to this.
+
+## 2. Overlay
+The `Presentation` module **MUST** have an `overlay` string property that returns one of the following values:
+
+| Value | Description |
+|-------|-------------|
+| `ICON` | There is an informative icon, e.g. volume, on top of the app. |
+| `BAND`  | There is a horizontal overlay at the top or bottom of the app. |
+| `SIDEBAR`     | There is a vertical sidebar covering less than 33% of the app on one side. |
+| `BLOCKED` | There is a significantly sized UX covering a majority of the app. |
 
 ## 2. Off-screen Video
-If an app has the `xrn:firebolt:capability:presentation:offscreen-audio` or `-video` capability, then it can keep playing video/audio.
+If an app has the `xrn:firebolt:capability:presentation:offscreen-audio` or `-video` capability, then it can keep playing video/audio when the app is off-screen.
 
-Need a transition interface, e.g. `PresentationManager.hide()` to allow app to tear down video.
+When an app has this capability, it **MAY** be put into the `OFFSCREEN` display state while in the `BACKGROUND` Lifecycle state.
 
 ## 3. Platform-provided Loading Screen
 Most apps will leverage a platform-provided loading screen.
