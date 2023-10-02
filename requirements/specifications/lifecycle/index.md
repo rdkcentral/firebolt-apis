@@ -71,7 +71,6 @@ off.
 - [4. Core SDK APIs](#4-core-sdk-apis)
   - [4.1. LifecycleManagement Interface](#41-lifecyclemanagement-interface)
   - [4.2. Ready](#42-ready)
-  - [4.3. Loading](#43-loading)
   - [4.4. Close](#44-close)
   - [4.5. Background](#45-background)
   - [4.6. Finished](#46-finished)
@@ -106,7 +105,6 @@ For information on *influencing* state transitions, see [State Transitions](#3-l
 | Foreground | ✔   | ✔   | ✔   | ✔   | ✔   | App has full access to CPU, RAM, and RCU input focus. |
 | Background | ✔   | ✔   | ✔   | ✔   |     | App has full access to CPU and RAM, but not RCU input focus. |
 | Suspended  |     |     |     |     |     | App state is persisted to storage and removed from CPU & RAM. |
-
 
 ### 2.1. Started
 
@@ -609,12 +607,49 @@ The `LifeCycleManagement` interface is implemented by Apps to provide resource m
 
 ```typescript
 interface LifecycleManagement {
-  function initialize(): Promise<void>;
+  function create(params: LaunchParameters): Promise<void>;
   function activate(intent: NavigationIntent): Promise<void>;
   function deactivate(): Promise<void>;
   function suspend(): Promise<void>;
   function resume(): Promise<void>;
 }
+```
+
+Example:
+
+```typescript
+import { Lifecycle } from '@firebolt-js/sdk'
+
+class ExampleLifecycleManager implements Lifecycle.LifecycleManagement {
+  function create(params: LaunchParameters): Promise<void> {
+    const limitTracking:boolean = params.limitAdTracking
+  }
+
+  function activate(intent: NavigationIntent): Promise<void> {
+    if (intent.action === "playback") {
+      console.log("Deep link to playback of " + intent.data.entityId)
+    }
+  }
+
+  function deactivate(): Promise<void> {
+    // free up MSE
+    video.src = ""
+    video.load()
+  }
+
+  function suspend(): Promise<void> {
+    // unload all images
+    document.querySelectorAll("img").forEach((img:HTMLElement) => {
+      img.parentElement.removeChild(img)
+    })
+  }
+
+  function resume(): Promise<void> {
+    // reload images
+  }
+}
+
+
 ```
 
 See the [Firebolt API
@@ -749,6 +784,8 @@ This method requires an appId parameter, which tells the platform which
 app to unsuspend.
 
 ## 6. Lifecycle Configuration
+
+TODO: do we want these to be per spec, per distributor, or per app?
 
 In order to enable Firebolt Certification of a device's Lifecycle
 Management features, the device **MUST** support the following
