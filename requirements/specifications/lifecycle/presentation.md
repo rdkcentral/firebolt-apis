@@ -1,7 +1,35 @@
 # App Presentation
 need to write this up...
 
-## 1. Display
+Document Status: Working Draft
+
+See [Firebolt Requirements Governance](../../governance.md) for more info.
+
+| Contributor    | Organization   |
+| -------------- | -------------- |
+| Andrew Bennet            | Sky            |
+| Cody Bonney   | Charter |
+| Bart Catrysse            | Liberty           |
+| Tim Dibben            | Sky            |
+| Jeremy LaCivita            | Comcast            |
+| Ramprasad Lakshminarayana | Sky |
+| Kevin Pearson            | Comcast            |
+| Peter Yu            | Comcast           |
+
+
+## 1. Overview
+TBD...
+
+- [1. Overview](#1-overview)
+- [2. Display](#2-display)
+  - [2.1. Display vs Lifecycle](#21-display-vs-lifecycle)
+- [3. Overlay](#3-overlay)
+- [4. Off-screen Video](#4-off-screen-video)
+- [5. Platform-provided Loading Screen](#5-platform-provided-loading-screen)
+- [6. App-provided Loading Screen](#6-app-provided-loading-screen)
+
+
+## 2. Display
 The `Presentation` module **MUST** have a `display` string property that returns one of the following values:
 
 | Value | Description |
@@ -12,7 +40,7 @@ The `Presentation` module **MUST** have a `display` string property that returns
 | `THUMBNAIL` | The app is displayed at a size smaller than 25% of the width or height of the entire screen |
 | `LOADING` | The platform is displaying a loading screen while  the app loads | 
 
-### 1.1 Display vs Lifecycle
+### 2.1. Display vs Lifecycle
 Each Lifecycle state only supports certain display states:
 
 | Lifecycle | Supported Displays |
@@ -24,7 +52,7 @@ Each Lifecycle state only supports certain display states:
 
 See [Off-screen Video](#2-offscreen-video) for an exception to this.
 
-## 2. Overlay
+## 3. Overlay
 The `Presentation` module **MUST** have an `overlay` string property that returns one of the following values:
 
 | Value | Description |
@@ -34,12 +62,12 @@ The `Presentation` module **MUST** have an `overlay` string property that return
 | `SIDEBAR`     | There is a vertical sidebar covering less than 33% of the app on one side. |
 | `BLOCKED` | There is a significantly sized UX covering a majority of the app. |
 
-## 2. Off-screen Video
+## 4. Off-screen Video
 If an app has the `xrn:firebolt:capability:presentation:offscreen-audio` or `-video` capability, then it can keep playing video/audio when the app is off-screen.
 
 When an app has this capability, it **MAY** be put into the `OFFSCREEN` display state while in the `BACKGROUND` Lifecycle state.
 
-## 3. Platform-provided Loading Screen
+## 5. Platform-provided Loading Screen
 Most apps will leverage a platform-provided loading screen.
 
 If an app provides the `xrn:firebolt:capability:presentation:loading-screen`
@@ -60,7 +88,7 @@ the loading screen is displayed.
 
 See [Lifecycle](./index.md) for more info on launching.
 
-## 4. App-provided Loading Screen
+## 6. App-provided Loading Screen
 If an app provides the `xrn:firebolt:capability:presentation:loading-screen`
 capability, then the platform **MAY** invoke this capability in some situations.
 
@@ -69,40 +97,11 @@ provide the `xrn:firebolt:capability:lifecycle:management` capability. If the ap
 does not provide this capability, then app-provided loading screens **MUST NOT**
 but invoked for the app. 
 
-When cold launching apps with this capability:
+Apps that provide the loading screen capability **MUST** be made visible at
+the very beginning of the `LifecycleManagement.activate()` transition, rather
+than at the end.
 
-> The platform **MUST** display the platform-provided loading screen when
-> the app starts loading.
-> 
-> Then the app's loading screen **MUST** be requested immediately after the app
-> is loaded. See [Displaying the app-provided loading screen](#41-displaying-the-app-provided-loading-screen),
-> below.
-
-When hot launching apps with this capability:
-
-> The platform **MUST** display the platform-provided loading screen when
-> the app launch is requested.
-> 
-> Then the app's loading screen **MUST** be requested immediately. See 
-> [Displaying the app-provided loading screen](#41-displaying-the-app-provided-loading-screen),
-> below.
+The presentation state of the app **MUST** be `FULLSCREEN` or `SCALED` during
+the `activate()` transition.
 
 See [Lifecycle](./index.md) for more info on loading and activating apps.
-
-### 4.1. Displaying the app provided loading screen.
-To display the loading screen:
-
-The platform **MUST** dispatch the `Presentation.onRequestLoadingScreen`
-notification to the app, and wait for `loadingScreenTimeout` milliseconds
-for either a `Presentation.loadingScreenResult` or
-`Lifecycle.loadingScreenError` call in response.
-
-**NOTE**: this requires a minor change to our code-generate to customize
-a provider method name, e.g. x-method-name: "display".
-
-Once the platform receives the `loadingScreenResult` call, then the app
-**MUST** be made visible in whatever presentation mode the app would
-have been launched into (typically `FULLSCREEN`).
- 
-If the app times out or makes an `loadingScreenError` call, then the app
-will not be made visible until activation is complete.
