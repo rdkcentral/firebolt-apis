@@ -648,8 +648,6 @@ class ExampleLifecycleManager implements Lifecycle.LifecycleManagement {
     // reload images
   }
 }
-
-
 ```
 
 See the [Firebolt API
@@ -669,8 +667,6 @@ the platform.
 
 This method requires a reason parameter, which tells the platform why
 the app is requesting to be closed:
-
-Lifecycle.appReadyTimeout
 
 | Reason                    | Description                                                                                                                                                              |
 |------------------------------------|------------------------------------|
