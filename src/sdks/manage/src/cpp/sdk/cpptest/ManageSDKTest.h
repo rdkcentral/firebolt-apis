@@ -18,19 +18,26 @@
 
 #pragma once
 
+#include <iostream>
 #include "error.h"
 
-class ManageSDKTestGeneratedCode {
+class ManageSDKTest {
 
 public:
-    ManageSDKTestGeneratedCode() = default;
-    virtual ~ManageSDKTestGeneratedCode() = default;
+    ManageSDKTest() = default;
+    virtual ~ManageSDKTest() = default;
 
     static void CreateFireboltInstance();
     static void DestroyFireboltInstance();
     static void TestManageStaticSDK();
     static void GetDeviceName();
     static void SetDeviceName();
+    static void GetClosedCaptionBackgroundOpacity();
+    static void SetClosedCaptionBackgroundOpacity();
+    static void GetClosedCaptionFontFamily();
+    static void SetClosedCaptionFontFamily();
+    static void GetLocalizationPreferredAudioLanguages();
+    static void SetLocalizationPreferredAudioLanguages();
     static bool WaitOnConnectionReady();
 
 private:

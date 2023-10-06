@@ -17,17 +17,17 @@
  */
 
 #include "Module.h"
-#include "ManageSDKTests.h"
+#include "ManageSDKTestStaticCode.h"
 
 namespace FireboltSDK {
-    ManageTests::ManageTests()
+    ManageTestStaticCode::ManageTestStaticCode()
         : Tests()
     {
         _functionMap.emplace(std::piecewise_construct, std::forward_as_tuple("Get Country Code"),
                              std::forward_as_tuple(&GetCountryCode));
     }
 
-    /* static */ Firebolt::Error ManageTests::GetCountryCode()
+    /* static */ Firebolt::Error ManageTestStaticCode::GetCountryCode()
     {
         const string method = _T("localization.countryCode");
         WPEFramework::Core::ProxyType<WPEFramework::Core::JSON::String> response;

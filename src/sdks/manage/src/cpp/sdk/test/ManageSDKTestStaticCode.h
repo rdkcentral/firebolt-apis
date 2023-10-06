@@ -50,11 +50,11 @@ namespace FireboltSDK {
         WPEFramework::Core::JSON::Boolean RememberWatchedPrograms;
     };
 
-    class ManageTests : public Tests {
+    class ManageTestStaticCode : public Tests {
 
     public:
-        ManageTests();
-        ~ManageTests() override = default;
+        ManageTestStaticCode();
+        ~ManageTestStaticCode() override = default;
 
         static Firebolt::Error GetCountryCode();
     };

@@ -20,8 +20,7 @@
 
 #include "Module.h"
 #include "firebolt.h"
-#include "deviceImpl.h"
-#include "ManageSDKTests.h"
+#include "ManageSDKTestStaticCode.h"
 #include "ManageSDKTestGeneratedCode.h"
 
 using namespace std;
@@ -75,7 +74,7 @@ bool ManageSDKTestGeneratedCode::WaitOnConnectionReady()
 
 void ManageSDKTestGeneratedCode::TestManageStaticSDK()
 {
-    FireboltSDK::Tests::Main<FireboltSDK::ManageTests>();
+    FireboltSDK::Tests::Main<FireboltSDK::ManageTestStaticCode>();
 }
 
 void ManageSDKTestGeneratedCode::GetDeviceName()
@@ -99,31 +98,6 @@ void ManageSDKTestGeneratedCode::SetDeviceName()
         cout << "Set DeviceName is success" << endl;
     } else {
         cout << "Set DeviceName status = " << static_cast<int>(error) << endl;
-    }
-}
-
-void ManageSDKTestGeneratedCode::GetSkipRestriction()
-{
-    Firebolt::Error error = Firebolt::Error::None;
-    const Firebolt::Advertising::SkipRestriction value = Firebolt::IFireboltAccessor::Instance().AdvertisingInterface().SkipRestrictionAPI(&error);
-
-    if (error == Firebolt::Error::None) {
-        cout << "Get SkipRestriction = " << static_cast<int>(value) << endl;
-    } else {
-        cout << "Get SkipRestriction status = " << static_cast<int>(error) << endl;
-    }
-}
-
-void ManageSDKTestGeneratedCode::SetSkipRestriction()
-{
-    Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::Advertising::SkipRestriction value = Firebolt::Advertising::SkipRestriction::NONE;
-    Firebolt::IFireboltAccessor::Instance().AdvertisingInterface().SetSkipRestrictionAPI(value, &error);
-
-    if (error == Firebolt::Error::None) {
-        cout << "Set SkipRestriction is success" << endl;
-    } else {
-        cout << "Set SkipRestriction status = " << static_cast<int>(error) << endl;
     }
 }
 
