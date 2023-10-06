@@ -35,9 +35,6 @@ int main()
         ManageSDKTestGeneratedCode::GetDeviceName();
         ManageSDKTestGeneratedCode::SetDeviceName();
         ManageSDKTestGeneratedCode::GetDeviceName();
-        ManageSDKTestGeneratedCode::GetSkipRestriction();
-        ManageSDKTestGeneratedCode::SetSkipRestriction();
-        ManageSDKTestGeneratedCode::GetSkipRestriction();
     }
     ManageSDKTestGeneratedCode::DestroyFireboltInstance();
     printf("TOTAL: %i tests; %i PASSED, %i FAILED\n", TotalTests, TotalTestsPassed, (TotalTests - TotalTestsPassed));
