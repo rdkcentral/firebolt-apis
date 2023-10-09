@@ -61,6 +61,11 @@ target_include_directories(${TESTAPP}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/../>
 )
 
+set_target_properties(${TESTAPP} PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+)
+
 add_custom_command(
     TARGET ${TESTAPP}
     POST_BUILD
