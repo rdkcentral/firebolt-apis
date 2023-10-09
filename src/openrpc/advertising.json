@@ -232,7 +232,7 @@
               "value": {
                 "scope": {
                   "type": "content",
-                  "id": "merlin:linear:station:123"
+                  "id": "metadata:linear:station:123"
                 }
               }
             }
@@ -395,11 +395,11 @@
                   "content"
                 ],
                 "default": "browse",
-                "description": "The scope type, which will determine where to show advertise"
+                "description": "The scope type, which will determine where to show advertisement"
               },
               "id": {
                 "type": "string",
-                "description": "The scope id to determine if the advertising is app based"
+                "description": "A value that identifies a specific scope within the scope type"
               }
             }
           }
