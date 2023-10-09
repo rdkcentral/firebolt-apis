@@ -92,6 +92,10 @@ See [Lifecycle](./index.md) for more info on launching.
 If an app provides the `xrn:firebolt:capability:presentation:loading-screen`
 capability, then the platform **MAY** invoke this capability in some situations.
 
+
+**TODO**: Remove metrics collection from loading screen / usability.
+**TODO**: talk to Ben Grey about detecting loading screen animation automatically...
+
 In order for an app and use an app-provided loading screen, the app **MUST**
 provide the `xrn:firebolt:capability:lifecycle:management` capability. If the app
 does not provide this capability, then app-provided loading screens **MUST NOT**

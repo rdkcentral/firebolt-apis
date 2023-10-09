@@ -226,6 +226,8 @@ Apps may optionally implement the Lifecycle.ResourceDeallocator API for
 more control over app suspension.
 
 ## 3. Lifecycle State Transitions
+**TODO**: write words about only one transition will be called on an app at a time...
+
 There are several state transitions where the app and the platform need
 to interact to ensure the transition goes smoothly.
 
@@ -319,10 +321,16 @@ Launching an app transitions it to one of the *active* states
 (foreground or background) so that it becomes part of the user's
 experience.
 
+**TODO**: is graphics available at beginning of activate?
+**TODO**: Outline when RAM/CPU/GRAPHICS, etc. becaome available for each transition, e.g. start vs end
+**TODO**: rename "suspended" to "Low Resource".
+
 The platform may launch apps for any number of reasons that are out of
 scope for this document.
 
 To launch an app, platforms **MUST** use the following process.
+
+**TODO**: Write words about how you can't activate two apps into "foreground" at the same time.
 
 If the app is already in the `FOREGROUND` state, then it is already
 launched and there is no need to do anything else. The platform **MUST
@@ -648,6 +656,8 @@ class ExampleLifecycleManager implements Lifecycle.LifecycleManagement {
     // reload images
   }
 }
+
+Lifecycle.provide("xrn:firebolt:capability:lifecycle:management", new ExampleLifecycleManager())
 ```
 
 See the [Firebolt API
