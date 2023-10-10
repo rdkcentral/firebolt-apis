@@ -1,3 +1,10 @@
+# [0.18.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.2...v0.18.0-next.3) (2023-10-10)
+
+
+### Bug Fixes
+
+* Updated Discovery.launch example with xrn:firebolt:application-type ([#187](https://github.com/rdkcentral/firebolt-apis/issues/187)) ([4dbbab3](https://github.com/rdkcentral/firebolt-apis/commit/4dbbab3d9fa68c0e5185ca72fd0170bae8a30139))
+
 # [0.18.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.1...v0.18.0-next.2) (2023-09-26)
 
 
