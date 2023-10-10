@@ -19,9 +19,14 @@
 #pragma once
 
 #include <iostream>
-#include "error.h"
+#include "firebolt.h"
 
 class ManageSDKTest {
+
+    class OnDeviceNameChangedNotification : public Firebolt::Device::IDevice::IOnDeviceNameChangedNotification {
+    public:
+        void OnDeviceNameChanged( const std::string& name) override;
+    };
 
 public:
     ManageSDKTest() = default;
@@ -32,6 +37,8 @@ public:
     static void TestManageStaticSDK();
     static void GetDeviceName();
     static void SetDeviceName();
+    static void SubscribeDeviceNameChanged();
+    static void UnsubscribeDeviceNameChanged();
     static void GetClosedCaptionBackgroundOpacity();
     static void SetClosedCaptionBackgroundOpacity();
     static void GetClosedCaptionFontFamily();
@@ -43,5 +50,6 @@ public:
 private:
     static void ConnectionChanged(const bool, const Firebolt::Error);
     static bool _connected;
+    static OnDeviceNameChangedNotification _onDeviceNameChangedNotification;
 };
 

@@ -17,16 +17,21 @@
  */
 
 #include <unistd.h>
-#include "firebolt.h"
 #include "ManageSDKTest.h"
 
 using namespace std;
 bool ManageSDKTest::_connected;
+ManageSDKTest::OnDeviceNameChangedNotification ManageSDKTest::_onDeviceNameChangedNotification;
+
+void ManageSDKTest::OnDeviceNameChangedNotification::OnDeviceNameChanged( const std::string& name)
+{
+    cout << "Name changed, new name --> " << name << endl;
+}
 
 void ManageSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
-   cout << "Change in connection: connected: " << connected << " error: " << static_cast<int>(error) << endl;
-   _connected = connected;
+    cout << "Change in connection: connected: " << connected << " error: " << static_cast<int>(error) << endl;
+    _connected = connected;
 }
 
 void ManageSDKTest::CreateFireboltInstance()
@@ -75,9 +80,9 @@ void ManageSDKTest::GetDeviceName()
     const std::string name = Firebolt::IFireboltAccessor::Instance().DeviceInterface().Name(&error);
 
     if (error == Firebolt::Error::None) {
-        cout << "Get DeviceName = " << name.c_str() << endl;
+        cout << "Get Device Name = " << name.c_str() << endl;
     } else {
-        cout << "Get DeviceName status = " << static_cast<int>(error) << endl;
+        cout << "Get Device Name status = " << static_cast<int>(error) << endl;
     }
 }
 
@@ -87,9 +92,31 @@ void ManageSDKTest::SetDeviceName()
     Firebolt::IFireboltAccessor::Instance().DeviceInterface().SetName("Hello", &error);
 
     if (error == Firebolt::Error::None) {
-        cout << "Set DeviceName is success" << endl;
+        cout << "Set Device Name is success" << endl;
     } else {
-        cout << "Set DeviceName status = " << static_cast<int>(error) << endl;
+        cout << "Set Device Name status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void ManageSDKTest::SubscribeDeviceNameChanged()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().DeviceInterface().Subscribe(_onDeviceNameChangedNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Subscribe Device NameChange is success" << endl;
+    } else {
+        cout << "Subscribe Device NameChange status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void ManageSDKTest::UnsubscribeDeviceNameChanged()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().DeviceInterface().Unsubscribe(_onDeviceNameChangedNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Unsubscribe Device NameChange is success" << endl;
+    } else {
+        cout << "Unsubscribe Device NameChange status = " << static_cast<int>(error) << endl;
     }
 }
 

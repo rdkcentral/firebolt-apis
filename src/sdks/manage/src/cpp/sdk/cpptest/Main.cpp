@@ -6,6 +6,7 @@ void ShowMenu()
     printf("Enter\n"
            "\tN : Get Device Name\n"
            "\tS : Set Device Name\n"
+           "\tC : Subscribe/Unsubscribe for Device Name Change\n"
            "\tB : Get ClosedCaption Background Opacity\n"
            "\tO : Set ClosedCaption Background Opacity\n"
            "\tF : Get ClosedCaption Font Family\n"
@@ -14,6 +15,37 @@ void ShowMenu()
            "\tP : Set Localization Preferred AudioLanguages\n"
            "\tQ : Quit\n\n"
           );
+}
+
+void ShowEventMenu()
+{
+    printf("Enter\n"
+         "\tS: Subscribe Event\n"
+         "\tU: Unsubscribe Event\n"
+         "\tQ : Quit\n");
+}
+
+#define HandleEventListener(Module, eventFuncName) \
+{ \
+    int opt; \
+    do { \
+        getchar(); \
+        ShowEventMenu(); \
+        printf("Enter option : "); \
+        opt = toupper(getchar()); \
+        switch (opt) { \
+        case 'S': { \
+            ManageSDKTest::Subscribe##Module##eventFuncName(); \
+            break; \
+        } \
+        case 'U': { \
+            ManageSDKTest::Unsubscribe##Module##eventFuncName(); \
+            break; \
+        } \
+        default: \
+            break; \
+        } \
+    } while (opt != 'Q'); \
 }
 
 int main (int argc, char* argv[])
@@ -45,6 +77,10 @@ int main (int argc, char* argv[])
             }
             case 'S': {
                 ManageSDKTest::SetDeviceName();
+                break;
+            }
+            case 'C': {
+                HandleEventListener(Device, NameChanged)
                 break;
             }
             case 'B': {
