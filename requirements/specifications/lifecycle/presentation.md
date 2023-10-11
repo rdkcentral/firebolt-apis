@@ -21,15 +21,21 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 TBD...
 
 - [1. Overview](#1-overview)
-- [2. Display](#2-display)
-  - [2.1. Display vs Lifecycle](#21-display-vs-lifecycle)
-- [3. Overlay](#3-overlay)
-- [4. Off-screen Video](#4-off-screen-video)
-- [5. Platform-provided Loading Screen](#5-platform-provided-loading-screen)
-- [6. App-provided Loading Screen](#6-app-provided-loading-screen)
+- [2. Focus](#2-focus)
+- [3. Display](#3-display)
+  - [3.1. Display vs Lifecycle](#31-display-vs-lifecycle)
+- [4. Overlay](#4-overlay)
+- [5. Off-screen Video](#5-off-screen-video)
+- [6. Platform-provided Loading Screen](#6-platform-provided-loading-screen)
+- [7. App-provided Loading Screen](#7-app-provided-loading-screen)
 
 
-## 2. Display
+## 2. Focus
+The `Presentation` module **MUST** have a `focus` boolean property that returns whether or not the app has input, e.g. RCU, focus.
+
+As a property, this API also has an `onFocusChanged` notification.
+
+## 3. Display
 The `Presentation` module **MUST** have a `display` string property that returns one of the following values:
 
 | Value | Description |
@@ -39,20 +45,21 @@ The `Presentation` module **MUST** have a `display` string property that returns
 | `SCALED`     | The app is displayed at a size smaller than the entire screen but at least 25% of the width or height |
 | `THUMBNAIL` | The app is displayed at a size smaller than 25% of the width or height of the entire screen |
 | `LOADING` | The platform is displaying a loading screen while  the app loads | 
+| `NONE`    | The app does not have a graphics surface allocated |
 
-### 2.1. Display vs Lifecycle
+### 3.1. Display vs Lifecycle
 Each Lifecycle state only supports certain display states:
 
-| Lifecycle | Supported Displays |
-|-------|-------------|
-| `FOREGROUND` | `FULLSCREEN`, `SCALED` |
-| `BACKGROUND` | `FULLSCREEN`, `SCALED`, `THUMBNAIL` |
-| `STARTED`    | `OFFSCREEN` |
-| `SUSPENDED`  |             |
+| Lifecycle      | Supported Displays                  |
+|----------------|-------------------------------------|
+| `INITIALIZING` | `NONE`, `LOADING`                   |
+| `ACTIVE`       | `FULLSCREEN`, `SCALED`, `THUMBNAIL` |
+| `INACTIVE`     | `OFFSCREEN`                         |
+| `SUSPENDED`    | `NONE`, `LOADING`                   |
 
 See [Off-screen Video](#2-offscreen-video) for an exception to this.
 
-## 3. Overlay
+## 4. Overlay
 The `Presentation` module **MUST** have an `overlay` string property that returns one of the following values:
 
 | Value | Description |
@@ -62,12 +69,12 @@ The `Presentation` module **MUST** have an `overlay` string property that return
 | `SIDEBAR`     | There is a vertical sidebar covering less than 33% of the app on one side. |
 | `BLOCKED` | There is a significantly sized UX covering a majority of the app. |
 
-## 4. Off-screen Video
+## 5. Off-screen Video
 If an app has the `xrn:firebolt:capability:presentation:offscreen-audio` or `-video` capability, then it can keep playing video/audio when the app is off-screen.
 
-When an app has this capability, it **MAY** be put into the `OFFSCREEN` display state while in the `BACKGROUND` Lifecycle state.
+When an app has this capability, it **MAY** be put into the `OFFSCREEN` display state while in the `ACTIVE` Lifecycle state.
 
-## 5. Platform-provided Loading Screen
+## 6. Platform-provided Loading Screen
 Most apps will leverage a platform-provided loading screen.
 
 If an app provides the `xrn:firebolt:capability:presentation:loading-screen`
@@ -88,7 +95,7 @@ the loading screen is displayed.
 
 See [Lifecycle](./index.md) for more info on launching.
 
-## 6. App-provided Loading Screen
+## 7. App-provided Loading Screen
 If an app provides the `xrn:firebolt:capability:presentation:loading-screen`
 capability, then the platform **MAY** invoke this capability in some situations.
 
