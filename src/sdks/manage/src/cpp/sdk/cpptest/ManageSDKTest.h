@@ -25,9 +25,26 @@ class ManageSDKTest {
 
     class OnDeviceNameChangedNotification : public Firebolt::Device::IDevice::IOnDeviceNameChangedNotification {
     public:
-        void OnDeviceNameChanged( const std::string& name) override;
+        void OnDeviceNameChanged( const std::string& ) override;
     };
 
+    class OnFontFamilyChangedNotification : public Firebolt::ClosedCaptions::IClosedCaptions::IOnFontFamilyChangedNotification {
+        void OnFontFamilyChanged( const Firebolt::Accessibility::FontFamily& ) override;
+    };
+
+    class OnBackgroundOpacityChangedNotification : public Firebolt::ClosedCaptions::IClosedCaptions::IOnBackgroundOpacityChangedNotification {
+        void OnBackgroundOpacityChanged( const float ) override;
+    };
+
+    class OnPreferredAudioLanguagesChangedNotification : public Firebolt::Localization::ILocalization::IOnPreferredAudioLanguagesChangedNotification {
+    public:
+        void OnPreferredAudioLanguagesChanged( const std::vector<std::string>& ) override;
+    };
+
+    struct OnRequestChallengeNotification : public Firebolt::PinChallenge::IPinChallenge::IOnRequestChallengeNotification {
+    public:
+        void OnRequestChallenge( const Firebolt::PinChallenge::PinChallengeProviderRequest& ) override;
+    };
 public:
     ManageSDKTest() = default;
     virtual ~ManageSDKTest() = default;
@@ -41,15 +58,28 @@ public:
     static void UnsubscribeDeviceNameChanged();
     static void GetClosedCaptionBackgroundOpacity();
     static void SetClosedCaptionBackgroundOpacity();
+    static void SubscribeClosedCaptionsBackgroundOpacityChanged();
+    static void UnsubscribeClosedCaptionsBackgroundOpacityChanged();
     static void GetClosedCaptionFontFamily();
     static void SetClosedCaptionFontFamily();
+    static void SubscribeClosedCaptionsFontFamilyChanged();
+    static void UnsubscribeClosedCaptionsFontFamilyChanged();
     static void GetLocalizationPreferredAudioLanguages();
     static void SetLocalizationPreferredAudioLanguages();
+    static void SubscribeLocalizationPreferredAudioLanguagesChanged();
+    static void UnsubscribeLocalizationPreferredAudioLanguagesChanged();
+    static void SubscribePinChallengeRequestChallenge();
+    static void UnsubscribePinChallengeRequestChallenge();
+
     static bool WaitOnConnectionReady();
 
 private:
     static void ConnectionChanged(const bool, const Firebolt::Error);
     static bool _connected;
-    static OnDeviceNameChangedNotification _onDeviceNameChangedNotification;
+    static OnDeviceNameChangedNotification _deviceNameChangedNotification;
+    static OnFontFamilyChangedNotification _fontFamilyChangedNotification;
+    static OnBackgroundOpacityChangedNotification _backgroundOpacityChangedNotification;
+    static OnPreferredAudioLanguagesChangedNotification _preferredAudioLanguagesChangedNotification;
+    static OnRequestChallengeNotification _requestChallengeNotification;
 };
 

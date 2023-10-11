@@ -9,10 +9,14 @@ void ShowMenu()
            "\tC : Subscribe/Unsubscribe for Device Name Change\n"
            "\tB : Get ClosedCaption Background Opacity\n"
            "\tO : Set ClosedCaption Background Opacity\n"
+           "\tY : Subscribe/Unsubscribe for ClosedCaption Background Opacity Change\n"
            "\tF : Get ClosedCaption Font Family\n"
            "\tM : Set ClosedCaption Font Family\n"
+           "\tI : Subscribe/Unsubscribe for ClosedCaption Font Family Change\n"
            "\tL : Get Localization Preferred AudioLanguages\n"
-           "\tP : Set Localization Preferred AudioLanguages\n"
+           "\tA : Set Localization Preferred AudioLanguages\n"
+           "\tR : Subscribe/Unsubscribe for Localization Preferred AudioLanguages Change\n"
+           "\tP : Subscribe/Unsubscribe for PinChallenge RequestChallenge\n"
            "\tQ : Quit\n\n"
           );
 }
@@ -91,6 +95,10 @@ int main (int argc, char* argv[])
                 ManageSDKTest::SetClosedCaptionBackgroundOpacity();
                 break;
             }
+            case 'Y': {
+                HandleEventListener(ClosedCaptions, BackgroundOpacityChanged)
+                break;
+            }
             case 'F': {
                 ManageSDKTest::GetClosedCaptionFontFamily();
                 break;
@@ -99,12 +107,24 @@ int main (int argc, char* argv[])
                 ManageSDKTest::SetClosedCaptionFontFamily();
                 break;
             }
+            case 'I': {
+                HandleEventListener(ClosedCaptions, FontFamilyChanged)
+                break;
+            }
             case 'L': {
                 ManageSDKTest::GetLocalizationPreferredAudioLanguages();
                 break;
             }
-            case 'P': {
+            case 'A': {
                 ManageSDKTest::SetLocalizationPreferredAudioLanguages();
+                break;
+            }
+            case 'R': {
+                HandleEventListener(Localization, PreferredAudioLanguagesChanged)
+                break;
+            }
+            case 'P': {
+                HandleEventListener(PinChallenge, RequestChallenge)
                 break;
             }
 
