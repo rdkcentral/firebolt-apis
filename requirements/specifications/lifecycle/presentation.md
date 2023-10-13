@@ -25,9 +25,10 @@ TBD...
 - [3. Display](#3-display)
   - [3.1. Display vs Lifecycle](#31-display-vs-lifecycle)
 - [4. Overlay](#4-overlay)
-- [5. Off-screen Video](#5-off-screen-video)
-- [6. Platform-provided Loading Screen](#6-platform-provided-loading-screen)
-- [7. App-provided Loading Screen](#7-app-provided-loading-screen)
+- [5. Background Audio](#5-background-audio)
+- [6. Picture-in-Picture Video](#6-picture-in-picture-video)
+- [7. Platform-provided Loading Screen](#7-platform-provided-loading-screen)
+- [8. App-provided Loading Screen](#8-app-provided-loading-screen)
 
 
 ## 2. Focus
@@ -40,41 +41,47 @@ The `Presentation` module **MUST** have a `display` string property that returns
 
 | Value | Description |
 |-------|-------------|
-| `FULLSCREEN` | The app is displayed such that the dimensions fill the entire screen |
-| `OFFSCREEN`  | The app is not displayed on the screen at all |
-| `SCALED`     | The app is displayed at a size smaller than the entire screen but at least 25% of the width or height |
-| `THUMBNAIL` | The app is displayed at a size smaller than 25% of the width or height of the entire screen |
-| `LOADING` | The platform is displaying a loading screen while  the app loads | 
-| `NONE`    | The app does not have a graphics surface allocated |
+| `fullscreen` | The app is displayed such that the dimensions fill the entire screen |
+| `offscreen`  | The app is has it's graphics surface attached, but not displayed on the screen at the moment, e.g. scrolled out of view |
+| `scaled`     | The app is displayed at a size smaller than the entire screen but at least 25% of the width or height |
+| `thumbnail` | The app is displayed at a size smaller than 25% of the width or height of the entire screen |
+| `loading` | The platform is displaying a loading screen while the app prepares to be activated | 
+| `none`    | The app does not have it's graphics surface attached to the screen |
 
 ### 3.1. Display vs Lifecycle
 Each Lifecycle state only supports certain display states:
 
-| Lifecycle      | Supported Displays                  |
-|----------------|-------------------------------------|
-| `INITIALIZING` | `NONE`, `LOADING`                   |
-| `ACTIVE`       | `FULLSCREEN`, `SCALED`, `THUMBNAIL` |
-| `INACTIVE`     | `OFFSCREEN`                         |
-| `SUSPENDED`    | `NONE`, `LOADING`                   |
+| Lifecycle      | Supported Displays                               |
+|----------------|--------------------------------------------------|
+| `initializing` | `none`, `loading`                                |
+| `active`       | `fullscreen`, `scaled`, `thumbnail`, `offscreen` |
+| `running`      | `none`, `loading`                                |
+| `suspended`    | `none`, `loading`                                |
+| `sleeping`     | `none`, `loading`                                |
 
-See [Off-screen Video](#2-offscreen-video) for an exception to this.
+See [Picture-in-picture](#6-picture-in-picture-video) and [Background Audio](#5-background-audio) for exceptions to this.
 
 ## 4. Overlay
 The `Presentation` module **MUST** have an `overlay` string property that returns one of the following values:
 
 | Value | Description |
 |-------|-------------|
-| `ICON` | There is an informative icon, e.g. volume, on top of the app. |
-| `BAND`  | There is a horizontal overlay at the top or bottom of the app. |
-| `SIDEBAR`     | There is a vertical sidebar covering less than 33% of the app on one side. |
-| `BLOCKED` | There is a significantly sized UX covering a majority of the app. |
+| `icon` | There is an informative icon, e.g. volume, on top of the app. |
+| `band`  | There is a horizontal overlay at the top or bottom of the app. |
+| `sidebar`     | There is a vertical sidebar covering less than 33% of the app on one side. |
+| `blocked` | There is a significantly sized UX covering a majority of the app. |
 
-## 5. Off-screen Video
-If an app has the `xrn:firebolt:capability:presentation:offscreen-audio` or `-video` capability, then it can keep playing video/audio when the app is off-screen.
+## 5. Background Audio
+If an app has the `xrn:firebolt:capability:media:background-audio`, then it can keep playing audio/video when the app is in the `none` display state and the audio will be played for the user.
 
-When an app has this capability, it **MAY** be put into the `OFFSCREEN` display state while in the `ACTIVE` Lifecycle state.
+When an app has this capability, it **MAY** be put into the `none` display state while in the `active` Lifecycle state.
 
-## 6. Platform-provided Loading Screen
+## 6. Picture-in-Picture Video
+If an app has the `xrn:firebolt:capability:media:picture-in-picture`, then it can keep playing audio/video when the app is in the `none` display state and the audio & video will be presented to the user in bounding box determined by the platform. Note that this does not include the entire UX of the app, just the active media pipeline.
+
+When an app has this capability, it **MAY** be put into the `none` display state while in the `active` Lifecycle state.
+
+## 7. Platform-provided Loading Screen
 Most apps will leverage a platform-provided loading screen.
 
 If an app provides the `xrn:firebolt:capability:presentation:loading-screen`
@@ -95,24 +102,20 @@ the loading screen is displayed.
 
 See [Lifecycle](./index.md) for more info on launching.
 
-## 7. App-provided Loading Screen
-If an app provides the `xrn:firebolt:capability:presentation:loading-screen`
+## 8. App-provided Loading Screen
+If an app provides the `xrn:firebolt:capability:lifecycle:loading-screen`
 capability, then the platform **MAY** invoke this capability in some situations.
 
-
-**TODO**: Remove metrics collection from loading screen / usability.
-**TODO**: talk to Ben Grey about detecting loading screen animation automatically...
-
 In order for an app and use an app-provided loading screen, the app **MUST**
-provide the `xrn:firebolt:capability:lifecycle:management` capability. If the app
+provide the `xrn:firebolt:capability:lifecycle:activity` capability. If the app
 does not provide this capability, then app-provided loading screens **MUST NOT**
 but invoked for the app. 
 
 Apps that provide the loading screen capability **MUST** be made visible at
-the very beginning of the `LifecycleManagement.activate()` transition, rather
+the very beginning of the `Activity.activate()` transition, rather
 than at the end.
 
-The presentation state of the app **MUST** be `FULLSCREEN` or `SCALED` during
+The presentation state of the app **SHOULD NOT** be `none` at any time during
 the `activate()` transition.
 
 See [Lifecycle](./index.md) for more info on loading and activating apps.
