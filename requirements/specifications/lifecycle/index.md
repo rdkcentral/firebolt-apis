@@ -10,9 +10,11 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Cody Bonney   | Charter |
 | Bart Catrysse            | Liberty           |
 | Tim Dibben            | Sky            |
+| Piotr Kobzda          | Liberty |
 | Jeremy LaCivita            | Comcast            |
 | Ramprasad Lakshminarayana | Sky |
 | Kevin Pearson            | Comcast            |
+| Jan Pedersen             | Sky |
 | Peter Yu            | Comcast           |
 
 
