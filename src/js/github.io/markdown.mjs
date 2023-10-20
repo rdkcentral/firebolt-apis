@@ -24,36 +24,181 @@ const requirements = await readFiles(await readDir(path.join('.', 'requirements'
 
 const processFiles = (docs) => {
     Object.keys(docs).forEach(ref => {
-
         if (ref.endsWith('.md')) {
             let data = docs[ref]
 
-//            console.log(data)
-            // find all headers
-            const headers = data.match(/#+[ \t]+(([0-9]+\.)+)[ /t]+(.*?)\n/g)
-    
-            // turn to slugs
-            const slugs = headers.map(h => h.replace(/#/g, ''))
-                            .map(h => h.replace(/\t/g, ''))
-                            .map(h => h.replace(/\./g, ''))
-                            .map(h => h.replace(/^ /g, ''))
-                            .map(h => h.replace(/\n$/g, ''))
-                            .map(h => h.replace(/ /g, '-'))
-                            .map(h => h.toLowerCase())
-                            .map(h => '#' + h)
+            data = fixBrokenLinks(data, ref, docs)
+            data = wrapText(data)
+            data = prettyTables(data)
+            data = bcp14(data)
 
-            const links = data.match(/\]\(.*?\#.*?\)/g)
-
-            links.map(l => l.slice(2, -1)).forEach(link => {
-                if (!slugs.find(s => s === link)) {
-                    const best = slugs.find(s => s.match(new RegExp(link.replace(/^\#[0-9]+/, '#[0-9]+')))) || slugs.find(s => s.startsWith(link.split('-')[0] + '-'))
-                    console.log('Fixing broken link: (' + link + ') -> (' + best + ')')
-                    data = data.replace('](' + link + ')', '](' + best + ')')
-                }
-            })    
             docs[ref] = data
         }
     })
+}
+
+function fixBrokenLinks(data, ref, files) {
+
+    const getSlugs = (data) => {
+        // find all headers
+        const headers = data.match(/#+[ \t]+(([0-9]+\.)+)[ /t]+(.*?)\n/g)
+
+        // turn to slugs
+        return headers.map(h => h.replace(/#/g, ''))
+                        .map(h => h.replace(/\t/g, ''))
+                        .map(h => h.replace(/\./g, ''))
+                        .map(h => h.replace(/^ /g, ''))
+                        .map(h => h.replace(/\n$/g, ''))
+                        .map(h => h.replace(/ /g, '-'))
+                        .map(h => h.toLowerCase())
+                        .map(h => '#' + h)
+    }
+
+    const slugs = getSlugs(data)
+    const links = data.match(/\]\([^\)]*?\#[^\)]*?\)/gms)
+
+    links.map(l => l.slice(2, -1)).forEach(link => {
+        if (!slugs.find(s => s === link)) {
+            const best = slugs.find(s => s.match(new RegExp(link.replace(/^\#[0-9]+/, '#[0-9]+')))) || slugs.find(s => s.startsWith(link.split('-')[0] + '-'))
+            if (best) {
+                console.log('Fixing broken link: (' + link + ') -> (' + best + ')')
+                data = data.replace('](' + link + ')', '](' + best + ')')    
+            }
+            // TODO: fix bad slugs in links to other files
+            else if (link.match(/[^\)]+?\#[^\)]*?/gms)) {
+                // external
+                const [file, slug] = link.split('#')
+                const fileRef = path.join(path.dirname(ref), file)
+                const fileSlugs = getSlugs(files[fileRef])
+                if (!fileSlugs.find(s => s === '#' + slug)) {
+                    const best = fileSlugs.find(s => s.match(new RegExp(('#'+slug).replace(/^\#[0-9]+/, '#[0-9]+')))) || slugs.find(s => s.startsWith(link.split('-')[0] + '-'))
+                    if (best) {
+                        console.log('Fixing broken external link: (' + link + ') -> (' + file + best + ')')
+                        data = data.replace('](' + link + ')', '](' + file + best + ')')    
+                    }
+                }
+            }
+        }
+    })    
+
+    return data
+}
+
+function wrapText(data) {
+    const lines = data.split('\n')
+    const maximum = 80
+    let buffer = ''
+    let wrapped = ''
+    let width = 0
+    const block_regex = /^\s*?\>/
+    const code_regex = /^\s*?```/
+    let code = false
+
+    lines.forEach( (line, index) => {
+
+        if (line.match(code_regex)) {
+            code = !code
+        }
+
+        // skip lists, tables, headers, and blanks
+        if (code || line.match(/^\s*?\-/) || line.match(/^\s*?\|/) || line.match(/^\#+/) || line.match(/^\s*?$/)) {
+            buffer && (wrapped += '\n' + buffer)
+            buffer = ''
+            wrapped += '\n' + line
+            width = 0
+        }
+        else {
+            const quote = line.match(block_regex) ? true : false
+            
+            if (quote) {
+                line = line.replace(block_regex, '').trim()
+                
+                if (!buffer) {
+                    buffer = '> '
+                    width = 2
+                }
+                else if (!line.trim()) {
+                    buffer += '\n> \n>'
+                    width = 2
+                }
+            }
+
+            line.split(/\s+/).forEach(word => {
+                if (word.match(block_regex)) {
+                    throw "Found > in line: " + line
+                }
+                let len = word.length + 1 // .replace(/\(.*?\)/g, '')
+                if (width + len > maximum) {
+                    buffer += '\n' + (quote ? '> ' : '') + word + ' '
+                    width = len + 2
+                }
+                else {
+                    buffer += word + ' '
+                    width += len
+                }
+            })
+        }
+    })
+
+    buffer && (wrapped += '\n' + buffer)
+
+    return wrapped
+}
+
+function prettyTables(data) {
+    const lines = data.split('\n')
+    const table_regex = /^\s*?\|/
+    const column_regex = /(?<!\\)\|/
+    const columns = line => line.trim().split(column_regex).slice(1, -1).map(c => (' ' + c.trim() + ' ').length)
+
+    for (var i=0; i<lines.length; i++) {
+        if (lines[i].match(table_regex)) {
+            let widths = columns(lines[i])
+            lines[i+1] = lines[i+1].replace(/\-+/g, '-')
+            // find the max width of each column
+            for (var j=i; lines[j].match(table_regex); j++) {
+                widths = columns(lines[[j]]).map( (w, index) => Math.max(w, widths[index]))
+            }
+            // pad each cell to match the max width
+            for (j=i; lines[j].match(table_regex); j++) {
+                lines[j] = lines[j].split(column_regex).map((cell, index) => {
+                    // stuff before or after the table row
+                    if (index === 0 || index === widths.length + 1) {
+                        return cell
+                    }
+                    else {
+                        if (cell.match(/^ \-+ $/)) {
+                            return ' ' + '-'.repeat(widths[index-1]-2) + ' '
+                        }
+                        else if (cell.match(/^\-+$/)) {
+                            return '-'.repeat(widths[index-1])
+                        }
+                        else {
+                            return (' ' + cell.trim() + ' ').padEnd(widths[index-1])
+                        }
+                    }
+                }).join('|')
+                i++
+            }
+        }
+    }
+
+    return lines.join('\n')
+}
+
+function bcp14(data) {
+    return data
+    .replace(/([^\*])MUST(\s+)NOT([^\*])/gms, '$1**MUST$2NOT**$3')
+    .replace(/([^\*])SHOULD(\s+)NOT([^\*])/gms, '$1**SHOULD$2NOT**$3')
+    .replace(/([^\*])SHALL(\s+)NOT([^\*])/gms, '$1**SHALL$2NOT**$3')
+    .replace(/([^\*])NOT(\s+)RECOMMENDED([^\*])/gms, '$1**NOT$2RECOMMENDED**$3')
+    .replace(/([^\*])MUST([^\*])/gms, '$1**MUST**$2')
+    .replace(/([^\*])SHOULD([^\*])/gms, '$1**SHOULD**$2')
+    .replace(/([^\*])SHALL([^\*])/gms, '$1**SHALL**$2')
+    .replace(/([^\*])RECOMMENDED([^\*])/gms, '$1**RECOMMENDED**$2')
+    .replace(/([^\*])MAY([^\*])/gms, '$1**MAY**$2')
+    .replace(/([^\*])REQUIRED([^\*])/gms, '$1**REQUIRED**$2')
+    .replace(/([^\*])OPTIONAL([^\*])/gms, '$1**OPTIONAL**$2')
 }
 
 processFiles(requirements)
