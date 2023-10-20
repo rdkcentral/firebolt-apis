@@ -302,7 +302,7 @@ Finally, if an app implements the `Sleepable` interface, then the following tran
 |                | CPU | RAM | Net | GFX | A/V | Description                                                                   |
 |----------------|-----|-----|-----|-----|-----|-------------------------------------------------------------------------------|
 | `sleep()`      | ↓   | ↓   | ✔   |     |     | Prepare for an extended period with no CPU cycles given to app.               |
-| `wake()`       | ↓   | ↓   | ✔   |     |     | Cleanup after an extended period with no CPU, e.g. reset timers / network connections.   |
+| `wake()`       | ↓   | ↓   | ✔   |     |     | Cleanup after an extended period with no CPU, e.g. reset timers / network connections. |
 
 All of these transition APIs are blocking, and each one has a platform-configurable timeout that specifies how long the app has to fulfill the method.
 
@@ -735,7 +735,6 @@ interface Application {
   function resume(): Promise<void>;
   function destroy(): Promsie<void>;
 }
-
 ```
 
 | Method   | Description |
@@ -758,11 +757,11 @@ interface Activity {
 }
 ```
 
-| Method   | Description |
-| -------- | ----------- |
-| `activate()` | Called when the platform is ready to move the app into the `ACTIVE` state where it will contribute to the user-perceptible experience, typically via presenting the app on screen. A/V resources are allowed to be allocated when this is called if the app has permission to use them and the platform has the necesarry resources available.|
-| `deactivate()` | Called when the platform is ready to move the app out of the `ACTIVE` state and into `RUNNING` to deallocate any A/V decoders. |
-| `navigate()` | Called when an app is already `ACTIVE` and the platform wants the app to navigate to a new [Navigation Intent](../intents/navigation.md) |
+| Method         | Description                                                                                                                              |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `activate()`   | Called when the platform is ready to move the app into the `ACTIVE` state. A/V resources may be allocated.                               |
+| `deactivate()` | Called when the platform is ready to move the app out of the `ACTIVE` state and into `RUNNING` to deallocate any A/V decoders.           |
+| `navigate()`   | Called when an app is already `ACTIVE` and the platform wants the app to navigate to a new [Navigation Intent](../intents/navigation.md) |
 
 ### 8.3. Sleepable Interface
 The `Sleepable` interface is implemented by Apps that are able to handle being put to sleep and then woken at a later point in time.
