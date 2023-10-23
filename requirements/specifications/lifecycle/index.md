@@ -1,33 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # App Lifecycle Management
 
 Document Status: Working Draft  
@@ -98,26 +68,25 @@ a compatible process so that it resumes where it left off.
   - [2.5. Sleeping](#25-sleeping)
 - [3. Getting the current state](#3-getting-the-current-state)
 - [4. Lifecycle State Transitions](#4-lifecycle-state-transitions)
-  - [4.2. Initializing an app](#42-initializing-an-app)
-  - [4.3. Activating an app](#43-activating-an-app)
-  - [4.4. Deactivating an app](#44-deactivating-an-app)
-  - [4.5. Suspending an app](#45-suspending-an-app)
-  - [4.6. Resuming an app](#46-resuming-an-app)
-  - [4.7. Putting an app to sleep](#47-putting-an-app-to-sleep)
-  - [4.8. Waking an app from sleep](#48-waking-an-app-from-sleep)
-  - [4.9. Destroying an app](#49-destroying-an-app)
-  - [4.10. Terminating an app](#410-terminating-an-app)
-- [6. Activity Navigation](#6-activity-navigation)
-- [7. Launch Parameters](#7-launch-parameters)
-- [8. Core SDK APIs](#8-core-sdk-apis)
-  - [8.1. Application Interface](#81-application-interface)
-  - [8.2. Activity Interface](#82-activity-interface)
-  - [8.3. Sleepable Interface](#83-sleepable-interface)
-  - [8.4. Example App](#84-example-app)
-  - [8.5. Ready](#85-ready)
-  - [8.6. Close](#86-close)
-  - [8.7. State](#87-state)
-- [9. Lifecycle Configuration](#9-lifecycle-configuration)
+  - [4.1. Initializing an app](#41-initializing-an-app)
+  - [4.2. Activating an app](#42-activating-an-app)
+  - [4.3. Deactivating an app](#43-deactivating-an-app)
+  - [4.4. Suspending an app](#44-suspending-an-app)
+  - [4.5. Resuming an app](#45-resuming-an-app)
+  - [4.6. Putting an app to sleep](#46-putting-an-app-to-sleep)
+  - [4.7. Waking an app from sleep](#47-waking-an-app-from-sleep)
+  - [4.8. Destroying an app](#48-destroying-an-app)
+  - [4.9. Terminating an app](#49-terminating-an-app)
+- [6. Create Parameters](#6-create-parameters)
+- [7. Core SDK APIs](#7-core-sdk-apis)
+  - [7.1. Application Interface](#71-application-interface)
+  - [7.2. Activatible Interface](#72-activatible-interface)
+  - [7.3. Sleepable Interface](#73-sleepable-interface)
+  - [7.4. Example App](#74-example-app)
+  - [7.5. Ready](#75-ready)
+  - [7.6. Close](#76-close)
+  - [7.7. State](#77-state)
+- [8. Lifecycle Configuration](#8-lifecycle-configuration)
 
 
 ## 2. Lifecycle States
@@ -132,35 +101,6 @@ transition methods, see [Transitions](#4-lifecycle-state-transitions), for
 more on this.  
 
 ![Lifecycle States](../../images/specifications/lifecycle/lifecycle-states.png) 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
 
 |              | CPU | RAM | F/S | Net | GFX | SFC | A/V | Description                                                                |
 |--------------|-----|-----|-----|-----|-----|-----|-----|----------------------------------------------------------------------------|
@@ -202,7 +142,7 @@ Apps in this state **MUST NOT** have access to the audio-video decoder.
 
 Apps in this state **MUST NOT** use the media pipeline.  
 
-See [Initializing an app](#42-initializing-an-app) for more information.  
+See [Initializing an app](#41-initializing-an-app) for more information.  
 
 ### 2.2. Running
 
@@ -387,7 +327,7 @@ This includes:
 By providing an implementation of the  
 `xrn:firebolt:capability:lifecycle:application` interface, an app can  
 influence how resources are managed during these state transitions. See  
-[Application Interface](#81-application-interface) for more info.  
+[Application Interface](#71-application-interface) for more info.  
 
 User-facing apps **MUST** implement the `Activity` interface,  
 `xrn:firebolt:capability:lifecycle:activatible`.  
@@ -396,14 +336,13 @@ This includes:
 
  - `Application.activate()`
  - `Application.deactivate()`
- - `Application.navigate()`
-
+ 
 By providing an implementation of the  
 `xrn:firebolt:capability:lifecycle:activatible` interface, an app can  
 influence how resources are managed during these state transitions. See  
 [Activity Interface](#82-activity-interface) for more info.  
 
-### 4.2. Initializing an app
+### 4.1. Initializing an app
 Once an app is loaded it **MUST** be initialized immediately.  
 
 Initializing consists of three parts:  
@@ -442,7 +381,7 @@ Apps **MAY** load a limited set of global display resources, e.g. a global
 style sheet or a logo used throughout the experience, during initialization.  
 
 During the `create()` transition, apps **MUST** inspect the `params` parameter  
-for [Parameters](#7-launch-parameters) and prepare to fulfill the provided  
+for [Parameters](#6-create-parameters) and prepare to fulfill the provided  
 launch configuration.  
 
 Example Launch Parameters:  
@@ -450,10 +389,7 @@ Example Launch Parameters:
 ```json
 {
   "preload": true,
-  "launchMode"?: "running" | "suspend",
-  "privacy": {
-    "limitAdTracking": true
-  }
+  "preloadReason": "boot"
 }
 ```  
 
@@ -462,7 +398,7 @@ Example Launch Parameters:
 Once the `create` method returns the app **MUST** be immediately transitioned  
 to the `RUNNING` state.  
 
-### 4.3. Activating an app
+### 4.2. Activating an app
 
 Activating an app transitions it to the `ACTIVE` state so that it becomes part  
 of the user's experience.  
@@ -486,9 +422,9 @@ If the app is not loaded, then the platform **MUST** [load](undefined) it
 first.  
 
 If the app is not initialized, the platform **MUST**  
-[initialize](#42-initializing-an-app) it first.  
+[initialize](#41-initializing-an-app) it first.  
 
-If the app is suspended, then it **MUST** be [resumed](#46-resuming-an-app)  
+If the app is suspended, then it **MUST** be [resumed](#45-resuming-an-app)  
 first.  
 
 At this point, the app **MUST** be in the `RUNNING` state.  
@@ -530,7 +466,7 @@ loading screens in the app's UX.
 
 **TODO**: Discuss ^^  
 
-### 4.4. Deactivating an app
+### 4.3. Deactivating an app
 
 Closing an app transitions it to the `RUNNING` state, so that it is no longer  
 part of the user's experience.  
@@ -563,13 +499,13 @@ to complete, and the remainder of this section does not apply.
 
 If an app is already performing an `activate()` transition, the platform  
 **MUST** wait for the activate call to succeed or fail and then skip the  
-remaining [activation steps](#43-activating-an-app).  
+remaining [activation steps](#42-activating-an-app).  
 
-If an app is currently [initializing](#42-initializing-an-app), the platform  
+If an app is currently [initializing](#41-initializing-an-app), the platform  
 **MUST** wait for initialization to succeed or fail and then skip any  
 activation that may have been pending.  
 
-If an app is currently in a [destroy](#49-destroying-an-app) transition then  
+If an app is currently in a [destroy](#48-destroying-an-app) transition then  
 the app cannot be closed and the platform **MUST NOT** close it, and the  
 remainder of this section does not apply.  
 
@@ -596,7 +532,7 @@ decoders.
 The platform **MAY** begin to transition the app out of view as soon as  
 `deactivate()` is called.  
 
-### 4.5. Suspending an app
+### 4.4. Suspending an app
 
 Suspending an app transitions it to the `SUSPENDED` state, where it is no  
 longer allowed to use graphics composition, and is expected to consume less  
@@ -640,7 +576,7 @@ Since every app **MUST** provide the
 > moved to the `SUSPENDED` state. 
 > 
 > If the app times out or makes a `suspendError` call, then the app **MUST** 
-> be [destroyed](#49-destroying-an-app). 
+> be [destroyed](#48-destroying-an-app). 
 
 During the `suspend()` transition, the app:  
 
@@ -648,7 +584,7 @@ During the `suspend()` transition, the app:
 > 
 > **SHOULD** reduce memory usage, if possible. 
 
-### 4.6. Resuming an app
+### 4.5. Resuming an app
 
 Resuming an app allows it to reallocate graphics composition and reload any  
 resources it might have deallocated during `suspend()`.  
@@ -686,7 +622,7 @@ terminated.
 During the `resume()` transition, apps **SHOULD** reallocate graphics  
 composition and other necessary resources.  
 
-### 4.7. Putting an app to sleep
+### 4.6. Putting an app to sleep
 TBD  
 
 Firebolt apps that have permission to use the  
@@ -695,14 +631,14 @@ Firebolt apps that have permission to use the
 
 TODO: if you don't call provide, we won't do this.  
 
-### 4.8. Waking an app from sleep
+### 4.7. Waking an app from sleep
 TBD  
 
 Firebolt apps that have permission to use the  
 `xrn:firebolt:capability:lifecycle:sleepable` capability **MUST** implement  
 `Sleepable.wake()`.  
 
-### 4.9. Destroying an app
+### 4.8. Destroying an app
 
 Destroying an app transitions it out of memory, so that it is no longer using  
 resources on the device.  
@@ -734,7 +670,7 @@ Since every app **MUST** provide the
 > If the app times out or makes an `destroyError` call, then the app **MUST** 
 > be terminated. 
 
-### 4.10. Terminating an app
+### 4.9. Terminating an app
 
 Terminating an app removes it from memory without dispatching any state  
 changes.  
@@ -746,56 +682,23 @@ Terminating an app results in removing it from memory and all resources held by
   the app and it's container being freed up.  
 
 Platforms **MAY** terminate an app when needed but **SHOULD NOT** do this in  
-place of graceful [destroying](#49-destroying-an-app).  
+place of graceful [destroying](#48-destroying-an-app).  
 
-## 6. Activity Navigation
-Typically navigation is handled either when the app is activated, via the  
-`intent` parameter of the `activate` method, or by internal input within the  
-app.  
-
-There are other times when the platform needs to inform an app of a user's  
-intent to navigate when the app is already `ACTIVE`, e.g. when a voice  
-command is executed or a soft remote sends a message while the app is in  
-focus.  
-
-In these cases, the platform **MUST** call the `Activity.navigate` method of  
-the App, and pass the `intent`.  
-
-Within the `navigate()` method, the app **MUST** inspect the `intent` parameter 
-  and prepare to fulfill a specific [Navigation  
-Intent](../intents/navigation.md) for the app, which may include:  
-
- - Loading any metadata needed to display the user's intended content.
- - Performing any entitlement checks to decide whether to display a player or a purchase flow
- - Any other steps necesary to present content to the user quickly
-
-## 7. Launch Parameters
-The `LaunchParameters` type is an object with the following properties:  
+## 6. Create Parameters
+The `CreateParameters` type is an object with the following properties:  
 
 ```typescript
 type Parameters = {
   preload: boolean,
-  reason: "boot" | "restart"  // load-reason, preload-reason
-  privacy: {
-    limitAdTracking: boolean
-  }
+  preloadReason?: "boot" | "restart" | "user"
 }
 ```  
 
-// Parameters.initialization()  
-
-- suspended after app restart
-- suspended after power on
-- foreground after app start
-
-^^^ need to dicuss what we need in here, and also what to do w/ US-centric  
-stuff like 'limitAdTracking'  
-
-## 8. Core SDK APIs
+## 7. Core SDK APIs
 
 The following APIs are exposed by the Firebolt Core SDK.  
 
-### 8.1. Application Interface
+### 7.1. Application Interface
 The `Application` interface is implemented by Apps to provide resource  
 management around memory as an Application moves through the core lifecycle  
 states:  
@@ -822,27 +725,25 @@ interface Application {
 | `resume()`  | Called when the platform wants the app to reallocate its graphics surface and prepare to be potentially used.                                                                     |
 | `destroy()` | Called when the platform is ready to end the lifecycle session for the app. Only called once.                                                                                     |
 
-### 8.2. Activity Interface
-The `Activity` interface is implemented by Apps that provide user perceptible  
-experiences, e.g. visible, audible, or user input.  
+### 7.2. Activatible Interface
+The `Activatible` interface is implemented by Apps that provide user  
+perceptible experiences, e.g. visible, audible, or user input.  
 
 These types of apps require additional resource management  
 
 ```typescript
-interface Activity {
+interface Activatible {
   function activate(intent: NavigationIntent): Promise<void>;
   function deactivate(): Promise<void>;
-  function navigate(intent: NavigationIntent): Promise<void>;
 }
 ```  
 
-| Method         | Description                                                                                                                              |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `activate()`   | Called when the platform is ready to move the app into the `ACTIVE` state. A/V resources may be allocated.                               |
-| `deactivate()` | Called when the platform is ready to move the app out of the `ACTIVE` state and into `RUNNING` to deallocate any A/V decoders.           |
-| `navigate()`   | Called when an app is already `ACTIVE` and the platform wants the app to navigate to a new [Navigation Intent](../intents/navigation.md) |
+| Method         | Description                                                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `activate()`   | Called when the platform is ready to move the app into the `ACTIVE` state. A/V resources may be allocated.                     |
+| `deactivate()` | Called when the platform is ready to move the app out of the `ACTIVE` state and into `RUNNING` to deallocate any A/V decoders. |
 
-### 8.3. Sleepable Interface
+### 7.3. Sleepable Interface
 The `Sleepable` interface is implemented by Apps that are able to handle being  
 put to sleep and then woken at a later point in time.  
 
@@ -861,7 +762,7 @@ interface Sleepable {
 | `sleep()` | Called when the platform is ready to move the app into the `SLEEPING` state where it will no longer have access to the CPU.                           |
 | `wake()`  | Called when the platform is ready to move the app out of the `SLEEPING` state and into `SUSPENDED`. Network connections should be reestablished here. |
 
-### 8.4. Example App
+### 7.4. Example App
 
 Example:  
 
@@ -870,27 +771,17 @@ import { Lifecycle } from '@firebolt-js/sdk'
 
 class ExampleApplication implements Lifecycle.Application, Lifecycle.Activity {
 
-  async function create(params: LaunchParameters): void {
-    const limitTracking:boolean = params.limitAdTracking
+  async function create(params: CreateParameters): void {
   }
 
   async function activate(intent: NavigationIntent, session: ProviderSession): void {
     // reallocate A/V
-
-    // handle intent
-    return navigate(intent)
   }
 
   async function deactivate(): void {
     // free up MSE
     video.src = ""
     video.load()
-  }
-
-  async function navigate(intent: NavigationIntent): void {
-    if (intent.action === "playback") {
-      console.log("Deep link to playback of " + intent.data.entityId)
-    }
   }
 
   async function suspend(): void {
@@ -923,13 +814,13 @@ See the [Firebolt API
 Documentation](https://developer.comcast.com/firebolt/core/sdk/latest/api/)  
 for details around syntax, etc.  
 
-### 8.5. Ready
+### 7.5. Ready
 
 The Lifecycle.ready() API allows an app to notify the platform that it is  
 initialized and ready to be displayed to the end user. This method **MUST  
 NOT** be called more than once.  
 
-### 8.6. Close
+### 7.6. Close
 
 The Lifecycle.close() API allows an app to request that it be closed by the  
 platform.  
@@ -956,13 +847,13 @@ Platforms **MAY** prioritize apps to be destroyed based on the reason provided.
 since it may be an accidental RCU press, whereas an explicit user exit is  
 more likely to be intentional.  
 
-### 8.7. State
+### 7.7. State
 
 The Lifecycle.state() method provides convenient access to the current state,  
 and is implemented by the Core SDK listening to all state notifications. This 
   method **MUST NOT** be asynchronous.  
 
-## 9. Lifecycle Configuration
+## 8. Lifecycle Configuration
 
 In order to enable Firebolt Certification of a device's Lifecycle Management  
 features, the device **MUST** support the following configuration options, so 

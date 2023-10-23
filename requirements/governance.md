@@ -30,6 +30,8 @@
 
 
 
+
+
 # Requirements Governance
 This document outlines the governance model for the Firebolt&reg; Open-Source  
 Project, including the structure of an Advisory Board and Working Groups, as  
@@ -329,7 +331,11 @@ The Requirements Repository **MUST** be located at:
 
 
 
+
+
 [https://github.com/rdkcentral/firebolt-apis](https://github.com/rdkcentral/firebolt-apis) 
+ 
+ 
  
  
  

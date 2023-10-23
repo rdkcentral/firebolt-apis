@@ -57,7 +57,7 @@ function fixBrokenLinks(data, ref, files) {
     const slugs = getSlugs(data)
     const links = data.match(/\]\([^\)]*?\#[^\)]*?\)/gms)
 
-    links.map(l => l.slice(2, -1)).forEach(link => {
+    links && links.map(l => l.slice(2, -1)).forEach(link => {
         if (!slugs.find(s => s === link)) {
             const best = slugs.find(s => s.match(new RegExp(link.replace(/^\#[0-9]+/, '#[0-9]+')))) || slugs.find(s => s.startsWith(link.split('-')[0] + '-'))
             if (best) {
