@@ -84,11 +84,15 @@ function fixBrokenLinks(data, ref, files) {
     return data
 }
 
+/* TODO: 
+    - Newline at top bug
+    - Multiple spaces bug
+*/
 function wrapText(data) {
     const lines = data.split('\n')
     const maximum = 80
     let buffer = ''
-    let wrapped = ''
+    let wrapped = []
     let width = 0
     const block_regex = /^\s*?\>/
     const code_regex = /^\s*?```/
@@ -102,9 +106,9 @@ function wrapText(data) {
 
         // skip lists, tables, headers, and blanks
         if (code || line.match(/^\s*?\-/) || line.match(/^\s*?\|/) || line.match(/^\#+/) || line.match(/^\s*?$/)) {
-            buffer && (wrapped += '\n' + buffer)
+            buffer && (wrapped.push(buffer))
             buffer = ''
-            wrapped += '\n' + line
+            wrapped.push(line)
             width = 0
         }
         else {
@@ -118,7 +122,7 @@ function wrapText(data) {
                     width = 2
                 }
                 else if (!line.trim()) {
-                    buffer += '\n> \n>'
+                    buffer += '\n> \n> '
                     width = 2
                 }
             }
@@ -127,22 +131,24 @@ function wrapText(data) {
                 if (word.match(block_regex)) {
                     throw "Found > in line: " + line
                 }
-                let len = word.length + 1 // .replace(/\(.*?\)/g, '')
-                if (width + len > maximum) {
-                    buffer += '\n' + (quote ? '> ' : '') + word + ' '
-                    width = len + 2
-                }
-                else {
-                    buffer += word + ' '
-                    width += len
+                if (word && !word.match(/^\s+$/)) {
+                    let len = word.length + 1 // .replace(/\(.*?\)/g, '')
+                    if (width + len > maximum) {
+                        buffer += '\n' + (quote ? '> ' : '') + word + ' '
+                        width = len + 2
+                    }
+                    else {
+                        buffer += word + ' '
+                        width += len
+                    }
                 }
             })
         }
     })
 
-    buffer && (wrapped += '\n' + buffer)
+    buffer && (wrapped.push(buffer))
 
-    return wrapped
+    return wrapped.join('\n')
 }
 
 function prettyTables(data) {
