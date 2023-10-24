@@ -266,129 +266,8 @@ repository, and not along side of the code that is implementing them.
 
 The Requirements Repository **MUST** be located at: 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [https://github.com/rdkcentral/firebolt-apis](https://github.com/rdkcentral/firebolt-apis) 
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
 ### 4.10. Requirements Repository Branching
 
 The Requirements Repository **MUST** have the following branches: 
@@ -398,13 +277,13 @@ The Requirements Repository **MUST** have the following branches:
 | next     | For all approved specifications, even those that have not been released under a version. |
 | proposed | An experimental branch containing all proposed specifications.                           |
 
-
 Working Drafts and Candidate Specification Drafts **MUST** be housed in a named 
 feature branch in the Requirements Repository (see below). 
 
 Branches are merged based on the approval process: 
 
 ![Branching](./images/governance/branching.png) 
+
 ### 4.11. Sanctioned Forks
 
 From time to time an organization with access to the Requirements Repository 
@@ -426,6 +305,7 @@ approved APIs, which may be different than the API in the fork.
 The Advisory Board, and selected Working Group, **SHOULD** be willing to avoid 
 unnecessary changes to make migration as easy as possible, without 
 sacrificing the integrity of the Firebolt Open-Source Project’s goals. 
+
 ### 4.12. Release Versions
 
 The Advisory Board has ownership of when to do major, minor, and patch releases 

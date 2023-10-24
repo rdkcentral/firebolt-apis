@@ -41,6 +41,7 @@ whether or not the app has input, e.g. RCU, focus.
 **TODO**: let's clearly define focus. RCU, soft-keyboard, soft-remote, 
 
 As a property, this API also has an `onFocusChanged` notification. 
+
 ## 3. Display
 
 The `Presentation` module **MUST** have a `display` string property that 
@@ -55,9 +56,9 @@ returns one of the following values:
 | `loading`    | The platform is displaying a loading screen while the app prepares to be activated                                      | 
 | `none`       | The app does not have it's graphics surface attached to the screen                                                      |
 
-
 **TODO**: an app could be offscreen & scaled. If a scaled or thumbnailed app 
 goes offscreen, it's now offscreen. 
+
 ### 3.1. Display vs Lifecycle
 
 Each Lifecycle state only supports certain display states: 

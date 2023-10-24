@@ -19,7 +19,6 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 
 ## 1. Overview
 
-
 This document describes the requirements that Firebolt platforms and Firebolt 
 applications must fulfill when managing App Lifecycles. *App Lifecycle* 
 refers to the lifecycle of an individual app from the time it is 
@@ -101,26 +100,7 @@ transition methods, see [Transitions](#4-lifecycle-state-transitions), for
 more on this. 
 
 ![Lifecycle States](../../images/specifications/lifecycle/lifecycle-states.png) 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
   
- 
- 
- 
-
 |              | CPU | RAM | F/S | Net | GFX | SFC | A/V | Description                                                                |
 |--------------|-----|-----|-----|-----|-----|-----|-----|----------------------------------------------------------------------------|
 | Initializing | ✔   | ✔   | ✔   | ✔   |     |     |     | Started executing, but is not yet instantiated as a Firebolt app.          |
