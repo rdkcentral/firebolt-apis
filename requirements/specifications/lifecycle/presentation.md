@@ -45,6 +45,7 @@ As a property, this API also has an `onFocusChanged` notification.
 
 The `Presentation` module **MUST** have a `display` string property that 
 returns one of the following values: 
+
 | Value        | Description                                                                                                             |
 |--------------|-------------------------------------------------------------------------------------------------------------------------|
 | `fullscreen` | The app is displayed such that the dimensions fill the entire screen                                                    |
@@ -71,6 +72,7 @@ Each Lifecycle state only supports certain display states:
 
 See [Picture-in-picture](#6-picture-in-picture-video) and [Background 
 Audio](#5-background-audio) for exceptions to this. 
+
 ## 4. Overlay
 
 The `Presentation` module **MUST** have an `overlay` string property that 
