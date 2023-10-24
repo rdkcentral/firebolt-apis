@@ -1,3 +1,10 @@
+# [0.18.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.3...v0.18.0-next.4) (2023-10-24)
+
+
+### Bug Fixes
+
+* Account.session params to be mandatory ([#196](https://github.com/rdkcentral/firebolt-apis/issues/196)) ([fc5c638](https://github.com/rdkcentral/firebolt-apis/commit/fc5c63886d9b4eb30b32c1edc75f0f6afe80a827))
+
 # [0.18.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.2...v0.18.0-next.3) (2023-10-10)
 
 
