@@ -27,7 +27,7 @@ test("ClosedCaptions.enabled()", () => {
 
 test("ClosedCaptions.fontFamily()", () => {
   return ClosedCaptions.fontFamily().then((res: string) => {
-    expect(res).toEqual("monospace");
+    expect(res).toEqual("monospaced_sanserif");
   });
 });
 
@@ -87,7 +87,7 @@ test("ClosedCaptions.textAlignVertical()", () => {
 
 test("ClosedCaptions.listen()", () => {
   return ClosedCaptions.listen("fontColorChanged", () => {}).then(
-    (res: Number) => {
+    (res: number) => {
       expect(res > 0).toBe(true);
     }
   );
@@ -95,7 +95,7 @@ test("ClosedCaptions.listen()", () => {
 
 test("ClosedCaptions.once()", () => {
   return ClosedCaptions.once("fontColorChanged", () => {}).then(
-    (res: Number) => {
+    (res: number) => {
       expect(res > 0).toBe(true);
     }
   );
@@ -104,4 +104,19 @@ test("ClosedCaptions.once()", () => {
 test("clear", () => {
   const result = ClosedCaptions.clear(-1000);
   expect(result).toBeFalsy();
+});
+
+test("ClosedCaptions.setFontColor() with null", async () => {
+  const oldValue = await ClosedCaptions.fontColor()
+  return ClosedCaptions.fontColor(null).then(async (res: null) => {
+    expect(res).toBe(null);
+    const newValue = await ClosedCaptions.fontColor()
+    expect(newValue).toBe(null)
+  });
+});
+
+test("ClosedCaptions.setFontColor() with ffffff", () => {
+  return ClosedCaptions.fontColor("#ffffff").then((res: null) => {
+    expect(res).toBe(null);
+  });
 });

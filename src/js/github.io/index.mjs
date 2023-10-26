@@ -19,7 +19,7 @@ const parsedArgs = Object.assign(defaultOpts, nopt(knownOpts, shortHands, proces
 const signOff = () => console.log('\nThis has been a presentation of \x1b[38;5;202mFirebolt\x1b[0m \u{1F525} \u{1F529}\n')
 
 const packageJson = await readJson(process.env.npm_package_json)
-const version = channel(packageJson.version)
+const version = parsedArgs.argv.remain && parsedArgs.argv.remain[0] || channel(packageJson.version)
 const requirements = await readFiles(await readDir(path.join('.', 'requirements'), { recursive: true }), path.join('.', 'requirements'))
 
 const processFiles = (docs, base, dir, subdir, category, setType) => {
@@ -120,7 +120,7 @@ const capabilities = () => {
     
     const linkify = (method) => `[${method}](./${corerpc.methods.find(m => m.name === method) ? 'core' : 'manage'}/${method.split('.').shift()}/#${method.match(/\.on[A-Z]/) ? method.split('.').pop().charAt(2).toLowerCase() + method.split('.').pop().substring(3).toLowerCase() : method.split('.').pop().toLowerCase()})`
     Object.keys(capabilities).sort().forEach(c => {
-        manifest += `## \`${c}\`\n`
+        manifest += `### \`${c}\`\n`
 
         if (capabilities[c].uses.length) {
             manifest += '\n| Uses |\n'
