@@ -15,10 +15,10 @@ This document is both a style guide *and* a template for Firebolt Requirements
 Specifications. 
 
 The Overview section is a non-normative or informative introduction to the 
-contents and subject matter of the document. This is included to introduce 
-the reader to the overall problem, solution, and scope. No formal 
-requirements will be included here, as it will often be skipped by readers 
-that are already familiar with the document. 
+contents and subject matter of the document. This is included to introduce the 
+reader to the overall problem, solution, and scope. No formal requirements will 
+be included here, as it will often be skipped by readers that are already 
+familiar with the document. 
 
 Overviews can be as long or short as appropriate for the subject matter, and 
 should have a target audience ranging from technical product managers to 
@@ -51,16 +51,15 @@ only when, they appear in all capitals, as shown here.
 **NOTE**: This is a simple table of contents. It should include links to all 
 headers in the document, except for the top-level header (i.e. `# Title`). It 
 is recommended to use a Markdown plugin to generate this based on headers 
-ranging from level two to level six. Delete this note from your actual spec 
-:) 
+ranging from level two to level six. Delete this note from your actual spec :) 
 ## 3. Specification Style Requirements
 
 Firebolt uses method templates in order to code-generate consistent APIs. For 
 example, methods with the `"property"` tag only need to have the `getter` 
-editorially defined. The Firebolt OpenRPC tools will auto-generate the 
-`setter` and `subscriber` as OpenRPC methods with matching types. 
-Additionally, the Firebolt OpenRPC tools wil then code-generate the getter, 
-setter, and subscriber as APIs in various languages using templates. 
+editorially defined. The Firebolt OpenRPC tools will auto-generate the `setter` 
+and `subscriber` as OpenRPC methods with matching types. Additionally, the 
+Firebolt OpenRPC tools wil then code-generate the getter, setter, and 
+subscriber as APIs in various languages using templates. 
 
 This enables both consistent APIs (all properties have a recongnizable pattern) 
 and consistent SDK implementation, which reduces the code that needs to be 
@@ -73,8 +72,8 @@ separated with '.'
 Module and method names, as well as constants **MUST** be in monospace font, 
 e.g. the `Foo` module **MUST** have a `bar` method that returns `true`. Specs 
 should use JavaScript notation for any code examples if the spec is not 
-targeting another specific language binding, e.g. a spec about Event 
-listeners in C++ would use C++ syntax. 
+targeting another specific language binding, e.g. a spec about Event listeners 
+in C++ would use C++ syntax. 
 
 String constants and values **MUST** be wrapped in quotes for clarity, e.g. 
 `"Hello World"`. 
@@ -122,23 +121,23 @@ to have a level of consistency across APIs.
 
 If a Firebolt method is specified such that it requires a non-existant 
 template, then a new Requirements Specification **MUST** be written and 
-referenced by the specification that inspired it. Method templates **MUST** 
-be designed with re-use in mind. 
+referenced by the specification that inspired it. Method templates **MUST** be 
+designed with re-use in mind. 
 ## 4. Example Section
 
 A section describes group of closely related features. Many specifications have 
 only one section, however, more complicated specifications may have many. The 
-first paragraph of a section is typically a non-normative introduction to 
-that section, and therefor does not contain any formal requirements. 
+first paragraph of a section is typically a non-normative introduction to that 
+section, and therefor does not contain any formal requirements. 
 ### 4.1. Example Feature
 
 Each feature under a section will have it's own heading. Non-normative 
 introductions to features are not typically needed, as the reader is ready to 
 get into requirements at this point. It is recommended that all Feature 
 headings under each Section contain only sentences or short paragraphs with 
-formal requirements, e.g. **MUST**, **SHOULD**, **MAY**, **MUST** NOT, 
-**SHOULD NOT**, etc. These sentences should be separated by blank lines for 
-readability, e.g.: 
+formal requirements, e.g. **MUST**, **SHOULD**, **MAY**, **MUST** NOT, **SHOULD 
+NOT**, etc. These sentences should be separated by blank lines for readability, 
+e.g.: 
 
 This requirement **MUST** be satisifed. 
 

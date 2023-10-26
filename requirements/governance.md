@@ -39,8 +39,8 @@ Requirements Specifications and Architectural Decision Records.
 
 The goal of the Firebolt Open-Source Project is to provide a 
 Distributor-configurable set of integration APIs and functional requirements 
-for those APIs so that Apps can integrate with the APIs once and run their 
-app on every Firebolt platform (regardless of distributor) consistently. 
+for those APIs so that Apps can integrate with the APIs once and run their app 
+on every Firebolt platform (regardless of distributor) consistently. 
 
 Specifically, Firebolt provides: 
  - Write Apps once, run on all Firebolt distributors
@@ -63,13 +63,13 @@ While enabling Distributors to:
 ## 4. Governance
 
 The Firebolt Open-Source Project is governed by an Advisory Board. The purpose 
-of the Advisory Board is to ensure that each major, minor, and patch version 
-of the Firebolt Requirements is aligned with the goals of the Firebolt 
-Open-Source Project. 
+of the Advisory Board is to ensure that each major, minor, and patch version of 
+the Firebolt Requirements is aligned with the goals of the Firebolt Open-Source 
+Project. 
 
 The Firebolt Requirements are the collection of all Requirements Specifications 
-and all Architectural Decision Records that are ratified by the Advisory 
-Board (and contained in this repository). 
+and all Architectural Decision Records that are ratified by the Advisory Board 
+(and contained in this repository). 
 ### 4.1. Scope
 
 This document describes the governance model for the following components: 
@@ -80,10 +80,9 @@ This document describes the governance model for the following components:
 ### 4.2. Firebolt Version
 
 A Firebolt Version is a snapshot of the Firebolt Requirements that has been 
-ratified as an official release of the requirements. Note that the 
-requirements are decoupled from any implementation of those requirements, and 
-iterations to the requirements will occur with input from any teams 
-implementing them. 
+ratified as an official release of the requirements. Note that the requirements 
+are decoupled from any implementation of those requirements, and iterations to 
+the requirements will occur with input from any teams implementing them. 
 
 Firebolt Versions **MUST** follow Semantic Versioning. 
 ### 4.3. Advisory Board
@@ -118,8 +117,8 @@ spanning technical and product experts. Further recommendations on working
 group composition are left to the Advisory Board. 
 
 As new features are prioritized, Working Groups should be formed to gather and 
-document requirements for those features. Working groups may be self-forming 
-or selected by the Advisory Board, but all working groups must have their 
+document requirements for those features. Working groups may be self-forming or 
+selected by the Advisory Board, but all working groups must have their 
 membership reviewed and approved by the board to ensure that they are well 
 balanced. 
 
@@ -132,16 +131,16 @@ to the Advisory Board
 
 A Requirements Specification includes all details necessary for multiple, 
 disassociated teams to build a consistent implementation of a feature, 
-including API signatures, validation, and functionality, as well as 
-functional and behavioral requirements of the feature that are not directly 
-exposed by an API. 
+including API signatures, validation, and functionality, as well as functional 
+and behavioral requirements of the feature that are not directly exposed by an 
+API. 
 
 Requirements and APIs may be targeted towards traditional 3rd party apps, as 
 well as more foundational 1st party apps. 
 
 The level of detail in an acceptable Requirements Specification should be such 
-that any App should run consistently on any implementation of the feature 
-that is based on the Specification. 
+that any App should run consistently on any implementation of the feature that 
+is based on the Specification. 
 
 Requirements Specifications are written using the [IETF Best Common Practice 
 14](https://www.rfc-editor.org/rfc/rfc2119.txt) and should include the 
@@ -155,23 +154,22 @@ interpreted as described in [BCP
 only when, they appear in all capitals, as shown here. 
 
 Requirements Specification move through several [stages](#48-approval-stages) 
-from being a draft, to being an official versioned requirements 
-specification. 
+from being a draft, to being an official versioned requirements specification. 
 ### 4.7. Architectural Decision Record
 
 An Architectural Decision Record includes all details necessary to ensure that 
-Firebolt Requirements are fulfilled with an architecturally sound design. 
-This is often used in cases where listing out explicit requirements, e.g. 
+Firebolt Requirements are fulfilled with an architecturally sound design. This 
+is often used in cases where listing out explicit requirements, e.g. 
 performance or operational requirements, is not possible or realistic, e.g. 
 Requiring use of a well-known open source component to fulfill some aspect of 
 the platform, or requiring adherence to a high level modular breakdown of 
 concerns to keep platform maintenance manageable. 
 
 Since ADRs included in the Firebolt Requirements **MUST** be adhered to, not 
-every architectural decision made in order to fulfill the Firebolt 
-Requirements needs to have a formal ADR in the Firebolt Requirements 
-repository. It is up to the Advisory Board which ADRs warrent a formal 
-inclusion in the Firebolt Requirements. 
+every architectural decision made in order to fulfill the Firebolt Requirements 
+needs to have a formal ADR in the Firebolt Requirements repository. It is up to 
+the Advisory Board which ADRs warrent a formal inclusion in the Firebolt 
+Requirements. 
 
 ADRs move through the same [stages](#48-approval-stages) as Requirements 
 Specifications. 
@@ -193,8 +191,8 @@ Artifacts:
 
 Note that a Draft **MUST** not be committed to any public location, e.g. the 
 Requirements Repository, because it has not yet been reviewed by the Working 
-Group and could mistakenly contain sensative, private information related to 
-a specific Firebolt distributor. 
+Group and could mistakenly contain sensative, private information related to a 
+specific Firebolt distributor. 
 #### 4.8.2. Working Draft
 
 A version of the requirements specification that is approved by the Working 
@@ -212,8 +210,8 @@ Artifacts:
 
 A version of the requirements specification that is approved by the Working 
 Group for proof-of-concept implementations and peer-review by the larger 
-Community. Candidate Specifications have been through significant review by 
-the Working Group and are ready for feedback from the larger community. 
+Community. Candidate Specifications have been through significant review by the 
+Working Group and are ready for feedback from the larger community. 
 
 Once this is published to the peer group for review, they’ll have two weeks to 
 add their comments, make amendments requests, etc. 
@@ -250,8 +248,8 @@ Artifacts:
 #### 4.8.6. Specification
 
 An official versioned stage of the requirements specification that is done and 
-will not change until a future version is created. This version may be used 
-for official production implementations. 
+will not change until a future version is created. This version may be used for 
+official production implementations. 
 
 Artifacts: 
  - Markdown specification merged into the #main branch of the Requirements Repository
@@ -303,8 +301,8 @@ The organization requesting the fork **MUST** be willing to migrate to the
 approved APIs, which may be different than the API in the fork. 
 
 The Advisory Board, and selected Working Group, **SHOULD** be willing to avoid 
-unnecessary changes to make migration as easy as possible, without 
-sacrificing the integrity of the Firebolt Open-Source Project’s goals. 
+unnecessary changes to make migration as easy as possible, without sacrificing 
+the integrity of the Firebolt Open-Source Project’s goals. 
 
 ### 4.12. Release Versions
 

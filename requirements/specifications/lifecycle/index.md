@@ -20,10 +20,9 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 ## 1. Overview
 
 This document describes the requirements that Firebolt platforms and Firebolt 
-applications must fulfill when managing App Lifecycles. *App Lifecycle* 
-refers to the lifecycle of an individual app from the time it is 
-launched/loaded to the time it is destroyed and all runtime resources are 
-discarded. 
+applications must fulfill when managing App Lifecycles. *App Lifecycle* refers 
+to the lifecycle of an individual app from the time it is launched/loaded to 
+the time it is destroyed and all runtime resources are discarded. 
 
 *Initializing* an app refers to fetching the initial resources, e.g. the 
 app-manifest and index.html, and loading them into a container capable of 
@@ -96,8 +95,8 @@ A Firebolt app, once running, **MUST** be in one of several states and **MUST
 NOT** be in more than one state at a time. 
 
 As an app changes states the platform will invoke specific app-provided 
-transition methods, see [Transitions](#4-lifecycle-state-transitions), for 
-more on this. 
+transition methods, see [Transitions](#4-lifecycle-state-transitions), for more 
+on this. 
 
 ![Lifecycle States](../../images/specifications/lifecycle/lifecycle-states.png) 
   
@@ -129,8 +128,8 @@ This is the initial state an app exists from the moment it starts receiving CPU
 cycles. 
 
 When an app starts running it **MUST** initialize the Firebolt SDK as quickly 
-as possible and then wait for the `Application.create()` interface to be 
-called before doing further setup. 
+as possible and then wait for the `Application.create()` interface to be called 
+before doing further setup. 
 
 Apps in this state **MUST NOT** have a graphics surface allocated yet. 
 
@@ -150,8 +149,7 @@ This state allows an app to be running and ready to go, but not actively part
 of the user-perceptible experience. 
 
 Running apps can execute code, but are not [Presented](./presentation.md) to 
-the user, do not receive any input from RCUs, and cannot use the video 
-decoder. 
+the user, do not receive any input from RCUs, and cannot use the video decoder. 
 
 Apps in this state **MUST** have access to the graphics surface. 
 
@@ -202,8 +200,7 @@ When an app transitions to this state, the platform **MUST** dispatch the
 This state allows an app to remain in memory and consume fewer resources. 
 
 Suspended apps can execute code, but are not [Presented](./presentation.md) to 
-the user, do not receive any input from RCUs, and cannot use the video 
-decoder. 
+the user, do not receive any input from RCUs, and cannot use the video decoder. 
 
 Apps in this state **MUST NOT** have a graphics surface allocated any longer. 
 It **MUST** have been deallocated in the `suspend()` transition. 
@@ -228,9 +225,9 @@ memory, and resume in the same state.
 
 *If* a platform does not support the 
 `xrn:firebolt:capability:lifecycle:sleepable` capability, then the following 
-requirements **MUST NOT** be fulfilled, even partially. A platform **MUST 
-NOT** use the APIs documented here to implement an alternate, non-compliant 
-version of the app sleeping feature. 
+requirements **MUST NOT** be fulfilled, even partially. A platform **MUST NOT** 
+use the APIs documented here to implement an alternate, non-compliant version 
+of the app sleeping feature. 
 
 *If* a platform supports the `xrn:firebolt:capability:lifecycle:sleepable` 
 capability, then the following requirements **MUST** be fulfilled. 
@@ -252,8 +249,8 @@ current lifecycle state of the app.
 
 If an app is in a transtition from one state to another, then it **MUST** be 
 considered in the state *before* the transition until such time as the app's 
-implementation of the [transition](#4-lifecycle-state-transitions) has 
-returned and the platfrom has finshed the transition. 
+implementation of the [transition](#4-lifecycle-state-transitions) has returned 
+and the platfrom has finshed the transition. 
 
 The `state` API **MUST** have a corresponding `onStateChanged` notification. 
 
@@ -325,9 +322,9 @@ This includes:
 
 
 By providing an implementation of the 
-`xrn:firebolt:capability:lifecycle:application` interface, an app can 
-influence how resources are managed during these state transitions. See 
-[Application Interface](#71-application-interface) for more info. 
+`xrn:firebolt:capability:lifecycle:application` interface, an app can influence 
+how resources are managed during these state transitions. See [Application 
+Interface](#71-application-interface) for more info. 
 
 User-facing apps **MUST** implement the `Activity` interface, 
 `xrn:firebolt:capability:lifecycle:activatible`. 
@@ -338,9 +335,9 @@ This includes:
  
 
 By providing an implementation of the 
-`xrn:firebolt:capability:lifecycle:activatible` interface, an app can 
-influence how resources are managed during these state transitions. See 
-[Activity Interface](#82-activity-interface) for more info. 
+`xrn:firebolt:capability:lifecycle:activatible` interface, an app can influence 
+how resources are managed during these state transitions. See [Activity 
+Interface](#82-activity-interface) for more info. 
 ### 4.1. Initializing an app
 
 Once an app is loaded it **MUST** be initialized immediately. 
@@ -352,8 +349,8 @@ Initializing consists of three parts:
 
 
 If an app does not provide the `xrn:firebolt:capability:lifecycle:application` 
-capability within `initializeTimeout` milliseconds, then the platform 
-**MUST** terminate the app. 
+capability within `initializeTimeout` milliseconds, then the platform **MUST** 
+terminate the app. 
 
 Otherwise, the platform **MUST** call the app's implementation of 
 `Application.create()`: 
@@ -371,8 +368,8 @@ Otherwise, the platform **MUST** call the app's implementation of
 
 Apps **SHOULD** set up any Firebolt event listeners either before calling 
 `Lifecycle.provide` or during `create()`, since the platform will wait until 
-the app is ready before dispatching many critical events such as Lifecycle 
-and Presentation events. 
+the app is ready before dispatching many critical events such as Lifecycle and 
+Presentation events. 
 
 Apps **SHOULD** acquire any important authentication needed for the app to 
 function during initialization. 
@@ -414,9 +411,8 @@ To activate an app, platforms **MUST** use the following process.
 
 If the app is already in the `ACTIVE` state, then it is already activated and 
 there is no need to do anything else. The platform **MUST NOT** dispatch any 
-*additional* lifecycle notifications when attempting to activate an app that 
-is already in the active state and the remainder of this section does not 
-apply. 
+*additional* lifecycle notifications when attempting to activate an app that is 
+already in the active state and the remainder of this section does not apply. 
 
 If the app is not loaded, then the platform **MUST** [load](undefined) it 
 first. 
@@ -467,9 +463,9 @@ activation which may include:
 
 
 The platform will display a loading screen for the entire duration of the 
-`activate()` callback, and apps **SHOULD** do whatever is necessary to 
-present the user with content that fulfills the `intent` without additional 
-loading screens in the app's UX. 
+`activate()` callback, and apps **SHOULD** do whatever is necessary to present 
+the user with content that fulfills the `intent` without additional loading 
+screens in the app's UX. 
 
 **TODO**: Discuss ^^ 
 ### 4.3. Deactivating an app
@@ -491,9 +487,9 @@ To close an app, platforms **MUST** use the following process.
 
 If an app is already in the `RUNNING`, `SUSPENDED`, or `SLEEPING` state, then 
 it is already closed and there is no need to do anything else. The platform 
-**MUST NOT** dispatch any *additional* lifecycle notifications when 
-attempting to close an app that is already in the `RUNNING` state and the 
-remainder of this section does not apply. 
+**MUST NOT** dispatch any *additional* lifecycle notifications when attempting 
+to close an app that is already in the `RUNNING` state and the remainder of 
+this section does not apply. 
 
 **TODO**: list out all possible transition "interuptions" and make sure they 
 are described in this doc. 
@@ -501,8 +497,8 @@ are described in this doc.
 If an app is in the `initializing` state, then it is not 
 
 If an app is already performing a `deactivate()` transition, the platform 
-**MUST** ignore the new attempt to close the app, allow the pending closure 
-to complete, and the remainder of this section does not apply. 
+**MUST** ignore the new attempt to close the app, allow the pending closure to 
+complete, and the remainder of this section does not apply. 
 
 If an app is already performing an `activate()` transition, the platform 
 **MUST** wait for the activate call to succeed or fail and then skip the 
@@ -542,12 +538,12 @@ The platform **MAY** begin to transition the app out of view as soon as
 
 
 Suspending an app transitions it to the `SUSPENDED` state, where it is no 
-longer allowed to use graphics composition, and is expected to consume less 
-CPU and RAM. 
+longer allowed to use graphics composition, and is expected to consume less CPU 
+and RAM. 
 
 The platform may suspend apps in order to free up memory, or for any number of 
-reasons that are out of scope for this document. However, it is the 
-platform's decision to suspend an app, not the app itself. 
+reasons that are out of scope for this document. However, it is the platform's 
+decision to suspend an app, not the app itself. 
 
 To suspend an app, platforms **MUST** use the following process. 
 
@@ -556,14 +552,14 @@ If an app is in the `ACTIVE` state then it cannot yet be suspended, and
 
 If an app is in the `SLEEPING` state then it cannot be suspended and there is 
 no need to do anything else. The platform **MUST NOT** dispatch any 
-*additional* lifecycle notifications when attempting to suspend an app that 
-is already in the `SLEEPING` state and the remainder of this section does not 
+*additional* lifecycle notifications when attempting to suspend an app that is 
+already in the `SLEEPING` state and the remainder of this section does not 
 apply. 
 
 If an app is already in the `SUSPENDED` state, then it is already suspended and 
 there is no need to do anything else. The platform **MUST NOT** dispatch any 
-*additional* lifecycle notifications when attempting to suspend an app that 
-is already in the suspended state and the remainder of this section does not 
+*additional* lifecycle notifications when attempting to suspend an app that is 
+already in the suspended state and the remainder of this section does not 
 apply. 
 
 If the app is not loaded, or is not in the `RUNNING` state, then it cannot be 
@@ -604,8 +600,7 @@ To resume an app, platforms **MUST** use the following process.
 If an app is not in the `SUSPENDED` state, then it cannot be resumed and there 
 is no need to do anything else. The platform **MUST NOT** dispatch any 
 *additional* lifecycle notifications when attempting to resume an app that is 
-not in the `SUSPENDED` state and the remainder of this section does not 
-apply. 
+not in the `SUSPENDED` state and the remainder of this section does not apply. 
 
 At this point, the app **MUST** be in the `SUSPENDED` state. 
 
@@ -657,9 +652,9 @@ To destroy an app, platforms **MUST** use the following process.
 
 If an app is not in the `RUNNING` state, then it cannot be destroyed and there 
 is no need to do anything else. The platform **MUST NOT** dispatch any 
-*additional* lifecycle notifications when attempting to destroy an app that 
-is not in the `RUNNING` state and the remainder of this section does not need 
-to happen. 
+*additional* lifecycle notifications when attempting to destroy an app that is 
+not in the `RUNNING` state and the remainder of this section does not need to 
+happen. 
 
 At this point, the app **MUST** be in the `RUNNING` state. 
 
@@ -818,14 +813,14 @@ Lifecycle.provide([
 class. 
 
 See the [Firebolt API 
-Documentation](https://developer.comcast.com/firebolt/core/sdk/latest/api/) 
-for details around syntax, etc. 
+Documentation](https://developer.comcast.com/firebolt/core/sdk/latest/api/) for 
+details around syntax, etc. 
 ### 7.5. Ready
 
 
 The Lifecycle.ready() API allows an app to notify the platform that it is 
-initialized and ready to be displayed to the end user. This method **MUST 
-NOT** be called more than once. 
+initialized and ready to be displayed to the end user. This method **MUST NOT** 
+be called more than once. 
 ### 7.6. Close
 
 
@@ -842,17 +837,17 @@ is requesting to be closed:
 
 
 Platforms generally **SHOULD** respect this call and move the app to the 
-running state, but there may be edge cases where this is not possible, e.g. 
-the app is considered to be the default experience for the device, and 
-closing it would leave no other UX present. 
+running state, but there may be edge cases where this is not possible, e.g. the 
+app is considered to be the default experience for the device, and closing it 
+would leave no other UX present. 
 
 When the request to close is not respected, the Lifecycle.close() method 
 **MUST** return an error. 
 
 Platforms **MAY** prioritize apps to be destroyed based on the reason provided. 
 For example, apps closed due to the RCU are less likely to be destroyed since 
-it may be an accidental RCU press, whereas an explicit user exit is more 
-likely to be intentional. 
+it may be an accidental RCU press, whereas an explicit user exit is more likely 
+to be intentional. 
 ### 7.7. State
 
 

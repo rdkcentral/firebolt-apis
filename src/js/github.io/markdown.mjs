@@ -35,9 +35,19 @@ const processFiles = (docs) => {
             docs[ref] = data
         }
     })
+
+    // do external links after all local links are fixed
+    Object.keys(docs).forEach(ref => {
+        if (ref.endsWith('.md')) {
+            docs[ref] = fixBrokenExternalLinks(docs[ref], ref, docs)
+        }
+    })
 }
 
-function fixBrokenLinks(data, ref, files) {
+function fixBrokenExternalLinks(data, ref, files) {
+    return fixBrokenLinks(data, ref, files, true)
+}
+function fixBrokenLinks(data, ref, files, external=false) {
 
     const getSlugs = (data) => {
         // find all headers
@@ -59,13 +69,16 @@ function fixBrokenLinks(data, ref, files) {
 
     links && links.map(l => l.slice(2, -1)).forEach(link => {
         if (!slugs.find(s => s === link)) {
-            const best = slugs.find(s => s.match(new RegExp(link.replace(/^\#[0-9]+/, '#[0-9]+')))) || slugs.find(s => s.startsWith(link.split('-')[0] + '-'))
-            if (best) {
-                console.log('Fixing broken link: (' + link + ') -> (' + best + ')')
-                data = data.replace('](' + link + ')', '](' + best + ')')    
+            // fix local links
+            if (!external) {
+                const best = slugs.find(s => s.match(new RegExp(link.replace(/^\#[0-9]+/, '#[0-9]+')))) || slugs.find(s => s.startsWith(link.split('-')[0] + '-'))
+                if (best) {
+                    console.log('Fixing broken link: (' + link + ') -> (' + best + ')')
+                    data = data.replace('](' + link + ')', '](' + best + ')')    
+                }    
             }
-            // TODO: fix bad slugs in links to other files
-            else if (link.match(/[^\)]+?\#[^\)]*?/gms)) {
+            // fix bad slugs in links to other files
+            else if (external && link.match(/[^\)]+?\#[^\)]*?/gms)) {
                 // external
                 const [file, slug] = link.split('#')
                 const fileRef = path.join(path.dirname(ref), file)
@@ -127,21 +140,33 @@ function wrapText(data) {
                 }
             }
 
-            line.split(/\s+/).forEach(word => {
+            let first = true
+            line.split(/\s+/).filter(word => word).forEach((word, i, words) => {
                 if (word.match(block_regex)) {
                     throw "Found > in line: " + line
                 }
+
+                if (i === 0) {
+                    console.error(`First word of line: ${word}`)
+                }
+                
                 if (word && !word.match(/^\s+$/)) {
                     let len = word.length + 1 // .replace(/\(.*?\)/g, '')
-                    if (width + len > maximum) {
+                    if (len > maximum && width === (quote ? 2 : 0)) {
+                        buffer += (quote ? '> ' : '') + word + ' '
+                        width = len + (quote ? 2 : 0)
+                    }
+                    else if (width + len > maximum) {
                         buffer += '\n' + (quote ? '> ' : '') + word + ' '
-                        width = len + 2
+                        width = len + (quote ? 2 : 0)
+//                        !first && (first = true)
                     }
                     else {
                         buffer += word + ' '
                         width += len
                     }
                 }
+                first = false
             })
         }
     })

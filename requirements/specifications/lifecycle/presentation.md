@@ -117,14 +117,13 @@ the active media pipeline.
 
 ## 7. Navigation
 Typically navigation is handled either when the app is activated, via the 
-`intent` parameter of the [`activate` 
-method](./index.md#42-activating-an-app), or by internal input within the 
-app. 
+`intent` parameter of the [`activate` method](./index.md#42-activating-an-app), 
+or by internal input within the app. 
 
 There are other times when the platform needs to inform an app of a user's 
-intent to navigate when the app is already `ACTIVE`, e.g. when a voice 
-command is executed or an RCU sends a reserved key to the platform that would 
-result in the app taking some action, e.g. going to its home screen. 
+intent to navigate when the app is already `ACTIVE`, e.g. when a voice command 
+is executed or an RCU sends a reserved key to the platform that would result in 
+the app taking some action, e.g. going to its home screen. 
 
 If the app provides the `xrn:firebolt:capability:presentation:navigation` 
 capability then the platform **MUST** call the `Navigation.navigateTo` method 
