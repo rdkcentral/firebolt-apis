@@ -22,7 +22,7 @@ The existing Firebolt `playback` intent does not meet these requirements. This d
 - [1. Overview](#1-overview)
 - [2. Table of Contents](#2-table-of-contents)
 - [3. Play Entity Intent](#3-play-entity-intent)
-  - [3.1. Playlist Entity Options](#31-playlist-entity-options)
+  - [3.1. Play Entity Options](#31-play-entity-options)
     - [3.1.1. Play First Option](#311-play-first-option)
 - [4. Play Query Intent](#4-play-query-intent)
   - [4.1. Play Options for Query](#41-play-options-for-query)
@@ -63,7 +63,7 @@ An example play-entity intent:
 
 Which would instruct an app to play the movie entity with id `movie/xyz`.
 
-### 3.1. Playlist Entity Options
+### 3.1. Play Entity Options
 
 #### 3.1.1. Play First Option
 For `play-entity` intents with an `entity` whose `entityType` is `"playlist"`, e.g.:
@@ -129,7 +129,7 @@ identify an entity from the playlist to play *before* the rest of the playlist, 
  }
  ```
 
-If `playFirstTrack` is provided and the playlist has at least that many items, then the item denoted by `playFirstTrack` **MUST** be moved from it's original position to the front of the playlist for.
+If `playFirstTrack` is provided and the playlist has at least that many items, then the item denoted by `playFirstTrack` **MUST** be moved from it's original position to the front of the playlist for playback.
 
 The options object **MUST NOT** have both a `playFirstId` and a `playFirstTrack` property.
 
