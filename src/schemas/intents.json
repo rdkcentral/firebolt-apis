@@ -655,36 +655,29 @@
         },
         "PlaylistEntity": {
             "title": "PlaylistEntity",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ProgramEntity"
-                },
-                {
-                    "description": "A Firebolt compliant representation of a Movie entity.",
-                    "title": "MovieEntity",
-                    "type": "object",
-                    "required": [
-                        "entityType",
-                        "entityId"
-                    ],
-                    "properties": {
-                        "entityType": {
-                            "const": "playlist"
-                        },
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
+            "description": "A Firebolt compliant representation of a Playlist entity.",
+            "title": "PlaylistEntity",
+            "type": "object",
+            "required": [
+                "entityType",
+                "entityId"
             ],
+            "properties": {
+                "entityType": {
+                    "const": "playlist"
+                },
+                "entityId": {
+                    "$ref": "#/definitions/Identifier"
+                },
+                "assetId": {
+                    "$ref": "#/definitions/Identifier"
+                },
+                "appContentData": {
+                    "type": "string",
+                    "maxLength": 256
+                }
+            },
+            "additionalProperties": false,
             "examples": [
                 {
                     "entityType": "playlist",
@@ -1058,7 +1051,12 @@
                                 }
                             },
                             "then": {
-                                "maxProperties": 1
+                                "type": "object",
+                                "properties": {
+                                    "options": {
+                                        "maxProperties": 1
+                                    }
+                                }
                             }
                         }
                     }
@@ -1130,9 +1128,14 @@
                                             "items": {
                                                 "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ProgramType"
                                             }
+                                        },
+                                        "musicTypes": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/MusicType"
+                                            }
                                         }
                                     },
-                                    "maxProperties": 1,
                                     "additionalProperties": false
                                 }
                             },
@@ -1144,39 +1147,6 @@
                                     "query",
                                     "options"
                                 ]
-                            },
-                            "if": {
-                                "properties": {
-                                    "entity": {
-                                        "type": "object",
-                                        "required": [
-                                            "entityType"
-                                        ],
-                                        "properties": {
-                                            "entityType": {
-                                                "const": "playlist"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "then": {
-                                "properties": {
-                                    "options": {
-                                        "type": "object",
-                                        "properties": {
-                                            "playFirstId": {
-                                                "type": "string"
-                                            },
-                                            "playFirstTrack": {
-                                                "type": "integer",
-                                                "minimum": 1
-                                            }
-                                        },
-                                        "maxProperties": 1,
-                                        "additionalProperties": false
-                                    }
-                                }
                             }
                         }
                     }
