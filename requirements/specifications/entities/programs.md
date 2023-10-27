@@ -1,18 +1,23 @@
 # Program Entities
 
-Document Status: Working Draft
+Document Status: Proposed Specification 
 
-See [Firebolt Requirements Governance](../../governance.md) for more info.
+See [Firebolt Requirements Governance](../../governance.md) for more info. 
 
-| Contributor    | Organization   |
-| -------------- | -------------- |
-| Seth Kelly            | Comcast            |
-| Jeremy LaCivita       | Comcast |
+| Contributor     | Organization |
+| --------------- | ------------ |
+| Seth Kelly      | Comcast      |
+| Jeremy LaCivita | Comcast      |
 
 ## 1. Overview
-TBD...
+TBD... 
 
-The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL NOT**", "**SHOULD**", "**SHOULD NOT**", "**RECOMMENDED**", "**NOT RECOMMENDED**", "**MAY**", and "**OPTIONAL**" in this document are to be interpreted as described in [BCP 14](https://www.rfc-editor.org/rfc/rfc2119.txt) [RFC2119] [RFC8174] when, and only when, they appear in all capitals, as shown here.
+The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
+NOT**", "**SHOULD**", "**SHOULD NOT**", "**RECOMMENDED**", "**NOT 
+RECOMMENDED**", "**MAY**", and "**OPTIONAL**" in this document are to be 
+interpreted as described in [BCP 
+14](https://www.rfc-editor.org/rfc/rfc2119.txt) [RFC2119] [RFC8174] when, and 
+only when, they appear in all capitals, as shown here. 
 
 ## 2. Table of Contents
 - [1. Overview](#1-overview)
@@ -22,11 +27,13 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 
 
 ## 3. Program Entities
-Every Program Entity **MUST** be an [Entity](./index.md#3-entities).
+Every Program Entity **MUST** be an [Entity](./index.md#3-entities). 
 
-Every Program Entity **MUST** have a `const` property named `entityType`, which **MUST** have the value `"program"`.
+Every Program Entity **MUST** have a `const` property named `entityType`, which 
+**MUST** have the value `"program"`. 
 
-Every Program Entity **MUST** have a `string` property named `programType`, whose value **MUST** be one of:
+Every Program Entity **MUST** have a `string` property named `programType`, 
+whose value **MUST** be one of: 
 
  - `"movie"`
  - `"episode"`
@@ -41,7 +48,7 @@ Every Program Entity **MUST** have a `string` property named `programType`, whos
  - `"musicVideo"`
  - `"minisode"`
 
-An example Program Entity:
+An example Program Entity: 
 
 ```json
 {
@@ -49,9 +56,9 @@ An example Program Entity:
     "programType": "movie",
     "entityId": "entity/abc"
 }
-```
+``` 
 
-Another example Entity:
+Another example Entity: 
 
 ```json
 {
@@ -59,14 +66,17 @@ Another example Entity:
     "programType": "episode",
     "entityId": "entity/xyz"
 }
-```
+``` 
 
 ### 3.1. Optional TV Entity Properties
-A Program Entity **MAY** have a `string` property named `seasonId` if its programType is `episode`, otherwise the entity **MUST NOT** have this property.
+A Program Entity **MAY** have a `string` property named `seasonId` if its 
+programType is `episode`, otherwise the entity **MUST NOT** have this property. 
 
-A Program Entity **MAY** have a `string` property named `seriesId` if its programType is either `episode` or `season`, otherwise the entity **MUST NOT** have this property.
+A Program Entity **MAY** have a `string` property named `seriesId` if its 
+programType is either `episode` or `season`, otherwise the entity **MUST NOT** 
+have this property. 
 
-An example TV Program Entity:
+An example TV Program Entity: 
 
 ```json
 {
@@ -76,9 +86,9 @@ An example TV Program Entity:
     "seriesId": "entity/hij",
     "seasonId": "entity/klm"
 }
-```
+``` 
 
-Another example TV Program Entity:
+Another example TV Program Entity: 
 
 ```json
 {
@@ -87,4 +97,4 @@ Another example TV Program Entity:
     "entityId": "entity/klm",
     "seriesId": "entity/hij"
 }
-```
+``` 
