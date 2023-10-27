@@ -1,3 +1,10 @@
+# [0.18.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.4...v0.18.0-next.5) (2023-10-27)
+
+
+### Features
+
+* Play Intent ([#151](https://github.com/rdkcentral/firebolt-apis/issues/151)) ([d1ddf3f](https://github.com/rdkcentral/firebolt-apis/commit/d1ddf3fb3b1f758315686ad2f6dc57c2b270f33a))
+
 # [0.18.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.3...v0.18.0-next.4) (2023-10-24)
 
 
