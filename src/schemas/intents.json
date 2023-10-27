@@ -177,13 +177,7 @@
                     ],
                     "properties": {
                         "source": {
-                            "type": "string",
-                            "enum": [
-                                "voice",
-                                "channel-lineup",
-                                "editorial",
-                                "device"
-                            ]
+                            "type": "string"
                         }
                     }
                 }
@@ -656,7 +650,6 @@
         "PlaylistEntity": {
             "title": "PlaylistEntity",
             "description": "A Firebolt compliant representation of a Playlist entity.",
-            "title": "PlaylistEntity",
             "type": "object",
             "required": [
                 "entityType",
@@ -1057,6 +1050,14 @@
                                         "maxProperties": 1
                                     }
                                 }
+                            },
+                            "else": {
+                                "type": "object",
+                                "properties": {
+                                    "options": {
+                                        "maxProperties": 0
+                                    }
+                                }                                
                             }
                         }
                     }
