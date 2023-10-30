@@ -1,3 +1,10 @@
+# [0.18.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.6...v0.18.0-next.7) (2023-10-30)
+
+
+### Bug Fixes
+
+* schemas version upgraded to 2.0.0-next.1 ([#199](https://github.com/rdkcentral/firebolt-apis/issues/199)) ([b0fb8cf](https://github.com/rdkcentral/firebolt-apis/commit/b0fb8cfbda6bbef055000dc9911f344ab9ee8771))
+
 # [0.18.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.5...v0.18.0-next.6) (2023-10-30)
 
 
