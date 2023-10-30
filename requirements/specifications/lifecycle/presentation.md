@@ -40,7 +40,7 @@ intents, which are like deep links from the platform.
   - [5.2. App-provided Loading Screen](#52-app-provided-loading-screen)
   - [5.3. When to use a loading screen](#53-when-to-use-a-loading-screen)
 - [6. Overlay](#6-overlay)
-  - [6.1. 4.1 Overlay vs Focus](#61-41-overlay-vs-focus)
+  - [6.1. Overlay vs Focus](#61-overlay-vs-focus)
 - [7. Navigation](#7-navigation)
 - [8. Background Audio](#8-background-audio)
 - [9. Picture-in-Picture Video](#9-picture-in-picture-video)
@@ -75,6 +75,7 @@ goes offscreen, it's now offscreen.
 ### 4.1. Display vs Lifecycle
 
 Each Lifecycle state only supports certain display states: 
+
 | Lifecycle      | Supported Displays                               |
 |----------------|--------------------------------------------------|
 | `initializing` | `none`, `loading`                                |
@@ -82,7 +83,6 @@ Each Lifecycle state only supports certain display states:
 | `running`      | `none`, `loading`                                |
 | `suspended`    | `none`, `loading`                                |
 | `sleeping`     | `none`, `loading`                                |
-
 
 See [Picture-in-picture](#9-picture-in-picture-video) and [Background 
 Audio](#8-background-audio) for exceptions to this. 
@@ -92,6 +92,12 @@ In order to manage user expectations, Firebolt platforms **MAY** display
 loading screens to end users when an app is going to be activated. Loading 
 Screens may be rendered either by the platform, the app, or both, depending on 
 Capability configuration. 
+
+Proposal:
+
+If an app has the `xrn:firebolt:capability:presentation:loading-screen` capability, it **MAY** be made visible any time from the beginning of activate() transition and **MUST** be made visible no later than the end.
+
+If an app does not have the `xrn:firebolt:capability:presentation:loading-screen` capability, it **MUST** be made visible at the end of the activate() transition.
 
 ### 5.1. Platform-provided Loading Screen
 
@@ -121,12 +127,14 @@ If an app provides the `xrn:firebolt:capability:presentation:loading-screen`
 capability, then the platform **MAY** invoke this capability in some 
 situations. 
 
-If the app is in the [Initializing](./index.md#51-initializing-an-app) state or 
-the create transition w/ `preload: false` then it **MUST** be made visible at 
-the end of the `Application.create()` transition. 
+**TODO**: this section only applies for app-provided loading screens...
 
-If the app is in any other state or transition, then it **MUST** be made 
-visible at the beginning of the `activate()` transition. 
+If the app is being explicitly launched by the user then it **MAY** be made visible either:
+
+-  as soon as the platform detects changes to the graphics plane
+-  at the beginning of the activate() transition
+ 
+In this case, it **MUST** be made visible no later than the end of the activate transition.
 
 The presentation state of the app **SHOULD NOT** be `none` at any time during 
 the `activate()` transition. 
@@ -142,18 +150,19 @@ Platforms **SHOULD** consider displaying a loading screen for:
 - app cold launch
 - app wake from sleep
 
+TODO: define all the various happy path & edge cases for this.
 
 ## 6. Overlay
-
 The `Presentation` module **MUST** have an `overlay` string property that 
-returns one of the following values: 
+informs the app when a focus-consuming overlay is present.
+
 | Value      | Description                                                                |
 |------------|----------------------------------------------------------------------------|
-| `partial`  | There is a vertical sidebar covering less than 33% of the app on one side. |
-| `blocking` | There is a significantly sized UX covering a majority of the app.          |
+| `partial`  | There is a overlay partially covering the app such that the content is still mostly viewable. |
+| `blocking` | There is a blocking overlay covering a majority of the app.          |
 | `none`     | There is nothing covering the app.                                         |
 
-### 6.1. 4.1 Overlay vs Focus
+### 6.1. Overlay vs Focus
 
 | Focus | Overlay                 |
 | ----- | ----------------------- |

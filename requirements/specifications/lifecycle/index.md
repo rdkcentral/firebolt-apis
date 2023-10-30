@@ -145,8 +145,8 @@ Apps in this state **MUST NOT** have access to the audio-video decoder.
 Apps in this state **MUST NOT** use the media pipeline. 
 
 See [Initializing an app](#51-initializing-an-app) for more information. 
-### 3.2. Running
 
+### 3.2. Running
 
 This state allows an app to be running and ready to go, but not actively part 
 of the user-perceptible experience. 
@@ -167,8 +167,8 @@ Apps in this state **MUST NOT** have access to the audio-video decoder.
 
 Apps in this state **MUST NOT** use the media pipeline and the platform 
 **MUST** tear down any Media Pipeline sessions associated with this app. 
-### 3.3. Active
 
+### 3.3. Active
 
 This state allows an app to be presented as part of the user-perceptible 
 experience. 
@@ -626,6 +626,7 @@ terminated.
 
 During the `resume()` transition, apps **SHOULD** reallocate graphics 
 composition and other necessary resources. 
+
 ### 5.6. Putting an app to sleep
 
 TBD 
@@ -691,13 +692,14 @@ place of graceful [destroying](#58-destroying-an-app).
 ## 6. Create Parameters
 
 The `CreateParameters` type is an object with the following properties: 
+
 ```typescript
 type CreateParameters = {
   preload: boolean,
   preloadReason?: "boot" | "restart" | "user"
 }
-
 ``` 
+
 ## 7. Core SDK APIs
 
 
