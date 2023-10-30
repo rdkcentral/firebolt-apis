@@ -93,11 +93,15 @@ loading screens to end users when an app is going to be activated. Loading
 Screens may be rendered either by the platform, the app, or both, depending on 
 Capability configuration. 
 
-Proposal:
+Proposal: 
 
-If an app has the `xrn:firebolt:capability:presentation:loading-screen` capability, it **MAY** be made visible any time from the beginning of activate() transition and **MUST** be made visible no later than the end.
+If an app has the `xrn:firebolt:capability:presentation:loading-screen` 
+capability, it **MAY** be made visible any time from the beginning of 
+activate() transition and **MUST** be made visible no later than the end. 
 
-If an app does not have the `xrn:firebolt:capability:presentation:loading-screen` capability, it **MUST** be made visible at the end of the activate() transition.
+If an app does not have the 
+`xrn:firebolt:capability:presentation:loading-screen` capability, it **MUST** 
+be made visible at the end of the activate() transition. 
 
 ### 5.1. Platform-provided Loading Screen
 
@@ -127,14 +131,16 @@ If an app provides the `xrn:firebolt:capability:presentation:loading-screen`
 capability, then the platform **MAY** invoke this capability in some 
 situations. 
 
-**TODO**: this section only applies for app-provided loading screens...
+**TODO**: this section only applies for app-provided loading screens... 
 
-If the app is being explicitly launched by the user then it **MAY** be made visible either:
+If the app is being explicitly launched by the user then it **MAY** be made 
+visible either: 
 
 -  as soon as the platform detects changes to the graphics plane
 -  at the beginning of the activate() transition
  
-In this case, it **MUST** be made visible no later than the end of the activate transition.
+In this case, it **MUST** be made visible no later than the end of the activate 
+transition. 
 
 The presentation state of the app **SHOULD NOT** be `none` at any time during 
 the `activate()` transition. 
@@ -150,17 +156,17 @@ Platforms **SHOULD** consider displaying a loading screen for:
 - app cold launch
 - app wake from sleep
 
-TODO: define all the various happy path & edge cases for this.
+TODO: define all the various happy path & edge cases for this. 
 
 ## 6. Overlay
 The `Presentation` module **MUST** have an `overlay` string property that 
-informs the app when a focus-consuming overlay is present.
+informs the app when a focus-consuming overlay is present. 
 
-| Value      | Description                                                                |
-|------------|----------------------------------------------------------------------------|
+| Value      | Description                                                                                   |
+|------------|-----------------------------------------------------------------------------------------------|
 | `partial`  | There is a overlay partially covering the app such that the content is still mostly viewable. |
-| `blocking` | There is a blocking overlay covering a majority of the app.          |
-| `none`     | There is nothing covering the app.                                         |
+| `blocking` | There is a blocking overlay covering a majority of the app.                                   |
+| `none`     | There is nothing covering the app.                                                            |
 
 ### 6.1. Overlay vs Focus
 
