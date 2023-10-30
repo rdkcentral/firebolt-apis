@@ -29,9 +29,9 @@ Apps that are presented to users by the platform may receive *navigation*
 intents, which are like deep links from the platform. 
 
 
-## 2. Table of Contents 
+## 2. Table of Contents
 - [1. Overview](#1-overview)
-- [2. Table of Contents](#2-table-of-contents-)
+- [2. Table of Contents](#2-table-of-contents)
 - [3. Focus](#3-focus)
 - [4. Display](#4-display)
   - [4.1. Display vs Lifecycle](#41-display-vs-lifecycle)
