@@ -1,3 +1,10 @@
+# [0.18.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.5...v0.18.0-next.6) (2023-10-30)
+
+
+### Bug Fixes
+
+* Permission schema with Capability as required ([74d9de9](https://github.com/rdkcentral/firebolt-apis/commit/74d9de9b125baffb415e11ba3888c1c464cf5b12))
+
 # [0.18.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.4...v0.18.0-next.5) (2023-10-27)
 
 
