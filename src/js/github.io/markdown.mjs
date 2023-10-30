@@ -145,10 +145,6 @@ function wrapText(data) {
                 if (word.match(block_regex)) {
                     throw "Found > in line: " + line
                 }
-
-                if (i === 0) {
-                    console.error(`First word of line: ${word}`)
-                }
                 
                 if (word && !word.match(/^\s+$/)) {
                     let len = word.length + 1 // .replace(/\(.*?\)/g, '')

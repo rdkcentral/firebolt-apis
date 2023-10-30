@@ -56,24 +56,27 @@ CPU cycles, which allows the platform to optimise memory consumption.
 
 *Waking* an app refers to copying a Sleeping app back into the memory space of 
 a compatible process so that it resumes where it left off. 
+
+## 2. Table of Contents
 - [1. Overview](#1-overview)
-- [2. Lifecycle States](#2-lifecycle-states)
-  - [2.1. Initializing](#21-initializing)
-  - [2.2. Running](#22-running)
-  - [2.3. Active](#23-active)
-  - [2.4. Suspended](#24-suspended)
-  - [2.5. Sleeping](#25-sleeping)
-- [3. Getting the current state](#3-getting-the-current-state)
-- [4. Lifecycle State Transitions](#4-lifecycle-state-transitions)
-  - [4.1. Initializing an app](#41-initializing-an-app)
-  - [4.2. Activating an app](#42-activating-an-app)
-  - [4.3. Deactivating an app](#43-deactivating-an-app)
-  - [4.4. Suspending an app](#44-suspending-an-app)
-  - [4.5. Resuming an app](#45-resuming-an-app)
-  - [4.6. Putting an app to sleep](#46-putting-an-app-to-sleep)
-  - [4.7. Waking an app from sleep](#47-waking-an-app-from-sleep)
-  - [4.8. Destroying an app](#48-destroying-an-app)
-  - [4.9. Terminating an app](#49-terminating-an-app)
+- [2. Table of Contents](#2-table-of-contents)
+- [3. Lifecycle States](#3-lifecycle-states)
+  - [3.1. Initializing](#31-initializing)
+  - [3.2. Running](#32-running)
+  - [3.3. Active](#33-active)
+  - [3.4. Suspended](#34-suspended)
+  - [3.5. Sleeping](#35-sleeping)
+- [4. Getting the current state](#4-getting-the-current-state)
+- [5. Lifecycle State Transitions](#5-lifecycle-state-transitions)
+  - [5.1. Initializing an app](#51-initializing-an-app)
+  - [5.2. Activating an app](#52-activating-an-app)
+  - [5.3. Deactivating an app](#53-deactivating-an-app)
+  - [5.4. Suspending an app](#54-suspending-an-app)
+  - [5.5. Resuming an app](#55-resuming-an-app)
+  - [5.6. Putting an app to sleep](#56-putting-an-app-to-sleep)
+  - [5.7. Waking an app from sleep](#57-waking-an-app-from-sleep)
+  - [5.8. Destroying an app](#58-destroying-an-app)
+  - [5.9. Terminating an app](#59-terminating-an-app)
 - [6. Create Parameters](#6-create-parameters)
 - [7. Core SDK APIs](#7-core-sdk-apis)
   - [7.1. Application Interface](#71-application-interface)
@@ -86,7 +89,7 @@ a compatible process so that it resumes where it left off.
 - [8. Lifecycle Configuration](#8-lifecycle-configuration)
 
 
-## 2. Lifecycle States
+## 3. Lifecycle States
 
 Firebolt platforms **MUST** support running one or more apps concurrently. The 
 platform **MUST** manage transition of apps from state to state. 
@@ -95,7 +98,7 @@ A Firebolt app, once running, **MUST** be in one of several states and **MUST
 NOT** be in more than one state at a time. 
 
 As an app changes states the platform will invoke specific app-provided 
-transition methods, see [Transitions](#4-lifecycle-state-transitions), for more 
+transition methods, see [Transitions](#5-lifecycle-state-transitions), for more 
 on this. 
 
 ![Lifecycle States](../../images/specifications/lifecycle/lifecycle-states.png) 
@@ -121,7 +124,7 @@ on this.
 | ✔   | Normal access           |
 | ?   | Unknown                 | 
 
-### 2.1. Initializing
+### 3.1. Initializing
 
 
 This is the initial state an app exists from the moment it starts receiving CPU 
@@ -141,8 +144,8 @@ Apps in this state **MUST NOT** have access to the audio-video decoder.
 
 Apps in this state **MUST NOT** use the media pipeline. 
 
-See [Initializing an app](#41-initializing-an-app) for more information. 
-### 2.2. Running
+See [Initializing an app](#51-initializing-an-app) for more information. 
+### 3.2. Running
 
 
 This state allows an app to be running and ready to go, but not actively part 
@@ -164,14 +167,14 @@ Apps in this state **MUST NOT** have access to the audio-video decoder.
 
 Apps in this state **MUST NOT** use the media pipeline and the platform 
 **MUST** tear down any Media Pipeline sessions associated with this app. 
-### 2.3. Active
+### 3.3. Active
 
 
 This state allows an app to be presented as part of the user-perceptible 
 experience. 
 
 To determine if an app is the *primary* experience, e.g. fullscreen, etc., see 
-[Presentation](./presentation.md#3-display). 
+[Presentation](./presentation.md#4-display). 
 
 It is a platform decision as to how many apps may be in this state at once. 
 
@@ -194,7 +197,7 @@ Apps in this state **SHOULD** reduce memory usage, if possible.
 
 When an app transitions to this state, the platform **MUST** dispatch the 
 `Lifecycle.onStateChanged` notification with the current state. 
-### 2.4. Suspended
+### 3.4. Suspended
 
 
 This state allows an app to remain in memory and consume fewer resources. 
@@ -216,7 +219,7 @@ Apps in this state **SHOULD** further reduce memory usage (more so than in the
 
 **TODO**:: add all the transition pre-requisites, e.g. Apps **MUST** only enter 
 this state from the `SUSPENDED` state, via the `sleep()` interface. 
-### 2.5. Sleeping
+### 3.5. Sleeping
 
 
 This state allows an app to be copied from memory to local storage and then 
@@ -242,14 +245,14 @@ If a platform supports copying sleeping apps memory out of RAM then:
 > 
 > Finally, the app and its container **MAY** be removed from memory and have 
 > other resources released as well. 
-## 3. Getting the current state
+## 4. Getting the current state
 
 The Lifecycle module **MUST** provide a `state` property API that returns the 
 current lifecycle state of the app. 
 
 If an app is in a transtition from one state to another, then it **MUST** be 
 considered in the state *before* the transition until such time as the app's 
-implementation of the [transition](#4-lifecycle-state-transitions) has returned 
+implementation of the [transition](#5-lifecycle-state-transitions) has returned 
 and the platfrom has finshed the transition. 
 
 The `state` API **MUST** have a corresponding `onStateChanged` notification. 
@@ -264,7 +267,7 @@ The `state` API must have one of the following values:
 
 Note that the `onStateChanged` notification **MUST** never be dispatched for 
 the `Sleeping` state since it would not be received anyway. 
-## 4. Lifecycle State Transitions
+## 5. Lifecycle State Transitions
 
 There are several state transitions where the app and the platform need to 
 interact to ensure the transition goes smoothly. 
@@ -338,7 +341,7 @@ By providing an implementation of the
 `xrn:firebolt:capability:lifecycle:activatible` interface, an app can influence 
 how resources are managed during these state transitions. See [Activity 
 Interface](#82-activity-interface) for more info. 
-### 4.1. Initializing an app
+### 5.1. Initializing an app
 
 Once an app is loaded it **MUST** be initialized immediately. 
 
@@ -394,7 +397,7 @@ Example Launch Parameters:
 
 Once the `create` method returns the app **MUST** be immediately transitioned 
 to the `RUNNING` state. 
-### 4.2. Activating an app
+### 5.2. Activating an app
 
 
 Activating an app transitions it to the `ACTIVE` state so that it becomes part 
@@ -418,9 +421,9 @@ If the app is not loaded, then the platform **MUST** [load](undefined) it
 first. 
 
 If the app is not initialized, the platform **MUST** 
-[initialize](#41-initializing-an-app) it first. 
+[initialize](#51-initializing-an-app) it first. 
 
-If the app is suspended, then it **MUST** be [resumed](#45-resuming-an-app) 
+If the app is suspended, then it **MUST** be [resumed](#55-resuming-an-app) 
 first. 
 
 At this point, the app **MUST** be in the `RUNNING` state. 
@@ -468,7 +471,7 @@ the user with content that fulfills the `intent` without additional loading
 screens in the app's UX. 
 
 **TODO**: Discuss ^^ 
-### 4.3. Deactivating an app
+### 5.3. Deactivating an app
 
 
 Closing an app transitions it to the `RUNNING` state, so that it is no longer 
@@ -502,13 +505,13 @@ complete, and the remainder of this section does not apply.
 
 If an app is already performing an `activate()` transition, the platform 
 **MUST** wait for the activate call to succeed or fail and then skip the 
-remaining [activation steps](#42-activating-an-app). 
+remaining [activation steps](#52-activating-an-app). 
 
-If an app is currently [initializing](#41-initializing-an-app), the platform 
+If an app is currently [initializing](#51-initializing-an-app), the platform 
 **MUST** wait for initialization to succeed or fail and then skip any 
 activation that may have been pending. 
 
-If an app is currently in a [destroy](#48-destroying-an-app) transition then 
+If an app is currently in a [destroy](#58-destroying-an-app) transition then 
 the app cannot be closed and the platform **MUST NOT** close it, and the 
 remainder of this section does not apply. 
 
@@ -534,7 +537,7 @@ decoders.
 
 The platform **MAY** begin to transition the app out of view as soon as 
 `deactivate()` is called. 
-### 4.4. Suspending an app
+### 5.4. Suspending an app
 
 
 Suspending an app transitions it to the `SUSPENDED` state, where it is no 
@@ -579,14 +582,14 @@ Since every app **MUST** provide the
 > moved to the `SUSPENDED` state. 
 > 
 > If the app times out or makes a `suspendError` call, then the app **MUST** be 
-> [destroyed](#48-destroying-an-app). 
+> [destroyed](#58-destroying-an-app). 
 
 During the `suspend()` transition, the app: 
 
 > **MUST** deallocate any graphics surface. 
 > 
 > **SHOULD** reduce memory usage, if possible. 
-### 4.5. Resuming an app
+### 5.5. Resuming an app
 
 
 Resuming an app allows it to reallocate graphics composition and reload any 
@@ -623,7 +626,7 @@ terminated.
 
 During the `resume()` transition, apps **SHOULD** reallocate graphics 
 composition and other necessary resources. 
-### 4.6. Putting an app to sleep
+### 5.6. Putting an app to sleep
 
 TBD 
 
@@ -632,14 +635,14 @@ Firebolt apps that have permission to use the
 `Sleepable.sleep()`. 
 
 TODO: if you don't call provide, we won't do this. 
-### 4.7. Waking an app from sleep
+### 5.7. Waking an app from sleep
 
 TBD 
 
 Firebolt apps that have permission to use the 
 `xrn:firebolt:capability:lifecycle:sleepable` capability **MUST** implement 
 `Sleepable.wake()`. 
-### 4.8. Destroying an app
+### 5.8. Destroying an app
 
 
 Destroying an app transitions it out of memory, so that it is no longer using 
@@ -671,7 +674,7 @@ Since every app **MUST** provide the
 > 
 > If the app times out or makes an `destroyError` call, then the app **MUST** 
 > be terminated. 
-### 4.9. Terminating an app
+### 5.9. Terminating an app
 
 
 Terminating an app removes it from memory without dispatching any state 
@@ -684,7 +687,7 @@ Terminating an app results in removing it from memory and all resources held by
 the app and it's container being freed up. 
 
 Platforms **MAY** terminate an app when needed but **SHOULD NOT** do this in 
-place of graceful [destroying](#48-destroying-an-app). 
+place of graceful [destroying](#58-destroying-an-app). 
 ## 6. Create Parameters
 
 The `CreateParameters` type is an object with the following properties: 

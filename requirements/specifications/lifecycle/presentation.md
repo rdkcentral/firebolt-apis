@@ -1,7 +1,5 @@
 # App Presentation
 
-need to write this up... 
-
 Document Status: Working Draft 
 
 See [Firebolt Requirements Governance](../../governance.md) for more info. 
@@ -18,22 +16,37 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 
 ## 1. Overview
 
-TBD... 
+This document describes the requirements that Firebolt platforms and Firebolt 
+applications must fulfill when managing App Presention. *App Presentation* 
+refers to the display, focus, and navigational aspects of an App. 
+
+The *display* of an app refers to it its visibility and size. 
+
+Whether an app has an *overlay* refers to any other apps or UX being presented 
+on top of the app. 
+
+Apps that are presented to users by the platform may receive *navigation* 
+intents, which are like deep links from the platform. 
+
+
+## 2. Table of Contents 
 - [1. Overview](#1-overview)
-- [2. Focus](#2-focus)
-- [3. Display](#3-display)
-  - [3.1. Display vs Lifecycle](#31-display-vs-lifecycle)
-- [4. Overlay](#4-overlay)
-  - [4.1. 4.1 Overlay vs Focus](#41-41-overlay-vs-focus)
-- [5. Background Audio](#5-background-audio)
-- [6. Picture-in-Picture Video](#6-picture-in-picture-video)
+- [2. Table of Contents](#2-table-of-contents-)
+- [3. Focus](#3-focus)
+- [4. Display](#4-display)
+  - [4.1. Display vs Lifecycle](#41-display-vs-lifecycle)
+- [5. Loading Screen](#5-loading-screen)
+  - [5.1. Platform-provided Loading Screen](#51-platform-provided-loading-screen)
+  - [5.2. App-provided Loading Screen](#52-app-provided-loading-screen)
+  - [5.3. When to use a loading screen](#53-when-to-use-a-loading-screen)
+- [6. Overlay](#6-overlay)
+  - [6.1. 4.1 Overlay vs Focus](#61-41-overlay-vs-focus)
 - [7. Navigation](#7-navigation)
-- [8. Platform-provided Loading Screen](#8-platform-provided-loading-screen)
-- [9. App-provided Loading Screen](#9-app-provided-loading-screen)
-- [10. When to use a loading screen](#10-when-to-use-a-loading-screen)
+- [8. Background Audio](#8-background-audio)
+- [9. Picture-in-Picture Video](#9-picture-in-picture-video)
 
 
-## 2. Focus
+## 3. Focus
 
 The `Presentation` module **MUST** have a `focus` boolean property that returns 
 whether or not the app has input, e.g. RCU, focus. 
@@ -42,7 +55,7 @@ whether or not the app has input, e.g. RCU, focus.
 
 As a property, this API also has an `onFocusChanged` notification. 
 
-## 3. Display
+## 4. Display
 
 The `Presentation` module **MUST** have a `display` string property that 
 returns one of the following values: 
@@ -59,7 +72,7 @@ returns one of the following values:
 **TODO**: an app could be offscreen & scaled. If a scaled or thumbnailed app 
 goes offscreen, it's now offscreen. 
 
-### 3.1. Display vs Lifecycle
+### 4.1. Display vs Lifecycle
 
 Each Lifecycle state only supports certain display states: 
 | Lifecycle      | Supported Displays                               |
@@ -71,10 +84,66 @@ Each Lifecycle state only supports certain display states:
 | `sleeping`     | `none`, `loading`                                |
 
 
-See [Picture-in-picture](#6-picture-in-picture-video) and [Background 
-Audio](#5-background-audio) for exceptions to this. 
+See [Picture-in-picture](#9-picture-in-picture-video) and [Background 
+Audio](#8-background-audio) for exceptions to this. 
 
-## 4. Overlay
+## 5. Loading Screen
+In order to manage user expectations, Firebolt platforms **MAY** display 
+loading screens to end users when an app is going to be activated. Loading 
+Screens may be rendered either by the platform, the app, or both, depending on 
+Capability configuration. 
+
+### 5.1. Platform-provided Loading Screen
+
+Most apps will leverage a platform-provided loading screen. 
+
+If an app provides the `xrn:firebolt:capability:presentation:loading-screen` 
+capability, then the platform **MAY** use the app-provided loading screen, in 
+which case, the rest of the section does not apply. 
+
+The loading screen **SHOULD** include a loading image referenced in the app's 
+manifest and cached on the device. 
+
+The loading screen **MUST** be displayed when the user attempts to launch the 
+app. 
+
+The loading screen **MUST** stay displayed until the app becomes active, or 
+launching is cancelled. 
+
+The presentation state of the app **MUST** be `LOADING` for the entire time the 
+loading screen is displayed. 
+
+See [Lifecycle](./index.md) for more info on launching. 
+
+### 5.2. App-provided Loading Screen
+
+If an app provides the `xrn:firebolt:capability:presentation:loading-screen` 
+capability, then the platform **MAY** invoke this capability in some 
+situations. 
+
+If the app is in the [Initializing](./index.md#51-initializing-an-app) state or 
+the create transition w/ `preload: false` then it **MUST** be made visible at 
+the end of the `Application.create()` transition. 
+
+If the app is in any other state or transition, then it **MUST** be made 
+visible at the beginning of the `activate()` transition. 
+
+The presentation state of the app **SHOULD NOT** be `none` at any time during 
+the `activate()` transition. 
+
+See [Lifecycle](./index.md) for more info on loading and activating apps. 
+
+### 5.3. When to use a loading screen
+
+It is up to each platform to determine when a loading screen is useful. 
+
+Platforms **SHOULD** consider displaying a loading screen for: 
+
+- app cold launch
+- app wake from sleep
+
+
+## 6. Overlay
 
 The `Presentation` module **MUST** have an `overlay` string property that 
 returns one of the following values: 
@@ -84,41 +153,17 @@ returns one of the following values:
 | `blocking` | There is a significantly sized UX covering a majority of the app.          |
 | `none`     | There is nothing covering the app.                                         |
 
-### 4.1. 4.1 Overlay vs Focus
+### 6.1. 4.1 Overlay vs Focus
 
 | Focus | Overlay                 |
 | ----- | ----------------------- |
 | true  | none                    |
 | false | partial, blocking, none |
 
-## 5. Background Audio
-
-When an app has this capability, it **MAY** be put into the `none` display 
-state while in the `active` Lifecycle state. 
-
-If an app has the `xrn:firebolt:capability:media:background-audio`, then it can 
-keep playing audio/video when the app is in the `none` display state and the 
-audio will be played for the user. 
-
-TODO: do we want background apps to have a gfx surface? that means they'd be in 
-'offscreen' display and using more memory TODO: we probably want to support 
-both modes here. 
-## 6. Picture-in-Picture Video
-
-When an app has the `xrn:firebolt:capability:media:picture-in-picture` 
-capability, it **MAY** be put into the `none` display state while in the 
-`active` Lifecycle state. 
-
-If an app has the `xrn:firebolt:capability:media:picture-in-picture`, then it 
-can keep playing audio/video when the app is in the `none` display state and 
-the audio & video will be presented to the user in bounding box determined by 
-the platform. Note that this does not include the entire UX of the app, just 
-the active media pipeline. 
-
 ## 7. Navigation
 Typically navigation is handled either when the app is activated, via the 
-`intent` parameter of the [`activate` method](./index.md#42-activating-an-app), 
-or by internal input within the app. 
+`intent` parameter of the [`activate()` 
+method](./index.md#52-activating-an-app), or by internal input within the app. 
 
 There are other times when the platform needs to inform an app of a user's 
 intent to navigate when the app is already `ACTIVE`, e.g. when a voice command 
@@ -166,48 +211,24 @@ To invoke an app's `navigateTo` provider API the platform **MUST**:
 > `intent` in some other way 
 
 
-## 8. Platform-provided Loading Screen
+## 8. Background Audio
+If an app has the `xrn:firebolt:capability:media:background-audio`, then it can 
+keep playing audio/video when the app is in the `none` display state and the 
+audio will be played for the user. 
 
-Most apps will leverage a platform-provided loading screen. 
+When an app has this capability, it **MAY** be put into the `none` display 
+state while in the `active` Lifecycle state. 
 
-If an app provides the `xrn:firebolt:capability:presentation:loading-screen` 
-capability, then the platform **MAY** use the app-provided loading screen, in 
-which case, the rest of the section does not apply. 
+TODO: do we want background apps to have a gfx surface? that means they'd be in 
+'offscreen' display and using more memory TODO: we probably want to support 
+both modes here. 
 
-The loading screen **SHOULD** include a loading image referenced in the app's 
-manifest and cached on the device. 
+## 9. Picture-in-Picture Video
+If an app has the `xrn:firebolt:capability:media:picture-in-picture`, then it 
+can keep playing audio/video when the app is in the `none` display state and 
+the audio & video will be presented to the user in bounding box determined by 
+the platform. Note that this does not include the entire UX of the app, just 
+the active media pipeline. 
 
-The loading screen **MUST** be displayed when the user attempts to launch the 
-app. 
-
-The loading screen **MUST** stay displayed until the app becomes active, or 
-launching is cancelled. 
-
-The presentation state of the app **MUST** be `LOADING` for the entire time the 
-loading screen is displayed. 
-
-See [Lifecycle](./index.md) for more info on launching. 
-## 9. App-provided Loading Screen
-
-If an app provides the `xrn:firebolt:capability:presentation:loading-screen` 
-capability, then the platform **MAY** invoke this capability in some 
-situations. 
-
-If the app is being created w/ preload: false then: 
-
-Apps that provide the loading screen capability **MUST** be made visible at the 
-end of the `Application.create()` transition, rather than at the end of the 
-activate transition. 
-
-**TODO**: if an app is in the running state already, show it at the beginning 
-of `activate()` 
-
-The presentation state of the app **SHOULD NOT** be `none` at any time during 
-the `activate()` transition. 
-
-See [Lifecycle](./index.md) for more info on loading and activating apps. 
-
-## 10. When to use a loading screen
-
-- cold launch
-- wake from sleep
+When an app has this capability, it **MAY** be put into the `none` display 
+state while in the `active` Lifecycle state. 
