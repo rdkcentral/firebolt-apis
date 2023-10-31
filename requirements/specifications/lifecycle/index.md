@@ -3,6 +3,7 @@
 Document Status: Working Draft 
 
 See [Firebolt Requirements Governance](../../governance.md) for more info. 
+
 | Contributor               | Organization |
 | ------------------------- | ------------ |
 | Andrew Bennett            | Sky          |

@@ -3,15 +3,18 @@
 Document Status: Working Draft 
 
 See [Firebolt Requirements Governance](../../governance.md) for more info. 
+
 | Contributor               | Organization |
 | ------------------------- | ------------ |
 | Andrew Bennett            | Sky          |
 | Cody Bonney               | Charter      |
 | Bart Catrysse             | Liberty      |
 | Tim Dibben                | Sky          |
+| Piotr Kobzda              | Liberty      |
 | Jeremy LaCivita           | Comcast      |
 | Ramprasad Lakshminarayana | Sky          |
 | Kevin Pearson             | Comcast      |
+| Jan Pedersen              | Sky          |
 | Peter Yu                  | Comcast      |
 
 ## 1. Overview
@@ -93,35 +96,45 @@ loading screens to end users when an app is going to be activated. Loading
 Screens may be rendered either by the platform, the app, or both, depending on 
 Capability configuration. 
 
+Firebolt platforms **MAY** decide when an app activation warrents a loading 
+screen, for example when an app will be initialized or woken from sleep before 
+activation. 
+
 Proposal: 
 
 If an app has the `xrn:firebolt:capability:presentation:loading-screen` 
-capability, it **MAY** be made visible any time from the beginning of 
-activate() transition and **MUST** be made visible no later than the end. 
+capability and the platform chooses to utilize the app's loading screen, the 
+app **MAY** be made visible any time from the beginning of activate() 
+transition and **MUST** be made visible no later than the end. 
 
 If an app does not have the 
-`xrn:firebolt:capability:presentation:loading-screen` capability, it **MUST** 
-be made visible at the end of the activate() transition. 
+`xrn:firebolt:capability:presentation:loading-screen` capability or the 
+platform decides not to use the app's loading screen, the app **MUST** be made 
+visible at the end of the activate() transition. 
 
 ### 5.1. Platform-provided Loading Screen
-
-Most apps will leverage a platform-provided loading screen. 
 
 If an app provides the `xrn:firebolt:capability:presentation:loading-screen` 
 capability, then the platform **MAY** use the app-provided loading screen, in 
 which case, the rest of the section does not apply. 
 
-The loading screen **SHOULD** include a loading image referenced in the app's 
-manifest and cached on the device. 
+If the platform determines that a platform loading screen will be displayed, 
+then: 
 
-The loading screen **MUST** be displayed when the user attempts to launch the 
-app. 
-
-The loading screen **MUST** stay displayed until the app becomes active, or 
-launching is cancelled. 
-
-The presentation state of the app **MUST** be `LOADING` for the entire time the 
-loading screen is displayed. 
+> The loading screen **SHOULD** include a loading image referenced in the app's 
+> manifest and cached on the device. 
+> 
+> The loading screen **MUST** be displayed when the user attempts to launch the 
+> app. 
+> 
+> The loading screen **MUST** stay displayed until the app becomes active, or 
+> launching is cancelled. 
+> 
+> The presentation state of the app **MUST** be `LOADING` for the entire time 
+> the loading screen is displayed. 
+> 
+> Each Firebolt platform **MAY** define what "load screen" means in these 
+> requirements. 
 
 See [Lifecycle](./index.md) for more info on launching. 
 
@@ -131,16 +144,21 @@ If an app provides the `xrn:firebolt:capability:presentation:loading-screen`
 capability, then the platform **MAY** invoke this capability in some 
 situations. 
 
-**TODO**: this section only applies for app-provided loading screens... 
+If the platform determines that an app loading screen will be displayed, then: 
 
-If the app is being explicitly launched by the user then it **MAY** be made 
-visible either: 
-
--  as soon as the platform detects changes to the graphics plane
--  at the beginning of the activate() transition
- 
-In this case, it **MUST** be made visible no later than the end of the activate 
-transition. 
+> The platform provided loading screen **MAY** be displayed first. 
+> 
+> If the platform provided loading screen is displayed then the app's 
+> presentation state should be `loading`. 
+> 
+> The app **MAY** be made visible at the beginning of the activate transition. 
+> 
+> The app **MAY** be made visible at a later point during the activate 
+> transition based on platform-specific requirements, e.g. detecting that the 
+> app's graphics surface has been utilized. 
+> 
+> The app **MUST** be made visible no later than the end of the activate 
+> transition. 
 
 The presentation state of the app **SHOULD NOT** be `none` at any time during 
 the `activate()` transition. 
