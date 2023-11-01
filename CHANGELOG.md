@@ -1,3 +1,10 @@
+# [1.0.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0-next.1...v1.0.0-next.2) (2023-11-01)
+
+
+### Bug Fixes
+
+* Provider error ([#202](https://github.com/rdkcentral/firebolt-apis/issues/202)) ([4666a5e](https://github.com/rdkcentral/firebolt-apis/commit/4666a5ee56846f14dd1ba79dab82891505b5a2ec))
+
 # [1.0.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.7...v1.0.0-next.1) (2023-11-01)
 
 
