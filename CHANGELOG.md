@@ -1,3 +1,16 @@
+# [1.0.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.7...v1.0.0-next.1) (2023-11-01)
+
+
+### Bug Fixes
+
+* CI looking for legacy 0.x version ([923d02a](https://github.com/rdkcentral/firebolt-apis/commit/923d02ae96716a5272c5507e864f366012824642))
+* Update schemas & 1.0.0 version! ([#200](https://github.com/rdkcentral/firebolt-apis/issues/200)) ([ea29f33](https://github.com/rdkcentral/firebolt-apis/commit/ea29f3323a22ffa36904bdc6cf6e76a31fa8cb76))
+
+
+### BREAKING CHANGES
+
+* This is not really a breaking change, but 1.0 release!!!
+
 # [0.18.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.6...v0.18.0-next.7) (2023-10-30)
 
 
