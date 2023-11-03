@@ -1,3 +1,16 @@
+# 1.0.0 (https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1...v1.0.0) (2023-11-03)
+
+Upgraded to 1.0 at part of RDK6 release. This API is still compatibile with 0.x versions.
+
+### Bug Fixes
+
+    * Updated Discovery.launch example with xrn:firebolt: application-type (#187 (https://github.com/rdkcentral/firebolt-apis/issues/187)) (4dbbab3 (https://github.com/rdkcentral/firebolt-apis/commit/4dbbab3d9fa68c0e5185ca72fd0170bae8a30139))
+
+### Features
+  
+    * Added scope parameter for advertisingId (#188 (https://github.com/rdkcentral/firebolt-apis/issues/188))
+    * Play Intent (#151 (https://github.com/rdkcentral/firebolt-apis/issues/151)) (d1ddf3f (https://github.com/rdkcentral/firebolt-apis/commit/d1ddf3fb3b1f758315686ad2f6dc57c2b270f33a))
+
 # [0.17.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.0...v0.17.1) (2023-09-15)
 
 ### Bug Fixes
