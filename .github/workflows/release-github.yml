@@ -12,7 +12,7 @@ on:
     branches: 
       - 'next'
       - 'proposed'
-      - 'pr-channel'
+      
 env:
   HUSKY: 0
 jobs:
