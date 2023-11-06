@@ -18,6 +18,11 @@
       "name": "proposed",
       "channel": "proposed",
       "prerelease": true
+    },
+    {
+      "name": "pr-channel",
+      "channel": "pr-channel",
+      "prerelease": true
     }
   ],
   "dryRun": false,
