@@ -176,13 +176,13 @@ function channel(version) {
     if (parts.length > 1) {
         parts.shift()
         const chnl = parts.join("-").split(".").shift()
-
-        if (['next', 'next-major', 'test'].includes(chnl)) {
-            return chnl
-        }
-        else {
-            return 'test'
-        }
+        return chnl
+        // if (['next', 'next-major', 'test'].includes(chnl)) {
+        //     return chnl
+        // }
+        // else {
+        //     return 'test'
+        // }
     }
     else {
         return 'latest'
