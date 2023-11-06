@@ -86,12 +86,14 @@
       "params": [
         {
           "name": "token",
+          "required": true,
           "schema": {
             "$ref": "#/components/schemas/Token"
           }
         },
         {
           "name": "expiresIn",
+          "required": true,
           "schema": {
             "$ref": "#/components/schemas/Expiry"
           }
