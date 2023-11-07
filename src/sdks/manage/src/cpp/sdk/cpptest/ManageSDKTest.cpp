@@ -25,7 +25,9 @@ ManageSDKTest::OnDeviceNameChangedNotification ManageSDKTest::_deviceNameChanged
 ManageSDKTest::OnFontFamilyChangedNotification ManageSDKTest::_fontFamilyChangedNotification;
 ManageSDKTest::OnBackgroundOpacityChangedNotification ManageSDKTest::_backgroundOpacityChangedNotification;
 ManageSDKTest::OnPreferredAudioLanguagesChangedNotification ManageSDKTest::_preferredAudioLanguagesChangedNotification;
+#ifdef RPC_ONLY
 ManageSDKTest::OnRequestChallengeNotification ManageSDKTest::_requestChallengeNotification;
+#endif
 
 void ManageSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
@@ -76,7 +78,7 @@ bool ManageSDKTest::WaitOnConnectionReady()
 void ManageSDKTest::GetDeviceName()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    const std::string name = Firebolt::IFireboltAccessor::Instance().DeviceInterface().Name(&error);
+    const std::string name = Firebolt::IFireboltAccessor::Instance().DeviceInterface().name(&error);
 
     if (error == Firebolt::Error::None) {
         cout << "Get Device Name = " << name.c_str() << endl;
@@ -88,7 +90,7 @@ void ManageSDKTest::GetDeviceName()
 void ManageSDKTest::SetDeviceName()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().DeviceInterface().SetName("Hello", &error);
+    Firebolt::IFireboltAccessor::Instance().DeviceInterface().setName("Hello", &error);
 
     if (error == Firebolt::Error::None) {
         cout << "Set Device Name is success" << endl;
@@ -97,7 +99,7 @@ void ManageSDKTest::SetDeviceName()
     }
 }
 
-void ManageSDKTest::OnDeviceNameChangedNotification::OnDeviceNameChanged( const std::string& name)
+void ManageSDKTest::OnDeviceNameChangedNotification::onDeviceNameChanged( const std::string& name )
 {
     cout << "Name changed, new name --> " << name << endl;
 }
@@ -105,7 +107,7 @@ void ManageSDKTest::OnDeviceNameChangedNotification::OnDeviceNameChanged( const 
 void ManageSDKTest::SubscribeDeviceNameChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().DeviceInterface().Subscribe(_deviceNameChangedNotification, &error);
+    Firebolt::IFireboltAccessor::Instance().DeviceInterface().subscribe(_deviceNameChangedNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Device NameChange is success" << endl;
     } else {
@@ -116,7 +118,7 @@ void ManageSDKTest::SubscribeDeviceNameChanged()
 void ManageSDKTest::UnsubscribeDeviceNameChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().DeviceInterface().Unsubscribe(_deviceNameChangedNotification, &error);
+    Firebolt::IFireboltAccessor::Instance().DeviceInterface().unsubscribe(_deviceNameChangedNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Device NameChange is success" << endl;
     } else {
@@ -127,7 +129,7 @@ void ManageSDKTest::UnsubscribeDeviceNameChanged()
 void ManageSDKTest::GetClosedCaptionBackgroundOpacity()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    const float value = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().BackgroundOpacity(&error);
+    const float value = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().backgroundOpacity(&error);
 
     if (error == Firebolt::Error::None) {
         cout << "Get ClosedCaption BackgroundOpacity = " << value << endl;
@@ -139,7 +141,7 @@ void ManageSDKTest::GetClosedCaptionBackgroundOpacity()
 void ManageSDKTest::SetClosedCaptionBackgroundOpacity()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().SetBackgroundOpacity(2.0, &error);
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setBackgroundOpacity(2.0, &error);
 
     if (error == Firebolt::Error::None) {
         cout << "Set ClosedCaption BackgroundOpacity is success" << endl;
@@ -148,7 +150,7 @@ void ManageSDKTest::SetClosedCaptionBackgroundOpacity()
     }
 }
 
-void ManageSDKTest::OnBackgroundOpacityChangedNotification::OnBackgroundOpacityChanged( const float opacity )
+void ManageSDKTest::OnBackgroundOpacityChangedNotification::onBackgroundOpacityChanged( const float opacity )
 {
     cout << "BackgroundOpacity changed, new value --> " << opacity << endl;
 }
@@ -156,7 +158,7 @@ void ManageSDKTest::OnBackgroundOpacityChangedNotification::OnBackgroundOpacityC
 void ManageSDKTest::SubscribeClosedCaptionsBackgroundOpacityChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().Subscribe(_backgroundOpacityChangedNotification, &error);
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().subscribe(_backgroundOpacityChangedNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Subscribe ClosedCaptions BackgroundOpacityChange is success" << endl;
     } else {
@@ -167,7 +169,7 @@ void ManageSDKTest::SubscribeClosedCaptionsBackgroundOpacityChanged()
 void ManageSDKTest::UnsubscribeClosedCaptionsBackgroundOpacityChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().Unsubscribe(_backgroundOpacityChangedNotification, &error);
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().unsubscribe(_backgroundOpacityChangedNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe ClosedCaptions BackgroundOpacityChange is success" << endl;
     } else {
@@ -192,7 +194,7 @@ inline const string& ConvertToFontFamilyStr(Firebolt::Accessibility::FontFamily 
 void ManageSDKTest::GetClosedCaptionFontFamily()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    const Firebolt::Accessibility::FontFamily value = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().FontFamily(&error);
+    const Firebolt::Accessibility::FontFamily value = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().fontFamily(&error);
 
     if (error == Firebolt::Error::None) {
         cout << "Get ClosedCaption FontFamily value = " << ConvertToFontFamilyStr(value) << endl;
@@ -204,7 +206,7 @@ void ManageSDKTest::GetClosedCaptionFontFamily()
 void ManageSDKTest::SetClosedCaptionFontFamily()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().SetFontFamily(Firebolt::Accessibility::FontFamily::PROPORTIONAL_SANSERIF, &error);
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setFontFamily(Firebolt::Accessibility::FontFamily::PROPORTIONAL_SANSERIF, &error);
 
     if (error == Firebolt::Error::None) {
         cout << "Set ClosedCaption FontFamily is success" << endl;
@@ -213,7 +215,7 @@ void ManageSDKTest::SetClosedCaptionFontFamily()
     }
 }
 
-void ManageSDKTest::OnFontFamilyChangedNotification::OnFontFamilyChanged( const Firebolt::Accessibility::FontFamily& family )
+void ManageSDKTest::OnFontFamilyChangedNotification::onFontFamilyChanged( const Firebolt::Accessibility::FontFamily& family )
 {
     cout << "FontFamily changed, new code --> " << ConvertToFontFamilyStr(family) << endl;
 }
@@ -221,7 +223,7 @@ void ManageSDKTest::OnFontFamilyChangedNotification::OnFontFamilyChanged( const 
 void ManageSDKTest::SubscribeClosedCaptionsFontFamilyChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().Subscribe(_fontFamilyChangedNotification, &error);
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().subscribe(_fontFamilyChangedNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Subscribe ClosedCaptions FontFamilyChange is success" << endl;
     } else {
@@ -232,7 +234,7 @@ void ManageSDKTest::SubscribeClosedCaptionsFontFamilyChanged()
 void ManageSDKTest::UnsubscribeClosedCaptionsFontFamilyChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().Unsubscribe(_fontFamilyChangedNotification, &error);
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().unsubscribe(_fontFamilyChangedNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe ClosedCaptions FontFamilyChange is success" << endl;
     } else {
@@ -243,7 +245,7 @@ void ManageSDKTest::UnsubscribeClosedCaptionsFontFamilyChanged()
 void ManageSDKTest::GetLocalizationPreferredAudioLanguages()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    const std::vector<std::string> languages = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().PreferredAudioLanguages(&error);
+    const std::vector<std::string> languages = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().preferredAudioLanguages(&error);
 
     if (error == Firebolt::Error::None) {
         cout << "Get Localization PreferredAudioLanguages : " << endl;
@@ -259,7 +261,7 @@ void ManageSDKTest::SetLocalizationPreferredAudioLanguages()
 {
     Firebolt::Error error = Firebolt::Error::None;
     const std::vector<std::string> languages = { "ara", "jpn", "hin" };
-    Firebolt::IFireboltAccessor::Instance().LocalizationInterface().SetPreferredAudioLanguages(languages, &error);
+    Firebolt::IFireboltAccessor::Instance().LocalizationInterface().setPreferredAudioLanguages(languages, &error);
 
     if (error == Firebolt::Error::None) {
         cout << "Set Localization PreferredAudioLanguages is success" << endl;
@@ -268,7 +270,7 @@ void ManageSDKTest::SetLocalizationPreferredAudioLanguages()
     }
 }
 
-void ManageSDKTest::OnPreferredAudioLanguagesChangedNotification::OnPreferredAudioLanguagesChanged( const std::vector<std::string>& languages)
+void ManageSDKTest::OnPreferredAudioLanguagesChangedNotification::onPreferredAudioLanguagesChanged( const std::vector<std::string>& languages )
 {
     cout << "PreferredAudioLanguages Changed, new languages --> " << endl;
     for (auto language : languages) {
@@ -279,7 +281,7 @@ void ManageSDKTest::OnPreferredAudioLanguagesChangedNotification::OnPreferredAud
 void ManageSDKTest::SubscribeLocalizationPreferredAudioLanguagesChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().LocalizationInterface().Subscribe(_preferredAudioLanguagesChangedNotification, &error);
+    Firebolt::IFireboltAccessor::Instance().LocalizationInterface().subscribe(_preferredAudioLanguagesChangedNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Localization PreferredAudioLanguagesChange is success" << endl;
     } else {
@@ -290,7 +292,7 @@ void ManageSDKTest::SubscribeLocalizationPreferredAudioLanguagesChanged()
 void ManageSDKTest::UnsubscribeLocalizationPreferredAudioLanguagesChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().LocalizationInterface().Unsubscribe(_preferredAudioLanguagesChangedNotification, &error);
+    Firebolt::IFireboltAccessor::Instance().LocalizationInterface().unsubscribe(_preferredAudioLanguagesChangedNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Localization PreferredAudioLanguagesChange is success" << endl;
     } else {
@@ -298,6 +300,7 @@ void ManageSDKTest::UnsubscribeLocalizationPreferredAudioLanguagesChanged()
     }
 }
 
+#ifdef RPC_ONLY
 using PinSpaceMap = std::unordered_map<Firebolt::PinChallenge::PinChallengePinSpace, string>;
 PinSpaceMap pinSpaceMap = {
     { Firebolt::PinChallenge::PinChallengePinSpace::PURCHASE, "Purchase" },
@@ -307,8 +310,7 @@ inline const string& ConvertToPinSpaceStr(Firebolt::PinChallenge::PinChallengePi
     return pinSpaceMap[pinSpace];
 }
 
-
-void ManageSDKTest::OnRequestChallengeNotification::OnRequestChallenge( const Firebolt::PinChallenge::PinChallengeProviderRequest& pinChallenge )
+void ManageSDKTest::OnRequestChallengeNotification::onRequestChallenge( const Firebolt::PinChallenge::PinChallengeProviderRequest& pinChallenge )
 {
     cout << "RequestChallenge, new challenge --> " << endl;
     cout << "CorrelationId : " << pinChallenge.correlationId << endl;
@@ -321,7 +323,7 @@ void ManageSDKTest::OnRequestChallengeNotification::OnRequestChallenge( const Fi
 void ManageSDKTest::SubscribePinChallengeRequestChallenge()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().PinChallengeInterface().Subscribe(_requestChallengeNotification, &error);
+    Firebolt::IFireboltAccessor::Instance().PinChallengeInterface().subscribe(_requestChallengeNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Subscribe PinChallenge RequestChallenge is success" << endl;
     } else {
@@ -332,10 +334,11 @@ void ManageSDKTest::SubscribePinChallengeRequestChallenge()
 void ManageSDKTest::UnsubscribePinChallengeRequestChallenge()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().PinChallengeInterface().Unsubscribe(_requestChallengeNotification, &error);
+    Firebolt::IFireboltAccessor::Instance().PinChallengeInterface().unsubscribe(_requestChallengeNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe PinChallenge RequestChallenge is success" << endl;
     } else {
         cout << "Unsubscribe PinChallenge RequestChallenge status = " << static_cast<int>(error) << endl;
     }
 }
+#endif

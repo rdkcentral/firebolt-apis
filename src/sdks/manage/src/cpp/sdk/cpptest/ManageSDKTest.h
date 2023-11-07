@@ -25,26 +25,28 @@ class ManageSDKTest {
 
     class OnDeviceNameChangedNotification : public Firebolt::Device::IDevice::IOnDeviceNameChangedNotification {
     public:
-        void OnDeviceNameChanged( const std::string& ) override;
+        void onDeviceNameChanged( const std::string& ) override;
     };
 
     class OnFontFamilyChangedNotification : public Firebolt::ClosedCaptions::IClosedCaptions::IOnFontFamilyChangedNotification {
-        void OnFontFamilyChanged( const Firebolt::Accessibility::FontFamily& ) override;
+        void onFontFamilyChanged( const Firebolt::Accessibility::FontFamily& ) override;
     };
 
     class OnBackgroundOpacityChangedNotification : public Firebolt::ClosedCaptions::IClosedCaptions::IOnBackgroundOpacityChangedNotification {
-        void OnBackgroundOpacityChanged( const float ) override;
+        void onBackgroundOpacityChanged( const float ) override;
     };
 
     class OnPreferredAudioLanguagesChangedNotification : public Firebolt::Localization::ILocalization::IOnPreferredAudioLanguagesChangedNotification {
     public:
-        void OnPreferredAudioLanguagesChanged( const std::vector<std::string>& ) override;
+        void onPreferredAudioLanguagesChanged( const std::vector<std::string>& ) override;
     };
 
+#ifdef RPC_ONLY
     struct OnRequestChallengeNotification : public Firebolt::PinChallenge::IPinChallenge::IOnRequestChallengeNotification {
     public:
-        void OnRequestChallenge( const Firebolt::PinChallenge::PinChallengeProviderRequest& ) override;
+        void onRequestChallenge( const Firebolt::PinChallenge::PinChallengeProviderRequest& ) override;
     };
+#endif
 public:
     ManageSDKTest() = default;
     virtual ~ManageSDKTest() = default;
@@ -68,9 +70,10 @@ public:
     static void SetLocalizationPreferredAudioLanguages();
     static void SubscribeLocalizationPreferredAudioLanguagesChanged();
     static void UnsubscribeLocalizationPreferredAudioLanguagesChanged();
+#ifdef RPC_ONLY
     static void SubscribePinChallengeRequestChallenge();
     static void UnsubscribePinChallengeRequestChallenge();
-
+#endif
     static bool WaitOnConnectionReady();
 
 private:
@@ -80,6 +83,8 @@ private:
     static OnFontFamilyChangedNotification _fontFamilyChangedNotification;
     static OnBackgroundOpacityChangedNotification _backgroundOpacityChangedNotification;
     static OnPreferredAudioLanguagesChangedNotification _preferredAudioLanguagesChangedNotification;
+#ifdef RPC_ONLY
     static OnRequestChallengeNotification _requestChallengeNotification;
+#endif
 };
 

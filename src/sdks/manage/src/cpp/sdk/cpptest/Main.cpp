@@ -16,7 +16,9 @@ void ShowMenu()
            "\tL : Get Localization Preferred AudioLanguages\n"
            "\tA : Set Localization Preferred AudioLanguages\n"
            "\tR : Subscribe/Unsubscribe for Localization Preferred AudioLanguages Change\n"
+#ifdef RPC_ONLY
            "\tP : Subscribe/Unsubscribe for PinChallenge RequestChallenge\n"
+#endif
            "\tQ : Quit\n\n"
           );
 }
@@ -123,11 +125,12 @@ int main (int argc, char* argv[])
                 HandleEventListener(Localization, PreferredAudioLanguagesChanged)
                 break;
             }
+#ifdef RPC_ONLY
             case 'P': {
                 HandleEventListener(PinChallenge, RequestChallenge)
                 break;
             }
-
+#endif
             default:
                 break;
             }
