@@ -30,7 +30,7 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
   - [8.2. Auto Low Latency Mode Signalled](#82-auto-low-latency-mode-signalled)
   - [8.3. Port Auto Low Latency Mode Capable](#83-port-auto-low-latency-mode-capable)
     - [8.3.1. Port Auto Low Latency Mode Capable Changed Notification](#831-port-auto-low-latency-mode-capable-changed-notification)
-
+- [9. Port Selection](#9-hdmi-port-selection)
 ## 3. All Ports
 The `HDMIInput` module **MUST** have a `ports` method that lists all physical HDMI input ports on the device.
 
@@ -286,3 +286,41 @@ HDMIInput.autoLowLatencyModeCapableChanged((data) => {
 `port` - the HDMI port that had an E-EDID ALLM advertisement change.
 
 The `onAutoLowLatencyModeCapableChanged`  API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
+
+## 9. HDMI Port Selection
+
+The `HDMIInput` module **MUST** have a `select` method that manages the selection of on a single HDMI port for playback.
+
+The `HDMIInput.select` **MUST** include a `port` field complying to the schema of `HDMIPortId`
+
+The `HDMIInput.select` **MUST** include a `type` field complying to the schema of `HDMISelectType`
+
+The `select` API **MUST** return an `empty` object for a successful selection, if there was an error the response **Must** contain the details of the error.
+```javascript
+HDMIInput.select('HDMI1','start').then(() => {
+  console.log("Successfully selected HDMI1 port");
+})
+```
+
+The `select` API requires `manage` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
+Below is an example of stopping an existing HDMI Port selection
+```javascript
+HDMIInput.select('HDMI1','stop').then(() => {
+  console.log("Successfully un selected HDMI1 port");
+})
+```
+
+
+### 9.2 HDMI Select Preview Mode
+
+Most of the modern system ui applications support showcasing the preview of the HDMI player within the tile. To support such feature we need the platform to create a `Hole Punch` around the Hdmi Video playback. To support this feature `HDMInput.select` api offers a `HDMIPreviewOptions` schema structure.
+
+The `HDMIPreviewOptions` schema **MUST** be specified with the `holePunch` field.
+If the `holePunch` field is set to `true` then the parameters **MUST** include the `dimensions` field for the `HDMIPreviewOptions`.
+```javascript
+HDMIInput.select('HDMI1','start', {"holdPunch": true, "dimensions": {"x":10, y: 10, "width":100, "height": 100}}).then(() => {
+  console.log("Successfully selected HDMI1 port");
+})
+```

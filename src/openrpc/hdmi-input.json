@@ -101,6 +101,131 @@
             ]
         },
         {
+            "name": "select",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-manages": [
+                        "xrn:firebolt:capability:inputs:hdmi"
+                    ]
+                }
+            ],
+            "summary": "Selects the HDMI Port for active input",
+            "params": [
+                {
+                    "name": "portId",
+                    "schema": {
+                        "$ref": "#/components/schemas/HDMIPortId"
+                    },
+                    "required": true
+                },
+                {
+                    "name": "type",
+                    "schema": {
+                        "$ref": "#/components/schemas/HDMISelectType"
+                    },
+                    "required": true
+                },
+                {
+                    "name": "options",
+                    "schema": {
+                        "$ref": "#/components/schemas/HDMIPreviewOptions"
+                    }
+                }
+            ],
+            "result": {
+                "name": "port",
+                "schema": {
+                    "const": null
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example for start",
+                    "params": [
+                        {
+                            "name": "portId",
+                            "value": "HDMI1"
+                        },
+                        {
+                            "name": "type",
+                            "value": "start"
+                        }
+                    ],
+                    "result": {
+                        "name": "port",
+                        "value": null
+                    }
+                },
+                {
+                    "name": "Default Example for stop",
+                    "params": [
+                        {
+                            "name": "portId",
+                            "value": "HDMI1"
+                        },
+                        {
+                            "name": "type",
+                            "value": "stop"
+                        }
+                    ],
+                    "result": {
+                        "name": "port",
+                        "value": null
+                    }
+                },
+                {
+                    "name": "Default Example for preview",
+                    "params": [
+                        {
+                            "name": "portId",
+                            "value": "HDMI1"
+                        },
+                        {
+                            "name": "type",
+                            "value": "start"
+                        },
+                        {
+                            "name": "options",
+                            "value": {
+                                "dimensions": {
+                                    "x": 40,
+                                    "y": 50,
+                                    "w": 100,
+                                    "h": 100
+                                },
+                                "holePunch": true
+                            }
+                        }
+                    ],
+                    "result": {
+                        "name": "ports",
+                        "value": null
+                    }
+                },
+                {
+                    "name": "Default Example for stop preview",
+                    "params": [
+                        {
+                            "name": "portId",
+                            "value": "HDMI1"
+                        },
+                        {
+                            "name": "type",
+                            "value": "stop"
+                        },
+                        {
+                            "name": "options",
+                            "value": {
+                                "holePunch": false
+                            }
+                        }
+                    ],
+                    "result": null
+                }
+            ]
+        },
+        {
             "name": "onConnectionChanged",
             "tags": [
                 {
@@ -413,9 +538,7 @@
                     "properties": {
                         "edidVersion": {
                             "type": "string",
-                            "enum": [
-                                "1.4", "unknown"
-                            ]
+                            "value":true
                         }
                     }
                 },
@@ -487,6 +610,80 @@
                     },
                     "autoLowLatencyModeSignalled": {
                         "type": "boolean"
+                    }
+                }
+            },
+            "HDMISelectType": {
+                "title": "HDMISelectType",
+                "type": "string",
+                "enum": [
+                    "start",
+                    "stop"
+                ]
+            },
+            "HDMIPreviewOptions": {
+                "title": "HDMIPreviewOptions",
+                "type": "object",
+                "required": [
+                    "holePunch"
+                ],
+                "properties": {
+                    "dimensions" : {
+                        "$ref": "#/components/schemas/HDMIVideoDimension"
+                    },
+                    "holePunch": {
+                        "description": "Used during preview modes where the player is showcased in a smaller dimension overlayed by the existing system ui application",
+                        "type": "boolean"
+                    }
+                },
+                "if": {
+                    "properties": {
+                        "holePunch": {
+                            "const": true
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "dimensions": {
+                            "required": true
+                        }
+                    }
+                }
+            },
+            "HDMIVideoDimension": {
+                "title": "HDMIVideoDimension",
+                "type": "object",
+                "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                ],
+                "properties": {
+                    "x": {
+                        "type": "number",
+                        "description": "x co-ordinate of the prevew",
+                        "default": 0,
+                        "minimum": 0
+                    },
+                    "y": {
+                        "type": "number",
+                        "description": "y co-ordinate of the prevew",
+                        "default": 0,
+                        "minimum": 0
+                    },
+                    "width": {
+                        "type": "number",
+                        "description": "width of the preview ",
+                        "default": 10,
+                        "minimum": 10
+                    },
+                    "height": {
+                        "type": "number",
+                        "description": "width of the preview ",
+                        "default": 10,
+                        "minimum": 10
                     }
                 }
             }
