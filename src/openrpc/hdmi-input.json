@@ -538,7 +538,9 @@
                     "properties": {
                         "edidVersion": {
                             "type": "string",
-                            "value":true
+                            "enum": [
+                                "1.4", "unknown"
+                            ]
                         }
                     }
                 },
