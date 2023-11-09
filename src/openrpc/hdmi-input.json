@@ -650,11 +650,9 @@
                     }
                 },
                 "then": {
-                    "properties": {
-                        "dimensions" : {
-                            "$ref": "#/components/schemas/HDMIVideoDimension"
-                        }
-                    }
+                    "required": [
+                        "dimensions"
+                    ]
                 }
             },
             "HDMIVideoDimension": {
