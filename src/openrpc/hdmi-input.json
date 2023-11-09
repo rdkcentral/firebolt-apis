@@ -647,9 +647,9 @@
                 },
                 "then": {
                     "properties": {
-                        "dimensions": {
-                            "required": true
-                        }
+                        "required": [
+                            "dimensions"
+                        ]
                     }
                 }
             },
