@@ -85,10 +85,7 @@ jobs:
         run: |
             echo "NPM DIST TAG ::: " ${{ env.NPM_DIST_TAG }}
             echo "Release Channel ::: " $RELEASE_CHANNEL
-            git config --global user.email "you@example.com"
-            git config --global user.name "Your Name"
-            npm version prerelease --preid $RELEASE_CHANNEL
-            npm version prerelease --preid $RELEASE_CHANNEL --workspaces
+            npm version prerelease --preid pr207 --workspaces --include-workspace-root --git-tag-version false
             npm publish --tag $RELEASE_CHANNEL --workspaces
       - name: Dry-run Firebolt SDKs to NPM
         if: steps.check_build.outputs.files_exists == 'true' && (github.ref_name == 'main' && github.event_name != 'workflow_dispatch')
