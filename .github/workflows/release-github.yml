@@ -71,6 +71,7 @@ jobs:
         run: |
           PRERELEASE=$(node ./src/js/version.mjs branch-to-prerelease $FEATURE_BRANCH)
           node ./src/js/version.mjs latest-prerelease $PRERELEASE
+          npm version prerelease --preid $PRERELEASE --git-tag-version false
           npm version prerelease --preid $PRERELEASE --workspaces --git-tag-version false
           npm run dist
       - name: Check if semantic-release created a build
