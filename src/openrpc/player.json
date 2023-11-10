@@ -21,7 +21,9 @@
         {
           "name": "playerId",
           "summary": "The id of the player to load content in",
-          "type": "string",
+          "schema": {
+            "type": "string"
+          },
           "required": true
         },
         {
