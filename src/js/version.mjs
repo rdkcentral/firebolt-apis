@@ -2,6 +2,7 @@
 
 import { readFile, writeFile } from 'fs/promises'
 import path from 'path'
+import { exec } from 'child_process'
 
 process.argv.shift()
 process.argv.shift()
@@ -10,22 +11,22 @@ const task = process.argv.shift()
 
 let inWorkspace = false
 let packageJson = await readFile(path.join('.', 'package.json'))
-                            .then(bytes => bytes.toString())
-                            .then(JSON.parse)
+    .then(bytes => bytes.toString())
+    .then(JSON.parse)
 
 if (!packageJson.workspaces) {
     inWorkspace = true
     packageJson = await readFile(path.join('..', '..', '..', 'package.json'))
-                            .then(bytes => bytes.toString())
-                            .then(JSON.parse)
+        .then(bytes => bytes.toString())
+        .then(JSON.parse)
 }
 
 const packageMain = packageJson
 
 if (task === 'sync') {
-    
+
     console.log()
-    
+
     await Promise.all(packageMain.workspaces.map(async workspace => {
         console.log(`Updating ${workspace}/package.json to version ${packageMain.version}.`)
         const packageWorkspace = await readFile(path.join('.', workspace, 'package.json'))
@@ -40,8 +41,8 @@ if (task === 'sync') {
 else if (task === 'channel') {
     const branch = process.argv.shift()
     const releaserc = await readFile(path.join('.', '.releaserc'))
-                            .then(bytes => bytes.toString())
-                            .then(JSON.parse)
+        .then(bytes => bytes.toString())
+        .then(JSON.parse)
 
     // default to 'test' channel if branch is unknown
     const config = releaserc.branches.find(b => b.name === branch) || { channel: branch.replace('/', '-') }
@@ -76,4 +77,27 @@ else if (task === 'validate') {
     }))
 
 
+} else if (task === 'latest-prerelease') {
+    const prerelease = process.argv.shift()
+    console.log('prerelease : ' + prerelease)
+    exec("npm show @firebolt-js/sdk versions --json", (error, result, errlog) => {
+        if (error) {
+            console.error(`error: ${error.message}`);
+            return;
+        }
+        let versions = JSON.parse(result).sort().reverse()
+        let matches = versions.filter(v => {
+            if (v.indexOf('-') !== -1) {
+                let prerel = v.substring(v.indexOf('-') + 1)
+                return prerel.startsWith(prerelease + '.')
+            }
+            return false
+        })
+        if (matches.length > 0) {
+            console.log('Setting package version to ' + matches[0])
+            exec("npm version " + matches[0] + " --workspaces")
+            return matches[0]
+        }
+        return null
+    });
 }
