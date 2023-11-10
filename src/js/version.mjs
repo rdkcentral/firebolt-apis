@@ -96,6 +96,7 @@ else if (task === 'validate') {
         })
         if (matches.length > 0) {
             console.log('Setting package version to ' + matches[0])
+            exec("npm version " + matches[0])
             exec("npm version " + matches[0] + " --workspaces")
             return matches[0]
         }
