@@ -101,4 +101,7 @@ else if (task === 'validate') {
         }
         return null
     });
+} else if (task === 'branch-to-prerelease') {
+    const branch = process.argv.shift()
+    console.log(branch.replace('/', '-'))
 }
