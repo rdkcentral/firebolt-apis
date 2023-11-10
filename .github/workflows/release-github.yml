@@ -38,22 +38,22 @@ jobs:
       - name: Set main tags
         if: github.ref_name == 'main' && github.event_name != 'pull_request'
         run: |
-          echo 'NPM_DIST_TAG="--tag latest"' >> $GITHUB_ENV
+          echo "NPM_DIST_TAG=--tag latest" >> $GITHUB_ENV
           echo "DOCS_TAG=latest" >> $GITHUB_ENV
       - name: Set next tags
         if: github.ref_name == 'next' && github.event_name != 'pull_request'
         run: |
-          echo 'NPM_DIST_TAG="--tag next"' >> $GITHUB_ENV
+          echo "NPM_DIST_TAG=--tag next" >> $GITHUB_ENV
           echo "DOCS_TAG=next" >> $GITHUB_ENV
       - name: Set feature branch tags
         if: github.ref_name != 'main' && github.ref_name != 'next' && github.event_name != 'pull_request'
         run: |
-          echo 'NPM_DIST_TAG="--tag test"' >> $GITHUB_ENV
+          echo "NPM_DIST_TAG=--tag test" >> $GITHUB_ENV
           echo "FEATURE_BRANCH=${{ github.ref_name }}" >> $GITHUB_ENV
       - name: Set PR tags
         if: github.ref_name != 'main' && github.ref_name != 'next' && github.event_name == 'pull_request'
         run: |
-          echo 'NPM_DIST_TAG="--tag test"' >> $GITHUB_ENV
+          echo "NPM_DIST_TAG=--tag test" >> $GITHUB_ENV
           echo "DOCS_TAG=$(node ./src/js/version.mjs branch-to-prerelease ${{ github.head_ref }})" >> $GITHUB_ENV
           echo "FEATURE_BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
       - name: Release mono-artifact to GitHub
