@@ -19,10 +19,16 @@
       "summary": "Loads content in a player and starts a media session",
       "params": [
         {
+          "name": "playerId",
+          "summary": "The id of the player to load content in",
+          "type": "string",
+          "required": true
+        },
+        {
           "name": "request",
           "summary": "The load request",
           "schema": {
-            "$ref": "#/components/schemas/PlayerLoadRequest"
+            "$ref": "#/components/schemas/LoadRequest"
           },
           "required": true
         }
@@ -38,9 +44,12 @@
           "name": "Default example #1",
           "params": [
             {
+              "name": "playerId",
+              "value": "app1:123"
+            },
+            {
               "name": "request",
               "value": {
-                "playerId": "app1:123",
                 "locator": "https://cdn.rdkcentral.com/media/assets/asset.hls"
               }
             }
@@ -76,9 +85,9 @@
         }
       ],
       "result": {
-        "name": "playResponse",
+        "name": "mediaSession",
         "schema": {
-          "const": null
+          "$ref": "#/components/schemas/PlayerMediaSession"
         }
       },
       "examples": [
@@ -91,8 +100,10 @@
             }
           ],
           "result": {
-            "name": "playResponse",
-            "value": null
+            "name": "mediaSession",
+            "value": {
+              "mediaSessionId": "sess1"
+            }
           }
         }
       ]
@@ -119,9 +130,9 @@
         }
       ],
       "result": {
-        "name": "stopResponse",
+        "name": "mediaSession",
         "schema": {
-          "const": null
+          "$ref": "#/components/schemas/PlayerMediaSession"
         }
       },
       "examples": [
@@ -134,8 +145,10 @@
             }
           ],
           "result": {
-            "name": "stopResponse",
-            "value": null
+            "name": "mediaSession",
+            "value": {
+              "mediaSessionId": "sess1"
+            }
           }
         }
       ]
@@ -315,8 +328,10 @@
             "value": {
               "correlationId": "abc",
               "parameters": {
-                "playerId": "app1:123",
-                "locator": "https://cdn.rdkcentral.com/media/assets/asset.hls"
+                "playerId": "123",
+                "request": {
+                  "locator": "https://cdn.rdkcentral.com/media/assets/asset.hls"
+                }
               }
             }
           }
@@ -361,7 +376,7 @@
             "value": {
               "correlationId": "abc",
               "parameters": {
-                "playerId": "app1:123"
+                "playerId": "123"
               }
             }
           }
@@ -406,7 +421,7 @@
             "value": {
               "correlationId": "abc",
               "parameters": {
-                "playerId": "app1:123"
+                "playerId": "123"
               }
             }
           }
@@ -627,18 +642,13 @@
   ],
   "components": {
     "schemas": {
-      "PlayerLoadRequest": {
-        "title": "PlayerLoadRequest",
+      "LoadRequest": {
+        "title": "LoadRequest",
         "type": "object",
         "required": [
-          "playerId",
           "locator"
         ],
         "properties": {
-          "playerId": {
-            "description": "The id of the player instance to load the locator into",
-            "type": "string"
-          },
           "locator": {
             "description": "A locator to the content to load",
             "type": "string",
@@ -655,16 +665,50 @@
         },
         "examples": [
           {
-            "playerId": "app1:123",
             "locator": "https://cdn.rdkcentral.com/media/assets/asset.hls"
           },
           {
-            "playerId": "app2:345",
             "locator": "https://cdn.rdkcentral.com/media/assets/asset-2.hls",
             "metadata": {
               "assetType": "linear"
             },
             "autoPlay": true
+          }
+        ]
+      },
+      "PlayerLoadRequest": {
+        "title": "PlayerLoadRequest",
+        "type": "object",
+        "required": [
+          "playerId",
+          "request"
+        ],
+        "properties": {
+          "playerId": {
+            "description": "The id of the player instance to load the locator into",
+            "type": "string"
+          },
+          "request": {
+            "description": "A request detailing what to load in the given player",
+            "$ref": "#/components/schemas/LoadRequest"
+          }
+        },
+        "examples": [
+          {
+            "playerId": "app1:123",
+            "request": {
+              "locator": "https://cdn.rdkcentral.com/media/assets/asset.hls"
+            }
+          },
+          {
+            "playerId": "app2:345",
+            "request": {
+              "locator": "https://cdn.rdkcentral.com/media/assets/asset-2.hls",
+              "metadata": {
+                "assetType": "linear"
+              },
+              "autoPlay": true
+            }
           }
         ]
       },
