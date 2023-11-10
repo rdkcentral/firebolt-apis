@@ -70,7 +70,10 @@ jobs:
         run: npx semantic-release --dry-run
       - name: Build artifacts for PRs
         if: github.event_name == 'pull_request'
-        run: npm run dist
+        run: |
+          npm version prerelease --preid pr207 --workspaces --git-tag-version false
+          npm version prerelease --preid pr207 --workspaces --include-workspace-root --git-tag-version false
+          npm run dist
       - name: Check if semantic-release created a build
         id: check_build
         uses: andstor/file-existence-action@v2
@@ -85,8 +88,6 @@ jobs:
         run: |
             echo "NPM DIST TAG ::: " ${{ env.NPM_DIST_TAG }}
             echo "Release Channel ::: " $RELEASE_CHANNEL
-            npm version prerelease --preid pr207 --workspaces --git-tag-version false
-            npm version prerelease --preid pr207 --workspaces --include-workspace-root --git-tag-version false
             npm publish --tag $RELEASE_CHANNEL --workspaces
       - name: Dry-run Firebolt SDKs to NPM
         if: steps.check_build.outputs.files_exists == 'true' && (github.ref_name == 'main' && github.event_name != 'workflow_dispatch')
