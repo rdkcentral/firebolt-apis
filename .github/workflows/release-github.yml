@@ -51,6 +51,7 @@ jobs:
         run: |
           echo "Setting RELEASE_CHANNEL to '$(node ./src/js/version.mjs channel $NPM_DIST_TAG)' using branch name '$NPM_DIST_TAG'"
           echo "RELEASE_CHANNEL=$(node ./src/js/version.mjs channel $NPM_DIST_TAG)" >> $GITHUB_ENV
+          echo "EVENT NAME ::: " ${{ github.event.number }}
       - name: Override release channel for PRs
         if: github.event_name == 'pull_request'
         run: |
@@ -69,10 +70,10 @@ jobs:
           npm_config_tag: ${{ env.NPM_DIST_TAG }} # <-- For main, this is `latest.` Otherwise, `next`, `next-major`, etc. See ./.releaserc for release branch config.
         run: npx semantic-release --dry-run
       - name: Build artifacts for PRs
-        if: github.event_name == 'pull_request'
+        if: github.ref_name != 'main' && github.ref_name != 'next'
         run: |
-          npm version prerelease --preid pr207 --workspaces --git-tag-version false
-          npm version prerelease --preid pr207 --workspaces --include-workspace-root --git-tag-version false
+          npm version prerelease --preid $RELEASE_CHANNEL --workspaces --git-tag-version false
+          npm version prerelease --preid $RELEASE_CHANNEL --workspaces --include-workspace-root --git-tag-version false
           npm run dist
       - name: Check if semantic-release created a build
         id: check_build
