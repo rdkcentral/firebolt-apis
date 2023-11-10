@@ -54,7 +54,7 @@ jobs:
         if: github.ref_name != 'main' && github.ref_name != 'next' && github.event_name == 'pull_request'
         run: |
           echo 'NPM_DIST_TAG=""' >> $GITHUB_ENV
-          echo "DOCS_TAG=${{ github.head_ref }}" >> $GITHUB_ENV
+          echo "DOCS_TAG=$(node ./src/js/version.mjs branch-to-prerelease ${{ github.head_ref }}" >> $GITHUB_ENV
           echo "FEATURE_BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
       - name: Release mono-artifact to GitHub
         if: (github.ref_name != 'main' && github.event_name != 'pull_request') || github.event_name == 'workflow_dispatch'
