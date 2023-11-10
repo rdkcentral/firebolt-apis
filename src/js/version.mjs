@@ -78,6 +78,7 @@ else if (task === 'validate') {
 
 
 } else if (task === 'latest-prerelease') {
+    console.log('Finding the latest prerelease')
     const prerelease = process.argv.shift()
     console.log('prerelease : ' + prerelease)
     exec("npm show @firebolt-js/sdk versions --json", (error, result, errlog) => {

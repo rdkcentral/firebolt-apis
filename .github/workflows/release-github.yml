@@ -45,11 +45,17 @@ jobs:
         run: |
           echo 'NPM_DIST_TAG="--tag next"' >> $GITHUB_ENV
           echo "DOCS_TAG=next" >> $GITHUB_ENV
+      - name: Set feature branch tags
+        if: github.ref_name != 'main' && github.ref_name != 'next' && github.event_name != 'pull_request'
+        run: |
+          echo 'NPM_DIST_TAG=""' >> $GITHUB_ENV
+          echo "FEATURE_BRANCH=${{ github.ref_name }}" >> $GITHUB_ENV
       - name: Set PR tags
         if: github.ref_name != 'main' && github.ref_name != 'next' && github.event_name == 'pull_request'
         run: |
           echo 'NPM_DIST_TAG=""' >> $GITHUB_ENV
           echo "DOCS_TAG=${{ github.head_ref }}" >> $GITHUB_ENV
+          echo "FEATURE_BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
       - name: Release mono-artifact to GitHub
         if: (github.ref_name != 'main' && github.event_name != 'pull_request') || github.event_name == 'workflow_dispatch'
         env:
@@ -63,8 +69,8 @@ jobs:
       - name: Build artifacts for feature branches
         if: github.ref_name != 'main' && github.ref_name != 'next'
         run: |
-          $(node ./src/js/version.mjs latest-prerelease ${{ github.ref_name }})
-          npm version prerelease --preid ${{ github.ref_name }} --workspaces --git-tag-version false
+          $(node ./src/js/version.mjs latest-prerelease $FEATURE_BRANCH)
+          npm version prerelease --preid $FEATURE_BRANCH --workspaces --git-tag-version false
           npm run dist
       - name: Check if semantic-release created a build
         id: check_build
