@@ -12,7 +12,6 @@ on:
     branches: 
       - 'next'
       - 'proposed'
-
 env:
   HUSKY: 0
 jobs:
@@ -51,12 +50,11 @@ jobs:
         run: |
           echo "Setting RELEASE_CHANNEL to '$(node ./src/js/version.mjs channel $NPM_DIST_TAG)' using branch name '$NPM_DIST_TAG'"
           echo "RELEASE_CHANNEL=$(node ./src/js/version.mjs channel $NPM_DIST_TAG)" >> $GITHUB_ENV
-          echo "EVENT NAME ::: " ${{ github.event.number }}
       - name: Override release channel for PRs
         if: github.event_name == 'pull_request'
         run: |
-          echo "Setting RELEASE_CHANNEL to 'pr${{ github.event.number }}'"
-          echo "RELEASE_CHANNEL=pr${{ github.event.number }}" >> $GITHUB_ENV
+          echo "Setting RELEASE_CHANNEL to '$(node ./src/js/version.mjs channel ${{ github.head_ref }})' using branch name ${{ github.head_ref }}"
+          echo "RELEASE_CHANNEL=$(node ./src/js/version.mjs channel ${{ github.head_ref }})" >> $GITHUB_ENV
       - name: Release mono-artifact to GitHub
         if: (github.ref_name != 'main' && github.event_name != 'pull_request') || github.event_name == 'workflow_dispatch'
         env:
@@ -107,7 +105,7 @@ jobs:
         if: steps.check_build.outputs.files_exists == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
-          npm_config_tag: ${{ env.NPM_DIST_TAG }} # <-- For main, this is `latest.` Otherwise, `next`, `next-major`, etc. See ./.releaserc for release branch config.
+          # npm_config_tag: ${{ env.NPM_DIST_TAG }} # <-- For main, this is `latest.` Otherwise, `next`, `next-major`, etc. See ./.releaserc for release branch config.
         run: |
           npm run publish:docs /tmp/firebolt-docs $RELEASE_CHANNEL
           cd /tmp/firebolt-docs
