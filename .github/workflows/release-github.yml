@@ -69,7 +69,7 @@ jobs:
       - name: Build artifacts for feature branches
         if: github.ref_name != 'main' && github.ref_name != 'next'
         run: |
-          $(node ./src/js/version.mjs latest-prerelease $FEATURE_BRANCH)
+          node ./src/js/version.mjs latest-prerelease $FEATURE_BRANCH
           npm version prerelease --preid $FEATURE_BRANCH --workspaces --git-tag-version false
           npm run dist
       - name: Check if semantic-release created a build
