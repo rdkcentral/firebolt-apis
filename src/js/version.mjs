@@ -96,8 +96,8 @@ else if (task === 'validate') {
         })
         if (matches.length > 0) {
             console.log('Setting package version to ' + matches[0])
-            console.log(execSync("npm version " + matches[0] + " --git-tag-version false"))
-            console.log(execSync("npm version " + matches[0] + " --workspaces --git-tag-version false"))
+            console.log(execSync("npm version " + matches[0] + " --git-tag-version false --allow-same-version true"))
+            console.log(execSync("npm version " + matches[0] + " --workspaces --git-tag-version false --allow-same-version true"))
             return matches[0]
         }
         return null
