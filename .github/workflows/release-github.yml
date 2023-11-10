@@ -70,8 +70,8 @@ jobs:
       - name: Build artifacts for feature branches
         if: github.ref_name != 'main' && github.ref_name != 'next'
         run: |
-          npm version prerelease --preid $RELEASE_CHANNEL --workspaces --git-tag-version false
-          npm version prerelease --preid $RELEASE_CHANNEL --workspaces --include-workspace-root --git-tag-version false
+          # npm version prerelease --preid $RELEASE_CHANNEL --workspaces --git-tag-version false
+          # npm version prerelease --preid $RELEASE_CHANNEL --workspaces --include-workspace-root --git-tag-version false
           npm run dist
       - name: Check if semantic-release created a build
         id: check_build
