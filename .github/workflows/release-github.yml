@@ -85,6 +85,8 @@ jobs:
         run: |
             echo "NPM DIST TAG ::: " ${{ env.NPM_DIST_TAG }}
             echo "Release Channel ::: " $RELEASE_CHANNEL
+            git config --global user.email "you@example.com"
+            git config --global user.name "Your Name"
             npm version prerelease --preid $RELEASE_CHANNEL
             npm version prerelease --preid $RELEASE_CHANNEL --workspaces
             npm publish --tag $RELEASE_CHANNEL --workspaces
