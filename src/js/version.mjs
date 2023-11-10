@@ -2,7 +2,7 @@
 
 import { readFile, writeFile } from 'fs/promises'
 import path from 'path'
-import { exec } from 'child_process'
+import { exec, execSync } from 'child_process'
 
 process.argv.shift()
 process.argv.shift()
@@ -96,8 +96,8 @@ else if (task === 'validate') {
         })
         if (matches.length > 0) {
             console.log('Setting package version to ' + matches[0])
-            exec("npm version " + matches[0])
-            exec("npm version " + matches[0] + " --workspaces")
+            console.log(execSync("npm version " + matches[0]))
+            console.log(execSync("npm version " + matches[0] + " --workspaces"))
             return matches[0]
         }
         return null
