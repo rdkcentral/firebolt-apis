@@ -177,12 +177,6 @@ function channel(version) {
         parts.shift()
         const chnl = parts.join("-").split(".").shift()
         return chnl
-        // if (['next', 'next-major', 'test'].includes(chnl)) {
-        //     return chnl
-        // }
-        // else {
-        //     return 'test'
-        // }
     }
     else {
         return 'latest'

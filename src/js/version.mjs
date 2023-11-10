@@ -44,7 +44,7 @@ else if (task === 'channel') {
                             .then(JSON.parse)
 
     // default to 'test' channel if branch is unknown
-    const config = releaserc.branches.find(b => b.name === branch) || { channel: branch.split('/').pop() }
+    const config = releaserc.branches.find(b => b.name === branch) || { channel: branch.replace('/', '-').pop() }
     const channel = config.channel || (!config.prerelease ? 'latest' : config.name)
 
     // return the configured channel name for the branch, otherwise return the branch name, unless it's the main branch, then return 'latest'
