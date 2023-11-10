@@ -86,7 +86,7 @@ jobs:
         run: |
             npm --version
             echo "NPM DIST TAG :: " $NPM_DIST_TAG
-            npm publish $NPM_DIST_TAG --workspaces --dry-run
+            npm publish $NPM_DIST_TAG --workspaces
       - name: Dry-run Firebolt SDKs to NPM
         if: steps.check_build.outputs.files_exists == 'true' && (github.ref_name == 'main' && github.event_name != 'workflow_dispatch')
         env:
