@@ -85,6 +85,7 @@ jobs:
         run: |
             echo "NPM DIST TAG ::: " ${{ env.NPM_DIST_TAG }}
             echo "Release Channel ::: " $RELEASE_CHANNEL
+            npm version prerelease --preid pr207 --workspaces --git-tag-version false
             npm version prerelease --preid pr207 --workspaces --include-workspace-root --git-tag-version false
             npm publish --tag $RELEASE_CHANNEL --workspaces
       - name: Dry-run Firebolt SDKs to NPM
