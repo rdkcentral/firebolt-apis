@@ -311,16 +311,3 @@ HDMIInput.select('HDMI1','stop').then(() => {
   console.log("Successfully un selected HDMI1 port");
 })
 ```
-
-
-### 9.2 HDMI Select Preview Mode
-
-Most of the modern system ui applications support showcasing the preview of the HDMI player within the tile. To support such feature we need the platform to create a `Hole Punch` around the Hdmi Video playback. To support this feature `HDMInput.select` api offers a `HDMIPreviewOptions` schema structure.
-
-The `HDMIPreviewOptions` schema **MUST** be specified with the `holePunch` field.
-If the `holePunch` field is set to `true` then the parameters **MUST** include the `dimensions` field for the `HDMIPreviewOptions`.
-```javascript
-HDMIInput.select('HDMI1','start', {"holdPunch": true, "dimensions": {"x":10, y: 10, "width":100, "height": 100}}).then(() => {
-  console.log("Successfully selected HDMI1 port");
-})
-```
