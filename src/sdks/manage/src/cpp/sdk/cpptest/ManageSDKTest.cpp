@@ -28,6 +28,7 @@ ManageSDKTest::OnPreferredAudioLanguagesChangedNotification ManageSDKTest::_pref
 #ifdef RPC_ONLY
 ManageSDKTest::OnRequestChallengeNotification ManageSDKTest::_requestChallengeNotification;
 #endif
+ManageSDKTest::KeyboardProvider ManageSDKTest::_keyboardProvider;
 
 void ManageSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
@@ -99,7 +100,7 @@ void ManageSDKTest::SetDeviceName()
     }
 }
 
-void ManageSDKTest::OnDeviceNameChangedNotification::onDeviceNameChanged( const std::string& name )
+void ManageSDKTest::OnDeviceNameChangedNotification::onDeviceNameChanged( const std::string& name)
 {
     cout << "Name changed, new name --> " << name << endl;
 }
@@ -270,7 +271,7 @@ void ManageSDKTest::SetLocalizationPreferredAudioLanguages()
     }
 }
 
-void ManageSDKTest::OnPreferredAudioLanguagesChangedNotification::onPreferredAudioLanguagesChanged( const std::vector<std::string>& languages )
+void ManageSDKTest::OnPreferredAudioLanguagesChangedNotification::onPreferredAudioLanguagesChanged( const std::vector<std::string>& languages)
 {
     cout << "PreferredAudioLanguages Changed, new languages --> " << endl;
     for (auto language : languages) {
@@ -342,3 +343,78 @@ void ManageSDKTest::UnsubscribePinChallengeRequestChallenge()
     }
 }
 #endif
+
+ManageSDKTest::KeyboardProvider::KeyboardProvider()
+    : _session(nullptr)
+    , _parameters()
+    , _keyInput(false)
+{
+}
+
+void ManageSDKTest::KeyboardProvider::keyboardLoop()
+{
+    if (_keyInput) {
+        cout << " Invoking _session->focus " << endl;
+        _session->focus();
+        getchar();
+
+        string key;
+        cout << _parameters.message << " : ";
+        getline(cin, key);
+        cout<< " key --> " << key;
+        Firebolt::Keyboard::KeyboardResult keyboardResult;
+        keyboardResult.text = key;
+        keyboardResult.canceled = false;
+        cout << " Invoking _session->result " << endl;
+        _session->result(keyboardResult);
+
+        key = "";
+        cout<< "\n Enter error message too for testing --> " << key;
+        getline(cin, key);
+        Firebolt::Keyboard::KeyboardError keyboardError;
+        keyboardError.code = 123;
+        keyboardError.message = key;
+        cout << " Invoking _session->error " << endl;
+        _session->error(keyboardError);
+
+        _keyInput = false;
+        cin.putback('\n');
+    } else {
+        cout << " there is no active keyboard input session " << endl;
+    }
+}
+
+void ManageSDKTest::KeyboardProvider::standard(const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session)
+{
+    cout << "KeyboardProvider Standard is invoked" << endl;
+    startKeyboardSession(parameters, std::move(session));
+}
+
+void ManageSDKTest::KeyboardProvider::password(const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session)
+{
+    cout << "KeyboardProvider Password is invoked" << endl;
+    startKeyboardSession(parameters, std::move(session));
+}
+
+void ManageSDKTest::KeyboardProvider::email(const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session)
+{
+    cout << "KeyboardProvider Email is invoked" << endl;
+    startKeyboardSession(parameters, std::move(session));
+}
+
+void ManageSDKTest::KeyboardProvider::startKeyboardSession( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session )
+{
+    _session = std::move(session);
+    _parameters = parameters;
+    _keyInput = true;
+}
+
+void ManageSDKTest::RegisterKeyboardProvider()
+{
+    Firebolt::IFireboltAccessor::Instance().KeyboardInterface().provide(_keyboardProvider);
+}
+
+void ManageSDKTest::SendMessageToKeyboardProvider()
+{
+    _keyboardProvider.keyboardLoop();
+}

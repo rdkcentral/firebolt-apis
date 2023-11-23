@@ -42,11 +42,28 @@ class ManageSDKTest {
     };
 
 #ifdef RPC_ONLY
-    struct OnRequestChallengeNotification : public Firebolt::PinChallenge::IPinChallenge::IOnRequestChallengeNotification {
+    class OnRequestChallengeNotification : public Firebolt::PinChallenge::IPinChallenge::IOnRequestChallengeNotification {
     public:
         void onRequestChallenge( const Firebolt::PinChallenge::PinChallengeProviderRequest& ) override;
     };
 #endif
+    class KeyboardProvider : public Firebolt::Keyboard::IKeyboardProvider {
+    public:
+        KeyboardProvider();
+        ~KeyboardProvider() override = default;
+        void standard( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session ) override;
+        void password( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session ) override;
+        void email( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session ) override;
+        void keyboardLoop();
+
+    private:
+        void startKeyboardSession(const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session);
+
+    private:
+        std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> _session;
+        Firebolt::Keyboard::KeyboardParameters _parameters;
+        bool _keyInput;
+    };
 public:
     ManageSDKTest() = default;
     virtual ~ManageSDKTest() = default;
@@ -74,6 +91,8 @@ public:
     static void SubscribePinChallengeRequestChallenge();
     static void UnsubscribePinChallengeRequestChallenge();
 #endif
+    static void RegisterKeyboardProvider();
+    static void SendMessageToKeyboardProvider();
     static bool WaitOnConnectionReady();
 
 private:
@@ -86,5 +105,6 @@ private:
 #ifdef RPC_ONLY
     static OnRequestChallengeNotification _requestChallengeNotification;
 #endif
+    static KeyboardProvider _keyboardProvider;
 };
 

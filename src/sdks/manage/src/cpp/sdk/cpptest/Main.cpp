@@ -3,7 +3,7 @@
 
 void ShowMenu()
 {
-    printf("Enter\n"
+    printf("Options ---- >\n"
            "\tN : Get Device Name\n"
            "\tS : Set Device Name\n"
            "\tC : Subscribe/Unsubscribe for Device Name Change\n"
@@ -19,6 +19,8 @@ void ShowMenu()
 #ifdef RPC_ONLY
            "\tP : Subscribe/Unsubscribe for PinChallenge RequestChallenge\n"
 #endif
+           "\tD : Register for Keyboard Provider\n"
+           "\tE : Send Keyboard Result to Provider\n"
            "\tQ : Quit\n\n"
           );
 }
@@ -131,6 +133,13 @@ int main (int argc, char* argv[])
                 break;
             }
 #endif
+            case 'D': {
+                ManageSDKTest::RegisterKeyboardProvider();
+                break;
+            }
+            case 'E': {
+                ManageSDKTest::SendMessageToKeyboardProvider();
+            }
             default:
                 break;
             }
