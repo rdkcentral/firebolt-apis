@@ -1,4 +1,4 @@
-
+#include <getopt.h>
 #include "ManageSDKTest.h"
 
 void ShowMenu()
@@ -16,13 +16,19 @@ void ShowMenu()
            "\tL : Get Localization Preferred AudioLanguages\n"
            "\tA : Set Localization Preferred AudioLanguages\n"
            "\tR : Subscribe/Unsubscribe for Localization Preferred AudioLanguages Change\n"
-#ifdef RPC_ONLY
-           "\tP : Subscribe/Unsubscribe for PinChallenge RequestChallenge\n"
-#endif
-           "\tD : Register for Keyboard Provider\n"
-           "\tE : Send Keyboard Result to Provider\n"
+           "\tD : Register for Keyboard Provider and check sequence\n"
+           "\tK : Register for Acknowledge Challenge Provider and check sequence\n"
+           "\tP : Register for Pin Challenge Provider and check sequence\n"
            "\tQ : Quit\n\n"
           );
+}
+
+void ShowProviderMenu(std::string& module)
+{
+    printf("Invoke %s onRequest sequence from other entity and press\n"
+         "\tR: To Send Response\n"
+         "\tE: To Send Error\n"
+         "\tQ : Quit\n", module.c_str());
 }
 
 void ShowEventMenu()
@@ -56,21 +62,52 @@ void ShowEventMenu()
     } while (opt != 'Q'); \
 }
 
+#define VALUE(string) #string
+#define TO_STRING(string) VALUE(string)
+#define HandleProviderSequence(Module) \
+{ \
+    int opt; \
+    do { \
+        getchar(); \
+        std::string module = TO_STRING(Module); \
+        ShowProviderMenu(module); \
+        printf("Enter option : "); \
+        opt = toupper(getchar()); \
+        switch (opt) { \
+        case 'R': { \
+            ManageSDKTest::SendResponseMessageTo##Module##Provider(); \
+            break; \
+        } \
+        case 'E': { \
+            ManageSDKTest::SendErrorMessageTo##Module##Provider(); \
+            break; \
+        } \
+        default: \
+            break; \
+        } \
+    } while (opt != 'Q'); \
+}
+
+#define options ":hu:"
 int main (int argc, char* argv[])
 {
-    char* config = "{\
-    \"waitTime\": 1000,\
-    \"logLevel\": \"Info\",\
-    \"workerPool\":{\
-        \"queueSize\": 8,\
-        \"threadCount\": 3\
-    },\
-    \"wsUrl\": \"ws://127.0.0.1:9998\"\
-}";
+    int c;
+    std::string url = "ws://127.0.0.1:9998";
+    while ((c = getopt (argc, argv, options)) != -1) {
+        switch (c)
+        {
+            case 'u':
+                 url = optarg;
+                 break;
+
+            case 'h':
+                 printf("./TestFireboltManage -u ws://ip:port\n");
+		 exit(1);
+        }
+    }
 
     printf("Firebolt Manage SDK Test\n");
-    
-    ManageSDKTest::CreateFireboltInstance();
+    ManageSDKTest::CreateFireboltInstance(url);
     int option;
 
     if (ManageSDKTest::WaitOnConnectionReady() == true) {
@@ -135,10 +172,18 @@ int main (int argc, char* argv[])
 #endif
             case 'D': {
                 ManageSDKTest::RegisterKeyboardProvider();
+                HandleProviderSequence(Keyboard)
                 break;
             }
-            case 'E': {
-                ManageSDKTest::SendMessageToKeyboardProvider();
+            case 'K': {
+                ManageSDKTest::RegisterAcknowledgeChallengeProvider();
+                HandleProviderSequence(AcknowledgeChallenge)
+                break;
+            }
+            case 'P': {
+                ManageSDKTest::RegisterPinChallengeProvider();
+                HandleProviderSequence(PinChallenge)
+                break;
             }
             default:
                 break;

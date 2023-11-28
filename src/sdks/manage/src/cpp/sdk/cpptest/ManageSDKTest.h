@@ -54,7 +54,7 @@ class ManageSDKTest {
         void standard( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session ) override;
         void password( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session ) override;
         void email( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session ) override;
-        void keyboardLoop();
+        void SendMessage(bool response);
 
     private:
         void startKeyboardSession(const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session);
@@ -64,11 +64,42 @@ class ManageSDKTest {
         Firebolt::Keyboard::KeyboardParameters _parameters;
         bool _keyInput;
     };
+    class AcknowledgeChallengeProvider : public Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeProvider {
+    public:
+        AcknowledgeChallengeProvider();
+        ~AcknowledgeChallengeProvider() override = default;
+	void challenge( const Firebolt::AcknowledgeChallenge::Challenge& parameters, std::unique_ptr<Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeSession> session ) override;
+        void SendMessage(bool response);
+
+    private:
+        void startAcknowledgeChallengeSession(const Firebolt::AcknowledgeChallenge::Challenge& parameters, std::unique_ptr<Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeSession> session);
+
+    private:
+        std::unique_ptr<Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeSession> _session;
+        Firebolt::AcknowledgeChallenge::Challenge _parameters;
+        bool _challengeInput;
+    };
+    class PinChallengeProvider : public Firebolt::PinChallenge::IPinChallengeProvider {
+    public:
+        PinChallengeProvider();
+        ~PinChallengeProvider() override = default;
+	void challenge( const Firebolt::PinChallenge::PinChallenge& parameters, std::unique_ptr<Firebolt::PinChallenge::IPinChallengeSession> session ) override;
+        void SendMessage(bool response);
+
+    private:
+        void startPinChallengeSession(const Firebolt::PinChallenge::PinChallenge& parameters, std::unique_ptr<Firebolt::PinChallenge::IPinChallengeSession> session);
+
+    private:
+        std::unique_ptr<Firebolt::PinChallenge::IPinChallengeSession> _session;
+        Firebolt::PinChallenge::PinChallenge _parameters;
+        bool _challengeInput;
+    };
+
 public:
     ManageSDKTest() = default;
     virtual ~ManageSDKTest() = default;
 
-    static void CreateFireboltInstance();
+    static void CreateFireboltInstance(const std::string& url);
     static void DestroyFireboltInstance();
     static void TestManageStaticSDK();
     static void GetDeviceName();
@@ -92,7 +123,15 @@ public:
     static void UnsubscribePinChallengeRequestChallenge();
 #endif
     static void RegisterKeyboardProvider();
-    static void SendMessageToKeyboardProvider();
+    static void SendResponseMessageToKeyboardProvider();
+    static void SendErrorMessageToKeyboardProvider();
+
+    static void RegisterAcknowledgeChallengeProvider();
+    static void SendResponseMessageToAcknowledgeChallengeProvider();
+    static void SendErrorMessageToAcknowledgeChallengeProvider();
+    static void RegisterPinChallengeProvider();
+    static void SendResponseMessageToPinChallengeProvider();
+    static void SendErrorMessageToPinChallengeProvider();
     static bool WaitOnConnectionReady();
 
 private:
@@ -106,5 +145,7 @@ private:
     static OnRequestChallengeNotification _requestChallengeNotification;
 #endif
     static KeyboardProvider _keyboardProvider;
+    static AcknowledgeChallengeProvider _acknowledgeChallengeProvider;
+    static PinChallengeProvider _pinChallengeProvider;
 };
 

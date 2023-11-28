@@ -29,6 +29,8 @@ ManageSDKTest::OnPreferredAudioLanguagesChangedNotification ManageSDKTest::_pref
 ManageSDKTest::OnRequestChallengeNotification ManageSDKTest::_requestChallengeNotification;
 #endif
 ManageSDKTest::KeyboardProvider ManageSDKTest::_keyboardProvider;
+ManageSDKTest::AcknowledgeChallengeProvider ManageSDKTest::_acknowledgeChallengeProvider;
+ManageSDKTest::PinChallengeProvider ManageSDKTest::_pinChallengeProvider;
 
 void ManageSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
@@ -36,7 +38,7 @@ void ManageSDKTest::ConnectionChanged(const bool connected, const Firebolt::Erro
     _connected = connected;
 }
 
-void ManageSDKTest::CreateFireboltInstance()
+void ManageSDKTest::CreateFireboltInstance(const std::string& url)
 {
     const std::string config = "{\
             \"waitTime\": 1000,\
@@ -45,8 +47,7 @@ void ManageSDKTest::CreateFireboltInstance()
             \"queueSize\": 8,\
             \"threadCount\": 3\
             },\
-            \"wsUrl\": \"ws://127.0.0.1:9998\"\
-            }";
+            \"wsUrl\": " + url + "}";
 
     _connected = false;
     Firebolt::IFireboltAccessor::Instance().Initialize(config);
@@ -351,7 +352,7 @@ ManageSDKTest::KeyboardProvider::KeyboardProvider()
 {
 }
 
-void ManageSDKTest::KeyboardProvider::keyboardLoop()
+void ManageSDKTest::KeyboardProvider::SendMessage(bool response)
 {
     if (_keyInput) {
         cout << " Invoking _session->focus " << endl;
@@ -361,22 +362,20 @@ void ManageSDKTest::KeyboardProvider::keyboardLoop()
         string key;
         cout << _parameters.message << " : ";
         getline(cin, key);
-        cout<< " key --> " << key;
-        Firebolt::Keyboard::KeyboardResult keyboardResult;
-        keyboardResult.text = key;
-        keyboardResult.canceled = false;
-        cout << " Invoking _session->result " << endl;
-        _session->result(keyboardResult);
-
-        key = "";
-        cout<< "\n Enter error message too for testing --> " << key;
-        getline(cin, key);
-        Firebolt::Keyboard::KeyboardError keyboardError;
-        keyboardError.code = 123;
-        keyboardError.message = key;
-        cout << " Invoking _session->error " << endl;
-        _session->error(keyboardError);
-
+        if (response) {
+            Firebolt::Keyboard::KeyboardResult keyboardResult;
+            keyboardResult.text = key;
+            keyboardResult.canceled = false;
+            cout << " Invoking _session->result " << endl;
+            _session->result(keyboardResult);
+        } else {
+            Firebolt::Keyboard::KeyboardError keyboardError;
+            keyboardError.code = 123;
+            keyboardError.message = key;
+            keyboardError.data = "nothing to send";
+            cout << " Invoking _session->error " << endl;
+            _session->error(keyboardError);
+        }
         _keyInput = false;
         cin.putback('\n');
     } else {
@@ -414,7 +413,149 @@ void ManageSDKTest::RegisterKeyboardProvider()
     Firebolt::IFireboltAccessor::Instance().KeyboardInterface().provide(_keyboardProvider);
 }
 
-void ManageSDKTest::SendMessageToKeyboardProvider()
+void ManageSDKTest::SendResponseMessageToKeyboardProvider()
 {
-    _keyboardProvider.keyboardLoop();
+    _keyboardProvider.SendMessage(true);
+}
+
+void ManageSDKTest::SendErrorMessageToKeyboardProvider()
+{
+    _keyboardProvider.SendMessage(false);
+}
+
+ManageSDKTest::AcknowledgeChallengeProvider::AcknowledgeChallengeProvider()
+    : _session(nullptr)
+    , _parameters()
+    , _challengeInput(false)
+{
+}
+
+void ManageSDKTest::AcknowledgeChallengeProvider::SendMessage(bool response)
+{
+    if (_challengeInput) {
+        cout << " Invoking _session->focus " << endl;
+        _session->focus();
+        getchar();
+        cout << " capability : " << _parameters.capability << endl;
+        cout << " id : " << _parameters.requestor.id << endl;
+        cout << " name : " << _parameters.requestor.name << endl;
+        if (response) {
+            Firebolt::AcknowledgeChallenge::GrantResult challengeResult;
+            challengeResult.granted = true;
+            cout << " Invoking _session->result " << endl;
+            _session->result(challengeResult);
+        } else {
+            string key;
+            getline(cin, key);
+
+            Firebolt::AcknowledgeChallenge::AcknowledgeChallengeError challengeError;
+            challengeError.code = 234;
+            challengeError.message = key;
+            cout << " Invoking _session->error " << endl;
+            _session->error(challengeError);
+            cin.putback('\n');
+        }
+        _challengeInput = false;
+    } else {
+        cout << " there is no active acknowledge challenge input session " << endl;
+    }
+}
+
+void ManageSDKTest::AcknowledgeChallengeProvider::challenge(const Firebolt::AcknowledgeChallenge::Challenge& parameters, std::unique_ptr<Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeSession> session)
+{
+    cout << "KeyboardProvider Standard is invoked" << endl;
+    startAcknowledgeChallengeSession(parameters, std::move(session));
+}
+
+void ManageSDKTest::AcknowledgeChallengeProvider::startAcknowledgeChallengeSession( const Firebolt::AcknowledgeChallenge::Challenge& parameters, std::unique_ptr<Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeSession> session )
+{
+    _session = std::move(session);
+    _parameters = parameters;
+    _challengeInput = true;
+}
+
+void ManageSDKTest::RegisterAcknowledgeChallengeProvider()
+{
+    Firebolt::IFireboltAccessor::Instance().AcknowledgeChallengeInterface().provide(_acknowledgeChallengeProvider);
+}
+
+void ManageSDKTest::SendResponseMessageToAcknowledgeChallengeProvider()
+{
+    _acknowledgeChallengeProvider.SendMessage(true);
+}
+
+void ManageSDKTest::SendErrorMessageToAcknowledgeChallengeProvider()
+{
+    _acknowledgeChallengeProvider.SendMessage(false);
+}
+
+ManageSDKTest::PinChallengeProvider::PinChallengeProvider()
+    : _session(nullptr)
+    , _parameters()
+    , _challengeInput(false)
+{
+}
+
+void ManageSDKTest::PinChallengeProvider::SendMessage(bool response)
+{
+    if (_challengeInput) {
+        cout << " Invoking _session->focus " << endl;
+        _session->focus();
+        getchar();
+        cout << " pinSpace : " << static_cast<int>(_parameters.pinSpace) << endl;
+        if (_parameters.capability.has_value()) {
+	    cout << " capability : " << _parameters.capability.value() << endl;
+        }
+        cout << " id : " << _parameters.requestor.id << endl;
+        cout << " name : " << _parameters.requestor.name << endl;
+
+        if (response) {
+            Firebolt::PinChallenge::PinChallengeResult challengeResult;
+            challengeResult.granted = true;
+            challengeResult.reason = Firebolt::PinChallenge::ResultReason::CORRECT_PIN;
+            cout << " Invoking _session->result " << endl;
+            _session->result(challengeResult);
+        } else {
+            string key;
+            getline(cin, key);
+
+            Firebolt::PinChallenge::PinChallengeError challengeError;
+            challengeError.code = 234;
+            challengeError.message = key;
+            cout << " Invoking _session->error " << endl;
+            _session->error(challengeError);
+            cin.putback('\n');
+        }
+        _challengeInput = false;
+    } else {
+        cout << " there is no active pin challenge input session " << endl;
+    }
+}
+
+void ManageSDKTest::PinChallengeProvider::challenge(const Firebolt::PinChallenge::PinChallenge& parameters, std::unique_ptr<Firebolt::PinChallenge::IPinChallengeSession> session)
+{
+    cout << "KeyboardProvider Standard is invoked" << endl;
+    startPinChallengeSession(parameters, std::move(session));
+}
+
+void ManageSDKTest::PinChallengeProvider::startPinChallengeSession( const Firebolt::PinChallenge::PinChallenge& parameters, std::unique_ptr<Firebolt::PinChallenge::IPinChallengeSession> session )
+{
+    _session = std::move(session);
+    _parameters = parameters;
+    _challengeInput = true;
+}
+
+void ManageSDKTest::RegisterPinChallengeProvider()
+{
+    Firebolt::IFireboltAccessor::Instance().PinChallengeInterface().provide(_pinChallengeProvider);
+}
+
+void ManageSDKTest::SendResponseMessageToPinChallengeProvider()
+{
+    _pinChallengeProvider.SendMessage(true);
+}
+
+void ManageSDKTest::SendErrorMessageToPinChallengeProvider()
+{
+    _pinChallengeProvider.SendMessage(false);
 }
