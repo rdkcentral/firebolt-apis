@@ -47,12 +47,14 @@ public:
     CoreSDKTest() = default;
     virtual ~CoreSDKTest() = default;
 
-    static void CreateFireboltInstance();
+    static void CreateFireboltInstance(const std::string& url);
     static void DestroyFireboltInstance();
     static void TestCoreStaticSDK();
     static void GetDeviceName();
     static void SubscribeDeviceNameChanged();
     static void UnsubscribeDeviceNameChanged();
+    static void GetDeviceModel();
+    static void GetDeviceSKU();
     static void GetDeviceAudio();
     static void SubscribeDeviceAudioChanged();
     static void UnsubscribeDeviceAudioChanged();
@@ -66,6 +68,9 @@ public:
     static void GetAccessibilityClosedCaptionsSettings();
     static void SubscribeAccessibilityClosedCaptionsSettingsChanged();
     static void UnsubscribeAccessibilityClosedCaptionsSettingsChanged();
+    static void InvokeKeyboardStandard();
+    static void InvokeKeyboardPassword();
+    static void InvokeKeyboardEmail();
     static bool WaitOnConnectionReady();
 
 private:

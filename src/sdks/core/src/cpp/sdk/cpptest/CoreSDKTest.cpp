@@ -33,17 +33,16 @@ void CoreSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error 
     _connected = connected;
 }
 
-void CoreSDKTest::CreateFireboltInstance()
+void CoreSDKTest::CreateFireboltInstance(const std::string& url)
 {
     const std::string config = "{\
-            \"waitTime\": 1000,\
+            \"waitTime\": 60000,\
             \"logLevel\": \"Info\",\
             \"workerPool\":{\
             \"queueSize\": 8,\
             \"threadCount\": 3\
             },\
-            \"wsUrl\": \"ws://127.0.0.1:9998\"\
-            }";
+            \"wsUrl\": " + url + "}";
 
     _connected = false;
     Firebolt::IFireboltAccessor::Instance().Initialize(config);
@@ -109,6 +108,30 @@ void CoreSDKTest::UnsubscribeDeviceNameChanged()
         cout << "Unsubscribe Device NameChange is success" << endl;
     } else {
         cout << "Unsubscribe Device NameChange status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::GetDeviceModel()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    const std::string model = Firebolt::IFireboltAccessor::Instance().DeviceInterface().model(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Get Device Model = " << model.c_str() << endl;
+    } else {
+        cout << "Get Device Model status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::GetDeviceSKU()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    const std::string sku = Firebolt::IFireboltAccessor::Instance().DeviceInterface().sku(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Get Device Sku = " << sku.c_str() << endl;
+    } else {
+        cout << "Get Device Sku status = " << static_cast<int>(error) << endl;
     }
 }
 
@@ -333,6 +356,44 @@ void CoreSDKTest::UnsubscribeLocalizationPreferredAudioLanguagesChanged()
         cout << "Unsubscribe Localization PreferredAudioLanguagesChange is success" << endl;
     } else {
         cout << "Unsubscribe Localization PreferredAudioLanguagesChange status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::InvokeKeyboardStandard()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string message = "Enter the name you'd like to associate with this device";
+    string response = Firebolt::IFireboltAccessor::Instance().KeyboardInterface().standard(message, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Keyboard standard response: " << response << endl;
+    } else {
+        cout << "Error while invoking keyboard.standard method, error = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::InvokeKeyboardPassword()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string message = "Enter the password to associate with this device";
+    string response = Firebolt::IFireboltAccessor::Instance().KeyboardInterface().password(message, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Keyboard password response: " << response << endl;
+    } else {
+        cout << "Error while invoking keyboard.password method, error = " << static_cast<int>(error) << endl;
+    }
+
+}
+
+void CoreSDKTest::InvokeKeyboardEmail()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Keyboard::EmailUsage type = Firebolt::Keyboard::EmailUsage::SIGN_IN;
+    std::string message = "Enter your email to sign into this app/device";
+    string response = Firebolt::IFireboltAccessor::Instance().KeyboardInterface().email(type, message, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Keyboard email response: " << response << endl;
+    } else {
+        cout << "Error while invoking keyboard.email method, error = " << static_cast<int>(error) << endl;
     }
 }
 
