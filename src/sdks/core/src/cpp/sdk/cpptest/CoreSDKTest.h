@@ -22,7 +22,10 @@
 #include "firebolt.h"
 
 class CoreSDKTest {
-
+    class OnPolicyChangedNotification : public Firebolt::Advertising::IAdvertising::IOnPolicyChangedNotification {
+    public:
+        void onPolicyChanged( const Firebolt::Advertising::AdPolicy& ) override;
+    };
     class OnDeviceNameChangedNotification : public Firebolt::Device::IDevice::IOnDeviceNameChangedNotification {
     public:
         void onDeviceNameChanged( const std::string& ) override;
@@ -43,6 +46,17 @@ class CoreSDKTest {
         void onClosedCaptionsSettingsChanged( const Firebolt::Accessibility::ClosedCaptionsSettings& ) override;
     };
 
+    struct OnBackgroundNotification : public Firebolt::Lifecycle::ILifecycle::IOnBackgroundNotification {
+        void onBackground( const Firebolt::Lifecycle::LifecycleEvent& ) override;
+    };
+    struct OnForegroundNotification : public Firebolt::Lifecycle::ILifecycle::IOnForegroundNotification {
+        void onForeground( const Firebolt::Lifecycle::LifecycleEvent& ) override;
+    };
+
+    struct OnFriendlyNameChangedNotification : public Firebolt::SecondScreen::ISecondScreen::IOnFriendlyNameChangedNotification {
+        void onFriendlyNameChanged( const std::string& ) override;
+    };
+
 public:
     CoreSDKTest() = default;
     virtual ~CoreSDKTest() = default;
@@ -50,36 +64,78 @@ public:
     static void CreateFireboltInstance(const std::string& url);
     static void DestroyFireboltInstance();
     static void TestCoreStaticSDK();
+
+    static void GetAccountId();
+    static void GetAccountUid();
+
     static void GetDeviceName();
     static void SubscribeDeviceNameChanged();
     static void UnsubscribeDeviceNameChanged();
     static void GetDeviceModel();
-    static void GetDeviceSKU();
+    static void GetDeviceSku();
     static void GetDeviceAudio();
     static void SubscribeDeviceAudioChanged();
     static void UnsubscribeDeviceAudioChanged();
     static void GetDeviceScreenResolution();
     static void SubscribeDeviceScreenResolutionChanged();
     static void UnsubscribeDeviceScreenResolutionChanged();
+
     static void GetLocalizationPreferredAudioLanguages();
-    static void SetLocalizationPreferredAudioLanguages();
     static void SubscribeLocalizationPreferredAudioLanguagesChanged();
     static void UnsubscribeLocalizationPreferredAudioLanguagesChanged();
+
     static void GetAccessibilityClosedCaptionsSettings();
     static void SubscribeAccessibilityClosedCaptionsSettingsChanged();
     static void UnsubscribeAccessibilityClosedCaptionsSettingsChanged();
+
+    static void GetAdvertisingPolicy();
+    static void SubscribeAdvertisingPolicyChanged();
+    static void UnsubscribeAdvertisingPolicyChanged();
+    static void BuildAdvertisingConfiguration();
+    static void GetAdvertisingDeviceAttributes();
+
     static void InvokeKeyboardStandard();
     static void InvokeKeyboardPassword();
     static void InvokeKeyboardEmail();
+
+    static void VerifyProfileApproveContentRating();
+    static void VerifyProfileApprovePurchase();
+    static void GetProfileFlags();
+
+    static void LifecycleClose();
+    static void SubscribeLifecycleBackgroundNotification();
+    static void UnsubscribeLifecycleBackgroundNotification();
+    static void SubscribeLifecycleForegroundNotification();
+    static void UnsubscribeLifecycleForegroundNotification();
+
+    static void GetAuthenticationDevice();
+    static void GetAuthenticationSession();
+    static void GetAuthenticationToken();
+    static void GetAuthenticationRoot();
+
+    static void MetricsStartContent();
+    static void MetricsStopContent();
+
+    static void GetSecondScreenDevice();
+    static void GetSecondScreenFriendlyName();
+    static void SubscribeSecondScreenFriendlyNameChanged();
+    static void UnsubscribeSecondScreenFriendlyNameChanged();
+
+    static void ParametersInitialization();
+
     static bool WaitOnConnectionReady();
 
 private:
     static void ConnectionChanged(const bool, const Firebolt::Error);
     static bool _connected;
+    static OnPolicyChangedNotification _policyChangedNotification;
     static OnDeviceNameChangedNotification _deviceNameChangedNotification;
     static OnAudioChangedNotification _audioChangedNotification;
     static OnScreenResolutionChangedNotification _screenResolutionChangedNotification;
     static OnPreferredAudioLanguagesChangedNotification _preferredAudioLanguagesChangedNotification;
     static OnClosedCaptionsSettingsChangedNotification _closedCaptionsSettingsChangedNotification;
+    static OnBackgroundNotification _backgroundNotification;
+    static OnForegroundNotification _foregroundNotification;
+    static OnFriendlyNameChangedNotification _friendlyNameChangedNotification;
 };
 

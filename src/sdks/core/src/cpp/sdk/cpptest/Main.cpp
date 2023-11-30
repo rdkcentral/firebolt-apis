@@ -4,38 +4,313 @@
 void ShowMenu()
 {
     printf("Enter\n"
-           "\tD : Get Device Name\n"
-           "\tN : Subscribe/Unsubscribe for Device Name Change\n"
-           "\tA : Get Device Audio Profiles\n"
-           "\tS : Subscribe/Unsubscribe for Device Audio Profiles Change\n"
-           "\tR : Get Device Screen Resolution\n"
-           "\tU : Subscribe/Unsubscribe for Device Screen Resolution\n"
-           "\tL : Get Localization Preferred AudioLanguages\n"
-           "\tP : Subscribe/Unsubscribe for Localization Preferred AudioLanguages Change\n"
-           "\tC : Get Closed Caption Settings\n"
-           "\tB : Subscribe/Unsubscribe for Closed Caption Settings\n"
-           "\tK : Invoke keyboard methods email/password/standard\n"
+           "\tI : Get Account Id\n"
+           "\tU : Get Account Uid\n"
            "\tM : Get Device Model\n"
-           "\tE : Get Device sku\n"
+           "\tS : Get Device Sku\n"
+           "\tA : Handle Advertising methods\n"
+           "\tN : Get/Subscribe/Unsubscribe Device Name\n"
+           "\tP : Get/Subscribe/Unsubscribe Device Audio Profiles\n"
+           "\tR : Get/Subscribe/Unsubscribe Device Screen Resolution\n"
+           "\tL : Get/Subscribe/Unsubscribe Localization Preferred AudioLanguages\n"
+           "\tC : Get/Subscribe/Unsubscribe Closed Caption Settings\n"
+           "\tK : Invoke keyboard methods email/password/standard\n"
+           "\tV : Handle Profile methods\n"
+           "\tT : Handle Authentication methods\n"
+           "\tE : Handle Metrics methods\n"
+           "\tF : Handle Lifecycle methods\n"
+           "\tD : Handle SecondScreen methods\n"
+           "\tZ : Parameters Initialization\n"
            "\tQ : Quit\n\n"
           );
+}
+
+void ShowPropertyMenu(std::string& module, std::string& property)
+{
+    printf("%s:%s property options \n"
+         "\tG : Get value\n"
+         "\tR : Show subscribe/unscribe event menu\n"
+         "\tQ : Quit\n", module.c_str(), property.c_str());
+}
+
+void ShowProfileMenu()
+{
+    printf("Options: \n"
+         "\tC : Verify ApproveContentRating\n"
+         "\tP : Verify ApprovePurchase\n"
+         "\tF : Get Flags\n"
+         "\tQ : Quit\n");
+}
+
+void ShowAuthenticationMenu()
+{
+    printf("Options: \n"
+         "\tD : Get Authentication Device\n"
+         "\tS : Get Authentication Session\n"
+         "\tR : Get Authentication Root\n"
+         "\tT : Get Authentication Token\n"
+         "\tQ : Quit\n");
+}
+
+void ShowAdvertisingMenu()
+{
+    printf("Options: \n"
+         "\tP : Get/Subscribe/Unsubscribe Advertising Policy\n"
+         "\tC : Build configuration object for Ad Framework initialization\n"
+         "\tD : Get the device advertising device attributes\n"
+         "\tQ : Quit\n");
+}
+
+void ShowLifecycleMenu()
+{
+    printf("Options: \n"
+         "\tC : Close lifecycle of the app\n"
+         "\tB : Subscribe/Unsubscribe Background notification\n"
+         "\tF : Subscribe/Unsubscribe Foreground notification\n"
+         "\tQ : Quit\n");
+}
+
+void ShowMetricsMenu()
+{
+    printf("Options: \n"
+         "\tS : Start Content\n"
+         "\tT : Stop Content\n"
+         "\tQ : Quit\n");
+}
+
+void ShowSecondScreenMenu()
+{
+    printf("Options: \n"
+         "\tD : Get Device Id\n"
+         "\tF : Get/Subscribe/Unsubscribe FriendlyName\n"
+         "\tQ : Quit\n");
 }
 
 void ShowKeyboardMenu()
 {
     printf("Enter\n"
-         "\tE: Invoke Email method\n"
-         "\tP: Invoke Password method\n"
-         "\tS: Invoke Standard method\n"
+         "\tE : Invoke Email method\n"
+         "\tP : Invoke Password method\n"
+         "\tS : Invoke Standard method\n"
          "\tQ : Quit\n");
 }
 
 void ShowEventMenu()
 {
     printf("Enter\n"
-         "\tS: Subscribe Event\n"
-         "\tU: Unsubscribe Event\n"
+         "\tS : Subscribe Event\n"
+         "\tU : Unsubscribe Event\n"
          "\tQ : Quit\n");
+}
+
+#define VALUE(string) #string
+#define TO_STRING(string) VALUE(string)
+
+#define HandleEventListener(Module, eventFuncName) \
+{ \
+    int opt; \
+    do { \
+        getchar(); \
+        ShowEventMenu(); \
+        printf("Enter option : "); \
+        opt = toupper(getchar()); \
+        switch (opt) { \
+        case 'S': { \
+            CoreSDKTest::Subscribe##Module##eventFuncName(); \
+            break; \
+        } \
+        case 'U': { \
+            CoreSDKTest::Unsubscribe##Module##eventFuncName(); \
+            break; \
+        } \
+        default: \
+            break; \
+        } \
+    } while (opt != 'Q'); \
+}
+
+
+#define HandleProperty(Module, Property) \
+{ \
+    int opt; \
+    do { \
+        getchar(); \
+        std::string module = TO_STRING(Module); \
+        std::string property = TO_STRING(Property); \
+        ShowPropertyMenu(module, property); \
+        printf("Enter option : "); \
+        opt = toupper(getchar()); \
+        switch (opt) { \
+        case 'G': { \
+            CoreSDKTest::Get##Module##Property(); \
+            break; \
+        } \
+        case 'R': { \
+            HandleEventListener(Module, Property##Changed) \
+            break; \
+        } \
+        default: \
+            break; \
+        } \
+    } while (opt != 'Q'); \
+}
+
+void HandleAuthenticationMethod()
+{
+    int opt;
+    do {
+        getchar();
+        ShowAuthenticationMenu();
+        printf("Enter option : ");
+        opt = toupper(getchar());
+        switch (opt) {
+        case 'D': {
+            CoreSDKTest::GetAuthenticationDevice();
+            break;
+        }
+        case 'S': {
+            CoreSDKTest::GetAuthenticationSession();
+            break;
+        }
+        case 'R': {
+            CoreSDKTest::GetAuthenticationRoot();
+            break;
+        }
+        case 'T': {
+            CoreSDKTest::GetAuthenticationToken();
+            break;
+        }
+        default:
+            break;
+        }
+    } while (opt != 'Q');
+}
+
+void HandleProfileMethod()
+{
+    int opt;
+    do {
+        getchar();
+        ShowProfileMenu();
+        printf("Enter option : ");
+        opt = toupper(getchar());
+        switch (opt) {
+        case 'C': {
+            CoreSDKTest::VerifyProfileApproveContentRating(); // Error while testing, need to cross check
+            break;
+        }
+        case 'P': {
+            CoreSDKTest::VerifyProfileApprovePurchase(); // Error while testing, need to cross check
+            break;
+        }
+        case 'F': {
+            CoreSDKTest::GetProfileFlags();
+            break;
+        }
+        default:
+            break;
+        }
+    } while (opt != 'Q');
+}
+
+void HandleAdvertisingMethod()
+{
+    int opt;
+    do {
+        getchar();
+        ShowAdvertisingMenu();
+        printf("Enter option : ");
+        opt = toupper(getchar());
+        switch (opt) {
+        case 'P': {
+            HandleProperty(Advertising, Policy)
+            break;
+        }
+        case 'C': {
+            CoreSDKTest::BuildAdvertisingConfiguration(); // Error while testing need to check
+            break;
+        }
+        case 'D': {
+            CoreSDKTest::GetAdvertisingDeviceAttributes(); // Error while testing need to check
+            break;
+        }
+        default:
+            break;
+        }
+    } while (opt != 'Q');
+}
+
+void HandleLifecycleMethod()
+{
+    int opt;
+    do {
+        getchar();
+        ShowLifecycleMenu();
+        printf("Enter option : ");
+        opt = toupper(getchar());
+        switch (opt) {
+        case 'C': {
+            CoreSDKTest::LifecycleClose();
+            break;
+        }
+        case 'B': {
+            HandleEventListener(Lifecycle, BackgroundNotification)
+            break;
+        }
+        case 'F': {
+            HandleEventListener(Lifecycle, ForegroundNotification)
+            break;
+        }
+        default:
+            break;
+        }
+    } while (opt != 'Q');
+}
+
+void HandleMetricsMethod()
+{
+    int opt;
+    do {
+        getchar();
+        ShowMetricsMenu();
+        printf("Enter option : ");
+        opt = toupper(getchar());
+        switch (opt) {
+        case 'S': {
+            CoreSDKTest::MetricsStartContent();
+            break;
+        }
+        case 'T': {
+            CoreSDKTest::MetricsStopContent();
+            break;
+        }
+        default:
+            break;
+        }
+    } while (opt != 'Q');
+}
+
+void HandleSecondScreenMethod()
+{
+    int opt;
+    do {
+        getchar();
+        ShowSecondScreenMenu();
+        printf("Enter option : ");
+        opt = toupper(getchar());
+        switch (opt) {
+        case 'D': {
+            CoreSDKTest::GetSecondScreenDevice();
+            break;
+        }
+        case 'F': {
+            HandleProperty(SecondScreen, FriendlyName)
+            break;
+        }
+        default:
+            break;
+        }
+    } while (opt != 'Q');
 }
 
 void HandleKeyboardMethodsInvokation()
@@ -63,29 +338,6 @@ void HandleKeyboardMethodsInvokation()
             break;
         }
     } while (opt != 'Q');
-}
-
-#define HandleEventListener(Module, eventFuncName) \
-{ \
-    int opt; \
-    do { \
-        getchar(); \
-        ShowEventMenu(); \
-        printf("Enter option : "); \
-        opt = toupper(getchar()); \
-        switch (opt) { \
-        case 'S': { \
-            CoreSDKTest::Subscribe##Module##eventFuncName(); \
-            break; \
-        } \
-        case 'U': { \
-            CoreSDKTest::Unsubscribe##Module##eventFuncName(); \
-            break; \
-        } \
-        default: \
-            break; \
-        } \
-    } while (opt != 'Q'); \
 }
 
 #define options ":hu:"
@@ -116,59 +368,74 @@ int main (int argc, char* argv[])
             printf("Enter option : ");
             option = toupper(getchar());
             switch (option) {
-            case 'D': {
-                CoreSDKTest::GetDeviceName();
+            case 'I' : {
+                CoreSDKTest::GetAccountId(); // Error while running need to cross check
+                break;
+            }
+            case 'U' : {
+                CoreSDKTest::GetAccountUid(); // Error while running need to cross check
+                break;
+            }
+            case 'A' : {
+                HandleAdvertisingMethod();
                 break;
             }
             case 'N': {
-                HandleEventListener(Device, NameChanged)
-                break;
-            }
-            case 'A': {
-                CoreSDKTest::GetDeviceAudio();
-                break;
-            }
-            case 'S': {
-                HandleEventListener(Device, AudioChanged)
-                break;
-            }
-            case 'R': {
-                CoreSDKTest::GetDeviceScreenResolution();
-                break;
-            }
-            case 'U': {
-                HandleEventListener(Device, ScreenResolutionChanged)
-                break;
-            }
-            case 'L': {
-                CoreSDKTest::GetLocalizationPreferredAudioLanguages();
-                break;
-            }
-            case 'P': {
-                HandleEventListener(Localization, PreferredAudioLanguagesChanged)
-                break;
-            }
-            case 'C': {
-                CoreSDKTest::GetAccessibilityClosedCaptionsSettings();
-                break;
-            }
-            case 'B': {
-                HandleEventListener(Accessibility, ClosedCaptionsSettingsChanged)
-                break;
-            }
-            case 'K': {
-                HandleKeyboardMethodsInvokation();
+                HandleProperty(Device, Name)
                 break;
             }
             case 'M': {
                 CoreSDKTest::GetDeviceModel();
                 break;
             }
-            case 'E': {
-                CoreSDKTest::GetDeviceSKU();
+            case 'S': {
+                CoreSDKTest::GetDeviceSku();
                 break;
             }
-
+            case 'P': {
+                HandleProperty(Device, Audio)
+                break;
+            }
+            case 'R': {
+                HandleProperty(Device, ScreenResolution)
+                break;
+            }
+            case 'L': {
+                HandleProperty(Localization, PreferredAudioLanguages)
+                break;
+            }
+            case 'C': {
+                HandleProperty(Accessibility, ClosedCaptionsSettings)
+                break;
+            }
+            case 'K': {
+                HandleKeyboardMethodsInvokation();
+                break;
+            }
+            case 'V': {
+                HandleProfileMethod();
+                break;
+            }
+            case 'T': {
+                HandleAuthenticationMethod();
+                break;
+            }
+            case 'F': {
+                HandleLifecycleMethod();
+                break;
+            }
+            case 'E': {
+                HandleMetricsMethod();
+                break;
+            }
+            case 'D': {
+                HandleSecondScreenMethod();
+                break;
+            }
+            case 'Z': {
+                CoreSDKTest::ParametersInitialization();
+                break;
+            }
             default:
                 break;
             }

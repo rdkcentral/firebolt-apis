@@ -22,6 +22,10 @@
 #include "firebolt.h"
 
 class ManageSDKTest {
+    class OnAudioDescriptionsEnabledChangedNotification : public Firebolt::AudioDescriptions::IAudioDescriptions::IOnEnabledChangedNotification {
+    public:
+        void onEnabledChanged( const bool ) override;
+    };
 
     class OnDeviceNameChangedNotification : public Firebolt::Device::IDevice::IOnDeviceNameChangedNotification {
     public:
@@ -41,12 +45,21 @@ class ManageSDKTest {
         void onPreferredAudioLanguagesChanged( const std::vector<std::string>& ) override;
     };
 
-#ifdef RPC_ONLY
-    class OnRequestChallengeNotification : public Firebolt::PinChallenge::IPinChallenge::IOnRequestChallengeNotification {
+    class OnAllowACRCollectionChangedNotification : public Firebolt::Privacy::IPrivacy::IOnAllowACRCollectionChangedNotification {
     public:
-        void onRequestChallenge( const Firebolt::PinChallenge::PinChallengeProviderRequest& ) override;
+        void onAllowACRCollectionChanged( const bool ) override;
     };
-#endif
+
+    class OnSignInNotification : public Firebolt::Discovery::IDiscovery::IOnSignInNotification {
+    public:
+        void onSignIn( const Firebolt::Discovery::Event& ) override;
+    };
+
+    class OnSignOutNotification : public Firebolt::Discovery::IDiscovery::IOnSignOutNotification {
+    public:
+        void onSignOut( const Firebolt::Discovery::Event& ) override;
+    };
+
     class KeyboardProvider : public Firebolt::Keyboard::IKeyboardProvider {
     public:
         KeyboardProvider();
@@ -68,7 +81,7 @@ class ManageSDKTest {
     public:
         AcknowledgeChallengeProvider();
         ~AcknowledgeChallengeProvider() override = default;
-	void challenge( const Firebolt::AcknowledgeChallenge::Challenge& parameters, std::unique_ptr<Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeSession> session ) override;
+        void challenge( const Firebolt::AcknowledgeChallenge::Challenge& parameters, std::unique_ptr<Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeSession> session ) override;
         void SendMessage(bool response);
 
     private:
@@ -83,7 +96,7 @@ class ManageSDKTest {
     public:
         PinChallengeProvider();
         ~PinChallengeProvider() override = default;
-	void challenge( const Firebolt::PinChallenge::PinChallenge& parameters, std::unique_ptr<Firebolt::PinChallenge::IPinChallengeSession> session ) override;
+        void challenge( const Firebolt::PinChallenge::PinChallenge& parameters, std::unique_ptr<Firebolt::PinChallenge::IPinChallengeSession> session ) override;
         void SendMessage(bool response);
 
     private:
@@ -102,26 +115,47 @@ public:
     static void CreateFireboltInstance(const std::string& url);
     static void DestroyFireboltInstance();
     static void TestManageStaticSDK();
+
+    static void GetAdvertisingSkipRestriction();
+    static void SetAdvertisingSkipRestriction();
+    static void ResetAdvertisingIdentifier();
+
+    static void GetAudioDescriptionsEnabled();
+    static void SetAudioDescriptionsEnabled();
+    static void SubscribeAudioDescriptionsEnabledChanged();
+    static void UnsubscribeAudioDescriptionsEnabledChanged();
+
     static void GetDeviceName();
     static void SetDeviceName();
     static void SubscribeDeviceNameChanged();
     static void UnsubscribeDeviceNameChanged();
-    static void GetClosedCaptionBackgroundOpacity();
-    static void SetClosedCaptionBackgroundOpacity();
+
+    static void GetClosedCaptionsBackgroundOpacity();
+    static void SetClosedCaptionsBackgroundOpacity();
     static void SubscribeClosedCaptionsBackgroundOpacityChanged();
     static void UnsubscribeClosedCaptionsBackgroundOpacityChanged();
-    static void GetClosedCaptionFontFamily();
-    static void SetClosedCaptionFontFamily();
+
+    static void GetClosedCaptionsFontFamily();
+    static void SetClosedCaptionsFontFamily();
     static void SubscribeClosedCaptionsFontFamilyChanged();
     static void UnsubscribeClosedCaptionsFontFamilyChanged();
+
     static void GetLocalizationPreferredAudioLanguages();
     static void SetLocalizationPreferredAudioLanguages();
     static void SubscribeLocalizationPreferredAudioLanguagesChanged();
     static void UnsubscribeLocalizationPreferredAudioLanguagesChanged();
-#ifdef RPC_ONLY
-    static void SubscribePinChallengeRequestChallenge();
-    static void UnsubscribePinChallengeRequestChallenge();
-#endif
+
+    static void GetPrivacyAllowACRCollection();
+    static void SetPrivacyAllowACRCollection();
+    static void SubscribePrivacyAllowACRCollectionChanged();
+    static void UnsubscribePrivacyAllowACRCollectionChanged();
+    static void GetPrivacySettings();
+
+    static void SubscribeDiscoverySignInNotification();
+    static void UnsubscribeDiscoverySignInNotification();
+    static void SubscribeDiscoverySignOutNotification();
+    static void UnsubscribeDiscoverySignOutNotification();
+
     static void RegisterKeyboardProvider();
     static void SendResponseMessageToKeyboardProvider();
     static void SendErrorMessageToKeyboardProvider();
@@ -129,23 +163,41 @@ public:
     static void RegisterAcknowledgeChallengeProvider();
     static void SendResponseMessageToAcknowledgeChallengeProvider();
     static void SendErrorMessageToAcknowledgeChallengeProvider();
+
     static void RegisterPinChallengeProvider();
     static void SendResponseMessageToPinChallengeProvider();
     static void SendErrorMessageToPinChallengeProvider();
+
+    static void GetLocalizationAdditionalInfo();
+    static void AddLocalizationAdditionalInfo();
+    static void RemoveLocalizationAdditionalInfo();
+
+    static void GetUserGrantsPermission();
+    static void GrantUserGrantsPermission();
+    static void DenyUserGrantsPermission();
+    static void ClearUserGrantsPermission();
+
+    static void WifiScan();
+    static void WifiConnect();
+    static void WifiDisconnect();
+
     static bool WaitOnConnectionReady();
 
 private:
     static void ConnectionChanged(const bool, const Firebolt::Error);
     static bool _connected;
+    static OnAudioDescriptionsEnabledChangedNotification _audioDescriptionEnabledChangedNotification;
     static OnDeviceNameChangedNotification _deviceNameChangedNotification;
     static OnFontFamilyChangedNotification _fontFamilyChangedNotification;
     static OnBackgroundOpacityChangedNotification _backgroundOpacityChangedNotification;
     static OnPreferredAudioLanguagesChangedNotification _preferredAudioLanguagesChangedNotification;
-#ifdef RPC_ONLY
-    static OnRequestChallengeNotification _requestChallengeNotification;
-#endif
+    static OnAllowACRCollectionChangedNotification _allowACRCollectionChangedNotification;
     static KeyboardProvider _keyboardProvider;
     static AcknowledgeChallengeProvider _acknowledgeChallengeProvider;
     static PinChallengeProvider _pinChallengeProvider;
+    static OnSignInNotification _signInNotification;
+    static OnSignOutNotification _signOutNotification;
+
+    static Firebolt::Wifi::AccessPointList _apList;
 };
 
