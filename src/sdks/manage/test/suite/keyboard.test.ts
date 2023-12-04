@@ -16,15 +16,97 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { test, expect } from "@jest/globals";
-import { Keyboard } from "../../build/javascript/src/firebolt-manage";
+import { test, expect, beforeAll } from "@jest/globals";
+import { Keyboard, Settings } from "../../build/javascript/src/firebolt-manage";
+
+const state = {
+  cb: null,
+  eventId: null,
+  pending: []
+}
+
+class MockProviderBroker {
+
+  constructor() {
+  }
+
+  send(msg) {
+    let parsed = JSON.parse(msg)
+    if (parsed.method === 'keyboard.onRequestStandard') {
+      state.eventId = parsed.id
+    }
+    if ((parsed.method === 'keyboard.standardResponse') || (parsed.method === 'keyboard.standardError')) {
+      let pending = state.pending.find(p => p.correlationId === parsed.params.correlationId)
+      state.pending = state.pending.filter(p => p.correlationId === parsed.params.correlationId)
+      if (pending) {
+        pending.callback(parsed)
+      }
+    }
+  }
+
+  receive(callback) {
+    state.cb = callback
+  }
+
+  async triggerProvider(msg, providerCallback) {
+    let fullMsg = {
+      jsonrpc: '2.0',
+      id: state.eventId,
+      result: {
+        correlationId: '' + Math.round((Math.random() * 1000000)),
+        parameters: msg
+      }
+    }
+    state.pending.push({
+      correlationId: fullMsg.result.correlationId,
+      callback: providerCallback
+    })
+    state.cb(JSON.stringify(fullMsg))
+  }
+}
+const broker = new MockProviderBroker()
+let provider = null
+
+beforeAll(async () => {
+  Settings.setLogLevel('DEBUG')
+  window['__firebolt'].setTransportLayer(new MockProviderBroker())
+  provider = new DelegatingKBProvider(new KBProvider())
+  await Keyboard.provide("xrn:firebolt:capability:input:keyboard", provider);
+})
+
+class DelegatingKBProvider implements Keyboard.KeyboardInputProvider {
+  delegate: Keyboard.KeyboardInputProvider;
+  constructor(delegate: Keyboard.KeyboardInputProvider) {
+    this.delegate = delegate;
+  }
+  standard(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<Keyboard.KeyboardResult> {
+    return this.delegate.standard(parameters, session)
+  }
+  password(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<Keyboard.KeyboardResult> {
+    return this.delegate.password(parameters, session)
+  }
+  email(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<Keyboard.KeyboardResult> {
+    return this.delegate.email(parameters, session)
+  }
+}
 
 class KBProvider implements Keyboard.KeyboardInputProvider {
   standard(
     parameters: Keyboard.KeyboardParameters,
     session: Keyboard.FocusableProviderSession
   ): Promise<Keyboard.KeyboardResult> {
-    return Promise.resolve(null);
+    return Promise.resolve({
+      text: 'foo'
+    });
   }
   password(
     parameters: Keyboard.KeyboardParameters,
@@ -40,15 +122,64 @@ class KBProvider implements Keyboard.KeyboardInputProvider {
   }
 }
 
-test("Keyboard.provide() declarations", () => {
-  Keyboard.provide("xrn:firebolt:capability:input:keyboard", new KBProvider());
-  expect(1).toBe(1);
+class KBProviderWithError implements Keyboard.KeyboardInputProvider {
+  async standard(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<Keyboard.KeyboardResult> {
+    throw new Error('failed')
+  }
+  async password(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<Keyboard.KeyboardResult> {
+    throw new Error('failed')
+  }
+  async email(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<Keyboard.KeyboardResult> {
+    throw new Error('failed')
+  }
+}
+
+test("Keyboard.provide() declarations", async () => {
+  let callback = null;
+  let promise: Promise<any> = new Promise((resolve, reject) => {
+    callback = resolve
+  })
+  provider.delegate = new KBProvider()
+  await broker.triggerProvider({
+    message: 'Enter name',
+    type: 'standard'
+  }, callback)
+  let result = await promise
+  console.log(result)
+  expect(result.method).toStrictEqual('keyboard.standardResponse')
+  expect(result.params.result.text).toStrictEqual('foo')
 });
 
 test("Keyboard.provide() with blank object", () => {
   expect(() => {
     Keyboard.provide("xrn:firebolt:capability:input:keyboard", {});
   }).toThrow();
+});
+
+test("Keyboard.provide() with error response", async () => {
+  let callback = null;
+  let promise: Promise<any> = new Promise((resolve, reject) => {
+    callback = resolve
+  })
+  provider.delegate = new KBProviderWithError()
+  await broker.triggerProvider({
+    message: 'Enter name',
+    type: 'standard'
+  }, callback)
+  let result = await promise
+  console.log(result)
+  expect(result.method).toStrictEqual('keyboard.standardError')
+  expect(result.params.error.message).toStrictEqual('failed')
+  expect(result.params.error.code).toStrictEqual(1000)
 });
 
 // Events Test cases
