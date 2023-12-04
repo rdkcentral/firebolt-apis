@@ -68,6 +68,24 @@ When an intent is sent to a Firebolt device from some other system, e.g. a cloud
 
 An intent message **MUST** have an `intent` object property that is the intent being passed.
 
+An example intent message:
+
+```json
+{
+    "type": "xrn:firebolt:intent:app:launch",
+    "appId": "Netflix",
+    "intent": {
+        "action": "launch",
+        "context": {
+            "source": "voice"
+        }
+    },
+    "metadata": {
+        "foo": "bar"
+    }
+}
+```
+
 ### 6.1. App Intent Message
 If an intent is targeting a specific app, then the intent message **MUST** have an `appId` string property with the appId of the targeted app.
 
