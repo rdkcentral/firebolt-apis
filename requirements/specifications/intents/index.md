@@ -75,7 +75,17 @@ If an intent is targeting a specific app, then the intent message **MUST** have 
 If an intent messagage does not have an `appId` property, then it **MUST** be targeting the device itself, e.g. a `power` intent to turn off the device.
 
 ### 6.3. Intent Message Type
-An intent message **SHOULD** have a `type` string property for categorizing the intent.
+An intent message **MUST** have a `type` string property for categorizing the intent.
+
+The type property **MUST** match the regular expression:
+
+```regex
+^xrn:firebolt:intent:(app|platform):[a-zA-Z]+$
+```
+
+App Intent Messages **MUST** have the fourth section set to `app`.
+
+Platform Intent Messages **MUST** have the fourth section set to `platform`
 
 Platforms may use this to route different types of intents to different subsystems.
 
