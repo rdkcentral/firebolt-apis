@@ -105,9 +105,9 @@ App Intent Messages **MUST** have the fourth section set to `app`.
 
 Platform Intent Messages **MUST** have the fourth section set to `platform`
 
-Platforms may use this to route different types of intents to different subsystems.
+All Intent Messages **MUST** have the fifth section set to the same value as `intent.action`.
 
-**TODO**: this was not spec'd out ver well... need to discuss.
+Platforms may use this to route different types of intents to different subsystems without having to understand the internal structure of Firebolt intent objects.
 
 ### 6.4. Intent Message Metadata
 An intent message **MAY** have a `metadata` object property for adding distributor-specific metadata for logging or analytics. The values in `metadata` **MUST NOT** impact how the device interprets the intent.
