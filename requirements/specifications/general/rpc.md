@@ -6,9 +6,11 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 
 | Contributor     | Organization   |
 | --------------- | -------------- |
+| Andrew Bennett  | Sky            |
 | Bart Catrysse   | Liberty        |
 | Piotr Kobzda    | Liberty        |
 | Jeremy LaCivita | Comcast        |
+| Kevin Pearson   | Comcast        |
 
 ## 1. Overview
 This document outlines the requirements for remote proceedure call (RPC) APIs surfaced by a Firebolt implementation to Firebolt Apps.
