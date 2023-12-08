@@ -128,20 +128,7 @@
             },
             "examples": [
                 {
-                    "name": "Default Example for start",
-                    "params": [
-                        {
-                            "name": "portId",
-                            "value": "HDMI1"
-                        }
-                    ],
-                    "result": {
-                        "name": "port",
-                        "value": null
-                    }
-                },
-                {
-                    "name": "Default Example for stop",
+                    "name": "Default Example for open",
                     "params": [
                         {
                             "name": "portId",
@@ -165,16 +152,8 @@
                     ]
                 }
             ],
-            "summary": "Closes the given HDMI Port if it is the current active source for HDMI Input. There would no action taken if the given portId is not the current active source.",
-            "params": [
-                {
-                    "name": "portId",
-                    "schema": {
-                        "$ref": "#/components/schemas/HDMIPortId"
-                    },
-                    "required": true
-                }
-            ],
+            "summary": "Closes the given HDMI Port if it is the current active source for HDMI Input. If there was no active source, then there would no action taken on the device.",
+            "params": [],
             "result": {
                 "name": "port",
                 "schema": {
@@ -183,25 +162,8 @@
             },
             "examples": [
                 {
-                    "name": "Default Example for start",
-                    "params": [
-                        {
-                            "name": "portId",
-                            "value": "HDMI1"
-                        }
-                    ],
-                    "result": {
-                        "name": "port",
-                        "value": null
-                    }
-                },
-                {
                     "name": "Default Example for stop",
                     "params": [
-                        {
-                            "name": "portId",
-                            "value": "HDMI1"
-                        }
                     ],
                     "result": {
                         "name": "port",

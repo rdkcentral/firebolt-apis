@@ -288,26 +288,26 @@ HDMIInput.autoLowLatencyModeCapableChanged((data) => {
 The `onAutoLowLatencyModeCapableChanged`  API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
 
 
-## 9. HDMI Port Selection
+## 9. HDMI Port Opening and closing
 
-The `HDMIInput` module **MUST** have a `select` method that manages the selection of on a single HDMI port for playback.
+The `HDMIInput` module **MUST** have `open` and `close` method(s) that manages the active source of on a single HDMI port.
 
-The `HDMIInput.select` **MUST** include a `port` field complying to the schema of `HDMIPortId`
+The `HDMIInput.open` **MUST** include a `portId` field complying to the schema of `HDMIPortId`
 
-The `HDMIInput.select` **MUST** include a `type` field complying to the schema of `HDMISelectType`
+The `HdmiInput.open` and `HDMIInput.close` API(s) **MUST** return an `empty` object for a successful operation, if there was an error the response **Must** contain the details of the error.
 
-The `select` API **MUST** return an `empty` object for a successful selection, if there was an error the response **Must** contain the details of the error.
+The `HdmiInput.open` and `HDMIInput.close` API requires `manage` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
+Below is an example for opening a given HDMIPort.
 ```javascript
-HDMIInput.select('HDMI1','start').then(() => {
-  console.log("Successfully selected HDMI1 port");
+HDMIInput.start('HDMI1').then(() => {
+  console.log("Successfully opened HDMI1 port");
 })
 ```
 
-The `select` API requires `manage` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
-
-Below is an example of stopping an existing HDMI Port selection
+Below is an example for stopping last active source.
 ```javascript
-HDMIInput.select('HDMI1','stop').then(() => {
-  console.log("Successfully un selected HDMI1 port");
+HDMIInput.stop('HDMI1').then(() => {
+  console.log("Successfully closed HDMI1 port");
 })
 ```
