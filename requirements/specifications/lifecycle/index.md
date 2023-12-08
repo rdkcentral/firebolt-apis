@@ -1,11 +1,11 @@
 # App Lifecycle Management
 
-Document Status: Working Draft 
+Document Status: Candidate Specification
 
 See [Firebolt Requirements Governance](../../governance.md) for more info. 
 
 | Contributor               | Organization |
-| ------------------------- | ------------ |
+|---------------------------|--------------|
 | Andrew Bennett            | Sky          |
 | Cody Bonney               | Charter      |
 | Bart Catrysse             | Liberty      |
@@ -36,7 +36,7 @@ first, if needed. For details on presentation, see [App
 Presentation](./presentation.md). 
 
 *Closing* an app refers to the process of getting an app out of a state where 
-it is the primary user experience (e.g not visible, not audible, and not 
+it is the primary user experience (e.g. not visible, not audible, and not 
 responding to input). This **does not** involve *destroying* the app. 
 
 *Suspending* an app refers to reducing the app's memory and CPU usage, and 
@@ -81,7 +81,7 @@ a compatible process so that it resumes where it left off.
 - [6. Create Parameters](#6-create-parameters)
 - [7. Core SDK APIs](#7-core-sdk-apis)
   - [7.1. Application Interface](#71-application-interface)
-  - [7.2. Activatible Interface](#72-activatible-interface)
+  - [7.2. Activatable Interface](#72-activatable-interface)
   - [7.3. Sleepable Interface](#73-sleepable-interface)
   - [7.4. Example App](#74-example-app)
   - [7.5. Ready](#75-ready)
@@ -92,8 +92,8 @@ a compatible process so that it resumes where it left off.
 
 ## 3. Lifecycle States
 
-Firebolt platforms **MUST** support running one or more apps concurrently. The 
-platform **MUST** manage transition of apps from state to state. 
+Firebolt platforms **MUST** support running one or more apps concurrently. The
+platform **MUST** manage transition of apps from state to state.
 
 A Firebolt app, once running, **MUST** be in one of several states and **MUST 
 NOT** be in more than one state at a time. 
@@ -126,7 +126,6 @@ on this.
 | ?   | Unknown                 | 
 
 ### 3.1. Initializing
-
 
 This is the initial state an app exists from the moment it starts receiving CPU 
 cycles. 
@@ -198,8 +197,8 @@ Apps in this state **SHOULD** reduce memory usage, if possible.
 
 When an app transitions to this state, the platform **MUST** dispatch the 
 `Lifecycle.onStateChanged` notification with the current state. 
-### 3.4. Suspended
 
+### 3.4. Suspended
 
 This state allows an app to remain in memory and consume fewer resources. 
 
@@ -220,8 +219,8 @@ Apps in this state **SHOULD** further reduce memory usage (more so than in the
 
 **TODO**:: add all the transition pre-requisites, e.g. Apps **MUST** only enter 
 this state from the `SUSPENDED` state, via the `sleep()` interface. 
-### 3.5. Sleeping
 
+### 3.5. Sleeping
 
 This state allows an app to be copied from memory to local storage and then 
 terminated to save resources. Subsequently, the app may be copied back into 
@@ -246,6 +245,7 @@ If a platform supports copying sleeping apps memory out of RAM then:
 > 
 > Finally, the app and its container **MAY** be removed from memory and have 
 > other resources released as well. 
+
 ## 4. Getting the current state
 
 The Lifecycle module **MUST** provide a `state` property API that returns the 
@@ -268,6 +268,7 @@ The `state` API must have one of the following values:
 
 Note that the `onStateChanged` notification **MUST** never be dispatched for 
 the `Sleeping` state since it would not be received anyway. 
+
 ## 5. Lifecycle State Transitions
 
 There are several state transitions where the app and the platform need to 
@@ -278,6 +279,7 @@ States](../../images/specifications/lifecycle/lifecycle-transitions.png)
 
 As an app changes states the platform will invoke specific app-provided 
 transition methods from the `Application` interface: 
+
 |   | Legend        |
 | - | ------------- | 
 | ↓ | Limited       |
@@ -290,23 +292,21 @@ transition methods from the `Application` interface:
 | `resume()`  | ✔   | ✔   | ✔   | ✔   |     | graphics surface reallocated, full memory usage and normal CPU cycles.                                |
 | `destroy()` | ✔/↓ | ✔/↓ | ✔   |     |     | Preprare for the app to be deallocated and removed from execution. CPU & RAM based on previous state. |
 
-
 If an app implements the `Activity` interface, then the following transitions 
 may be invoked: 
+
 |                | CPU | RAM | Net | GFX | A/V | Description                                                               |
 |----------------|-----|-----|-----|-----|-----|---------------------------------------------------------------------------|
 | `activate()`   | ✔   | ✔   | ✔   | ✔   | ✔   | App is expected to become a user-perceptible part of the user experience. |
 | `deactivate()` | ✔   | ✔   | ✔   | ✔   | ✔   | Must remove any user-perceptible activities and deallocate A/V decoders.  |
 
-
-
 Finally, if an app implements the `Sleepable` interface, then the following 
 transistions may be invoked. 
+
 |           | CPU | RAM | Net | GFX | A/V | Description                                                                            |
 |-----------|-----|-----|-----|-----|-----|----------------------------------------------------------------------------------------|
 | `sleep()` | ↓   | ↓   | ✔   |     |     | Prepare for an extended period with no CPU cycles given to app.                        |
 | `wake()`  | ↓   | ↓   | ✔   |     |     | Cleanup after an extended period with no CPU, e.g. reset timers / network connections. |
-
 
 All of these transition APIs are blocking, and each one has a 
 platform-configurable timeout that specifies how long the app has to fulfill 
@@ -319,6 +319,7 @@ All Firebolt apps **MUST** implement the `Application` interface,
 `xrn:firebolt:capability:lifecycle:application`. 
 
 This includes: 
+
  - `Application.create()`
  - `Application.suspend()`
  - `Application.resume()`
@@ -331,17 +332,19 @@ how resources are managed during these state transitions. See [Application
 Interface](#71-application-interface) for more info. 
 
 User-facing apps **MUST** implement the `Activity` interface, 
-`xrn:firebolt:capability:lifecycle:activatible`. 
+`xrn:firebolt:capability:lifecycle:activatable`. 
 
 This includes: 
+
  - `Application.activate()`
  - `Application.deactivate()`
  
 
 By providing an implementation of the 
-`xrn:firebolt:capability:lifecycle:activatible` interface, an app can influence 
+`xrn:firebolt:capability:lifecycle:activatable` interface, an app can influence 
 how resources are managed during these state transitions. See [Activity 
 Interface](#82-activity-interface) for more info. 
+
 ### 5.1. Initializing an app
 
 Once an app is loaded it **MUST** be initialized immediately. 
@@ -386,20 +389,18 @@ for [Parameters](#6-create-parameters) and prepare to fulfill the provided
 launch configuration. 
 
 Example Launch Parameters: 
+
 ```json
 {
   "preload": true,
   "preloadReason": "boot"
 }
-
 ``` 
-
-**TODO**: discuss this ^^ 
 
 Once the `create` method returns the app **MUST** be immediately transitioned 
 to the `RUNNING` state. 
-### 5.2. Activating an app
 
+### 5.2. Activating an app
 
 Activating an app transitions it to the `ACTIVE` state so that it becomes part 
 of the user's experience. 
@@ -429,7 +430,7 @@ first.
 
 At this point, the app **MUST** be in the `RUNNING` state. 
 
-If an app provides the `xrn:firebolt:capability:lifecycle:activatible` 
+If an app provides the `xrn:firebolt:capability:lifecycle:activatable` 
 capability, then the platform **MUST** call the app's implementation of 
 `Activity.activate()`: 
 
@@ -465,15 +466,10 @@ activation which may include:
  - Performing any entitlement checks to decide whether to display a player or a purchase flow
  - Any other steps necesary to present content to the user quickly
 
+The platform **MAY** display a loading screen during the `activate()` callback, see
+[Loading Screen](./presentation.md#5-loading-screen) for more info.
 
-The platform will display a loading screen for the entire duration of the 
-`activate()` callback, and apps **SHOULD** do whatever is necessary to present 
-the user with content that fulfills the `intent` without additional loading 
-screens in the app's UX. 
-
-**TODO**: Discuss ^^ 
 ### 5.3. Deactivating an app
-
 
 Closing an app transitions it to the `RUNNING` state, so that it is no longer 
 part of the user's experience. 
@@ -518,7 +514,7 @@ remainder of this section does not apply.
 
 At this point, the app **MUST** be in the `ACTIVE` state. 
 
-If an app provides the `xrn:firebolt:capability:lifecycle:activatible` 
+If an app provides the `xrn:firebolt:capability:lifecycle:activatable` 
 capability, then the platform **MUST** call the app's implementation of 
 `Activity.deactivate()`: 
 
@@ -590,8 +586,8 @@ During the `suspend()` transition, the app:
 > **MUST** deallocate any graphics surface. 
 > 
 > **SHOULD** reduce memory usage, if possible. 
+> 
 ### 5.5. Resuming an app
-
 
 Resuming an app allows it to reallocate graphics composition and reload any 
 resources it might have deallocated during `suspend()`. 
@@ -644,8 +640,8 @@ TBD
 Firebolt apps that have permission to use the 
 `xrn:firebolt:capability:lifecycle:sleepable` capability **MUST** implement 
 `Sleepable.wake()`. 
-### 5.8. Destroying an app
 
+### 5.8. Destroying an app
 
 Destroying an app transitions it out of memory, so that it is no longer using 
 resources on the device. 
@@ -703,8 +699,8 @@ type CreateParameters = {
 
 ## 7. Core SDK APIs
 
-
 The following APIs are exposed by the Firebolt Core SDK. 
+
 ### 7.1. Application Interface
 
 The `Application` interface is implemented by Apps to provide resource 
@@ -723,8 +719,8 @@ interface Application {
   function resume(): Promise<void>;
   function destroy(): Promsie<void>;
 }
-
 ``` 
+
 | Method      | Description                                                                                                                                                                       |
 | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `create()`  | Called when the platform is ready to create the lifecycle session for the app. Only called only once, during the `INITIALIZING` state.                                            |
@@ -732,14 +728,14 @@ interface Application {
 | `resume()`  | Called when the platform wants the app to reallocate its graphics surface and prepare to be potentially used.                                                                     |
 | `destroy()` | Called when the platform is ready to end the lifecycle session for the app. Only called once.                                                                                     |
 
-### 7.2. Activatible Interface
+### 7.2. Activatable Interface
 
-The `Activatible` interface is implemented by Apps that provide user 
+The `Activatable` interface is implemented by Apps that provide user 
 perceptible experiences, e.g. visible, audible, or user input. 
 
 These types of apps require additional resource management 
 ```typescript
-interface Activatible {
+interface Activatable {
   function activate(intent: NavigationIntent): Promise<void>;
   function deactivate(): Promise<void>;
 }
@@ -810,10 +806,12 @@ class ExampleApplication implements Lifecycle.Application, Lifecycle.Activity {
 
 Lifecycle.provide([
     "xrn:firebolt:capability:lifecycle:application",
-    "xrn:firebolt:capability:lifecycle:activatible"
+    "xrn:firebolt:capability:lifecycle:activatable"
   ], new ExampleApplication())
 
 ``` 
+
+**TODO**: remove old APIs
 
 **NOTE**: we need to support passing an array of capabilities for a single 
 class. 
