@@ -30,7 +30,7 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
   - [8.2. Auto Low Latency Mode Signalled](#82-auto-low-latency-mode-signalled)
   - [8.3. Port Auto Low Latency Mode Capable](#83-port-auto-low-latency-mode-capable)
     - [8.3.1. Port Auto Low Latency Mode Capable Changed Notification](#831-port-auto-low-latency-mode-capable-changed-notification)
-- [9. Port Selection](#9-hdmi-port-selection)
+- [9. HDMI Port managing active source](#9-hdmi-port-managing-active-source)
 ## 3. All Ports
 The `HDMIInput` module **MUST** have a `ports` method that lists all physical HDMI input ports on the device.
 
