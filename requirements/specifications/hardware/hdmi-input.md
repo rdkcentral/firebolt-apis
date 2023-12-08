@@ -288,7 +288,7 @@ HDMIInput.autoLowLatencyModeCapableChanged((data) => {
 The `onAutoLowLatencyModeCapableChanged`  API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
 
 
-## 9. HDMI Port Opening and closing
+## 9. HDMI Port managing active source
 
 The `HDMIInput` module **MUST** have `open` and `close` method(s) that manages the active source of on a single HDMI port.
 
