@@ -101,7 +101,7 @@
             ]
         },
         {
-            "name": "select",
+            "name": "open",
             "tags": [
                 {
                     "name": "capabilities",
@@ -110,19 +110,12 @@
                     ]
                 }
             ],
-            "summary": "Selects the HDMI Port for active input",
+            "summary": "Opens the HDMI Port allowing it to be the active source device. Incase there is a different HDMI portId already set as the active source, this call would stop the older portId before opening the given portId.",
             "params": [
                 {
                     "name": "portId",
                     "schema": {
                         "$ref": "#/components/schemas/HDMIPortId"
-                    },
-                    "required": true
-                },
-                {
-                    "name": "type",
-                    "schema": {
-                        "$ref": "#/components/schemas/HDMISelectType"
                     },
                     "required": true
                 }
@@ -140,10 +133,6 @@
                         {
                             "name": "portId",
                             "value": "HDMI1"
-                        },
-                        {
-                            "name": "type",
-                            "value": "start"
                         }
                     ],
                     "result": {
@@ -157,10 +146,61 @@
                         {
                             "name": "portId",
                             "value": "HDMI1"
-                        },
+                        }
+                    ],
+                    "result": {
+                        "name": "port",
+                        "value": null
+                    }
+                }
+            ]
+        },
+        {
+            "name": "close",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-manages": [
+                        "xrn:firebolt:capability:inputs:hdmi"
+                    ]
+                }
+            ],
+            "summary": "Closes the given HDMI Port if it is the current active source for HDMI Input. There would no action taken if the given portId is not the current active source.",
+            "params": [
+                {
+                    "name": "portId",
+                    "schema": {
+                        "$ref": "#/components/schemas/HDMIPortId"
+                    },
+                    "required": true
+                }
+            ],
+            "result": {
+                "name": "port",
+                "schema": {
+                    "const": null
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example for start",
+                    "params": [
                         {
-                            "name": "type",
-                            "value": "stop"
+                            "name": "portId",
+                            "value": "HDMI1"
+                        }
+                    ],
+                    "result": {
+                        "name": "port",
+                        "value": null
+                    }
+                },
+                {
+                    "name": "Default Example for stop",
+                    "params": [
+                        {
+                            "name": "portId",
+                            "value": "HDMI1"
                         }
                     ],
                     "result": {
@@ -559,14 +599,6 @@
                         "type": "boolean"
                     }
                 }
-            },
-            "HDMISelectType": {
-                "title": "HDMISelectType",
-                "type": "string",
-                "enum": [
-                    "start",
-                    "stop"
-                ]
             }
         }
     }
