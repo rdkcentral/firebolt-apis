@@ -23,8 +23,9 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [1. Overview](#1-overview)
 - [2. Table of Contents](#2-table-of-contents)
 - [3. Protocol](#3-protocol)
-  - [3.1. OpenRPC Schemas](#31-openrpc-schemas)
-    - [3.1.1. Schema Ids](#311-schema-ids)
+  - [3.1. OpenRPC Documents](#31-openrpc-documents)
+    - [3.1.1. OpenRPC Ids](#311-openrpc-ids)
+    - [3.1.2. Duplex Linking](#312-duplex-linking)
   - [3.2. Asynchronous Events](#32-asynchronous-events)
   - [3.3. Provider Interfaces](#33-provider-interfaces)
 - [4. Transport](#4-transport)
@@ -33,9 +34,9 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 ## 3. Protocol
 Firebolt implmentations **MUST** support RPC using the [JSON-RPC 2.0](https://www.jsonrpc.org/specification) protocol.
 
-The RPC interface of every Firebolt method **MUST** be defined via an [OpenRPC schema](https://spec.open-rpc.org).
+The RPC interface of every Firebolt method **MUST** be defined via an [OpenRPC document](https://spec.open-rpc.org).
 
-RPC method schemas **SHOULD** use the [Firebolt OpenRPC](https://github.com/rdkcentral/firebolt-openrpc/) Extensions to enable language-specific design patterns to be applied to similar APIs.
+RPC method definitions **SHOULD** use the [Firebolt OpenRPC](https://github.com/rdkcentral/firebolt-openrpc/) Extensions to enable language-specific design patterns to be applied to similar APIs.
 
 Firebolt implementations **MAY** support other RPC protocols in addition to JSON-RPC 2.0, as long as a compatible transport layer is provided so that apps do not have to be rewritten.
 
@@ -43,43 +44,74 @@ Firebolt implementations **MUST** support all aspects of the JSON-RPC specificat
 
 Firebolt implementations **MUST** send only one response for each request.
 
-### 3.1. OpenRPC Schemas
-Since both the App and the Firebolt Implementation expose APIs, there **MUST** be a separate OpenRPC Schema for each.
+**TODO**: Add note about case sensitivity
 
-The Firebolt Implementation OpenRPC Schema:
+### 3.1. OpenRPC Documents
+Since both the App and the Firebolt Implementation expose APIs, there **MUST** be a separate OpenRPC definition for each.
+
+The Firebolt Implementation OpenRPC Document:
 ```
 firebolt-open-rpc.json
 ```
 
-The Firebolt App OpenRpc Schema:
+The Firebolt App OpenRpc Document:
 
 ```
 firebolt-application-open-rpc.json
 ```
 
-#### 3.1.1. Schema Ids
-The Firebolt Implementation OpenRPC Schema **MUST** have the `$id` set to:
+#### 3.1.1. OpenRPC Ids
+The Firebolt Implementation OpenRPC Document **MUST** have the `$id` set to:
 
 ```
 "$schema": "https://meta.open-rpc.org/",
 "$id": "https://rdkcentral.github.io/firebolt/openrpc/platform"
 ```
 
-An HTTP `GET` on `https://rdkcentral.github.io/firebolt/openrpc/platform` **MUST** return the latest product version of the Firebolt Implementation Open RPC Schema.
+An HTTP `GET` on `https://rdkcentral.github.io/firebolt/openrpc/platform` **MUST** return the latest product version of the Firebolt Implementation Open RPC Definition.
 
-The Firebolt App OpenRpc Schema **MUST** have the `$id` set to:
+The Firebolt App OpenRpc Document **MUST** have the `$id` set to:
 
 ```
 "$schema": "https://meta.open-rpc.org/",
 "$id": "https://rdkcentral.github.io/firebolt/openrpc/application"
 ```
 
-An HTTP `GET` on `https://rdkcentral.github.io/firebolt/openrpc/application` **MUST** return the latest product version of the Firebolt Application Open RPC Schema.
+An HTTP `GET` on `https://rdkcentral.github.io/firebolt/openrpc/application` **MUST** return the latest product version of the Firebolt Application Open RPC Definition.
+
+#### 3.1.2. Duplex Linking
+Since a platform OpenRPC definition has a corresponding application defintion, it **MUST** be denoted by an OpenRPC `x-client-api` extension property in the `info` section.
+
+Similarly, the application OpenRPC definition **MUST** reference the platform definition in the `x-client-api` property.
+
+Firebolt Platform OpenRPC:
+
+```json
+{
+    "$id": "https://rdkcentral.github.io/firebolt/openrpc/platform",
+    "info": {
+        "title": "Firebolt",
+        "x-client-api": "https://rdkcentral.github.io/firebolt/openrpc/application"
+    }
+}
+```
+
+Firebolt Application OpenRPC:
+
+```json
+{
+    "$id": "https://rdkcentral.github.io/firebolt/openrpc/application",
+    "info": {
+        "title": "Firebolt",
+        "x-client-api": "https://rdkcentral.github.io/firebolt/openrpc/platform"
+    }
+}
+```
 
 ### 3.2. Asynchronous Events
 Asynchronous events, aka "notifications," **MUST** be handled by leveraging the common "duplex" pattern where both the Firebolt App & the Firebolt Implementation act as a JSON-RPC Server *and* a JSON-RPC client.
 
-To register for an event, e.g "Sunrise", the Firebolt App would call an RPC method on the Firebolt Implementation called `Sky.onSunrise` with the `listen` parameter set to `true`:
+To register for an event, e.g "sunrise", the Firebolt App would call an RPC method on the Firebolt Implementation called `Sky.onSunrise` with the `listen` parameter set to `true`:
 
 App -> Firebolt
 
@@ -116,7 +148,7 @@ This `onSunrise` call **MUST** only have one response: either an empty success r
 }
 ```
 
-If a Firebolt App has registered for an event, e.g. "Sunrise," then the Firebolt Implementation **SHOULD** send any occurences of the "Sunrise" event to the app via a JSON-RPC notification request:
+If a Firebolt App has registered for an event, e.g. "sunrise," then the Firebolt Implementation **SHOULD** send any occurences of the "sunrise" event to the app via a JSON-RPC notification request:
 
 Firebolt -> App
 
@@ -127,11 +159,11 @@ Firebolt -> App
 }
 ```
 
-If a Firebolt App registers (or unregisters) for an event, e.g. "Sunrise," more than once, then the Firebolt Implementation **SHOULD** treat the request as a success if the initial request was successful. The Firebolt Implementation **MUST** send only one notification to the app per occurences of the "Sunrise" event regardless of how many times it registered.
+If a Firebolt App registers (or unregisters) for an event, e.g. "sunrise," more than once, then the Firebolt Implementation **SHOULD** treat the request as a success if the initial request was successful. The Firebolt Implementation **MUST** send only one notification to the app per occurences of the "sunrise" event regardless of how many times it registered.
 
 A single unregistration for an event **MUST** result in the notifications for that event being turned off for that app, regardless of how many times the app had registered.
 
-The Platform event registration API **MUST** have an `x-notifier` extension property on the `event` tag with a `$ref` style value to a method in the Application RPC:
+The Platform event registration API **MUST** have an `x-notifier` extension property on the `event` tag with a `$ref` style value to a method in the platform RPC:
 
 ```json
 {
@@ -141,7 +173,6 @@ The Platform event registration API **MUST** have an `x-notifier` extension prop
             "tags": [
                 {
                     "name": "event",
-                    "x-notifier-rpc": "https://rdkcentral.github.io/firebolt/openrpc/application",
                     "x-notifier": "Sky.sunrise"
                 }
             ]
@@ -155,9 +186,7 @@ Provider Interfaces allow a Firebolt App to "provide" a Firebolt Capability back
 
 Provider Interfaces **MUST** be handled by leveraging the common "duplex" pattern where both the Firebolt App & the Firebolt Implementation act as a JSON-RPC Server *and* a JSON-RPC client.
 
-To register as a provider for a capability, e.g. `"xrn:firebolt:capability:sky:sun"`, the Firebolt App would call an RPC method on the Firebolt Implementation for each interface method in the "xrn:firebolt:capability:sky:sun" interface.
-
-For this example, the `"xrn:firebolt:capability:sky:sun"` interface consists of:
+For this example, the `"xrn:firebolt:capability:sky:sun"` interface consists of (Written in TypeScript for brevity):
 
 ```typescript
 interface Sun {
@@ -166,33 +195,44 @@ interface Sun {
 }
 ```
 
-To register for this Provider Interface, the Firebolt App would call an RPC method on the Firebolt Implementation called `provide`, with the `capability` parameter set to `"xrn:firebolt:capability:sky:sun"` and the `available` parameter set to `true`, e.g.:
+To register as a provider for a capability, e.g. `"xrn:firebolt:capability:sky:sun"`, the Firebolt App would call an RPC method on the Firebolt Implementation to enable the interface to be called on the application by the platform.
+
+The Platform provider registration API **MUST** have a `provider` tag and an `x-interface` string parameter denoting the name of the interface from the Application OpenRPC that this registration API is enabling.
 
 ```json
 {
-    "id": 1,
-    "method": "Sky.provide",
-    "params": [
+    "methods": [
         {
-            "capability": "xrn:firebolt:capability:sky:sun",
-            "available": true
+            "name": "Sky.provideSun",
+            "tags": [
+				{
+					"name": "provider",
+                    "x-interface": "Sun"
+				}
+            ],
+            "params": [
+                {
+                    "name": "enbled",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ]
         }
     ]
 }
 ```
 
-To disable a capability, the Firebolt App would call the `provide` RPC method with `available` set to `false`.
+To register for this Provider Interface, the Firebolt App would call the RPC method, e.g.:
 
 ```json
 {
     "id": 1,
-    "method": "Sky.provide",
-    "params": [
-        {
-            "capability": "xrn:firebolt:capability:sky:sun",
-            "available": false
-        }
-    ]
+    "method": "Sky.provideSun",
+    "params": {
+        "enabled": true
+    }
 }
 ```
 
@@ -207,35 +247,6 @@ If a Firebolt App has registered as a capability provider, e.g. "xrn:firebolt:ca
 ```
 
 The app **MUST** respond either either a result or an error.
-
-The Platform provider registration API **MUST** have a `provider` tag and a `capability` string parameter with an `enum` for all of the capabilities this API allows registration for.
-
-```json
-{
-    "methods": [
-        {
-            "name": "Sky.provide",
-            "tags": [
-				{
-					"name": "provider"
-				}
-            ],
-            "params": [
-                {
-                    "name": "capability",
-                    "required": true,
-                    "schema": {
-                        "type": "string",
-                        "enum": [
-                            "xrn:firebolt:capability:sky:sun"
-                        ]
-                    }
-                }
-            ]
-        }
-    ]
-}
-```
 
 ## 4. Transport
 The RPC Protocol **MUST** be handled over a WebSocket.
