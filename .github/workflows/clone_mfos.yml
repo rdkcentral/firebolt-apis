@@ -23,41 +23,17 @@ jobs:
           ref: main
       - name: Install MFOS Dependencies
         run: |
-          cd ..
-          echo "First LS"
-          ls
-          cd firebolt-apis
-          echo "firebolt-apis LS"
-          ls
           cd server
           cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
           npm start &
-
-      - name: Set up workspace for Mfos
-        id: set-up-mfos-workspace
-        run:  |
-          echo "Workspace Path: ${{ github.workspace }}/mock-firebolt"
-
-      - name: Clone FCA
-        uses: actions/checkout@v2
-        with:
-          repository: rdkcentral/firebolt-certification-app
-          ref: main
-      - name: Install FCA Dependencies
-        run: |
+          echo "Sleep 10s"
+          sleep 10s
           cd ..
-          echo "First LS"
-          ls
-          cd firebolt-apis
-          echo "firebolt-apis LS"
-          ls
+          git clone https://github.com/rdkcentral/firebolt-certification-app.git
           npm install
           npm start &
-          sleep 20s
-
-      - name: Go back to the Mfos workspace
-        run:  |
-          cd ${{ steps.set-up-mfos-workspace.outputs.workspace-path }}
-          cd server
-          ls
+          sleep 10s
+          cd ..
+          echo "LS AFTER FCA"
+          ls 
