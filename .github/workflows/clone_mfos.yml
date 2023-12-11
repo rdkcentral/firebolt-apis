@@ -18,8 +18,9 @@ jobs:
     steps:
       - name: FCA Standalone Report
         run: |
+          echo "GIT"
+          echo "${{ github }}
           PR_BRANCH=$(echo "${{ github.event_name }}" | tr '[:upper:]' '[:lower:]')
-          
           if [ "${PR_BRANCH}" == "pull_request" ]; then
           PR_BRANCH="${{ github.event.pull_request.head.ref }}"
           elif [ "${PR_BRANCH}" == "push" ]; then
@@ -37,8 +38,6 @@ jobs:
           cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
           npm start &
-          echo "Sleep 10s"
-          sleep 10s
           cd ..//..
           ls 
           echo "LS AFTER MOCK"
@@ -46,7 +45,6 @@ jobs:
           cd firebolt-certification-app
           npm install
           npm start &
-          sleep 10s
           cd ..
           echo "LS AFTER FCA"
           ls
