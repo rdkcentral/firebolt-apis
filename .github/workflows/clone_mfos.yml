@@ -18,7 +18,8 @@ jobs:
     steps:
       - name: FCA Standalone Report
         run: |
-          git clone --branch ${{ github.event.pull_request.head.ref }} https://github.com/rdkcentral/firebolt-apis.git
+          echo "BRANCH_NAME=$(echo ${{ github.ref }} | awk -F '/' '{print $NF}')" >> $GITHUB_ENV
+          git clone --branch ${{ env.BRANCH_NAME }} https://github.com/rdkcentral/firebolt-apis.git
           ls 
           git clone https://github.com/rdkcentral/mock-firebolt.git
           cd mock-firebolt/server
