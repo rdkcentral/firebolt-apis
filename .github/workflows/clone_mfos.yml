@@ -1,0 +1,20 @@
+name: Clone Repository
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  clone-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          repository: https://github.com/rdkcentral/mock-firebolt
+          ref: main
