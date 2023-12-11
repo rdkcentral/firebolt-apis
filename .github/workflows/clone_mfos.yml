@@ -23,6 +23,12 @@ jobs:
           ref: main
       - name: Install MFOS Dependencies
         run: |
+          cd ..
+          echo "First LS"
+          cd ..
+          echo "Seconds LS"
+          cd .. 
+          echo "Third LS"
           cd server
           cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
@@ -30,7 +36,8 @@ jobs:
 
       - name: Set up workspace for Mfos
         id: set-up-mfos-workspace
-        run: echo "Workspace Path: ${{ github.workspace }}/mock-firebolt"
+        run:  |
+          echo "Workspace Path: ${{ github.workspace }}/mock-firebolt"
 
       - name: Clone FCA
         uses: actions/checkout@v2
