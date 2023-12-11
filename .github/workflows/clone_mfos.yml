@@ -17,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: FCA Standalone Report
-        uses: actions/checkout@v2
         run: |
           git clone https://github.com/rdkcentral/mock-firebolt.git
           cd mock-firebolt/server
