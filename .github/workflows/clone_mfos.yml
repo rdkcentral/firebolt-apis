@@ -1,19 +1,22 @@
 name: Clone Repository
 
 on:
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
   push:
-    branches:
-      - main
+    branches-ignore: [ main ]
+  pull_request:
+    types:
+      - opened
+    branches: [ main ]
+env:
+  HUSKY: 0
 
 jobs:
-  clone-repo:
+  release:
+    name: Clonemfos
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v2
         with:
           repository: rdkcentral/mock-firebolt
