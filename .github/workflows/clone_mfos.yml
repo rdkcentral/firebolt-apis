@@ -1,4 +1,4 @@
-name: Clone Repository
+name: Standalone MFOS Report job
 
 on:
   workflow_dispatch:
@@ -23,7 +23,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: FCA Standalone Report
         run: |
-          apt-get -y install jq
+          apt-get update && apt-get -y install jq
           echo "Clone firebolt-apis repo with pr branch"
           PR_BRANCH=$(echo "${{ github.event_name }}" | tr '[:upper:]' '[:lower:]')
           if [ "${PR_BRANCH}" == "pull_request" ]; then
