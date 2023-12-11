@@ -18,23 +18,31 @@ jobs:
     steps:
       - name: FCA Standalone Report
         run: |
-          echo "GIT"
-          echo "${{ github }}
+          apt-get update && apt-get -y install jq
           PR_BRANCH=$(echo "${{ github.event_name }}" | tr '[:upper:]' '[:lower:]')
           if [ "${PR_BRANCH}" == "pull_request" ]; then
-          PR_BRANCH="${{ github.event.pull_request.head.ref }}"
+            PR_BRANCH="${{ github.event.pull_request.head.ref }}"
           elif [ "${PR_BRANCH}" == "push" ]; then
-          PR_BRANCH="${{ github.ref }}"
-          PR_BRANCH="${PR_BRANCH#refs/heads/}"
+            PR_BRANCH="${{ github.ref }}"
+            PR_BRANCH="${PR_BRANCH#refs/heads/}"
           else
-          echo "Unsupported event: ${{ github.event_name }}"
-          exit 1
+            echo "Unsupported event: ${{ github.event_name }}"
+            exit 1
           fi
-          echo "Pull Request Branch: ${PR_BRANCH}"
           git clone --branch ${PR_BRANCH} https://github.com/bpvstaty366/firebolt-apis.git
+          cd firebolt-apis
+          npm i
+          npm run compile
+          cd ..
           ls 
           git clone https://github.com/rdkcentral/mock-firebolt.git
           cd mock-firebolt/server
+          cp ../../firebolt-apis/dist/firebolt-open-rpc.json ../../mock-firebolt/server/src/firebolt-open-rpc.json
+          ls src
+          cat src/firebolt-open-rpc.json
+          jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
+          jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
+          cat src/.mf.config.SAMPLE.json
           cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
           npm start &
