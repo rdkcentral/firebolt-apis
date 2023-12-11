@@ -300,14 +300,14 @@ The `HdmiInput.open` and `HDMIInput.close` API requires `manage` access to the `
 
 Below is an example for opening a given HDMIPort.
 ```javascript
-HDMIInput.start('HDMI1').then(() => {
+HDMIInput.open('HDMI1').then(() => {
   console.log("Successfully opened HDMI1 port");
 })
 ```
 
-Below is an example for stopping last active source.
+Below is an example for closing last active source.
 ```javascript
-HDMIInput.stop('HDMI1').then(() => {
+HDMIInput.close().then(() => {
   console.log("Successfully closed HDMI1 port");
 })
 ```
