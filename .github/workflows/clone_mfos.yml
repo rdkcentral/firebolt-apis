@@ -13,7 +13,7 @@ env:
 
 jobs:
   release:
-    name: Run Mfos Jpb
+    name: Run Mfos Job
     runs-on: ubuntu-latest
     steps:
       - name: Clone Mfos
@@ -38,8 +38,10 @@ jobs:
           ref: main
       - name: Install FCA Dependencies
         run: |
+          echo "FIRST LS"
           ls
           cd ..
+          echo "LSIM"
           ls 
           cd firebolt-certification-app
           npm install
