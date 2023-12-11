@@ -27,7 +27,6 @@ jobs:
           cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
           npm start &
-          continue-on-error: true  # Allow subsequent steps to run even if this step fails
 
       - name: Set up workspace for Mfos
         id: set-up-mfos-workspace
