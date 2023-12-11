@@ -16,20 +16,17 @@ jobs:
     name: Run Mfos Job
     runs-on: ubuntu-latest
     steps:
-      - name: Clone Mfos
+      - name: FCA Standalone Report
         uses: actions/checkout@v2
-        with:
-          repository: rdkcentral/mock-firebolt
-          ref: main
-      - name: Install MFOS Dependencies
         run: |
-          cd server
+          git clone https://github.com/rdkcentral/mock-firebolt.git
+          cd mock-firebolt/server
           cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
           npm start &
           echo "Sleep 10s"
           sleep 10s
-          cd ..
+          cd ..//..
           git clone https://github.com/rdkcentral/firebolt-certification-app.git
           cd firebolt-certification-app
           npm install
