@@ -25,11 +25,14 @@ jobs:
         run: |
           cd ..
           echo "First LS"
+          ls
           cd ..
           echo "Seconds LS"
+          ls
           cd .. 
           echo "Third LS"
-          cd server
+          ls
+          cd */*/*/server
           cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
           npm start &
