@@ -27,5 +27,7 @@ jobs:
           cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
           npm start &
+          cat package.json
+          ls
           cd ..//..
-          ls 
+          ls
