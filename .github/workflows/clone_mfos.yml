@@ -31,9 +31,10 @@ jobs:
           sleep 10s
           cd ..
           git clone https://github.com/rdkcentral/firebolt-certification-app.git
+          cd firebolt-certification-app
           npm install
           npm start &
           sleep 10s
           cd ..
           echo "LS AFTER FCA"
-          ls 
+          ls
