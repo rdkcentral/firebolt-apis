@@ -38,11 +38,9 @@ jobs:
           ref: main
       - name: Install FCA Dependencies
         run: |
-          echo "FIRST LS"
-          ls
+          npm install
+          npm start &
+          sleep 20s
           cd ..
           echo "LSIM"
           ls 
-          cd firebolt-certification-app
-          npm install
-          npm start &
