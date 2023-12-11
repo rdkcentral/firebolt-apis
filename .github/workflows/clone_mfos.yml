@@ -30,7 +30,7 @@ jobs:
           exit 1
           fi
           echo "Pull Request Branch: ${PR_BRANCH}"
-          git clone --branch ${PR_BRANCH} https://github.com/rdkcentral/firebolt-apis.git
+          git clone --branch ${PR_BRANCH} git@github.com:bpvstaty366/firebolt-apis.git
           ls 
           git clone https://github.com/rdkcentral/mock-firebolt.git
           cd mock-firebolt/server
