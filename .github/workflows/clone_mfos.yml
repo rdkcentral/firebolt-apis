@@ -26,13 +26,10 @@ jobs:
           cd ..
           echo "First LS"
           ls
-          cd ..
-          echo "Seconds LS"
+          cd firebolt-apis
+          echo "firebolt-apis LS"
           ls
-          cd .. 
-          echo "Third LS"
-          ls
-          cd */*/*/server
+          cd server
           cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
           npm start &
@@ -49,6 +46,12 @@ jobs:
           ref: main
       - name: Install FCA Dependencies
         run: |
+          cd ..
+          echo "First LS"
+          ls
+          cd firebolt-apis
+          echo "firebolt-apis LS"
+          ls
           npm install
           npm start &
           sleep 20s
