@@ -23,7 +23,9 @@ jobs:
           ref: main
       - name: Install MFOS Dependencies
         run: |
-          echo "LS"
-          ls
-          cd mock-firebolt
+          cd server
+          cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
+          npm start &
+          cd ..//..
+          ls 
