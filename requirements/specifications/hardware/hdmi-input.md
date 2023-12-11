@@ -30,7 +30,7 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
   - [8.2. Auto Low Latency Mode Signalled](#82-auto-low-latency-mode-signalled)
   - [8.3. Port Auto Low Latency Mode Capable](#83-port-auto-low-latency-mode-capable)
     - [8.3.1. Port Auto Low Latency Mode Capable Changed Notification](#831-port-auto-low-latency-mode-capable-changed-notification)
-
+- [9. HDMI Port managing active source](#9-hdmi-port-managing-active-source)
 ## 3. All Ports
 The `HDMIInput` module **MUST** have a `ports` method that lists all physical HDMI input ports on the device.
 
@@ -286,3 +286,28 @@ HDMIInput.autoLowLatencyModeCapableChanged((data) => {
 `port` - the HDMI port that had an E-EDID ALLM advertisement change.
 
 The `onAutoLowLatencyModeCapableChanged`  API requires `use` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
+
+## 9. HDMI Port managing active source
+
+The `HDMIInput` module **MUST** have `open` and `close` method(s) that manages the active source of on a single HDMI port.
+
+The `HDMIInput.open` **MUST** include a `portId` field complying to the schema of `HDMIPortId`
+
+The `HdmiInput.open` and `HDMIInput.close` API(s) **MUST** return an `empty` object for a successful operation, if there was an error the response **Must** contain the details of the error.
+
+The `HdmiInput.open` and `HDMIInput.close` API requires `manage` access to the `xrn:firebolt:capability:inputs:hdmi` capability.
+
+Below is an example for opening a given HDMIPort.
+```javascript
+HDMIInput.open('HDMI1').then(() => {
+  console.log("Successfully opened HDMI1 port");
+})
+```
+
+Below is an example for closing last active source.
+```javascript
+HDMIInput.close().then(() => {
+  console.log("Successfully closed HDMI1 port");
+})
+```
