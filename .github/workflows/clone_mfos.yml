@@ -31,3 +31,16 @@ jobs:
           ls
           cd ..//..
           ls
+      - name: Clone FCA
+        uses: actions/checkout@v2
+        with:
+          repository: rdkcentral/firebolt-certification-app
+          ref: main
+      - name: Install FCA Dependencies
+        run: |
+          ls
+          cd ..
+          ls 
+          cd firebolt-certification-app
+          npm install
+          npm start &
