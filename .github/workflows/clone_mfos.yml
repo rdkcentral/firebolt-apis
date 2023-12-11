@@ -13,11 +13,15 @@ env:
 
 jobs:
   release:
-    name: Clonemfos
+    name: Run Mfos Jpb
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Clone Mfos
         uses: actions/checkout@v2
         with:
           repository: rdkcentral/mock-firebolt
           ref: main
+      - name: Install MFOS Dependencies
+        run: |
+          cd mock-firebolt
+          npm install
