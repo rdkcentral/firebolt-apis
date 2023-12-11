@@ -34,12 +34,9 @@ jobs:
           npm i
           npm run compile
           cd ..
-          ls 
           git clone https://github.com/rdkcentral/mock-firebolt.git
           cd mock-firebolt/server
           cp ../../firebolt-apis/dist/firebolt-open-rpc.json ../../mock-firebolt/server/src/firebolt-open-rpc.json
-          ls src
-          cat src/firebolt-open-rpc.json
           jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
           jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
           cat src/.mf.config.SAMPLE.json
@@ -47,8 +44,6 @@ jobs:
           npm install
           npm start &
           cd ..//..
-          ls 
-          echo "LS AFTER MOCK"
           git clone https://github.com/rdkcentral/firebolt-certification-app.git
           cd firebolt-certification-app
           npm install
