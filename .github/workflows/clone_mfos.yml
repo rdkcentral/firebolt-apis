@@ -30,8 +30,7 @@ jobs:
 
       - name: Set up workspace for Mfos
         id: set-up-mfos-workspace
-        run:  |
-          echo "Workspace Path: ${{ github.workspace }}/mock-firebolt"
+        run: echo "Workspace Path: ${{ github.workspace }}/mock-firebolt"
 
       - name: Clone FCA
         uses: actions/checkout@v2
