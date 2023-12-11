@@ -12,7 +12,7 @@ env:
   HUSKY: 0
 
 jobs:
-  Standalone MFOS Report Job:
+  StandaloneMFOS:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
