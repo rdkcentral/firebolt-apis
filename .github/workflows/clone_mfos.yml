@@ -53,7 +53,7 @@ jobs:
           sleep 5s
           cd ..
           ls
-          curl -X POST -H "Content-Type: application/json" -d '{
+          response=$(curl -X POST -H "Content-Type: application/json" -d '{
             "result": {
               "lmt": 0,
               "us_privacy": "1-N-",
@@ -69,5 +69,7 @@ jobs:
                 }
               }
             }
-          }' http://localhost:3333/api/v1/state/method/parameters.initialization/result
-
+          }' http://localhost:3333/api/v1/state/method/parameters.initialization/result)
+          echo "RESP: "
+          echo $response
+    
