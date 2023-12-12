@@ -90,8 +90,10 @@ jobs:
               await page.goto("http://localhost:8081/?mf=ws://localhost:9998/12345&standalone=true");
 
               // Perform any additional actions as needed
-
+      
               // Close the browser
-              await browser.close();
+            //  await browser.close();
             })();
           '
+          echo "sleep 120s"
+          sleep 120s
