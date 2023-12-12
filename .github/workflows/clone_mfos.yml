@@ -46,8 +46,11 @@ jobs:
           npm start &
           cd ..//..
           echo "clone fca repo and start it in the background"
-          git clone https://github.com/rdkcentral/firebolt-certification-app.git
+          echo "PR_BRANCH $PR_BRANCH"
+          git clone --branch ${PR_BRANCH} https://github.com/rdkcentral/firebolt-certification-app.git
           cd firebolt-certification-app
+          NEW_PLATFORM_LIST="['XCLASS', 'XRE_ThorXRE', 'default', 'mock-firebolt-os']"
+          sed -i "s/\(PLATFORM_LIST: \)[^,]*\(,\)/\1$NEW_PLATFORM_LIST\2/" plugins/config.js
           npm install
           npm start &
           sleep 5s
