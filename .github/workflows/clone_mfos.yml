@@ -120,7 +120,15 @@ jobs:
               await browser.close();
             })();
           '
+          ls
           echo "REPORT JSON????"
           ls -lh report.json
+          echo "LESS"
           less report.json
-          cat report.json
+      - name: Send report.json to PR
+        run: |
+          echo "ls?"
+          ls
+          echo "cd ..?"
+          cd ..
+          ls
