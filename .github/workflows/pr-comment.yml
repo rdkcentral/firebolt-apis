@@ -2,7 +2,7 @@ name: Comment Artifact URL on PR
 
 on:
   workflow_run:
-    workflows: [MFOS Standalone Report]
+    workflows: [Node.js CI]
     types: [completed]
 
 jobs:
