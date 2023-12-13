@@ -34,7 +34,6 @@ jobs:
           cd firebolt-apis
           npm i
           npm run compile
-          cd ..
       - name: Start MFOS
         run: |
           ls
@@ -47,7 +46,6 @@ jobs:
           cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
           npm start &
-          cd ..//..
       - name: Start FCA
         run: |
           ls
@@ -130,15 +128,38 @@ jobs:
               await browser.close();
             })();
           '
-          ls
-          echo "REPORT JSON????"
-          ls -lh report.json
-          echo "LESS"
-          less report.json
+      - name: Upload report.json as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: report-json
+          path: report.json
+
+  SendReportToPR:
+    needs: RunStandaloneTests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download report.json artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: report-json
+          path: ${{ github.workspace }}/report-json
+
       - name: Send report.json to PR
         run: |
-          echo "ls?"
           ls
-          echo "cd ..?"
-          cd ..
-          ls
+          echo "TUT?"
+          # Create a comment with the contents of report.json
+          reportPath="${{ github.workspace }}/report-json/report.json"
+          commentContent=$(cat $reportPath)
+
+          # Get PR information
+          PR_NUMBER=$(jq --raw-output .number "$GITHUB_EVENT_PATH")
+
+          # Comment on the PR
+          echo "Sending report.json as a comment to PR #$PR_NUMBER"
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
+            --data "{\"body\":\"Here is the report.json file:\n\`\`\`\n${commentContent}\n\`\`\`\"}"
