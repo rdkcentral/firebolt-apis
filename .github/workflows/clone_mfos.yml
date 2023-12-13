@@ -93,23 +93,19 @@ jobs:
                logMessage = `${msg.text()}`;
                console.log(logMessage);
               }
-              // Check if the log message contains "Response String:"
-              if (logMessage.includes("Response String:")) {
-              isResponseStringLog = true;
-            } else if (isResponseStringLog) {
-              // The next log message is expected to be JSON
-              try {
-              // Remove the "Response String:" prefix before parsing JSON
-              const jsonString = logMessage.replace("Response String:", "").trim();
-              responseString = JSON.parse(jsonString);
-              console.log("Parsed JSON:", responseString);
-            } catch (error) {
-              console.error("Error parsing JSON:", error);
-            }
-              
-              // Reset the flag
-              isResponseStringLog = false;
-            }
+             if (logMessage.includes("Response String:")) {
+                const jsonStringMatch = logMessage.match(/Response String:(.*)/);
+                if (jsonStringMatch && jsonStringMatch[1]) {
+                try {
+                const jsonString = jsonStringMatch[1].trim();
+                console.log(jsonString + "jsonString");
+                const responseString = JSON.parse(jsonString);
+                console.log("Parsed JSON:", responseString);
+              } catch (error) {
+                console.error("Error parsing JSON:", error);
+              }
+              }
+              }
             });
               // Navigate to the URL
               await page.goto("http://localhost:8081/?mf=ws://localhost:9998/12345&standalone=true");
