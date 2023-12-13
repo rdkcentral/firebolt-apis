@@ -13,7 +13,7 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Kevin Pearson   | Comcast        |
 
 ## 1. Overview
-This document outlines the requirements for remote proceedure call (RPC) APIs surfaced by a Firebolt implementation to Firebolt Apps.
+This document outlines the requirements for remote procedure call (RPC) APIs surfaced by a Firebolt implementation to Firebolt Apps.
 
 This document does not cover the scope of the Firebolt SDK vs the App itself, and the term "Firebolt App" is meant to denote a fully built App, including the Firebolt SDK.
 
