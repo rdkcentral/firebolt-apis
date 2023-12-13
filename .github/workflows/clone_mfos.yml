@@ -162,11 +162,21 @@ jobs:
           echo $github.event_path
           echo "GITHUB_EVENT_PATH"
           echo $GITHUB_EVENT_PATH
+          cat $GITHUB_EVENT_PATH
           echo "PR_BRANCH"
           PR_BRANCH=$(echo "${{ github.event_name }}" | tr '[:upper:]' '[:lower:]')
-          echo "PR_NUMBER"
+          if [ "${PR_BRANCH}" == "pull_request" ]; then
+          PR_BRANCH="${{ github.event.pull_request.head.ref }}"
+          elif [ "${PR_BRANCH}" == "push" ]; then
+          PR_BRANCH="${{ github.ref }}"
+          PR_BRANCH="${PR_BRANCH#refs/heads/}"
+          else
+            echo "Unsupported event: ${{ github.event_name }}"
+            exit 1
+          fi 
+          echo "$PR_BRANCH"
           PR_NUMBER=${{ github.event.pull_request.number }}
-
+          echo "$PR_NUMBER"
           # Comment on the PR
           echo "Sending report.json as a comment to PR #$PR_NUMBER"
           curl -X POST \
