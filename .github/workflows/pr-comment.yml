@@ -1,40 +1,19 @@
 name: Comment Artifact URL on PR
 
 on:
-  workflow_dispatch:
-  push:
-    branches-ignore: [ main ]
-  pull_request:
-    types:
-      - opened
-    branches: [ main ]
-
-env:
-  HUSKY: 0
-  # Turns off installing commit hooks in CI environments
+  workflow_run:
+    workflows: [MFOS Standalone Report]
+    types: [completed]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [lts/*]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run fs:setup
-      - run: npm run validate:each
-      - run: npm run compile
-      - run: npm run slice
-      - run: npm run validate:compiled
-      - run: npm run sdks
-      - run: npm run test
+      - name: Get Artifacts Link
+        env:
+          WORKFLOW_RUN_EVENT_OBJ: ${{ toJSON(github.event.workflow_run) }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PREVIOUS_JOB_ID=$(jq -r '.id' <<< "$WORKFLOW_RUN_EVENT_OBJ")
+          SUITE_ID=$(jq -r '.check_suite_id' <<< "$WORKFLOW_RUN_EVENT_OBJ")
