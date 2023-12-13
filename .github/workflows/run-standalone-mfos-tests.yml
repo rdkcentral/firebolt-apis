@@ -129,57 +129,9 @@ jobs:
               await browser.close();
             })();
           '
-      - name: Get pull request number
-        id: get_pr_number
-        run: |
-          PR_NUMBER=$(curl -s -X GET -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-                       "https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/pulls" \
-                       | jq --raw-output '.[0].number')
-          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
-          mv report.json report_${PR_NUMBER}.json
-          echo "LS"
-          ls
-          echo ${{ env.PR_NUMBER }}
       - name: Upload report.json as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: report_${{ env.PR_NUMBER }}.json
-          path: ${{ github.workspace }}/report_${{ env.PR_NUMBER }}.json
+          name: report.json
+          path: ${{ github.workspace }}/report.json
 
-      - name: Set output for artifact URL
-        run: echo "REPORT_JSON_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/report_${{ env.PR_NUMBER }}.json" >> $GITHUB_ENV
-
-      - name: Send report.json to PR
-        env:
-          WORKFLOW_RUN_EVENT_OBJ: ${{ toJSON(github.event.workflow_run) }}
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          apt-get update && apt-get -y install jq curl
-          # Create a comment with the contents of report.json
-          commentContent=$REPORT_JSON_URL
-          echo "$commentContent"
-          echo "WORKFLOW?"
-          echo $WORKFLOW_RUN_EVENT_OBJ
-          PREVIOUS_JOB_ID=$(jq -r '.id' <<< "$WORKFLOW_RUN_EVENT_OBJ")
-          SUITE_ID=$(jq -r '.check_suite_id' <<< "$WORKFLOW_RUN_EVENT_OBJ")
-          ARTIFACT_ID=$(gh api "/repos/${{ github.repository }}/actions/artifacts" \
-            --jq ".artifacts.[] |
-            select(.workflow_run.id==${PREVIOUS_JOB_ID}) |
-            .id")
-          echo "ARTIFACT_URL=https://github.com/${{ github.repository }}/suites/${SUITE_ID}/artifacts/${ARTIFACT_ID}" >> $GITHUB_ENV
-          PR_NUMBER=$(jq -r '.pull_requests[0].number' <<< "$WORKFLOW_RUN_EVENT_OBJ")
-          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
-
-          echo "SUITES $SUITE_ID"
-          echo "PREVIOUS_JOB_ID $PREVIOUS_JOB_ID"
-          echo "ARTIFACT_ID $ARTIFACT_ID"
-          echo "PR_NUMBER $PR_NUMBER"
-          echo "ARTIFACT_URL $ARTIFACT_URL"
-
-          # Comment on the PR
-          echo "Sending report.json as a comment to PR #$PR_NUMBER"
-          curl -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
-            --data "{\"body\":\"Report.json file:\n\`\`\`\n${commentContent}\n\`\`\`\"}"
