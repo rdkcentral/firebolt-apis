@@ -5,7 +5,7 @@ on:
     types:
       - "completed"
     workflows:
-      - "Standalone MFOS Report job"
+      - "MFOS Standalone Report"
 
 jobs:
   comment-on-pr:
