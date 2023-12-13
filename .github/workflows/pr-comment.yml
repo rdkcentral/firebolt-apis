@@ -1,11 +1,11 @@
-name: Comment Arifact URL on PR
+name: Comment Artifact URL on PR
 
 on:
   workflow_run:
     types:
       - "completed"
     workflows:
-      - "Artifact Upload"
+      - "Standalone MFOS Report job"
 
 jobs:
   comment-on-pr:
