@@ -10,6 +10,15 @@ jobs:
   RunStandaloneTest:
     runs-on: ubuntu-latest
     steps:
+      - name: Download Workflow Name
+        uses: actions/download-artifact@v2
+        with:
+          name: workflow_name
+          path: ${{ runner.workspace }}/workflow_name
+
       - name: Get an open-rpc from firebolt-apis
         run: |
+          workflow_name=$(cat ${{ runner.workspace }}/workflow_name)
+          echo "Workflow Name: $workflow_name"
           apt-get update && apt-get -y install jq curl
+          # Add other steps as needed

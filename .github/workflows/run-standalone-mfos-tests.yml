@@ -13,6 +13,16 @@ jobs:
   RunStandaloneTests:
     runs-on: ubuntu-latest
     steps:
+      - name: Set Workflow Name
+        run: echo "##[set-output name=workflow_name]Standalone"
+        id: set_workflow_name
+
       - name: Get an open-rpc from firebolt-apis
         run: |
           echo "HI"
+
+      - name: Upload Workflow Name
+        uses: actions/upload-artifact@v2
+        with:
+          name: workflow_name
+          path: ${{ runner.workspace }}/workflow_name
