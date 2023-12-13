@@ -41,4 +41,3 @@ jobs:
     - run: npm run validate:compiled
     - run: npm run sdks
     - run: npm run test
-    - run: npm run test
