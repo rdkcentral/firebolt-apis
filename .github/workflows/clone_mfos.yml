@@ -139,11 +139,12 @@ jobs:
           mv report.json report_${PR_NUMBER}.json
           echo "LS"
           ls
+          echo ${{ env.PR_NUMBER }}
       - name: Upload report.json as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: report_${PR_NUMBER}.json
-          path: ${{ github.workspace }}/report_${PR_NUMBER}.json
+          name: report_${{ env.PR_NUMBER }}.json
+          path: ${{ github.workspace }}/report_${{ env.PR_NUMBER }}.json
 
   SendReportToPR:
     needs: RunStandaloneTests
@@ -151,13 +152,13 @@ jobs:
 
     steps:
       - name: Set output for artifact URL
-        run: echo "REPORT_JSON_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/report_${PR_NUMBER}.json" >> $GITHUB_ENV
+        run: echo "REPORT_JSON_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/report_${{ env.PR_NUMBER }}.json" >> $GITHUB_ENV
 
       - name: Send report.json to PR
         run: |
           apt-get update && apt-get -y install jq curl
           # Create a comment with the contents of report.json
-          commentContent="Here is the [report.json download link]($REPORT_JSON_URL) for the changes in this pull request."
+          commentContent=$REPORT_JSON_URL
           echo "$commentContent"
 
           PR_NUMBER=$(curl -s -X GET -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
