@@ -15,7 +15,7 @@ jobs:
   StandaloneMFOS:
     runs-on: ubuntu-latest
     steps:
-      - name: FCA Standalone Report
+      - name: Get an open-rpc from firebolt-apis
         run: |
           apt-get update && apt-get -y install jq curl
           echo "Clone firebolt-apis repo with pr branch"
@@ -35,6 +35,8 @@ jobs:
           npm i
           npm run compile
           cd ..
+      - name: Start MFOS
+        run: |
           echo "clone mfos repo and start it in the background"
           git clone https://github.com/rdkcentral/mock-firebolt.git
           cd mock-firebolt/server
@@ -45,6 +47,8 @@ jobs:
           npm install
           npm start &
           cd ..//..
+      - name: Start FCA
+        run: |
           echo "clone fca repo and start it in the background"
           echo "PR_BRANCH $PR_BRANCH"
           git clone --branch ${PR_BRANCH} https://github.com/bpvstaty366/firebolt-certification-app.git
@@ -52,6 +56,8 @@ jobs:
           npm install
           npm start &
           sleep 5s
+      - name: Run Standalone tests
+        run: |
           response=$(curl -X POST -H "Content-Type: application/json" -d '{
             "result": {
               "lmt": 0,
