@@ -99,7 +99,7 @@ jobs:
                     const responseString = JSON.parse(jsonString);
                     console.log("Parsed JSON:", responseString);
                     const filePath="report.json"
-                    fs.writeFileSync(filePath, JSON.stringify(responseString), 'utf-8');
+                    fs.writeFileSync(filePath, JSON.stringify(responseString), "utf-8");
                     console.log(`Parsed JSON written to ${filePath}`);
                   } catch (error) {
                     console.error("Error parsing JSON:", error);
