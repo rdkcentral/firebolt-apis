@@ -88,7 +88,7 @@ jobs:
           
               // Enable console logging
               page.on("console", (msg) => {
-              const logMessage='';
+              let logMessage;
               if(${msg.type().includes('log'){
                logMessage = `${msg.text()}`;
                console.log(logMessage);
