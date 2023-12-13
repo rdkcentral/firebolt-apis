@@ -149,39 +149,15 @@ jobs:
       - name: Send report.json to PR
         run: |
           apt-get update && apt-get -y install jq curl
-          echo "LS"
-          ls
-          echo "env | sort"
-          env | sort
-          echo "EVENT_NAME"
-          echo "${{ github.event_name }}: ${{ github.event_path }}"
           # Create a comment with the contents of report.json
           reportPath="${{ github.workspace }}/report-json/report.json"
           reportPath='{ "A": "B" }'
           #commentContent=$(cat $reportPath)
           commentContent=reportPath
           # Get PR information
-          echo "github.event_path"
-          echo $github.event_path
-          echo "GITHUB_EVENT_PATH"
-          echo $GITHUB_EVENT_PATH
-          cat $GITHUB_EVENT_PATH
-          echo "toJson(github.event)"
-          echo "${{ toJson(github.event) }}"
-          echo "PR_BRANCH"
-          PR_BRANCH=$(echo "${{ github.event_name }}" | tr '[:upper:]' '[:lower:]')
-          if [ "${PR_BRANCH}" == "pull_request" ]; then
-          PR_BRANCH="${{ github.event.pull_request.head.ref }}"
-          elif [ "${PR_BRANCH}" == "push" ]; then
-          echo "IN PR PUSH?"
-          PR_BRANCH="${{ github.ref }}"
-          PR_BRANCH="${PR_BRANCH#refs/heads/}"
-          else
-            echo "Unsupported event: ${{ github.event_name }}"
-            exit 1
-          fi 
-          echo "$PR_BRANCH"
-          PR_NUMBER=${{ github.event.pull_request.number }}
+          PR_NUMBER=$(curl -s -X GET -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+             "https://api.github.com/repos/${{ github.repository }}/pulls" \
+             | jq --raw-output '.[0].number')
           echo "$PR_NUMBER"
           # Comment on the PR
           echo "Sending report.json as a comment to PR #$PR_NUMBER"
