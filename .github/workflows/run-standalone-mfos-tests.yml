@@ -1,13 +1,11 @@
 name: MFOS Standalone Report
 
 on:
-  push:
-    branches-ignore: [ main ]
   pull_request:
     types:
       - opened
       - synchronize
-    branches: [ main ]
+    branches: [ next ]
 
 jobs:
   RunStandaloneTests:
