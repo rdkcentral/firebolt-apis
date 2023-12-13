@@ -156,6 +156,11 @@ jobs:
           commentContent=reportPath
           # Get PR information
           echo "LINK"
+          echo "github.repository"
+          echo "$github.repository"
+          cat $GITHUB_EVENT_PATH
+          echo "GITHUB_EVENT_PATH.repository.comments_url"
+          echo $GITHUB_EVENT_PATH.repository.comments_url
           PR_NUMBER=${{ github.repository.comments_url }}
           echo "$PR_NUMBER"
           # Comment on the PR
