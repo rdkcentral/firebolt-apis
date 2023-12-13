@@ -2,14 +2,14 @@ name: Artifact
 
 on:
   workflow_run:
-    workflows: [ "Standalone" ]
+    workflows: [Standalone]
     types:
       - completed
 
 jobs:
-  build:
+  RunStandaloneTest:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Artifacts Link
+      - name: Get an open-rpc from firebolt-apis
         run: |
-          echo "HI"
+          apt-get update && apt-get -y install jq curl
