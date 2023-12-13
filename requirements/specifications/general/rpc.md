@@ -50,7 +50,7 @@ Firebolt implementations **MUST** send only one response for each request.
 
 Firebolt implementations **MUST** treat all named OpenRPC fields, i.e. fields with a `"name"` attribute, as case-senstitive values, including, but not limited to methods and params.
 
-**TODO**: Add note about case sensitivity
+Firebolt implementations **MUST** return a `-32600` error (Invalid Request) if a method having no result definition is requested with an `id` value.
 
 ### 3.1. OpenRPC Documents
 Since both the App and the Firebolt Implementation expose APIs, there **MUST** be a separate OpenRPC definition for each.
@@ -341,8 +341,8 @@ class myApp implements Lifecycle.IApplication, Lifecycle.IActivatable {
 
 const app = new myApp()
 
-Lifecycle.provideApplication(app)
-Lifecycle.provideActivatable(app)
+await Lifecycle.provideApplication(app)
+await Lifecycle.provideActivatable(app)
 ```
 
 ## 4. Transport
