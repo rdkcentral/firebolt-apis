@@ -2,15 +2,13 @@ name: Comment Artifact URL on PR
 
 on:
   workflow_run:
+    workflows: [ Standalone ]
     types:
-      - "completed"
-    workflows:
-      - "Standalone"
+      - completed
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Get Artifacts Link
         run: |
