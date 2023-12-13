@@ -148,7 +148,9 @@ jobs:
       - name: Send report.json to PR
         run: |
           apt-get update && apt-get -y install jq curl
+          echo "LS"
           ls
+          echo "EVENT_NAME"
           echo "${{ github.event_name }}: ${{ github.event_path }}"
           # Create a comment with the contents of report.json
           reportPath="${{ github.workspace }}/report-json/report.json"
@@ -156,6 +158,7 @@ jobs:
           #commentContent=$(cat $reportPath)
           commentContent=reportPath
           # Get PR information
+          echo "EVENT_PATH"
           echo $github.event_path
           PR_BRANCH=$(echo "${{ github.event_name }}" | tr '[:upper:]' '[:lower:]')
           PR_NUMBER=${{ github.event.pull_request.number }}
