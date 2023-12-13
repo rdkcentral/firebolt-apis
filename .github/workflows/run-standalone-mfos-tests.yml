@@ -1,7 +1,6 @@
 name: Standalone
 
 on:
-  workflow_dispatch:
   push:
     branches-ignore: [ main ]
   pull_request:
@@ -9,8 +8,6 @@ on:
       - opened
       - synchronize
     branches: [ main ]
-env:
-  HUSKY: 0
 
 jobs:
   RunStandaloneTests:
