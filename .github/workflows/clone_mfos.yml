@@ -158,9 +158,13 @@ jobs:
           #commentContent=$(cat $reportPath)
           commentContent=reportPath
           # Get PR information
-          echo "EVENT_PATH"
+          echo "github.event_path"
           echo $github.event_path
+          echo "GITHUB_EVENT_PATH"
+          echo $GITHUB_EVENT_PATH
+          echo "PR_BRANCH"
           PR_BRANCH=$(echo "${{ github.event_name }}" | tr '[:upper:]' '[:lower:]')
+          echo "PR_NUMBER"
           PR_NUMBER=${{ github.event.pull_request.number }}
 
           # Comment on the PR
