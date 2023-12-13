@@ -135,34 +135,23 @@ jobs:
           PR_NUMBER=$(curl -s -X GET -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                        "https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/pulls" \
                        | jq --raw-output '.[0].number')
-          echo "::set-output name=pr_number::$PR_NUMBER"
+          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
           mv report.json report_${PR_NUMBER}.json
           echo "LS"
           ls
       - name: Upload report.json as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: report${{ steps.get_pr_number.outputs.pr_number }}.json
-          path: ${{ github.workspace }}/report.json
+          name: report_${PR_NUMBER}.json
+          path: ${{ github.workspace }}/report_${PR_NUMBER}.json
 
   SendReportToPR:
     needs: RunStandaloneTests
     runs-on: ubuntu-latest
 
     steps:
-      - name: Upload report.json as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: report${{ steps.get_pr_number.outputs.pr_number }}.json
-          path: ${{ github.workspace }}/report.json
-
-      - name: Get artifact URL
-        id: get_artifact_url
-        run: echo "::set-env name=REPORT_JSON_URL::${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/report${{ steps.get_pr_number.outputs.pr_number }}.json"
-
       - name: Set output for artifact URL
-        id: set_output
-        run: echo "REPORT_JSON_URL=${{ env.REPORT_JSON_URL }}" >> $GITHUB_ENV
+        run: echo "REPORT_JSON_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/report_${PR_NUMBER}.json" >> $GITHUB_ENV
 
       - name: Send report.json to PR
         run: |
