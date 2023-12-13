@@ -146,11 +146,6 @@ jobs:
           name: report_${{ env.PR_NUMBER }}.json
           path: ${{ github.workspace }}/report_${{ env.PR_NUMBER }}.json
 
-  SendReportToPR:
-    needs: RunStandaloneTests
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Set output for artifact URL
         run: echo "REPORT_JSON_URL=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/report_${{ env.PR_NUMBER }}.json" >> $GITHUB_ENV
 
@@ -171,4 +166,4 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
-            --data "{\"body\":\"Here is the report.json file:\n\`\`\`\n${commentContent}\n\`\`\`\"}"
+            --data "{\"body\":\"Report.json file:\n\`\`\`\n${commentContent}\n\`\`\`\"}"
