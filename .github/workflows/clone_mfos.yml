@@ -150,6 +150,8 @@ jobs:
           apt-get update && apt-get -y install jq curl
           echo "LS"
           ls
+          echo "env | sort"
+          env | sort
           echo "EVENT_NAME"
           echo "${{ github.event_name }}: ${{ github.event_path }}"
           # Create a comment with the contents of report.json
@@ -163,14 +165,8 @@ jobs:
           echo "GITHUB_EVENT_PATH"
           echo $GITHUB_EVENT_PATH
           cat $GITHUB_EVENT_PATH
-          echo "github.event_name"
-          echo $github.event_name
-          cd $github.event_name
-          ls
           echo "toJson(github.event)"
           echo "${{ toJson(github.event) }}"
-           echo "toJson(github.event.pull_request)"
-          echo "${{ toJson(github.event.pull_request) }}"
           echo "PR_BRANCH"
           PR_BRANCH=$(echo "${{ github.event_name }}" | tr '[:upper:]' '[:lower:]')
           if [ "${PR_BRANCH}" == "pull_request" ]; then
