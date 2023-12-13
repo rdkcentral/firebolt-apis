@@ -152,8 +152,8 @@ jobs:
           # Create a comment with the contents of report.json
           reportPath="${{ github.workspace }}/report-json/report.json"
           reportPath='{ "A": "B" }'
-          commentContent=$(cat $reportPath)
-
+          #commentContent=$(cat $reportPath)
+          commentContent=reportPath
           # Get PR information
           echo $github.event_path
           PR_NUMBER=$(jq --raw-output .number "${{ github.event_path }}")
