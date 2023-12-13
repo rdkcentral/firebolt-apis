@@ -163,6 +163,9 @@ jobs:
           echo "GITHUB_EVENT_PATH"
           echo $GITHUB_EVENT_PATH
           cat $GITHUB_EVENT_PATH
+          echo "github.event_name"
+          echo $github.event_name
+          cat $github.event_name
           echo "toJson(github.event)"
           echo "${{ toJson(github.event) }}"
            echo "toJson(github.event.pull_request)"
@@ -172,6 +175,7 @@ jobs:
           if [ "${PR_BRANCH}" == "pull_request" ]; then
           PR_BRANCH="${{ github.event.pull_request.head.ref }}"
           elif [ "${PR_BRANCH}" == "push" ]; then
+          echo "IN PR PUSH?"
           PR_BRANCH="${{ github.ref }}"
           PR_BRANCH="${PR_BRANCH#refs/heads/}"
           else
