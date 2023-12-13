@@ -1,8 +1,6 @@
 name: MFOS Standalone Report
 
 on:
-  push:
-    branches-ignore: [ main ]
   pull_request:
     types:
       - opened
