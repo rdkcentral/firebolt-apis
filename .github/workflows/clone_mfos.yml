@@ -155,9 +155,8 @@ jobs:
           #commentContent=$(cat $reportPath)
           commentContent=reportPath
           # Get PR information
-          PR_NUMBER=$(curl -s -X GET -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-             "https://api.github.com/repos/${{ github.repository }}/pulls" \
-             | jq --raw-output '.[0].number')
+          echo "LINK"
+          PR_NUMBER=${{ github.repository.comments_url }}
           echo "$PR_NUMBER"
           # Comment on the PR
           echo "Sending report.json as a comment to PR #$PR_NUMBER"
