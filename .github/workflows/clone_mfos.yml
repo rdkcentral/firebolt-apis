@@ -107,11 +107,7 @@ jobs:
                     const jsonString = jsonStringMatch[1].trim();
                     const responseString = JSON.parse(jsonString);
                     console.log("Parsed JSON:", responseString);
-                    PR_NUMBER=$(curl -s -X GET -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-                      "https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/pulls" \
-                      | jq --raw-output '.[0].number')
-
-                    const filePath="report$PR_NUMBER.json"
+                    const filePath="report.json"
                     fs.writeFileSync(filePath, JSON.stringify(responseString), "utf-8");
                     console.log(`Parsed JSON written to ${filePath}`);
                     // Exit the Node.js script
@@ -140,7 +136,9 @@ jobs:
                        "https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/pulls" \
                        | jq --raw-output '.[0].number')
           echo "::set-output name=pr_number::$PR_NUMBER"
-
+          mv report.json report_${PR_NUMBER}.json
+          echo "LS"
+          ls
       - name: Upload report.json as artifact
         uses: actions/upload-artifact@v2
         with:
