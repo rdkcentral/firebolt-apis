@@ -1,8 +1,11 @@
 name: Comment Artifact URL on PR
 
 on:
+  workflow_dispatch:
   workflow_run:
-    workflows: ["MFOS Standalone Report"]
+    workflows: [Standalone]
+    types:
+      - completed
 
 jobs:
   build:

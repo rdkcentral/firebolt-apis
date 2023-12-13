@@ -1,4 +1,4 @@
-name: MFOS Standalone Report
+name: Standalone
 
 on:
   workflow_dispatch:
