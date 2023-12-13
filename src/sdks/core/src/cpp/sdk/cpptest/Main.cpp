@@ -20,6 +20,7 @@ void ShowMenu()
            "\tE : Handle Metrics methods\n"
            "\tF : Handle Lifecycle methods\n"
            "\tD : Handle SecondScreen methods\n"
+           "\tY : Handle Discovery methods\n"
            "\tZ : Parameters Initialization\n"
            "\tQ : Quit\n\n"
           );
@@ -83,6 +84,23 @@ void ShowSecondScreenMenu()
     printf("Options: \n"
          "\tD : Get Device Id\n"
          "\tF : Get/Subscribe/Unsubscribe FriendlyName\n"
+         "\tQ : Quit\n");
+}
+
+void ShowDiscoveryMenu()
+{
+    printf("Options: \n"
+         "\tS : SignIn\n"
+         "\tO : SignOut\n"
+         "\tA : ContentAccess\n"
+         "\tC : ClearContentAccess\n"
+         "\tE : Entitlements\n"
+         "\tI : EntityInfo\n"
+         "\tP : Policy\n"
+         "\tU : PurchasedContent\n"
+         "\tW : Watched\n"
+         "\tR : WatchedReduced\n"
+         "\tN : WatchNext\n"
          "\tQ : Quit\n");
 }
 
@@ -313,6 +331,65 @@ void HandleSecondScreenMethod()
     } while (opt != 'Q');
 }
 
+void HandleDiscoveryMethod()
+{
+    int opt;
+    do {
+        getchar();
+        ShowDiscoveryMenu();
+        printf("Enter option : ");
+        opt = toupper(getchar());
+        switch (opt) {
+        case 'S': {
+            CoreSDKTest::DiscoverySignIn();
+            break;
+        }
+        case 'O': {
+            CoreSDKTest::DiscoverySignOut();
+            break;
+        }
+        case 'A': {
+            CoreSDKTest::DiscoveryContentAccess();
+            break;
+        }
+        case 'C': {
+            CoreSDKTest::DiscoveryClearContentAccess();
+            break;
+        }
+        case 'E': {
+            CoreSDKTest::DiscoveryEntitlements();
+            break;
+        }
+        case 'I': {
+            CoreSDKTest::DiscoveryEntityInfo();
+            break;
+        }
+        case 'P': {
+            CoreSDKTest::DiscoveryPolicy();
+            break;
+        }
+        case 'U': {
+            CoreSDKTest::DiscoveryPurchasedContent();
+            break;
+        }
+        case 'W': {
+            CoreSDKTest::DiscoveryWatched();
+            break;
+        }
+        case 'R': {
+            CoreSDKTest::DiscoveryWatchedReduced();
+            break;
+        }
+        case 'N': {
+            CoreSDKTest::DiscoveryWatchNext();
+            break;
+        }
+        default:
+            break;
+        }
+    } while (opt != 'Q');
+}
+
 void HandleKeyboardMethodsInvokation()
 {
     int opt;
@@ -430,6 +507,10 @@ int main (int argc, char* argv[])
             }
             case 'D': {
                 HandleSecondScreenMethod();
+                break;
+            }
+            case 'Y': {
+                HandleDiscoveryMethod();
                 break;
             }
             case 'Z': {

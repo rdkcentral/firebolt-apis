@@ -121,6 +121,18 @@ public:
     static void SubscribeSecondScreenFriendlyNameChanged();
     static void UnsubscribeSecondScreenFriendlyNameChanged();
 
+    static void DiscoverySignIn();
+    static void DiscoverySignOut();
+    static void DiscoveryContentAccess();
+    static void DiscoveryClearContentAccess();
+    static void DiscoveryEntitlements();
+    static void DiscoveryEntityInfo();
+    static void DiscoveryPolicy();
+    static void DiscoveryPurchasedContent();
+    static void DiscoveryWatched();
+    static void DiscoveryWatchedReduced();
+    static void DiscoveryWatchNext();
+
     static void ParametersInitialization();
 
     static bool WaitOnConnectionReady();

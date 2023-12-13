@@ -5,6 +5,7 @@ void ShowMenu()
 {
     printf("Options ---- >\n"
            "\tA : Get/Set Advertising skipRestriction\n"
+           "\tT : Set Account Session\n"
            "\tE : Get/Set/Subscribe/Unsubscribe AudioDescriptions Enabled\n"
            "\tN : Get/Set/Subscribe/Unsubscribe Device Name\n"
            "\tB : Get/Set/Subscribe/Unsubscribe ClosedCaption Background Opacity\n"
@@ -308,6 +309,10 @@ int main (int argc, char* argv[])
             switch (option) {
             case 'A': {
                 HandleProperty(Advertising, SkipRestriction)
+                break;
+            }
+            case 'T': {
+                ManageSDKTest::SetAccountSession();
                 break;
             }
             case 'E': {

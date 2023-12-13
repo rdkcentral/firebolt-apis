@@ -120,6 +120,8 @@ public:
     static void SetAdvertisingSkipRestriction();
     static void ResetAdvertisingIdentifier();
 
+    static void SetAccountSession();
+
     static void GetAudioDescriptionsEnabled();
     static void SetAudioDescriptionsEnabled();
     static void SubscribeAudioDescriptionsEnabledChanged();

@@ -786,3 +786,302 @@ void CoreSDKTest::ParametersInitialization()
         cout << "Parameters Initialization status = " << static_cast<int>(error) << endl;
     }
 }
+
+void CoreSDKTest::DiscoverySignIn()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::optional<std::vector<Firebolt::Entertainment::Entitlement>> entitlements = std::make_optional<std::vector<Firebolt::Entertainment::Entitlement>>();
+    Firebolt::Entertainment::Entitlement entitlement;
+    entitlement.startTime = "2025-01-01T00:00:00.000Z";
+    entitlement.endTime = "2025-01-01T00:00:00.000Z";
+    entitlements.value().push_back(entitlement);
+
+    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().signIn(entitlements, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery SignIn is " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Discovery SignIn status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::DiscoverySignOut()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().signOut(&error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery SignOut is " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Discovery SignOut status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::DiscoveryContentAccess()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Discovery::ContentAccessIdentifiers contentAccessIdentifiers;
+    contentAccessIdentifiers.availabilities =  std::make_optional<std::vector<Firebolt::Discovery::Availability>>();
+    Firebolt::Discovery::Availability availability;
+    availability.type = Firebolt::Discovery::AvailabilityType::CHANNEL_LINEUP;
+    availability.id = "partner.com/availability/123";
+    availability.startTime = "2021-04-23T18:25:43.511Z";
+    availability.endTime = "2021-04-23T18:25:43.511Z";
+    contentAccessIdentifiers.availabilities.value().push_back(availability);
+
+    contentAccessIdentifiers.entitlements = std::make_optional<std::vector<Firebolt::Entertainment::Entitlement>>();
+    Firebolt::Entertainment::Entitlement entitlement;
+    entitlement.startTime = "2025-01-01T00:00:00.000Z";
+    entitlement.endTime = "2025-01-01T00:00:00.000Z";
+    contentAccessIdentifiers.entitlements.value().push_back(entitlement);
+
+    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().contentAccess(contentAccessIdentifiers, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery ContentAccess is success" << endl;
+    } else {
+        cout << "Discovery ContentAccess status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::DiscoveryClearContentAccess()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().clearContentAccess(&error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery ClearContentAccess is success" << endl;
+    } else {
+        cout << "Discovery ClearContentAccess status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::DiscoveryEntitlements()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::vector<Firebolt::Entertainment::Entitlement> entitlements;
+    Firebolt::Entertainment::Entitlement entitlement;
+    entitlement.startTime = "2025-01-01T00:00:00.000Z";
+    entitlement.endTime = "2025-01-01T00:00:00.000Z";
+    entitlements.push_back(entitlement);
+
+    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().entitlements(entitlements, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery Entitlements is " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Discovery Entitlements status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::DiscoveryEntityInfo()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Discovery::EntityInfoResult result;
+    result.expires = "2025-01-01T00:00:00.000Z";
+    {
+        result.entity.identifiers.entityId = "98765";
+        result.entity.title = "Perfect Strangers";
+        result.entity.entityType = "program";
+        result.entity.programType = Firebolt::Entertainment::ProgramType::SERIES;
+        result.entity.synopsis = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.";
+        result.entity.releaseDate = "1986-01-01T00:00:00.000Z";
+        result.entity.contentRatings = std::make_optional<std::vector<Firebolt::Entertainment::ContentRating>>();
+        {
+            Firebolt::Entertainment::ContentRating contentRating;
+            contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::US_TV;
+            contentRating.rating = "TV-PG";
+            result.entity.contentRatings.value().push_back(contentRating);
+        }
+        {
+            Firebolt::Entertainment::ContentRating contentRating;
+            contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::CA_TV;
+            contentRating.rating = "TV-PG";
+            result.entity.contentRatings.value().push_back(contentRating);
+        }
+
+        Firebolt::Entertainment::WayToWatch wayToWatch;
+        result.entity.waysToWatch = std::make_optional<std::vector<Firebolt::Entertainment::WayToWatch>>();
+        wayToWatch.identifiers.assetId = "123";
+        wayToWatch.expires = "2025-01-01T00:00:00.000Z";
+        wayToWatch.entitled = true;
+        wayToWatch.entitledExpires = "2025-01-01T00:00:00.000Z";
+        wayToWatch.offeringType = Firebolt::Entertainment::OfferingType::BUY;
+        wayToWatch.price = 2.99;
+        wayToWatch.videoQuality = std::make_optional<std::vector<Firebolt::Entertainment::WayToWatchVideoQuality>>();
+        wayToWatch.videoQuality.value().push_back(Firebolt::Entertainment::WayToWatchVideoQuality::UHD);
+        wayToWatch.audioProfile.push_back(Firebolt::Types::AudioProfile::DOLBY_ATMOS);
+        wayToWatch.audioLanguages = std::make_optional<std::vector<std::string>>();
+        wayToWatch.audioLanguages.value().push_back("en");
+        wayToWatch.closedCaptions = std::make_optional<std::vector<std::string>>();
+        wayToWatch.closedCaptions.value().push_back("en");
+        wayToWatch.subtitles = std::make_optional<std::vector<std::string>>();
+        wayToWatch.subtitles.value().push_back("es");
+        wayToWatch.audioDescriptions = std::make_optional<std::vector<std::string>>();
+        wayToWatch.audioDescriptions.value().push_back("en");
+        result.entity.waysToWatch.value().push_back(wayToWatch);
+    }
+    {
+        result.related = std::make_optional<std::vector<Firebolt::Entertainment::EntityInfo>>();
+        Firebolt::Entertainment::EntityInfo entityInfo;
+        entityInfo.identifiers.entityId = "112";
+        entityInfo.identifiers.seriesId = "98765";
+        entityInfo.title = "Picture This";
+        entityInfo.entityType = "program";
+        entityInfo.programType = Firebolt::Entertainment::ProgramType::EPISODE;
+        entityInfo.synopsis = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.";
+        entityInfo.releaseDate = "1993-01-01T00:00:00.000Z";
+        entityInfo.contentRatings = std::make_optional<std::vector<Firebolt::Entertainment::ContentRating>>();
+        {
+            Firebolt::Entertainment::ContentRating contentRating;
+            contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::CA_TV_FR;
+            contentRating.rating = "TV_PG";
+            entityInfo.contentRatings.value().push_back(contentRating);
+        }
+        {
+            Firebolt::Entertainment::ContentRating contentRating;
+            contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::CA_MOVIE_FR;
+            contentRating.rating = "TV_PG";
+            entityInfo.contentRatings.value().push_back(contentRating);
+        }
+
+        entityInfo.waysToWatch = std::make_optional<std::vector<Firebolt::Entertainment::WayToWatch>>();
+        Firebolt::Entertainment::WayToWatch wayToWatch;
+        wayToWatch.identifiers.assetId = "234";
+        wayToWatch.expires = "2026-01-01T00:00:00.000Z";
+        wayToWatch.entitled = true;
+        wayToWatch.entitledExpires = "2026-01-01T00:00:00.000Z";
+        wayToWatch.offeringType = Firebolt::Entertainment::OfferingType::BUY;
+        wayToWatch.price = 3.99;
+        wayToWatch.videoQuality = std::make_optional<std::vector<Firebolt::Entertainment::WayToWatchVideoQuality>>();
+        wayToWatch.videoQuality.value().push_back(Firebolt::Entertainment::WayToWatchVideoQuality::HD);
+        wayToWatch.audioProfile.push_back(Firebolt::Types::AudioProfile::DOLBY_DIGITAL_7_1_PLUS);
+        wayToWatch.audioLanguages = std::make_optional<std::vector<std::string>>();
+        wayToWatch.audioLanguages.value().push_back("de");
+        wayToWatch.closedCaptions = std::make_optional<std::vector<std::string>>();
+        wayToWatch.closedCaptions.value().push_back("de");
+        wayToWatch.subtitles = std::make_optional<std::vector<std::string>>();
+        wayToWatch.subtitles.value().push_back("de");
+        wayToWatch.audioDescriptions = std::make_optional<std::vector<std::string>>();
+        wayToWatch.audioDescriptions.value().push_back("de");
+        entityInfo.waysToWatch.value().push_back(wayToWatch);
+        result.related.value().push_back(entityInfo);
+    }
+
+    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().entityInfo(result, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery EntityInfo is " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Discovery EntityInfo status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::DiscoveryWatched()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string entityId = "partner.com/entity/123";
+    std::optional<float> progress = 0.95;
+    std::optional<bool> completed = true;
+    std::optional<std::string> watchedOn = "2021-04-23T18:25:43.511Z";
+
+    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().watched(entityId, progress, completed, watchedOn, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery Watched is " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Discovery Watched status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::DiscoveryWatchedReduced()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Discovery::WatchedInfo watchedInfo;
+    watchedInfo.entityId = "partner.com/entity/123";
+    watchedInfo.progress = 0.95;
+    watchedInfo.completed = true;
+    watchedInfo.watchedOn = "2021-04-23T18:25:43.511Z";
+    std::vector<Firebolt::Discovery::WatchedInfo> watchedInfoList;
+    watchedInfoList.push_back(watchedInfo);
+
+    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().watched(watchedInfoList, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery Watched Reduced is " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Discovery Watched Reduced status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::DiscoveryWatchNext()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string title = "A Cool Show";
+    Firebolt::Entertainment::ContentIdentifiers identifiers;
+    identifiers.entityId = "partner.com/entity/123";
+    std::optional<std::string> expires = "2021-04-23T18:25:43.511Z";
+    std::optional<Firebolt::Discovery::Images> images = std::make_optional<Firebolt::Discovery::Images>();
+    images = "\"3x4\": {\"en-US\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\", \"es\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\"}, \"16x9\": {\"en\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\"}";
+
+    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().watchNext(title, identifiers, expires, images, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery Watched Next is " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Discovery Watched Next status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::DiscoveryPolicy()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Discovery::DiscoveryPolicy policy = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().policy(&error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery Policy is " << endl;
+        cout << "\tenableRecommendations: " << policy.enableRecommendations << endl;
+        cout << "\tshareWatchHistory: " << policy.shareWatchHistory << endl;
+        cout << "\trememberWatchedPrograms: " << policy.rememberWatchedPrograms << endl;
+    } else {
+        cout << "Discovery Policy status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::DiscoveryPurchasedContent()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Discovery::PurchasedContentResult result;
+    result.expires = "2025-01-01T00:00:00.000Z";
+    result.totalCount = 10;
+    Firebolt::Entertainment::EntityInfo entityInfo;
+    entityInfo.identifiers.entityId = "345";
+    entityInfo.title = "Cool Runnings";
+    entityInfo.entityType = "program";
+    entityInfo.programType = Firebolt::Entertainment::ProgramType::MOVIE;
+    entityInfo.synopsis = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.";
+    entityInfo.releaseDate = "1993-01-01T00:00:00.000Z";
+    entityInfo.contentRatings = std::make_optional<std::vector<Firebolt::Entertainment::ContentRating>>();
+    {
+        Firebolt::Entertainment::ContentRating contentRating;
+        contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::US_MOVIE;
+        contentRating.rating = "PG";
+        entityInfo.contentRatings.value().push_back(contentRating);
+    }
+    {
+        Firebolt::Entertainment::ContentRating contentRating;
+        contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::CA_TV;
+        contentRating.rating = "TV-PG";
+        entityInfo.contentRatings.value().push_back(contentRating);
+    }
+
+    Firebolt::Entertainment::WayToWatch wayToWatch;
+    entityInfo.waysToWatch = std::make_optional<std::vector<Firebolt::Entertainment::WayToWatch>>();
+    wayToWatch.identifiers.assetId = "123";
+    wayToWatch.expires = "2025-01-01T00:00:00.000Z";
+    wayToWatch.entitled = true;
+    wayToWatch.entitledExpires = "2025-01-01T00:00:00.000Z";
+    wayToWatch.offeringType = Firebolt::Entertainment::OfferingType::BUY;
+    wayToWatch.price = 2.99;
+    wayToWatch.videoQuality = std::make_optional<std::vector<Firebolt::Entertainment::WayToWatchVideoQuality>>();
+    wayToWatch.videoQuality.value().push_back(Firebolt::Entertainment::WayToWatchVideoQuality::UHD);
+    wayToWatch.audioProfile.push_back(Firebolt::Types::AudioProfile::DOLBY_ATMOS);
+    wayToWatch.audioLanguages = std::make_optional<std::vector<std::string>>();
+    wayToWatch.audioLanguages.value().push_back("en");
+    wayToWatch.closedCaptions = std::make_optional<std::vector<std::string>>();
+    wayToWatch.closedCaptions.value().push_back("en");
+    wayToWatch.subtitles = std::make_optional<std::vector<std::string>>();
+    wayToWatch.subtitles.value().push_back("es");
+    wayToWatch.audioDescriptions = std::make_optional<std::vector<std::string>>();
+    wayToWatch.audioDescriptions.value().push_back("en");
+    entityInfo.waysToWatch.value().push_back(wayToWatch);
+    //result.entries.push_back(entityInfo);
+
+    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().purchasedContent(result, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery PurchasedContent is " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Discovery PurchasedContent status = " << static_cast<int>(error) << endl;
+    }
+}
