@@ -49,7 +49,7 @@ jobs:
           
           echo "Head SHA: $HEAD_SHA"
           echo "HEAD_SHA=$HEAD_SHA" >> "$GITHUB_ENV"
-
+          echo "URL"
       - name: Update Comment
         env:
           JOB_PATH: "${{ github.server_url }}/${{ github.repository }}/actions/\
@@ -61,7 +61,7 @@ jobs:
           issue-number: ${{ env.PR_NUMBER }}
           body: |-
             ## Build Preview
-
+    
             Report Url
             
             | Name      | Link
