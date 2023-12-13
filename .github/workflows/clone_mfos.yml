@@ -163,6 +163,8 @@ jobs:
           echo "GITHUB_EVENT_PATH"
           echo $GITHUB_EVENT_PATH
           cat $GITHUB_EVENT_PATH
+          echo "toJson(github.event)"
+          echo "${{ toJson(github.event) }}"
           echo "PR_BRANCH"
           PR_BRANCH=$(echo "${{ github.event_name }}" | tr '[:upper:]' '[:lower:]')
           if [ "${PR_BRANCH}" == "pull_request" ]; then
