@@ -79,13 +79,11 @@ jobs:
           echo "Run headless browser script with puppeteer"
           node -e '
             const puppeteer = require("puppeteer");
-
+            const fs = require("fs");
             (async () => {
               const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-gpu"] });
               const page = await browser.newPage();
-              let responseString = null;
-              let isResponseStringLog = false;
-          
+         
               // Enable console logging
               page.on("console", (msg) => {
               let logMessage="";
@@ -96,15 +94,17 @@ jobs:
              if (logMessage.includes("Response String:")) {
                 const jsonStringMatch = logMessage.match(/Response String:(.*)/);
                 if (jsonStringMatch && jsonStringMatch[1]) {
-                try {
-                const jsonString = jsonStringMatch[1].trim();
-                console.log(jsonString + "jsonString");
-                const responseString = JSON.parse(jsonString);
-                console.log("Parsed JSON:", responseString);
-              } catch (error) {
-                console.error("Error parsing JSON:", error);
-              }
-              }
+                  try {
+                    const jsonString = jsonStringMatch[1].trim();
+                    const responseString = JSON.parse(jsonString);
+                    console.log("Parsed JSON:", responseString);
+                    const filePath="report.json"
+                    fs.writeFileSync(filePath, JSON.stringify(responseString), 'utf-8');
+                    console.log(`Parsed JSON written to ${filePath}`);
+                  } catch (error) {
+                    console.error("Error parsing JSON:", error);
+                  }
+                }
               }
             });
               // Navigate to the URL
@@ -117,3 +117,5 @@ jobs:
               await browser.close();
             })();
           '
+          echo "REPORT JSON????"
+          cat report.json
