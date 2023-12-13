@@ -88,9 +88,11 @@ jobs:
           
               // Enable console logging
               page.on("console", (msg) => {
-              const logMessage = `[Browser Console] ${msg.type().substr(0, 3).toUpperCase()} ${msg.text()}`;
-              console.log(logMessage);
-              
+              const logMessage='';
+              if(${msg.type().includes('log'){
+               logMessage = `${msg.text()}`;
+               console.log(logMessage);
+              }
               // Check if the log message contains "Response String:"
               if (logMessage.includes("Response String:")) {
               isResponseStringLog = true;
