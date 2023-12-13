@@ -9,7 +9,7 @@ on:
       - 'proposed'
   pull_request:
     types: [opened, synchronize]
-    branches: 
+    branches:
       - 'next'
       - 'proposed'
 env:
