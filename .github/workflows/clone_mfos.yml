@@ -12,7 +12,7 @@ env:
   HUSKY: 0
 
 jobs:
-  StandaloneMFOS:
+  RunStandaloneTests:
     runs-on: ubuntu-latest
     steps:
       - name: Get an open-rpc from firebolt-apis
