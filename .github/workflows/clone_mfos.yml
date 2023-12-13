@@ -147,10 +147,11 @@ jobs:
 
       - name: Send report.json to PR
         run: |
+          apt-get update && apt-get -y install jq curl
           ls
           # Create a comment with the contents of report.json
           reportPath="${{ github.workspace }}/report-json/report.json"
-          reportPath={"a": "s"}
+          reportPath='{ "A": "B" }'
           commentContent=$(cat $reportPath)
 
           # Get PR information
