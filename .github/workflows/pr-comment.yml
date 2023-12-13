@@ -14,6 +14,6 @@ jobs:
     steps:
       - name: Get Artifact URL & PR Info
         run: |
-          PREVIOUS_JOB_ID=$(jq -r '.id' <<< "$WORKFLOW_RUN_EVENT_OBJ")
+          PREVIOUS_JOB_ID=${{ github.event.workflow_run.id }}
           echo "Previous Job ID: $PREVIOUS_JOB_ID"
           echo "PREVIOUS_JOB_ID=$PREVIOUS_JOB_ID" >> "$GITHUB_ENV"
