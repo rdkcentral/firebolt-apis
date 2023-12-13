@@ -150,6 +150,7 @@ jobs:
           ls
           # Create a comment with the contents of report.json
           reportPath="${{ github.workspace }}/report-json/report.json"
+          reportPath={"a": "s"}
           commentContent=$(cat $reportPath)
 
           # Get PR information
