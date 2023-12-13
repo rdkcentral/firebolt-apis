@@ -45,30 +45,3 @@ jobs:
 
           echo "Head sha: $HEAD_SHA"
           echo "HEAD_SHA=$HEAD_SHA" >> "$GITHUB_ENV"
-
-      - name: Update Comment
-        env:
-          JOB_PATH: "${{ github.server_url }}/${{ github.repository }}/actions/\
-            runs/${{ env.PREVIOUS_JOB_ID }}"
-          HEAD_SHA: ${{ env.HEAD_SHA }}
-        uses: peter-evans/create-or-update-comment@v2
-        with:
-          issue-number: ${{ env.PR_NUMBER }}
-          body: |-
-            ## Build Preview
-
-            [![badge]]($JOB_PATH)
-
-            You can find files attached to the below linked Workflow Run URL (Logs).
-
-            Please note that files only stay for around 90 days!
-
-            | Name      | Link
-            --------------------------------------------------------------------
-            | Commit    | ${{ env.HEAD_SHA }}
-
-            | Logs      | ${{ env.JOB_PATH }}
-
-            | Jar Files | ${{ env. ARTIFACT_URL }}
-
-            [badge]: https://img.shields.io/badge/Build-Success!-3fb950?logo=github&style=for-the-badge
