@@ -1,8 +1,8 @@
-name: Comment Artifact URL on PR
+name: Artifact
 
 on:
   workflow_run:
-    workflows: [ Standalone ]
+    workflows: [ "Standalone" ]
     types:
       - completed
 
