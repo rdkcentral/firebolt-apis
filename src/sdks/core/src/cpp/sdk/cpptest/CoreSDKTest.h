@@ -127,6 +127,7 @@ public:
     static void DiscoveryClearContentAccess();
     static void DiscoveryEntitlements();
     static void DiscoveryEntityInfo();
+    static void DiscoveryLaunch();
     static void DiscoveryPolicy();
     static void DiscoveryPurchasedContent();
     static void DiscoveryWatched();

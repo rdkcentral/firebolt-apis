@@ -46,6 +46,7 @@ void ShowProfileMenu()
 void ShowAuthenticationMenu()
 {
     printf("Options: \n"
+         "\t Invoke lifecyclesession management sequence from postman before invoking methods\n"
          "\tD : Get Authentication Device\n"
          "\tS : Get Authentication Session\n"
          "\tR : Get Authentication Root\n"
@@ -96,6 +97,7 @@ void ShowDiscoveryMenu()
          "\tC : ClearContentAccess\n"
          "\tE : Entitlements\n"
          "\tI : EntityInfo\n"
+         "\tL : Launch\n"
          "\tP : Policy\n"
          "\tU : PurchasedContent\n"
          "\tW : Watched\n"
@@ -362,6 +364,10 @@ void HandleDiscoveryMethod()
         }
         case 'I': {
             CoreSDKTest::DiscoveryEntityInfo();
+            break;
+        }
+        case 'L': {
+            CoreSDKTest::DiscoveryLaunch();
             break;
         }
         case 'P': {

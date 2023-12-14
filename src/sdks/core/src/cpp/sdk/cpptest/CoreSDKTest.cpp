@@ -871,23 +871,23 @@ void CoreSDKTest::DiscoveryEntityInfo()
     Firebolt::Discovery::EntityInfoResult result;
     result.expires = "2025-01-01T00:00:00.000Z";
     {
-        result.entity.identifiers.entityId = "98765";
-        result.entity.title = "Perfect Strangers";
+        result.entity.identifiers.entityId = "345";
+        result.entity.title = "Cool Running";
         result.entity.entityType = "program";
-        result.entity.programType = Firebolt::Entertainment::ProgramType::SERIES;
+        result.entity.programType = Firebolt::Entertainment::ProgramType::MOVIE;
         result.entity.synopsis = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.";
-        result.entity.releaseDate = "1986-01-01T00:00:00.000Z";
+        result.entity.releaseDate = "1993-01-01T00:00:00.000Z";
         result.entity.contentRatings = std::make_optional<std::vector<Firebolt::Entertainment::ContentRating>>();
         {
             Firebolt::Entertainment::ContentRating contentRating;
-            contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::US_TV;
-            contentRating.rating = "TV-PG";
+            contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::US_MOVIE;
+            contentRating.rating = "PG";
             result.entity.contentRatings.value().push_back(contentRating);
         }
         {
             Firebolt::Entertainment::ContentRating contentRating;
-            contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::CA_TV;
-            contentRating.rating = "TV-PG";
+            contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::CA_MOVIE;
+            contentRating.rating = "G";
             result.entity.contentRatings.value().push_back(contentRating);
         }
 
@@ -915,46 +915,24 @@ void CoreSDKTest::DiscoveryEntityInfo()
     {
         result.related = std::make_optional<std::vector<Firebolt::Entertainment::EntityInfo>>();
         Firebolt::Entertainment::EntityInfo entityInfo;
-        entityInfo.identifiers.entityId = "112";
-        entityInfo.identifiers.seriesId = "98765";
-        entityInfo.title = "Picture This";
+        entityInfo.identifiers.entityId = "345";
+        entityInfo.title = "Cool Runnings Trailer";
         entityInfo.entityType = "program";
-        entityInfo.programType = Firebolt::Entertainment::ProgramType::EPISODE;
-        entityInfo.synopsis = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.";
+        entityInfo.programType = Firebolt::Entertainment::ProgramType::PREVIEW;
         entityInfo.releaseDate = "1993-01-01T00:00:00.000Z";
-        entityInfo.contentRatings = std::make_optional<std::vector<Firebolt::Entertainment::ContentRating>>();
-        {
-            Firebolt::Entertainment::ContentRating contentRating;
-            contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::CA_TV_FR;
-            contentRating.rating = "TV_PG";
-            entityInfo.contentRatings.value().push_back(contentRating);
-        }
-        {
-            Firebolt::Entertainment::ContentRating contentRating;
-            contentRating.scheme = Firebolt::Entertainment::ContentRatingScheme::CA_MOVIE_FR;
-            contentRating.rating = "TV_PG";
-            entityInfo.contentRatings.value().push_back(contentRating);
-        }
-
         entityInfo.waysToWatch = std::make_optional<std::vector<Firebolt::Entertainment::WayToWatch>>();
         Firebolt::Entertainment::WayToWatch wayToWatch;
-        wayToWatch.identifiers.assetId = "234";
+        wayToWatch.identifiers.assetId = "123111";
+        wayToWatch.identifiers.entityId = "345";
         wayToWatch.expires = "2026-01-01T00:00:00.000Z";
         wayToWatch.entitled = true;
-        wayToWatch.entitledExpires = "2026-01-01T00:00:00.000Z";
-        wayToWatch.offeringType = Firebolt::Entertainment::OfferingType::BUY;
-        wayToWatch.price = 3.99;
         wayToWatch.videoQuality = std::make_optional<std::vector<Firebolt::Entertainment::WayToWatchVideoQuality>>();
         wayToWatch.videoQuality.value().push_back(Firebolt::Entertainment::WayToWatchVideoQuality::HD);
-        wayToWatch.audioProfile.push_back(Firebolt::Types::AudioProfile::DOLBY_DIGITAL_7_1_PLUS);
+        wayToWatch.audioProfile.push_back(Firebolt::Types::AudioProfile::DOLBY_ATMOS);
         wayToWatch.audioLanguages = std::make_optional<std::vector<std::string>>();
-        wayToWatch.audioLanguages.value().push_back("de");
+        wayToWatch.audioLanguages.value().push_back("en");
         wayToWatch.closedCaptions = std::make_optional<std::vector<std::string>>();
-        wayToWatch.closedCaptions.value().push_back("de");
-        wayToWatch.subtitles = std::make_optional<std::vector<std::string>>();
-        wayToWatch.subtitles.value().push_back("de");
-        wayToWatch.audioDescriptions = std::make_optional<std::vector<std::string>>();
-        wayToWatch.audioDescriptions.value().push_back("de");
+        wayToWatch.closedCaptions.value().push_back("en");
         entityInfo.waysToWatch.value().push_back(wayToWatch);
         result.related.value().push_back(entityInfo);
     }
@@ -1007,7 +985,7 @@ void CoreSDKTest::DiscoveryWatchNext()
     identifiers.entityId = "partner.com/entity/123";
     std::optional<std::string> expires = "2021-04-23T18:25:43.511Z";
     std::optional<Firebolt::Discovery::Images> images = std::make_optional<Firebolt::Discovery::Images>();
-    images = "\"3x4\": {\"en-US\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\", \"es\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\"}, \"16x9\": {\"en\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\"}";
+    images = "{\"3x4\": {\"en-US\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\", \"es\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\"}, \"16x9\": {\"en\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\"}}";
 
     bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().watchNext(title, identifiers, expires, images, &error);
     if (error == Firebolt::Error::None) {
@@ -1084,4 +1062,61 @@ void CoreSDKTest::DiscoveryPurchasedContent()
     } else {
         cout << "Discovery PurchasedContent status = " << static_cast<int>(error) << endl;
     }
+}
+
+void CoreSDKTest::DiscoveryLaunch()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    cout << "Enter appId :";
+    getchar();
+    std::string appId;
+    getline(cin, appId);
+    {
+        std::optional<Firebolt::Intents::TuneIntent> intent = std::make_optional<Firebolt::Intents::TuneIntent>();
+        intent.value().action = "tune";
+        intent.value().data.entity.entityType = "channel";
+        intent.value().data.entity.channelType = Firebolt::Intents::ChannelEntityChannelType::STREAMING;
+        intent.value().data.entity.entityId = "an-ott-channel";
+        std::string entityId;
+        std::optional<std::string> appContentData;
+        intent.value().data.options = std::make_optional<Firebolt::Intents::TuneIntentDataOptions>();
+        intent.value().data.options.value().restartCurrentProgram = true;
+        intent.value().context.source = Firebolt::Intents::IntentContextSource::VOICE;
+        cout << "Calling Discovery Launch TuneIntent method " << endl;
+        bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
+        if (error == Firebolt::Error::None) {
+            cout << "Discovery Launch TuneIntent is " << (status ? "true" : "false") << endl;
+        } else {
+            cout << "Discovery Launch TuneIntent status = " << static_cast<int>(error) << endl;
+        }
+    }
+
+    { 
+        std::optional<Firebolt::Intents::EntityIntent> intent = std::make_optional<Firebolt::Intents::EntityIntent>();
+        intent.value().action = "entity";
+        intent.value().context.source = Firebolt::Intents::IntentContextSource::VOICE;
+        intent.value().data = "{\"entityId\":\"example-movie-id\",\"entityType\":\"program\",\"programType\":\"movie\"}";
+        intent.value().context.source = Firebolt::Intents::IntentContextSource::VOICE;
+        cout << "Calling Discovery Launch EntityIntent method " << endl;
+        bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
+        if (error == Firebolt::Error::None) {
+            cout << "Discovery Launch EntityIntent is " << (status ? "true" : "false") << endl;
+        } else {
+            cout << "Discovery Launch EntityIntent status = " << static_cast<int>(error) << endl;
+        }
+    }
+
+    {
+        std::optional<Firebolt::Intents::HomeIntent> intent = std::make_optional<Firebolt::Intents::HomeIntent>();
+        intent.value().action = "home";
+        intent.value().context.source = Firebolt::Intents::IntentContextSource::VOICE;
+        cout << "Calling Discovery Launch HomeIntent method " << endl;
+        bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
+        if (error == Firebolt::Error::None) {
+            cout << "Discovery Launch HomeIntent is " << (status ? "true" : "false") << endl;
+        } else {
+            cout << "Discovery Launch HomeIntent status = " << static_cast<int>(error) << endl;
+        }
+    }
+    cin.putback('\n');
 }
