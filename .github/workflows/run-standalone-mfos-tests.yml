@@ -42,6 +42,7 @@ jobs:
           cp src/.mf.config.SAMPLE.json src/.mf.config.json
           npm install
           npm start &
+
       - name: Start FCA
         run: |
           echo "clone fca repo and start it in the background"
@@ -51,6 +52,7 @@ jobs:
           npm install
           npm start &
           sleep 5s
+
       - name: Run Standalone tests
         run: |
           echo "curl request with runTest intent on initialization"
@@ -140,7 +142,7 @@ jobs:
           });
           '
 
-      - name: Upload report.json as an artifact
+      - name: Upload json/html files as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: report

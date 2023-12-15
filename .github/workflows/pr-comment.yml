@@ -11,7 +11,7 @@ jobs:
   comment-on-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Artifact And Job Data
+      - name: Get Data from PR and Artifact
         env:
           GITHUB_TOKEN: ${{ github.token }}
           OWNER: ${{ github.repository_owner }}
@@ -41,7 +41,7 @@ jobs:
           JOB_PATH="${{ github.server_url }}/${{ github.repository }}/actions/runs/$PREVIOUS_JOB_ID"
           echo "JOB_PATH=$JOB_PATH" >> "$GITHUB_ENV"
 
-      - name: 'Download an artifact'
+      - name: Download an artifact
         uses: actions/github-script@v6
         with:
           script: |
@@ -78,7 +78,7 @@ jobs:
               console.log("Artifact downloaded successfully.");
             }
 
-      - name: 'Unzip an artifact'
+      - name: Unzip an artifact
         run: |
           unzip report.zip
           # Extract values from report.json
