@@ -31,6 +31,13 @@ CoreSDKTest::OnPreferredAudioLanguagesChangedNotification CoreSDKTest::_preferre
 CoreSDKTest::OnBackgroundNotification CoreSDKTest::_backgroundNotification;
 CoreSDKTest::OnForegroundNotification CoreSDKTest::_foregroundNotification;
 CoreSDKTest::OnFriendlyNameChangedNotification CoreSDKTest::_friendlyNameChangedNotification;
+CoreSDKTest::OnAvailableNotification CoreSDKTest::_availableNotification;
+
+#ifdef POLYMORPHICS_METHODS
+CoreSDKTest::OnNavigateToHomeIntentNotification CoreSDKTest::_navigateToHomeIntentNotification;
+CoreSDKTest::OnNavigateToEntityIntentNotification CoreSDKTest::_navigateToEntityIntentNotification;
+CoreSDKTest::OnNavigateToTuneIntentNotification CoreSDKTest::_navigateToTuneIntentNotification;
+#endif
 
 void CoreSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
@@ -426,6 +433,32 @@ void CoreSDKTest::UnsubscribeAccessibilityClosedCaptionsSettingsChanged()
     }
 }
 
+void CoreSDKTest::GetLocalizationAdditionalInfo()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    const Firebolt::Localization::Info info = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().additionalInfo(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Get Localization AdditionalInfo : " << endl;
+        for (auto element: info) {
+            cout << "key : " << element.first << ", value : " << element.second << endl;
+        }
+    } else {
+        cout << "Get Localization AdditionalInfo status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::GetLocalizationLatlon()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    const Firebolt::Localization::LatLon latlon = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().latlon(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Get Localization LatLon pair value : " << endl;
+        cout << "key : " << latlon.first << ", value : " << latlon.second << endl;
+    } else {
+        cout << "Get Localization LatLon status = " << static_cast<int>(error) << endl;
+    }
+}
 void CoreSDKTest::GetLocalizationPreferredAudioLanguages()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -677,14 +710,153 @@ void CoreSDKTest::GetAuthenticationToken()
     }
 }
 
+EnumMap<Firebolt::Capabilities::DenyReason> denyReasonMap = {
+    { Firebolt::Capabilities::DenyReason::UNPERMITTED, "unpermitted" },
+    { Firebolt::Capabilities::DenyReason::UNSUPPORTED, "unsupported" },
+    { Firebolt::Capabilities::DenyReason::DISABLED, "disbaled" },
+    { Firebolt::Capabilities::DenyReason::UNAVAILABLE, "unavailable" },
+    { Firebolt::Capabilities::DenyReason::GRANT_DENIED, "grant_denied" },
+    { Firebolt::Capabilities::DenyReason::UNGRANTED, "ungranted" }
+};
+
+static void PrintCapabilityInfo(const Firebolt::Capabilities::CapabilityInfo& info)
+{
+    if (info.capability.has_value()) {
+        cout << "\tcapability : " << info.capability.value() << endl;
+    }
+    cout << "\tsupported : " << (info.supported ? "true" : "false") << endl;
+    cout << "\tavailable : " << (info.available ? "true" : "false") << endl;
+    if (info.use.permitted.has_value() || info.use.granted.has_value()) {
+        if (info.use.permitted.has_value()) {
+            cout << "\tuse.permitted : " << (info.use.permitted.value() ? "true" : "false") << endl;
+        }
+        if (info.use.granted.has_value()) {
+            cout << "\tuse.granted : " << (info.use.granted.value() ? "true" : "false") << endl;
+        }
+    }
+    if (info.manage.permitted.has_value() || info.manage.granted.has_value()) {
+        if (info.manage.permitted.has_value()) {
+            cout << "\tmanage.permitted : " << (info.manage.permitted.value() ? "true" : "false") << endl;
+        }
+        if (info.manage.granted.has_value()) {
+            cout << "\tmanage.granted : " << (info.manage.granted.value() ? "true" : "false") << endl;
+        }
+    }
+    if (info.provide.permitted.has_value() || info.provide.granted.has_value()) {
+        if (info.provide.permitted.has_value()) {
+            cout << "\tprovide.permitted : " << (info.provide.permitted.value() ? "true" : "false") << endl;
+        }
+        if (info.provide.granted.has_value()) {
+            cout << "\tprovide.granted : " << (info.provide.granted.value() ? "true" : "false") << endl;
+        }
+    }
+    if (info.details.has_value()) {
+        cout << "\tdetails: " << endl;
+        for (auto item : info.details.value()) {
+             cout << "\t\t" << ConvertFromEnum<Firebolt::Capabilities::DenyReason>(denyReasonMap, item) << endl;
+        }
+    }
+}
+void CoreSDKTest::GetCapabilitiesAvailable()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string capability = "xrn:firebolt:capability:token:device";
+    bool status = Firebolt::IFireboltAccessor::Instance().CapabilitiesInterface().available(capability, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Capabilities Available = " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Capabilities Available status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::SubscribeCapabilitiesAvailableChanged()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string capability = "xrn:firebolt:capability:usergrant:pinchallenge";
+    Firebolt::IFireboltAccessor::Instance().CapabilitiesInterface().subscribe(capability, _availableNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Subscribe Capabilities AvailableNotification is success" << endl;
+    } else {
+        cout << "Subscribe Capabilities AvailableNotification status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::UnsubscribeCapabilitiesAvailableChanged()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().CapabilitiesInterface().unsubscribe(_availableNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Unsubscribe Capabilities AvailableNotification is success" << endl;
+    } else {
+        cout << "Unsubscribe Capabilities AvailableNotification status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::OnAvailableNotification::onAvailable( const std::string& capability, const Firebolt::Capabilities::CapabilityInfo& info)
+{
+    cout << "OnAvailableNotification is invoked " << endl;
+    cout << "capability: " << capability << endl;
+    cout << "capabilityInfo: " << endl;
+    PrintCapabilityInfo(info);
+}
+void CoreSDKTest::GetCapabilitiesGranted()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string capability = "xrn:firebolt:capability:localization:postal-code";
+    std::optional<Firebolt::Capabilities::CapabilityOption> options;
+    bool status = Firebolt::IFireboltAccessor::Instance().CapabilitiesInterface().granted(capability, options, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Capabilities Granted = " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Capabilities Granted status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::GetCapabilitiesPermitted()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string capability = "xrn:firebolt:capability:input:keyboard";
+    std::optional<Firebolt::Capabilities::CapabilityOption> options = std::make_optional<Firebolt::Capabilities::CapabilityOption>();
+    options.value().role = std::make_optional<Firebolt::Capabilities::Role>();
+    options.value().role.value() = Firebolt::Capabilities::Role::MANAGE;
+    bool status = Firebolt::IFireboltAccessor::Instance().CapabilitiesInterface().permitted(capability, options, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Capabilities Permitted = " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Capabilities Permitted status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::GetCapabilitiesSupported()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string capability = "xrn:firebolt:capability:wifi:scan";
+    bool status = Firebolt::IFireboltAccessor::Instance().CapabilitiesInterface().supported(capability, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Capabilities Supported = " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Capabilities Supported status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::GetCapabilitiesInfo()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::vector<std::string> capabilities = { "xrn:firebolt:capability:device:model", "xrn:firebolt:capability:input:keyboard", "xrn:firebolt:capability:protocol:bluetoothle", "xrn:firebolt:capability:token:device", "xrn:firebolt:capability:token:platform", "xrn:firebolt:capability:protocol:moca", "xrn:firebolt:capability:wifi:scan", "xrn:firebolt:capability:localization:postal-code", "xrn:firebolt:capability:localization:locality"};
+    std::vector<Firebolt::Capabilities::CapabilityInfo> info = Firebolt::IFireboltAccessor::Instance().CapabilitiesInterface().info(capabilities, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Capabilities Info : " << endl;
+        for (auto element : info) {
+            PrintCapabilityInfo(element);
+	    cout << endl;
+        }
+    } else {
+        cout << "Capabilities Info status = " << static_cast<int>(error) << endl;
+    }
+}
+
 void CoreSDKTest::MetricsStartContent()
 {
     Firebolt::Error error = Firebolt::Error::None;
     std::optional<std::string> entityId;
-    const bool status = Firebolt::IFireboltAccessor::Instance().MetricsInterface().startContent(entityId, &error);
+    bool status = Firebolt::IFireboltAccessor::Instance().MetricsInterface().startContent(entityId, &error);
 
     if (error == Firebolt::Error::None) {
-        cout << "Metrics Start Content = " << status << endl;
+        cout << "Metrics Start Content = " << (status ? "true" : "false") << endl;
     } else {
         cout << "Metrics Start Content status = " << static_cast<int>(error) << endl;
     }
@@ -693,10 +865,10 @@ void CoreSDKTest::MetricsStopContent()
 {
     Firebolt::Error error = Firebolt::Error::None;
     std::optional<std::string> entityId;
-    const bool status = Firebolt::IFireboltAccessor::Instance().MetricsInterface().stopContent(entityId, &error);
+    bool status = Firebolt::IFireboltAccessor::Instance().MetricsInterface().stopContent(entityId, &error);
 
     if (error == Firebolt::Error::None) {
-        cout << "Metrics Stop Content = " << status << endl;
+        cout << "Metrics Stop Content = " << (status ? "true" : "false") << endl;
     } else {
         cout << "Metrics Stop Content status = " << static_cast<int>(error) << endl;
     }
@@ -712,6 +884,19 @@ void CoreSDKTest::GetSecondScreenDevice()
         cout << "Get SecondScreen Device : " << deviceId.c_str() << endl;
     } else {
         cout << "Get SecondScreen Device status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::GetSecondScreenProtocols()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Types::BooleanMap map = Firebolt::IFireboltAccessor::Instance().SecondScreenInterface().protocols(&error);
+    if (error == Firebolt::Error::None) {
+        cout << "Get SecondScreen Protocols : " << endl;
+        for (auto element : map) {
+            cout << element.first << " : " << (element.second ? "true" : "false") << endl;
+        }
+    } else {
+        cout << "Get SecondScreen Protocols status = " << static_cast<int>(error) << endl;
     }
 }
 void CoreSDKTest::GetSecondScreenFriendlyName()
@@ -865,6 +1050,36 @@ void CoreSDKTest::DiscoveryEntitlements()
         cout << "Discovery Entitlements status = " << static_cast<int>(error) << endl;
     }
 }
+void CoreSDKTest::DiscoveryWatchNext()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string title = "A Cool Show";
+    Firebolt::Entertainment::ContentIdentifiers identifiers;
+    identifiers.entityId = "partner.com/entity/123";
+    std::optional<std::string> expires = "2021-04-23T18:25:43.511Z";
+    std::optional<Firebolt::Discovery::Images> images = std::make_optional<Firebolt::Discovery::Images>();
+    images = "{\"3x4\": {\"en-US\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\", \"es\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\"}, \"16x9\": {\"en\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\"}}";
+
+    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().watchNext(title, identifiers, expires, images, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery Watched Next is " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Discovery Watched Next status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::DiscoveryPolicy()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Discovery::DiscoveryPolicy policy = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().policy(&error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery Policy is " << endl;
+        cout << "\tenableRecommendations: " << policy.enableRecommendations << endl;
+        cout << "\tshareWatchHistory: " << policy.shareWatchHistory << endl;
+        cout << "\trememberWatchedPrograms: " << policy.rememberWatchedPrograms << endl;
+    } else {
+        cout << "Discovery Policy status = " << static_cast<int>(error) << endl;
+    }
+}
 void CoreSDKTest::DiscoveryEntityInfo()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -944,69 +1159,6 @@ void CoreSDKTest::DiscoveryEntityInfo()
         cout << "Discovery EntityInfo status = " << static_cast<int>(error) << endl;
     }
 }
-void CoreSDKTest::DiscoveryWatched()
-{
-    Firebolt::Error error = Firebolt::Error::None;
-    std::string entityId = "partner.com/entity/123";
-    std::optional<float> progress = 0.95;
-    std::optional<bool> completed = true;
-    std::optional<std::string> watchedOn = "2021-04-23T18:25:43.511Z";
-
-    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().watched(entityId, progress, completed, watchedOn, &error);
-    if (error == Firebolt::Error::None) {
-        cout << "Discovery Watched is " << (status ? "true" : "false") << endl;
-    } else {
-        cout << "Discovery Watched status = " << static_cast<int>(error) << endl;
-    }
-}
-void CoreSDKTest::DiscoveryWatchedReduced()
-{
-    Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::Discovery::WatchedInfo watchedInfo;
-    watchedInfo.entityId = "partner.com/entity/123";
-    watchedInfo.progress = 0.95;
-    watchedInfo.completed = true;
-    watchedInfo.watchedOn = "2021-04-23T18:25:43.511Z";
-    std::vector<Firebolt::Discovery::WatchedInfo> watchedInfoList;
-    watchedInfoList.push_back(watchedInfo);
-
-    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().watched(watchedInfoList, &error);
-    if (error == Firebolt::Error::None) {
-        cout << "Discovery Watched Reduced is " << (status ? "true" : "false") << endl;
-    } else {
-        cout << "Discovery Watched Reduced status = " << static_cast<int>(error) << endl;
-    }
-}
-void CoreSDKTest::DiscoveryWatchNext()
-{
-    Firebolt::Error error = Firebolt::Error::None;
-    std::string title = "A Cool Show";
-    Firebolt::Entertainment::ContentIdentifiers identifiers;
-    identifiers.entityId = "partner.com/entity/123";
-    std::optional<std::string> expires = "2021-04-23T18:25:43.511Z";
-    std::optional<Firebolt::Discovery::Images> images = std::make_optional<Firebolt::Discovery::Images>();
-    images = "{\"3x4\": {\"en-US\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\", \"es\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\"}, \"16x9\": {\"en\": \"https://i.ytimg.com/vi/4r7wHMg5Yjg/maxresdefault.jpg\"}}";
-
-    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().watchNext(title, identifiers, expires, images, &error);
-    if (error == Firebolt::Error::None) {
-        cout << "Discovery Watched Next is " << (status ? "true" : "false") << endl;
-    } else {
-        cout << "Discovery Watched Next status = " << static_cast<int>(error) << endl;
-    }
-}
-void CoreSDKTest::DiscoveryPolicy()
-{
-    Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::Discovery::DiscoveryPolicy policy = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().policy(&error);
-    if (error == Firebolt::Error::None) {
-        cout << "Discovery Policy is " << endl;
-        cout << "\tenableRecommendations: " << policy.enableRecommendations << endl;
-        cout << "\tshareWatchHistory: " << policy.shareWatchHistory << endl;
-        cout << "\trememberWatchedPrograms: " << policy.rememberWatchedPrograms << endl;
-    } else {
-        cout << "Discovery Policy status = " << static_cast<int>(error) << endl;
-    }
-}
 void CoreSDKTest::DiscoveryPurchasedContent()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1054,7 +1206,7 @@ void CoreSDKTest::DiscoveryPurchasedContent()
     wayToWatch.audioDescriptions = std::make_optional<std::vector<std::string>>();
     wayToWatch.audioDescriptions.value().push_back("en");
     entityInfo.waysToWatch.value().push_back(wayToWatch);
-    //result.entries.push_back(entityInfo);
+    result.entries.push_back(entityInfo);
 
     bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().purchasedContent(result, &error);
     if (error == Firebolt::Error::None) {
@@ -1063,7 +1215,7 @@ void CoreSDKTest::DiscoveryPurchasedContent()
         cout << "Discovery PurchasedContent status = " << static_cast<int>(error) << endl;
     }
 }
-
+#ifdef POLYMORPHICS_METHODS
 void CoreSDKTest::DiscoveryLaunch()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1120,3 +1272,101 @@ void CoreSDKTest::DiscoveryLaunch()
     }
     cin.putback('\n');
 }
+void CoreSDKTest::DiscoveryWatched()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string entityId = "partner.com/entity/123";
+    std::optional<float> progress = 0.95;
+    std::optional<bool> completed = true;
+    std::optional<std::string> watchedOn = "2021-04-23T18:25:43.511Z";
+
+    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().watched(entityId, progress, completed, watchedOn, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery Watched is " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Discovery Watched status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::DiscoveryWatchedReduced()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Discovery::WatchedInfo watchedInfo;
+    watchedInfo.entityId = "partner.com/entity/123";
+    watchedInfo.progress = 0.95;
+    watchedInfo.completed = true;
+    watchedInfo.watchedOn = "2021-04-23T18:25:43.511Z";
+    std::vector<Firebolt::Discovery::WatchedInfo> watchedInfoList;
+    watchedInfoList.push_back(watchedInfo);
+
+    bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().watched(watchedInfoList, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery Watched Reduced is " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Discovery Watched Reduced status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchNotification()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().subscribe(_navigateToHomeIntentNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Subscribe Discovery OnNavigateToLaunch HomeIntent is success" << endl;
+    } else {
+        cout << "Subscribe Discovery OnNavigateToLaunch HomeIntent status = " << static_cast<int>(error) << endl;
+    }
+
+    error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().subscribe(_navigateToEntityIntentNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Subscribe Discovery OnNavigateToLaunch EntityIntent is success" << endl;
+    } else {
+        cout << "Subscribe Discovery OnNavigateToLaunch EntityIntent status = " << static_cast<int>(error) << endl;
+    }
+
+    error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().subscribe(_navigateToTuneIntentNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Subscribe Discovery OnNavigateToLaunch TuneIntent is success" << endl;
+    } else {
+        cout << "Subscribe Discovery OnNavigateToLaunch TuneIntent status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchNotification()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().unsubscribe(_navigateToHomeIntentNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Unsubscribe Discovery OnNavigateToLaunch HomeIntent is success" << endl;
+    } else {
+        cout << "Unsubscribe Discovery OnNavigateToLaunch HomeIntent status = " << static_cast<int>(error) << endl;
+    }
+
+    error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().unsubscribe(_navigateToEntityIntentNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Unsubscribe Discovery OnNavigateToLaunch EntityIntent is success" << endl;
+    } else {
+        cout << "Unsubscribe Discovery OnNavigateToLaunch EntityIntent status = " << static_cast<int>(error) << endl;
+    }
+
+    error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().unsubscribe(_navigateToTuneIntentNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Unsubscribe Discovery OnNavigateToLaunch TuneIntent is success" << endl;
+    } else {
+        cout << "Unsubscribe Discovery OnNavigateToLaunch TuneIntent status = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::OnNavigateToHomeIntentNotification::onNavigateTo( const Firebolt::Intents::HomeIntent& intent)
+{
+    cout << "onNavigateTo for action : " << intent.action << endl;
+}
+void CoreSDKTest::OnNavigateToEntityIntentNotification::onNavigateTo( const Firebolt::Intents::EntityIntent& intent)
+{
+    cout << "onNavigateTo for action : " << intent.action << endl;
+}
+void CoreSDKTest::OnNavigateToTuneIntentNotification::onNavigateTo( const Firebolt::Intents::TuneIntent& intent)
+{
+    cout << "onNavigateTo for action : " << intent.action << endl;
+}
+#endif

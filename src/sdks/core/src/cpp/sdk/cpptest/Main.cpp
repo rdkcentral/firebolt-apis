@@ -12,11 +12,12 @@ void ShowMenu()
            "\tN : Get/Subscribe/Unsubscribe Device Name\n"
            "\tP : Get/Subscribe/Unsubscribe Device Audio Profiles\n"
            "\tR : Get/Subscribe/Unsubscribe Device Screen Resolution\n"
-           "\tL : Get/Subscribe/Unsubscribe Localization Preferred AudioLanguages\n"
+           "\tL : Handle Localization methods\n"
            "\tC : Get/Subscribe/Unsubscribe Closed Caption Settings\n"
            "\tK : Invoke keyboard methods email/password/standard\n"
            "\tV : Handle Profile methods\n"
            "\tT : Handle Authentication methods\n"
+           "\tB : Handle Capabilities Method\n"
            "\tE : Handle Metrics methods\n"
            "\tF : Handle Lifecycle methods\n"
            "\tD : Handle SecondScreen methods\n"
@@ -43,6 +44,15 @@ void ShowProfileMenu()
          "\tQ : Quit\n");
 }
 
+void ShowLocalizationMenu()
+{
+    printf("Options: \n"
+         "\tA: Get additionalInfo\n"
+         "\tL: Get LatLon\n"
+	 "\tP: Get/Subscribe/Unsubscribe Preferred AudioLanguages\n"
+         "\tQ : Quit\n");
+}
+
 void ShowAuthenticationMenu()
 {
     printf("Options: \n"
@@ -51,6 +61,17 @@ void ShowAuthenticationMenu()
          "\tS : Get Authentication Session\n"
          "\tR : Get Authentication Root\n"
          "\tT : Get Authentication Token\n"
+         "\tQ : Quit\n");
+}
+
+void ShowCapabilitiesMenu()
+{
+    printf("Options: \n"
+         "\tA : Get Capabilities Available\n"
+         "\tG : Get Capabilities Granted\n"
+         "\tP : Get Capabilities Permitted\n"
+         "\tS : Get Capabilities Supported\n"
+         "\tI : Get Capabilities Info\n"
          "\tQ : Quit\n");
 }
 
@@ -85,6 +106,7 @@ void ShowSecondScreenMenu()
     printf("Options: \n"
          "\tD : Get Device Id\n"
          "\tF : Get/Subscribe/Unsubscribe FriendlyName\n"
+         "\tP : Get Protocols\n"
          "\tQ : Quit\n");
 }
 
@@ -97,12 +119,15 @@ void ShowDiscoveryMenu()
          "\tC : ClearContentAccess\n"
          "\tE : Entitlements\n"
          "\tI : EntityInfo\n"
-         "\tL : Launch\n"
          "\tP : Policy\n"
          "\tU : PurchasedContent\n"
+         "\tN : WatchNext\n"
+#ifdef POLYMORPHICS_METHODS
+         "\tL : Launch\n"
          "\tW : Watched\n"
          "\tR : WatchedReduced\n"
-         "\tN : WatchNext\n"
+         "\tB : Subscribe/Unsubscribe DiscoveryOnNavigateToLaunch\n"
+#endif
          "\tQ : Quit\n");
 }
 
@@ -206,6 +231,41 @@ void HandleAuthenticationMethod()
     } while (opt != 'Q');
 }
 
+void HandleCapabilitiesMethod()
+{
+    int opt;
+    do {
+        getchar();
+        ShowCapabilitiesMenu();
+        printf("Enter option : ");
+        opt = toupper(getchar());
+        switch (opt) {
+        case 'A': {
+            HandleProperty(Capabilities, Available)
+            break;
+        }
+        case 'G': {
+            CoreSDKTest::GetCapabilitiesGranted();
+            break;
+        }
+        case 'P': {
+            CoreSDKTest::GetCapabilitiesPermitted();
+            break;
+        }
+        case 'S': {
+            CoreSDKTest::GetCapabilitiesSupported();
+            break;
+        }
+        case 'I': {
+            CoreSDKTest::GetCapabilitiesInfo();
+            break;
+        }
+        default:
+            break;
+        }
+    } while (opt != 'Q');
+}
+
 void HandleProfileMethod()
 {
     int opt;
@@ -225,6 +285,33 @@ void HandleProfileMethod()
         }
         case 'F': {
             CoreSDKTest::GetProfileFlags();
+            break;
+        }
+        default:
+            break;
+        }
+    } while (opt != 'Q');
+}
+
+void HandleLocalizationMethod()
+{
+    int opt;
+    do {
+        getchar();
+	ShowLocalizationMenu();
+        printf("Enter option : ");
+        opt = toupper(getchar());
+        switch (opt) {
+        case 'A': {
+            CoreSDKTest::GetLocalizationAdditionalInfo();
+            break;
+        }
+        case 'L': {
+            CoreSDKTest::GetLocalizationLatlon();
+            break;
+        }
+        case 'P': {
+            HandleProperty(Localization, PreferredAudioLanguages)
             break;
         }
         default:
@@ -327,6 +414,10 @@ void HandleSecondScreenMethod()
             HandleProperty(SecondScreen, FriendlyName)
             break;
         }
+        case 'P': {
+            CoreSDKTest::GetSecondScreenProtocols();
+            break;
+        }
         default:
             break;
         }
@@ -366,16 +457,21 @@ void HandleDiscoveryMethod()
             CoreSDKTest::DiscoveryEntityInfo();
             break;
         }
-        case 'L': {
-            CoreSDKTest::DiscoveryLaunch();
-            break;
-        }
         case 'P': {
             CoreSDKTest::DiscoveryPolicy();
             break;
         }
         case 'U': {
             CoreSDKTest::DiscoveryPurchasedContent();
+            break;
+        }
+        case 'N': {
+            CoreSDKTest::DiscoveryWatchNext();
+            break;
+        }
+#ifdef POLYMORPHICS_METHODS
+        case 'L': {
+            CoreSDKTest::DiscoveryLaunch();
             break;
         }
         case 'W': {
@@ -386,10 +482,10 @@ void HandleDiscoveryMethod()
             CoreSDKTest::DiscoveryWatchedReduced();
             break;
         }
-        case 'N': {
-            CoreSDKTest::DiscoveryWatchNext();
-            break;
+        case 'B': {
+            HandleEventListener(Discovery, OnNavigateToLaunchNotification)
         }
+#endif
         default:
             break;
         }
@@ -484,7 +580,7 @@ int main (int argc, char* argv[])
                 break;
             }
             case 'L': {
-                HandleProperty(Localization, PreferredAudioLanguages)
+                HandleLocalizationMethod();
                 break;
             }
             case 'C': {
@@ -501,6 +597,10 @@ int main (int argc, char* argv[])
             }
             case 'T': {
                 HandleAuthenticationMethod();
+                break;
+            }
+            case 'B': {
+                HandleCapabilitiesMethod();
                 break;
             }
             case 'F': {

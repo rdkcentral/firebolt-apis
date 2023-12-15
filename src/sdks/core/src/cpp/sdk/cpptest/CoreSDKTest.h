@@ -57,6 +57,21 @@ class CoreSDKTest {
         void onFriendlyNameChanged( const std::string& ) override;
     };
 
+    struct OnAvailableNotification : public Firebolt::Capabilities::ICapabilities::IOnAvailableNotification {
+        void onAvailable( const std::string& capability, const Firebolt::Capabilities::CapabilityInfo& ) override;
+    };
+
+#ifdef POLYMORPHICS_METHODS
+    struct OnNavigateToHomeIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToHomeIntentNotification {
+        void onNavigateTo( const Firebolt::Intents::HomeIntent& ) override;
+    };
+    struct OnNavigateToEntityIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToEntityIntentNotification {
+        void onNavigateTo( const Firebolt::Intents::EntityIntent& ) override;
+    };
+    struct OnNavigateToTuneIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToTuneIntentNotification {
+        void onNavigateTo( const Firebolt::Intents::TuneIntent& ) override;
+    };
+#endif
 public:
     CoreSDKTest() = default;
     virtual ~CoreSDKTest() = default;
@@ -80,6 +95,8 @@ public:
     static void SubscribeDeviceScreenResolutionChanged();
     static void UnsubscribeDeviceScreenResolutionChanged();
 
+    static void GetLocalizationAdditionalInfo();
+    static void GetLocalizationLatlon();
     static void GetLocalizationPreferredAudioLanguages();
     static void SubscribeLocalizationPreferredAudioLanguagesChanged();
     static void UnsubscribeLocalizationPreferredAudioLanguagesChanged();
@@ -113,10 +130,19 @@ public:
     static void GetAuthenticationToken();
     static void GetAuthenticationRoot();
 
+    static void GetCapabilitiesSupported();
+    static void GetCapabilitiesAvailable();
+    static void GetCapabilitiesGranted();
+    static void GetCapabilitiesPermitted();
+    static void GetCapabilitiesInfo();
+    static void SubscribeCapabilitiesAvailableChanged();
+    static void UnsubscribeCapabilitiesAvailableChanged();
+
     static void MetricsStartContent();
     static void MetricsStopContent();
 
     static void GetSecondScreenDevice();
+    static void GetSecondScreenProtocols();
     static void GetSecondScreenFriendlyName();
     static void SubscribeSecondScreenFriendlyNameChanged();
     static void UnsubscribeSecondScreenFriendlyNameChanged();
@@ -127,11 +153,15 @@ public:
     static void DiscoveryClearContentAccess();
     static void DiscoveryEntitlements();
     static void DiscoveryEntityInfo();
-    static void DiscoveryLaunch();
     static void DiscoveryPolicy();
     static void DiscoveryPurchasedContent();
+#ifdef POLYMORPHICS_METHODS
+    static void DiscoveryLaunch();
     static void DiscoveryWatched();
     static void DiscoveryWatchedReduced();
+    static void SubscribeDiscoveryOnNavigateToLaunchNotification();
+    static void UnsubscribeDiscoveryOnNavigateToLaunchNotification();
+#endif
     static void DiscoveryWatchNext();
 
     static void ParametersInitialization();
@@ -150,5 +180,11 @@ private:
     static OnBackgroundNotification _backgroundNotification;
     static OnForegroundNotification _foregroundNotification;
     static OnFriendlyNameChangedNotification _friendlyNameChangedNotification;
+    static OnAvailableNotification _availableNotification;
+#ifdef POLYMORPHICS_METHODS
+    static OnNavigateToHomeIntentNotification _navigateToHomeIntentNotification;
+    static OnNavigateToEntityIntentNotification _navigateToEntityIntentNotification;
+    static OnNavigateToTuneIntentNotification _navigateToTuneIntentNotification;
+#endif
 };
 

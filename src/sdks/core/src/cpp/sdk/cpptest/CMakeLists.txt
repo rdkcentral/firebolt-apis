@@ -61,6 +61,12 @@ target_include_directories(${TESTAPP}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/../>
 )
 
+if (POLYMORPHICS_METHODS)
+    target_compile_definitions(${TESTAPP}
+        PUBLIC
+            POLYMORPHICS_METHODS=1)
+endif()
+
 set_target_properties(${TESTAPP} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES

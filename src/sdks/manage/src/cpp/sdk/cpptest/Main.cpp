@@ -344,15 +344,15 @@ int main (int argc, char* argv[])
                 break;
             }
             case 'I': {
-                HandleEventListener(Discovery, SignInNotification) // Testing sequence needs to understand
+                HandleEventListener(Discovery, SignInNotification)
                 break;
             }
             case 'O': {
-                HandleEventListener(Discovery, SignOutNotification) // Testing sequence needs to understand
+                HandleEventListener(Discovery, SignOutNotification)
                 break;
             }
             case 'R': {
-                ManageSDKTest::ResetAdvertisingIdentifier(); // Testing sequence needs to understand
+                ManageSDKTest::ResetAdvertisingIdentifier();
                 break;
             }
             case 'K': {
