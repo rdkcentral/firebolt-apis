@@ -83,10 +83,10 @@ jobs:
           unzip report.zip
           # Extract values from report.json
           report=$(cat report.json | jq -r '.')
-          passes=$(echo "$report" | jq -r '.report.stats.passes')
-          failures=$(echo "$report" | jq -r '.report.stats.failures')
-          pending=$(echo "$report" | jq -r '.report.stats.pending')
-          skipped=$(echo "$report" | jq -r '.report.stats.skipped')
+          passes=$(echo "$report" | jq -r '.stats.passes')
+          failures=$(echo "$report" | jq -r '.stats.failures')
+          pending=$(echo "$report" | jq -r '.stats.pending')
+          skipped=$(echo "$report" | jq -r '.stats.skipped')
           echo "Skipped=$skipped" >> "$GITHUB_ENV"
           echo "Pending=$pending" >> "$GITHUB_ENV"
           echo "Passes=$passes" >> "$GITHUB_ENV"
@@ -99,5 +99,5 @@ jobs:
           body: |-
             MFOS Standalone Report:
             Passes - ${{ env.Passes }} Failures - ${{ env.Failures }} Pending - ${{ env.Pending }} Skipped - ${{ env.Skipped }}
-            Report JSON URL: ${{ env. ARTIFACT_URL }}
+            Report JSON/HTML Files: ${{ env. ARTIFACT_URL }}
             Job Logs: ${{ env. JOB_PATH }}

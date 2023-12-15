@@ -29,6 +29,8 @@ jobs:
           cd firebolt-apis
           npm i
           npm run compile
+          npm run dist
+
       - name: Start MFOS
         run: |
           echo "clone mfos repo and start it in the background"
@@ -45,12 +47,13 @@ jobs:
           echo "clone fca repo and start it in the background"
           git clone https://github.com/rdkcentral/firebolt-certification-app.git
           cd firebolt-certification-app
+          jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
           npm install
           npm start &
           sleep 5s
       - name: Run Standalone tests
         run: |
-          ls
+          echo "curl request with runTest intent on initialization"
           response=$(curl -X POST -H "Content-Type: application/json" -d '{
             "result": {
               "lmt": 0,
@@ -68,6 +71,8 @@ jobs:
               }
             }
           }' http://localhost:3333/api/v1/state/method/parameters.initialization/result)
+          
+          echo "run mfos tests in headless browser"
           npm install puppeteer
           echo "Start xvfb"
           Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
@@ -117,21 +122,37 @@ jobs:
               await browser.close();
             })();
           '
+      - name: Create html/assets
+        run: |
+          npm i mochawesome-report-generator
+          mkdir report
+          mv report.json report/
+          jq -r '.' report/report.json > tmp.json && mv tmp.json report/report.json 
+          jq '.report' report/report.json > tmp.json && mv tmp.json report/report.json 
+          node -e '
+          const marge = require("mochawesome-report-generator/bin/cli-main");
+          marge({
+            _: ["report/report.json"],
+            reportFileName: "report.json",
+            reportTitle: "FireboltCertificationTestReport",
+            reportPageTitle: "FireboltCertificationTestReport",
+            reportDir: "./report",
+          });
+          '
+
       - name: Upload report.json as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: report.json
-          path: ${{ github.workspace }}/report.json
+          name: report
+          path: ${{ github.workspace }}/report
 
       - name: Get results from report.json
         run: |
-          report=$(cat report.json | jq -r '.')
-          failures=$(echo "$report" | jq -r '.report.stats.failures')
+          failures=$(cat report/report.json | jq -r '.stats.failures')
           echo "If failures more than 0, fail the job"
           echo "Failures=$failures"
           if [ "$failures" -gt 0 ]; then
            exit 1;
           else
             echo "No failures detected."
-           exit 0;
           fi
