@@ -5,13 +5,13 @@ on:
     types:
       - "completed"
     workflows:
-      - "MFOS Standalone Report"
+      - "Core SDK - MFOS standalone sanity report"
 
 jobs:
   comment-on-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Data from PR and Artifact
+      - name: Get Artifact And Job Data
         env:
           GITHUB_TOKEN: ${{ github.token }}
           OWNER: ${{ github.repository_owner }}
@@ -97,7 +97,7 @@ jobs:
         with:
           issue-number: ${{ env.PR_NUMBER }}
           body: |-
-            MFOS Standalone Report:
+            Core SDK - MFOS standalone sanity report:
             Passes - ${{ env.Passes }} Failures - ${{ env.Failures }} Pending - ${{ env.Pending }} Skipped - ${{ env.Skipped }}
             Report JSON/HTML Files: ${{ env. ARTIFACT_URL }}
             Job Logs: ${{ env. JOB_PATH }}
