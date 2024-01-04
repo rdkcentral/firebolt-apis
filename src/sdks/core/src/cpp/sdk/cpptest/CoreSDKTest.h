@@ -58,10 +58,9 @@ class CoreSDKTest {
     };
 
     struct OnAvailableNotification : public Firebolt::Capabilities::ICapabilities::IOnAvailableNotification {
-        void onAvailable( const std::string& capability, const Firebolt::Capabilities::CapabilityInfo& ) override;
+        void onAvailable( const Firebolt::Capabilities::CapabilityInfo& ) override;
     };
 
-#ifdef POLYMORPHICS_METHODS
     struct OnNavigateToHomeIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToHomeIntentNotification {
         void onNavigateTo( const Firebolt::Intents::HomeIntent& ) override;
     };
@@ -71,7 +70,7 @@ class CoreSDKTest {
     struct OnNavigateToTuneIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToTuneIntentNotification {
         void onNavigateTo( const Firebolt::Intents::TuneIntent& ) override;
     };
-#endif
+
 public:
     CoreSDKTest() = default;
     virtual ~CoreSDKTest() = default;
@@ -155,13 +154,13 @@ public:
     static void DiscoveryEntityInfo();
     static void DiscoveryPolicy();
     static void DiscoveryPurchasedContent();
-#ifdef POLYMORPHICS_METHODS
     static void DiscoveryLaunch();
+#ifdef POLYMORPHICS_REDUCER_METHODS
     static void DiscoveryWatched();
     static void DiscoveryWatchedReduced();
+#endif
     static void SubscribeDiscoveryOnNavigateToLaunchNotification();
     static void UnsubscribeDiscoveryOnNavigateToLaunchNotification();
-#endif
     static void DiscoveryWatchNext();
 
     static void ParametersInitialization();
@@ -181,10 +180,8 @@ private:
     static OnForegroundNotification _foregroundNotification;
     static OnFriendlyNameChangedNotification _friendlyNameChangedNotification;
     static OnAvailableNotification _availableNotification;
-#ifdef POLYMORPHICS_METHODS
     static OnNavigateToHomeIntentNotification _navigateToHomeIntentNotification;
     static OnNavigateToEntityIntentNotification _navigateToEntityIntentNotification;
     static OnNavigateToTuneIntentNotification _navigateToTuneIntentNotification;
-#endif
 };
 

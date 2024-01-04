@@ -61,10 +61,10 @@ target_include_directories(${TESTAPP}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/../>
 )
 
-if (POLYMORPHICS_METHODS)
+if (POLYMORPHICS_REDUCER_METHODS)
     target_compile_definitions(${TESTAPP}
         PUBLIC
-            POLYMORPHICS_METHODS=1)
+            POLYMORPHICS_REDUCER_METHODS=1)
 endif()
 
 set_target_properties(${TESTAPP} PROPERTIES

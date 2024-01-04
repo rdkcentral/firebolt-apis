@@ -33,11 +33,9 @@ CoreSDKTest::OnForegroundNotification CoreSDKTest::_foregroundNotification;
 CoreSDKTest::OnFriendlyNameChangedNotification CoreSDKTest::_friendlyNameChangedNotification;
 CoreSDKTest::OnAvailableNotification CoreSDKTest::_availableNotification;
 
-#ifdef POLYMORPHICS_METHODS
 CoreSDKTest::OnNavigateToHomeIntentNotification CoreSDKTest::_navigateToHomeIntentNotification;
 CoreSDKTest::OnNavigateToEntityIntentNotification CoreSDKTest::_navigateToEntityIntentNotification;
 CoreSDKTest::OnNavigateToTuneIntentNotification CoreSDKTest::_navigateToTuneIntentNotification;
-#endif
 
 void CoreSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
@@ -789,10 +787,9 @@ void CoreSDKTest::UnsubscribeCapabilitiesAvailableChanged()
         cout << "Unsubscribe Capabilities AvailableNotification status = " << static_cast<int>(error) << endl;
     }
 }
-void CoreSDKTest::OnAvailableNotification::onAvailable( const std::string& capability, const Firebolt::Capabilities::CapabilityInfo& info)
+void CoreSDKTest::OnAvailableNotification::onAvailable( const Firebolt::Capabilities::CapabilityInfo& info)
 {
     cout << "OnAvailableNotification is invoked " << endl;
-    cout << "capability: " << capability << endl;
     cout << "capabilityInfo: " << endl;
     PrintCapabilityInfo(info);
 }
@@ -1215,7 +1212,6 @@ void CoreSDKTest::DiscoveryPurchasedContent()
         cout << "Discovery PurchasedContent status = " << static_cast<int>(error) << endl;
     }
 }
-#ifdef POLYMORPHICS_METHODS
 void CoreSDKTest::DiscoveryLaunch()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1272,6 +1268,7 @@ void CoreSDKTest::DiscoveryLaunch()
     }
     cin.putback('\n');
 }
+#ifdef POLYMORPHICS_REDUCER_METHODS
 void CoreSDKTest::DiscoveryWatched()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1305,6 +1302,7 @@ void CoreSDKTest::DiscoveryWatchedReduced()
         cout << "Discovery Watched Reduced status = " << static_cast<int>(error) << endl;
     }
 }
+#endif
 void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchNotification()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1369,4 +1367,3 @@ void CoreSDKTest::OnNavigateToTuneIntentNotification::onNavigateTo( const Firebo
 {
     cout << "onNavigateTo for action : " << intent.action << endl;
 }
-#endif

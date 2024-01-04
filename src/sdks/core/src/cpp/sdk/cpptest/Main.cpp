@@ -122,12 +122,12 @@ void ShowDiscoveryMenu()
          "\tP : Policy\n"
          "\tU : PurchasedContent\n"
          "\tN : WatchNext\n"
-#ifdef POLYMORPHICS_METHODS
          "\tL : Launch\n"
+#ifdef POLYMORPHICS_REDUCER_METHODS
          "\tW : Watched\n"
          "\tR : WatchedReduced\n"
-         "\tB : Subscribe/Unsubscribe DiscoveryOnNavigateToLaunch\n"
 #endif
+         "\tB : Subscribe/Unsubscribe DiscoveryOnNavigateToLaunch\n"
          "\tQ : Quit\n");
 }
 
@@ -469,11 +469,11 @@ void HandleDiscoveryMethod()
             CoreSDKTest::DiscoveryWatchNext();
             break;
         }
-#ifdef POLYMORPHICS_METHODS
         case 'L': {
             CoreSDKTest::DiscoveryLaunch();
             break;
         }
+#ifdef POLYMORPHICS_REDUCER_METHODS
         case 'W': {
             CoreSDKTest::DiscoveryWatched();
             break;
@@ -482,10 +482,10 @@ void HandleDiscoveryMethod()
             CoreSDKTest::DiscoveryWatchedReduced();
             break;
         }
+#endif
         case 'B': {
             HandleEventListener(Discovery, OnNavigateToLaunchNotification)
         }
-#endif
         default:
             break;
         }
