@@ -156,6 +156,185 @@
       ]
     },
     {
+      "name": "setPosition",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:player:base"
+          ]
+        }
+      ],
+      "summary": "Tells the player to set its position to the given offset in the media",
+      "params": [
+        {
+          "name": "playerId",
+          "summary": "The id of the player to set the position for",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "position",
+          "summary": "The position the player should seek to in milliseconds",
+          "schema": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "setPositionResponse",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            },
+            {
+              "name": "position",
+              "value": 10000
+            }
+          ],
+          "result": {
+            "name": "setPositionResponse",
+            "value": null
+          }
+        },
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            },
+            {
+              "name": "position",
+              "value": 600000
+            }
+          ],
+          "result": {
+            "name": "setPositionResponse",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "setSpeed",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:player:base"
+          ]
+        }
+      ],
+      "summary": "Tells the player to set its speed",
+      "params": [
+        {
+          "name": "playerId",
+          "summary": "The id of the player to set the position for",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "speed",
+          "summary": "The speed to set as a multiplier of the default speed. Negative values would cause the media to rewind. Use 0 to pause",
+          "schema": {
+            "type": "number"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "setSpeedResponse",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Set speed to 2",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            },
+            {
+              "name": "speed",
+              "value": 2
+            }
+          ],
+          "result": {
+            "name": "setSpeedResponse",
+            "value": null
+          }
+        },
+        {
+          "name": "Set speed to 0.5",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            },
+            {
+              "name": "speed",
+              "value": 0.5
+            }
+          ],
+          "result": {
+            "name": "setSpeedResponse",
+            "value": null
+          }
+        },
+        {
+          "name": "Set speed to -2",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            },
+            {
+              "name": "speed",
+              "value": -2
+            }
+          ],
+          "result": {
+            "name": "setSpeedResponse",
+            "value": null
+          }
+        },
+        {
+          "name": "Set speed to 0",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            },
+            {
+              "name": "speed",
+              "value": 0
+            }
+          ],
+          "result": {
+            "name": "setSpeedResponse",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
       "name": "status",
       "tags": [
         {
@@ -288,6 +467,177 @@
               "endPosition": 3600000,
               "liveSyncTime": "2021-05-23T18:25:43.511Z"
             }
+          }
+        }
+      ]
+    },
+    {
+      "name": "tracks",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:player:base"
+          ]
+        }
+      ],
+      "summary": "Gets the supported tracks for the current playing media",
+      "params": [
+        {
+          "name": "playerId",
+          "summary": "The id of the player to get the tracks for",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "playerTracks",
+        "schema": {
+          "$ref": "#/components/schemas/PlayerTracks"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            }
+          ],
+          "result": {
+            "name": "playerTracks",
+            "value": {
+              "audio": [
+                {
+                  "trackId": "123",
+                  "language": "en",
+                  "audioDescription": false,
+                  "type": "PCM",
+                  "selected": true
+                }
+              ],
+              "captions": [
+                {
+                  "trackId": "123",
+                  "language": "en",
+                  "name": "CC1",
+                  "selected": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "setAudioTrack",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:player:base"
+          ]
+        }
+      ],
+      "summary": "Selects the given audio track",
+      "params": [
+        {
+          "name": "playerId",
+          "summary": "The id of the player to set the track for",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "trackId",
+          "summary": "The id of the track to select",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "setAudioTrackResult",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            },
+            {
+              "name": "trackId",
+              "value": "Audio1"
+            }
+          ],
+          "result": {
+            "name": "setAudioTrackResult",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "setCaptionsTrack",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:player:base"
+          ]
+        }
+      ],
+      "summary": "Selects the given captions track",
+      "params": [
+        {
+          "name": "playerId",
+          "summary": "The id of the player to set the track for",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "trackId",
+          "summary": "The id of the track to select",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "setCaptionsTrackResult",
+        "schema": {
+          "const": null
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example #1",
+          "params": [
+            {
+              "name": "playerId",
+              "value": "app1:123"
+            },
+            {
+              "name": "trackId",
+              "value": "CC1"
+            }
+          ],
+          "result": {
+            "name": "setAudioTrackResult",
+            "value": null
           }
         }
       ]
@@ -519,6 +869,285 @@
               "correlationId": "abc",
               "parameters": {
                 "playerId": "123"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onRequestSetPosition",
+      "summary": "Registers as a provider for when media position should be set",
+      "params": [],
+      "tags": [
+        {
+          "name": "event",
+          "x-response": {
+            "const": null,
+            "examples": [
+              null
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base",
+          "x-allow-focus": false
+        }
+      ],
+      "result": {
+        "name": "setPositionRequest",
+        "summary": "The request to set position in the media",
+        "schema": {
+          "$ref": "#/components/schemas/PlayerSetPositionProviderRequest"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "123",
+                "position": 10000
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onRequestSetSpeed",
+      "summary": "Registers as a provider for when media speed should be set",
+      "params": [],
+      "tags": [
+        {
+          "name": "event",
+          "x-response": {
+            "const": null,
+            "examples": [
+              null
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base",
+          "x-allow-focus": false
+        }
+      ],
+      "result": {
+        "name": "setSpeedRequest",
+        "summary": "The request to set speed in the media",
+        "schema": {
+          "$ref": "#/components/schemas/PlayerSetSpeedProviderRequest"
+        }
+      },
+      "examples": [
+        {
+          "name": "Set Speed to 2",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "123",
+                "speed": 2
+              }
+            }
+          }
+        },
+        {
+          "name": "Set Speed to 0.5",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "123",
+                "speed": 0.5
+              }
+            }
+          }
+        },
+        {
+          "name": "Set Speed to -2",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "123",
+                "speed": -2
+              }
+            }
+          }
+        },
+        {
+          "name": "Set Speed to 0",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "123",
+                "speed": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onRequestTracks",
+      "summary": "Registers as a provider for when player tracks needs to be provided",
+      "params": [],
+      "tags": [
+        {
+          "name": "event",
+          "x-response": {
+            "$ref": "#/components/schemas/PlayerTracks",
+            "examples": [
+              {
+                "audio": [
+                  {
+                    "trackId": "123",
+                    "language": "en",
+                    "audioDescription": false,
+                    "type": "PCM",
+                    "selected": true
+                  }
+                ],
+                "captions": [
+                  {
+                    "trackId": "123",
+                    "language": "en",
+                    "name": "CC1",
+                    "selected": true
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base",
+          "x-allow-focus": false
+        }
+      ],
+      "result": {
+        "name": "tracksRequest",
+        "summary": "The request to get the tracks of a player",
+        "schema": {
+          "$ref": "https://meta.comcast.com/firebolt/player#/definitions/PlayerProviderRequest"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "123"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onRequestSetAudioTrack",
+      "summary": "Registers as a provider for setting the audio track",
+      "params": [],
+      "tags": [
+        {
+          "name": "event",
+          "x-response": {
+            "const": null,
+            "examples": [
+              null
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base",
+          "x-allow-focus": false
+        }
+      ],
+      "result": {
+        "name": "setTracksRequest",
+        "summary": "The request to set the audio track of a player",
+        "schema": {
+          "$ref": "#/components/schemas/PlayerSetAudioTrackProviderRequest"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "123",
+                "trackId": "Audio1"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "onRequestSetCaptionsTrack",
+      "summary": "Registers as a provider for setting the captions track",
+      "params": [],
+      "tags": [
+        {
+          "name": "event",
+          "x-response": {
+            "const": null,
+            "examples": [
+              null
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:player:base",
+          "x-allow-focus": false
+        }
+      ],
+      "result": {
+        "name": "setTracksRequest",
+        "summary": "The request to set the captions track of a player",
+        "schema": {
+          "$ref": "#/components/schemas/PlayerSetCaptionsTrackProviderRequest"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "correlationId": "abc",
+              "parameters": {
+                "playerId": "123",
+                "trackId": "CC1"
               }
             }
           }
@@ -852,6 +1481,346 @@
           "parameters": {
             "description": "The request to load media in the player",
             "$ref": "#/components/schemas/PlayerLoadRequest"
+          }
+        }
+      },
+      "AudioTrack": {
+        "title": "AudioTrack",
+        "type": "object",
+        "required": [
+          "trackId",
+          "language",
+          "audioDescription",
+          "type",
+          "selected"
+        ],
+        "properties": {
+          "trackId": {
+            "description": "The id of the track",
+            "type": "string"
+          },
+          "language": {
+            "description": "The language of the audio",
+            "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Language"
+          },
+          "audioDescription": {
+            "description": "Whether this track supports audio description",
+            "type": "boolean"
+          },
+          "type": {
+            "description": "The type of track",
+            "type": "string",
+            "enum": [
+              "PCM",
+              "AC3",
+              "EAC3",
+              "AAC"
+            ]
+          },
+          "selected": {
+            "description": "Whether this track is currently selected",
+            "type": "boolean"
+          }
+        },
+        "examples": [
+          {
+            "trackId": "Audio1",
+            "language": "en",
+            "audioDescription": false,
+            "type": "PCM",
+            "selected": true
+          },
+          {
+            "trackId": "Audio2",
+            "language": "es",
+            "audioDescription": true,
+            "type": "AC3",
+            "selected": false
+          }
+        ]
+      },
+      "CaptionsTrack": {
+        "title": "CaptionsTrack",
+        "type": "object",
+        "required": [
+          "trackId",
+          "selected"
+        ],
+        "properties": {
+          "trackId": {
+            "description": "The id of the track",
+            "type": "string"
+          },
+          "language": {
+            "description": "The language of the captions",
+            "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Language"
+          },
+          "name": {
+            "description": "The name of track",
+            "type": "string"
+          },
+          "selected": {
+            "description": "Whether this track is currently selected",
+            "type": "boolean"
+          }
+        },
+        "examples": [
+          {
+            "trackId": "CC1",
+            "language": "en",
+            "selected": true
+          },
+          {
+            "trackId": "CC2",
+            "name": "ClosedCaptions2",
+            "selected": false
+          }
+        ]
+      },
+      "PlayerTracks": {
+        "title": "PlayerTracks",
+        "type": "object",
+        "required": [
+          "audio",
+          "captions"
+        ],
+        "properties": {
+          "audio": {
+            "description": "The list of audio tracks",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AudioTrack"
+            }
+          },
+          "captions": {
+            "description": "The list of captions tracks",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CaptionsTrack"
+            }
+          }
+        },
+        "examples": [
+          {
+            "audio": [
+              {
+                "trackId": "Audio1",
+                "language": "en",
+                "audioDescription": false,
+                "type": "PCM",
+                "selected": true
+              },
+              {
+                "trackId": "Audio2",
+                "language": "es",
+                "audioDescription": true,
+                "type": "AC3",
+                "selected": false
+              }
+            ],
+            "captions": [
+              {
+                "trackId": "CC1",
+                "language": "en",
+                "selected": true
+              },
+              {
+                "trackId": "CC2",
+                "name": "ClosedCaptions2",
+                "selected": false
+              }
+            ]
+          }
+        ]
+      },
+      "PlayerSetPositionRequest": {
+        "title": "PlayerSetPositionRequest",
+        "type": "object",
+        "required": [
+          "playerId",
+          "position"
+        ],
+        "properties": {
+          "playerId": {
+            "description": "The id of the player to set the position for",
+            "type": "string"
+          },
+          "position": {
+            "description": "The position the player should seek to in milliseconds",
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "examples": [
+          {
+            "playerId": "app1:123",
+            "position": 10000
+          },
+          {
+            "playerId": "app2:345",
+            "position": 600000
+          }
+        ]
+      },
+      "PlayerSetPositionProviderRequest": {
+        "title": "PlayerSetPositionProviderRequest",
+        "type": "object",
+        "required": [
+          "correlationId",
+          "parameters"
+        ],
+        "properties": {
+          "correlationId": {
+            "type": "string",
+            "description": "An id to correlate the provider response with this request"
+          },
+          "parameters": {
+            "description": "The request to set position in the player",
+            "$ref": "#/components/schemas/PlayerSetPositionRequest"
+          }
+        }
+      },
+      "PlayerSetSpeedRequest": {
+        "title": "PlayerSetSpeedRequest",
+        "type": "object",
+        "required": [
+          "playerId",
+          "speed"
+        ],
+        "properties": {
+          "playerId": {
+            "description": "The id of the player to set the speed for",
+            "type": "string"
+          },
+          "speed": {
+            "description": "The speed to set as a multiplier of the default speed. Negative values would cause the media to rewind. Use 0 to pause",
+            "type": "number"
+          }
+        },
+        "examples": [
+          {
+            "playerId": "app1:123",
+            "speed": 2
+          },
+          {
+            "playerId": "app2:345",
+            "speed": 0.5
+          },
+          {
+            "playerId": "app2:345",
+            "speed": -2
+          },
+          {
+            "playerId": "app2:345",
+            "speed": 0
+          }
+        ]
+      },
+      "PlayerSetSpeedProviderRequest": {
+        "title": "PlayerSetSpeedProviderRequest",
+        "type": "object",
+        "required": [
+          "correlationId",
+          "parameters"
+        ],
+        "properties": {
+          "correlationId": {
+            "type": "string",
+            "description": "An id to correlate the provider response with this request"
+          },
+          "parameters": {
+            "description": "The request to set speed in the player",
+            "$ref": "#/components/schemas/PlayerSetSpeedRequest"
+          }
+        }
+      },
+      "PlayerSetAudioTrackRequest": {
+        "title": "PlayerSetAudioTrackRequest",
+        "type": "object",
+        "required": [
+          "playerId",
+          "trackId"
+        ],
+        "properties": {
+          "playerId": {
+            "description": "The id of the player to set the track for",
+            "type": "string"
+          },
+          "trackId": {
+            "description": "The id of the track to use for audio",
+            "type": "string"
+          }
+        },
+        "examples": [
+          {
+            "playerId": "app1:123",
+            "trackId": "Audio1"
+          },
+          {
+            "playerId": "app1:123",
+            "trackId": "Audio2"
+          }
+        ]
+      },
+      "PlayerSetAudioTrackProviderRequest": {
+        "title": "PlayerSetAudioTrackProviderRequest",
+        "type": "object",
+        "required": [
+          "correlationId",
+          "parameters"
+        ],
+        "properties": {
+          "correlationId": {
+            "type": "string",
+            "description": "An id to correlate the provider response with this request"
+          },
+          "parameters": {
+            "description": "The request to set audio track in the player",
+            "$ref": "#/components/schemas/PlayerSetAudioTrackRequest"
+          }
+        }
+      },
+      "PlayerSetCaptionsTrackRequest": {
+        "title": "PlayerSetCaptionsTrackRequest",
+        "type": "object",
+        "required": [
+          "playerId"
+        ],
+        "properties": {
+          "playerId": {
+            "description": "The id of the player to set the track for",
+            "type": "string"
+          },
+          "trackId": {
+            "description": "The id of the track to use for captions. Leave off to turn off captions",
+            "type": "string"
+          }
+        },
+        "examples": [
+          {
+            "playerId": "app1:123",
+            "trackId": "Audio1"
+          },
+          {
+            "playerId": "app1:123"
+          }
+        ]
+      },
+      "PlayerSetCaptionsTrackProviderRequest": {
+        "title": "PlayerSetCaptionsTrackProviderRequest",
+        "type": "object",
+        "required": [
+          "correlationId",
+          "parameters"
+        ],
+        "properties": {
+          "correlationId": {
+            "type": "string",
+            "description": "An id to correlate the provider response with this request"
+          },
+          "parameters": {
+            "description": "The request to set captions track in the player",
+            "$ref": "#/components/schemas/PlayerSetCaptionsTrackRequest"
           }
         }
       }
