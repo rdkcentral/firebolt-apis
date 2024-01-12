@@ -16,20 +16,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef CORESDK_C_TESTS_H
-#define CORESDK_C_TESTS_H
+#include <iostream>
+#include "CoreSDKTestGeneratedCode.h"
 
-#include <OpenRPCCTests.h>
+int __cnt = 0;
+int __pass = 0;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+int TotalTests = 0;
+int TotalTestsPassed = 0;
 
-int32_t test_firebolt_core_main();
-int32_t test_properties_get_policy();
+int main()
+{
+    CoreSDKTestGeneratedCode::CreateFireboltInstance();
 
-#ifdef __cplusplus
+    if (CoreSDKTestGeneratedCode::WaitOnConnectionReady() == true) {
+        CoreSDKTestGeneratedCode::GetDeviceName();
+    }
+    CoreSDKTestGeneratedCode::DestroyFireboltInstance();
+    printf("TOTAL: %i tests; %i PASSED, %i FAILED\n", TotalTests, TotalTestsPassed, (TotalTests - TotalTestsPassed));
 }
-#endif
 
-#endif //CORESDK_C_TESTS_H

@@ -27,7 +27,9 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 find_package(${NAMESPACE}Core CONFIG REQUIRED)
 
 file(GLOB CPP_SOURCES *.cpp)
-add_library(${TESTLIB} STATIC ${CPP_SOURCES} CoreSDKTestGeneratedCode.c)
+list(REMOVE_ITEM CPP_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp)
+message("After CPP_SOURCES " ${CPP_SOURCES})
+add_library(${TESTLIB} STATIC ${CPP_SOURCES})
 
 target_link_libraries(${TESTLIB}
 	PRIVATE
@@ -44,7 +46,7 @@ target_include_directories(${TESTLIB}
 )
 
 set_target_properties(${TESTLIB} PROPERTIES
-    CXX_STANDARD 11
+    CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
     LINK_WHAT_YOU_USE TRUE
     FRAMEWORK FALSE
@@ -54,7 +56,7 @@ set(TESTAPP FireboltCoreSDKTestApp)
 
 message("Setup ${TESTAPP} v${PROJECT_VERSION}")
 
-add_executable(${TESTAPP} Main.c)
+add_executable(${TESTAPP} Main.cpp)
 
 target_link_libraries(${TESTAPP}
     PRIVATE

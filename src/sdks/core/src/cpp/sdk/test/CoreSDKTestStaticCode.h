@@ -17,7 +17,6 @@
  */
 
 #pragma once
-
 #include <OpenRPCTests.h>
 
 namespace FireboltSDK {
@@ -51,12 +50,12 @@ namespace FireboltSDK {
         WPEFramework::Core::JSON::Boolean RememberWatchedPrograms;
     };
 
-    class CoreTests : public Tests {
+    class CoreTestStaticCode : public Tests {
 
     public:
-        CoreTests();
-        ~CoreTests() override = default;
+        CoreTestStaticCode();
+        ~CoreTestStaticCode() override = default;
 
-        static int32_t GetDiscoveryPolicy();
+        static Firebolt::Error GetCountryCode();
     };
 }
