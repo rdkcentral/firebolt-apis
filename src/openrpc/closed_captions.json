@@ -73,7 +73,7 @@
                     "params": [],
                     "result": {
                         "name": "family",
-                        "value": "monospace"
+                        "value": "monospaced_sanserif"
                     }
                 },
                 {
@@ -225,7 +225,7 @@
                     "params": [],
                     "result": {
                         "name": "edge",
-                        "value": "solid"
+                        "value": "uniform"
                     }
                 },
                 {
@@ -618,6 +618,56 @@
                     "result": {
                         "name": "opacity",
                         "value": null
+                    }
+                }
+            ]
+        },
+        {
+            "name": "preferredLanguages",
+            "summary": "A prioritized list of ISO 639-2/B codes for the preferred closed captions languages on this device.",
+            "params": [],
+            "tags": [
+                {
+                    "name": "property"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:accessibility:closedcaptions"
+                    ]
+                }
+            ],
+            "result": {
+                "name": "languages",
+                "summary": "the preferred closed captions languages",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639_2Language"
+                    }
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            "spa",
+                            "eng"
+                        ]
+                    }
+                },
+                {
+                    "name": "Default Example #2",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            "eng",
+                            "spa"
+                        ]
                     }
                 }
             ]
