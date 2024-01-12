@@ -138,6 +138,9 @@
         },
         {
             "module": "Discovery",
+            "use": [
+                "xrn:firebolt:capability:discovery:interest"
+            ],
             "manage": [
                 "xrn:firebolt:capability:discovery:sign-in-status"
             ]
