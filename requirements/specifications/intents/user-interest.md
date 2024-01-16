@@ -53,13 +53,14 @@ track of which apps are using them separately.
 - [2. Table of Contents](#2-table-of-contents)
 - [3. User Interest from an in-app UX](#3-user-interest-from-an-in-app-ux)
 - [4. User Interest from a platform UX](#4-user-interest-from-a-platform-ux)
+  - [4.1. Upstream User Interest Intent](#41-upstream-user-interest-intent)
 - [5. User Interest Bulk Updates](#5-user-interest-bulk-updates)
 - [6. Core SDK APIs](#6-core-sdk-apis)
   - [6.1. InterestType](#61-interesttype)
   - [6.2. Discovery.userInterest](#62-discoveryuserinterest)
   - [6.3. Discovery Interest Provider](#63-discovery-interest-provider)
   - [6.4. InterestIntent](#64-interestintent)
-- [7. Manage SDK APIs](#7-manage-sdk-apis)
+- [7. Discovery SDK APIs](#7-discovery-sdk-apis)
   - [7.1. Content.requestUserInterest](#71-contentrequestuserinterest)
   - [7.2. Content.onUserInterestedIn](#72-contentonuserinterestedin)
   - [7.3. InterestedInIntent](#73-interestedinintent)
@@ -96,6 +97,14 @@ When this method is called with a valid `EntityInfo`, the platform
 **MUST** dispatch a `Content.onUserInterestedIn` notification to all Apps
 that have registered for it (typically Aggregated Experience Apps) with
 information about the app, interest type, and the entity.
+
+The `Content.onUserInterestedIn` event has the `InterestedInIntent` as its
+data.
+
+An Aggregated Experience can register for the `Content.onUserInterestedIn`
+notification, and it will receive notifications when an `EntityInfo` is
+returned from the active App after a `Discovery.userInterest` call is
+fulfilled.
 
 An app **MUST** have permissions to `use` the
 `xrn:firebolt:capability:discovery:interest` capability in order to 
@@ -141,21 +150,6 @@ EntityInfo, which is returned as the result to the pending
 
 ![](../../../requirements/images/specifications/intents/user-interest/media/image4.png)
 
-A user's intention to express interest in something is handled by the
-`InterestIntent`. This intent happens *before* the platform knows which
-content is displayed and/or selected by the foreground app. The
-`InterestIntent` may originate from a cloud system, e.g. Voice, or from the RCU, or elsewhere. Origination of this intent is out
-of scope for this document. This intent includes the type of interest,
-e.g. interest or disinterest.
-
-To fire an `InterestIntent` to the current App, another app, typically
-the Aggregated Experience, will call the `Content.requestUserInterest()` method
-of the Discovery SDK.
-
-When `Content.requestUserInterest` is called, if the App in the foreground 
-Lifecycle state has registered a provider for the `xrn:firebolt:capability:discovery:interest` capability, then it **MUST** have that provider invoked with the values from the
-`Content.requestUserInterest` call.
-
 Once an App's callback is invoked, that app will have `interestTimeout`
 milliseconds to return a value or throw an error. Values returned after
 that time **MUST** be ignored. The timeout value is stored in the
@@ -173,23 +167,15 @@ If there is no valid entity to return, then the method **MUST** throw an
 exception.
 
 If the foreground App returns a valid `EntityInfo` before the timeout,
-then, the value from the **MUST** be used.
+then, the returned value **MUST** be used.
 
-Once a single `EntityInfo` is selected the platform **MUST** dispatch a
-`Content.onUserInterestedIn` notification to all Apps that have registered
-for it (typically Aggregated Experience Apps) with metadata about the
-app and entity as its data.
+### 4.1. Upstream User Interest Intent
+In some cases, e.g. a voice assistant, some upstream component will inform
+the platform that the user is interested in whatever is currently being presented.
 
-The `Content.onUserInterestedIn` event has the `InterestedInIntent` as its
-data.
+To do this, the upstream system **MUST** send a `UserInterest` intent, which describes the type of interest.
 
-The platform **MUST NOT** dispatch more than one `onUserInterestedIn`
-notification, even if more than one App responded to the pull request.
-
-An Aggregated Experience can register for the `Content.onUserInterestedIn`
-notification, and it will receive notifications when an `EntityInfo` is
-returned from the active App after a `Discovery.userInterest` call is
-fulfilled.
+When a Firebolt platform receives this intent, it **SHOULD** initiate the platform's [user interest flow](#4-user-interest-from-a-platform-ux).
 
 ## 5. User Interest Bulk Updates
 
@@ -249,9 +235,9 @@ type InterestIntent {
 }
 ```
 
-## 7. Manage SDK APIs
+## 7. Discovery SDK APIs
 
-The following APIs are exposed by the Firebolt Core SDK as part of the
+The following APIs are exposed by the Firebolt Discovery SDK as part of the
 `Content` module.
 
 ### 7.1. Content.requestUserInterest

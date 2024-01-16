@@ -1,10 +1,10 @@
 ---
-title: Firebolt Manage SDK
+title: Firebolt Discovery SDK
 ---
 
 [![semantic-release: conventional](https://img.shields.io/badge/semantic--release-conventional-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
-# Firebolt Manage SDK
+# Firebolt Discovery SDK
 For building Firebolt compliant apps for discovering first-party content on Firebolt devices.
 
 ## Usage
