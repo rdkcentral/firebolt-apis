@@ -43,7 +43,7 @@ generated](../../../requirements/images/specifications/intents/user-interest/med
 This is just one example of what an Aggregated Experience App might do
 with the User Interest API.
 
-Note that this API **should not** be used to implement Watch History or
+Note that this API **SHOULD NOT** be used to implement Watch History or
 Watch Next features. These concepts are much more fundamental to
 Firebolt and have explicit APIs so that Firebolt Distributors can keep
 track of which apps are using them separately.
@@ -114,18 +114,14 @@ If the result is `null` or is not a valid entity, i.e. does not match
 the [EntityInfo](../entities/) schema, then no `Content.onUserInterestedIn`
 notification will be dispatched.
 
-The `Discovery.userInterest` method **MUST NOT** be used in place of more
+The `Discovery.userInterest` method **SHOULD NOT** be used in place of more
 specific Discovery methods, e.g. `Discovery.watchNext` or
 `Discovery.watched`. These methods facilitate specific UX flows that may
 have separate legal opt-outs for each user.
 
-The `Discovery.userInterest` method **MUST NOT** be called unless the user
+The `Discovery.userInterest` method **SHOULD NOT** be called unless the user
 is activating a UI element in the app, or in a second screen experience
 that is communicating with the app, that implies interest of some kind.
-
-**TODO**: This seems like a contractual obligation, as testing this is
-non-trivial / impossible. Are we keeping track of contractual
-requirements anywhere?
 
 ## 4. User Interest from a platform UX
 
