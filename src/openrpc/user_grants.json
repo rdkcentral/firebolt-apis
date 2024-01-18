@@ -129,7 +129,7 @@
                 {
                     "name": "capability",
                     "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                        "$ref": "../schemas/capabilities.json#/definitions/Capability"
                     },
                     "required": true
                 }
@@ -182,14 +182,14 @@
                 {
                     "name": "role",
                     "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                        "$ref": "../schemas/capabilities.json#/definitions/Role"
                     },
                     "required": true
                 },
                 {
                     "name": "capability",
                     "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                        "$ref": "../schemas/capabilities.json#/definitions/Capability"
                     },
                     "required": true
                 },
@@ -247,14 +247,14 @@
                 {
                     "name": "role",
                     "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                        "$ref": "../schemas/capabilities.json#/definitions/Role"
                     },
                     "required": true
                 },
                 {
                     "name": "capability",
                     "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                        "$ref": "../schemas/capabilities.json#/definitions/Capability"
                     },
                     "required": true
                 },
@@ -312,14 +312,14 @@
                 {
                     "name": "role",
                     "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                        "$ref": "../schemas/capabilities.json#/definitions/Role"
                     },
                     "required": true
                 },
                 {
                     "name": "capability",
                     "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                        "$ref": "../schemas/capabilities.json#/definitions/Capability"
                     },
                     "required": true
                 },
@@ -386,7 +386,7 @@
                     "schema": {
                         "type": "array",
                         "items": {
-                            "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Permission"
+                            "$ref": "../schemas/capabilities.json#/definitions/Permission"
                         },
                         "minItems": 1
                     },
@@ -500,10 +500,10 @@
                         "$ref": "#/components/schemas/GrantState"
                     },
                     "capability": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
+                        "$ref": "../schemas/capabilities.json#/definitions/Capability"
                     },
                     "role": {
-                        "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Role"
+                        "$ref": "../schemas/capabilities.json#/definitions/Role"
                     },
                     "lifespan": {
                         "type": "string",

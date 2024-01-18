@@ -71,7 +71,7 @@
           "name": "result",
           "required": true,
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/EntityInfoResult"
+            "$ref": "../schemas/discovery.json#/definitions/EntityInfoResult"
           },
           "summary": "The entityInfo data."
         }
@@ -442,7 +442,7 @@
           "name": "result",
           "required": true,
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/PurchasedContentResult"
+            "$ref": "../schemas/discovery.json#/definitions/PurchasedContentResult"
           },
           "summary": "The data for the purchasedContent"
         }
@@ -628,7 +628,7 @@
           "name": "title",
           "summary": "The title of this call to action",
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/LocalizedString"
+            "$ref": "../schemas/types.json#/definitions/LocalizedString"
           },
           "required": true
         },
@@ -636,7 +636,7 @@
           "name": "identifiers",
           "summary": "A set of content identifiers for this call to action",
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ContentIdentifiers"
+            "$ref": "../schemas/entertainment.json#/definitions/ContentIdentifiers"
           },
           "required": true
         },
@@ -655,7 +655,7 @@
             "type": "object",
             "patternProperties": {
               "^.*$": {
-                "$ref": "https://meta.comcast.com/firebolt/types#/definitions/LocalizedString"
+                "$ref": "../schemas/types.json#/definitions/LocalizedString"
               }
             }
           }
@@ -748,7 +748,7 @@
           "schema": {
             "type": "array",
             "items": {
-              "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/Entitlement"
+              "$ref": "../schemas/entertainment.json#/definitions/Entitlement"
             }
           },
           "required": true
@@ -986,7 +986,7 @@
           "required": false,
           "summary": "An optional `NavigationIntent` with details about what part of the app to show first, and context around how/why it was launched",
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/intents#/definitions/NavigationIntent"
+            "$ref": "../schemas/intents.json#/definitions/NavigationIntent"
           }
         }
       ],
@@ -1266,7 +1266,7 @@
         "name": "value",
         "summary": "An object describing where in the app the user intends to navigate to",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/intents#/definitions/NavigationIntent"
+          "$ref": "../schemas/intents.json#/definitions/NavigationIntent"
         }
       },
       "examples": [
@@ -1310,7 +1310,7 @@
           "schema": {
             "type": "array",
             "items": {
-              "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/Entitlement"
+              "$ref": "../schemas/entertainment.json#/definitions/Entitlement"
             }
           },
           "required": false
@@ -1600,7 +1600,7 @@
             "type": "object",
             "properties": {
               "result": {
-                "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/EntityInfoResult"
+                "$ref": "../schemas/discovery.json#/definitions/EntityInfoResult"
               }
             }
           }
@@ -1616,12 +1616,12 @@
             "format": "date-time"
           },
           "entity": {
-            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
+            "$ref": "../schemas/entertainment.json#/definitions/EntityInfo"
           },
           "related": {
             "type": "array",
             "items": {
-              "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
+              "$ref": "../schemas/entertainment.json#/definitions/EntityInfo"
             }
           }
         },
@@ -1668,10 +1668,10 @@
             "minimum": -1
           },
           "offeringType": {
-            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/OfferingType"
+            "$ref": "../schemas/entertainment.json#/definitions/OfferingType"
           },
           "programType": {
-            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ProgramType"
+            "$ref": "../schemas/entertainment.json#/definitions/ProgramType"
           }
         },
         "required": [
@@ -1694,7 +1694,7 @@
             "type": "object",
             "properties": {
               "result": {
-                "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/PurchasedContentResult"
+                "$ref": "../schemas/discovery.json#/definitions/PurchasedContentResult"
               }
             }
           }
@@ -1715,7 +1715,7 @@
           "entries": {
             "type": "array",
             "items": {
-              "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
+              "$ref": "../schemas/entertainment.json#/definitions/EntityInfo"
             }
           }
         },
@@ -1771,7 +1771,7 @@
           "entitlements": {
             "type": "array",
             "items": {
-              "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/Entitlement"
+              "$ref": "../schemas/entertainment.json#/definitions/Entitlement"
             },
             "description": "A list of identifiers that represent what content is consumable for the subscriber. Excluding entitlements will cause no change to the entitlements that are stored for this subscriber. Providing an empty array will clear the subscriber's entitlements"
           }

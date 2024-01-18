@@ -68,7 +68,7 @@
             "result": {
                 "name": "speed",
                 "schema": {
-                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VoiceSpeed"
+                    "$ref": "../schemas/accessibility.json#/definitions/VoiceSpeed"
                 }
             },
             "examples": [

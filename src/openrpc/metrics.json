@@ -320,7 +320,7 @@
         {
           "name": "parameters",
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
+            "$ref": "../schemas/types.json#/definitions/FlatMap"
           },
           "required": false
         }
@@ -399,7 +399,7 @@
           "name": "parameters",
           "summary": "Optional additional parameters to be logged with the error",
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
+            "$ref": "../schemas/types.json#/definitions/FlatMap"
           },
           "required": false          
         }

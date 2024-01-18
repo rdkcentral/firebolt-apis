@@ -116,7 +116,7 @@
         "title": "PinChallengeProviderRequest",
         "allOf": [
           {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ProviderRequest"
+            "$ref": "../schemas/types.json#/definitions/ProviderRequest"
           },
           {
             "type": "object",

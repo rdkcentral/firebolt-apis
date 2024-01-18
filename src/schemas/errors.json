@@ -1,5 +1,4 @@
 {
-  "$id": "https://meta.comcast.com/firebolt/errors",
   "title": "Errors",
   "oneOf": [
     { "$ref": "#/definitions/FireboltError" },

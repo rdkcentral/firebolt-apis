@@ -125,7 +125,7 @@
       "result": {
         "name": "result",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/advertising#/definitions/SkipRestriction"
+          "$ref": "../schemas/advertising.json#/definitions/SkipRestriction"
         }
       },
       "examples": [
@@ -346,7 +346,7 @@
         "type": "object",
         "properties": {
           "skipRestriction": {
-            "$ref": "https://meta.comcast.com/firebolt/advertising#/definitions/SkipRestriction"
+            "$ref": "../schemas/advertising.json#/definitions/SkipRestriction"
           },
           "limitAdTracking": {
             "type": "boolean"

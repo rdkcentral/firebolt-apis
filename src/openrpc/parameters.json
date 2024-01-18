@@ -71,7 +71,7 @@
                         "type": "object",
                         "properties": {
                             "navigateTo": {
-                                "$ref": "https://meta.comcast.com/firebolt/intents#/definitions/NavigationIntent"
+                                "$ref": "../schemas/intents.json#/definitions/NavigationIntent"
                             }
                         }
                     },
@@ -79,7 +79,7 @@
                         "type": "object",
                         "properties": {
                             "launchRequest": {
-                                "$ref": "https://meta.comcast.com/firebolt/secondscreen#/definitions/SecondScreenEvent"
+                                "$ref": "../schemas/secondscreen.json#/definitions/SecondScreenEvent"
                             }
                         }
                     }

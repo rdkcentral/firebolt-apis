@@ -27,7 +27,7 @@
         "name": "closedCaptionsSettings",
         "summary": "the closed captions settings",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/ClosedCaptionsSettings"
+          "$ref": "../schemas/accessibility.json#/definitions/ClosedCaptionsSettings"
         }
       },
       "examples": [
@@ -80,7 +80,7 @@
         "name": "closedCaptionsSettings",
         "summary": "the closed captions settings",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/ClosedCaptionsSettings"
+          "$ref": "../schemas/accessibility.json#/definitions/ClosedCaptionsSettings"
         }
       },
       "examples": [
@@ -135,7 +135,7 @@
         "name": "settings",
         "summary": "the voice guidance settings",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VoiceGuidanceSettings"
+          "$ref": "../schemas/accessibility.json#/definitions/VoiceGuidanceSettings"
         }
       },
       "examples": [
@@ -171,7 +171,7 @@
         "name": "settings",
         "summary": "the voice guidance settings",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VoiceGuidanceSettings"
+          "$ref": "../schemas/accessibility.json#/definitions/VoiceGuidanceSettings"
         }
       },
       "examples": [

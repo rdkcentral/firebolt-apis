@@ -82,7 +82,7 @@
         "name": "flags",
         "summary": "The profile flags.",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
+          "$ref": "../schemas/types.json#/definitions/FlatMap"
         }
       },
       "examples": [

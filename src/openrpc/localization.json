@@ -25,7 +25,7 @@
         "name": "locality",
         "summary": "the device city",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Locality"
+          "$ref": "../schemas/localization.json#/definitions/Locality"
         }
       },
       "examples": [
@@ -105,7 +105,7 @@
         "name": "code",
         "summary": "the device country code",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/CountryCode"
+          "$ref": "../schemas/localization.json#/definitions/CountryCode"
         }
       },
       "examples": [
@@ -151,7 +151,7 @@
         "name": "lang",
         "summary": "the device language",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Language"
+          "$ref": "../schemas/localization.json#/definitions/Language"
         }
       },
       "examples": [
@@ -194,7 +194,7 @@
         "schema": {
           "type": "array",
           "items": {
-            "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639_2Language"
+            "$ref": "../schemas/localization.json#/definitions/ISO639_2Language"
           }
         }
       },
@@ -236,7 +236,7 @@
         "name": "locale",
         "summary": "the device locale",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Locale"
+          "$ref": "../schemas/localization.json#/definitions/Locale"
         }
       },
       "examples": [
@@ -440,7 +440,7 @@
       "result": {
           "name": "result",
           "schema": {
-              "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/TimeZone"
+              "$ref": "../schemas/localization.json#/definitions/TimeZone"
           }
       },
       "examples": [

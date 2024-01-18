@@ -1,5 +1,4 @@
 {
-    "$id": "https://meta.comcast.com/firebolt/intents",
     "title": "Intents",
     "oneOf": [
         {
@@ -446,7 +445,7 @@
                     "const": "program"
                 },
                 "programType": {
-                    "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ProgramType"
+                    "$ref": "./entertainment.json#/definitions/ProgramType"
                 },
                 "entityId": {
                     "type": "string"
@@ -1127,13 +1126,13 @@
                                         "programTypes": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ProgramType"
+                                                "$ref": "./entertainment.json#/definitions/ProgramType"
                                             }
                                         },
                                         "musicTypes": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/MusicType"
+                                                "$ref": "./entertainment.json#/definitions/MusicType"
                                             }
                                         }
                                     },

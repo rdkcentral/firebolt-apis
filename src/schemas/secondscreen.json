@@ -1,5 +1,4 @@
 {
-    "$id": "https://meta.comcast.com/firebolt/secondscreen",
     "title": "SecondScreen",
     "anyOf": [
       { "$ref": "#/definitions/SecondScreenEvent" }
