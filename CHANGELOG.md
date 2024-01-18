@@ -1,3 +1,10 @@
+# [1.1.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0...v1.1.0-next.1) (2024-01-16)
+
+
+### Features
+
+* HDMI Low Latency Mode ([#156](https://github.com/rdkcentral/firebolt-apis/issues/156)) ([06d3624](https://github.com/rdkcentral/firebolt-apis/commit/06d3624b69ee0529d4c1a1c78a15dbfdf54c8b16))
+
 # [1.0.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1...v1.0.0) (2023-11-03)
 
 
