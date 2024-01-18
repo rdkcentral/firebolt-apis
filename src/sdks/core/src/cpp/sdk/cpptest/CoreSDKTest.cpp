@@ -388,12 +388,13 @@ void PrintClosedCaptionsSettings( const Firebolt::Accessibility::ClosedCaptionsS
     if (closedCaptionsSettings.styles.windowOpacity.has_value()) {
         cout << "ClosedCaptionsSettings::Styles::WindowOpacity : " << closedCaptionsSettings.styles.windowOpacity.value() << endl;
     }
-    cout << "ClosedCaptionsSettings::PreferredLanguages :";
-
-    for (auto index: closedCaptionsSettings.preferredLanguages.value()) {
-        cout << " " << index;
+    if (closedCaptionsSettings.preferredLanguages.has_value()) {
+        cout << "ClosedCaptionsSettings::PreferredLanguages :";
+        for (auto index: closedCaptionsSettings.preferredLanguages.value()) {
+            cout << " " << index;
+        }
+        cout << endl;
     }
-    cout << endl;
 }
 void CoreSDKTest::GetAccessibilityClosedCaptionsSettings()
 {
