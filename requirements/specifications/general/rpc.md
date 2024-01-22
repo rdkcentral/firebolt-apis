@@ -30,8 +30,8 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
   - [3.3. Asynchronous Events](#33-asynchronous-events)
     - [3.3.1. Notifier OpenRPC Extension](#331-notifier-openrpc-extension)
   - [3.4. Provider Interfaces](#34-provider-interfaces)
-    - [Interface OpenRPC Extension](#interface-openrpc-extension)
-    - [Client Provider Example](#client-provider-example)
+    - [3.4.1. Interface OpenRPC Extension](#341-interface-openrpc-extension)
+    - [3.4.2. Client Provider Example](#342-client-provider-example)
 - [4. Transport](#4-transport)
   - [4.1. API Version](#41-api-version)
 
@@ -60,10 +60,10 @@ The Firebolt Implementation OpenRPC Document:
 firebolt-open-rpc.json
 ```
 
-The Firebolt App OpenRpc Document:
+The Firebolt App OpenRPC Document:
 
 ```
-firebolt-application-open-rpc.json
+firebolt-app-open-rpc.json
 ```
 
 #### 3.1.1. OpenRPC Ids
@@ -74,16 +74,16 @@ The Firebolt Implementation OpenRPC Document **MUST** have the `$id` set to:
 "$id": "https://rdkcentral.github.io/firebolt/openrpc/platform"
 ```
 
-An HTTP `GET` on `https://rdkcentral.github.io/firebolt/openrpc/platform` **MUST** return the latest product version of the Firebolt Implementation Open RPC Definition.
+An HTTP `GET` on `https://rdkcentral.github.io/firebolt/openrpc/platform` **MUST** return the latest production version of the Firebolt Implementation Open RPC Definition.
 
 The Firebolt App OpenRpc Document **MUST** have the `$id` set to:
 
 ```
 "$schema": "https://meta.open-rpc.org/",
-"$id": "https://rdkcentral.github.io/firebolt/openrpc/application"
+"$id": "https://rdkcentral.github.io/firebolt/openrpc/app"
 ```
 
-An HTTP `GET` on `https://rdkcentral.github.io/firebolt/openrpc/application` **MUST** return the latest product version of the Firebolt Application Open RPC Definition.
+An HTTP `GET` on `https://rdkcentral.github.io/firebolt/openrpc/app` **MUST** return the latest production version of the Firebolt App Open RPC Definition.
 
 #### 3.1.2. Duplex Linking
 Since a platform OpenRPC definition has a corresponding application defintion, it **MUST** be denoted by an OpenRPC `x-client-api` extension property in the `info` section.
@@ -97,7 +97,7 @@ Firebolt Platform OpenRPC:
     "$id": "https://rdkcentral.github.io/firebolt/openrpc/platform",
     "info": {
         "title": "Firebolt",
-        "x-client-api": "https://rdkcentral.github.io/firebolt/openrpc/application"
+        "x-client-api": "https://rdkcentral.github.io/firebolt/openrpc/app"
     }
 }
 ```
@@ -106,9 +106,9 @@ Firebolt Application OpenRPC:
 
 ```json
 {
-    "$id": "https://rdkcentral.github.io/firebolt/openrpc/application",
+    "$id": "https://rdkcentral.github.io/firebolt/openrpc/app",
     "info": {
-        "title": "Firebolt",
+        "title": "Firebolt App",
         "x-client-api": "https://rdkcentral.github.io/firebolt/openrpc/platform"
     }
 }
@@ -278,7 +278,7 @@ If a Firebolt App has registered as a capability provider, e.g. "xrn:firebolt:ca
 
 The app **MUST** respond either either a result or an error.
 
-#### Interface OpenRPC Extension
+#### 3.4.1. Interface OpenRPC Extension
 The Platform provider registration API **MUST** have a `provider` tag and an `x-interface` string parameter denoting the name of the interface from the Application OpenRPC that this registration API is enabling.
 
 ```json
@@ -319,6 +319,13 @@ The Application OpenRPC definition for the interface **MUST** have one or more m
     "methods": [
         {
             "name": "Sun.rise",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-provides": "xrn:firebolt:capability:sky:sun",
+                    "x-allow-focus": true
+                }
+            ],
             "params": [],
         },
         {
@@ -329,20 +336,135 @@ The Application OpenRPC definition for the interface **MUST** have one or more m
 }
 ```
 
-#### Client Provider Example
+#### 3.4.2. Client Provider Example
 Using the [Lifecycle](../lifecycle/index.md) `Application` and `Activatable` interfaces as an example:
 
 ```typescript
-import { Lifecycle, Capabilities } from '@firebolt-js/sdk'
+import { Lifecycle } from '@firebolt-js/sdk'
 
-class myApp implements Lifecycle.IApplication, Lifecycle.IActivatable {
-  function create()
+class myApp implements Lifecycle.IApplication {
+  async function create(params: CreateParameters) {}
+  async function suspend() {}
+  async function resume() {}
+  async function destroy() {}
 }
 
 const app = new myApp()
 
 await Lifecycle.provideApplication(app)
-await Lifecycle.provideActivatable(app)
+```
+
+The Firebolt Implementation OpenRPC would include:
+
+```json
+{
+    "info": {
+        "title": "Firebolt Platform"
+    },
+    "methods": [
+        {
+            "name": "Lifecycle.provideApplication",
+            "tags": [
+				{
+					"name": "provider",
+                    "x-interface": "Application"
+				}
+            ],
+            "params": [
+                {
+                    "name": "enabled",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+
+The Firebolt App OpenRPC would include:
+
+```json
+{
+    "info": {
+        "title": "Firebolt App"
+    },
+    "methods": [
+        {
+            "name": "Application.create",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-provides": "xrn:firebolt:capability:lifecycle:application"
+                }
+            ],
+            "params": [
+                {
+                    "name": "params",
+                    "schema": {
+                        "$ref": "#/components/schemas/CreateParameters"
+                    }
+                }
+            ],
+            "result": {
+                "name": "default",
+                "schema": {
+                    "type": "null"
+                }
+            }
+        },
+        {
+            "name": "Application.suspend",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-provides": "xrn:firebolt:capability:lifecycle:application"
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "default",
+                "schema": {
+                    "type": "null"
+                }
+            }
+        },
+        {
+            "name": "Application.resume",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-provides": "xrn:firebolt:capability:lifecycle:application"
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "default",
+                "schema": {
+                    "type": "null"
+                }
+            }
+        },
+        {
+            "name": "Application.destroy",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-provides": "xrn:firebolt:capability:lifecycle:application"
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "default",
+                "schema": {
+                    "type": "null"
+                }
+            }
+        }
+    ]
+}
 ```
 
 ## 4. Transport
@@ -354,3 +476,4 @@ The Firebolt API Version *and* protocol **MUST** be passsed as part of the Sec-W
 ```http
 Sec-WebSocket-Protocol: firebolt.v2.0.0, jsonrpc
 ```
+    
