@@ -11,6 +11,8 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Stuart Harris   | Sky            |
 | Farhan Mood     | Liberty Global            |
 
+TODO: surroundProfiles
+
 ## 1. Overview
 Apps may need to know what media format, e.g. HDR profile or video codec, is currently playing.
 
@@ -37,10 +39,10 @@ Pipeline](./media-pipeline.md) and Firebolt APIs will be created to query device
     - [4.1.1. Video Codec](#411-video-codec)
     - [4.1.2. Audio Codec](#412-audio-codec)
     - [4.1.3. Dynamic Range](#413-dynamic-range)
-    - [4.1.4. Immersive Audio](#414-immersive-audio)
+    - [4.1.4. Surround \& Immersive Audio](#414-surround--immersive-audio)
     - [4.1.5. Frame Rate](#415-frame-rate)
     - [4.1.6. Resolution](#416-resolution)
-    - [4.1.7. Resolution (Alternative)](#417-resolution-alternative)
+    - [4.1.7. Resolution and Frame rate](#417-resolution-and-frame-rate)
   - [4.2. MediaInfo for Pipeline](#42-mediainfo-for-pipeline)
   - [4.3. Global MediaInfo](#43-global-mediainfo)
 - [5. Device Media Support](#5-device-media-support)
@@ -48,10 +50,13 @@ Pipeline](./media-pipeline.md) and Firebolt APIs will be created to query device
     - [5.1.1. Video Codecs](#511-video-codecs)
     - [5.1.2. Audio Codecs](#512-audio-codecs)
     - [5.1.3. Dynamic Range](#513-dynamic-range)
-    - [5.1.4. Immersive Audio](#514-immersive-audio)
+    - [5.1.4. Surround \& Immersive Audio](#514-surround--immersive-audio)
     - [5.1.5. Resolutions](#515-resolutions)
-    - [5.1.6. Resolutions (Alternative)](#516-resolutions-alternative)
+    - [5.1.6. Resolutions and Frame rates](#516-resolutions-and-frame-rates)
   - [5.2. Implicit Media Support](#52-implicit-media-support)
+- [6. Device Media Settings](#6-device-media-settings)
+  - [6.1. Audio Settings](#61-audio-settings)
+  - [6.2. Video Settings](#62-video-settings)
 
 ## 3. MimeTypes
 The Firebolt `MimeTypes` module consists of static enumeration of all codecs, formats, etc., and their mime-types.
@@ -60,7 +65,7 @@ The Firebolt `MimeTypes` module consists of static enumeration of all codecs, fo
 | ---------------- | ---------------------- |------ |
 | `AUDIO_AAC`      | `audio/mp4a-latm`      |
 | `AUDIO_AC3`      | `audio/ac3`            |
-| `AUDIO_AC4`      | `audio/ac4`
+| `AUDIO_AC4`      | `audio/ac4`            |
 | `AUDIO_DTS`      | `audio/vnd.dts`        |
 | `AUDIO_EAC3`     | `audio/eac3`           | Note we call this AC3+ in RDK...
 | `AUDIO_MPEG`     | `audio/mpeg`           | 
@@ -81,17 +86,22 @@ The Firebolt `MimeTypes` module consists of static enumeration of all codecs, fo
 | `IA_DTS_X`       | `audio/vnd.dts.uhd;profile=p2` |
 | `IA_MPEGH_MHA1`  | `audio/mha1`           |
 | `IA_MPEGH_MHM1`  | `audio/mhm1`           |
+| `VIDEO_SDR`      | `video/sdr             |`
 | `VIDEO_AV1`      | `video/av01`           |
 | `VIDEO_H263`     | `video/3gpp`           |
 | `VIDEO_H264`     | `video/avc`            |
 | `VIDEO_H265`     | `video/hevc`           |
+| `VIDEO_H265_M10` | `video/hevc;profile=main10`           |
 | `VIDEO_MPEG`     | `video/mpeg`           |
 | `VIDEO_VP8`      | `video/x-vnd.on2.vp8`  |
 | `VIDEO_VP9`      | `video/x-vnd.on2.vp9`  |
+| `VIDEO_VP9_P2`   | `video/x-vnd.on2.vp9;profile=p2`  |
 | `VIDEO_VP10`     | `video/x-vnd.on2.vp10` |
 | `VIDEO_VC1`      | `video/wvc1`           |
 | `UNKNOWN`        | `unknown`              |
 | `NONE`           | `none`                 |
+
+TODO: do we want a prefix for Surround enums, e.g. `AUDIO_SURROUND_*`
 
 ## 4. Media Info
 
@@ -133,9 +143,11 @@ one of the following values from the `MimeTypes` module:
 - `VIDEO_H263`
 - `VIDEO_H264`
 - `VIDEO_H265`
+- `VIDEO_H265_M10`
 - `VIDEO_MPEG`
 - `VIDEO_VP8`
 - `VIDEO_VP9`
+- `VIDEO_VP9_P2`
 - `VIDEO_VP10`
 - `VIDEO_VC1`
 - `UNKNOWN`
@@ -187,6 +199,7 @@ values from the `MimeTypes` module:
 - `HDR_DOLBYVISION`
 - `HDR_SLHDR1`
 - `HDR_HLG`
+- `VIDEO_SDR`
 - `NONE`
 - `UNKNOWN`
 
@@ -196,7 +209,7 @@ notification.
 
 The `MediaInfo` module **MUST** have an `isHDR` API that returns true if
 the value of `dynamicRangeProfile` is currently any of the values
-excluding `none` and `unknown`.
+excluding `VIDEO_SDR`, `none` and `unknown`.
 
 The `isHDR` API **MUST** be a Firebolt `property:readonly` API, and have
 a corresponding `onIsHDRChanged` notification.
@@ -205,13 +218,16 @@ Use of the `dynamicRangeProfile` and `isHDR` APIs require access to the
 `use` role of the `xrn:firebolt:capability:media-info:hdr`
 capability.
 
-#### 4.1.4. Immersive Audio
+#### 4.1.4. Surround & Immersive Audio
 
 The `MediaInfo` module **MUST** have an `audioProfile` API that returns
-the immersive (or not) audio profile, e.g., Dolby Atmos, etc., of the
+the immersive, surround, or unaugmented audio profile, e.g., Dolby Atmos, etc., of the
 media currently playing. This API **MUST** return one of the following
 values from the `MimeTypes` module:
 
+- `AUDIO_AC3`
+- `AUDIO_AC4`
+- `AUDIO_EAC3`
 - `IA_AURO3D`
 - `IA_DOLBYATMOS`
 - `IA_DTS_X`
@@ -223,9 +239,31 @@ values from the `MimeTypes` module:
 The audioProfile API **MUST** be a Firebolt `property:readonly` API, and
 have a corresponding `onAudioProfileChanged` notification.
 
+The `MediaInfo` module **MUST** have an `isSurroundAudio` API that
+returns true if the value of `surroundProfile` is currently any of the
+following values:
+
+- `AUDIO_AC3`
+- `AUDIO_AC4`
+- `AUDIO_EAC3`
+
+The `isSurroundAudio` API **MUST** be a Firebolt `property:readonly`
+API, and have a corresponding `onIsSurroundAudioChanged`
+notification.
+
+Use of the `surroundProfile` and `isSurroundAudio` APIs require access
+to the `use` role of the
+`xrn:firebolt:capability:media-info:audio-profile` capability.
+
 The `MediaInfo` module **MUST** have an `isImmersiveAudio` API that
 returns true if the value of `audioProfile` is currently any of the
-values excluding `none`.
+following values:
+
+- `IA_AURO3D`
+- `IA_DOLBYATMOS`
+- `IA_DTS_X`
+- `IA_MPEGH_MHA1`
+- `IA_MPEGH_MHM1`
 
 The `isImmersiveAudio` API **MUST** be a Firebolt `property:readonly`
 API, and have a corresponding `onIsImmersiveAudioChanged`
@@ -234,6 +272,7 @@ notification.
 Use of the `audioProfile` and `isImmersiveAudio` APIs require access
 to the `use` role of the
 `xrn:firebolt:capability:media-info:audio-profile` capability.
+
 
 #### 4.1.5. Frame Rate
 
@@ -252,21 +291,6 @@ Use of the `frameRate` APIs require access to the `use` role of the
 #### 4.1.6. Resolution
 
 The `MediaInfo` module **MUST** have a `resolution` API that returns
-the encoded dimensions, e.g., `{ "width": 4096, "height": 2160 }`, of the media currently
-playing. Note that this has nothing to do with the dimensions rasterized on the screen (see the Device [Resolution](#312-resolution) API for that).
-This API **MUST** return an object with two integers greater than or equal to `0`.
-  
-The resolution API **MUST** be a Firebolt `property:readonly` API, and
-have a corresponding `onResolutionChanged` notification.
-
-Use of the `resolution` APIs require access to the `use` role of the
-`xrn:firebolt:capability:media-info:resolution` capability.
-
-#### 4.1.7. Resolution (Alternative)
-
-**TODO**: pick one
-
-The `MediaInfo` module **MUST** have a `resolution` API that returns
 the encoded dimensions as a string enumeration, e.g., `"1020p"`, of the media currently
 playing. Note that this has nothing to do with the dimensions rasterized on the screen (see the Device [Resolution](#312-resolution) API for that).
 
@@ -278,7 +302,35 @@ This API **MUST** return a string with one of the following values:
 - `"1800p"`
 - `"2160p"`
 
- **Note**: do we want interlaced versions?
+ **TODO**: do we want interlaced versions?
+  
+The resolution API **MUST** be a Firebolt `property:readonly` API, and
+have a corresponding `onResolutionChanged` notification.
+
+Use of the `resolution` APIs require access to the `use` role of the
+`xrn:firebolt:capability:media-info:resolution` capability.
+
+#### 4.1.7. Resolution and Frame rate
+
+The `MediaInfo` module **MUST** have a `resolutionAndFrameRate` API that returns
+the encoded dimensions and frame rate as a string enumeration, e.g., `"1020p 24fps"`, of the media currently
+playing. Note that this has nothing to do with the dimensions rasterized on the screen (see the Device [Resolution](#312-resolution) API for that).
+
+This API **MUST** return a string with one of the following values:
+
+- `"720p 24fps"`
+- `"720p 30fps"`
+- `"1080p 24fps"`
+- `"1080p 30fps"`
+- `"1440p 24fps"`
+- `"1440p 30fps"`
+- `"1800p 24fps"`
+- `"1800p 30fps"`
+- `"2160p 24fps"`
+- `"2160p 30fps"`
+
+ **TODO**: do we want interlaced versions?
+ **TODO**: what's the list of supported framerates?
   
 The resolution API **MUST** be a Firebolt `property:readonly` API, and
 have a corresponding `onResolutionChanged` notification.
@@ -297,6 +349,7 @@ The following APIs **MUST** exist:
 -   `isHdrForPipeline`
 -   `audioProfileForPipeline`
 -   `audioCodecForPipeline`
+-   `isSurroundAudioForPipeline`
 -   `isImmersiveAudioForPipeline`
 -   `frameRateForPipeline`
 -   `resolutionForPipeline`
@@ -420,17 +473,19 @@ video codecs, e.g., H.265, VP9, etc., that are supported by the current
 device configuration. This API **MUST** return an Array with one or more
 of the following values:
 
--   `"av1"`
--   `"h263"`
--   `"h264"`
--   `"h265"`
--   `"mpeg"`
--   `"vp8"`
--   `"vp9"`
--   `"vp10"`
--   `"vc1"`
--   `"unknown"`
--   `"none"`
+- `VIDEO_AV1`
+- `VIDEO_H263`
+- `VIDEO_H264`
+- `VIDEO_H265`
+- `VIDEO_H265_M10`
+- `VIDEO_MPEG`
+- `VIDEO_VP8`
+- `VIDEO_VP9`
+- `VIDEO_VP9_P2`
+- `VIDEO_VP10`
+- `VIDEO_VC1`
+- `UNKNOWN`
+- `NONE`
 
 The videoCodecs API **MUST** be a Firebolt `property:immutable` API.
 
@@ -446,22 +501,22 @@ the audio codecs, e.g., ac3, ac4, ogg, etc., that are supported by the current
 device configuration. This API **MUST** return an Array with one or more of the
 following values:
 
--   `"aac"`
--   `"ac3"`
--   `"ac3plus"`
--   `"eac3"`
--   `"ac4"`
--   `"dts"`
--   `"mpeg1"`
--   `"mpeg2"`
--   `"mpeg3"`
--   `"mpeg4"`
--   `"opus"`
--   `"ogg"`
--   `"trueHd"`
--   `"wav"`
--   `"unknown"`
--   `"none"`
+
+- `AUDIO_AAC`
+- `AUDIO_AC3`
+- `AUDIO_AC4`
+- `AUDIO_DTS`
+- `AUDIO_EAC3`
+- `AUDIO_MPEG`
+- `AUDIO_MPEG1`
+- `AUDIO_MPEG2`
+- `AUDIO_MPEG4`
+- `AUDIO_OPUS`
+- `AUDIO_OGG`
+- `AUDIO_TRUEHD`
+- `AUDIO_WAV`
+- `UNKNOWN`
+- `NONE`
   
 The audioCodecs API **MUST** be a Firebolt `property:immutable` API.
 
@@ -477,13 +532,13 @@ returns the dynamic range profiles, e.g., HDR, HDR10, etc., that are
 supported by the current device configuration. This API **MUST** return
 an Array with one or more of the following values:
 
--   `"none"`
--   `"hdr10"`
--   `"hdr10plus"`
--   `"dolbyVision"`
--   `"slHdr1"`
--   `"hlg" `
--   `"unknown"`
+- `HDR_HDR10`
+- `HDR_HDR10PLUS`
+- `HDR_DOLBYVISION`
+- `HDR_SLHDR1`
+- `HDR_HLG`
+- `NONE`
+- `UNKNOWN`
 
 The dynamicRangeProfiles API **MUST** be a Firebolt `property:readonly`
 API, and have a corresponding `onDynamicRangeProfilesChanged`
@@ -500,32 +555,44 @@ Use of the `dynamicRangeProfiles` and `supportsHDR` APIs require access to the
 `use` role of the `xrn:firebolt:capability:device:info`
 capability.
 
-#### 5.1.4. Immersive Audio
+#### 5.1.4. Surround & Immersive Audio
 
 The `Device` module **MUST** have an `audioProfiles` API that returns
-the immersive (or not) audio profiles, e.g., Dolby Atmos, etc., that are
+the immersive, surround, or unaugmented audio profiles, e.g., Dolby Atmos, etc., that are
 supported by the current device configuration. This API **MUST** return an
 Array with one ore more of the following values:
 
--   `"auro3d"`
--   `"dolbyAtmos"`
--   `"dtsx"`
--   `"mpegh"`
--   `"unknown"`
--   `"none"`
+- `AUDIO_AC3`
+- `AUDIO_AC4`
+- `AUDIO_EAC3`
+- `IA_AURO3D`
+- `IA_DOLBYATMOS`
+- `IA_DTS_X`
+- `IA_MPEGH_MHA1`
+- `IA_MPEGH_MHM1`
+- `UNKNOWN`
+- `NONE`
 
 The audioProfile API **MUST** be a Firebolt `property:readonly` API, and
 have a corresponding `onAudioProfilesChanged` notification.
 
 The `Device` module **MUST** have an `supportsImmersiveAudio` API that
 returns true if the value of `audioProfiles` contains any of the
-values beyond `none`.
+`IA_*`values above.
 
 The `supportsImmersiveAudio` API **MUST** be a Firebolt `property:readonly`
 API, and have a corresponding `onSupportsImmersiveAudioChanged`
 notification.
 
-Use of the `audioProfiles` and `supportsImmersiveAudio` APIs require access
+The `Device` module **MUST** have an `supportsSurroundAudio` API that
+returns true if the value of `audioProfiles` contains any of the
+`AUDIO_*` values above.
+
+The `supportsSurroundAudio` API **MUST** be a Firebolt `property:readonly`
+API, and have a corresponding `onSupportsImmersiveAudioChanged`
+notification.
+
+Use of the `audioProfiles`, `supportsSurroundAudio`, and `supportsImmersiveAudio` APIs require access
 to the `use` role of the `xrn:firebolt:capability:device:info` capability.
 
 #### 5.1.5. Resolutions
@@ -534,13 +601,12 @@ The `Device` module **MUST** have a `resolutions` API that returns an array
 of the native dimensions the device is capable of rasterizing (if the device
 has a screen) or outputting (if the device does not).
 
-This API **MUST** return an Array of objects with two integers greater than or equal to `0`, e.g.:
+This API **MUST** return an Array of objects with the resolution encoded as a string:
 
 ```json
 [
-  { "width": 4096, "height": 2160 },
-  { "width": 2048, "height": 1080 },
-  { "width": 1024, "height": 540 }
+  "720p",
+  "1080p"
 ]
 ```
 
@@ -552,30 +618,30 @@ Use of the `resolution` API requires access to the `use` role of the
 
 Note that this API is not part of the `MediaInfo` module, but is documented here for completeness.
 
-#### 5.1.6. Resolutions (Alternative)
+#### 5.1.6. Resolutions and Frame rates
 
-**TODO**: pick one
-
-The `Device` module **MUST** have a `resolutions` API that returns
-an array
+The `Device` module **MUST** have a `resolutionsAndFrameRates` API that returns an array
 of the native dimensions the device is capable of rasterizing (if the device
 has a screen) or outputting (if the device does not).
 
-This API **MUST** return an Array of strings with one or more of the following values:
+This API **MUST** return an Array of objects with the resolution encoded as a string:
 
-- `"720p"`
-- `"1080p"`
-- `"1440p"`
-- `"1800p"`
-- `"2160p"`
+```json
+[
+  "720p 24fps",
+  "720p 30fms",
+  "1080p 24fps",
+  "1080p 30fms"
+]
+```
 
- **Note**: do we want interlaced versions?
-  
 The resolution API **MUST** be a Firebolt `property:readonly` API, and
-have a corresponding `onResolutionChanged` notification.
+have a corresponding `onResolutionsAndFrameRatesChanged` notification.
 
-Use of the `resolution` APIs require access to the `use` role of the
+Use of the `resolution` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
+
+Note that this API is not part of the `MediaInfo` module, but is documented here for completeness.
 
 ### 5.2. Implicit Media Support
 Apps may also need to know what types of media support the device implicitly has,
@@ -603,4 +669,40 @@ The APIs are as follows:
  - `allAudioCodecs`
  - `allDynamicRanges`
  - `allImmersiveAudioProfiles`
+ - `allSurroundAudioProfiles`
  - `allResolutions`
+
+## 6. Device Media Settings
+
+### 6.1. Audio Settings
+The `Device` module **MUST** have an `audioSettings` API that returns
+the Device's current audio settings.
+
+The audioSettings **MUST** include a `mode` string property with one of the following values:
+
+- `MONO`
+- `STEREO`
+- `SURROUND`
+- `PASSTHROUGH`
+- `AUTO`
+- `STEREO_SURROUND_MAT_FOLLOW`
+- `UNKNOWN`
+- `NONE`
+
+The audioSettings **MUST** include an `atmosOutputLock` boolean property.
+
+The audioSettings **MUST** include an `audioLoundnessEquivalence` boolean property.
+
+The audioSettings API **MUST** be a Firebolt `property:readonly` API, and
+have a corresponding `onAudioSettingsChanged` notification.
+
+Use of the `audioSettings` and `onAudioSettingsChanged` APIs require access
+to the `use` role of the `xrn:firebolt:capability:device:audio-settings` capability.
+
+### 6.2. Video Settings
+The `Device` module **MUST** have an `videoSettings` API that returns
+the Device's current video settings.
+
+The videoSettings **MUST** include a boolean `useSourceFrameRate` property.
+
+If this is set to `true` then the hdmi output frame rate is set to follow video source frame rate.
