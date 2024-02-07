@@ -1,3 +1,10 @@
+# [1.1.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0-next.2...v1.1.0-next.3) (2024-02-07)
+
+
+### Bug Fixes
+
+* Modified account:uid to SHOULD ([#224](https://github.com/rdkcentral/firebolt-apis/issues/224)) ([70c8b24](https://github.com/rdkcentral/firebolt-apis/commit/70c8b24decfcbff2c32fb1b0d21290afc00a8432))
+
 # [1.1.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0-next.1...v1.1.0-next.2) (2024-02-07)
 
 
