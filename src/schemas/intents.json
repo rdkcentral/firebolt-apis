@@ -384,6 +384,9 @@
                                     "$ref": "#/definitions/TVSeasonEntity"
                                 },
                                 {
+                                    "$ref": "#/definitions/MusicEntity"
+                                },
+                                {
                                     "$ref": "#/definitions/AdditionalEntity"
                                 },
                                 {
