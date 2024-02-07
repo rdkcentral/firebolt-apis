@@ -11,8 +11,6 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Stuart Harris   | Sky            |
 | Farhan Mood     | Liberty Global            |
 
-TODO: surroundProfiles
-
 ## 1. Overview
 Apps may need to know what media format, e.g. HDR profile or video codec, is currently playing.
 
@@ -30,8 +28,49 @@ To solve this, Firebolt APIs will be created to detect the formats and
 codecs currently being decoded by the [Media
 Pipeline](./media-pipeline.md) and Firebolt APIs will be created to query device support for those formats.
 
+### User Stories
+
+### As an OTT App developer
+
+I want to know what is supported by the device and it's active AV chain:
+
+- I want to know if a video or audio format (Dolby Vision, Dolby Atmos, etc.) will work if playback is attempted.
+- I want to know if a video or audio codec (AVC, HEVC, etc.) is supported.
+- I want to know if a codec profile-level (HEVC Main 10, VP9 Profile 2, etc.) is supported.
+- I want to know how many audio output channels (e.g. 7.1, 5.1) are available.
+- I want to know what resolutions and framerates are supported (e.g. 1080p60).
+
+I want to know what kind of content I'm currently playing:
+
+- I want to know which video or audio format the media I'm currently playing is sending to the decoder.
+- I want to know which video or audio codec the media I'm currently playing is sending to the decoder.
+- I want to know which video or audio codec profile level the media I'm currently playing is sending to the decoder.
+- I want to know how many audio output channels (e.g. 7.1, 5.1) are currently being sent to the decoder.
+- I want to know what resolution and framerate is currently being sent to the decoder.
+
+### As a first-party App developer
+
+I want to show an audio/videophile overlay with detailed information:
+
+- I want to know all video or audio formats that are currently being sent to a decoder.
+- I want to know all video or audio codecs that are currently being sent to a decoder.
+- I want to know all video or audio codec profiles/levels currently being sent to a decoder.
+- I want to know all audio output channel profiles (e.g. 7.1, 5.1) currently being sent to a decoder.
+- I want to know all resolution and framerates currently being sent to a decoder.
+
+I want to know what my device *would* support if i upgraded my AV peripherals:
+
+- I want to know if a video or audio format (Dolby Vision, Dolby Atmos, etc.) *would* work with upgraded peripherals.
+- I want to know if a video or audio codec (AVC, HEVC, etc.) *would* work with upgraded peripherals.
+- I want to know if a codec profile-level (HEVC Main 10, VP9 Profile 2, etc.) *would* work with upgraded peripherals.
+- I want to know how many audio output channels (e.g. 7.1, 5.1) *would* be available with upgraded peripherals.
+- I want to know what resolutions and framerates *would* be supported with upgraded peripherals. (e.g. 1080p60).
+
 ## 2. Table of Contents
 - [1. Overview](#1-overview)
+  - [User Stories](#user-stories)
+  - [As an OTT App developer](#as-an-ott-app-developer)
+  - [As a first-party App developer](#as-a-first-party-app-developer)
 - [2. Table of Contents](#2-table-of-contents)
 - [3. MimeTypes](#3-mimetypes)
 - [4. Media Info](#4-media-info)
@@ -40,9 +79,7 @@ Pipeline](./media-pipeline.md) and Firebolt APIs will be created to query device
     - [4.1.2. Audio Codec](#412-audio-codec)
     - [4.1.3. Dynamic Range](#413-dynamic-range)
     - [4.1.4. Surround \& Immersive Audio](#414-surround--immersive-audio)
-    - [4.1.5. Frame Rate](#415-frame-rate)
-    - [4.1.6. Resolution](#416-resolution)
-    - [4.1.7. Resolution and Frame rate](#417-resolution-and-frame-rate)
+    - [4.1.6. Resolution and Frame rate](#416-resolution-and-frame-rate)
   - [4.2. MediaInfo for Pipeline](#42-mediainfo-for-pipeline)
   - [4.3. Global MediaInfo](#43-global-mediainfo)
 - [5. Device Media Support](#5-device-media-support)
@@ -52,11 +89,12 @@ Pipeline](./media-pipeline.md) and Firebolt APIs will be created to query device
     - [5.1.3. Dynamic Range](#513-dynamic-range)
     - [5.1.4. Surround \& Immersive Audio](#514-surround--immersive-audio)
     - [5.1.5. Resolutions](#515-resolutions)
-    - [5.1.6. Resolutions and Frame rates](#516-resolutions-and-frame-rates)
   - [5.2. Implicit Media Support](#52-implicit-media-support)
 - [6. Device Media Settings](#6-device-media-settings)
   - [6.1. Audio Settings](#61-audio-settings)
   - [6.2. Video Settings](#62-video-settings)
+  - [6.3. Rialto](#63-rialto)
+- [Use Cases](#use-cases)
 
 ## 3. MimeTypes
 The Firebolt `MimeTypes` module consists of static enumeration of all codecs, formats, etc., and their mime-types.
@@ -86,7 +124,7 @@ The Firebolt `MimeTypes` module consists of static enumeration of all codecs, fo
 | `IA_DTS_X`       | `audio/vnd.dts.uhd;profile=p2` |
 | `IA_MPEGH_MHA1`  | `audio/mha1`           |
 | `IA_MPEGH_MHM1`  | `audio/mhm1`           |
-| `VIDEO_SDR`      | `video/sdr             |`
+| `SDR`            | `video/sdr`            |
 | `VIDEO_AV1`      | `video/av01`           |
 | `VIDEO_H263`     | `video/3gpp`           |
 | `VIDEO_H264`     | `video/avc`            |
@@ -199,7 +237,7 @@ values from the `MimeTypes` module:
 - `HDR_DOLBYVISION`
 - `HDR_SLHDR1`
 - `HDR_HLG`
-- `VIDEO_SDR`
+- `SDR`
 - `NONE`
 - `UNKNOWN`
 
@@ -209,7 +247,7 @@ notification.
 
 The `MediaInfo` module **MUST** have an `isHDR` API that returns true if
 the value of `dynamicRangeProfile` is currently any of the values
-excluding `VIDEO_SDR`, `none` and `unknown`.
+excluding `SDR`, `none` and `unknown`.
 
 The `isHDR` API **MUST** be a Firebolt `property:readonly` API, and have
 a corresponding `onIsHDRChanged` notification.
@@ -225,9 +263,7 @@ the immersive, surround, or unaugmented audio profile, e.g., Dolby Atmos, etc., 
 media currently playing. This API **MUST** return one of the following
 values from the `MimeTypes` module:
 
-- `AUDIO_AC3`
-- `AUDIO_AC4`
-- `AUDIO_EAC3`
+- `SURROUND_DOLBY`
 - `IA_AURO3D`
 - `IA_DOLBYATMOS`
 - `IA_DTS_X`
@@ -235,6 +271,9 @@ values from the `MimeTypes` module:
 - `IA_MPEGH_MHM1`
 - `UNKNOWN`
 - `NONE`
+
+**TODO**: How does Android handle surround?
+**TODO**: AC4 - can you have Atmos in AC4? if so it' supports both surround & immersive
 
 The audioProfile API **MUST** be a Firebolt `property:readonly` API, and
 have a corresponding `onAudioProfileChanged` notification.
@@ -271,46 +310,38 @@ notification.
 
 Use of the `audioProfile` and `isImmersiveAudio` APIs require access
 to the `use` role of the
-`xrn:firebolt:capability:media-info:audio-profile` capability.
+`xrn:firebolt:capability:media-info:audio-profile` capability.- [1. Overview](#1-overview)
+- [1. Overview](#1-overview)
+  - [User Stories](#user-stories)
+  - [As an OTT App developer](#as-an-ott-app-developer)
+  - [As a first-party App developer](#as-a-first-party-app-developer)
+- [2. Table of Contents](#2-table-of-contents)
+- [3. MimeTypes](#3-mimetypes)
+- [4. Media Info](#4-media-info)
+  - [4.1. MediaInfo for current app](#41-mediainfo-for-current-app)
+    - [4.1.1. Video Codec](#411-video-codec)
+    - [4.1.2. Audio Codec](#412-audio-codec)
+    - [4.1.3. Dynamic Range](#413-dynamic-range)
+    - [4.1.4. Surround \& Immersive Audio](#414-surround--immersive-audio)
+    - [4.1.6. Resolution and Frame rate](#416-resolution-and-frame-rate)
+  - [4.2. MediaInfo for Pipeline](#42-mediainfo-for-pipeline)
+  - [4.3. Global MediaInfo](#43-global-mediainfo)
+- [5. Device Media Support](#5-device-media-support)
+  - [5.1. Negotiated Media Support](#51-negotiated-media-support)
+    - [5.1.1. Video Codecs](#511-video-codecs)
+    - [5.1.2. Audio Codecs](#512-audio-codecs)
+    - [5.1.3. Dynamic Range](#513-dynamic-range)
+    - [5.1.4. Surround \& Immersive Audio](#514-surround--immersive-audio)
+    - [5.1.5. Resolutions](#515-resolutions)
+  - [5.2. Implicit Media Support](#52-implicit-media-support)
+- [6. Device Media Settings](#6-device-media-settings)
+  - [6.1. Audio Settings](#61-audio-settings)
+  - [6.2. Video Settings](#62-video-settings)
+  - [6.3. Rialto](#63-rialto)
+- [Use Cases](#use-cases)
 
 
-#### 4.1.5. Frame Rate
-
-The `MediaInfo` module **MUST** have a `frameRate` API that returns
-the frame rate, e.g., 24, of the media currently
-playing. This API **MUST** return a number greater than or equal to `0`.
-
-If no video is playing, then this API **MUST** return `0`.
-  
-The audioCodec API **MUST** be a Firebolt `property:readonly` API, and
-have a corresponding `onFrameRateChanged` notification.
-
-Use of the `frameRate` APIs require access to the `use` role of the
-`xrn:firebolt:capability:media-info:frame-rate` capability.
-
-#### 4.1.6. Resolution
-
-The `MediaInfo` module **MUST** have a `resolution` API that returns
-the encoded dimensions as a string enumeration, e.g., `"1020p"`, of the media currently
-playing. Note that this has nothing to do with the dimensions rasterized on the screen (see the Device [Resolution](#312-resolution) API for that).
-
-This API **MUST** return a string with one of the following values:
-
-- `"720p"`
-- `"1080p"`
-- `"1440p"`
-- `"1800p"`
-- `"2160p"`
-
- **TODO**: do we want interlaced versions?
-  
-The resolution API **MUST** be a Firebolt `property:readonly` API, and
-have a corresponding `onResolutionChanged` notification.
-
-Use of the `resolution` APIs require access to the `use` role of the
-`xrn:firebolt:capability:media-info:resolution` capability.
-
-#### 4.1.7. Resolution and Frame rate
+#### 4.1.6. Resolution and Frame rate
 
 The `MediaInfo` module **MUST** have a `resolutionAndFrameRate` API that returns
 the encoded dimensions and frame rate as a string enumeration, e.g., `"1020p 24fps"`, of the media currently
@@ -318,16 +349,18 @@ playing. Note that this has nothing to do with the dimensions rasterized on the 
 
 This API **MUST** return a string with one of the following values:
 
-- `"720p 24fps"`
-- `"720p 30fps"`
-- `"1080p 24fps"`
-- `"1080p 30fps"`
-- `"1440p 24fps"`
-- `"1440p 30fps"`
-- `"1800p 24fps"`
-- `"1800p 30fps"`
-- `"2160p 24fps"`
-- `"2160p 30fps"`
+- `"720p24"`
+- `"720p30"`
+- `"1080p24"`
+- `"1080p30"`
+- `"1440p24"`
+- `"1440p30"`
+- `"1800p24"`
+- `"1800p30"`
+- `"2160p24"`
+- `"2160p30"`
+
+**TODO**: DSTypes.h
 
  **TODO**: do we want interlaced versions?
  **TODO**: what's the list of supported framerates?
@@ -605,29 +638,6 @@ This API **MUST** return an Array of objects with the resolution encoded as a st
 
 ```json
 [
-  "720p",
-  "1080p"
-]
-```
-
-The resolution API **MUST** be a Firebolt `property:readonly` API, and
-have a corresponding `onResolutionChanged` notification.
-
-Use of the `resolution` API requires access to the `use` role of the
-`xrn:firebolt:capability:device:info` capability.
-
-Note that this API is not part of the `MediaInfo` module, but is documented here for completeness.
-
-#### 5.1.6. Resolutions and Frame rates
-
-The `Device` module **MUST** have a `resolutionsAndFrameRates` API that returns an array
-of the native dimensions the device is capable of rasterizing (if the device
-has a screen) or outputting (if the device does not).
-
-This API **MUST** return an Array of objects with the resolution encoded as a string:
-
-```json
-[
   "720p 24fps",
   "720p 30fms",
   "1080p 24fps",
@@ -636,7 +646,7 @@ This API **MUST** return an Array of objects with the resolution encoded as a st
 ```
 
 The resolution API **MUST** be a Firebolt `property:readonly` API, and
-have a corresponding `onResolutionsAndFrameRatesChanged` notification.
+have a corresponding `onResolutionsChanged` notification.
 
 Use of the `resolution` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
@@ -689,6 +699,8 @@ The audioSettings **MUST** include a `mode` string property with one of the foll
 - `UNKNOWN`
 - `NONE`
 
+**TODO**: the rest of these need to move to Rialto:
+
 The audioSettings **MUST** include an `atmosOutputLock` boolean property.
 
 The audioSettings **MUST** include an `audioLoundnessEquivalence` boolean property.
@@ -699,6 +711,8 @@ have a corresponding `onAudioSettingsChanged` notification.
 Use of the `audioSettings` and `onAudioSettingsChanged` APIs require access
 to the `use` role of the `xrn:firebolt:capability:device:audio-settings` capability.
 
+TODO: Netflix needs to be able to *set* atmosOutputLock...
+
 ### 6.2. Video Settings
 The `Device` module **MUST** have an `videoSettings` API that returns
 the Device's current video settings.
@@ -706,3 +720,75 @@ the Device's current video settings.
 The videoSettings **MUST** include a boolean `useSourceFrameRate` property.
 
 If this is set to `true` then the hdmi output frame rate is set to follow video source frame rate.
+
+### 6.3. Rialto
+
+- Preferred resolution/framerate
+- atmos lock
+- loudness eq
+
+## Use Cases
+
+| API           | Current App | Any Pipeline | Globally | Supported by Chain | Supported by Device |
+|---------------|-------------|--------------|----------|--------------------|---------------------|
+| Video Codec   |  | | | | | 
+| Audio Codec   | | | | | | 
+| Dynamic Range | | | | | | 
+| Audio Profile | | | | | | 
+| Resolution    | | | | | | 
+
+he encoding format for this AudioProfile.
+
+Value is
+
+- AudioFormat.ENCODING_DEFAULT
+- AudioFormat.ENCODING_PCM_16BIT
+- AudioFormat.ENCODING_PCM_8BIT
+- AudioFormat.ENCODING_PCM_FLOAT,
+- AudioFormat.ENCODING_AC3
+- AudioFormat.ENCODING_E_AC3
+- AudioFormat.ENCODING_DTS
+- AudioFormat.ENCODING_DTS_HD
+- AudioFormat.ENCODING_MP3
+- AudioFormat.ENCODING_AAC_LC
+- AudioFormat.ENCODING_AAC_HE_V1
+- AudioFormat.ENCODING_AAC_HE_V2
+- AudioFormat.ENCODING_IEC61937
+- AudioFormat.ENCODING_DOLBY_TRUEHD
+- AudioFormat.ENCODING_AAC_ELD
+- AudioFormat.ENCODING_AAC_XHE
+- AudioFormat.ENCODING_AC4
+- AudioFormat.ENCODING_E_AC3_JOC
+- AudioFormat.ENCODING_DOLBY_MAT
+- AudioFormat.ENCODING_OPUS
+- AudioFormat.ENCODING_PCM_24BIT_PACKED
+- AudioFormat.ENCODING_PCM_32BIT
+- AudioFormat.ENCODING_MPEGH_BL_L3
+- AudioFormat.ENCODING_MPEGH_BL_L4
+- AudioFormat.ENCODING_MPEGH_LC_L3
+- AudioFormat.ENCODING_MPEGH_LC_L4
+- AudioFormat.ENCODING_DTS_UHD_P1
+- AudioFormat.ENCODING_DRA
+- AudioFormat.ENCODING_DTS_HD_MA
+- AudioFormat.ENCODING_DTS_UHD_P2
+- AudioFormat.ENCODING_DSD
+
+
+"Dolby Audio":
+
+- AudioFormat.ENCODING_AC3
+- AudioFormat.ENCODING_E_AC3
+- AudioFormat.ENCODING_E_AC3_JOC
+
+"atmos" -> ENCODING_E_AC3_JOC
+
+Surround has nothing to do w/ codec:
+
+Need `audioChannels()` API that returns stereo, mono, 5.1, 7.1, etc.
+
+On Android, there are Audio Formats, and formats ahve profiles. profiles have channels/sample rates.
+
+https://developer.android.com/reference/android/media/AudioFormat
+
+Video Codecs have Codec Levels/profiles:
+https://developer.android.com/reference/android/media/MediaFormat#KEY_HDR10_PLUS_INFO
