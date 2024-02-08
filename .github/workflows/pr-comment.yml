@@ -11,77 +11,42 @@ jobs:
   comment-on-pr:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Get Artifact And Job Data
         env:
           GITHUB_TOKEN: ${{ github.token }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
+          SERVER_URL: ${{ github.server_url }}
+          GITHUB_REPO: ${{ github.repository }}
           WORKFLOW_RUN_EVENT_OBJ: ${{ toJSON(github.event.workflow_run) }}
         run: |
-          PREVIOUS_JOB_ID=$(jq -r '.id' <<< "$WORKFLOW_RUN_EVENT_OBJ") && echo "PREVIOUS_JOB_ID=$PREVIOUS_JOB_ID" >> "$GITHUB_ENV"
-          SUITE_ID=$(jq -r '.check_suite_id' <<< "$WORKFLOW_RUN_EVENT_OBJ") && echo "SUITE_ID=$SUITE_ID" >> "$GITHUB_ENV"
-          ARTIFACT_ID=$(gh api "/repos/$OWNER/$REPO/actions/artifacts" --jq ".artifacts[] | select(.workflow_run.id==$PREVIOUS_JOB_ID and .expired==false) | .id") && echo "ARTIFACT_ID=$ARTIFACT_ID" >> "$GITHUB_ENV"
-          PR_NUMBER=$(jq -r '.pull_requests[0].number' <<< "$WORKFLOW_RUN_EVENT_OBJ") && echo "PR_NUMBER=$PR_NUMBER" >> "$GITHUB_ENV"
-          ARTIFACT_URL="${{ github.server_url }}/${{ github.repository }}/suites/$SUITE_ID/artifacts/$ARTIFACT_ID" && echo "ARTIFACT_URL=$ARTIFACT_URL" >> "$GITHUB_ENV"
-          JOB_PATH="${{ github.server_url }}/${{ github.repository }}/actions/runs/$PREVIOUS_JOB_ID" && echo "JOB_PATH=$JOB_PATH" >> "$GITHUB_ENV"
+          ./.github/workflows/utils.sh getArtifactData
 
       - name: Download an artifact
         uses: actions/github-script@v6
         with:
           script: |
-            const ARTIFACT_ID = process.env.ARTIFACT_ID;
-            const JOB_PATH = process.env.JOB_PATH;
-            
-            if (!ARTIFACT_ID) {
-              console.log("Send the comment to pr and exit the job"); 
-              // Create a comment
-              const comment = `Failed to create a report:\n Job logs: ${JOB_PATH}`;
-            
-              // Post the comment to the pull request
-              let prcomment = await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ env.PR_NUMBER }},
-                body: comment,
-              });
-            
-              process.exit(1);
-            
-            } else {
-              //download report.json
-              let download = await github.rest.actions.downloadArtifact({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              artifact_id: ARTIFACT_ID,
-              archive_format: 'zip',
-              });
-            
-              let fs = require('fs');
-              fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/report.zip`, Buffer.from(download.data));
-            
-              console.log("Artifact downloaded successfully.");
-            }
+            const { downloadArtifact } = require('./.github/workflows/utils.cjs');
+            downloadArtifact(process.env.ARTIFACT_ID,process.env.JOB_PATH,process.env.PR_NUMBER,context,github);
 
       - name: Unzip an artifact
         run: |
-          unzip report.zip
-          # Extract values from report.json
-          report=$(cat report.json | jq -r '.')
-          passes=$(echo "$report" | jq -r '.stats.passes')
-          failures=$(echo "$report" | jq -r '.stats.failures')
-          pending=$(echo "$report" | jq -r '.stats.pending')
-          skipped=$(echo "$report" | jq -r '.stats.skipped')
-          echo "Skipped=$skipped" >> "$GITHUB_ENV"
-          echo "Pending=$pending" >> "$GITHUB_ENV"
-          echo "Passes=$passes" >> "$GITHUB_ENV"
-          echo "Failures=$failures" >> "$GITHUB_ENV"
+          ./.github/workflows/utils.sh unzipArtifact
 
-      - name: Update Comment
-        uses: peter-evans/create-or-update-comment@v2
+      - name: Post a Comment
+        uses: actions/github-script@v6
         with:
-          issue-number: ${{ env.PR_NUMBER }}
-          body: |-
-            Core SDK - MFOS standalone sanity report:
-            Passes - ${{ env.Passes }} Failures - ${{ env.Failures }} Pending - ${{ env.Pending }} Skipped - ${{ env.Skipped }}
-            Report JSON/HTML Files: ${{ env. ARTIFACT_URL }}
-            Job Logs: ${{ env. JOB_PATH }}
+          script: |
+            const { createComment } = require('./.github/workflows/utils.cjs');
+            createComment(github, context);
+        env:
+          issue_number: ${{ env.PR_NUMBER }}
+          Passes: ${{ env.Passes }}
+          Failures: ${{ env.Failures }}
+          Pending: ${{ env.Pending }}
+          Skipped: ${{ env.Skipped }}
+          ARTIFACT_URL: ${{ env.ARTIFACT_URL }}
+          JOB_PATH: ${{ env.JOB_PATH }}

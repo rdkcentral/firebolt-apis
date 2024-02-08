@@ -20,7 +20,7 @@ jobs:
           GITHUB_REF: ${{ github.ref }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
-          ./.github/workflows/run-standalone-mfos-tests.sh
+          ./.github/workflows/utils.sh runTests
 
       - name: Upload report.json as an artifact
         uses: actions/upload-artifact@v2
@@ -30,11 +30,4 @@ jobs:
 
       - name: Get results from report.json
         run: |
-          failures=$(cat report/report.json | jq -r '.stats.failures')
-          echo "If failures more than 0, fail the job"
-          echo "Failures=$failures"
-          if [ "$failures" -gt 0 ]; then
-           exit 1;
-          else
-            echo "No failures detected."
-          fi
+          ./.github/workflows/utils.sh getResults
