@@ -17,7 +17,7 @@
  */
 
 #include <unistd.h>
-#include<bits/stdc++.h>
+#include <cstring>
 #include "ManageSDKTest.h"
 
 using namespace std;
