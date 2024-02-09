@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0...v1.1.0) (2024-02-09)
+
+
+### Bug Fixes
+
+* Add Music to Playable entities ([#225](https://github.com/rdkcentral/firebolt-apis/issues/225)) ([22c9b71](https://github.com/rdkcentral/firebolt-apis/commit/22c9b71d3c0ee98d32585d1b365afabf8e64d6ed))
+* Modified account:uid to SHOULD ([#224](https://github.com/rdkcentral/firebolt-apis/issues/224)) ([70c8b24](https://github.com/rdkcentral/firebolt-apis/commit/70c8b24decfcbff2c32fb1b0d21290afc00a8432))
+
+
+### Features
+
+* HDMI Low Latency Mode ([#156](https://github.com/rdkcentral/firebolt-apis/issues/156)) ([06d3624](https://github.com/rdkcentral/firebolt-apis/commit/06d3624b69ee0529d4c1a1c78a15dbfdf54c8b16))
+
 # [1.1.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0-next.2...v1.1.0-next.3) (2024-02-07)
 
 
