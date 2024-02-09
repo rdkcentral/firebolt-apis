@@ -92,7 +92,5 @@ ${if.enums}
 
 namespace WPEFramework {
 
-
 /* ${ENUMS} */
-
 }${end.if.enums}
