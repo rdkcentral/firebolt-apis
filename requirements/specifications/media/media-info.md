@@ -11,10 +11,16 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Stuart Harris   | Sky            |
 | Farhan Mood     | Liberty Global            |
 
+**TODO**: Get Feedback from Apps community
+**TODO**: How do we make this API simple for javasscript devs w/out taking away the power?
+**TODO**: Check non-Android TV APIs, e.g. Roku, etc.
+
 ## 1. Overview
 App developers need to know which audio and video formats can be successfully played on a Firebolt device.
 
-Video formats include 
+Video formats include... 
+
+**TODO**: Rewrite this section.
 
 Apps may need to know what media format, e.g. HDR profile or video codec, is currently playing.
 
@@ -125,6 +131,8 @@ The Firebolt `Media` module **MUST** have a `Formats` enumeration audio and vide
 | `UNKNOWN`        | `unknown`              |
 | `NONE`           | `none`                 |
 
+**TODO**: Atmos is not always MAT... MAT -> PCM version of Atmos. Can also be carried over AC4 EAC3 DolbyTrueHD
+
 ## 4. Format Features
 The Firebolt `Media` module **MUST** have a `Features` enumeration audio and video format features:
 
@@ -137,6 +145,8 @@ The Firebolt `Media` module **MUST** have a `Features` enumeration audio and vid
 | `HDR_ST2084`                  | `hdrSt2084`     | Any format that supports ST2084 color transfer |
 | `HDR_HLG`                     | `hdrHlg`        | Any format that supports HLG color transfer |
 
+TODO: maybe add AUDIO_DOLBYATOMS feature
+TODO: bring back Technicolor
 
 ## 5. Device Media Support
 Apps need to know what types of media the device supports.
@@ -171,6 +181,11 @@ These values change and different AV inputs are activated or connected.
 The `Device` module **MUST** have a `videoFormatSupported` API that returns
 `true` or `false` depending on whether the format specified is supported by
 the current device configuration. This API **MUST** return `boolean`.
+
+```javascript
+const hdr10plusWithH265 = videoFormatSupported(Media.Formats.VIDEO_H265_M10, [ Media.Features.HDR_HDR10Plus ], '1080p30')
+const hdr10plusWithVP9 = videoFormatSupported(Media.Formats.VIDEO_VP9_P2, [ Media.Features.HDR_HDR10Plus ])
+```
 
 The `videoFormatSupported` API **MUST** have a required `format` parameter which
 **MUST** be one of the following values:
@@ -322,6 +337,8 @@ MediaInfo.videoFormat(1) // return the video codec in the current app's media pi
 MediaInfo.videoFormat(2) // return the video codec in the current app's media pipeline 2
 ```
 
+**TODO**: where do we map video tags to ids? need a spec for this? same spec, new spec?
+
 The `pipeline` parameter is required for the JSON-RPC request, however, the Firebolt SDK **SHOULD** provide a default value of `1` if it is not provided by the calling app.
 
 For example:
@@ -441,7 +458,9 @@ Use of the `audioFormat` APIs require access to the `use` role of the
 
 ### 6.2. Global MediaInfo
 
-First party apps need a way to query which media formats are currently active, without caring about which pipeline.
+First party apps need a way to query which media formats are currently being output, without caring about which pipeline.
+
+**TODO**: need to define output more specifically. Hardware decoder? Software Decoder, HDMI, Composite... SPDIff, Jeremy to check with XClass?
 
 The following APIs **MUST** exist:
 
@@ -469,6 +488,9 @@ MediaInfo.activeVideoFormats((active) => {
   console.log('Dolby Vision is now ' + (dolbyVision ? 'active' : 'inactive') + '.')
 })
 ```
+**TODO**: Group Audio & Video from output 1, output 2, etc.
+**TODO**: Add display dimensions to video formats in this array, so we know how big they are
+**TODO**: How do i use this api for just the "main" screen and ignore the other.
 
 These APIs **MUST** all be gated by `manage` role of the same
 capabilities required by the corresponding methods above, i.e.:
