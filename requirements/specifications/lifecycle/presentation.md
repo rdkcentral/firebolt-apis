@@ -5,7 +5,6 @@ Document Status: Candidate Specification
 See [Firebolt Requirements Governance](../../governance.md) for more info. 
 
 | Contributor               | Organization |
-
 | ------------------------- | ------------ |
 | Andrew Bennett            | Sky          |
 | Cody Bonney               | Charter      |
@@ -95,8 +94,7 @@ Each Lifecycle state only supports certain display states:
 | `suspended`    | `none`, `loading`                                |
 | `sleeping`     | `none`, `loading`                                |
 
-See [Picture-in-picture](#9-picture-in-picture-video) and [Background 
-Audio](#8-background-audio) for exceptions to this. 
+See [Picture-in-picture](#9-picture-in-picture-video) for exceptions to this. 
 
 ## 6. Loading Screen
 In order to manage user expectations, Firebolt platforms **MAY** display 
@@ -207,33 +205,28 @@ is executed or an RCU sends a reserved key to the platform that would result in
 the app taking some action, e.g. going to its home screen. 
 
 If the app provides the `xrn:firebolt:capability:presentation:navigation` 
-capability then the platform **MUST** call the `Navigation.navigateTo` method 
+capability then the platform **MUST** call the `Presentation.navigateTo` method 
 of the app's provider and pass an `intent` to an app that is in the `ACTIVE` 
 state. 
 
 To invoke an app's `navigateTo` provider API the platform **MUST**: 
 
-> The platform **MUST** dispatch the `Presentation.onRequestNavigateTo` 
-> notification to the app, and wait for `appNavigateToTimeout` milliseconds for 
-> either a `Presentation.navigateToResult` or `Presentation.navigateToError` 
-> call in response. 
+> The platform **MUST** call the `Presentation.navigateTo` method of the App,
+> and wait for `appNavigateToTimeout` milliseconds for either a result or error
+> response.
 > 
-> Once the platform receives the `navigateToResult` call, then the platform may 
-> proceed with the expectation that the app in fact will handle the `intent`.
+> Once the platform receives a result, then the platform may proceed with the
+> expectation that the app in fact will handle the `intent`.
 > 
-> If the app times out or makes an `navigateToError` call, then the app **MAY** 
-> have focus removed or be deactivated, so that the platform can handle the 
+> If the app times out or returns an error, then the app **MAY** have focus
+> removed or be deactivated, so that the platform can handle the 
 > `intent` in some other way. 
 
-An app **SHOULD** call `navigateToResult` after the `onRequestNavigateTo` call if the app is capabable of handling the intent. Otherwise the app **SHOULD** call `navigateToError`.
-
-An app **MAY** receive a navigate call while it is already executing a navigate 
-call. 
-
-An app **MUST** acknowledge receipt of each navigate call with either `navigateToResult` `navigateToError`. 
+An app **SHOULD** successfully handle the `navigateTo` call if the app is capabable
+of handling the intent. Otherwise the app **SHOULD** throw an error.
 
 Platforms **MAY** decide to remove focus from or deactivate apps that do not 
-acknowledge the `navigateTo` call. 
+acknowledge the `navigateTo` call successfully. 
 
 If an app receives multiple navigate calls in parallel, it **MAY** ignore all but the final call.
 
