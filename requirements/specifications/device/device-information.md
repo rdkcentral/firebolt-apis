@@ -15,6 +15,8 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 ## 1. Overview
 This document outlines the requirements for ontological, intrinsic, and product-related device indentification APIs.
 
+**TODO**: add capabilities to all APIs
+
 The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL NOT**", "**SHOULD**", "**SHOULD NOT**", "**RECOMMENDED**", "**NOT RECOMMENDED**", "**MAY**", and "**OPTIONAL**" in this document are to be interpreted as described in [BCP 14](https://www.rfc-editor.org/rfc/rfc2119.txt) [RFC2119] [RFC8174] when, and only when, they appear in all capitals, as shown here.
 
 ## 2. Table of Contents
@@ -54,6 +56,8 @@ The Device module **MUST** expose a read-only, clear-text unique identifier of t
 This API will likely only be permitted to fisrt-party apps and **MUST** only be surfaced in the Manage SDK.
 
 The value of this **MUST** be unique within a distributor.
+
+This API requires `use` access to the `xrn:firebolt:capability:device:identification` capability.
 
 **NOTE**: we probably need a registry of Firebolt distributors to avoid collisions.
 
