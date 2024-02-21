@@ -155,6 +155,9 @@
     },
     "xrn:firebolt:capability:storage:secure": {
       "level": "could"
+    },
+    "xrn:firebolt:capability:account:uid": {
+      "level": "should"
     }
   },
   "apis": {}

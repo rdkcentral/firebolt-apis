@@ -1,4 +1,11 @@
-# 1.0.0 (https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1...v1.0.0) (2023-11-03)
+# [1.1.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0...v1.1.0) (2024-02-09)
+
+### Bug Fixes
+
+    * Add Music to Playable entities (#225 (https://github.com/rdkcentral/firebolt-apis/issues/225)) (22c9b71 (https://github.com/rdkcentral/firebolt-apis/commit/22c9b71d3c0ee98d32585d1b365afabf8e64d6ed))
+    * Modified account:uid to SHOULD (#224 (https://github.com/rdkcentral/firebolt-apis/issues/224)) (70c8b24 (https://github.com/rdkcentral/firebolt-apis/commit/70c8b24decfcbff2c32fb1b0d21290afc00a8432))
+
+# [1.0.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1...v1.0.0) (2023-11-03)
 
 Upgraded to 1.0 at part of RDK6 release. This API is still compatibile with 0.x versions.
 
