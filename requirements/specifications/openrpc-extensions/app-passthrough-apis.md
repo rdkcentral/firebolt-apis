@@ -27,8 +27,9 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
   - [3.1. Aggregated vs Single Providers](#31-aggregated-vs-single-providers)
   - [3.2. Selecting the best provider app](#32-selecting-the-best-provider-app)
   - [3.3. Inserting the appId](#33-inserting-the-appid)
-- [4. Example: User Interest](#4-example-user-interest)
-- [5. Example: Keyboard](#5-example-keyboard)
+- [4. API Gateway](#4-api-gateway)
+- [5. Example: User Interest](#5-example-user-interest)
+- [6. Example: Keyboard](#6-example-keyboard)
 
 ## 3. App Provided Extension
 Firebolt OpenRPC **MUST** support a `boolean` `x-app-provided` extension property on the `capabilities` tag that denotes a method is provided by some app on the device.
@@ -84,7 +85,10 @@ If an app provided method's `capabilities` tag has an `x-app-id-property` proper
 
 If an app provided method's `capabilities` tag has an `x-app-id-property` property and `x-aggregate` is `true`, then the `items` schema of the result schema **MUST** have a property with that name, and property's value **MUST** be set to the the appId of the providing app for each of the items in the result.
 
-## 4. Example: User Interest
+## 4. API Gateway
+The Firebolt API Gateway **MUST** detect app-passthrough APIs and map the `use`/`manage` APIs to the corresponding `provide` APIs by parsing the Firebolt OpenRPC Specification and following the logic outline in this document.
+
+## 5. Example: User Interest
 
 User Interest does not use the `x-app-method` property because there is only one method and one event in the API, so they can be detected automatically via the capability string.
 
@@ -288,7 +292,7 @@ Content.onUserInterest (push)
 }
 ```
 
-## 5. Example: Keyboard
+## 6. Example: Keyboard
 
 Keyboard *requires* the* `x-app-method` property because there are three methods in the same capability, so the mapping cannot be detected automatically via the capability string.
 
