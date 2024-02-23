@@ -50,7 +50,7 @@ If an app provided method's `capabilities` tag has no `x-app-method` property an
 
 > There **MUST** be another method that provides that capability via `x-provides`, and is not a notification method (i.e. it has an `x-response` defined); This method is referred to as the "provider" for the rest of this document.
 
-If, at this point, there is no provider method, or more than one provider method, then this method is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
+If an app provided method has no provider method, or more than one provider method, then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
 
 ### 3.1. Aggregated vs Single Providers
 An app provided method's `capabilites` tag **MAY** have a `boolean` `x-aggregate` property which denotes whether or not multiple apps may provide responses to a single request of the method.
