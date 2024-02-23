@@ -35,28 +35,28 @@ Firebolt OpenRPC **MUST** support a `boolean` `x-app-provided` extension propert
 
 The `x-app-provided` extension **MUST NOT** be used on a method with any value in the `x-provides` extension.
 
-If a method has a `capabilities` tag with `x-app-provided` set to `true` then it **MUST** `use` a single capability or `manage` a single capability, but not both.
+If a method has a `capabilities` tag with `x-app-provided` set to `true` then it **MUST** `use` a single capability or `manage` a single capability, but not both. Any such method is referred to as an "app provided method" for the rest of this document.
 
-If a method has a `capabilities` tag with `x-app-provided` set to `true` and the `capabilities` tag also has an `x-app-method` string property, then:
+If an app provided method's `capabilities` tag has an `x-app-method` string property, then:
 
 > The method denoted by the `x-app-method` property **MUST** provide the same capability that is either used or managed by this method; This method is referred to as the "provider" for the rest of this document.
 
-If a method has a `capabilities` tag with `x-app-provided` set to `true` and there is no `x-app-method` property and the method has an `event` tag, then:
+If an app provided method's `capabilities` tag has no `x-app-method` property and the method has an `event` tag, then:
 
 > There **MUST** be another method that provides that capability via `x-provides`, and is a notification method (i.e. it has no `x-response` defined); This method is referred to as the "provider" for the rest of this document.
 
-If a method has a `capabilities` tag with `x-app-provided` set to `true` and there is no `x-app-method` property and the method does not have an `event` tag, then:
+If an app provided method's `capabilities` tag has no `x-app-method` property and the method does not have an `event` tag, then:
 
 > There **MUST** be another method that provides that capability via `x-provides`, and is not a notification method (i.e. it has an `x-response` defined); This method is referred to as the "provider" for the rest of this document.
 
 If, at this point, there is no provider method, or more than one provider method, then this method is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
 
 ### 3.1. Aggregated vs Single Providers
-If a method has a `capabilities` tag with `x-app-provided` set to `true` then the tag **MAY** have a `boolean` `x-aggregate` property which denotes whether or not multiple apps may provide responses to a single request.
+An app provided method's `capabilites` tag **MAY** have a `boolean` `x-aggregate` property which denotes whether or not multiple apps may provide responses to a single request of the method.
 
 If the `x-aggregate` property is not present then it defaults to `false`.
 
-If a method has `x-aggregate` set to `true` then:
+If an app provided method has `x-aggregate` set to `true` then:
 
 > The method **MUST** have a result with the type set to `array`.
 >
@@ -80,7 +80,9 @@ If `x-app-selection` is set to `"presentation"` and neither the `forground` or `
 If `x-app-selection` is set to `"recent"` then the app selected to provide the result **MUST** be the most recently launched app that provides the required capability.
 
 ### 3.3. Inserting the appId
-TBD about `x-app-id` injection.
+If an app provided method's `capabilities` tag has an `x-app-id-property` property and `x-aggregate` is not set to `true`, then the result schema **MUST** have a property with that name, and property's value **MUST** be set to the the appId of the providing app for the result.
+
+If an app provided method's `capabilities` tag has an `x-app-id-property` property and `x-aggregate` is `true`, then the `items` schema of the result schema **MUST** have a property with that name, and property's value **MUST** be set to the the appId of the providing app for each of the items in the result.
 
 ## 4. Example: User Interest
 
@@ -134,7 +136,7 @@ Content.requestUserInterest (pull, use)
                     "x-app-provided": true,
                     "x-app-selection": "presentation",
                     "x-aggregate": false,
-                    "x-app-id": "appId",
+                    "x-app-id-property": "appId",
                     "x-uses": [
                         "xrn:firebolt:capability:discovery:interest"
                     ]
@@ -266,7 +268,7 @@ Content.onUserInterest (push)
                     "name": "capabilities",
                     "x-app-provided": true,
                     "x-aggregate": false,
-                    "x-app-id": "appId",
+                    "x-app-id-property": "appId",
                     "x-uses": [
                         "xrn:firebolt:capability:discovery:interest"
                     ]
