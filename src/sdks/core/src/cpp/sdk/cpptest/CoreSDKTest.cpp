@@ -37,6 +37,10 @@ CoreSDKTest::OnNavigateToHomeIntentNotification CoreSDKTest::_navigateToHomeInte
 CoreSDKTest::OnNavigateToEntityIntentNotification CoreSDKTest::_navigateToEntityIntentNotification;
 CoreSDKTest::OnNavigateToTuneIntentNotification CoreSDKTest::_navigateToTuneIntentNotification;
 
+CoreSDKTest::KeyboardEmailAsyncResponse CoreSDKTest::_keyboardEmailAsyncResponse;
+CoreSDKTest::KeyboardPasswordAsyncResponse CoreSDKTest::_keyboardPasswordAsyncResponse;
+CoreSDKTest::KeyboardStandardAsyncResponse CoreSDKTest::_keyboardStandardAsyncResponse;
+
 void CoreSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
     cout << "Change in connection: connected: " << connected << " error: " << static_cast<int>(error) << endl;
@@ -46,7 +50,7 @@ void CoreSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error 
 void CoreSDKTest::CreateFireboltInstance(const std::string& url)
 {
     const std::string config = "{\
-            \"waitTime\": 60000,\
+            \"waitTime\": 1000,\
             \"logLevel\": \"Info\",\
             \"workerPool\":{\
             \"queueSize\": 8,\
@@ -500,39 +504,80 @@ void CoreSDKTest::UnsubscribeLocalizationPreferredAudioLanguagesChanged()
     }
 }
 
+void CoreSDKTest::KeyboardStandardAsyncResponse::response(const std::string& response, Firebolt::Error* error)
+{
+    if (error && (*error != Firebolt::Error::None)) {
+        cout << "Error with keyboard standard response, error = " << static_cast<int>(*error) << endl;
+    } else {
+        cout << "Keyboard standard response: " << response << endl;
+    }
+}
 void CoreSDKTest::InvokeKeyboardStandard()
 {
     Firebolt::Error error = Firebolt::Error::None;
     std::string message = "Enter the name you'd like to associate with this device";
-    string response = Firebolt::IFireboltAccessor::Instance().KeyboardInterface().standard(message, &error);
-    if (error == Firebolt::Error::None) {
-        cout << "Keyboard standard response: " << response << endl;
+    Firebolt::IFireboltAccessor::Instance().KeyboardInterface().requestStandard(message, _keyboardStandardAsyncResponse, &error);
+    if (error != Firebolt::Error::None) {
+       cout << "Error with keyboard standard request method invoke, error = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::AbortKeyboardStandard()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().KeyboardInterface().abortStandard(_keyboardStandardAsyncResponse, &error);
+    if (error != Firebolt::Error::None) {
+       cout << "Error with keyboard standard abort method invoke, error = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::KeyboardPasswordAsyncResponse::response(const std::string& response, Firebolt::Error* error)
+{
+    if (error && (*error != Firebolt::Error::None)) {
+        cout << "Error with keyboard password response, error = " << static_cast<int>(*error) << endl;
     } else {
-        cout << "Error while invoking keyboard.standard method, error = " << static_cast<int>(error) << endl;
+        cout << "Keyboard password response: " << response << endl;
     }
 }
 void CoreSDKTest::InvokeKeyboardPassword()
 {
     Firebolt::Error error = Firebolt::Error::None;
     std::string message = "Enter the password to associate with this device";
-    string response = Firebolt::IFireboltAccessor::Instance().KeyboardInterface().password(message, &error);
-    if (error == Firebolt::Error::None) {
-        cout << "Keyboard password response: " << response << endl;
-    } else {
-        cout << "Error while invoking keyboard.password method, error = " << static_cast<int>(error) << endl;
+    Firebolt::IFireboltAccessor::Instance().KeyboardInterface().requestPassword(message, _keyboardPasswordAsyncResponse, &error);
+    if (error != Firebolt::Error::None) {
+       cout << "Error with keyboard password request method invoke, error = " << static_cast<int>(error) << endl;
     }
-
+}
+void CoreSDKTest::AbortKeyboardPassword()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().KeyboardInterface().abortPassword(_keyboardPasswordAsyncResponse, &error);
+    if (error != Firebolt::Error::None) {
+       cout << "Error with keyboard password abort method invoke, error = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::KeyboardEmailAsyncResponse::response(const std::string& response, Firebolt::Error* error)
+{
+    if (error && (*error != Firebolt::Error::None)) {
+        cout << "Error with email password response, error = " << static_cast<int>(*error) << endl;
+    } else {
+        cout << "Keyboard email response: " << response << endl;
+    }
 }
 void CoreSDKTest::InvokeKeyboardEmail()
 {
     Firebolt::Error error = Firebolt::Error::None;
     Firebolt::Keyboard::EmailUsage type = Firebolt::Keyboard::EmailUsage::SIGN_IN;
     std::string message = "Enter your email to sign into this app/device";
-    string response = Firebolt::IFireboltAccessor::Instance().KeyboardInterface().email(type, message, &error);
-    if (error == Firebolt::Error::None) {
-        cout << "Keyboard email response: " << response << endl;
-    } else {
-        cout << "Error while invoking keyboard.email method, error = " << static_cast<int>(error) << endl;
+    Firebolt::IFireboltAccessor::Instance().KeyboardInterface().requestEmail(type, message, _keyboardEmailAsyncResponse, &error);
+    if (error != Firebolt::Error::None) {
+       cout << "Error with keyboard email requeset method invoke, error = " << static_cast<int>(error) << endl;
+    }
+}
+void CoreSDKTest::AbortKeyboardEmail()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().KeyboardInterface().abortEmail(_keyboardEmailAsyncResponse, &error);
+    if (error != Firebolt::Error::None) {
+       cout << "Error with keyboard email abort method invoke, error = " << static_cast<int>(error) << endl;
     }
 }
 

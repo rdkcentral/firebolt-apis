@@ -135,8 +135,11 @@ void ShowKeyboardMenu()
 {
     printf("Enter\n"
          "\tE : Invoke Email method\n"
+         "\tA : Abort Email method\n"
          "\tP : Invoke Password method\n"
+         "\tC : Abort Password method\n"
          "\tS : Invoke Standard method\n"
+         "\tK : Abort Standard method\n"
          "\tQ : Quit\n");
 }
 
@@ -505,12 +508,24 @@ void HandleKeyboardMethodsInvokation()
             CoreSDKTest::InvokeKeyboardEmail();
             break;
         }
+        case 'A': {
+            CoreSDKTest::AbortKeyboardEmail();
+            break;
+        }
         case 'P': {
             CoreSDKTest::InvokeKeyboardPassword();
             break;
         }
+        case 'C': {
+            CoreSDKTest::AbortKeyboardPassword();
+            break;
+        }
         case 'S': {
             CoreSDKTest::InvokeKeyboardStandard();
+            break;
+        }
+        case 'K': {
+            CoreSDKTest::AbortKeyboardStandard();
             break;
         }
         default:

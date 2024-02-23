@@ -70,6 +70,15 @@ class CoreSDKTest {
     struct OnNavigateToTuneIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToTuneIntentNotification {
         void onNavigateTo( const Firebolt::Intents::TuneIntent& ) override;
     };
+    struct KeyboardEmailAsyncResponse : public Firebolt::Keyboard::IKeyboardAsyncResponse {
+        void response(const std::string&, Firebolt::Error*) override;
+    };
+    struct KeyboardPasswordAsyncResponse : public Firebolt::Keyboard::IKeyboardAsyncResponse {
+        void response(const std::string&, Firebolt::Error*) override;
+    };
+    struct KeyboardStandardAsyncResponse : public Firebolt::Keyboard::IKeyboardAsyncResponse {
+        void response(const std::string&, Firebolt::Error*) override;
+    };
 
 public:
     CoreSDKTest() = default;
@@ -111,8 +120,11 @@ public:
     static void GetAdvertisingDeviceAttributes();
 
     static void InvokeKeyboardStandard();
+    static void AbortKeyboardStandard();
     static void InvokeKeyboardPassword();
+    static void AbortKeyboardPassword();
     static void InvokeKeyboardEmail();
+    static void AbortKeyboardEmail();
 
     static void VerifyProfileApproveContentRating();
     static void VerifyProfileApprovePurchase();
@@ -183,5 +195,8 @@ private:
     static OnNavigateToHomeIntentNotification _navigateToHomeIntentNotification;
     static OnNavigateToEntityIntentNotification _navigateToEntityIntentNotification;
     static OnNavigateToTuneIntentNotification _navigateToTuneIntentNotification;
+    static KeyboardEmailAsyncResponse _keyboardEmailAsyncResponse;
+    static KeyboardPasswordAsyncResponse _keyboardPasswordAsyncResponse;
+    static KeyboardStandardAsyncResponse _keyboardStandardAsyncResponse;
 };
 
