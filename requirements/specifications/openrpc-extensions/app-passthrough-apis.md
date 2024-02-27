@@ -26,7 +26,9 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [3. App Provided Extension](#3-app-provided-extension)
   - [3.1. Aggregated vs Single Providers](#31-aggregated-vs-single-providers)
   - [3.2. Selecting the best provider app](#32-selecting-the-best-provider-app)
-  - [3.3. Inserting the appId](#33-inserting-the-appid)
+  - [3.3. Calculating the final result](#33-calculating-the-final-result)
+    - [3.3.1. Composite Results](#331-composite-results)
+    - [3.3.2. Inserting the appId](#332-inserting-the-appid)
 - [4. API Gateway](#4-api-gateway)
 - [5. Example: User Interest](#5-example-user-interest)
 - [6. Example: Keyboard](#6-example-keyboard)
@@ -57,20 +59,26 @@ An app provided method's `capabilites` tag **MAY** have a `boolean` `x-aggregate
 
 If the `x-aggregate` property is not present then it defaults to `false`.
 
+If an app provided method has an `event` tag then the `capabilities` tag **MUST NOT** have the `x-aggregate` property set to `true`.
+
 If an app provided method has `x-aggregate` set to `true` then:
 
 > The method **MUST** have a result with the type set to `array`.
 >
 > The `items` schema of the array **MUST** match the `x-response` schema on the provider method.
+>
+> The final result returned by the app provided method **MUST** be a flattened array with all of the calculated results from each provider.
 
 Otherwise, if `x-aggregate` is `false` (explicityly or by default):
 
 > The method **MUST** have a result, which can by any type.
 >
 > The result schema **MUST** match the `x-response` schema on the provider method.
+>
+> The final result returned by the app provided method **MUST** be the [calculated result](#33-calculating-the-final-result) from the selected provider.
 
 ### 3.2. Selecting the best provider app
-If a method has `x-aggregate` set to `false` then there **MAY** have a `boolean` `x-app-selection` property which denotes how to pick a single app to provide the response.
+If a method does not have `x-aggregate` set to `true` then it **MAY** have a `boolean` `x-app-selection` property which denotes how to pick a single app to provide the response.
 
 If the `x-app-selection` property is not present then it defaults to `false`.
 
@@ -80,10 +88,37 @@ If `x-app-selection` is set to `"presentation"` and neither the `forground` or `
 
 If `x-app-selection` is set to `"recent"` then the app selected to provide the result **MUST** be the most recently launched app that provides the required capability.
 
-### 3.3. Inserting the appId
-If an app provided method's `capabilities` tag has an `x-app-id-property` property and `x-aggregate` is not set to `true`, then the result schema **MUST** have a property with that name, and property's value **MUST** be set to the the appId of the providing app for the result.
+### 3.3. Calculating the final result
+For each app provided method result, the result **MUST** be calculated with the following potential transformations.
 
-If an app provided method's `capabilities` tag has an `x-app-id-property` property and `x-aggregate` is `true`, then the `items` schema of the result schema **MUST** have a property with that name, and property's value **MUST** be set to the the appId of the providing app for each of the items in the result.
+If an app provided method has `x-aggregate` set to `true`, then the term "calculated result" refers to the items of the app provided method result array for the remainder of this section.
+
+If an app provided method has `x-aggregate` set to `false` or the property does not exist, then the term "calculated result" refers to the app provided method result for the remainder of this section.
+
+#### 3.3.1. Composite Results
+An app provided method may be configured to use the provided value as the calculated result, or to compose it into an object along with  other values.
+
+If the app provided method does not have an `event` tag then:
+
+> If an app provided method's `capabilities` tag has an `x-composite-result` property set to `true`, then the app provided method result schema **MUST** have a property that matches name and schema of the provider method result, and property's value **MUST** be set to the value returned by the providing app for the final result.
+>
+> If an app provided method's `capabilities` tag does not have an `x-composite-result` property or it is `false`, then the calculated result schema **MUST** match the app provided method result schema and the value of the calculated result **MUST** be the value returned by the providing app.
+
+If the app provided method has an `event` tag then:
+
+> If an app provided method's `capabilities` tag has an `x-composite-result` property, then every property of the provided method result schema that has a matching name and schema *parameter* in the provider method **MUST** have that property set to the value of the matching parameter from the provider notification for the final result.
+>
+> If an app provided method's `capabilities` tag does not have an `x-composite-result` property, then the calculated result schema **MUST** match the *last parameter* of the provider method and the value of the calculated result **MUST** be the value of that parameter from the provider notification for the final result.
+
+
+#### 3.3.2. Inserting the appId
+An app provided method may be configured to insert the providing app id into composite results. This is not allowed in non-composite results to avoid collisions with the provder method sending an appId and Firebolt overriding it.
+
+If an app provided method's `capabilities` tag has an `x-composite-result` property set to `true` then the method **MAY** have an `x-app-id-property`.
+
+If an app provided method's `capabilities` tag has an `x-composite-result` property set to `false` or does not have the property then the method **MUST NOT** have an `x-app-id-property`.
+
+If an app provided method's `capabilities` tag has an `x-app-id-property` property, then the calculated result schema **MUST** have a property with that name, and property's value **MUST** be set to the the appId of the providing app for that calculated result.
 
 ## 4. API Gateway
 The Firebolt API Gateway **MUST** detect app-passthrough APIs and map the `use`/`manage` APIs to the corresponding `provide` APIs by parsing the Firebolt OpenRPC Specification and following the logic outline in this document.
@@ -139,8 +174,9 @@ Content.requestUserInterest (pull, use)
                     "name": "capabilities",
                     "x-app-provided": true,
                     "x-app-selection": "presentation",
-                    "x-aggregate": false,
+                    "x-composite-result": true,
                     "x-app-id-property": "appId",
+                    "x-aggregate": false,
                     "x-uses": [
                         "xrn:firebolt:capability:discovery:interest"
                     ]
@@ -181,7 +217,7 @@ Discovery.onRequestUserInterest (1.0, pull, provide)
                 {
                     "name": "event",
                     "x-response": {
-                        "$ref": "#/components/schemas/InterestInfo"
+                        "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/EntityInfo"
                     }
                 }
             ],
@@ -249,10 +285,16 @@ Discovery.userInterest (push)
             ],
             "params": [
                 {
-                  "name": "info",
+                  "name": "type",
                   "schema": {
-                      "$ref": "#/components/schemas/InterestInfo",
+                      "$ref": "#/components/schemas/InterestType",
                   }
+                },
+                {
+                  "name": "entity",
+                  "schema": {
+                      "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/EntityInfo"
+                  }                    
                 }
             ]
         }
@@ -271,6 +313,7 @@ Content.onUserInterest (push)
                 {
                     "name": "capabilities",
                     "x-app-provided": true,
+                    "x-composite-result": true,
                     "x-aggregate": false,
                     "x-app-id-property": "appId",
                     "x-uses": [
