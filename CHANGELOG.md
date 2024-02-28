@@ -1,3 +1,10 @@
+## [1.1.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.1.1-next.1) (2024-02-28)
+
+
+### Bug Fixes
+
+* Removed sdk as required field from Device.version ([#231](https://github.com/rdkcentral/firebolt-apis/issues/231)) ([ef3de3e](https://github.com/rdkcentral/firebolt-apis/commit/ef3de3e68619c6f666dd1d751b0acc25f6438122))
+
 # [1.1.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0...v1.1.0) (2024-02-09)
 
 
