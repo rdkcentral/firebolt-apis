@@ -125,7 +125,7 @@ function runTests(){
     reportFileName: "report.json",
     reportTitle: "FireboltCertificationTestReport",
     reportPageTitle: "FireboltCertificationTestReport",
-    reportDir: ".firebolt-apis//report",
+    reportDir: "./firebolt-apis/report",
   });
   '
 }
