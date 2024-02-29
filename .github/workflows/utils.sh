@@ -132,6 +132,14 @@ function runTests(){
 }
 
 function getResults(){
+  ls
+  echo "LS"
+  cd firebolt-apis
+  echo "firebolt-apis"
+  cd report
+  echo "report"
+  ls
+  cat report.json
   failures=$(cat firebolt-apis/report/report.json | jq -r '.stats.failures')
   echo "If failures more than 0, fail the job"
   echo "Failures=$failures"
