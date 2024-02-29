@@ -34,7 +34,8 @@ function runTests(){
   cd ..//..
 
   echo "clone fca repo and start it in the background"
-  git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
+ # git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
+  git clone https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
   jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
   cat package.json
