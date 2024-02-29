@@ -24,14 +24,14 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [1. Overview](#1-overview)
 - [2. Table of Contents](#2-table-of-contents)
 - [3. Provided By Extension](#3-provided-by-extension)
-  - [3.1. Selecting the best provider app](#31-selecting-the-best-provider-app)
-  - [3.2. Selecting all provider apps](#32-selecting-all-provider-apps)
-  - [3.3. Calculating the final result](#33-calculating-the-final-result)
-    - [3.3.1. Composite Results](#331-composite-results)
-    - [3.3.2. Inserting the appId](#332-inserting-the-appid)
-- [4. API Gateway](#4-api-gateway)
-- [5. Example: User Interest](#5-example-user-interest)
-- [6. Example: Keyboard](#6-example-keyboard)
+- [4. Selecting the best provider app](#4-selecting-the-best-provider-app)
+- [5. Calculating the result](#5-calculating-the-result)
+  - [5.1. Selecting multiple provider apps](#51-selecting-multiple-provider-apps)
+  - [5.2. Composite Results](#52-composite-results)
+  - [5.3. Inserting the appId](#53-inserting-the-appid)
+- [6. API Gateway](#6-api-gateway)
+- [7. Example: User Interest](#7-example-user-interest)
+- [8. Example: Keyboard](#8-example-keyboard)
 
 ## 3. Provided By Extension
 Firebolt OpenRPC **MUST** support a `string` `x-provided-by` extension property on the `capabilities` tag that denotes a method is provided by some app on the device registering for the specified provider API, e.g. `Module.onRequestMethod`.
@@ -48,18 +48,22 @@ The provider method **MUST** provide the same capability that the app provided m
 
 If the app provided method has an `event` tag then the provider method **MUST** have a result schema with `"type"` set to the string `"null"`.
 
-If an app provided method has no provider method, or more than one provider method, then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
+If an app provided method has no provider method then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
 
-### 3.1. Selecting the best provider app
-An app provided method's `capabilites` tag **MAY** have the `x-provider-selection` property which denotes the method for selecting which app(s) will should provide the capability.
+## 4. Selecting the best provider app
+A provider method's `capabilites` tag **MAY** have the `x-lifecycle` property which denotes which lifecycle states the providing app is allowed to be in during an app provided transaction.
 
-If the `x-provider-selection` property is not present then it defaults to `"running"`.
+If the `x-lifecycle` property is not present then it **MUST** be assumed to be `["foreground", "background", "inactive"]` for the remainder of this section.
 
-If `x-provider-selection` is set to `"active"` then the app selected to provide the value **MUST** be the `foreground` or `background` app with a bias for `foreground` apps and ties broken by which app was mostly recently foreground and fullscreen.
+The app selected to provide a value **MUST** be in one of the lifecycle states listed in the `x-lifecycle` extension of the provider method. 
 
-If `x-provider-selection` is set to, or defaults to, `"running"` then the app selected to provide the result **MUST** be an app that is currently in the `foreground`, `background`, or `inactive` states, biased in that order, with ties broken by which app was most recently foreground and fullscreen.
+If `x-multiple-providers` is set to `true` then all apps matching `x-lifecycle` at the time of the transaction **MUST** be used to provide the value, see [Selecting multiple provider apps](#32-selecting-multiple-provider-apps) for more info.
 
-If `x-provider-selection` is set to `"all"` refer to [Selecting of all provider apps](#31-selecting-all-provider-apps), below.
+If `x-multiple-providers` is set to `false` or not set then:
+
+> If more than one app is possible, then the candidate apps **MUST** be pruned by reevaluating the `x-lifecycle` array with the last value removed; This is repeated until there is only one app or only one lifecycle state remaining.
+>
+> If more than one app is still possible, then the app that was most recently in the `foreground` state **MUST** be selected; In the case of a tie, the platform **MUST** choose only one app using its own discretion.
 
 If the app provided method does not have an `event` tag and no matching app provides the required capability then the calling app **MUST** receive an error that the capability is unavailable and not a result.
 
@@ -67,31 +71,37 @@ If the app provided method has an `event` tag then event registration **MUST** n
 
 **TODO**: ^^ do we want to scan the catalog and see if it's even possible to have an app that provides it? Seems heavy/overkill and dives into a spec we don't have yet.
 
-### 3.2. Selecting all provider apps
-An app provided method's `capabilites` tag **MAY** have the `x-provider-selection` property set to `all` which denotes that all providers of this capability may provide responses to a single request of the method.
+## 5. Calculating the result
+Each app provided method result **MUST** be calculated with the following potential transformations.
 
-If an app provided method has `x-provider-selection` set to `all` and the app provided method does not have an `event` tag then:
-
-> The method **MUST** have a result with the type set to `array`.
->
-> The `items` schema of the array **MUST** match the `x-response` schema on the provider method.
->
-> The final result returned by the app provided method **MUST** be a flattened array with all of the values from all providers.
-
-Otherwise, if `x-provider-selection` is set to `all` and the app provided method has an `event` tag then:
-
-> The method result schema **MUST** match the `x-response` schema on the provider method.
-> 
-> The app provided method **MUST** dispatch a single, separate event with the value from each notification made by any provider.
-
-### 3.3. Calculating the final result
-For each app provided method result, the result **MUST** be calculated with the following potential transformations.
-
-If an app provided method has `x-provider-selection` set to `all` and the app provided method does not have an `event` tag, then the term "calculated result" refers to the items of the app provided method result array for the remainder of this section.
+If an app provided method has `x-multiple-providers` set to `true` and the app provided method does not have an `event` tag, then the term "calculated result" refers to each item of the app provided method result array for the remainder of this section.
 
 Otherwise, the term "calculated result" refers to the app provided method result for the remainder of this section.
 
-#### 3.3.1. Composite Results
+### 5.1. Selecting multiple provider apps
+An app provided method's `capabilites` tag **MAY** have the `x-multiple-providers` property set to `true` which denotes that more than one app may provider this capability at the same time.
+
+If an app provided method has `x-multiple-providers` set to `true` and the app provided method does not have an `event` tag then:
+
+> The method **MUST** have a result with the type set to `array`.
+>
+> At least one of the following **MUST** be true:
+> 
+> - The `items` schema of the array **MUST** match the `x-response` schema on the provider method.
+> 
+> - The `items` schema of the array **MUST** have a property whose name is not `"appId"` and schema matches the `x-response` schema.
+>
+> The final result returned by the app provided method **MUST** be a flattened array with all of the values from all selected providers.
+
+If an app provided method has `x-multiple-providers` is set to `true` and the app provided method has an `event` tag then:
+
+> - The method result schema **MUST** match the `x-response` schema on the provider method.
+> 
+> - The method result schema **MUST** have a property whose name is not `"appId"` and schema matches the `x-response` schema.
+> 
+> The app provided method **MUST** dispatch each "calculated result" as a separate event to all listeners.
+
+### 5.2. Composite Results
 An app provided method may be configured to use the provided value as the calculated result, or to compose it into an object along with other values.
 
 If the app provided method does not have an `event` tag:
@@ -106,15 +116,15 @@ If the app provided method has an `event` tag:
 >
 > Otherwise, if the calculated result schema is an object with a property whose name and schema matches the provider method's *last* parameter name and schema then the value of that parameter **MUST** inserted into an object under the property name; this is refered to as a "composite result" for the rest of this document.
 
-#### 3.3.2. Inserting the appId
+### 5.3. Inserting the appId
 An app provided method may be configured to insert the providing app id into composite results. This is not allowed in non-composite results to avoid collisions with the provder method sending an appId and Firebolt overriding it.
 
 If a "composite result" was used to wrap the provider method value and the app provided method's schema has an `appId` `string` property at the top level then the property's value **MUST** be set to the the appId of the providing app for that calculated result.
 
-## 4. API Gateway
+## 6. API Gateway
 The Firebolt API Gateway **MUST** detect app-passthrough APIs and map the `use`/`manage` APIs to the corresponding `provide` APIs by parsing the Firebolt OpenRPC Specification and following the logic outline in this document.
 
-## 5. Example: User Interest
+## 7. Example: User Interest
 
 User Interest does not use the `x-app-method` property because there is only one method and one event in the API, so they can be detected automatically via the capability string.
 
@@ -162,7 +172,7 @@ Content.requestUserInterest (pull, use)
                 {
                     "name": "capabilities",
                     "x-provided-by": "Discovery.onRequestUserInterest",
-                    "x-provider-selection": "active",
+                    "x-lifecycle": "active",
                     "x-uses": [
                         "xrn:firebolt:capability:discovery:interest"
                     ]
@@ -299,7 +309,7 @@ Content.onUserInterest (push)
                 {
                     "name": "capabilities",
                     "x-provided-by": "Discovery.userInterest",
-                    "x-provider-selection": "active",
+                    "x-lifecycle": "active",
                     "x-uses": [
                         "xrn:firebolt:capability:discovery:interest"
                     ]
@@ -319,7 +329,7 @@ Content.onUserInterest (push)
 }
 ```
 
-## 6. Example: Keyboard
+## 8. Example: Keyboard
 
 Keyboard *requires* the* `x-app-method` property because there are three methods in the same capability, so the mapping cannot be detected automatically via the capability string.
 
