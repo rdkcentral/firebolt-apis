@@ -34,7 +34,6 @@ function runTests(){
   cd ..//..
 
   echo "clone fca repo and start it in the background"
- # git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
   git clone https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
   jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
@@ -115,18 +114,18 @@ function runTests(){
   '
   echo "create html and json assets"
   npm i mochawesome-report-generator
-  mkdir firebolt-apis/report
-  mv report.json firebolt-apis/report
-  jq -r '.' firebolt-apis/report/report.json > tmp.json && mv tmp.json firebolt-apis/report/report.json
-  jq '.report' firebolt-apis/report/report.json > tmp.json && mv tmp.json firebolt-apis/report/report.json
+  mkdir report
+  mv report.json report/
+  jq -r '.' report/report.json > tmp.json && mv tmp.json report/report.json
+  jq '.report' report/report.json > tmp.json && mv tmp.json report/report.json
   node -e '
   const marge = require("mochawesome-report-generator/bin/cli-main");
   marge({
-    _: ["firebolt-apis/report/report.json"],
+    _: ["report/report.json"],
     reportFileName: "report.json",
     reportTitle: "FireboltCertificationTestReport",
     reportPageTitle: "FireboltCertificationTestReport",
-    reportDir: "./firebolt-apis/report",
+    reportDir: "./report",
   });
   '
 }
@@ -135,10 +134,10 @@ function getResults(){
   failures=$(cat report/report.json | jq -r '.stats.failures')
   echo "If failures more than 0, fail the job"
   echo "Failures=$failures"
-  if [ "$failures" -eq 0 ]; then
-    echo "No failures detected."
+  if [ "$failures" -gt 0 ]; then
+   exit 1;
   else
-    exit 1
+    echo "No failures detected."
   fi
 }
 
