@@ -34,7 +34,7 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [6. Example: Keyboard](#6-example-keyboard)
 
 ## 3. Provided By Extension
-Firebolt OpenRPC **MUST** support a `string` `x-provided-by` extension property on the `capabilities` tag that denotes a method is provided by some app on the device registeringf or the specified provider API, e.g. `Module.onRequestMethod`.
+Firebolt OpenRPC **MUST** support a `string` `x-provided-by` extension property on the `capabilities` tag that denotes a method is provided by some app on the device registering for the specified provider API, e.g. `Module.onRequestMethod`.
 
 The method denoted by `x-provided-by` is referred to as the "provider" or "provider method" for the remainder of this document.
 
@@ -46,9 +46,7 @@ An app provided method **MUST** `use` a single capability or `manage` a single c
 
 The provider method **MUST** provide the same capability that the app provided method either uses or manages.
 
-If the app provided method has an `event` tag then the provider method **MUST** be a notification method (i.e. it has no `x-response` defined).
-
-If the app provided method has no `event` tag then the provider method **MUST NOT** be a notification method (i.e. it *does* have an `x-response` defined).
+If the app provided method has an `event` tag then the provider method **MUST** have a result schema with `"type"` set to the string `"null"`.
 
 If an app provided method has no provider method, or more than one provider method, then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
 
