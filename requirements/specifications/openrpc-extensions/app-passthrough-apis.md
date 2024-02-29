@@ -57,9 +57,9 @@ If the `x-lifecycle` property is not present then it **MUST** be assumed to be `
 
 The app selected to provide a value **MUST** be in one of the lifecycle states listed in the `x-lifecycle` extension of the provider method. 
 
-If `x-multiple-providers` is set to `true` then all apps matching `x-lifecycle` at the time of the transaction **MUST** be used to provide the value, see [Selecting multiple provider apps](#32-selecting-multiple-provider-apps) for more info.
+If the *app provided method's* `capabilities` tag has the `x-multiple-providers` property is set to `true` then all apps matching `x-lifecycle` at the time of the transaction **MUST** be used to provide the value, see [Selecting multiple provider apps](#32-selecting-multiple-provider-apps) for more info.
 
-If `x-multiple-providers` is set to `false` or not set then:
+If the *app provided method's* `capabilities` tag has the `x-multiple-providers` is set to `false` or not set then:
 
 > If more than one app is possible, then the candidate apps **MUST** be pruned by reevaluating the `x-lifecycle` array with the last value removed; This is repeated until there is only one app or only one lifecycle state remaining.
 >
@@ -172,7 +172,6 @@ Content.requestUserInterest (pull, use)
                 {
                     "name": "capabilities",
                     "x-provided-by": "Discovery.onRequestUserInterest",
-                    "x-lifecycle": "active",
                     "x-uses": [
                         "xrn:firebolt:capability:discovery:interest"
                     ]
@@ -209,6 +208,7 @@ Discovery.onRequestUserInterest (1.0, pull, provide)
                 {
                     "name": "capabilities",
                     "x-provides": "xrn:firebolt:capability:discovery:interest",
+                    "x-lifecycle": ["foreground", "background"],
                 },
                 {
                     "name": "event",
@@ -243,6 +243,7 @@ Discovery.userInterest (2.0, pull, provide)
             "tags": [
                 {
                     "name": "capabilities",
+                    "x-lifecycle": ["foreground", "background"],
                     "x-provides": "xrn:firebolt:capability:discovery:interest"
                 }
             ],
@@ -276,7 +277,8 @@ Discovery.userInterest (push)
             "tags": [
                 {
                     "name": "capabilities",
-                    "x-provides": "xrn:firebolt:capability:discovery:interest"
+                    "x-provides": "xrn:firebolt:capability:discovery:interest",
+                    "x-lifecycle": ["foreground", "background"],
                 }
             ],
             "params": [
@@ -309,7 +311,6 @@ Content.onUserInterest (push)
                 {
                     "name": "capabilities",
                     "x-provided-by": "Discovery.userInterest",
-                    "x-lifecycle": "active",
                     "x-uses": [
                         "xrn:firebolt:capability:discovery:interest"
                     ]
