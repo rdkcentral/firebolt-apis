@@ -115,17 +115,17 @@ function runTests(){
   echo "create html and json assets"
   npm i mochawesome-report-generator
   mkdir firebolt-apis/report
-  mv report.json report/
-  jq -r '.' report/report.json > tmp.json && mv tmp.json report/report.json
-  jq '.report' report/report.json > tmp.json && mv tmp.json report/report.json
+  mv report.json firebolt-apis/report
+  jq -r '.' firebolt-apis/report/report.json > tmp.json && mv tmp.json firebolt-apis/report/report.json
+  jq '.report' firebolt-apis/report/report.json > tmp.json && mv tmp.json firebolt-apis/report/report.json
   node -e '
   const marge = require("mochawesome-report-generator/bin/cli-main");
   marge({
-    _: ["report/report.json"],
+    _: ["firebolt-apis/report/report.json"],
     reportFileName: "report.json",
     reportTitle: "FireboltCertificationTestReport",
     reportPageTitle: "FireboltCertificationTestReport",
-    reportDir: "./report",
+    reportDir: ".firebolt-apis//report",
   });
   '
 }
