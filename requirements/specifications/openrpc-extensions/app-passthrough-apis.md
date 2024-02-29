@@ -23,9 +23,9 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 ## 2. Table of Contents
 - [1. Overview](#1-overview)
 - [2. Table of Contents](#2-table-of-contents)
-- [3. App Provided Extension](#3-app-provided-extension)
-  - [3.1. Aggregated vs Single Providers](#31-aggregated-vs-single-providers)
-  - [3.2. Selecting the best provider app](#32-selecting-the-best-provider-app)
+- [3. Provided By Extension](#3-provided-by-extension)
+  - [3.1. Selecting the best provider app](#31-selecting-the-best-provider-app)
+  - [3.2. Selecting all provider apps](#32-selecting-all-provider-apps)
   - [3.3. Calculating the final result](#33-calculating-the-final-result)
     - [3.3.1. Composite Results](#331-composite-results)
     - [3.3.2. Inserting the appId](#332-inserting-the-appid)
@@ -33,92 +33,85 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [5. Example: User Interest](#5-example-user-interest)
 - [6. Example: Keyboard](#6-example-keyboard)
 
-## 3. App Provided Extension
-Firebolt OpenRPC **MUST** support a `boolean` `x-app-provided` extension property on the `capabilities` tag that denotes a method is provided by some app on the device.
+## 3. Provided By Extension
+Firebolt OpenRPC **MUST** support a `string` `x-provided-by` extension property on the `capabilities` tag that denotes a method is provided by some app on the device registeringf or the specified provider API, e.g. `Module.onRequestMethod`.
 
-The `x-app-provided` extension **MUST NOT** be used on a method with any value in the `x-provides` extension.
+The method denoted by `x-provided-by` is referred to as the "provider" or "provider method" for the remainder of this document.
 
-If a method has a `capabilities` tag with `x-app-provided` set to `true` then it **MUST** `use` a single capability or `manage` a single capability, but not both. Any such method is referred to as an "app provided method" for the rest of this document.
+The method with the `x-provided-by` extension is referred to as the "app provided method" for the remainder of this document.
 
-If an app provided method's `capabilities` tag has an `x-app-method` string property, then:
+The `x-provided-by` extension **MUST NOT** be used on a method with any value in the `x-provides` extension.
 
-> The method denoted by the `x-app-method` property **MUST** provide the same capability that is either used or managed by this method; This method is referred to as the "provider" for the rest of this document.
+An app provided method **MUST** `use` a single capability or `manage` a single capability, but not both.
 
-If an app provided method's `capabilities` tag has no `x-app-method` property and the method has an `event` tag, then:
+The provider method **MUST** provide the same capability that the app provided method either uses or manages.
 
-> There **MUST** be another method that provides that capability via `x-provides`, and is a notification method (i.e. it has no `x-response` defined); This method is referred to as the "provider" for the rest of this document.
+If the app provided method has an `event` tag then the provider method **MUST** be a notification method (i.e. it has no `x-response` defined).
 
-If an app provided method's `capabilities` tag has no `x-app-method` property and the method does not have an `event` tag, then:
-
-> There **MUST** be another method that provides that capability via `x-provides`, and is not a notification method (i.e. it has an `x-response` defined); This method is referred to as the "provider" for the rest of this document.
+If the app provided method has no `event` tag then the provider method **MUST NOT** be a notification method (i.e. it *does* have an `x-response` defined).
 
 If an app provided method has no provider method, or more than one provider method, then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
 
-### 3.1. Aggregated vs Single Providers
-An app provided method's `capabilites` tag **MAY** have a `boolean` `x-aggregate` property which denotes whether or not multiple apps may provide responses to a single request of the method.
+### 3.1. Selecting the best provider app
+An app provided method's `capabilites` tag **MAY** have the `x-provider-selection` property which denotes the method for selecting which app(s) will should provide the capability.
 
-If the `x-aggregate` property is not present then it defaults to `false`.
+If the `x-provider-selection` property is not present then it defaults to `"running"`.
 
-If an app provided method has an `event` tag then the `capabilities` tag **MUST NOT** have the `x-aggregate` property set to `true`.
+If `x-provider-selection` is set to `"active"` then the app selected to provide the value **MUST** be the `foreground` or `background` app with a bias for `foreground` apps and ties broken by which app was mostly recently foreground and fullscreen.
 
-If an app provided method has `x-aggregate` set to `true` then:
+If `x-provider-selection` is set to, or defaults to, `"running"` then the app selected to provide the result **MUST** be an app that is currently in the `foreground`, `background`, or `inactive` states, biased in that order, with ties broken by which app was most recently foreground and fullscreen.
+
+If `x-provider-selection` is set to `"all"` refer to [Selecting of all provider apps](#31-selecting-all-provider-apps), below.
+
+If the app provided method does not have an `event` tag and no matching app provides the required capability then the calling app **MUST** receive an error that the capability is unavailable and not a result.
+
+If the app provided method has an `event` tag then event registration **MUST** not return an availability error due to a lack of providers, since one may be launched at a future point.
+
+**TODO**: ^^ do we want to scan the catalog and see if it's even possible to have an app that provides it? Seems heavy/overkill and dives into a spec we don't have yet.
+
+### 3.2. Selecting all provider apps
+An app provided method's `capabilites` tag **MAY** have the `x-provider-selection` property set to `all` which denotes that all providers of this capability may provide responses to a single request of the method.
+
+If an app provided method has `x-provider-selection` set to `all` and the app provided method does not have an `event` tag then:
 
 > The method **MUST** have a result with the type set to `array`.
 >
 > The `items` schema of the array **MUST** match the `x-response` schema on the provider method.
 >
-> The final result returned by the app provided method **MUST** be a flattened array with all of the calculated results from each provider.
+> The final result returned by the app provided method **MUST** be a flattened array with all of the values from all providers.
 
-Otherwise, if `x-aggregate` is `false` (explicityly or by default):
+Otherwise, if `x-provider-selection` is set to `all` and the app provided method has an `event` tag then:
 
-> The method **MUST** have a result, which can by any type.
->
-> The result schema **MUST** match the `x-response` schema on the provider method.
->
-> The final result returned by the app provided method **MUST** be the [calculated result](#33-calculating-the-final-result) from the selected provider.
-
-### 3.2. Selecting the best provider app
-If a method does not have `x-aggregate` set to `true` then it **MAY** have a `boolean` `x-app-selection` property which denotes how to pick a single app to provide the response.
-
-If the `x-app-selection` property is not present then it defaults to `false`.
-
-If `x-app-selection` is set to `"presentation"` then the app selected to provide the result **MUST** be the `foreground` or `background` app.
-
-If `x-app-selection` is set to `"presentation"` and neither the `forground` or `background` app provides the required capability then the calling app **MUST** receive an error and not a result.
-
-If `x-app-selection` is set to `"recent"` then the app selected to provide the result **MUST** be the most recently launched app that provides the required capability.
+> The method result schema **MUST** match the `x-response` schema on the provider method.
+> 
+> The app provided method **MUST** dispatch a single, separate event with the value from each notification made by any provider.
 
 ### 3.3. Calculating the final result
 For each app provided method result, the result **MUST** be calculated with the following potential transformations.
 
-If an app provided method has `x-aggregate` set to `true`, then the term "calculated result" refers to the items of the app provided method result array for the remainder of this section.
+If an app provided method has `x-provider-selection` set to `all` and the app provided method does not have an `event` tag, then the term "calculated result" refers to the items of the app provided method result array for the remainder of this section.
 
-If an app provided method has `x-aggregate` set to `false` or the property does not exist, then the term "calculated result" refers to the app provided method result for the remainder of this section.
+Otherwise, the term "calculated result" refers to the app provided method result for the remainder of this section.
 
 #### 3.3.1. Composite Results
-An app provided method may be configured to use the provided value as the calculated result, or to compose it into an object along with  other values.
+An app provided method may be configured to use the provided value as the calculated result, or to compose it into an object along with other values.
 
-If the app provided method does not have an `event` tag then:
+If the app provided method does not have an `event` tag:
 
-> If an app provided method's `capabilities` tag has an `x-composite-result` property set to `true`, then the app provided method result schema **MUST** have a property that matches name and schema of the provider method result, and property's value **MUST** be set to the value returned by the providing app for the final result.
+> If the calculated result schema matches the provider method result schema then the provider method result value **MUST** be passed through as-is, this is *not* considered a "composite result."
 >
-> If an app provided method's `capabilities` tag does not have an `x-composite-result` property or it is `false`, then the calculated result schema **MUST** match the app provided method result schema and the value of the calculated result **MUST** be the value returned by the providing app.
+> Otherwise, if the calculated result schema is an object with a property whose name and schema matches the provider method result name and schema then the provider method result value **MUST** inserted into an object under the property name; this is refered to as a "composite result" for the rest of this document.
 
-If the app provided method has an `event` tag then:
+If the app provided method has an `event` tag:
 
-> If an app provided method's `capabilities` tag has an `x-composite-result` property, then every property of the provided method result schema that has a matching name and schema *parameter* in the provider method **MUST** have that property set to the value of the matching parameter from the provider notification for the final result.
+> If the calculated result schema matches the provider method's *last* parameter schema then the value of that parameter **MUST** be passed through as the calculated result value as-is.
 >
-> If an app provided method's `capabilities` tag does not have an `x-composite-result` property, then the calculated result schema **MUST** match the *last parameter* of the provider method and the value of the calculated result **MUST** be the value of that parameter from the provider notification for the final result.
-
+> Otherwise, if the calculated result schema is an object with a property whose name and schema matches the provider method's *last* parameter name and schema then the value of that parameter **MUST** inserted into an object under the property name; this is refered to as a "composite result" for the rest of this document.
 
 #### 3.3.2. Inserting the appId
 An app provided method may be configured to insert the providing app id into composite results. This is not allowed in non-composite results to avoid collisions with the provder method sending an appId and Firebolt overriding it.
 
-If an app provided method's `capabilities` tag has an `x-composite-result` property set to `true` then the method **MAY** have an `x-app-id-property`.
-
-If an app provided method's `capabilities` tag has an `x-composite-result` property set to `false` or does not have the property then the method **MUST NOT** have an `x-app-id-property`.
-
-If an app provided method's `capabilities` tag has an `x-app-id-property` property, then the calculated result schema **MUST** have a property with that name, and property's value **MUST** be set to the the appId of the providing app for that calculated result.
+If a "composite result" was used to wrap the provider method value and the app provided method's schema has an `appId` `string` property at the top level then the property's value **MUST** be set to the the appId of the providing app for that calculated result.
 
 ## 4. API Gateway
 The Firebolt API Gateway **MUST** detect app-passthrough APIs and map the `use`/`manage` APIs to the corresponding `provide` APIs by parsing the Firebolt OpenRPC Specification and following the logic outline in this document.
@@ -140,20 +133,18 @@ Schemas
                     "disinterest"
                 ]
             },
-            "InterestInfo": {
+            "EntityDetailsFromApp": {
                 "type": "object",
                 "properties": {
                     "appId": {
                         "type": "string"
                     },
                     "entity": {
-                        "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/EntityInfo"
-                    },
-                    "type": {
-                        "$ref": "#/components/schemas/InterestType"
+                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
                     }
                 },
                 "required": [
+                    "appId",
                     "entity"
                 ]
             }
@@ -172,11 +163,8 @@ Content.requestUserInterest (pull, use)
             "tags": [
                 {
                     "name": "capabilities",
-                    "x-app-provided": true,
-                    "x-app-selection": "presentation",
-                    "x-composite-result": true,
-                    "x-app-id-property": "appId",
-                    "x-aggregate": false,
+                    "x-provided-by": "Discovery.onRequestUserInterest",
+                    "x-provider-selection": "active",
                     "x-uses": [
                         "xrn:firebolt:capability:discovery:interest"
                     ]
@@ -194,7 +182,7 @@ Content.requestUserInterest (pull, use)
             "result": {
                 "name": "interestedIn",
                 "schema": {
-                    "$ref": "#/components/schemas/InterestInfo",
+                    "$ref": "#/components/schemas/EntityFromApp",
                 }
             }
         }
@@ -217,7 +205,7 @@ Discovery.onRequestUserInterest (1.0, pull, provide)
                 {
                     "name": "event",
                     "x-response": {
-                        "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/EntityInfo"
+                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
                     }
                 }
             ],
@@ -261,7 +249,7 @@ Discovery.userInterest (2.0, pull, provide)
             "result": {
                 "name": "entity",
                 "schema": {
-                    "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/EntityInfo"
+                    "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
                 }
             }
         }
@@ -293,7 +281,7 @@ Discovery.userInterest (push)
                 {
                   "name": "entity",
                   "schema": {
-                      "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/EntityInfo"
+                      "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
                   }                    
                 }
             ]
@@ -312,10 +300,8 @@ Content.onUserInterest (push)
             "tags": [
                 {
                     "name": "capabilities",
-                    "x-app-provided": true,
-                    "x-composite-result": true,
-                    "x-aggregate": false,
-                    "x-app-id-property": "appId",
+                    "x-provided-by": "Discovery.userInterest",
+                    "x-provider-selection": "active",
                     "x-uses": [
                         "xrn:firebolt:capability:discovery:interest"
                     ]
