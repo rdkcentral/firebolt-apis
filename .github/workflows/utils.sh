@@ -114,7 +114,7 @@ function runTests(){
   '
   echo "create html and json assets"
   npm i mochawesome-report-generator
-  mkdir report
+  mkdir firebolt-apis/report
   mv report.json report/
   jq -r '.' report/report.json > tmp.json && mv tmp.json report/report.json
   jq '.report' report/report.json > tmp.json && mv tmp.json report/report.json
