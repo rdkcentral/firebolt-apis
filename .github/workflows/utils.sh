@@ -143,10 +143,10 @@ function getResults(){
   failures=$(cat firebolt-apis/report/report.json | jq -r '.stats.failures')
   echo "If failures more than 0, fail the job"
   echo "Failures=$failures"
-  if [ "$failures" -gt 0 ]; then
-   exit 1;
-  else
+  if [ "$failures" -eq 0 ]; then
     echo "No failures detected."
+  else
+    exit 1
   fi
 }
 
