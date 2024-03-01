@@ -64,6 +64,8 @@ If the *app provided method's* `capabilities` tag has the `x-multiple-providers`
 > If more than one app is possible, then the candidate apps **MUST** be pruned by reevaluating the `x-lifecycle` array with the last value removed; This is repeated until there is only one app or only one lifecycle state remaining.
 >
 > If more than one app is still possible, then the app that was most recently in the `foreground` state **MUST** be selected; In the case of a tie, the platform **MUST** choose only one app using its own discretion.
+>
+> If there is no provider most recently in the `foreground` state then the app that was most recently in the inactive state **MUST** be selected.
 
 If the app provided method does not have an `event` tag and no matching app provides the required capability then the calling app **MUST** receive an error that the capability is unavailable and not a result.
 
