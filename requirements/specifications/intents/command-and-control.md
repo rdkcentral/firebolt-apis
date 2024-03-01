@@ -76,11 +76,11 @@ This intent allows a user to turn the device on or off.
     },
     "intent": {
         "action": "power",
+        "data": {
+            "value": true | false
+        },
         "context": {
             "source": "voice"
-        },
-        "data": {
-            "value": true \| false
         }
     }
 }
@@ -103,12 +103,12 @@ seconds:
     },
     "intent": {
         "action": "power",
+        "data": {
+            "value": true | false,
+            "delay": 3600
+        },
         "context": {
             "source": "voice"
-        },
-        "data": {
-            "value": true \| false,
-            "delay": 3600
         }
     }
 }
@@ -137,11 +137,11 @@ This intent allows setting the volume to an absolute or relative value.
     },
     "intent": {
         "action": "volume",
-        "context": {
-            "source": "VOICE"
-        },
         "data": {
             "value": 70
+        },
+        "context": {
+            "source": "VOICE"
         }
     }
 }
@@ -164,12 +164,12 @@ optional relative field:
     },
     "intent": {
         "action": "volume",
-        "context": {
-            "source": "VOICE"
-        },
         "data": {
             "value": -10,
             "relative": true
+        },
+        "context": {
+            "source": "VOICE"
         }
     }
 }
@@ -203,11 +203,11 @@ This intent allows the user to mute or unmute the device.
     },
     "intent": {
         "action": "mute",
+        "data": {
+            "value": true | false
+        },
         "context": {
             "source": "VOICE"
-        },
-        "data": {
-            "value": true \| false
         }
     }
 }
@@ -255,11 +255,11 @@ Intent
     },
     "intent": {
         "action": "channel",
+        "data": {
+            "value": "next" | "previous"
+        },
         "context": {
             "source": "voice"
-        },
-        "data": {
-            "value": "next" \| "previous"
         }
     }
 }
@@ -293,7 +293,7 @@ Media:
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "pause" \| "resume" \| "replay" \| "stop",
+        "action": "pause" | "resume" | "replay" | "stop",
         "context": {
             "source": "voice"
         }
@@ -363,9 +363,8 @@ relative field:
         "data": {
             "seconds": -30,
             "relative": true
-        },s
-
-"context": {
+        },
+        "context": {
             "source": "voice"
         }
     }
@@ -391,11 +390,11 @@ The Trick Play Intent allows users to fast-forward or rewind:
     },
     "intent": {
         "action": "trickplay",
-        "context": {
-            "source": "voice"
-        },
         "data": {
             "speed": 2.5
+        },
+        "context": {
+            "source": "voice"
         }
     }
 }
@@ -432,11 +431,11 @@ This intent allows a user to turn closed captions on or off.
     },
     "intent": {
         "action": "closedCaptions",
+        "data": {
+            "value": true | false
+        },
         "context": {
             "source": "voice"
-        },
-        "data": {
-            "value": true \| false
         }
     }
 }
@@ -456,11 +455,11 @@ Additionally, this intent may specify a toggle:
     },
     "intent": {
         "action": "closedCaptions",
-        "context": {
-            "source": "voice"
-        },
         "data": {
             "toggle": true
+        },
+        "context": {
+            "source": "voice"
         }
     }
 }
@@ -481,11 +480,11 @@ This intent allows a user to turn voice guidance on or off.
     },
     "intent": {
         "action": "voiceGuidance",
+        "data": {
+            "value": true | false
+        },
         "context": {
             "source": "voice"
-        },
-        "data": {
-            "value": true \| false
         }
     }
 }
@@ -505,11 +504,11 @@ Additionally, this intent may specify a toggle:
     },
     "intent": {
         "action": "voiceGuidance",
-        "context": {
-            "source": "voice"
-        },
         "data": {
             "toggle": true
+        },
+        "context": {
+            "source": "voice"
         }
     }
 }
@@ -530,11 +529,11 @@ This intent allows a user to turn voice guidance on or off.
     },
     "intent": {
         "action": "audioDescription",
+        "data": {
+            "value": true | false
+        },
         "context": {
             "source": "voice"
-        },
-        "data": {
-            "value": true \| false
         }
     }
 }
@@ -554,11 +553,11 @@ Additionally, this intent may specify a toggle:
     },
     "intent": {
         "action": "audioDescription",
-        "context": {
-            "source": "voice"
-        },
         "data": {
             "toggle": true
+        },
+        "context": {
+            "source": "voice"
         }
     }
 }
@@ -585,11 +584,11 @@ up/down/left/right:
     },
     "intent": {
         "action": "focus",
+        "data": {
+            "direction": "up" | "down" | "left" | "right"
+        },
         "context": {
             "source": "voice"
-        },
-        "data": {
-            "direction": "up" \| "down" \| "left" \| "right"
         }
     }
 }
@@ -648,13 +647,13 @@ up/down/left/right:
     },
     "intent": {
         "action": "scroll",
+        "data": {
+            "direction": "up" | "down" | "left" | "right",
+            "unit": "page" | "line" | "percent",
+            "distance": 2.5
+        },
         "context": {
             "source": "voice"
-        },
-        "data": {
-            "direction": "up" \| "down" \| "left" \| "right",
-            "unit": "page" \| "line" \| "percent",
-            "distance": 2.5
         }
     }
 }
