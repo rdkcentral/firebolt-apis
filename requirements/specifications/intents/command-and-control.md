@@ -40,7 +40,8 @@ together for easier forwarding to appropriate components.
     - [3.5.1. Closed Captions Intent](#351-closed-captions-intent)
     - [3.5.2. Voice Guidance Intent](#352-voice-guidance-intent)
     - [3.5.3. Audio Descritions Intent](#353-audio-descritions-intent)
-    - [3.5.4. Text Magnification Intent](#354-text-magnification-intent)
+    - [3.5.4. High Contrast Intent](#354-high-contrast-intent)
+    - [3.5.5. Text Magnification Intent](#355-text-magnification-intent)
   - [3.6. Interaction Intents](#36-interaction-intents)
     - [3.6.1. Focus Intent](#361-focus-intent)
     - [3.6.2. Select Intent](#362-select-intent)
@@ -564,7 +565,56 @@ Additionally, this intent may specify a toggle:
 }
 ```
 
-#### 3.5.4. Text Magnification Intent
+#### 3.5.4. High Contrast Intent
+
+This intent allows a user to turn high contrast mode on or off.
+
+```json
+{
+    "type": "xrn:firebolt:intent:platform:accessibility",
+    "target": "client",
+    "metadata": {
+        "assistant": "XFINITY",
+        "lang": "eng-USA",
+        "micType": "NEAR_FIELD"
+    },
+    "intent": {
+        "action": "highContrast",
+        "data": {
+            "value": true | false
+        },
+        "context": {
+            "source": "voice"
+        }
+    }
+}
+
+```
+
+Additionally, this intent may specify a toggle:
+
+```json
+{
+    "type": "xrn:firebolt:intent:platform:accessibility",
+    "target": "client",
+    "metadata": {
+        "assistant": "XFINITY",
+        "lang": "eng-USA",
+        "micType": "NEAR_FIELD"
+    },
+    "intent": {
+        "action": "highContrast",
+        "data": {
+            "toggle": true
+        },
+        "context": {
+            "source": "voice"
+        }
+    }
+}
+```
+
+#### 3.5.5. Text Magnification Intent
 
 This intent allows a user to turn text magnification on or off.
 
