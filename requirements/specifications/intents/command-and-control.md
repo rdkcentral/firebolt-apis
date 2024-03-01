@@ -185,7 +185,7 @@ volume to 50% *of what it currently is\...*"
 
 **Note**: Both Google & Alexa support either 0-10 or 0% to 100%.
 
-Firebolt uses a scale of 0-100 for this intent. It\'s up to each voice
+Firebolt uses a size of 0-100 for this intent. It\'s up to each voice
 integration if it wants to convert "5" to "50%" before generating
 the intent, but convenience transformations like this are recommended.
 
@@ -612,6 +612,35 @@ Additionally, this intent may specify a toggle:
     }
 }
 ```
+
+Finally, this intent may specify a magnification scale as a number:
+
+```json
+{
+    "type": "xrn:firebolt:intent:platform:accessibility",
+    "target": "client",
+    "metadata": {
+        "assistant": "XFINITY",
+        "lang": "eng-USA",
+        "micType": "NEAR_FIELD"
+    },
+    "intent": {
+        "action": "textMagnification",
+        "data": {
+            "scale": 2.5
+        },
+        "context": {
+            "source": "voice"
+        }
+    }
+}
+```
+
+Setting the scale to `1` turns off magnification. Setting the scale to a value greater than 1 turns on magnification.
+
+Even if a Firebolt platform does not support specifying the numeric scale, it **MUST** turn magnifacation on and off based on them.
+
+The magnification intent **MUST** have only one property, `scale`, `toggle`, `value` and **MUST NOT** comebine them in a single intent.
 
 ### 3.6. Interaction Intents
 
