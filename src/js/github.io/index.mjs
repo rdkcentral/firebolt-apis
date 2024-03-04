@@ -38,18 +38,23 @@ const processFiles = (docs, base, dir, subdir, category, setType) => {
 
         if (ref.endsWith('.md')) {
             const filename = ref.split(path.sep).pop()
-            if (filename !== 'index.md') {
+            // if this is a generated file, leave it alone
+            if ( !base.startsWith('src')) { //filename !== 'index.md') {
+                console.log(`UPDATING LINKS: ${ref}`)
                 const dirname = filename.split('.').shift()
-                const parts = ['index.md']
+                const parts = filename === 'index' ? ['..'] : ['index.md']
                 // if the dirname is the same as parent dir, don't insert it
-                if (dirname != ref.split(path.sep).slice(-2, -1)[0]) {
+                if (dirname !== ref.split(path.sep).slice(-2, -1)[0] && dirname !== 'index') {
                     parts.unshift(dirname)
                     data = data.replace(/\]\(\.\.\//g, '](../../')
                     data = data.replace(/\]\(\.\//g, '](../')
                 }
                 data = data.replace(/\]\((.*?)\.md([\)#])/g, ']($1$2')
                 data = data.replace(/\]\((.*?)\/(.*?)\/\2([\)#])/g, ']($1/$2$3')
-            ref = ref.split(path.sep).slice(0, -1).concat(parts).join(path.sep)
+                ref = ref.split(path.sep).slice(0, -1).concat(parts).join(path.sep)
+            }
+            else {
+                console.log(`NOT UPDATING LINKS: ${ref}`)
             }
 
             docs[path.join(parsedArgs.output, dir, version, subdir, ref)] = frontmatter(data, version, subdir, category, type)
@@ -58,7 +63,7 @@ const processFiles = (docs, base, dir, subdir, category, setType) => {
             docs[path.join(parsedArgs.output, dir, version, subdir, ref)] = data
         }
     
-        console.log(`Will copy ${path.join(base, source)} to ${path.join(parsedArgs.output, dir, version, subdir, ref)}`)
+//        console.log(`Will copy ${path.join(base, source)} to ${path.join(parsedArgs.output, dir, version, subdir, ref)}`)
     
         if (version === 'latest') {
             if (ref.endsWith('.md')) {
@@ -171,13 +176,7 @@ function channel(version) {
     if (parts.length > 1) {
         parts.shift()
         const chnl = parts.join("-").split(".").shift()
-
-        if (['next', 'next-major', 'test'].includes(chnl)) {
-            return chnl
-        }
-        else {
-            return 'test'
-        }
+        return chnl
     }
     else {
         return 'latest'

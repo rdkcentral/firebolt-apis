@@ -1,3 +1,124 @@
+## [1.1.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.1.1-next.1) (2024-02-28)
+
+
+### Bug Fixes
+
+* Removed sdk as required field from Device.version ([#231](https://github.com/rdkcentral/firebolt-apis/issues/231)) ([ef3de3e](https://github.com/rdkcentral/firebolt-apis/commit/ef3de3e68619c6f666dd1d751b0acc25f6438122))
+
+# [1.1.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0...v1.1.0) (2024-02-09)
+
+
+### Bug Fixes
+
+* Add Music to Playable entities ([#225](https://github.com/rdkcentral/firebolt-apis/issues/225)) ([22c9b71](https://github.com/rdkcentral/firebolt-apis/commit/22c9b71d3c0ee98d32585d1b365afabf8e64d6ed))
+* Modified account:uid to SHOULD ([#224](https://github.com/rdkcentral/firebolt-apis/issues/224)) ([70c8b24](https://github.com/rdkcentral/firebolt-apis/commit/70c8b24decfcbff2c32fb1b0d21290afc00a8432))
+
+
+### Features
+
+* HDMI Low Latency Mode ([#156](https://github.com/rdkcentral/firebolt-apis/issues/156)) ([06d3624](https://github.com/rdkcentral/firebolt-apis/commit/06d3624b69ee0529d4c1a1c78a15dbfdf54c8b16))
+
+# [1.1.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0-next.2...v1.1.0-next.3) (2024-02-07)
+
+
+### Bug Fixes
+
+* Modified account:uid to SHOULD ([#224](https://github.com/rdkcentral/firebolt-apis/issues/224)) ([70c8b24](https://github.com/rdkcentral/firebolt-apis/commit/70c8b24decfcbff2c32fb1b0d21290afc00a8432))
+
+# [1.1.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0-next.1...v1.1.0-next.2) (2024-02-07)
+
+
+### Bug Fixes
+
+* Add Music to Playable entities ([#225](https://github.com/rdkcentral/firebolt-apis/issues/225)) ([22c9b71](https://github.com/rdkcentral/firebolt-apis/commit/22c9b71d3c0ee98d32585d1b365afabf8e64d6ed))
+
+# [1.1.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0...v1.1.0-next.1) (2024-01-16)
+
+
+### Features
+
+* HDMI Low Latency Mode ([#156](https://github.com/rdkcentral/firebolt-apis/issues/156)) ([06d3624](https://github.com/rdkcentral/firebolt-apis/commit/06d3624b69ee0529d4c1a1c78a15dbfdf54c8b16))
+
+# [1.0.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1...v1.0.0) (2023-11-03)
+
+
+### Bug Fixes
+
+* Account.session params to be mandatory ([#196](https://github.com/rdkcentral/firebolt-apis/issues/196)) ([fc5c638](https://github.com/rdkcentral/firebolt-apis/commit/fc5c63886d9b4eb30b32c1edc75f0f6afe80a827))
+* CI looking for legacy 0.x version ([923d02a](https://github.com/rdkcentral/firebolt-apis/commit/923d02ae96716a5272c5507e864f366012824642))
+* Permission schema with Capability as required ([74d9de9](https://github.com/rdkcentral/firebolt-apis/commit/74d9de9b125baffb415e11ba3888c1c464cf5b12))
+* Provider error ([#202](https://github.com/rdkcentral/firebolt-apis/issues/202)) ([4666a5e](https://github.com/rdkcentral/firebolt-apis/commit/4666a5ee56846f14dd1ba79dab82891505b5a2ec))
+* schemas version upgraded to 2.0.0-next.1 ([#199](https://github.com/rdkcentral/firebolt-apis/issues/199)) ([b0fb8cf](https://github.com/rdkcentral/firebolt-apis/commit/b0fb8cfbda6bbef055000dc9911f344ab9ee8771))
+* Update schemas & 1.0.0 version! ([#200](https://github.com/rdkcentral/firebolt-apis/issues/200)) ([ea29f33](https://github.com/rdkcentral/firebolt-apis/commit/ea29f3323a22ffa36904bdc6cf6e76a31fa8cb76))
+* Updated Discovery.launch example with xrn:firebolt:application-type ([#187](https://github.com/rdkcentral/firebolt-apis/issues/187)) ([4dbbab3](https://github.com/rdkcentral/firebolt-apis/commit/4dbbab3d9fa68c0e5185ca72fd0170bae8a30139))
+* Updated metrics:distributor capability to could ([#185](https://github.com/rdkcentral/firebolt-apis/issues/185)) ([9ca2206](https://github.com/rdkcentral/firebolt-apis/commit/9ca2206a2dca7149dcf93df3d303806d136785ed))
+
+
+### Features
+
+* Added optional parameter 'force' in usergrants.request ([#186](https://github.com/rdkcentral/firebolt-apis/issues/186)) ([31801ca](https://github.com/rdkcentral/firebolt-apis/commit/31801caec6bea0e8b295ea6a9ec54ca1d8e08d16))
+* Play Intent ([#151](https://github.com/rdkcentral/firebolt-apis/issues/151)) ([d1ddf3f](https://github.com/rdkcentral/firebolt-apis/commit/d1ddf3fb3b1f758315686ad2f6dc57c2b270f33a))
+
+
+### BREAKING CHANGES
+
+* This is not really a breaking change, but 1.0 release!!!
+
+# [1.0.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0-next.1...v1.0.0-next.2) (2023-11-01)
+
+
+### Bug Fixes
+
+* Provider error ([#202](https://github.com/rdkcentral/firebolt-apis/issues/202)) ([4666a5e](https://github.com/rdkcentral/firebolt-apis/commit/4666a5ee56846f14dd1ba79dab82891505b5a2ec))
+
+# [1.0.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.7...v1.0.0-next.1) (2023-11-01)
+
+
+### Bug Fixes
+
+* CI looking for legacy 0.x version ([923d02a](https://github.com/rdkcentral/firebolt-apis/commit/923d02ae96716a5272c5507e864f366012824642))
+* Update schemas & 1.0.0 version! ([#200](https://github.com/rdkcentral/firebolt-apis/issues/200)) ([ea29f33](https://github.com/rdkcentral/firebolt-apis/commit/ea29f3323a22ffa36904bdc6cf6e76a31fa8cb76))
+
+
+### BREAKING CHANGES
+
+* This is not really a breaking change, but 1.0 release!!!
+
+# [0.18.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.6...v0.18.0-next.7) (2023-10-30)
+
+
+### Bug Fixes
+
+* schemas version upgraded to 2.0.0-next.1 ([#199](https://github.com/rdkcentral/firebolt-apis/issues/199)) ([b0fb8cf](https://github.com/rdkcentral/firebolt-apis/commit/b0fb8cfbda6bbef055000dc9911f344ab9ee8771))
+
+# [0.18.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.5...v0.18.0-next.6) (2023-10-30)
+
+
+### Bug Fixes
+
+* Permission schema with Capability as required ([74d9de9](https://github.com/rdkcentral/firebolt-apis/commit/74d9de9b125baffb415e11ba3888c1c464cf5b12))
+
+# [0.18.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.4...v0.18.0-next.5) (2023-10-27)
+
+
+### Features
+
+* Play Intent ([#151](https://github.com/rdkcentral/firebolt-apis/issues/151)) ([d1ddf3f](https://github.com/rdkcentral/firebolt-apis/commit/d1ddf3fb3b1f758315686ad2f6dc57c2b270f33a))
+
+# [0.18.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.3...v0.18.0-next.4) (2023-10-24)
+
+
+### Bug Fixes
+
+* Account.session params to be mandatory ([#196](https://github.com/rdkcentral/firebolt-apis/issues/196)) ([fc5c638](https://github.com/rdkcentral/firebolt-apis/commit/fc5c63886d9b4eb30b32c1edc75f0f6afe80a827))
+
+# [0.18.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.2...v0.18.0-next.3) (2023-10-10)
+
+
+### Bug Fixes
+
+* Updated Discovery.launch example with xrn:firebolt:application-type ([#187](https://github.com/rdkcentral/firebolt-apis/issues/187)) ([4dbbab3](https://github.com/rdkcentral/firebolt-apis/commit/4dbbab3d9fa68c0e5185ca72fd0170bae8a30139))
+
 # [0.18.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v0.18.0-next.1...v0.18.0-next.2) (2023-09-26)
 
 
