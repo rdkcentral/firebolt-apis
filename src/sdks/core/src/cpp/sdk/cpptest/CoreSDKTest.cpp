@@ -1230,7 +1230,7 @@ void CoreSDKTest::DiscoveryLaunch()
         std::optional<std::string> appContentData;
         intent.value().data.options = std::make_optional<Firebolt::Intents::TuneIntentDataOptions>();
         intent.value().data.options.value().restartCurrentProgram = true;
-        intent.value().context.source = Firebolt::Intents::IntentContextSource::VOICE;
+        intent.value().context.source = "voice";
         cout << "Calling Discovery Launch TuneIntent method " << endl;
         bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
         if (error == Firebolt::Error::None) {
@@ -1243,9 +1243,9 @@ void CoreSDKTest::DiscoveryLaunch()
     { 
         std::optional<Firebolt::Intents::EntityIntent> intent = std::make_optional<Firebolt::Intents::EntityIntent>();
         intent.value().action = "entity";
-        intent.value().context.source = Firebolt::Intents::IntentContextSource::VOICE;
+        intent.value().context.source = "voice";
         intent.value().data = "{\"entityId\":\"example-movie-id\",\"entityType\":\"program\",\"programType\":\"movie\"}";
-        intent.value().context.source = Firebolt::Intents::IntentContextSource::VOICE;
+        intent.value().context.source = "voice";
         cout << "Calling Discovery Launch EntityIntent method " << endl;
         bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
         if (error == Firebolt::Error::None) {
@@ -1258,7 +1258,7 @@ void CoreSDKTest::DiscoveryLaunch()
     {
         std::optional<Firebolt::Intents::HomeIntent> intent = std::make_optional<Firebolt::Intents::HomeIntent>();
         intent.value().action = "home";
-        intent.value().context.source = Firebolt::Intents::IntentContextSource::VOICE;
+        intent.value().context.source = "voice";
         cout << "Calling Discovery Launch HomeIntent method " << endl;
         bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
         if (error == Firebolt::Error::None) {

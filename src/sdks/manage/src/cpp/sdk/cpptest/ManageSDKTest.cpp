@@ -147,8 +147,8 @@ void ManageSDKTest::ResetAdvertisingIdentifier()
 void ManageSDKTest::SetAccountSession()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    std::optional<std::string> token = "Test";
-    std::optional<int32_t> expiresIn = 60;
+    std::string token = "Test";
+    int32_t expiresIn = 60;
     Firebolt::IFireboltAccessor::Instance().AccountInterface().session(token, expiresIn, &error);
     if (error == Firebolt::Error::None) {
         cout << "Set Account Session is success" << endl;
