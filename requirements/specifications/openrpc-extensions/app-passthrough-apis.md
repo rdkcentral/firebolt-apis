@@ -51,6 +51,9 @@ If the app provided method has an `event` tag then the provider method **MUST** 
 If an app provided method has no provider method then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
 
 ## 4. Selecting the best provider app
+
+**TODO**: This entire section should be moved into a per-device config for the capability, and not specified in the OpenRPC.
+
 A provider method's `capabilites` tag **MAY** have the `x-lifecycle` property which denotes which lifecycle states the providing app is allowed to be in during an app provided transaction.
 
 If the `x-lifecycle` property is not present then it **MUST** be assumed to be `["foreground", "background", "inactive"]` for the remainder of this section.
