@@ -1086,7 +1086,7 @@ void CoreSDKTest::DiscoveryEntityInfo()
     {
         result.entity.identifiers.entityId = "345";
         result.entity.title = "Cool Running";
-        result.entity.entityType = "program";
+        result.entity.entityType = Firebolt::Entertainment::EntityInfoEntityType::PROGRAM;
         result.entity.programType = Firebolt::Entertainment::ProgramType::MOVIE;
         result.entity.synopsis = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.";
         result.entity.releaseDate = "1993-01-01T00:00:00.000Z";
@@ -1130,7 +1130,7 @@ void CoreSDKTest::DiscoveryEntityInfo()
         Firebolt::Entertainment::EntityInfo entityInfo;
         entityInfo.identifiers.entityId = "345";
         entityInfo.title = "Cool Runnings Trailer";
-        entityInfo.entityType = "program";
+        entityInfo.entityType = Firebolt::Entertainment::EntityInfoEntityType::PROGRAM;
         entityInfo.programType = Firebolt::Entertainment::ProgramType::PREVIEW;
         entityInfo.releaseDate = "1993-01-01T00:00:00.000Z";
         entityInfo.waysToWatch = std::make_optional<std::vector<Firebolt::Entertainment::WayToWatch>>();
@@ -1166,7 +1166,7 @@ void CoreSDKTest::DiscoveryPurchasedContent()
     Firebolt::Entertainment::EntityInfo entityInfo;
     entityInfo.identifiers.entityId = "345";
     entityInfo.title = "Cool Runnings";
-    entityInfo.entityType = "program";
+    entityInfo.entityType = Firebolt::Entertainment::EntityInfoEntityType::PROGRAM;
     entityInfo.programType = Firebolt::Entertainment::ProgramType::MOVIE;
     entityInfo.synopsis = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.";
     entityInfo.releaseDate = "1993-01-01T00:00:00.000Z";
