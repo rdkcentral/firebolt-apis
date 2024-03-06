@@ -19,7 +19,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      # Checkout/install project
+      #  Checkout/install project
       - name: Checkout
         uses: actions/checkout@v2
         with:
