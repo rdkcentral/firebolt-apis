@@ -80,7 +80,6 @@
             "required": [
                 "identifiers",
                 "entityType",
-                "programType",
                 "title"
             ],
             "properties": {

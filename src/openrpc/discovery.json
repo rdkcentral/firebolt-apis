@@ -1467,6 +1467,136 @@
           }
         }
       ]
+    },
+    {
+      "name": "userInterest",
+      "summary": "Notify the platform that content was marked as interesting to the user.",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:discovery:interest"
+        }
+      ],
+      "params": [
+        {
+          "name": "type",
+          "required": true,
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/UserInterestType"
+          },
+          "summary": "The entity Id of the watched content."
+        },
+        {
+          "name": "entity",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
+          }
+        }
+      ],
+      "result": {
+        "name": "default",
+        "schema": {
+          "type": "null"
+        }
+      },
+      "examples": [
+        {
+          "name": "Notify the platform of interest.",
+          "params": [
+            {
+              "name": "type",
+              "value": "interest"
+            },
+            {
+              "name": "entity",
+              "value": {
+                "identifiers": {
+                  "entityId": "xyz"
+                },
+                "entityType": "program",
+                "programType": "movie",
+                "title": "Interesting Movie Title"
+              }
+            }
+          ],
+          "result": {
+            "name": "default",
+            "value": null
+          }
+        },
+        {
+          "name": "Notify the platform of disinterest.",
+          "params": [
+            {
+              "name": "type",
+              "value": "disinterest"
+            },
+            {
+              "name": "entity",
+              "value": {
+                "identifiers": {
+                  "entityId": "xyz"
+                },
+                "entityType": "program",
+                "programType": "movie",
+                "title": "Uninteresting Movie Title"
+              }
+            }
+          ],
+          "result": {
+            "name": "default",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "onRequestUserInterest",
+      "summary": "Invoked when the platform is requesting metadata for content that the user finds interesting.",
+      "tags": [
+        {
+          "name": "event",
+          "x-response": {
+            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo",
+            "examples": [
+              {
+                  "identifiers": {
+                    "entityId": "xyz"
+                  },
+                  "entityType": "program",
+                  "programType": "movie",
+                  "title": "Interesting Movie Title"
+              }
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:discovery:interest"
+        }
+      ],
+      "params": [],
+      "result": {
+        "name": "request",
+        "schema": {
+          "$ref": "#/components/schemas/UserInterestProviderRequest"
+        }
+      },
+      "examples": [
+        {
+          "name": "Platform requests the currently displayed content.",
+          "params": [],
+          "result": {
+            "name": "request",
+            "value": {
+              "correlationId": "1",
+              "parameters": {
+                "type": "interest"
+              }
+            }
+          }
+        }
+      ]
     }
   ],
   "components": {
@@ -1785,6 +1915,36 @@
         "enum": [
           "xrn:firebolt:channel:any"
         ]
+      },
+      "UserInterestProviderRequest": {
+        "title": "UserInterestProviderRequest",
+        "type": "object",
+        "required": [
+          "correlationId",
+          "parameters"
+        ],
+        "properties": {
+          "correlationId": {
+            "type": "string",
+            "description": "An id to correlate the provider response with this request"
+          },
+          "parameters": {
+            "description": "The request to initiate a user interest session",
+            "$ref": "#/components/schemas/UserInterestParameters"
+          }
+        }
+      },
+      "UserInterestParameters": {
+        "title": "UserInterestParameters",
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/UserInterestType"
+          }
+        }
       }
     }
   }
