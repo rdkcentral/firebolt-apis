@@ -1,3 +1,10 @@
+## [1.1.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.1-next.1...v1.1.1-next.2) (2024-03-06)
+
+
+### Bug Fixes
+
+* Add PlaylistEntity to EntityIntent ([9769d6d](https://github.com/rdkcentral/firebolt-apis/commit/9769d6d7d43f1d61dfcda16ba4806175c5cf7658))
+
 ## [1.1.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.1.1-next.1) (2024-02-28)
 
 
