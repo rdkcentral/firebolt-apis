@@ -1,0 +1,343 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Content",
+        "version": "0.0.0",
+        "description": ""
+    },
+    "methods": [
+        {
+            "name": "requestDetails",
+            "tags": [
+                {
+                    "name": "push-pull",
+                    "x-subscriber-type": "global"
+                },
+                {
+                    "name": "capabilities",
+                    "x-provided-by": "Discovery.onRequestDetails",
+                    "x-uses": [
+                        "xrn:firebolt:capability:discovery:entity-info"
+                    ]
+                }
+            ],
+            "summary": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow.",
+            "description": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow. Includes information about the program entity and its relevant associated entities, such as extras, previews, and, in the case of TV series, seasons and episodes.\n\nSee the `EntityInfo` and `WayToWatch` data structures below for more information.\n\nThe app only needs to implement Pull support for `entityInfo` at this time.",
+            "params": [
+                {
+                    "name": "entityId",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "result": {
+                "name": "details",
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/DetailsResult"
+                },
+                "summary": "The entityInfo data."
+            },
+            "examples": [
+                {
+                    "name": "Send entity info for a movie to the platform.",
+                    "params": [
+                        {
+                            "name": "entityId",
+                            "value": "345"
+                        }
+                    ],
+                    "result": {
+                        "name": "details",
+                        "value": {
+                            "expires": "2025-01-01T00:00:00.000Z",
+                            "details": {
+                                "identifiers": {
+                                    "entityId": "345",
+                                    "entityType": "program",
+                                    "programType": "movie"
+                                },
+                                "info": {
+                                    "title": "Cool Runnings",
+                                    "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+                                    "releaseDate": "1993-01-01T00:00:00.000Z",
+                                    "contentRatings": [
+                                        {
+                                            "scheme": "US-Movie",
+                                            "rating": "PG"
+                                        },
+                                        {
+                                            "scheme": "CA-Movie",
+                                            "rating": "G"
+                                        }
+                                    ]
+                                },
+                                "waysToWatch": [
+                                    {
+                                        "identifiers": {
+                                            "assetId": "123"
+                                        },
+                                        "expires": "2025-01-01T00:00:00.000Z",
+                                        "entitled": true,
+                                        "entitledExpires": "2025-01-01T00:00:00.000Z",
+                                        "offeringType": "buy",
+                                        "price": 2.99,
+                                        "videoQuality": [
+                                            "UHD"
+                                        ],
+                                        "audioProfile": [
+                                            "dolbyAtmos"
+                                        ],
+                                        "audioLanguages": [
+                                            "en"
+                                        ],
+                                        "closedCaptions": [
+                                            "en"
+                                        ],
+                                        "subtitles": [
+                                            "es"
+                                        ],
+                                        "audioDescriptions": [
+                                            "en"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Send entity info for a movie with a trailer to the platform.",
+                    "params": [
+                        {
+                            "name": "entityId",
+                            "value": "345"
+                        }
+                    ],
+                    "result": {
+                        "name": "details",
+                        "value": {
+                            "expires": "2025-01-01T00:00:00.000Z",
+                            "details": {
+                                "identifiers": {
+                                    "entityId": "345",
+                                    "entityType": "program",
+                                    "programType": "movie"
+                                },
+                                "info": {
+                                    "title": "Cool Runnings",
+                                    "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+                                    "releaseDate": "1993-01-01T00:00:00.000Z",
+                                    "contentRatings": [
+                                        {
+                                            "scheme": "US-Movie",
+                                            "rating": "PG"
+                                        },
+                                        {
+                                            "scheme": "CA-Movie",
+                                            "rating": "G"
+                                        }
+                                    ]
+                                },
+                                "waysToWatch": [
+                                    {
+                                        "identifiers": {
+                                            "assetId": "123"
+                                        },
+                                        "expires": "2025-01-01T00:00:00.000Z",
+                                        "entitled": true,
+                                        "entitledExpires": "2025-01-01T00:00:00.000Z",
+                                        "offeringType": "buy",
+                                        "price": 2.99,
+                                        "videoQuality": [
+                                            "UHD"
+                                        ],
+                                        "audioProfile": [
+                                            "dolbyAtmos"
+                                        ],
+                                        "audioLanguages": [
+                                            "en"
+                                        ],
+                                        "closedCaptions": [
+                                            "en"
+                                        ],
+                                        "subtitles": [
+                                            "es"
+                                        ],
+                                        "audioDescriptions": [
+                                            "en"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "requestPurchases",
+            "tags": [
+                {
+                    "name": "push-pull"
+                },
+                {
+                    "name": "capabilities",
+                    "x-provided-by": "Discovery.onRequestPurchases",
+                    "x-uses": [
+                        "xrn:firebolt:capability:discovery:purchased-content"
+                    ]
+                }
+            ],
+            "summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
+            "params": [],
+            "result": {
+                "name": "purchases",
+                "required": true,
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/DetailsArrayResult"
+                },
+                "summary": "The data for the purchasedContent"
+            },
+            "examples": [
+                {
+                    "name": "Inform the platform of the user's purchased content",
+                    "params": [],
+                    "result": {
+                        "name": "purchases",
+                        "value": {
+                            "totalCount": 10,
+                            "expires": "2025-01-01T00:00:00.000Z",
+                            "entries": [
+                                {
+                                    "identifiers": {
+                                        "entityId": "345",
+                                        "entityType": "program",
+                                        "programType": "movie"
+                                    },
+                                    "info": {
+                                        "title": "Cool Runnings",
+                                        "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+                                        "releaseDate": "1993-01-01T00:00:00.000Z",
+                                        "contentRatings": [
+                                            {
+                                                "scheme": "US-Movie",
+                                                "rating": "PG"
+                                            },
+                                            {
+                                                "scheme": "CA-Movie",
+                                                "rating": "G"
+                                            }
+                                        ]
+                                    },
+                                    "waysToWatch": [
+                                        {
+                                            "identifiers": {
+                                                "assetId": "123"
+                                            },
+                                            "expires": "2025-01-01T00:00:00.000Z",
+                                            "entitled": true,
+                                            "entitledExpires": "2025-01-01T00:00:00.000Z",
+                                            "offeringType": "buy",
+                                            "price": 2.99,
+                                            "videoQuality": [
+                                                "UHD"
+                                            ],
+                                            "audioProfile": [
+                                                "dolbyAtmos"
+                                            ],
+                                            "audioLanguages": [
+                                                "en"
+                                            ],
+                                            "closedCaptions": [
+                                                "en"
+                                            ],
+                                            "subtitles": [
+                                                "es"
+                                            ],
+                                            "audioDescriptions": [
+                                                "en"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "description": "Return content purchased by the user, such as rentals and electronic sell through purchases.\n\nThe app should return the user's 100 most recent purchases in `entries`. The total count of purchases must be provided in `count`. If `count` is greater than the total number of `entries`, the UI may provide a link into the app to see the complete purchase list.\n\nThe `EntityInfo` object returned is not required to have `waysToWatch` populated, but it is recommended that it do so in case the UI wants to surface additional information on the purchases screen.\n\nThe app should implement both Push and Pull methods for `purchasedContent`.\n\nThe app should actively push `purchasedContent` when:\n\n*  The app becomes Active.\n*  When the state of the purchasedContent set has changed.\n*  The app goes into Inactive or Background state, if there is a chance a change event has been missed."
+        },
+        {
+            "name": "requestUserInterest",
+            "tags": [
+                {
+                    "name": "push-pull"
+                },
+                {
+                    "name": "capabilities",
+                    "x-provided-by": "Discovery.onRequestUserInterest",
+                    "x-uses": [
+                        "xrn:firebolt:capability:discovery:entity-info"
+                    ]
+                }
+            ],
+            "summary": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow.",
+            "description": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow. Includes information about the program entity and its relevant associated entities, such as extras, previews, and, in the case of TV series, seasons and episodes.\n\nSee the `EntityInfo` and `WayToWatch` data structures below for more information.\n\nThe app only needs to implement Pull support for `entityInfo` at this time.",
+            "params": [
+                {
+                    "name": "type",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "result": {
+                "name": "entity",
+                "required": true,
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+                },
+                "summary": "The EntityDetails data."
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "type",
+                            "value": "interest"
+                        }
+                    ],
+                    "result": {
+                        "name": "entity",
+                        "value": {
+                            "identifiers": {
+                                "entityId": "345",
+                                "entityType": "program",
+                                "programType": "movie"
+                            },
+                            "info": {
+                                "title": "Cool Runnings",
+                                "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+                                "releaseDate": "1993-01-01T00:00:00.000Z",
+                                "contentRatings": [
+                                    {
+                                        "scheme": "US-Movie",
+                                        "rating": "PG"
+                                    },
+                                    {
+                                        "scheme": "CA-Movie",
+                                        "rating": "G"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
