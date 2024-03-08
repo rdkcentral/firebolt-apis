@@ -108,7 +108,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
         run: |
           cd /tmp
-          git clone https://kschrief:$GITHUB_TOKEN@github.com/kschrief/firebolt.git ./firebolt-docs
+          git clone https://rdkcentral:$GITHUB_TOKEN@github.com/rdkcentral/firebolt.git ./firebolt-docs
       - name: Release docs to GitHub.io
         if: steps.check_build.outputs.files_exists == 'true' && (github.ref_name == 'main' || github.ref_name == 'next' || github.ref_name == 'next-major' || github.event_name == 'pull_request')
         env:
