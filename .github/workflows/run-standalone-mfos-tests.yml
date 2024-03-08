@@ -19,7 +19,7 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
-          EXCLUDED_METHODS: ${{ secrets.EXCLUDEDMETHODS }}
+          EXCLUDED_METHODS: ${{ secrets.EXCLUDED_METHODS }}
         run: |
           ./.github/workflows/utils.sh runTests
 
