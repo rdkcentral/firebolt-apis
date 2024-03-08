@@ -51,7 +51,7 @@ function runTests(){
         "navigateTo": {
           "action": "search",
           "data": {
-            "query": "{\"task\":\"runTest\",\"params\":{\"certification\":true,\"exceptionMethods\":[],\"methodsToBeExcluded\":[\"'"$EXCEPTION_METHODS"'\"]},\"action\":\"CORE\",\"context\":{\"communicationMode\":\"SDK\"},\"metadata\":{\"target\":\"MFOS\",\"targetVersion\":\"NIL\",\"deviceModel\":\"NIL\",\"fbVersion\":\"NA\"},\"asynchronous\":false,\"appType\":\"firebolt\"}"
+            "query": "{\"task\":\"runTest\",\"params\":{\"certification\":true,\"exceptionMethods\":[],\"methodsToBeExcluded\":[\"'"$EXCLUDED_METHODS"'\"]},\"action\":\"CORE\",\"context\":{\"communicationMode\":\"SDK\"},\"metadata\":{\"target\":\"MFOS\",\"targetVersion\":\"NIL\",\"deviceModel\":\"NIL\",\"fbVersion\":\"NA\"},\"asynchronous\":false,\"appType\":\"firebolt\"}"
           },
           "context": {
             "source": "voice"
