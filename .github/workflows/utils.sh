@@ -43,23 +43,7 @@ function runTests(){
   cd ..
 
   echo "curl request with runTest install on initialization"
-  response=$(curl -X POST -H "Content-Type: application/json" -d '{
-    "result": {
-      "lmt": 0,
-      "us_privacy": "1-N-",
-      "discovery": {
-        "navigateTo": {
-          "action": "search",
-          "data": {
-            "query": "{\"task\":\"runTest\",\"params\":{\"certification\":true,\"exceptionMethods\":[],\"methodsToBeExcluded\":[\"'"$EXCLUDED_METHODS"'\"]},\"action\":\"CORE\",\"context\":{\"communicationMode\":\"SDK\"},\"metadata\":{\"target\":\"MFOS\",\"targetVersion\":\"NIL\",\"deviceModel\":\"NIL\",\"fbVersion\":\"NA\"},\"asynchronous\":false,\"appType\":\"firebolt\"}"
-          },
-          "context": {
-            "source": "voice"
-          }
-        }
-      }
-    }
-  }' http://localhost:3333/api/v1/state/method/parameters.initialization/result)
+  response=$(curl -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
 
   echo "run mfos tests in a headless browser"
   npm install puppeteer
