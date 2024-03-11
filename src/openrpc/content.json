@@ -279,7 +279,7 @@
                     "name": "capabilities",
                     "x-provided-by": "Discovery.onRequestUserInterest",
                     "x-uses": [
-                        "xrn:firebolt:capability:discovery:entity-info"
+                        "xrn:firebolt:capability:discovery:user-interest"
                     ]
                 }
             ],
