@@ -48,8 +48,8 @@ together for easier forwarding to appropriate components.
     - [3.6.3. Scroll Intent](#363-scroll-intent)
     - [3.6.4. Back Intent](#364-back-intent)
     - [3.6.5. Exit Intent](#365-exit-intent)
-- [4. Section Intents](#4-section-intents)
-  - [4.1. Content Discovery Section Intents](#41-content-discovery-section-intents)
+- [4. Launch Intents](#4-launch-intents)
+  - [4.1. Content Discovery Launch Intents](#41-content-discovery-launch-intents)
   - [4.2. Device Settings Launch Intent](#42-device-settings-launch-intent)
 
 ## 3. Control Intents
@@ -85,6 +85,29 @@ This intent allows a user to turn the device on or off.
 }
 ```
 
+Additionally, this intent may specify a toggle:
+
+```json
+{
+    "type": "xrn:firebolt:intent:platform:power",
+    "target": "client",
+    "metadata": {
+        "assistant": "XFINITY",
+        "lang": "eng-USA",
+        "micType": "NEAR_FIELD"
+    },
+    "intent": {
+        "action": "power",
+        "data": {
+            "toggle": true
+        },
+        "context": {
+            "source": "voice"
+        }
+    }
+}
+```
+
 Additionally, this intent allows a user to set a timer for turning off
 the power, aka a "sleep timer."
 
@@ -111,13 +134,10 @@ seconds:
         }
     }
 }
-
 ```
 
 While it may not be implemented by all platforms, this could also be
 used to turn on the TV with a timer.
-
-**TODO**: Current spec supports toggle. i think we can drop this, though.
 
 ### 3.2. Volume Intents
 
@@ -373,10 +393,9 @@ relative field:
 }
 ```
 
-For relative seeking, the seconds value may be a positive or negative
-value.
+For relative seeking, the seconds value may be a positive or negative value.
 
-**TODO**: currently published spec has seconds always positive, and a `direction` enum... can we drop that?
+If a relative seek intent with a seconds value of `0` is received, the platform **SHOULD** ignore it, rather than rebuffering at the current position.
 
 #### 3.4.3. Trick Play Intent
 
@@ -435,7 +454,7 @@ This intent allows a user to turn closed captions on or off.
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "closedcaptions",
+        "action": "closed-captions",
         "data": {
             "value": true | false
         },
@@ -459,7 +478,7 @@ Additionally, this intent may specify a toggle:
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "closedcaptions",
+        "action": "closed-captions",
         "data": {
             "toggle": true
         },
@@ -542,6 +561,30 @@ The intent **MAY** specify `speed` `number` property that specifies a speed from
 }
 ```
 
+When providing a `speed` this intent **MAY** also set the `relative` property to `true` denoting an increase or decrease in speed. The speed value may be between -5 and 5 inclusive:
+
+```json
+{
+    "type": "xrn:firebolt:intent:platform:accessibility",
+    "target": "client",
+    "metadata": {
+        "assistant": "XFINITY",
+        "lang": "eng-USA",
+        "micType": "NEAR_FIELD"
+    },
+    "intent": {
+        "action": "voice-guidance",
+        "data": {
+            "speed": -1,
+            "relative": true
+        },
+        "context": {
+            "source": "voice"
+        }
+    }
+}
+```
+
 The voice guidance intent **MUST** have only one property, `speed`, `toggle`, `value` and **MUST NOT** comebine them in a single intent.
 
 Finally, the intent **MAY** specify a `verbosity` property, which **MUST** use one of the following values is provided:
@@ -590,7 +633,7 @@ This intent allows a user to turn audio descriptions of content on or off.
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "audiodescriptions",
+        "action": "audio-descriptions",
         "data": {
             "value": true | false
         },
@@ -614,7 +657,7 @@ Additionally, this intent may specify a toggle:
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "audiodescriptions",
+        "action": "audio-descriptions",
         "data": {
             "toggle": true
         },
@@ -905,30 +948,16 @@ inactive state.
 }
 ```
 
-## 4. Section Intents
+## 4. Launch Intents
 
-The section intent is already defined as part of Firebolt.
+If a Firebolt app wants to launch the main or settings experience of the device, it can use one of the following abstract appIds with the `launch` intent.
 
-### 4.1. Content Discovery Section Intents
+### 4.1. Content Discovery Launch Intents
 
 The following section IDs will be used, with the Firebolt application
 type as the target App ID:
 
 `xrn:firebolt:application-type:main`
-
-| Section    | Description                                                         |
-| ---------- | ------------------------------------------------------------------- |
-| guide      | Launches a program guide, typically linear, in the main experience. |
-| menu       | Launches a top-level menu, or home page, of the main experience.    |
-| recordings | Launches a list of user recordings in the main experience.          |
-| favorites  | Launches a list of user favorites in the main experience.           |
-| purchases  | Launches a list of user purchased content in the main experience.   |
-| playlist   | Launches a list of content the user has saved for future playback.  |
-| recent     | Launches a list of recently watched content.                        |
-
-Note that not every Firebolt Distributor will have all of these
-features. For unsupported features, these intents should simply launch
-the main aggregated experience UI.
 
 ### 4.2. Device Settings Launch Intent
 
@@ -936,7 +965,5 @@ To launch the settings UI, a Launch Intent will be used, with the
 Firebolt application type:
 
 `xrn:firebolt:application-type:settings`
-
-Currently there are no standardized sections for the settings App.
 
 
