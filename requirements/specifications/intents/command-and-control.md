@@ -200,8 +200,6 @@ optional relative field:
 The value is a positive or negative integer that is relative to a scale
 of 0-100.
 
-**TODO**: Firebolt currently specifies the value as 0-1
-
 Firebolt will not support complicated relative changes, e.g. "Set the
 volume to 50% *of what it currently is\...*"
 
@@ -325,8 +323,6 @@ Media:
 }
 ```
 
-**TODO**: this is different than what we officially published. We need to track down if anyone implemented the old Pause Intent. If so, we need to support pause w/ value: false to mean resume.
-
 If the action is pause, then the currently playing media should be
 paused, with the frames on-screen and the video decoder ready to resume.
 
@@ -441,8 +437,6 @@ These intents manipulate accessibility features on the device.
 #### 3.5.1. Closed Captions Intent
 
 This intent allows a user to turn closed captions on or off.
-
-**TODO**: there is no hyphen in closed captions because it was already spec'd w/out one previously. Need to check if any platforms implemented it or not.
 
 ```json
 {
@@ -619,8 +613,6 @@ Finally, the intent **MAY** specify a `verbosity` property, which **MUST** use o
 #### 3.5.3. Audio Descritions Intent
 
 This intent allows a user to turn audio descriptions of content on or off.
-
-**TODO**: there is no hyphen in closed captions because it was already spec'd w/out one previously. Need to check if any platforms implemented it or not.
 
 
 ```json
