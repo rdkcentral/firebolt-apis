@@ -41,7 +41,7 @@ together for easier forwarding to appropriate components.
     - [3.5.2. Voice Guidance Intent](#352-voice-guidance-intent)
     - [3.5.3. Audio Descritions Intent](#353-audio-descritions-intent)
     - [3.5.4. High Contrast Intent](#354-high-contrast-intent)
-    - [3.5.5. Text Magnification Intent](#355-text-magnification-intent)
+    - [3.5.5. Screen Magnification Intent](#355-screen-magnification-intent)
   - [3.6. Interaction Intents](#36-interaction-intents)
     - [3.6.1. Focus Intent](#361-focus-intent)
     - [3.6.2. Select Intent](#362-select-intent)
@@ -51,9 +51,6 @@ together for easier forwarding to appropriate components.
 - [4. Section Intents](#4-section-intents)
   - [4.1. Content Discovery Section Intents](#41-content-discovery-section-intents)
   - [4.2. Device Settings Launch Intent](#42-device-settings-launch-intent)
-- [5. Volume Notes](#5-volume-notes)
-  - [5.1. Jump Notes](#51-jump-notes)
-  - [5.2. Core SDK APIs](#52-core-sdk-apis)
 
 ## 3. Control Intents
 
@@ -120,6 +117,8 @@ seconds:
 While it may not be implemented by all platforms, this could also be
 used to turn on the TV with a timer.
 
+**TODO**: Current spec supports toggle. i think we can drop this, though.
+
 ### 3.2. Volume Intents
 
 Volume Intents control the audio level of the device.
@@ -181,14 +180,17 @@ optional relative field:
 The value is a positive or negative integer that is relative to a scale
 of 0-100.
 
+**TODO**: Firebolt currently specifies the value as 0-1
+
 Firebolt will not support complicated relative changes, e.g. "Set the
 volume to 50% *of what it currently is\...*"
-
-**Note**: Both Google & Alexa support either 0-10 or 0% to 100%.
 
 Firebolt uses a size of 0-100 for this intent. It\'s up to each voice
 integration if it wants to convert "5" to "50%" before generating
 the intent, but convenience transformations like this are recommended.
+
+Whether or not a TV uses logarithmic or linear scale is irrelevant to
+the VolumeIntent schema.
 
 #### 3.2.2. Mute Intent
 
@@ -303,8 +305,7 @@ Media:
 }
 ```
 
-**TODO**: this is different than what we officially published. We need
-to track down if anyone implemented the old Pause Intent.
+**TODO**: this is different than what we officially published. We need to track down if anyone implemented the old Pause Intent. If so, we need to support pause w/ value: false to mean resume.
 
 If the action is pause, then the currently playing media should be
 paused, with the frames on-screen and the video decoder ready to resume.
@@ -343,7 +344,6 @@ in the currently playing media.
         }
     }
 }
-
 ```
 
 The seconds value is a positive integer representing where to seek.
@@ -371,11 +371,12 @@ relative field:
         }
     }
 }
-
 ```
 
 For relative seeking, the seconds value may be a positive or negative
 value.
+
+**TODO**: currently published spec has seconds always positive, and a `direction` enum... can we drop that?
 
 #### 3.4.3. Trick Play Intent
 
@@ -422,6 +423,8 @@ These intents manipulate accessibility features on the device.
 
 This intent allows a user to turn closed captions on or off.
 
+**TODO**: there is no hyphen in closed captions because it was already spec'd w/out one previously. Need to check if any platforms implemented it or not.
+
 ```json
 {
     "type": "xrn:firebolt:intent:platform:accessibility",
@@ -432,7 +435,7 @@ This intent allows a user to turn closed captions on or off.
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "closedCaptions",
+        "action": "closedcaptions",
         "data": {
             "value": true | false
         },
@@ -456,7 +459,7 @@ Additionally, this intent may specify a toggle:
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "closedCaptions",
+        "action": "closedcaptions",
         "data": {
             "toggle": true
         },
@@ -481,7 +484,7 @@ This intent allows a user to turn voice guidance on or off.
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "voiceGuidance",
+        "action": "voice-guidance",
         "data": {
             "value": true | false
         },
@@ -505,7 +508,7 @@ Additionally, this intent may specify a toggle:
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "voiceGuidance",
+        "action": "voice-guidance",
         "data": {
             "toggle": true
         },
@@ -516,9 +519,7 @@ Additionally, this intent may specify a toggle:
 }
 ```
 
-#### 3.5.3. Audio Descritions Intent
-
-This intent allows a user to turn voice guidance on or off.
+The intent **MAY** specify `speed` `number` property that specifies a speed from 0 to 10:
 
 ```json
 {
@@ -530,7 +531,64 @@ This intent allows a user to turn voice guidance on or off.
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "audioDescription",
+        "action": "voice-guidance",
+        "data": {
+            "speed": 2
+        },
+        "context": {
+            "source": "voice"
+        }
+    }
+}
+```
+
+The voice guidance intent **MUST** have only one property, `speed`, `toggle`, `value` and **MUST NOT** comebine them in a single intent.
+
+Finally, the intent **MAY** specify a `verbosity` property, which **MUST** use one of the following values is provided:
+
+- `low`
+- `high`
+
+```json
+{
+    "type": "xrn:firebolt:intent:platform:accessibility",
+    "target": "client",
+    "metadata": {
+        "assistant": "XFINITY",
+        "lang": "eng-USA",
+        "micType": "NEAR_FIELD"
+    },
+    "intent": {
+        "action": "voice-guidance",
+        "data": {
+            "value": true,
+            "verbosity": "low"
+        },
+        "context": {
+            "source": "voice"
+        }
+    }
+}
+```
+
+#### 3.5.3. Audio Descritions Intent
+
+This intent allows a user to turn audio descriptions of content on or off.
+
+**TODO**: there is no hyphen in closed captions because it was already spec'd w/out one previously. Need to check if any platforms implemented it or not.
+
+
+```json
+{
+    "type": "xrn:firebolt:intent:platform:accessibility",
+    "target": "client",
+    "metadata": {
+        "assistant": "XFINITY",
+        "lang": "eng-USA",
+        "micType": "NEAR_FIELD"
+    },
+    "intent": {
+        "action": "audiodescriptions",
         "data": {
             "value": true | false
         },
@@ -554,7 +612,7 @@ Additionally, this intent may specify a toggle:
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "audioDescription",
+        "action": "audiodescriptions",
         "data": {
             "toggle": true
         },
@@ -579,7 +637,7 @@ This intent allows a user to turn high contrast mode on or off.
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "highContrast",
+        "action": "high-contrast",
         "data": {
             "value": true | false
         },
@@ -603,7 +661,7 @@ Additionally, this intent may specify a toggle:
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "highContrast",
+        "action": "high-contrast",
         "data": {
             "toggle": true
         },
@@ -614,9 +672,9 @@ Additionally, this intent may specify a toggle:
 }
 ```
 
-#### 3.5.5. Text Magnification Intent
+#### 3.5.5. Screen Magnification Intent
 
-This intent allows a user to turn text magnification on or off.
+This intent allows a user to turn screen magnification on or off.
 
 ```json
 {
@@ -628,7 +686,7 @@ This intent allows a user to turn text magnification on or off.
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "textMagnification",
+        "action": "screen-magnification",
         "data": {
             "value": true | false
         },
@@ -652,7 +710,7 @@ Additionally, this intent may specify a toggle:
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "textMagnification",
+        "action": "screen-magnification",
         "data": {
             "toggle": true
         },
@@ -675,7 +733,7 @@ Finally, this intent may specify a magnification scale as a number:
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "textMagnification",
+        "action": "screen-magnification",
         "data": {
             "scale": 2.5
         },
@@ -852,9 +910,9 @@ The section intent is already defined as part of Firebolt.
 ### 4.1. Content Discovery Section Intents
 
 The following section IDs will be used, with the Firebolt application
-type:
+type as the target App ID:
 
-xrn:firebolt:application-type:main
+`xrn:firebolt:application-type:main`
 
 | Section    | Description                                                         |
 | ---------- | ------------------------------------------------------------------- |
@@ -875,37 +933,8 @@ the main aggregated experience UI.
 To launch the settings UI, a Launch Intent will be used, with the
 Firebolt application type:
 
-xrn:firebolt:application-type:settings
+`xrn:firebolt:application-type:settings`
 
 Currently there are no standardized sections for the settings App.
 
-## 5. Volume Notes
 
-Whether or not a TV uses logarithmic or linear scale is irrelevant to
-the Intent schema.
-
-### 5.1. Jump Notes
-
-For the feature of instantly moving forward/backwards by \<N\> seconds I
-prefer *not* to call this "skip" because in the AVOD world,
-"skip"
-means to completely bypass an add or chapter (like next track of a CD
-player). I\'ve used "jump" in the past, but I\'m open to other names.
-We could go with seek, and have a relative and absolute version?
-
-### 5.2. Core SDK APIs
-
-We need SDK APIs for some of these, since they\'re potentially surfaced
-to apps, e.g. channel scanning.
-
-Need App-facing SDK APIs for:
-
--   Seek (otherwise how to pass the value) - New API, maybe
-    MediaControl.onSeek
-
--   TrickPlay (how to pass the speed) - New API, maybe
-    MediaControl.onTrickPlay
-
--   Channel (how to pass direction) - Discovery.onNavigateTo
-
-Everything else is handled by the OS, i think.
