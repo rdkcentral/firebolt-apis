@@ -546,8 +546,10 @@ The voice guidance intent **MUST** have only one property, `speed`, `toggle`, `v
 
 Finally, the intent **MAY** specify a `verbosity` property, which **MUST** use one of the following values is provided:
 
-- `low`
-- `high`
+| Value  | Description |
+|--------|-------------|
+| `low`  | to select shorter response, less context, and less detail; can use abbreviations and can selectively skip words  |
+| `high` | to select longer response, more context, and more detail; full comprehensive readout and explicit reflectION of what is seen on screen |
 
 ```json
 {
