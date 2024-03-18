@@ -290,7 +290,14 @@
                     "name": "type",
                     "required": true,
                     "schema": {
-                        "type": "string"
+                        "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
+                    }
+                },
+                {
+                    "name": "reason",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
                     }
                 }
             ],
@@ -309,6 +316,10 @@
                         {
                             "name": "type",
                             "value": "interest"
+                        },
+                        {
+                            "name": "reason",
+                            "value": "playlist"
                         }
                     ],
                     "result": {

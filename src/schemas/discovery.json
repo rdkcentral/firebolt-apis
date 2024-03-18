@@ -101,6 +101,23 @@
             }
           }
         }
-      }        
+      },
+      "InterestType": {
+        "title": "InterestType",
+        "type": "string",
+        "enum": [
+          "interest",
+          "disinterest"
+        ]
+      },
+      "InterestReason": {
+        "title": "InterestReason",
+        "type": "string",
+        "enum": [
+          "playlist",
+          "reaction",
+          "recording"
+        ]
+      }
     }  
   }

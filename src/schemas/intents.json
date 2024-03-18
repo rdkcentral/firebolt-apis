@@ -104,9 +104,6 @@
                                 },
                                 {
                                     "$ref": "#/definitions/DialogIntent"
-                                },
-                                {
-                                    "$ref": "#/definitions/InterestedInIntent"
                                 }
                             ]
                         },
@@ -1791,63 +1788,7 @@
                 }
             ]
         },
-        "InterestedInIntent": {
-            "description": "A Firebolt compliant representation of a user's interest in a piece of content.",
-            "title": "InterestedInIntent",
-            "allOf": [
-                {
-                    "title": "InterestedInIntent",
-                    "$ref": "#/definitions/Intent"
-                },
-                {
-                    "title": "InterestedInIntent",
-                    "$ref": "#/definitions/IntentProperties"
-                },
-                {
-                    "title": "InterestedInIntent",
-                    "type": "object",
-                    "properties": {
-                        "action": {
-                            "const": "interestedIn"
-                        },
-                        "data": {
-                            "type": "object",
-                            "properties": {
-                                "appId": {
-                                    "type": "string"
-                                },
-                                "type": {
-                                    "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/UserInterestType"
-                                },
-                                "entity": {
-                                    "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
-                                }
-                            }
-                        }
-                    }
-                }
-            ],
-            "examples": [
-                {
-                    "action": "interestedIn",
-                    "data": {
-                        "appId": "coolapp",
-                        "type": "interest",
-                        "entity": {
-                            "identifiers": {
-                                "entityId": "xyz"
-                            },
-                            "entityType": "program",
-                            "programType": "movie",
-                            "title": "Interesting Movie Title"
-                        }
-                    },
-                    "context": {
-                        "source": "voice"
-                    }
-                }
-            ]
-        },        
+ 
         "Identifier": {
             "type": "string"
         },

@@ -21,8 +21,9 @@ import { Content } from "../../build/javascript/src/firebolt-discovery";
 
 test("Content.requestUserInterest()", () => {
   const expTime: number = new Date().getTime() + 100;
-  return Content.requestUserInterest(Content.InterestType.INTEREST).then((entity:Content.EntityInfo) => {
+  Content.requestDetails
+  return Content.requestUserInterest(Content.InterestType.INTEREST, Content.InterestReason.PLAYLIST).then((entity:Content.EntityDetails) => {
     expect(entity).toBeDefined()
-    expect(entity.title).toBe("Interesting Movie Title")
+    expect(entity.info.title).toBe("Cool Runnings")
   })
 });
