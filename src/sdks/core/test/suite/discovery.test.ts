@@ -150,3 +150,17 @@ test("clear()", () => {
   const result: boolean = Discovery.clear(-1000);
   expect(result).toBeFalsy();
 });
+
+test("details() provider", () => {
+  class myDetailsProvider implements Discovery.DetailsProvider {
+    details(parameters?: object, session?: Discovery.ProviderSession): Promise<Discovery.DetailsResult> {
+      return null
+    }
+  }
+
+  class myUserInterestProvider implements Discovery.UserInterestProvider {
+    userInterest(parameters?: object, session?: Discovery.ProviderSession): Promise<Discovery.EntityDetails> {
+      return null
+    }
+  }
+})
