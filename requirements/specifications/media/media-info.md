@@ -79,22 +79,31 @@ I want to know what my device *would* support if i upgraded my AV peripherals:
   - [1.3. As a first-party App developer](#13-as-a-first-party-app-developer)
 - [2. Table of Contents](#2-table-of-contents)
 - [3. Format MimeTypes](#3-format-mimetypes)
-- [4. Format Features](#4-format-features)
-- [5. Device Media Support](#5-device-media-support)
-  - [5.1. Negotiated Media Support](#51-negotiated-media-support)
-    - [5.1.1. Video Format Supported](#511-video-format-supported)
-    - [5.1.2. Audio Format Supported](#512-audio-format-supported)
-  - [5.2. Implicit Media Support](#52-implicit-media-support)
-- [6. Media Info](#6-media-info)
-  - [6.1. MediaInfo for current app](#61-mediainfo-for-current-app)
-    - [6.1.1. Video Format](#611-video-format)
-    - [6.1.2. Audio Format](#612-audio-format)
-  - [6.2. Global MediaInfo](#62-global-mediainfo)
-- [7. Device Media Settings](#7-device-media-settings)
-  - [7.1. Audio Settings](#71-audio-settings)
-  - [7.2. Video Settings](#72-video-settings)
-  - [7.3. Rialto](#73-rialto)
-- [8. Notes](#8-notes)
+- [4. Device Media Support](#4-device-media-support)
+  - [4.1. Negotiated Media Support](#41-negotiated-media-support)
+    - [4.1.1. Video Format Supported](#411-video-format-supported)
+    - [4.1.2. Audio Format Supported](#412-audio-format-supported)
+  - [4.2. Implicit Media Support](#42-implicit-media-support)
+    - [4.2.1. Video Format Possible](#421-video-format-possible)
+    - [4.2.2. Audio Format Possible](#422-audio-format-possible)
+- [5. Display Properties](#5-display-properties)
+  - [5.1. Display Width and Height](#51-display-width-and-height)
+  - [5.2. Current and Optimal Resolution](#52-current-and-optimal-resolution)
+  - [5.3. Supported Resolutions](#53-supported-resolutions)
+  - [5.4. Supported HDR Profiles](#54-supported-hdr-profiles)
+  - [5.5. Use Source Framerate](#55-use-source-framerate)
+- [6. Audio Output Properties](#6-audio-output-properties)
+  - [6.1. Mode](#61-mode)
+- [7. Media Info](#7-media-info)
+  - [7.1. MediaInfo for current app](#71-mediainfo-for-current-app)
+    - [7.1.1. Video Format](#711-video-format)
+    - [7.1.2. Audio Format](#712-audio-format)
+  - [7.2. Global MediaInfo](#72-global-mediainfo)
+    - [7.2.1. Active Video Formats](#721-active-video-formats)
+    - [7.2.2. Active Audio Formats](#722-active-audio-formats)
+- [8. Device Media Settings](#8-device-media-settings)
+  - [8.1. Audio Settings](#81-audio-settings)
+- [9. Notes](#9-notes)
 
 ## 3. Format MimeTypes
 The Firebolt `Media` module **MUST** have a `Formats` enumeration audio and video formats:
@@ -133,22 +142,7 @@ The Firebolt `Media` module **MUST** have a `Formats` enumeration audio and vide
 
 **TODO**: Atmos is not always MAT... MAT -> PCM version of Atmos. Can also be carried over AC4 EAC3 DolbyTrueHD
 
-## 4. Format Features
-The Firebolt `Media` module **MUST** have a `Features` enumeration audio and video format features:
-
-| Name                          | Value           | Notes |
-| ----------------------------- | --------------- | ----- |
-| `HDR`                         | `hdr`           | Aggregation of any features that starts with `HDR` |
-| `HDR_DOLBYVISION`             | `hdrDolbyVision`| Only true for the VIDEO_DOLBYVISION format  |
-| `HDR_HDR10`                   | `hdr10`         | Any format that supports HDR10 metadata    |
-| `HDR_HDR10PLUS`               | `hdr10plus`     | Any format that supports HDR10+ metadata   |
-| `HDR_ST2084`                  | `hdrSt2084`     | Any format that supports ST2084 color transfer |
-| `HDR_HLG`                     | `hdrHlg`        | Any format that supports HLG color transfer |
-
-TODO: maybe add AUDIO_DOLBYATOMS feature
-TODO: bring back Technicolor
-
-## 5. Device Media Support
+## 4. Device Media Support
 Apps need to know what types of media the device supports.
 
 There are two sets of supported media in question:
@@ -159,15 +153,15 @@ There are two sets of supported media in question:
 For example, a Firebolt device capable of Dolby Atmos connected to a soundbar that is only capable of Dolby Audio might want to display a notification to the user, e.g.:
 
 ```javascript
-const device = await Device.audioFormatPossible(Media.Formats.AUDIO_DOLBYATMOS)
-const negotiated = await Device.audioFormatSupported(Media.Formats.AUDIO_DOLBYATMOS)
+const device = await Device.audioFormatPossible(Media.Formats.AUDIO_DOLBY_MAT)
+const negotiated = await Device.audioFormatSupported(Media.Formats.AUDIO_DOLBY_MAT)
 
 if (device && !negotiated) {
   console.log("Warning, your soundbar does not support Dolby Atmos!")
 }
 ```
 
-### 5.1. Negotiated Media Support
+### 4.1. Negotiated Media Support
 Apps need to know what types of media support the current *device configuration*,
 e.g. a Firebolt STB connected to an HDMI television, is capable of.
 
@@ -176,15 +170,15 @@ return all possible values supported by the current device configuration.
 
 These values change and different AV inputs are activated or connected.
 
-#### 5.1.1. Video Format Supported
+#### 4.1.1. Video Format Supported
 
 The `Device` module **MUST** have a `videoFormatSupported` API that returns
 `true` or `false` depending on whether the format specified is supported by
 the current device configuration. This API **MUST** return `boolean`.
 
 ```javascript
-const hdr10plusWithH265 = videoFormatSupported(Media.Formats.VIDEO_H265_M10, [ Media.Features.HDR_HDR10Plus ], '1080p30')
-const hdr10plusWithVP9 = videoFormatSupported(Media.Formats.VIDEO_VP9_P2, [ Media.Features.HDR_HDR10Plus ])
+const hdr10plusWithH265 = videoFormatSupported(Media.Formats.VIDEO_H265_M10, '1080p30')
+const hdr10plusWithVP9 = videoFormatSupported(Media.Formats.VIDEO_VP9_P2)
 ```
 
 The `videoFormatSupported` API **MUST** have a required `format` parameter which
@@ -202,21 +196,6 @@ The `videoFormatSupported` API **MUST** have a required `format` parameter which
 - `VIDEO_VP9_P2`
 - `VIDEO_VP10`
 - `VIDEO_VC1`
-
-The `videoFormatSupported` API **MUST** have an optional `features` parameter
-which **MUST** be an array of zero or more strings from the following values:
-
-| Enumeration                   | Notes |
-| ----------------------------- | ----- |
-| `HDR`                         | Aggregation of any features that starts with `HDR` |
-| `HDR_DOLBYVISION`             | Only true for the VIDEO_DOLBYVISION format  |
-| `HDR_HDR10`                   | Any format that supports HDR10 metadata    |
-| `HDR_HDR10PLUS`               | Any format that supports HDR10+ metadata   |
-| `HDR_ST2084`                  | Any format that supports ST2084 color transfer |
-| `HDR_HLG`                     | Any format that supports HLG color transfer |
-
-If the `features` parameter is provided, then the `videoFormatSupported` API **MUST NOT**
-return `true` unless all of the features in the array are supported by the format specified.
 
 The `videoFormatSupported` API **MUST** have an optional `resolution` parameter
 which **MUST** be a string from the following values:
@@ -243,12 +222,10 @@ which **MUST** be a string from the following values:
 If the `resolution` parameter is provided, then the `videoFormatSupported` API **MUST NOT**
 return `true` unless the resolution, and framerate if included, are supported by the format specified.
 
-**TODO**: Can plugging in a new TV to a STB change videoCodecs support?
-
 Use of the `videoFormatSupported` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
 
-#### 5.1.2. Audio Format Supported
+#### 4.1.2. Audio Format Supported
 
 The `Device` module **MUST** have an `audioFormatSupported` API that returns
 `true` or `false` depending on whether the format specified is supported by
@@ -273,22 +250,6 @@ The `audioFormatSupported` API **MUST** have a required `format` parameter which
 - `AUDIO_TRUEHD`
 - `AUDIO_WAV`
 
-The `audioFormatSupported` API **MUST** have an optional `features` parameter
-which **MUST** be an array of zero or more strings from the following values:
-
-| Enumeration                   | Notes |
-| ----------------------------- | ----- |
-| `CHANNELS_MONO`               | |
-| `CHANNELS_STEREO`             | |
-| `CHANNELS_SURROUND`           | Aggregation of any SURROUND features |
-| `CHANNELS_SURROUND_5_1`       | |
-| `CHANNELS_SURROUND_7_1`       | |
-
-TODO: Android has lots more channel configs
-
-If the `features` parameter is provided, then the `audioFormatSupported` API **MUST NOT**
-return `true` unless all of the features in the array are supported by the format specified.
-
 The `audioFormatSupported` API **MUST** have an optional `sampleRate` parameter
 which **MUST** be a string from the following values:
 
@@ -297,12 +258,10 @@ which **MUST** be a string from the following values:
 If the `sampleRate` parameter is provided, then the `audioFormatSupported` API **MUST NOT**
 return `true` unless the resolution, and framerate if included, are supported by the format specified.
 
-**TODO**: Can plugging in a new TV to a STB change audio formats support?
-
 Use of the `videoFormatSupported` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
 
-### 5.2. Implicit Media Support
+### 4.2. Implicit Media Support
 Apps may also need to know what types of media support the device implicitly has,
 regardless of other connected devices.
 
@@ -313,17 +272,120 @@ These APIs require the same capability permissions as their [Negotiated Media Su
 
 These values never change without a restart.
 
-The APIs are as follows:
+#### 4.2.1. Video Format Possible
+The `Device` module **MUST** have a `videoFormatPossible` API that returns
+`true` or `false` depending on whether the format specified is supported by
+the device, regardless of configuration. This API **MUST** return `boolean`.
 
- - `audioFormatPossible`
- - `videoFormatPossible`
+```javascript
+const hdr10plusWithH265 = videoFormatPossible(Media.Formats.VIDEO_H265_M10, '1080p30')
+const hdr10plusWithVP9 = videoFormatPossible(Media.Formats.VIDEO_VP9_P2)
+```
+The `videoFormatPossible` **MUST** support the same parameters as the [`videoFormatSupported` API](#411-video-format-supported).
 
-## 6. Media Info
+#### 4.2.2. Audio Format Possible
+The `Device` module **MUST** have a `audioFormatPossible` API that returns
+`true` or `false` depending on whether the format specified is supported by
+the device, regardless of configuration. This API **MUST** return `boolean`.
+
+The `audioFormatPossible` **MUST** support the same parameters as the [`audioFormatSupported` API](#412-audio-format-supported).
+
+## 5. Display Properties
+
+Apps need to know various aspects of the current (or built in) display on a device.
+
+These will be surfaced in a new `Display` module.
+
+Access to these APIs is governed by the `xrn:firebolt:capability:display:info` capability.
+
+### 5.1. Display Width and Height
+
+The `Display` module **MUST** have a `width` and `height` method that return the width and height of the display, in centimeters.
+
+**TODO**: Does HDMI tell you this on a STB?
+
+### 5.2. Current and Optimal Resolution
+
+The `Display` module **MUST** have a `currentResolution` and  `optimalResolution` method that returns a valid resolution for either the current state of the display, or the displays optimal resolution value.
+
+These methods **MUST** return one of the following values:
+
+- `1080p24`
+- `1080i25`
+- `1080p30`
+- `1080i50`
+- `1080p50`
+- `1080p60`
+- `2160p30`
+- `2160p50`
+- `2160p60`
+
+TODO: get final list...
+TODO: Roku does width & height, and doesn't include framerate
+
+### 5.3. Supported Resolutions
+ 
+The `Display` module **MUST** have a `supportedResolutions` method that returns an array of valid resolutions that the display supports.
+
+These methods **MUST** return an array with one or more of the following values:
+
+- `1080p24`
+- `1080i25`
+- `1080p30`
+- `1080i50`
+- `1080p50`
+- `1080p60`
+- `2160p30`
+- `2160p50`
+- `2160p60`
+
+### 5.4. Supported HDR Profiles
+The `Display` module **MUST** have an `hdr` method that returns an array of valid HDR profiles that the display supports.
+
+The array **MUST** have one or more of the following values:
+
+| Enumeration                   | Notes |
+| ----------------------------- | ----- |
+| `HDR_DOLBYVISION`             | Only true for the VIDEO_DOLBYVISION format  |
+| `HDR_HDR10`                   | Any format that supports HDR10 metadata    |
+| `HDR_HDR10PLUS`               | Any format that supports HDR10+ metadata   |
+| `HDR_ST2084`                  | Any format that supports ST2084 color transfer |
+| `HDR_HLG`                     | Any format that supports HLG color transfer |
+
+### 5.5. Use Source Framerate
+The `Display` module **MUST** have a boolean `useSourceFrameRate` API.
+
+This API **MUST** return `true` if the hdmi output frame rate is set to follow video source frame rate.
+
+Otherwise, this API **MUST** return false.
+
+## 6. Audio Output Properties
+Apps need to know various aspects of the current (or built in) audio output system on a device.
+
+These will be surfaced in a new `AudioOutput` module.
+
+Access to these APIs is governed by the `xrn:firebolt:capability:audio-output:info` capability.
+
+### 6.1. Mode
+The `AudioOutput` module  **MUST** include a `mode` string API that returns one of the following values:
+
+- `MONO`
+- `STEREO`
+- `SURROUND`
+- `PASSTHROUGH`
+- `AUTO`
+- `STEREO_SURROUND_MAT_FOLLOW`
+- `UNKNOWN`
+- `NONE`
+
+**TODO**: is this all of them?
+
+## 7. Media Info
 
 The Firebolt `MediaInfo` module consists of APIs to get information
 about any media actively being decoded by the Media Pipeline or an active HDMI input.
 
-### 6.1. MediaInfo for current app
+### 7.1. MediaInfo for current app
 
 Apps need a way to query the media info for media currently being played  
 by the app. All of the following methods take a single `pipeline`
@@ -338,6 +400,7 @@ MediaInfo.videoFormat(2) // return the video codec in the current app's media pi
 ```
 
 **TODO**: where do we map video tags to ids? need a spec for this? same spec, new spec?
+JL: i linked to the Media Pipeline spec and merged it into this branch... we should review.
 
 The `pipeline` parameter is required for the JSON-RPC request, however, the Firebolt SDK **SHOULD** provide a default value of `1` if it is not provided by the calling app.
 
@@ -349,10 +412,10 @@ MediaInfo.videoCodec()
 
 Would query the video codec for the app's pipeline `1` in JavaScript, which supports default values for parameters.
 
-#### 6.1.1. Video Format
+#### 7.1.1. Video Format
 
 The `MediaInfo` module **MUST** have a `videoFormat` API that returns an `object` with the
-video codec, e.g., H.265, VP9, etc., features, and resolution of the media currently in the
+video codec, e.g., H.265, VP9, etc., and resolution of the media currently in the
 media pipeline (either playing or paused).
 
 The `videoFormat` result **MUST** have a `type` property with one of the following values from the `Media.Formats` enum:
@@ -372,16 +435,17 @@ The `videoFormat` result **MUST** have a `type` property with one of the followi
 - `UNKNOWN`
 - `NONE`
 
-The `videoFormat` result **MUST** have a `features` array property with zero or more of the following values:
+The `videoFormat` result **MUST** have an `hdr` array property with zero or more of the following values:
 
 | Enumeration                   | Notes |
 | ----------------------------- | ----- |
-| `HDR`                         | Aggregation of any features that starts with `HDR` |
 | `HDR_DOLBYVISION`             | Only true for the VIDEO_DOLBYVISION format  |
 | `HDR_HDR10`                   | Any format that supports HDR10 metadata    |
 | `HDR_HDR10PLUS`               | Any format that supports HDR10+ metadata   |
 | `HDR_ST2084`                  | Any format that supports ST2084 color transfer |
 | `HDR_HLG`                     | Any format that supports HLG color transfer |
+
+If a value is included the `hdr` array then the media currently in the media pipeline **MUST** include the denoted HDR metadata in the decoded video.
 
 The `videoFormat` result **MUST** have a `resolution` string property with one of the following values:
 
@@ -412,10 +476,10 @@ have a corresponding `onVideoFormatChanged` notification.
 Use of the `videoFormat` APIs require access to the `use` role of the
 `xrn:firebolt:capability:media-info:video-format` capability.
 
-#### 6.1.2. Audio Format
+#### 7.1.2. Audio Format
 
 The `MediaInfo` module **MUST** have a `audioFormat` API that returns an `object` with the
-video codec, e.g., H.265, VP9, etc., features, and resolution of the media currently in the
+audio codec, e.g., AAC, AC3, etc., and sample rate of the media currently in the
 media pipeline (either playing or paused).
 
 The `audioFormat` result **MUST** have a `type` property with one of the following values from the `Media.Formats` enum:
@@ -436,17 +500,20 @@ The `audioFormat` result **MUST** have a `type` property with one of the followi
 - `AUDIO_TRUEHD`
 - `AUDIO_WAV`
 
-The `audioFormat` result **MUST** have a `features` array property with zero or more of the following values:
+**TODO**: Roku has format, codec, profile, level...
+
+The `audioFormat` result **MUST** have a `channels` string property with one of the following values:
 
 | Enumeration                   | Notes |
 | ----------------------------- | ----- |
 | `CHANNELS_MONO`               | |
 | `CHANNELS_STEREO`             | |
-| `CHANNELS_SURROUND`           | Aggregation of any SURROUND features |
 | `CHANNELS_SURROUND_5_1`       | |
 | `CHANNELS_SURROUND_7_1`       | |
 
-The `audioFormat` result **MUST** have a `resolution` string property with one of the following values:
+**TODO**: get all values...
+
+The `audioFormat` result **MUST** have a `sampleRate` string property with one of the following values:
 
 - TBD
 
@@ -456,29 +523,18 @@ have a corresponding `onAudioFormatChanged` notification.
 Use of the `audioFormat` APIs require access to the `use` role of the
 `xrn:firebolt:capability:media-info:audio-format` capability.
 
-### 6.2. Global MediaInfo
+### 7.2. Global MediaInfo
 
-First party apps need a way to query which media formats are currently being output, without caring about which pipeline.
+First party apps need a way to query which media formats are currently being output to the [media pipeline](./media-pipeline.md), without caring about which pipeline.
 
-**TODO**: need to define output more specifically. Hardware decoder? Software Decoder, HDMI, Composite... SPDIff, Jeremy to check with XClass?
+#### 7.2.1. Active Video Formats
+The `MediaInfo` module **MUST** have a `activeVideoFormats` API that returns an array of `objects` with the video codec, e.g., H.265, VP9, etc., and sample rate of the media currently in each media pipeline (either playing or paused).
 
-The following APIs **MUST** exist:
+Each item in the `activeVideoFormats` result array **MUST** conform to the same requirements as the indivual results from the [`videoFormat` API](#611-video-format).
 
--   `activeVideoFormats`
--   `activeAudioFormats`
--   `onActiveVideoFormatsChanged`
--   `onActiveAudioFormatsChanged`
+Additionally, the `MediaInfo` module **MUST** have an `onActiveVideoFormatsChanged` notifier that fires whenever any pipeline starts, stops, or changes its current video format.
 
-These APIs **MUST** all be Firebolt `property:readonly` APIs with the
-corresponding notifications.
-
-These APIs **MUST** take no parameters.
-
-These APIs **MUST** return an array of Formats that are currently being sent to a decoder pipeline.
-
-These APIs **MUST** have corresponding notifications for when a specific type becomes active or inactive, e.g. `onActiveVideoFormatsChanged`.
-
-For example:
+Example:
 
 ```typescript
 const isDolbyVision:boolean = await MediaInfo.activeVideoFormats().find(f => f.type === Media.Formats.VIDEO_DOLBYVISION)
@@ -488,23 +544,45 @@ MediaInfo.activeVideoFormats((active) => {
   console.log('Dolby Vision is now ' + (dolbyVision ? 'active' : 'inactive') + '.')
 })
 ```
+
+Access to these APIs is gated by `manage` access to the `xrn:firebolt:capability:media-info:video-format` capability.
+
+#### 7.2.2. Active Audio Formats
+The `MediaInfo` module **MUST** have a `activeAudioFormats` API that returns an `object` with the audio codec, e.g., AAC, AC3, etc., and sample rate of the media currently in the
+media pipeline (either playing or paused).
+
+Each item in the `activeAudioFormats` result array **MUST** conform to the same requirements as the indivual results from the [`audioFormat` API](#612-audio-format).
+
+Additionally, the `MediaInfo` module **MUST** have an `onActiveAudioFormatsChanged` notifier that fires whenever any pipeline starts, stops, or changes its current audio format.
+
+Example:
+
+```typescript
+const isDolbyAtmos:boolean = await MediaInfo.activeAudioFormats().find(f => f.type === Media.Formats.AUDIO_DOLBY_MAT)
+
+MediaInfo.activeVideoFormats((active) => {
+  const dolbyAtmos = active.find(f => f.type === Media.Formats.AUDIO_DOLBY_MAT)
+  console.log('Dolby Vision is now ' + (dolbyAtmos ? 'active' : 'inactive') + '.')
+})
+```
+
+Access to these APIs is gated by `manage` access to the `xrn:firebolt:capability:media-info:audio-format` capability.
+
 **TODO**: Group Audio & Video from output 1, output 2, etc.
+
+JL: no, we're trying to support on screen badges here, not more complex use cases
+
 **TODO**: Add display dimensions to video formats in this array, so we know how big they are
+
+JL: it's in there via `resolution`
+
 **TODO**: How do i use this api for just the "main" screen and ignore the other.
 
-These APIs **MUST** all be gated by `manage` role of the same
-capabilities required by the corresponding methods above, i.e.:
+JL: we can add a param where you specify the pipeline or display? Out of scope?
 
-| Capability               | Use                 | Manage                    |
-|--------------------------|---------------------|---------------------------|
-| media-info:video-format  | videoFormatSupported | activeVideoFormats       |
-| media-info:audio-format  | audioFormatSupported | activeAudioFormats       |
+## 8. Device Media Settings
 
-*Capability names truncated for legibility
-
-## 7. Device Media Settings
-
-### 7.1. Audio Settings
+### 8.1. Audio Settings
 The `Device` module **MUST** have an `audioSettings` API that returns
 the Device's current audio settings.
 
@@ -519,35 +597,7 @@ The audioSettings **MUST** include a `mode` string property with one of the foll
 - `UNKNOWN`
 - `NONE`
 
-**TODO**: the rest of these need to move to Rialto:
-
-The audioSettings **MUST** include an `atmosOutputLock` boolean property.
-
-The audioSettings **MUST** include an `audioLoundnessEquivalence` boolean property.
-
-The audioSettings API **MUST** be a Firebolt `property:readonly` API, and
-have a corresponding `onAudioSettingsChanged` notification.
-
-Use of the `audioSettings` and `onAudioSettingsChanged` APIs require access
-to the `use` role of the `xrn:firebolt:capability:device:audio-settings` capability.
-
-TODO: Netflix needs to be able to *set* atmosOutputLock...
-
-### 7.2. Video Settings
-The `Device` module **MUST** have an `videoSettings` API that returns
-the Device's current video settings.
-
-The videoSettings **MUST** include a boolean `useSourceFrameRate` property.
-
-If this is set to `true` then the hdmi output frame rate is set to follow video source frame rate.
-
-### 7.3. Rialto
-
-- Preferred resolution/framerate
-- atmos lock
-- loudness eq
-
-## 8. Notes
+## 9. Notes
 
 | API           | Current App | Any Pipeline | Globally | Supported by Chain | Supported by Device |
 |---------------|-------------|--------------|----------|--------------------|---------------------|
