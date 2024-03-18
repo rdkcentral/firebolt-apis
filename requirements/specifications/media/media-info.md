@@ -101,9 +101,7 @@ I want to know what my device *would* support if i upgraded my AV peripherals:
   - [7.2. Global MediaInfo](#72-global-mediainfo)
     - [7.2.1. Active Video Formats](#721-active-video-formats)
     - [7.2.2. Active Audio Formats](#722-active-audio-formats)
-- [8. Device Media Settings](#8-device-media-settings)
-  - [8.1. Audio Settings](#81-audio-settings)
-- [9. Notes](#9-notes)
+- [8. Notes](#8-notes)
 
 ## 3. Format MimeTypes
 The Firebolt `Media` module **MUST** have a `Formats` enumeration audio and video formats:
@@ -580,24 +578,7 @@ JL: it's in there via `resolution`
 
 JL: we can add a param where you specify the pipeline or display? Out of scope?
 
-## 8. Device Media Settings
-
-### 8.1. Audio Settings
-The `Device` module **MUST** have an `audioSettings` API that returns
-the Device's current audio settings.
-
-The audioSettings **MUST** include a `mode` string property with one of the following values:
-
-- `MONO`
-- `STEREO`
-- `SURROUND`
-- `PASSTHROUGH`
-- `AUTO`
-- `STEREO_SURROUND_MAT_FOLLOW`
-- `UNKNOWN`
-- `NONE`
-
-## 9. Notes
+## 8. Notes
 
 | API           | Current App | Any Pipeline | Globally | Supported by Chain | Supported by Device |
 |---------------|-------------|--------------|----------|--------------------|---------------------|
