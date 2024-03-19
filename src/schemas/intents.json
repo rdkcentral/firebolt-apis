@@ -383,6 +383,12 @@
                                     "$ref": "#/definitions/TVSeasonEntity"
                                 },
                                 {
+                                    "$ref": "#/definitions/MusicEntity"
+                                },
+                                {
+                                    "$ref": "#/definitions/PlaylistEntity"
+                                },
+                                {
                                     "$ref": "#/definitions/AdditionalEntity"
                                 },
                                 {
@@ -457,6 +463,26 @@
                 "entityId"
             ]
         },
+        "MusicEntity": {
+            "title": "MusicEntity",
+            "type": "object",
+            "properties": {
+                "entityType": {
+                    "const": "music"
+                },
+                "musicType": {
+                    "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/MusicType"
+                },
+                "entityId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "entityType",
+                "musicType",
+                "entityId"
+            ]
+        },        
         "MovieEntity": {
             "title": "MovieEntity",
             "allOf": [
@@ -688,6 +714,9 @@
                 },
                 {
                     "$ref": "#/definitions/PlaylistEntity"
+                },
+                {
+                    "$ref": "#/definitions/MusicEntity"
                 },
                 {
                     "$ref": "#/definitions/AdditionalEntity"
