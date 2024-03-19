@@ -16,6 +16,7 @@
     "validate:compiled": "npx firebolt-openrpc validate --input dist/firebolt-open-rpc.json && npm run validate --workspaces",
     "validate": "npm run validate:each && npm run validate:compiled ",
     "compile": "npx firebolt-openrpc openrpc --input src --template src/template/openrpc/template.json --output ./dist/firebolt-open-rpc.json --schemas src/schemas",
+    "update": "npx firebolt-openrpc update --input src --schemas src/schemas",
     "slice": "npm run slice --workspaces",
     "sdks": "npm run sdk --workspaces",
     "docs": "npm run docs --workspaces",

@@ -471,7 +471,7 @@
                     "const": "music"
                 },
                 "musicType": {
-                    "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/MusicType"
+                    "$ref": "./entertainment.json#/definitions/MusicType"
                 },
                 "entityId": {
                     "type": "string"
