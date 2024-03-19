@@ -8,9 +8,12 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 |-----------------|----------------|
 | Jeremy LaCivita | Comcast        |
 | Kevin Pearson   | Comcast        |
+| Yuri Pasquali   | Sky            |
 
 ## 1. Overview
-This document describes the App Pass-through Firebolt OpenRPC extension.
+This document describes how one Firebolt App can provide a capability that may be used by another Firebolt App leveraging the platform as a permission broker that passes the requests and respones to each app with out feature-specific logic.
+
+This document covers the App Pass-through Firebolt OpenRPC extension as well as how Firebolt implementations should detect and execute app provided pass-through APIs.
 
 Some APIs require an app to fulfill the request on behalf of another app, e.g. to provide a UX or cross-app data sharing. Generally the calling app doesn't care or have a say in which other app provides the API, that is up to the Firebolt distributor.
 
@@ -23,113 +26,203 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 ## 2. Table of Contents
 - [1. Overview](#1-overview)
 - [2. Table of Contents](#2-table-of-contents)
-- [3. Provided By Extension](#3-provided-by-extension)
-- [4. Selecting the best provider app](#4-selecting-the-best-provider-app)
-- [5. Calculating the result](#5-calculating-the-result)
-  - [5.1. Selecting multiple provider apps](#51-selecting-multiple-provider-apps)
-  - [5.2. Composite Results](#52-composite-results)
-  - [5.3. Inserting the appId](#53-inserting-the-appid)
-- [6. API Gateway](#6-api-gateway)
-- [7. Example: User Interest](#7-example-user-interest)
-- [8. Example: Keyboard](#8-example-keyboard)
+- [3. Open RPC Extensions](#3-open-rpc-extensions)
+  - [3.1. Provided By Extension](#31-provided-by-extension)
+  - [3.2. Multiple Providers Extension](#32-multiple-providers-extension)
+- [4. Routing App pass-through APIs](#4-routing-app-pass-through-apis)
+- [5. Direct pass-through results](#5-direct-pass-through-results)
+- [6. Aggregated pass-through results](#6-aggregated-pass-through-results)
+- [7. Pass-through notifications](#7-pass-through-notifications)
+- [8. Provider Candidates](#8-provider-candidates)
+- [9. Best Candidate](#9-best-candidate)
+- [10. Session Transformations](#10-session-transformations)
+- [11. Provider Parameter Injection](#11-provider-parameter-injection)
+- [12. API Gateway](#12-api-gateway)
+- [13. Example: User Interest](#13-example-user-interest)
+- [14. Example: Keyboard](#14-example-keyboard)
 
-## 3. Provided By Extension
-Firebolt OpenRPC **MUST** support a `string` `x-provided-by` extension property on the `capabilities` tag that denotes a method is provided by some app on the device registering for the specified provider API, e.g. `Module.onRequestMethod`.
+## 3. Open RPC Extensions
+
+### 3.1. Provided By Extension
+Firebolt OpenRPC **MUST** support a `string` `x-provided-by` extension property on the `capabilities` tag that denotes a method is provided by some app on the device registering for the specified provider API, e.g.:
+
+```json
+{
+    "methods": [
+        {
+            "name": "Keyboard.standard",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-provided-by": "Keyboard.onRequestStandard",
+                    "x-uses": [
+                        "xrn:firebolt:capability:input:keyboard"
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
 
 The method denoted by `x-provided-by` is referred to as the "provider" or "provider method" for the remainder of this document.
 
-The method with the `x-provided-by` extension is referred to as the "app provided method" for the remainder of this document.
+The method with the `x-provided-by` extension is referred to as the "platform method" for the remainder of this document.
 
-The `x-provided-by` extension **MUST NOT** be used on a method with any value in the `x-provides` extension.
+To prevent unresolvable chaining of methods the `x-provided-by` extension **MUST NOT** be used on a method with any value in the `x-provides` extension.
 
-An app provided method **MUST** `use` a single capability or `manage` a single capability, but not both.
+To prevent compound methods an platform method **MUST** `use` a single capability or `manage` a single capability, but not both.
 
-The provider method **MUST** provide the same capability that the app provided method either uses or manages.
+The provider method **MUST** provide the same capability that the platform method either uses or manages.
 
-If the app provided method has an `event` tag then the provider method **MUST** have a result schema with `"type"` set to the string `"null"`.
+If an platform method has no provider method then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
 
-If an app provided method has no provider method then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
+### 3.2. Multiple Providers Extension
+Firebolt OpenRPC **MUST** support a `string` `x-multiple-providers` extension property on the `capabilities` tag that denotes a single method request may be provided by multiple apps on the device registering for the specified provider API, e.g.:
 
-## 4. Selecting the best provider app
+```json
+{
+    "methods": [
+        {
+            "name": "Content.search",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-provided-by": "Discover.onRequestSearch",
+                    "x-multiple-providers": true,
+                    "x-uses": [
+                        "xrn:firebolt:capability:discovery:search"
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
 
-**TODO**: This entire section should be moved into a per-device config for the capability, and not specified in the OpenRPC.
+Setting `x-multiple-providers` to `true` means that all available apps that can provide the capability **MUST** be called and their results aggregated into an array for the final result.
 
-A provider method's `capabilites` tag **MAY** have the `x-lifecycle` property which denotes which lifecycle states the providing app is allowed to be in during an app provided transaction.
+A platform method with `x-multiple-providers` set to `true` **MUST** have an `array` result type.
 
-If the `x-lifecycle` property is not present then it **MUST** be assumed to be `["foreground", "background", "inactive"]` for the remainder of this section.
+## 4. Routing App pass-through APIs
+When an app calls a platform method the platform **MUST** return an unavailable error if there is no candidate app to execute the provider method.
 
-The app selected to provide a value **MUST** be in one of the lifecycle states listed in the `x-lifecycle` extension of the provider method. 
+## 5. Direct pass-through results
+A direct pass-through is where a single app provides a single response to a single request by another app.
 
-If the *app provided method's* `capabilities` tag has the `x-multiple-providers` property is set to `true` then all apps matching `x-lifecycle` at the time of the transaction **MUST** be used to provide the value, see [Selecting multiple provider apps](#32-selecting-multiple-provider-apps) for more info.
+This section only applies to app provider methods that do not have an `event` tag and do not have the `x-multiple-providers` extension set to `true`.
 
-If the *app provided method's* `capabilities` tag has the `x-multiple-providers` is set to `false` or not set then:
+The platform method result schema **MUST** either:
 
-> If more than one app is possible, then the candidate apps **MUST** be pruned by reevaluating the `x-lifecycle` array with the last value removed; This is repeated until there is only one app or only one lifecycle state remaining.
+> Match the `x-response` schema on the provider method so that the result can be passed through.
 >
-> If more than one app is still possible, then the app that was most recently in the `foreground` state **MUST** be selected; In the case of a tie, the platform **MUST** choose only one app using its own discretion.
->
-> If there is no provider most recently in the `foreground` state then the app that was most recently in the inactive state **MUST** be selected.
-
-If the app provided method does not have an `event` tag and no matching app provides the required capability then the calling app **MUST** receive an error that the capability is unavailable and not a result.
-
-If the app provided method has an `event` tag then event registration **MUST** not return an availability error due to a lack of providers, since one may be launched at a future point.
-
-**TODO**: ^^ do we want to scan the catalog and see if it's even possible to have an app that provides it? Seems heavy/overkill and dives into a spec we don't have yet.
-
-## 5. Calculating the result
-Each app provided method result **MUST** be calculated with the following potential transformations.
-
-If an app provided method has `x-multiple-providers` set to `true` and the app provided method does not have an `event` tag, then the term "calculated result" refers to each item of the app provided method result array for the remainder of this section.
-
-Otherwise, the term "calculated result" refers to the app provided method result for the remainder of this section.
-
-### 5.1. Selecting multiple provider apps
-An app provided method's `capabilites` tag **MAY** have the `x-multiple-providers` property set to `true` which denotes that more than one app may provider this capability at the same time.
-
-If an app provided method has `x-multiple-providers` set to `true` and the app provided method does not have an `event` tag then:
-
-> The method **MUST** have a result with the type set to `array`.
->
-> At least one of the following **MUST** be true:
+> or
 > 
-> - The `items` schema of the array **MUST** match the `x-response` schema on the provider method.
-> 
-> - The `items` schema of the array **MUST** have a property whose name is not `"appId"` and schema matches the `x-response` schema.
+> Have a property that matches the `x-response` schema on the provider method so that the result can
+> be composed and passed through.
+
+When an app calls a platform method the platform **MUST** return an unavailable error if there is no [candidate app](#7-provider-candidates) to execute the provider method.
+
+The platform **MUST** call the provider method from the [best candidate](#8-best-candidate) app and acquire the result.
+
+If the platform method result schema matches the `x-response` schema on the provider method then the value **MUST** be used as-is.
+
+Otherwise if the platform method result schema has a property that matches the `x-response` schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [session transformations](#9-session-transformations) to the composed result.
+
+## 6. Aggregated pass-through results
+An aggregated pass-through is where many apps provides responses to a single request by another app. The results are aggregated inside of an array.
+
+This section only applies to app provider methods that do not have an `event` tag and do have the `x-multiple-providers` extension set to `true`.
+
+The platform method result schema **MUST** have a type of `array`.
+
+The platform method result schema **MUST** have an `items` sub-schema that either:
+
+> Matches the `x-response` schema on the provider method so that the result can be added to the final array.
 >
-> The final result returned by the app provided method **MUST** be a flattened array with all of the values from all selected providers.
-
-If an app provided method has `x-multiple-providers` is set to `true` and the app provided method has an `event` tag then:
-
-> - The method result schema **MUST** match the `x-response` schema on the provider method.
-> 
-> - The method result schema **MUST** have a property whose name is not `"appId"` and schema matches the `x-response` schema.
-> 
-> The app provided method **MUST** dispatch each "calculated result" as a separate event to all listeners.
-
-### 5.2. Composite Results
-An app provided method may be configured to use the provided value as the calculated result, or to compose it into an object along with other values.
-
-If the app provided method does not have an `event` tag:
-
-> If the calculated result schema matches the provider method result schema then the provider method result value **MUST** be passed through as-is, this is *not* considered a "composite result."
+> or
 >
-> Otherwise, if the calculated result schema is an object with a property whose name and schema matches the provider method result name and schema then the provider method result value **MUST** inserted into an object under the property name; this is refered to as a "composite result" for the rest of this document.
+> Has a property that matches the `x-response` schema on the provider method so that the result can be composed
+> and added to the final array.
 
-If the app provided method has an `event` tag:
+When an app calls a platform method the platform **MUST** return an unavailable error if there is no [candidate app](#7-provider-candidates) to execute the provider method.
 
-> If the calculated result schema matches the provider method's *last* parameter schema then the value of that parameter **MUST** be passed through as the calculated result value as-is.
+The platform **MUST** call the provider method from each [candidate app](#7-provider-candidates) and aggregated all of the results into an array.
+
+If the platform method result `items` schema matches the `x-response` schema on the provider method then each provier value **MUST** be used as-is.
+
+Otherwise if the platform method result `items` schema has a property that matches the `x-response` schema on the provider method then each provider value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [session transformations](#9-session-transformations) to the composed result.
+
+## 7. Pass-through notifications
+Firebolt events have a synchronous subscriber registration method, e.g. `Lifecycle.onInactive(true)`, in addition to asynchronous notifications when the event actually happens. For events powered by an app pass-through, only the asynchronous notifications are passed in by the providing app. The initial event registration is handled by the platform, and the success response is not handled by the providing app.
+
+This section only applies to platform methods that have an `event` tag.
+
+App provided event registration **MUST** not return an availability error due to a lack of providers, since one may be launched at a future point.
+
+To ensure that event provider methods all behave the same the provider method **MUST** have a result schema with `"type"` set to the string `"null"`, since it will not expect any result from the platform after pushing the notification.
+
+The platform method result schema **MUST** either:
+
+> Match the *last* parameter schema on the provider method so that the result can be passed through.
 >
-> Otherwise, if the calculated result schema is an object with a property whose name and schema matches the provider method's *last* parameter name and schema then the value of that parameter **MUST** inserted into an object under the property name; this is refered to as a "composite result" for the rest of this document.
+> Have a property that matches the *last* parameter schema on the provider method so that the result can
+> be passed through.
 
-### 5.3. Inserting the appId
-An app provided method may be configured to insert the providing app id into composite results. This is not allowed in non-composite results to avoid collisions with the provder method sending an appId and Firebolt overriding it.
+The platform method event context parameters **MUST** each match the corresponding parameter schema on the provider method so that the result can be passed through.
 
-If a "composite result" was used to wrap the provider method value and the app provided method's schema has an `appId` `string` property at the top level then the property's value **MUST** be set to the the appId of the providing app for that calculated result.
+When a provider app calls a provider method mapped to an event the platform **MUST** ignore the notification if the app is not a [candidate app](#7-provider-candidates) for this capability.
 
-## 6. API Gateway
+If the platform method result schema matches the *last* parameter schema on the provider method then the value **MUST** be used as-is.
+
+Otherwise if the platform method result schema has a property that matches the *last* parameter schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [session transformations](#9-session-transformations) to the composed result.
+
+Finally the platform **MUST** dispatch the notification to the app that registered for the event via the original platform method, using all but the last parameter as context.
+
+## 8. Provider Candidates
+The Firebolt Device Manfist **MUST** have a list of `ProviderPolicy` configurations that map capabilities to policies for determining candidate providers:
+
+```json
+{
+    "providerPolicies": [
+        {
+            "lifecycle": [
+                "foreground"
+            ],
+            "allowLaunch": true,
+            "capabilities": [
+                "xrn:firebolt:capability:foo:bar"
+            ]
+        }
+    ]
+}
+```
+
+The policy **MUST** have a list of valid lifecycle states for an app to provide the capability.
+
+The policy **MUST** have a boolean property `allowLaunch` to denote whether launching provider apps in order to fulfill a platform method is allowed.
+
+## 9. Best Candidate
+If there is only one candidate then it **MUST** be the best candidate.
+
+If there is more than one candidate, then the app that was most recently in the foreground state **MUST** be the best candidate.
+
+If none of the candidates have been in the foreground state then the app that was most recently launched **MUST** be the best candidate.
+
+If none of the candidates have been launched and the `ProviderPolicy` has `allowLaunch` set to true then the platform **SHOULD** select a candidate app, launch it, and use it as the best candidate; how this selection occurs is out of scope for this document.
+
+## 10. Session Transformations
+An platform method may be configured to insert the providing app id into composite values. This is not allowed in non-composite results to avoid collisions with the provder method sending an appId and Firebolt overriding it.
+
+If a "composite result" was used to wrap the provider method value and the platform method's schema has an `appId` `string` property at the top level then the property's value **MUST** be set to the the appId of the providing app for that calculated result.
+
+## 11. Provider Parameter Injection
+If the provider method has a parameter named `appId` and the platform method *does not*, then the appId of the app calling the platform method **MUST** be sent to the provider in the `appId` parameter.
+
+## 12. API Gateway
 The Firebolt API Gateway **MUST** detect app-passthrough APIs and map the `use`/`manage` APIs to the corresponding `provide` APIs by parsing the Firebolt OpenRPC Specification and following the logic outline in this document.
 
-## 7. Example: User Interest
+## 13. Example: User Interest
 
 User Interest does not use the `x-app-method` property because there is only one method and one event in the API, so they can be detected automatically via the capability string.
 
@@ -335,7 +428,7 @@ Content.onUserInterest (push)
 }
 ```
 
-## 8. Example: Keyboard
+## 14. Example: Keyboard
 
 Keyboard *requires* the* `x-app-method` property because there are three methods in the same capability, so the mapping cannot be detected automatically via the capability string.
 

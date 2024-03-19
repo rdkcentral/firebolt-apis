@@ -1,4 +1,4 @@
-# User Interest Intents
+# User Interest
 
 Document Status: Candidate Specification
 
@@ -51,22 +51,24 @@ track of which apps are using them separately.
 ## 2. Table of Contents
 - [1. Overview](#1-overview)
 - [2. Table of Contents](#2-table-of-contents)
-- [3. User Interest from an in-app UX](#3-user-interest-from-an-in-app-ux)
-- [4. User Interest from a platform UX](#4-user-interest-from-a-platform-ux)
-  - [4.1. Upstream User Interest Intent](#41-upstream-user-interest-intent)
-- [5. User Interest Bulk Updates](#5-user-interest-bulk-updates)
-- [6. Core SDK APIs](#6-core-sdk-apis)
-  - [6.1. InterestType](#61-interesttype)
-  - [6.2. Discovery.userInterest](#62-discoveryuserinterest)
-  - [6.3. Discovery Interest Provider](#63-discovery-interest-provider)
-  - [6.4. InterestIntent](#64-interestintent)
-- [7. Discovery SDK APIs](#7-discovery-sdk-apis)
-  - [7.1. Content.requestUserInterest](#71-contentrequestuserinterest)
-  - [7.2. Content.onUserInterestedIn](#72-contentonuserinterestedin)
-  - [7.3. InterestedInIntent](#73-interestedinintent)
+- [3. User Interest Flows](#3-user-interest-flows)
+  - [3.1. User Interest from an in-app UX](#31-user-interest-from-an-in-app-ux)
+  - [3.2. User Interest from a platform UX](#32-user-interest-from-a-platform-ux)
+  - [3.3. Upstream User Interest Intent](#33-upstream-user-interest-intent)
+  - [3.4. User Interest Bulk Updates](#34-user-interest-bulk-updates)
+- [4. Core SDK APIs](#4-core-sdk-apis)
+  - [4.1. InterestType](#41-interesttype)
+  - [4.2. InterestReason](#42-interestreason)
+  - [4.3. Discovery.userInterest](#43-discoveryuserinterest)
+  - [4.4. Discovery Interest Provider](#44-discovery-interest-provider)
+  - [4.5. InterestIntent](#45-interestintent)
+- [5. Discovery SDK APIs](#5-discovery-sdk-apis)
+  - [5.1. Content.requestUserInterest](#51-contentrequestuserinterest)
+  - [5.2. Content.onUserInterestedIn](#52-contentonuserinterestedin)
 
 
-## 3. User Interest from an in-app UX
+## 3. User Interest Flows
+### 3.1. User Interest from an in-app UX
 
 Some Apps will have a built-in user interface for users to express
 interest in content from the App. This could be a "Favorite" button,
@@ -82,33 +84,43 @@ meta-data, the device\'s Aggregated Experience will be notified of the
 user's interest in that entity:
 
 ```typescript
-Discovery.userInterest(type:UserInterestType, entity:EntityInfo)
+Discovery.userInterest(type:InterestType, reason: InterestReason, entity:EntityInfo)
 ```
 
-The type parameter denotes what sort of interest:
+The `type` parameter denotes the directionality of the interest:
 
 -   `interest`
--   `disinterest`
+-   `disinterest`   
+
+The `reason` parameter denotes why or how the user has expressed interest:
+
+| Reason | Description |
+| ------ | ----------- |
+| `playlist` | Interested in adding to a list |
+| `reaction` | Interested in submitting a reaction, e.g. like or dislike |
+| `recording` | Interest in scheduling a recording |
+| `share` | Interest in sharing the content on social media |
+
+**NOTE**: We can remove some of these (not `playlist`) these are here for now to illustrate the purpose for the reason paramater.
 
 An app **MUST** `provide` the `xrn:firebolt:capability:discovery:interest`
 capability in order to call `Discovery.userInterest`.
 
 When this method is called with a valid `EntityInfo`, the platform
-**MUST** dispatch a `Content.onUserInterestedIn` notification to all Apps
+**MUST** dispatch a `Content.onUserInterest` notification to all Apps
 that have registered for it (typically Aggregated Experience Apps) with
 information about the app, interest type, and the entity.
 
-The `Content.onUserInterestedIn` event has the `InterestedInIntent` as its
-data.
+The `Content.onUserInterest` event has a `UserInterestInfo` object with the `type`, `reason` and `entity` parameters as it's properties.
 
-An Aggregated Experience can register for the `Content.onUserInterestedIn`
+An Aggregated Experience can register for the `Content.onUserInterest`
 notification, and it will receive notifications when an `EntityInfo` is
 returned from the active App after a `Discovery.userInterest` call is
 fulfilled.
 
 An app **MUST** have permissions to `use` the
 `xrn:firebolt:capability:discovery:interest` capability in order to 
-listen to the `Content.onUserInterestedIn` notification.
+listen to the `Content.onUserInterest` notification.
 
 If the result is `null` or is not a valid entity, i.e. does not match
 the [EntityInfo](../entities/) schema, then no `Content.onUserInterestedIn`
@@ -123,7 +135,7 @@ The `Discovery.userInterest` method **SHOULD NOT** be called unless the user
 is activating a UI element in the app, or in a second screen experience
 that is communicating with the app, that implies interest of some kind.
 
-## 4. User Interest from a platform UX
+### 3.2. User Interest from a platform UX
 
 Firebolt platforms may provide a platform UX, e.g. voice or and RCU, to
 express user interest in content from an active App. To facilitate this
@@ -165,31 +177,53 @@ exception.
 If the foreground App returns a valid `EntityInfo` before the timeout,
 then, the returned value **MUST** be used.
 
-### 4.1. Upstream User Interest Intent
+If there is no app registered the an error **MUST** be returned.
+
+### 3.3. Upstream User Interest Intent
 In some cases, e.g. a voice assistant, some upstream component will inform
 the platform that the user is interested in whatever is currently being presented.
 
-To do this, the upstream system **MUST** send a `UserInterest` intent, which describes the type of interest.
+To do this, the upstream system **MUST** send a `Interest` intent, which describes the type of and reason for the interest.
+
+```json
+{
+  "action": "interest",
+  "data": {
+    "type": "interest",
+    "reason": "playlist"
+  }
+}
+```
 
 When a Firebolt platform receives this intent, it **SHOULD** initiate the platform's [user interest flow](#4-user-interest-from-a-platform-ux).
 
-## 5. User Interest Bulk Updates
+### 3.4. User Interest Bulk Updates
 
 Sending bulk interest updates, e.g. Entities the user expressed interest
 in on a different platform, is not supported.
 
-## 6. Core SDK APIs
+## 4. Core SDK APIs
 
 The following APIs are exposed by the Firebolt Core SDK as part of the
 `Discovery` module.
 
-### 6.1. InterestType
+### 4.1. InterestType
 This is an enum with the following values:
 
 - `"interest"`
 - `"disinterest"`
 
-### 6.2. Discovery.userInterest
+### 4.2. InterestReason
+This is an enum with the following values:
+
+| Reason | Description |
+| ------ | ----------- |
+| `playlist` | Interested in adding to a list |
+| `reaction` | Interested in submitting a reaction, e.g. like or dislike |
+| `recording` | Interest in scheduling a recording |
+| `share` | Interest in sharing the content on social media |
+
+### 4.3. Discovery.userInterest
 
 This is a push API that allows Apps to push entities that the user has
 expressed interest in to the platform.
@@ -198,23 +232,23 @@ To push an entity that the user is interested in pass an `EntityInfo`
 object to the method:
 
 ```typescript
-Discovery.userInterest(type: InterestType, entity: EntityInfo): Promise<void>
+Discovery.userInterest(type: InterestType, reason: InterestReason, entity: EntityInfo): Promise<void>
 ```
 
-### 6.3. Discovery Interest Provider
+### 4.4. Discovery Interest Provider
 To respond to requests for the current entity, because the user has
 expressed interest in some way that the platform manages, register a
 provider:
 
 ```typescript
 interface IDiscoveryInterestProvider {
-  function userInterest(type: InterestType): Promise<EntityInfo>
+  function userInterest(type: InterestType, reason: InterestReason): Promise<EntityInfo>
 }
 
 Discovery.provide("xrn:firbolt:capability:discovery:interest", IDiscoveryInterestProvider)
 ```
 
-### 6.4. InterestIntent
+### 4.5. InterestIntent
 
 An `InterestIntent` denotes that the user has expressed interest in the
 currently displayed and/or selected content:
@@ -223,7 +257,8 @@ currently displayed and/or selected content:
 type InterestIntent {
   action: "interest"
   data: {
-    type: "interest"
+    type: "interest" | "disinterest",
+    reason: "playlist" | "reaction" | "recording"
   },
   context: {
     source: "rcu" | "voice"
@@ -231,42 +266,26 @@ type InterestIntent {
 }
 ```
 
-## 7. Discovery SDK APIs
+## 5. Discovery SDK APIs
 
 The following APIs are exposed by the Firebolt Discovery SDK as part of the
 `Content` module.
 
-### 7.1. Content.requestUserInterest
+### 5.1. Content.requestUserInterest
 This method triggers the corresponding Discovery provider API for the
 foreground app.
 
 ```typescript
-Content.requestUserInterest(type: InterestType): Promise<EntityInfo>
+Content.requestUserInterest(type: InterestType, reason: InterestReason): Promise<EntityInfo>
 ```
 
-### 7.2. Content.onUserInterestedIn
+### 5.2. Content.onUserInterestedIn
 
 This notification allows Aggregated Experience Apps to be informed when
 a user expresses interest in some Content, and the content resolves to a
 valid Entity from some App.
 
-`Content.listen('userInterestedIn', InterestedInIntent => void): Promise<void>`
+`Content.listen('userInterest', UserInterestInfo => void): Promise<void>`
 
-The callback will be passed an `InterestedEventData` object with
-information about the entity that the user expressed interest in.
-
-### 7.3. InterestedInIntent
-
-`InterestedInIntent` provides information about what the user has
-expressed interest in:
-
-```typescript
-type InterestedInIntent {
-  action: "interestedIn",
-  data: {
-    appId: string,
-    type: InterestType,
-    entity: EntityInfo
-  }
-}
-```
+The callback will be passed an `UserInterestInfo` object with
+the type, reason, and information about the entity that the user expressed interest in.
