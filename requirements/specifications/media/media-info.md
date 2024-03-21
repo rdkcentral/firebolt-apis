@@ -90,6 +90,7 @@ I want to know what my device *would* support if i upgraded my AV peripherals:
   - [5.1. Display Width and Height](#51-display-width-and-height)
   - [5.2. Current and Optimal Resolution](#52-current-and-optimal-resolution)
   - [5.3. Supported Resolutions](#53-supported-resolutions)
+  - [Device Supported Resolutions](#device-supported-resolutions)
   - [5.4. Supported HDR Profiles](#54-supported-hdr-profiles)
   - [5.5. Use Source Framerate](#55-use-source-framerate)
 - [6. Audio Output Properties](#6-audio-output-properties)
@@ -248,6 +249,27 @@ The `audioFormatSupported` API **MUST** have a required `format` parameter which
 - `AUDIO_TRUEHD`
 - `AUDIO_WAV`
 
+**TODO**: Need to add Codec, Profile, Level (we handle this via additional enums to keep the API flat)
+**TODO**: Need to add atmos flag (and drop _MAT from DOLBY?)
+**TODO**: Need passhthrough flag (to report supported formats of the receiver, if enabled)
+**TODO**: Roku also has: Container, Bitrate
+
+The `audioFormatSupported` API **MUST** have an optional `channels` parameter
+which **MUST** be a string from the following values if provided:
+
+| Enumeration                   | Notes |
+| ----------------------------- | ----- |
+| `CHANNELS_MONO`               | |
+| `CHANNELS_STEREO`             | |
+| `CHANNELS_SURROUND`           | Aggregation of any SURROUND features |
+| `CHANNELS_SURROUND_5_1`       | |
+| `CHANNELS_SURROUND_7_1`       | |
+
+**TODO**: Android has lots more channel configs
+
+If the `channels` parameter is provided, then the `audioFormatSupported` API **MUST NOT**
+return `true` unless all of the features in the array are supported by the format specified.
+
 The `audioFormatSupported` API **MUST** have an optional `sampleRate` parameter
 which **MUST** be a string from the following values:
 
@@ -286,7 +308,9 @@ The `Device` module **MUST** have a `audioFormatPossible` API that returns
 `true` or `false` depending on whether the format specified is supported by
 the device, regardless of configuration. This API **MUST** return `boolean`.
 
-The `audioFormatPossible` **MUST** support the same parameters as the [`audioFormatSupported` API](#412-audio-format-supported).
+The `audioFormatPossible` method **MUST** support the same parameters as the [`audioFormatSupported` API](#412-audio-format-supported).
+
+The `audioFormatPossible` also supports passing `mode` to check if a format is possible in a different mode.
 
 ## 5. Display Properties
 
@@ -298,9 +322,9 @@ Access to these APIs is governed by the `xrn:firebolt:capability:display:info` c
 
 ### 5.1. Display Width and Height
 
-The `Display` module **MUST** have a `width` and `height` method that return the width and height of the display, in centimeters.
+The `Display` module **MUST** have a `width` and `height` method that return the width and height of the display, in centimeters from the HDMI edid.
 
-**TODO**: Does HDMI tell you this on a STB?
+For built-in displays `width` and `height` **MUST** also be provided.
 
 ### 5.2. Current and Optimal Resolution
 
@@ -318,8 +342,11 @@ These methods **MUST** return one of the following values:
 - `2160p50`
 - `2160p60`
 
-TODO: get final list...
-TODO: Roku does width & height, and doesn't include framerate
+**TODO**: get final list...
+
+The `optimalResolution` **MUST** come from the HDMI edid.
+
+For built-in displays `optimalResolution` **MUST** also be provided.
 
 ### 5.3. Supported Resolutions
  
@@ -337,6 +364,23 @@ These methods **MUST** return an array with one or more of the following values:
 - `2160p50`
 - `2160p60`
 
+### Device Supported Resolutions
+The `Device` module **MUST** have a `supportedResolutions` method that returns an array of valid resolutions that the device supports, regardless of any connected display.
+
+This method **MUST** return an array with one or more of the following values:
+
+- `1080p24`
+- `1080i25`
+- `1080p30`
+- `1080i50`
+- `1080p50`
+- `1080p60`
+- `2160p30`
+- `2160p50`
+- `2160p60`
+
+**TODO**: check how Roku does this
+
 ### 5.4. Supported HDR Profiles
 The `Display` module **MUST** have an `hdr` method that returns an array of valid HDR profiles that the display supports.
 
@@ -349,6 +393,22 @@ The array **MUST** have one or more of the following values:
 | `HDR_HDR10PLUS`               | Any format that supports HDR10+ metadata   |
 | `HDR_ST2084`                  | Any format that supports ST2084 color transfer |
 | `HDR_HLG`                     | Any format that supports HLG color transfer |
+
+The `hdr` method **MUST** support an optional `resolution` parameter.
+
+When the `resolution` parameter is provided, the resulting array **MUST** include only HDR profiles that are supported by that resolution.
+
+**TODO**: Do we want generic resolution or `fourK: true` param?
+
+**TODO**: Add Technicolor
+**TODO**: DolbyVision: Source vs device LED
+**TODO**: Need review w/ luc on HDR use cases:
+  - does display support (this section, 5.4)
+    - should this move to videoFormatSupported
+  - does device implicitly support (not in this doc)
+  - does the current media have it (7.1.1)
+
+**TODO**: do we need to include hdr x resolution support? (max resolution for each profile, e.g. 4K, 1080p)
 
 ### 5.5. Use Source Framerate
 The `Display` module **MUST** have a boolean `useSourceFrameRate` API.
