@@ -28,6 +28,12 @@
             ]
         },
         {
+            "module": "Channels",
+            "use": [
+                "xrn:firebolt:capability:broadcast:scan"
+            ]
+        },
+        {
             "module": "Metrics",
             "use": [
                 "xrn:firebolt:capability:metrics:distributor"
