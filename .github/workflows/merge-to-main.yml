@@ -1,0 +1,94 @@
+name: Attempt to merge next to main
+on:
+  workflow_dispatch:
+
+jobs:
+  # Check if next can merge into main
+  check_merge:
+    name: Check if "next" can merge into "main"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          repo-token: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }}
+          persist-credentials: true
+
+      # Set user identity
+      - name: Set-Identity
+        run: |
+          git config --global user.email "${{ secrets.GLOBAL_GITHUB_EMAIL }}"
+          git config --global user.name "${{ secrets.GLOBAL_GITHUB_USER }}"
+
+      # Checkout "main"
+      - name: Checkout main
+        run: git checkout "main"
+
+      # Attempt a dry-run merge
+      - name: Attempt a dry-run merge
+        run: |
+          git merge --no-commit --no-ff origin/${{github.ref_name}}
+          exit $?
+
+  # Attempt to merge to main if our dry-run succeeded
+  process_merge_on_success:
+    name: Perform merge from "next" to "main"
+    needs: check_merge
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          repo-token: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }}
+          persist-credentials: true
+
+      # Set user identity
+      - name: Set-Identity
+        run: |
+          git config --global user.email "${{ secrets.GLOBAL_GITHUB_EMAIL }}"
+          git config --global user.name "${{ secrets.GLOBAL_GITHUB_USER }}"
+
+      # Checkout "main"
+      - name: Checkout main
+        run: git checkout "main"
+
+      - name: Perform the merge from next to main
+        run: |
+          git merge origin/next
+          merge_status=$?
+
+          git push origin "main"
+          push_status=$?
+
+          if [ "$merge_status" -eq 0 ] && [ "$push_status" -eq 0 ]; then
+            echo "Push to main succeeded"
+            exit 0
+          else
+            exit 1
+          fi
+
+  # If the merge cannot be performed, let stakeholders  know
+  process_merge_on_failure:
+    name: Merge dry-run failure
+    needs: check_merge
+    runs-on: ubuntu-latest
+    if: ${{ failure() }}
+
+    steps:
+      - name: Post error message (To-Do)
+        run: echo "Next cannot be merged into main cleanly"
+
+  # If we attempted to merge/push to next-main but there was a failure
+  process_push_failure:
+    name: Merge failure
+    needs: process_merge_on_success
+    runs-on: ubuntu-latest
+    if: ${{ failure() && needs.process_merge_on_success.result != 'skipped' }}
+
+    steps:
+      - name: Post error message (To-Do)
+        run: echo "There was a failure when merging next into main"
