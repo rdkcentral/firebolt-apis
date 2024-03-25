@@ -86,7 +86,9 @@ I want to know what my device *would* support if i upgraded my AV peripherals:
   - [4.2. Implicit Media Support](#42-implicit-media-support)
     - [4.2.1. Video Format Possible](#421-video-format-possible)
     - [4.2.2. Audio Format Possible](#422-audio-format-possible)
+    - [Hdr Supported / Possible](#hdr-supported--possible)
 - [5. Display Properties](#5-display-properties)
+  - [Color Information...](#color-information)
   - [5.1. Display Width and Height](#51-display-width-and-height)
   - [5.2. Current and Optimal Resolution](#52-current-and-optimal-resolution)
   - [5.3. Supported Resolutions](#53-supported-resolutions)
@@ -139,7 +141,7 @@ The Firebolt `Media` module **MUST** have a `Formats` enumeration audio and vide
 | `UNKNOWN`        | `unknown`              |
 | `NONE`           | `none`                 |
 
-**TODO**: Atmos is not always MAT... MAT -> PCM version of Atmos. Can also be carried over AC4 EAC3 DolbyTrueHD
+**TODO**: Atmos is not always MAT... MAT -> PCM version of Atmos. Can also be carried over AC4 EAC3, AC3+, DolbyTrueHD
 
 ## 4. Device Media Support
 Apps need to know what types of media the device supports.
@@ -254,6 +256,14 @@ The `audioFormatSupported` API **MUST** have a required `format` parameter which
 **TODO**: Need passhthrough flag (to report supported formats of the receiver, if enabled)
 **TODO**: Roku also has: Container, Bitrate
 
+**NOTE**: MAT is decoded on the device, it's not a format you'd have encoded content on a CDN
+
+```javascript
+if (audioFormatSupported('AUDIO_AC4', { atmos: true })) {
+  // show badges
+}
+```
+
 The `audioFormatSupported` API **MUST** have an optional `channels` parameter
 which **MUST** be a string from the following values if provided:
 
@@ -312,6 +322,9 @@ The `audioFormatPossible` method **MUST** support the same parameters as the [`a
 
 The `audioFormatPossible` also supports passing `mode` to check if a format is possible in a different mode.
 
+#### Hdr Supported / Possible
+Device module...
+
 ## 5. Display Properties
 
 Apps need to know various aspects of the current (or built in) display on a device.
@@ -319,6 +332,10 @@ Apps need to know various aspects of the current (or built in) display on a devi
 These will be surfaced in a new `Display` module.
 
 Access to these APIs is governed by the `xrn:firebolt:capability:display:info` capability.
+
+### Color Information...
+Expose this so apps can check
+BT2020 BT709
 
 ### 5.1. Display Width and Height
 
@@ -379,6 +396,8 @@ This method **MUST** return an array with one or more of the following values:
 - `2160p50`
 - `2160p60`
 
+**TODO** rationalize this with supported vs possible (possible is ambiguous... lets' go with device vs display/audiooutput, etc.)
+
 **TODO**: check how Roku does this
 
 ### 5.4. Supported HDR Profiles
@@ -398,7 +417,27 @@ The `hdr` method **MUST** support an optional `resolution` parameter.
 
 When the `resolution` parameter is provided, the resulting array **MUST** include only HDR profiles that are supported by that resolution.
 
-**TODO**: Do we want generic resolution or `fourK: true` param?
+**TODO**: Do we want generic resolution or `UHD: true` param?
+
+```javascript
+if (Display.supportedResolutions().includes('UHD') ) {
+  Display.hdr('UHD).includes('HDR_HDR10')
+}
+
+else {
+  Display.hdr('HD').includes('HDR_HDR10')
+}
+```
+
+or
+
+```javascript
+  Display.hdr().includes('HDR_HDR10')
+```
+
+```javascript
+Device.hdrPossible()
+```
 
 **TODO**: Add Technicolor
 **TODO**: DolbyVision: Source vs device LED
@@ -435,6 +474,14 @@ The `AudioOutput` module  **MUST** include a `mode` string API that returns one 
 - `STEREO_SURROUND_MAT_FOLLOW`
 - `UNKNOWN`
 - `NONE`
+
+New list from call:
+
+- auto (includes mat)
+- dd / surround
+- stereo
+- passthrough
+- none
 
 **TODO**: is this all of them?
 
