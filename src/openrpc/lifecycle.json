@@ -58,7 +58,7 @@
           "summary": "The reason the app is requesting to be closed",
           "required": true,
           "schema": {
-            "$ref": "../schemas/lifecycle.json#/definitions/CloseReason"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/CloseReason"
           }
         }
       ],
@@ -151,7 +151,7 @@
         "name": "state",
         "summary": "the current state of the app.",
         "schema": {
-          "$ref": "../schemas/lifecycle.json#/definitions/LifecycleState"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState"
         }
       },
       "examples": [
@@ -365,11 +365,11 @@
         ],
         "properties": {
           "state": {
-            "$ref": "../schemas/lifecycle.json#/definitions/LifecycleState",
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
             "description": "The current lifcycle state"
           },
           "previous": {
-            "$ref": "../schemas/lifecycle.json#/definitions/LifecycleState",
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
             "description": "The previous lifcycle state"
           },
           "source": {

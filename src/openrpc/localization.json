@@ -25,7 +25,7 @@
         "name": "locality",
         "summary": "the device city",
         "schema": {
-          "$ref": "../schemas/localization.json#/definitions/Locality"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/Locality"
         }
       },
       "examples": [
@@ -105,7 +105,7 @@
         "name": "code",
         "summary": "the device country code",
         "schema": {
-          "$ref": "../schemas/localization.json#/definitions/CountryCode"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/CountryCode"
         }
       },
       "examples": [
@@ -151,7 +151,7 @@
         "name": "lang",
         "summary": "the device language",
         "schema": {
-          "$ref": "../schemas/localization.json#/definitions/Language"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/Language"
         }
       },
       "examples": [
@@ -194,7 +194,7 @@
         "schema": {
           "type": "array",
           "items": {
-            "$ref": "../schemas/localization.json#/definitions/ISO639_2Language"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/ISO639_2Language"
           }
         }
       },
@@ -236,7 +236,7 @@
         "name": "locale",
         "summary": "the device locale",
         "schema": {
-          "$ref": "../schemas/localization.json#/definitions/Locale"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/Locale"
         }
       },
       "examples": [
@@ -440,7 +440,7 @@
       "result": {
           "name": "result",
           "schema": {
-              "$ref": "../schemas/localization.json#/definitions/TimeZone"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/TimeZone"
           }
       },
       "examples": [

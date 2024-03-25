@@ -1,5 +1,6 @@
 {
     "title": "Accessibility",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/accessibility",
     "anyOf": [
         {
             "$ref": "#/definitions/ClosedCaptionsStyles"
@@ -113,7 +114,7 @@
                 "preferredLanguages": {
                     "type": "array",
                     "items": {
-                        "$ref": "./localization.json#/definitions/ISO639_2Language"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/ISO639_2Language"
                     }
                 }
             },
@@ -160,7 +161,7 @@
                     "description": "Whether or not voice guidance should be enabled by default"
                 },
                 "speed": {
-                    "$ref": "./accessibility.json#/definitions/VoiceSpeed",
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/VoiceSpeed",
                     "description": "The speed at which voice guidance speech will be read back to the user"
                 }
             },

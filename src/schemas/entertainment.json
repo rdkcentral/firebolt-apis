@@ -1,5 +1,6 @@
 {
     "title": "Entertainment",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/entertainment",
     "anyOf": [
         {
             "$ref": "#/definitions/ProgramType"
@@ -99,10 +100,10 @@
                     "description": "The type of the entity, e.g. `program` or `music`."
                 },
                 "programType": {
-                    "$ref": "./entertainment.json#/definitions/ProgramType"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ProgramType"
                 },
                 "musicType": {
-                    "$ref": "./entertainment.json#/definitions/MusicType"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/MusicType"
                 },
                 "synopsis": {
                     "type": "string",
@@ -209,7 +210,7 @@
                     "description": "Time when the entity is no longer entitled."
                 },
                 "offeringType": {
-                    "$ref": "./entertainment.json#/definitions/OfferingType"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/OfferingType"
                 },
                 "hasAds": {
                     "type": "boolean",
@@ -234,7 +235,7 @@
                 "audioProfile": {
                     "type": "array",
                     "items": {
-                        "$ref": "./types.json#/definitions/AudioProfile"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/AudioProfile"
                     },
                     "description": "List of the audio types available via the WayToWatch."
                 },

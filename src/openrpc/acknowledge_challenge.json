@@ -93,7 +93,7 @@
         "title": "ChallengeProviderRequest",
         "allOf": [
           {
-            "$ref": "../schemas/types.json#/definitions/ProviderRequest"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/ProviderRequest"
           },
           {
             "type": "object",

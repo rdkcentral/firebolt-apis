@@ -1,5 +1,6 @@
 {
     "title": "SecondScreen",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/secondscreen",
     "anyOf": [
       { "$ref": "#/definitions/SecondScreenEvent" }
     ],

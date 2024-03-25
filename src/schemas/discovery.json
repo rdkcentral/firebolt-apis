@@ -1,5 +1,6 @@
 {
     "title": "Discovery",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/discovery",
     "anyOf": [
       {
         "$ref": "#/definitions/PurchasedContentResult"
@@ -21,7 +22,7 @@
           "entries": {
             "type": "array",
             "items": {
-              "$ref": "./entertainment.json#/definitions/EntityInfo"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
             }
           }
         },
@@ -42,12 +43,12 @@
             "format": "date-time"
           },
           "entity": {
-            "$ref": "./entertainment.json#/definitions/EntityInfo"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
           },
           "related": {
             "type": "array",
             "items": {
-              "$ref": "./entertainment.json#/definitions/EntityInfo"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
             }
           }
         },

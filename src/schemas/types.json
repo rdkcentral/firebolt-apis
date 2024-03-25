@@ -1,5 +1,6 @@
 {
     "title": "Types",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/types",
     "definitions": {
         "SemanticVersion": {
             "title": "SemanticVersion",

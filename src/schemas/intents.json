@@ -1,5 +1,6 @@
 {
     "title": "Intents",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/intents",
     "oneOf": [
         {
             "$ref": "#/definitions/AppIntentMessage"
@@ -451,7 +452,7 @@
                     "const": "program"
                 },
                 "programType": {
-                    "$ref": "./entertainment.json#/definitions/ProgramType"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ProgramType"
                 },
                 "entityId": {
                     "type": "string"
@@ -471,7 +472,7 @@
                     "const": "music"
                 },
                 "musicType": {
-                    "$ref": "./entertainment.json#/definitions/MusicType"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/MusicType"
                 },
                 "entityId": {
                     "type": "string"
@@ -1155,13 +1156,13 @@
                                         "programTypes": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "./entertainment.json#/definitions/ProgramType"
+                                                "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ProgramType"
                                             }
                                         },
                                         "musicTypes": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "./entertainment.json#/definitions/MusicType"
+                                                "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/MusicType"
                                             }
                                         }
                                     },

@@ -295,19 +295,19 @@
           "type": "object",
           "properties": {
             "sdk": {
-              "$ref": "../schemas/types.json#/definitions/SemanticVersion",
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/SemanticVersion",
               "description": "The Firebolt SDK version"
             },
             "api": {
-              "$ref": "../schemas/types.json#/definitions/SemanticVersion",
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/SemanticVersion",
               "description": "The lateset Firebolt API version supported by the curent device."
             },
             "firmware": {
-              "$ref": "../schemas/types.json#/definitions/SemanticVersion",
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/SemanticVersion",
               "description": "The device firmware version."
             },
             "os": {
-              "$ref": "../schemas/types.json#/definitions/SemanticVersion",
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/SemanticVersion",
               "description": "**Deprecated** Use `firmware`, instead."
             },
             "debug": {
@@ -378,7 +378,7 @@
         "name": "supportedHdcpProfiles",
         "summary": "the supported HDCP profiles",
         "schema": {
-          "$ref": "../schemas/types.json#/definitions/BooleanMap"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/BooleanMap"
         }
       },
       "examples": [
@@ -414,7 +414,7 @@
         "name": "supportedHdrProfiles",
         "summary": "the supported HDR profiles",
         "schema": {
-          "$ref": "../schemas/types.json#/definitions/BooleanMap"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/BooleanMap"
         }
       },
       "examples": [
@@ -795,12 +795,12 @@
         "title": "AudioProfiles",
         "allOf": [
           {
-            "$ref": "../schemas/types.json#/definitions/BooleanMap"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/BooleanMap"
           },
           {
             "type": "object",
             "propertyNames": {
-              "$ref": "../schemas/types.json#/definitions/AudioProfile"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/AudioProfile"
             }
           }
         ]

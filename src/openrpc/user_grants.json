@@ -129,7 +129,7 @@
                 {
                     "name": "capability",
                     "schema": {
-                        "$ref": "../schemas/capabilities.json#/definitions/Capability"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
                     },
                     "required": true
                 }
@@ -182,14 +182,14 @@
                 {
                     "name": "role",
                     "schema": {
-                        "$ref": "../schemas/capabilities.json#/definitions/Role"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Role"
                     },
                     "required": true
                 },
                 {
                     "name": "capability",
                     "schema": {
-                        "$ref": "../schemas/capabilities.json#/definitions/Capability"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
                     },
                     "required": true
                 },
@@ -247,14 +247,14 @@
                 {
                     "name": "role",
                     "schema": {
-                        "$ref": "../schemas/capabilities.json#/definitions/Role"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Role"
                     },
                     "required": true
                 },
                 {
                     "name": "capability",
                     "schema": {
-                        "$ref": "../schemas/capabilities.json#/definitions/Capability"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
                     },
                     "required": true
                 },
@@ -312,14 +312,14 @@
                 {
                     "name": "role",
                     "schema": {
-                        "$ref": "../schemas/capabilities.json#/definitions/Role"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Role"
                     },
                     "required": true
                 },
                 {
                     "name": "capability",
                     "schema": {
-                        "$ref": "../schemas/capabilities.json#/definitions/Capability"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
                     },
                     "required": true
                 },
@@ -386,7 +386,7 @@
                     "schema": {
                         "type": "array",
                         "items": {
-                            "$ref": "../schemas/capabilities.json#/definitions/Permission"
+                            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Permission"
                         },
                         "minItems": 1
                     },
@@ -500,10 +500,10 @@
                         "$ref": "#/components/schemas/GrantState"
                     },
                     "capability": {
-                        "$ref": "../schemas/capabilities.json#/definitions/Capability"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
                     },
                     "role": {
-                        "$ref": "../schemas/capabilities.json#/definitions/Role"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Role"
                     },
                     "lifespan": {
                         "type": "string",

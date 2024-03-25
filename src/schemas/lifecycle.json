@@ -1,5 +1,6 @@
 {
     "title": "Lifecycle",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle",
     "oneOf": [
       {
         "$ref": "#/definitions/LifecycleState"

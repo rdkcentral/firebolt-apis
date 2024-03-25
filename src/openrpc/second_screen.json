@@ -22,7 +22,7 @@
         "name": "protocols",
         "summary": "the supported protocols",
         "schema": {
-          "$ref": "../schemas/types.json#/definitions/BooleanMap"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/BooleanMap"
         }
       },
       "examples": [
@@ -129,7 +129,7 @@
         "name": "launchRequestEvent",
         "summary": "Dispatched when a second screen device on the local network has requested this app to be launched",
         "schema": {
-          "$ref": "../schemas/secondscreen.json#/definitions/SecondScreenEvent"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/secondscreen#/definitions/SecondScreenEvent"
         }
       },
       "examples": [
@@ -165,7 +165,7 @@
       "result": {
         "name": "closeRequestEvent",
         "schema": {
-          "$ref": "../schemas/secondscreen.json#/definitions/SecondScreenEvent"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/secondscreen#/definitions/SecondScreenEvent"
         }
       },
       "examples": [

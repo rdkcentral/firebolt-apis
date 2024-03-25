@@ -68,7 +68,7 @@
             "result": {
                 "name": "speed",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/VoiceSpeed"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/VoiceSpeed"
                 }
             },
             "examples": [

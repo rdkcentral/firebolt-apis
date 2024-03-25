@@ -71,7 +71,7 @@
                         "type": "object",
                         "properties": {
                             "navigateTo": {
-                                "$ref": "../schemas/intents.json#/definitions/NavigationIntent"
+                                "$ref": "https://meta.rdkcentral.com/firebolt/schemas/intents#/definitions/NavigationIntent"
                             }
                         }
                     },
@@ -79,7 +79,7 @@
                         "type": "object",
                         "properties": {
                             "launchRequest": {
-                                "$ref": "../schemas/secondscreen.json#/definitions/SecondScreenEvent"
+                                "$ref": "https://meta.rdkcentral.com/firebolt/schemas/secondscreen#/definitions/SecondScreenEvent"
                             }
                         }
                     }

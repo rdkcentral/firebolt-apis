@@ -320,7 +320,7 @@
         {
           "name": "parameters",
           "schema": {
-            "$ref": "../schemas/types.json#/definitions/FlatMap"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/FlatMap"
           },
           "required": false
         }
@@ -399,7 +399,7 @@
           "name": "parameters",
           "summary": "Optional additional parameters to be logged with the error",
           "schema": {
-            "$ref": "../schemas/types.json#/definitions/FlatMap"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/FlatMap"
           },
           "required": false          
         }

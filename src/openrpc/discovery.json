@@ -71,7 +71,7 @@
           "name": "result",
           "required": true,
           "schema": {
-            "$ref": "../schemas/discovery.json#/definitions/EntityInfoResult"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/EntityInfoResult"
           },
           "summary": "The entityInfo data."
         }
@@ -442,7 +442,7 @@
           "name": "result",
           "required": true,
           "schema": {
-            "$ref": "../schemas/discovery.json#/definitions/PurchasedContentResult"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/PurchasedContentResult"
           },
           "summary": "The data for the purchasedContent"
         }
@@ -628,7 +628,7 @@
           "name": "title",
           "summary": "The title of this call to action",
           "schema": {
-            "$ref": "../schemas/types.json#/definitions/LocalizedString"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/LocalizedString"
           },
           "required": true
         },
@@ -636,7 +636,7 @@
           "name": "identifiers",
           "summary": "A set of content identifiers for this call to action",
           "schema": {
-            "$ref": "../schemas/entertainment.json#/definitions/ContentIdentifiers"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ContentIdentifiers"
           },
           "required": true
         },
@@ -655,7 +655,7 @@
             "type": "object",
             "patternProperties": {
               "^.*$": {
-                "$ref": "../schemas/types.json#/definitions/LocalizedString"
+                "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/LocalizedString"
               }
             }
           }
@@ -748,7 +748,7 @@
           "schema": {
             "type": "array",
             "items": {
-              "$ref": "../schemas/entertainment.json#/definitions/Entitlement"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/Entitlement"
             }
           },
           "required": true
@@ -986,7 +986,7 @@
           "required": false,
           "summary": "An optional `NavigationIntent` with details about what part of the app to show first, and context around how/why it was launched",
           "schema": {
-            "$ref": "../schemas/intents.json#/definitions/NavigationIntent"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/intents#/definitions/NavigationIntent"
           }
         }
       ],
@@ -1266,7 +1266,7 @@
         "name": "value",
         "summary": "An object describing where in the app the user intends to navigate to",
         "schema": {
-          "$ref": "../schemas/intents.json#/definitions/NavigationIntent"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/intents#/definitions/NavigationIntent"
         }
       },
       "examples": [
@@ -1310,7 +1310,7 @@
           "schema": {
             "type": "array",
             "items": {
-              "$ref": "../schemas/entertainment.json#/definitions/Entitlement"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/Entitlement"
             }
           },
           "required": false
@@ -1600,7 +1600,7 @@
             "type": "object",
             "properties": {
               "result": {
-                "$ref": "../schemas/discovery.json#/definitions/EntityInfoResult"
+                "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/EntityInfoResult"
               }
             }
           }
@@ -1616,12 +1616,12 @@
             "format": "date-time"
           },
           "entity": {
-            "$ref": "../schemas/entertainment.json#/definitions/EntityInfo"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
           },
           "related": {
             "type": "array",
             "items": {
-              "$ref": "../schemas/entertainment.json#/definitions/EntityInfo"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
             }
           }
         },
@@ -1668,10 +1668,10 @@
             "minimum": -1
           },
           "offeringType": {
-            "$ref": "../schemas/entertainment.json#/definitions/OfferingType"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/OfferingType"
           },
           "programType": {
-            "$ref": "../schemas/entertainment.json#/definitions/ProgramType"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ProgramType"
           }
         },
         "required": [
@@ -1694,7 +1694,7 @@
             "type": "object",
             "properties": {
               "result": {
-                "$ref": "../schemas/discovery.json#/definitions/PurchasedContentResult"
+                "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/PurchasedContentResult"
               }
             }
           }
@@ -1715,7 +1715,7 @@
           "entries": {
             "type": "array",
             "items": {
-              "$ref": "../schemas/entertainment.json#/definitions/EntityInfo"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
             }
           }
         },
@@ -1771,7 +1771,7 @@
           "entitlements": {
             "type": "array",
             "items": {
-              "$ref": "../schemas/entertainment.json#/definitions/Entitlement"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/Entitlement"
             },
             "description": "A list of identifiers that represent what content is consumable for the subscriber. Excluding entitlements will cause no change to the entitlements that are stored for this subscriber. Providing an empty array will clear the subscriber's entitlements"
           }

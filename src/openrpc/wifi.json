@@ -105,7 +105,7 @@
           },
           "timeout": {
             "schema": {
-              "$ref": "../schemas/types.json#/definitions/Timeout"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/Timeout"
             }
           }
         }
@@ -128,7 +128,7 @@
         {
           "name": "timeout",
           "schema": {
-            "$ref": "../schemas/types.json#/definitions/Timeout"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/Timeout"
           }
         }
       ],

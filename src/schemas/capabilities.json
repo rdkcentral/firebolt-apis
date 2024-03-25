@@ -1,5 +1,6 @@
 {
     "title": "Capabilities",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/capabilities",
     "oneOf": [
         {
             "$ref": "#/definitions/Capability"
@@ -203,7 +204,7 @@
         "GrantKey": {
             "allOf": [
                 {
-                    "$ref": "./capabilities.json#/definitions/Capability"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
                 },
                 {
                     "type": "string",

@@ -27,7 +27,7 @@
         "name": "closedCaptionsSettings",
         "summary": "the closed captions settings",
         "schema": {
-          "$ref": "../schemas/accessibility.json#/definitions/ClosedCaptionsSettings"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/ClosedCaptionsSettings"
         }
       },
       "examples": [
@@ -80,7 +80,7 @@
         "name": "closedCaptionsSettings",
         "summary": "the closed captions settings",
         "schema": {
-          "$ref": "../schemas/accessibility.json#/definitions/ClosedCaptionsSettings"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/ClosedCaptionsSettings"
         }
       },
       "examples": [
@@ -135,7 +135,7 @@
         "name": "settings",
         "summary": "the voice guidance settings",
         "schema": {
-          "$ref": "../schemas/accessibility.json#/definitions/VoiceGuidanceSettings"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/VoiceGuidanceSettings"
         }
       },
       "examples": [
@@ -171,7 +171,7 @@
         "name": "settings",
         "summary": "the voice guidance settings",
         "schema": {
-          "$ref": "../schemas/accessibility.json#/definitions/VoiceGuidanceSettings"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/VoiceGuidanceSettings"
         }
       },
       "examples": [

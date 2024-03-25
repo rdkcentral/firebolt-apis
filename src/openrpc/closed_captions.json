@@ -64,7 +64,7 @@
             "result": {
                 "name": "family",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/FontFamily"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/FontFamily"
                 }
             },
             "examples": [
@@ -112,7 +112,7 @@
             "result": {
                 "name": "size",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/FontSize"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/FontSize"
                 }
             },
             "examples": [
@@ -160,7 +160,7 @@
             "result": {
                 "name": "color",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/Color"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/Color"
                 }
             },
             "examples": [
@@ -208,7 +208,7 @@
             "result": {
                 "name": "edge",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/FontEdge"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/FontEdge"
                 }
             },
             "examples": [
@@ -256,7 +256,7 @@
             "result": {
                 "name": "color",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/Color"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/Color"
                 }
             },
             "examples": [
@@ -304,7 +304,7 @@
             "result": {
                 "name": "opacity",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/Opacity"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/Opacity"
                 }
             },
             "examples": [
@@ -352,7 +352,7 @@
             "result": {
                 "name": "color",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/Color"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/Color"
                 }
             },
             "examples": [
@@ -400,7 +400,7 @@
             "result": {
                 "name": "opacity",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/Opacity"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/Opacity"
                 }
             },
             "examples": [
@@ -448,7 +448,7 @@
             "result": {
                 "name": "alignment",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/HorizontalAlignment"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/HorizontalAlignment"
                 }
             },
             "examples": [
@@ -496,7 +496,7 @@
             "result": {
                 "name": "alignment",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/VerticalAlignment"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/VerticalAlignment"
                 }
             },
             "examples": [
@@ -544,7 +544,7 @@
             "result": {
                 "name": "color",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/Color"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/Color"
                 }
             },
             "examples": [
@@ -592,7 +592,7 @@
             "result": {
                 "name": "opacity",
                 "schema": {
-                    "$ref": "../schemas/accessibility.json#/definitions/Opacity"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/Opacity"
                 }
             },
             "examples": [
@@ -643,7 +643,7 @@
                 "schema": {
                     "type": "array",
                     "items": {
-                        "$ref": "../schemas/localization.json#/definitions/ISO639_2Language"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/ISO639_2Language"
                     }
                 }
             },
@@ -679,7 +679,7 @@
                 "title": "ClosedCaptionsSettingsProviderRequest",
                 "allOf": [
                     {
-                        "$ref": "../schemas/types.json#/definitions/ProviderRequest"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/ProviderRequest"
                     },
                     {
                         "type": "object",
