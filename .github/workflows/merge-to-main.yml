@@ -21,27 +21,9 @@ jobs:
           git config --global user.email "${{ secrets.GLOBAL_GITHUB_EMAIL }}"
           git config --global user.name "${{ secrets.GLOBAL_GITHUB_USER }}"
 
-      # Get the "next" version number
-      - name: Extract next version
-        id: extract_version
-        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
-
       # Checkout "main"
       - name: Checkout main
         run: git checkout "main"
-
-      # Update "main" version to match "next"
-      - name: Update "main" version to match "next"
-        run: |
-          jq '.version = "${{ steps.extract_version.outputs.version }}"' package.json > temp.json
-
-          if diff -q "package.json" "temp.json" >/dev/null; then
-            echo "Versions are identical. No change required."
-            rm temp.json
-          else
-            mv temp.json package.json
-            git add package.json && git commit -m "Sync version to ${{ steps.extract_version.outputs.version }}"
-          fi
 
       # Attempt a dry-run merge
       - name: Attempt a dry-run merge
@@ -70,27 +52,9 @@ jobs:
           git config --global user.email "${{ secrets.GLOBAL_GITHUB_EMAIL }}"
           git config --global user.name "${{ secrets.GLOBAL_GITHUB_USER }}"
 
-      # Get the "next" version number
-      - name: Extract next version
-        id: extract_version
-        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
-
       # Checkout "main"
       - name: Checkout main
         run: git checkout "main"
-
-      # Update "main" version to match "next"
-      - name: Update "main" version to match "next"
-        run: |
-          jq '.version = "${{ steps.extract_version.outputs.version }}"' package.json > temp.json
-
-          if diff -q "package.json" "temp.json" >/dev/null; then
-            echo "Versions are identical. No change required."
-            rm temp.json
-          else
-            mv temp.json package.json
-            git add package.json && git commit -m "Sync version to ${{ steps.extract_version.outputs.version }}"
-          fi
 
       - name: Perform the merge from next to main
         run: |
@@ -107,7 +71,7 @@ jobs:
             exit 1
           fi
 
-  # If the merge cannot be performed, let stakeholders know
+  # If the merge cannot be performed, let stakeholders  know
   process_merge_on_failure:
     name: Merge dry-run failure
     needs: check_merge

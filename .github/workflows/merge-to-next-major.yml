@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "next"
+      - 'next'
 
 jobs:
   # Check if next can merge into next-major
@@ -24,17 +24,21 @@ jobs:
           git config --global user.email "${{ secrets.GLOBAL_GITHUB_EMAIL }}"
           git config --global user.name "${{ secrets.GLOBAL_GITHUB_USER }}"
 
-      # Get the "next" version number
-      - name: Extract next version
-        id: extract_version
-        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
-
       # Checkout "next-major"
       - name: Checkout next-major
         run: git checkout "next-major"
 
-      # Update "next-major" version to match "next"
-      - name: Update "next-major" version to match "next"
+      # Get the "next-major" version number
+      - name: Extract next-major version
+        id: extract_version
+        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
+
+      # Checkout "next"
+      - name: Checkout next
+        run: git checkout "next"
+
+      # Update "next" version to match "next-major"
+      - name: Update "next" version to match "next-major"
         run: |
           jq '.version = "${{ steps.extract_version.outputs.version }}"' package.json > temp.json
 
@@ -46,10 +50,14 @@ jobs:
             git add package.json && git commit -m "Sync version to ${{ steps.extract_version.outputs.version }}"
           fi
 
+      # Checkout "next-major"
+      - name: Checkout next-major
+        run: git checkout "next-major"
+
       # Attempt a dry-run merge
       - name: Attempt a dry-run merge
         run: |
-          git merge --no-commit --no-ff origin/${{github.ref_name}}
+          git merge --no-commit --no-ff ${{github.ref_name}}
           exit $?
 
   # Attempt to merge to next-major if our dry-run succeeded
@@ -73,17 +81,21 @@ jobs:
           git config --global user.email "${{ secrets.GLOBAL_GITHUB_EMAIL }}"
           git config --global user.name "${{ secrets.GLOBAL_GITHUB_USER }}"
 
-      # Get the "next" version number
-      - name: Extract next version
-        id: extract_version
-        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
-
       # Checkout "next-major"
       - name: Checkout next-major
         run: git checkout "next-major"
 
-      # Update "next-major" version to match "next"
-      - name: Update "next-major" version to match "next"
+      # Get the "next-major" version number
+      - name: Extract next-major version
+        id: extract_version
+        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
+
+      # Checkout "next"
+      - name: Checkout next
+        run: git checkout "next"
+
+      # Update "next" version to match "next-major"
+      - name: Update "next" version to match "next-major"
         run: |
           jq '.version = "${{ steps.extract_version.outputs.version }}"' package.json > temp.json
 
@@ -95,9 +107,13 @@ jobs:
             git add package.json && git commit -m "Sync version to ${{ steps.extract_version.outputs.version }}"
           fi
 
+      # Checkout "next-major"
+      - name: Checkout next-major
+        run: git checkout "next-major"
+
       - name: Perform the merge from next to next-major
         run: |
-          git merge origin/next
+          git merge next
           merge_status=$?
 
           git push origin "next-major"
