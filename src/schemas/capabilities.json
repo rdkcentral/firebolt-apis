@@ -202,6 +202,7 @@
             }
         },
         "GrantKey": {
+            "title": "GrantKey",
             "allOf": [
                 {
                     "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
