@@ -16,7 +16,7 @@
 
 cmake_minimum_required(VERSION 3.3)
 
-project(FireboltCoreSDKTests)
+project(FireboltManageSDKTests)
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX "${SYSROOT_PATH}/usr" CACHE INTERNAL "" FORCE)
@@ -42,11 +42,11 @@ find_package(${NAMESPACE}Core CONFIG REQUIRED)
 find_package(Firebolt CONFIG REQUIRED)
 find_package(${FIREBOLT_NAMESPACE}SDK CONFIG REQUIRED)
 
-set(TESTAPP TestFireboltCore)
+set(TESTAPP TestFireboltManage)
 
 message("Setup ${TESTAPP}")
 
-add_executable(${TESTAPP} main.c)
+add_executable(${TESTAPP} ManageSDKTest.cpp Main.cpp)
 
 target_link_libraries(${TESTAPP}
     PRIVATE
@@ -59,6 +59,11 @@ target_include_directories(${TESTAPP}
         $<BUILD_INTERFACE:${FIREBOLT_PATH}/usr/include/${FIREBOLT_NAMESPACE}SDK>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/../>
+)
+
+set_target_properties(${TESTAPP} PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
 )
 
 add_custom_command(
