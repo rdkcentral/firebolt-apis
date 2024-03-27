@@ -1,6 +1,6 @@
 {
 	"name": "@firebolt-js/sdk",
-	"version": "1.1.1-next.2",
+	"version": "1.2.0-next.1",
 	"description": "The Firebolt JS SDK",
 	"main": "./dist/lib/firebolt.mjs",
 	"types": "./dist/lib/firebolt.d.ts",
@@ -14,7 +14,7 @@
 		"native": "npx firebolt-openrpc sdk --input ./dist/firebolt-core-open-rpc.json --template ./src/cpp --output ./build/c/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/c",
 		"cpp": "npm run cpp:compile && npm run cpp:install",
 		"cpp:compile": "npx firebolt-openrpc sdk --input ./dist/firebolt-core-open-rpc.json --template ./src/cpp --output ./build/cpp/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/cpp",
-		"cpp:install":"./build/cpp/src/scripts/install.sh -i ./build/cpp/src -s ./build/cpp/src/ -m core",
+		"cpp:install": "./build/cpp/src/scripts/install.sh -i ./build/cpp/src -s ./build/cpp/src/ -m core",
 		"compile": "cd ../../.. && npm run compile",
 		"slice": "npx firebolt-openrpc slice -i ../../../dist/firebolt-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-core-open-rpc.json",
 		"docs": "npx firebolt-openrpc docs --input ./dist/firebolt-core-open-rpc.json --output build/docs/markdown --as-path",
