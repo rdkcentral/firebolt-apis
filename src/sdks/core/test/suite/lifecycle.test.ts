@@ -26,9 +26,9 @@ let readyMetricCalled: boolean = false;
 let readyMetricCalledAfterResolve: boolean = false;
 
 testHarness.onSend = function (module: string, method: string) {
-  if (module === "lifecycle" && method === "ready") {
+  if (module === "Lifecycle" && method === "ready") {
     readyCalled = true;
-  } else if (module === "metrics" && method === "ready") {
+  } else if (module === "Metrics" && method === "ready") {
     readyMetricCalled = true;
 
     if (readyResolved) {

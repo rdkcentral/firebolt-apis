@@ -31,10 +31,10 @@ export const store = {
 
 async function ready() {
   let readyRes;
-  await prioritize('Lifecycle', (event, value) => {
+  prioritize('Lifecycle', (event, value) => {
     store._current = event
   })
-  readyRes =await Transport.send('lifecycle', 'ready', {})
+  readyRes = await Gateway.request('Lifecycle.ready', {})
   setTimeout(_ => {
     logReady()
   })
@@ -49,7 +49,7 @@ function state() {
 
 function finished() {
   if (store.current === 'unloading') {
-    return Transport.send('lifecycle', 'finished')
+    return Gateway.request('Lifecycle.finished')
   } else {
     throw 'Cannot call finished() except when in the unloading transition'
   }

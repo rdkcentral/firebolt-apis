@@ -2,7 +2,7 @@ import Setup from "../../../../../test/Setup"
 import { sent } from "../../../../../test/Setup"
 
 import { test, expect  } from "@jest/globals"
-import { Lifecycle, Device, Discovery } from "../../build/javascript/src/firebolt";
+import { Lifecycle, Device, Discovery, Entertainment } from "../../build/javascript/src/firebolt";
 
 let listenerId:number
 
@@ -39,7 +39,7 @@ const result: Discovery.EntityInfoResult = {
         "identifiers": {
             "entityId": "123"
         },
-        "programType": Discovery.ProgramType.MOVIE,
+        "programType": Entertainment.ProgramType.MOVIE,
         "title": "A title"
     },
     "expires": ""
@@ -67,7 +67,7 @@ test('entityInfo pull', () => {
         return Promise.resolve(result)
     })
 
-    Setup.emit('discovery', 'pullEntityInfo', {
+    Setup.emit('Discovery', 'pullEntityInfo', {
         correlationId: '123',
         parameters: {
             entityId: '123'

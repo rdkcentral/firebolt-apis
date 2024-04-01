@@ -19,7 +19,6 @@
 const win = globalThis || window;
 
 import { test, expect } from "@jest/globals";
-import { Lifecycle, Discovery } from "../../build/javascript/src/firebolt";
 
 // holds test transport layer state, e.g. callback
 const state = {
@@ -31,9 +30,8 @@ let callbackWiredUp: boolean = false;
 let sendCalled: boolean = false;
 
 const transport = {
-  send: function (message: string) {
+  send: function (json: any) {
     sendCalled = true;
-    const json = JSON.parse(message);
     if (json.method.toLowerCase() === "discovery.onnavigateto") {
       // we'll assert on this later...
       navigateToListenCount++;
@@ -61,14 +59,21 @@ const transport = {
   },
 };
 
-win.__firebolt.setTransportLayer(transport);
+win.__firebolt = win.__firebolt || {}
+const transportAlreadyExisted = !!win.__firebolt.transport
+
+win.__firebolt = {
+  transport
+}
+
+import { Lifecycle, Discovery, Intents } from "../../build/javascript/src/firebolt";
 
 // listen twice, using event-specific call FIRST
-Discovery.listen("navigateTo", (value: Discovery.NavigationIntent) => {
+Discovery.listen("navigateTo", (value: Intents.NavigationIntent) => {
   callbackWiredUp = true;
 });
 
-Discovery.listen("navigateTo", (value: Discovery.NavigationIntent) => {
+Discovery.listen("navigateTo", (value: Intents.NavigationIntent) => {
   /* this just adds more listen calls to make sure we don't spam */
 });
 Discovery.listen((event: string, value: object) => {
@@ -82,6 +87,7 @@ Lifecycle.ready();
 
 test("Transport injected after SDK", () => {
   expect(callbackWiredUp).toBe(true);
+  expect(transportAlreadyExisted).toBe(false)
 });
 
 test("Transport send method working", () => {
