@@ -11,11 +11,8 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 
 ## 1. Overview
 
-Many apps will need to make use of audio, video, images, and other
-assets that are cultivated by the user of the device rather than by an
-app or content provider. For example, an app might want to allow a user
-to upload a photo to be used as a profile picture or provide a slide
-show of photos from a connected USB device.
+Some apps will need to make use of files stored on the device, e.g. on
+internal storage or a USB Mass Storage device.
 
 Giving such apps full access to the filesystem to facilitate access to
 the user's personally cultivated media is providing far too much
@@ -34,16 +31,15 @@ agnostic, storage-agnostic way.
 - [2. Table of Contents](#2-table-of-contents)
 - [3. Media Access](#3-media-access)
   - [3.1. Listing Media Files](#31-listing-media-files)
-  - [3.2. Accessing Volumes](#32-accessing-volumes)
-  - [3.3. Volume Availability](#33-volume-availability)
-  - [3.4. Accessing Files](#34-accessing-files)
-  - [3.5. Core APIs](#35-core-apis)
-    - [3.5.1. Volumes](#351-volumes)
-    - [3.5.2. Audio, Video, Images, Files](#352-audio-video-images-files)
-  - [3.6. Schemas](#36-schemas)
-    - [3.6.1. MediaFile](#361-mediafile)
-    - [3.6.2. Volume](#362-volume)
-    - [3.6.3. VolumeType](#363-volumetype)
+  - [3.2. Volume Availability](#32-volume-availability)
+  - [3.3. Accessing Files](#33-accessing-files)
+  - [3.4. Core APIs](#34-core-apis)
+    - [3.4.1. Volumes](#341-volumes)
+    - [3.4.2. Files](#342-files)
+  - [3.5. Schemas](#35-schemas)
+    - [3.5.1. MediaFile](#351-mediafile)
+    - [3.5.2. Volume](#352-volume)
+    - [3.5.3. VolumeType](#353-volumetype)
 
 ## 3. Media Access
 
@@ -53,148 +49,49 @@ new media file `Volumes` are available.
 
 ### 3.1. Listing Media Files
 
-The following APIs are used to return a list of `MediaFile` objects:
+The `MediaAccess` module **MUST** have a `files` API used to return a
+list of `MediaFile` objects from a specific directory.
 
--   `MediaAccess.audio()`
--   `MediaAccess.images()`
--   `MediaAccess.video()`
--   `MediaAccess.media()`
--   `MediaAccess.files()`
+The `files` APIs **MUST** support a required `path` parameter of type
+`string`.
 
-These APIs **MUST** support an optional `volume` parameter of type
-`Volume`.
+The `path` parameter may denote a Volume mount-point or a directory at
+any level below one of the available volumes.
 
-If `volume` is provided, then these APIs **MUST** return all *matching*
-(see below) `MediaFile` objects on user-granted volumes that match the
-`volume` parameter. The if the `volume` parameter has `undefined` or
-`null` properties, then those properties are not used to filter out
-volumes from the list. For example a value of `{ type: "usb" }`
-would return all matching `MediaFile` objects on any USB volumes.
+The `files` API **MUST** return all files and directories inside the 
+provided `path`.
 
-These APIs **MUST** support an optional `files` parameter of type
-`MediaFile`.
+The `files` API **MUST NOT** be recursive.
 
-If files is provided, then these APIs **MUST** return all matching (see
-below) ) `MediaFile` objects on user-granted volumes that match the
-`files` parameter. The if the `files` parameter has `undefined` or
-`null` properties, then those properties are not used to filter out
-files from the list. For example a value of
-`{ type: "application/mp3" }` would return all matching
-`MediaFile` objects that have the mp3 mime type.
+If the `path` is not a valid directory, the `files` API **MUST** return
+an `Invalid path` error.
 
-Wildcards, e.g. `{ uri: "*.mp3" }` are **not** supported.
-
-**NOTE**: if this is easy we can reconsider...
-
-If both `volume` and `files` are provided, then these APIs **MUST**
-return all `MediaFiles` that match the volume parameter **AND** the
-files parameter.
-
-If neither `volume` nor `files` is provided, then these APIs **MUST**
-return all *matching* `MediaFiles` on all user-granted volumes.
+If the `path` is a directory that cannot be accessed due to OS
+permissions, then the `files` API **MUST** also return the same `Invalid path`
+error. 
 
 Each `MediaFile` includes the full URI, relative to the Volume, so
 that Apps may present them in a manner that matches the directory
-structure on the `Volume`.
+structure on the `Volume`, e.g.:
 
-In order to call the `MediaAccess.audio()` API an app **MUST** have
-permission to use the `xrn:firebolt:capability:media-access:audio`
-capability.
+```json
+{
+    "path": "/Volumes/USB-Drive/mp3s/mysong.mp3",
+    "url": "https://127.0.0.1:1001/MediaAccess/USBMassStorage/Volumes/USB-Drive/mp3s/mysong.mp3",
+    "isDir": false,
+    "type": "application/mp3"
+}
+```
 
-The `MediaAccess.audio()` API only matches media that have a mime-type
-of `audio/*`.
-
-In order to call the `MediaAccess.images()` API an app **MUST** have
-permission to use the `xrn:firebolt:capability:media-access:images`
-capability.
-
-The `MediaAccess.images()` API only matches media that have a
-mime-type of `image/*`.
-
-In order to call the `MediaAccess.video()` API an app **MUST** have
-permission to use the `xrn:firebolt:capability:media-access:video`
-capability.
-
-The `MediaAccess.video()` API only matches media that have a
-mime-type of `video/*`.
-
-In order to call the `MediaAccess.media()` API an app **MUST** have
-permission to use at least one of the the
-`xrn:firebolt:capability:media-access:` capabilities for `audio`,
-`images`, or `video`.
-
-**TODO**: Need Ripple team input on this... it breaks our standard pattern.
-
-The `MediaAccess.media()` API only matches `MediaFile` objects that
-the app has permission to, i.e. files that would have been returned from
-`audio()`, `images()`, and `video()`.
+Apps **MUST** use the `path` property for display purposes and the `url`
+property for fetching purposes. This allows the underlying HTTP
+implementation to change w/out apps breaking.
 
 In order to call the `MediaAccess.files()` API an app **MUST** have
 permission to use the `xrn:firebolt:capability:media-access:files`
 capability.
 
-The `MediaAccess.files()` API matches all files on user-granted
-volumes on multiple media storage devices connected to the TV/STB such
-as USB Drive1, USB Drive2 etc . It's left to the app on how to use the
-content and present to users to play, e.g. all files in a file explorer
-UI, or various Tiles grouped under different sections based on media
-type: Videos, Audio, Images, Misc., etc.
-
-### 3.2. Accessing Volumes
-
-Having permission to use the various media access capabilities is not
-enough. An app **MUST** also have access to each volume if the device is
-configured to require a User Grant to access new volumes.
-
-To configure this, Distributors **MAY** configure a `GrantPolicy` on the
-`xrn:firebolt:capability:volume:read` capability. This capability is
-public and non-negotiable, so that distributors do not need to keep
-track of which public APIs use it.
-
-The default Firebolt `GrantPolicy` **MUST** be:
-
-```json
-{
-    "scope": "app",
-    "lifespan": "forever",
-    "overridable": true,
-    "options": [
-        {
-            "steps": [
-                {
-                    "capability": "xrn:firebolt:capability:usergrant:acknowledge",
-                }
-            ]
-        }
-    ]
-}
-```
-
-**TODO**: I think we updated grant policies to allow sharing them across
-multiple capabilities. If so, we can drop this new `volume:read` cap, and
-put the individual capabilities from the section above into one policy.
-
-This grant policy allows distributors to configure the `GrantPolicy` in
-whatever way they want, including automatically granting.
-
-Finally, the `GrantPolicy` object itself will have a new Boolean
-configuration value, `perResource` for determining if a particular
-policy is per resource or just for the capability as a whole.
-
-If `perResource` is true, then a `resource` name `string` **MUST** be
-passed when checking the grant status, and the resources that have been
-granted **MUST** be persisted in the grant status.
-
-For the `MediaAccess` APIs, the `resource` string will be the `uri` of
-the specific **Volume** being accessed.
-
-This results in the first time an app wants to access MediaFiles on a
-volume, the platform will check if the app not only has access to the
-API used, but also the device being queried.
-
-**TODO** need to review this with Ripple team.
-
-### 3.3. Volume Availability
+### 3.2. Volume Availability
 
 Apps that consume user cultivated media will likely want to know when
 volumes become available or unavailable.
@@ -206,7 +103,7 @@ Volume Type, e.g. `usb`.
 
 See [Temporal Sets](../openrpc-extensions/temporal-set.md) for more info.
 
-### 3.4. Accessing Files
+### 3.3. Accessing Files
 
 **TODO**: this is still in review
 **TODO**: Add some details on the HTTP Server thunder plugin
@@ -225,36 +122,41 @@ self-signed certificate trusted by the browser.
 **NOTE: does using an IP address mean we can't use SSL? Do we need a
 fake domain name? Do we even need SSL if the host is 127.0.0.1?**
 
-Authorization **MUST** be obtained by the Firebolt SDK using an
-`rpc-only` authorize method.
+Each App that uses the MediaAccess APIs **MUST** be assigned a unique
+port number for accessing the http URLs for those files. This allows any
+security measures to be opaque to the calling app.
 
-Authorization **MUST** be short lived, e.g. less than 5 seconds.
+App containers **MUST** be limited to only access one of the available
+Media Access ports.
 
-To facilitate Authorization, Firebolt **MUST** offer an API to fetch the
-file contents. The name of this API should be determined by the target
-language of the SDK.
+The port numbers `1000` to `1999` on the local device **MUST** be reserved
+for HTTP Media Access URLs.
 
-In the JavaScript SDK, the `MediaFile` schema **MUST** include an
-`x-method` property called `fetch` that calls the ECMAScript `fetch` API
-with a short-lived authorization token and returns the ECMAScript
-`Response` object. See [Response Methods](../openrpc-extensions/response-method.md)
-for more info on x-method properties.
+**TODO**: ^^ do these ports make sense?
 
-In the JavaScript SDK, the `fetch` method **MUST** be called from within
-an ECMAScript `Worker`, to avoid slowing down the app.
 
-SDKs for other languages **SHOULD** come up with similar optimizations
-using appropriate API names.
+HTTP URLs for file access **MUST** follow the template:
+
+```
+https://127.0.0.1:<app port>/MediaAccess/<storage type>/<path>
+```
+
+The `<storage type>` for `usb` is `USBMassStorage`.
+
+For example:
+
+```
+https://127.0.0.1:1001/MediaAccess/USBMassStorage/Volumes/USB-Drive/mp3s/mysong.mp3
+```
 
 ![Diagram Description automatically
 generated](../../images/specifications/media/access/media/image1.png)
 
-
-### 3.5. Core APIs
+### 3.4. Core APIs
 
 The following APIs are added to the Core SDK.
 
-#### 3.5.1. Volumes
+#### 3.4.1. Volumes
 
 The `volumes` method can be called in one of four ways.
 
@@ -298,58 +200,44 @@ This method returns a `VolumeProcess` object, synchronously, that
 contains a single `stop()` method for cancelling the temporal-set
 session.
 
-#### 3.5.2. Audio, Video, Images, Files
+#### 3.4.2. Files
 
 These APIs return all the files that match the associated capability,
 and the Volume query parameter:
 
 ```typescript
-function audio(volumes?: Volume, files?: MediaFile):
-Promise<MediaFile[]>
-
-function video(volumes?: Volume, files?: MediaFile):
-Promise<MediaFile[]>
-
-function images(volumes?: Volume, files?: MediaFile):
-Promise<MediaFile[]>
-
-function media(volumes?: Volume, files?: MediaFile):
-Promise<MediaFile[]>
-
-function files(volumes?: Volume, files?: MediaFile):
-Promise<MediaFile[]>
+function files(path: string):Promise<MediaFile[]>
 ```
 
-The `volumes` and `files` parameters can be sparsely populated, e.g.
-passing in `{ type: "usb" }` to the `audio` method would return
-all audio files on any USB drive.
-
-### 3.6. Schemas
+### 3.5. Schemas
 
 The following Schemas are used by this API.
 
-#### 3.6.1. MediaFile
+#### 3.5.1. MediaFile
 
 This is the primary object return by the various APIs.
 
-| Property | Type   | Description                                  |
-|----------|--------|----------------------------------------------|
-| volume   | Volume | The Volume the file is stored on             |
-| uri      | string | The full path, including volume, to the file |
-| type     | string | The mime-type of the file                    |
+| Property | Type    | Description                                  |
+|----------|---------|----------------------------------------------|
+| path     | string  | The Unix path to the file, starting with the volume, e.g. `/Volumes/USB-Drive/mp3s/mysong.mp3` |
+| uri      | string  | The http URL to request the file contents, e.g. `https://127.0.0.1:1001/MediaAccess/USBMassStorage/Volumes/USB-Drive/mp3s/mysong.mp3` |
+| isDir    | boolean | Whether the MediaFile is a directory         |
+| type     | string  | The mime-type of the file                    |
 
-#### 3.6.2. Volume
+If a file is a directory then `isDir` **MUST** be true.
+
+#### 3.5.2. Volume
 
 This provides information about a Volume, e.g. a Device, that stores
 MediaFiles.
 
-| Property | Type       | Description                                       |
-|----------|------------|---------------------------------------------------|
-| type     | VolumeType | The type of volume, e.g. USB                      |
-| uri      | string     | The full path to the root of the volume's storage |
-| name     | string     | The display name of the volume                    |
+| Property | Type       | Description                                                                  |
+|----------|------------|------------------------------------------------------------------------------|
+| type     | VolumeType | The type of volume, e.g. USB                                                 |
+| path     | string     | The Unix path to the root of the volume's storage, e.g. `/Volumes/USB-Drive` |
+| name     | string     | The display name of the volume, e.g. `My Cool USB Drive"                     |
 
-#### 3.6.3. VolumeType
+#### 3.5.3. VolumeType
 
 An enumeration of strings representing possible Volume types:
 
