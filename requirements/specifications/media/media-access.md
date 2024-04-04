@@ -150,7 +150,7 @@ https://127.0.0.1:1001/MediaAccess/USBMassStorage/Volumes/USB-Drive/mp3s/mysong.
 ```
 
 ![Diagram Description automatically
-generated](../../images/specifications/media/access/media/image1.png)
+generated](../../images/specifications/media/access/media/media-access-hla.png)
 
 ### 3.4. Core APIs
 
