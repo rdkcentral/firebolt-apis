@@ -17,6 +17,7 @@ App developers need to know which audio and video formats can be successfully pl
 Video formats include... 
 
 **TODO**: Rewrite this section.
+**TODO**: check Farhan's emails!!
 
 Apps may need to know what media format, e.g. HDR profile or video codec, is currently playing.
 
@@ -80,17 +81,13 @@ I want to know what my device *would* support if i upgraded my AV peripherals:
   - [4.1. Negotiated Media Support](#41-negotiated-media-support)
     - [4.1.1. Video Format Supported](#411-video-format-supported)
     - [4.1.2. Audio Format Supported](#412-audio-format-supported)
-  - [4.2. Implicit Media Support](#42-implicit-media-support)
-    - [4.2.1. Video Format Possible](#421-video-format-possible)
-    - [4.2.2. Audio Format Possible](#422-audio-format-possible)
-    - [4.2.3. Hdr Supported / Possible](#423-hdr-supported--possible)
+    - [4.2.3. Hdr Supported](#423-hdr-supported)
 - [5. Display Properties](#5-display-properties)
   - [5.1. Color Information...](#51-color-information)
   - [5.2. Display Width and Height](#52-display-width-and-height)
   - [5.3. Current and Optimal Resolution](#53-current-and-optimal-resolution)
   - [5.4. Supported Resolutions](#54-supported-resolutions)
   - [5.5. Device Supported Resolutions](#55-device-supported-resolutions)
-  - [5.6. Supported HDR Profiles](#56-supported-hdr-profiles)
   - [5.7. Use Source Framerate](#57-use-source-framerate)
 - [6. Audio Output Properties](#6-audio-output-properties)
   - [6.1. Mode](#61-mode)
@@ -157,43 +154,17 @@ The `Display.Resolution` enum **MUST** have one of the following values:
 - `"1080p25"`
 - `"1080p30"`
 - `"1080p50"`
-- `"1080p60b10"`
-- `"1080p60Dv"`
 - `"1080p"`
 - `UHD`         // convenience value for `2160p*`
 - `"2160p24"`
 - `"2160p25"`
 - `"2160p30"`
-- `"2160p30Dv"`
 - `"2160p50"`
 - `"2160p60"`
-- `"2160p60Dv"`
-- `"2160p24b10"`
-- `"2160p25b10"`
-- `"2160p30b10"`
-- `"2160p50b10"`
-- `"2160p60b10"`
 - `"4320p60"`
-- `"4320p60b10"`
 
 ## 4. Device Media Support
 Apps need to know what types of media the device supports.
-
-There are two sets of supported media in question:
-
-- What the device has negotiated as supported with other connected devices, e.g. an HDMI Soundbar
-- What the device is implicitly supports
-
-For example, a Firebolt device capable of Dolby Atmos connected to a soundbar that is only capable of Dolby Audio might want to display a notification to the user, e.g.:
-
-```javascript
-const device = await Device.audioFormatPossible(Media.Formats.AUDIO_DOLBY_MAT)
-const negotiated = await Device.audioFormatSupported(Media.Formats.AUDIO_DOLBY_MAT)
-
-if (device && !negotiated) {
-  console.log("Warning, your soundbar does not support Dolby Atmos!")
-}
-```
 
 ### 4.1. Negotiated Media Support
 Apps need to know what types of media support the current *device configuration*,
@@ -211,19 +182,36 @@ The `Device` module **MUST** have a `videoFormatSupported` API that returns
 the current device configuration. This API **MUST** return `boolean`.
 
 ```javascript
-const hdr10plusWithH265 = videoFormatSupported(Media.Formats.VIDEO_H265_M10, '1080p30')
+const hdr10plusWithH265 = videoFormatSupported(Media.Formats.VIDEO_H265_M10, { resolution: '1080p30' } )
 const hdr10plusWithVP9 = videoFormatSupported(Media.Formats.VIDEO_VP9_P2)
 ```
 
-The `videoFormatSupported` API **MUST** have a required `format` parameter which
-**MUST** be one of the following values:
+**TODO**: clear this up:
+
+When calling videoFormatSupported with a `resolution` parameter, then the Display support for that resolution is factored into the response.
+
+The `audioFormatSupported` API **MUST** have an `options` parameter
+which **MUST** be an object with zero or more of the following properties:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| codec    | `string` | the Code |
+| profile  | `string` | the Codec profile: <br>**h.265**: "main", "high", "main10"<br>**vp9**: "p0", "p2"<br>**AAC**: "mp2lc", "mp4he" |
+| level    | `string`   | the Codec level: <br>**h.265**: "4.1", "4.2", "5.0", "5.1"<br>**vp9**:"3.0", "3.1", "4.0", "4.1", "5.0", "5.1" || atmos    | `boolean` | Whether or not Dolby Atmos support for the given format is being requested |
+| resolution | `Display.Resolution` | The Resolution, e.g. `1080p` of the support being requested. |
+| hdr      | HDRProfile | The HDR profile that support is being checked for. |
+
+```javascript
+videoFormatSupported('', {})
+```
+
+The `codec` property **MUST** be one of the following values:
 
 - `VIDEO_AV1`
 - `VIDEO_DOLBYVISION`
 - `VIDEO_H263`
 - `VIDEO_H264`
 - `VIDEO_H265`
-- `VIDEO_H265_M10`
 - `VIDEO_MPEG`
 - `VIDEO_VP8`
 - `VIDEO_VP9`
@@ -231,18 +219,10 @@ The `videoFormatSupported` API **MUST** have a required `format` parameter which
 - `VIDEO_VP10`
 - `VIDEO_VC1`
 
-The `audioFormatSupported` API **MUST** have an optional `options` parameter
-which **MUST** be an object with zero or more of the following properties:
-
-| Property | Type | Description |
-|----------|------|-------------|
-| profile  | `string` | the Codec profile: <br>**h.265**: "main", "high", "main10"<br>**vp9**: "p0", "p2"<br>**AAC**: "mp2lc", "mp4he" |
-| level    | `string   | the Codec level: <br>**h.265**: "4.1", "4.2", "5.0", "5.1"<br>**vp9**:"3.0", "3.1", "4.0", "4.1", "5.0", "5.1" || atmos    | `boolean` | Whether or not Dolby Atmos support for the given format is being requested |
-| resolution | `Display.Resolution` | The Resolution, e.g. `1080p` of the support being requested. |
-
+**TODO**: Add HDRProfile
 **TODO**: Roku also has: Container
 
-If the `options` parameter is provided, then the `videoFormatSupported` API **MUST NOT**
+The `videoFormatSupported` API **MUST NOT**
 return `true` unless the format specified is supported with **all** of the properties specified
 by `options` *all at the same time*.
 
@@ -303,41 +283,7 @@ by `options` *all at the same time*.
 Use of the `videoFormatSupported` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
 
-### 4.2. Implicit Media Support
-Apps may also need to know what types of media support the device implicitly has,
-regardless of other connected devices.
-
-To facilitate this, the `Device` module will have a set of methods that
-return all possible values supported by the device. These APIs will have the same names as [Negotiated Media Support APIs](#41-negotiated-media-support) but end w/ `Possible` instead of `Supported` to denote that all device supported values are evaluated, not just the currently negotiated values.
-
-These APIs require the same capability permissions as their [Negotiated Media Support APIs](#41-negotiated-media-support) counterparts.
-
-These values never change without a restart.
-
-#### 4.2.1. Video Format Possible
-
-**TODO**: Is this method even needed? Video is decoded by the device and sent to the display using that display's standards. If a device supports decoding a format, then it can be sent to any display. I propose we drop this method.
-
-The `Device` module **MUST** have a `videoFormatPossible` API that returns
-`true` or `false` depending on whether the format specified is supported by
-the device, regardless of configuration. This API **MUST** return `boolean`.
-
-```javascript
-const hdr10plusWithH265 = videoFormatPossible(Media.Formats.VIDEO_H265_M10, '1080p30')
-const hdr10plusWithVP9 = videoFormatPossible(Media.Formats.VIDEO_VP9_P2)
-```
-The `videoFormatPossible` **MUST** support the same parameters as the [`videoFormatSupported` API](#411-video-format-supported).
-
-#### 4.2.2. Audio Format Possible
-**TODO**: This is literally only needed for the atmos flag... the rest of this is covered by the `mode` parameter. Roku doesn't give you a way to check if a device supports atmos when the soundbar doesn't. Discuss... I propose we drop this method.
-
-The `Device` module **MUST** have a `audioFormatPossible` API that returns
-`true` or `false` depending on whether the format specified is supported by
-the device, regardless of configuration. This API **MUST** return `boolean`.
-
-The `audioFormatPossible` method **MUST** support the same parameters as the [`audioFormatSupported` API](#412-audio-format-supported).
-
-#### 4.2.3. Hdr Supported / Possible
+#### 4.2.3. Hdr Supported
 Device module...
 
 ## 5. Display Properties
@@ -351,6 +297,8 @@ Access to these APIs is governed by the `xrn:firebolt:capability:display:info` c
 ### 5.1. Color Information...
 Expose this so apps can check
 BT2020 BT709
+
+**TODO**: ^^
 
 ### 5.2. Display Width and Height
 
@@ -378,40 +326,6 @@ This method **MUST** return a value from the `Display.Resolution` enum.
 The `Device` module **MUST** have a `supportedResolutions` method that returns an array of valid resolutions that the device supports, regardless of any connected display.
 
 This method **MUST** return an array with one or more of the following values from the `Display.Resolution` enum.
-
-### 5.6. Supported HDR Profiles
-The `Display` module **MUST** have an `hdr` method that returns an array of valid HDR profiles that the display supports.
-
-The array **MUST** have one or more of the following values:
-
-| Enumeration                   | Notes |
-| ----------------------------- | ----- |
-| `HDR_DOLBYVISION`             | Only true for the VIDEO_DOLBYVISION format  |
-| `HDR_HDR10`                   | Any format that supports HDR10 metadata    |
-| `HDR_HDR10PLUS`               | Any format that supports HDR10+ metadata   |
-| `HDR_ST2084`                  | Any format that supports ST2084 color transfer |
-| `HDR_HLG`                     | Any format that supports HLG color transfer |
-
-The `hdr` method **MUST** support an optional `resolution` parameter.
-
-When the `resolution` parameter is provided it **MUST** be one of the values in the `Display.Resolution` enumeration.
-
-When the `resolution` parameter is provided, the resulting array **MUST** include only HDR profiles that are supported by that resolution.
-
-```javascript
-if (Display.supportedResolutions().includes('UHD') ) {
-  Display.hdr('UHD').includes('HDR_HDR10')
-}
-else {
-  Display.hdr('HD').includes('HDR_HDR10')
-}
-```
-
-or
-
-```javascript
-  Display.hdr().includes('HDR_HDR10')
-```
 
 ### 5.7. Use Source Framerate
 The `Display` module **MUST** have a boolean `useSourceFrameRate` API.
