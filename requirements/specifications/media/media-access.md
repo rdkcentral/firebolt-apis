@@ -74,14 +74,28 @@ Each `MediaFile` includes the full URI, relative to the Volume, so
 that Apps may present them in a manner that matches the directory
 structure on the `Volume`, e.g.:
 
+TODO: is this a true root path, or simulated path.
+
 ```json
 {
-    "path": "/Volumes/USB-Drive/mp3s/mysong.mp3",
-    "url": "https://127.0.0.1:1001/MediaAccess/USBMassStorage/Volumes/USB-Drive/mp3s/mysong.mp3",
+    "name": "mysong.mp3",
+    "url": "https://127.0.0.1:1001/MediaAccess/USBMassStorage/mnt/USB-Drive/mp3s/mysong.mp3",
     "isDir": false,
     "type": "application/mp3"
 }
 ```
+
+Example director:
+
+```json
+{
+    "name": "mp3s",
+    "url": "https://127.0.0.1:1001/MediaAccess/USBMassStorage/mnt/USB-Drive/mp3s/mysong.mp3",
+    "isDir": true
+}
+
+```
+
 
 Apps **MUST** use the `path` property for display purposes and the `url`
 property for fetching purposes. This allows the underlying HTTP
@@ -132,7 +146,7 @@ Media Access ports.
 The port numbers `1000` to `1999` on the local device **MUST** be reserved
 for HTTP Media Access URLs.
 
-**TODO**: ^^ do these ports make sense?
+**TODO**: ^^ get rid of port logic for now
 
 
 HTTP URLs for file access **MUST** follow the template:
@@ -146,7 +160,7 @@ The `<storage type>` for `usb` is `USBMassStorage`.
 For example:
 
 ```
-https://127.0.0.1:1001/MediaAccess/USBMassStorage/Volumes/USB-Drive/mp3s/mysong.mp3
+https://127.0.0.1:1001/MediaAccess/USBMassStorage/mnt/USB-Drive/mp3s/mysong.mp3
 ```
 
 ![Diagram Description automatically
@@ -163,7 +177,6 @@ The `volumes` method can be called in one of four ways.
 ```typescript
 function volumes(): Promise<Volume[]>
 ```
-
 
 The get the currently cached list of Volumes w/out scanning call the
 method with just a `query` parameter:
@@ -219,10 +232,9 @@ This is the primary object return by the various APIs.
 
 | Property | Type    | Description                                  |
 |----------|---------|----------------------------------------------|
-| path     | string  | The Unix path to the file, starting with the volume, e.g. `/Volumes/USB-Drive/mp3s/mysong.mp3` |
-| uri      | string  | The http URL to request the file contents, e.g. `https://127.0.0.1:1001/MediaAccess/USBMassStorage/Volumes/USB-Drive/mp3s/mysong.mp3` |
+| name     | string  | The Unix filename of the file w/out any path or directories |
+| uri      | string  | The http URL to request the file contents, e.g. `https://127.0.0.1:1001/MediaAccess/USBMassStorage/mnt/USB-Drive/mp3s/mysong.mp3` |
 | isDir    | boolean | Whether the MediaFile is a directory         |
-| type     | string  | The mime-type of the file                    |
 
 If a file is a directory then `isDir` **MUST** be true.
 
@@ -234,8 +246,8 @@ MediaFiles.
 | Property | Type       | Description                                                                  |
 |----------|------------|------------------------------------------------------------------------------|
 | type     | VolumeType | The type of volume, e.g. USB                                                 |
-| path     | string     | The Unix path to the root of the volume's storage, e.g. `/Volumes/USB-Drive` |
-| name     | string     | The display name of the volume, e.g. `My Cool USB Drive"                     |
+| path     | string     | The Unix path to the root of the volume's storage, e.g. `/mnt/USB-Drive` |
+| label    | string     | The display name of the volume, e.g. `My Cool USB Drive`                     |
 
 #### 3.5.3. VolumeType
 
