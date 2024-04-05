@@ -704,7 +704,7 @@
           "params": [
             {
               "name":"format",
-              "value": "aac"
+              "value": "AAC"
             },
             {
               "name": "channels",
