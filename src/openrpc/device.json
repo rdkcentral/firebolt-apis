@@ -308,7 +308,7 @@
             },
             "os": {
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "**Deprecated** Use `firmware`, instead."
+              "description": "**Deprecated** Use firmware instead"
             },
             "debug": {
               "type": "string",
@@ -539,6 +539,239 @@
               1920,
               1080
             ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "videoFormatSupported",
+      "summary": "Get the supported video formats",
+      "params": [
+        {
+          "name": "format",
+          "summary": "Video Format to check if it is supported by platform",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/VideoFormat"
+          }
+        },
+        {
+          "name": "resolution",
+          "summary": "Video Resolution to check if it is supported by platform",
+          "schema": {
+            "$ref": "#/components/schemas/VideoFormatResolution"
+          }
+        }
+      ],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "videoFormatSupported",
+        "summary": "Video Format and Resolution support",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the video format",
+          "params": [
+            {
+              "name": "format",
+              "value": "av1"
+            },
+            {
+              "name": "resolution",
+              "value": "1080i"
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "videoFormatPossible",
+      "summary": "Get the possible video formats",
+      "params": [
+        {
+          "name": "format",
+          "summary": "Video Format to check if it is possible by platform regardless of the configuration",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/VideoFormat"
+          }
+        },
+        {
+          "name": "resolution",
+          "summary": "Video Resolution to check if it is possible by platform",
+          "schema": {
+            "$ref": "#/components/schemas/VideoFormatResolution"
+          }
+        }
+      ],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "videoFormatPossible",
+        "summary": "Video Format and Resolution support",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the video format",
+          "params": [
+            {
+              "name": "format",
+              "value": "av1"
+            },
+            {
+              "name": "resolution",
+              "value": "1080i"
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "audioFormatSupported",
+      "summary": "Check the supported audio formats",
+      "params": [
+        {
+          "name": "format",
+          "summary": "Audio Format to check if it is supported by platform",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/AudioFormat"
+          }
+        },
+        {
+          "name": "channels",
+          "summary": "Channels is the output medium for the Audio",
+          "schema": {
+            "$ref": "#/components/schemas/AudioChannels"
+          }
+        }
+      ],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "audioFormatSupported",
+        "summary": "Audio Format and Channel support",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the Audio format and channel format",
+          "params": [
+            {
+              "name":"format",
+              "value": "aac"
+            },
+            {
+              "name": "channels",
+              "value": "mono"
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "audioFormatPossible",
+      "summary": "Check the possible video formats",
+      "params": [
+        {
+          "name": "format",
+          "summary": "Audio Format to check if it is possible irrespective of the configuration in the platform",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/AudioFormat"
+          }
+        },
+        {
+          "name": "channels",
+          "summary": "Channels is the output medium for the Audio",
+          "schema": {
+            "$ref": "#/components/schemas/AudioChannels"
+          }
+        }
+      ],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "audioFormatPossible",
+        "summary": "Audio Format and Channel support",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the Audio format and channel format",
+          "params": [
+            {
+              "name": "format",
+              "value": "aac"
+            }, 
+            {
+              "name": "channels",
+              "value": "mono"
+            }
+          ],
+
+          "result": {
+            "name": "Default Result",
+            "value": true
           }
         }
       ]
@@ -804,6 +1037,82 @@
             }
           }
         ]
+      },
+      "VideoFormat": {
+        "title": "VideoFormat",
+        "type": "string",
+        "enum": [
+          "av1",
+          "dolbyVision",
+          "h263",
+          "h264",
+          "h265",
+          "h265M10",
+          "mpeg",
+          "vp8",
+          "vp9",
+          "vp9_p2",
+          "vp10",
+          "vc1"
+        ],
+        "description": "The video format supported by the platform"
+      },
+      "VideoFormatResolution": {
+        "title": "VideoFormatResolution",
+        "type": "string",
+        "enum": [
+          "480i",
+          "480p",
+          "576i",
+          "576p",
+          "576p50",
+          "720p",
+          "720p50",
+          "1080i",
+          "1080p",
+          "1080p24",
+          "1080i25",
+          "1080p30",
+          "1080i50",
+          "1080p50",
+          "1080p60",
+          "2160p30",
+          "2160p50",
+          "2160p60"
+        ]
+      },
+      "AudioFormat": {
+        "title": "AudioFormat",
+        "type": "string",
+        "enum": [
+          "AAC",
+          "AC3",
+          "AC4",
+          "DOLBY_MAT",
+          "DTS",
+          "DTS_X",
+          "EAC3",
+          "MPEG",
+          "MPEG1",
+          "MPEG2",
+          "MPEG4",
+          "OPUS",
+          "OGG",
+          "TRUEHD",
+          "WAV"
+        ],
+        "description": "The audio format supported by the platform"
+      },
+      "AudioChannels": {
+        "title": "AudioChannels",
+        "type": "string",
+        "enum": [
+          "MONO",
+          "STEREO",
+          "SURROUND",
+          "SURROUND_7_1"
+        ],
+        "description": "The audio channels supported by the platform"
       }
     }
   }

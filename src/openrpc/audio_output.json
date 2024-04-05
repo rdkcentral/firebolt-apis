@@ -1,0 +1,59 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Display",
+        "description": "A module for query info about e current (or built in) display on a device",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "mode",
+            "summary": "Get the Audio mode supported by the platform.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:audio-output:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "audioMode",
+                "summary": "Get the Audio mode supported by the platform.",
+                "schema": {
+                    "$ref": "#/components/schemas/AudioOutput"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "Stereo"
+                    }
+                }
+            ]
+        }
+    ],
+    "components": {
+        "schemas": {
+            "AudioOutput": {
+                "title": "AudioOutput",
+                "type": "string",
+                "enum": [
+                    "Mono",
+                    "Stereo",
+                    "Surround",
+                    "Passthrough",
+                    "Auto",
+                    "StereoSurroundMatFollow",
+                    "Unknown",
+                    "None"
+                ],
+                "description": "The audio output supported by the platform"
+              }
+        }
+    }
+}
