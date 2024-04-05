@@ -11,10 +11,6 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Stuart Harris   | Sky            |
 | Farhan Mood     | Liberty Global            |
 
-**TODO**: Get Feedback from Apps community
-**TODO**: How do we make this API simple for javasscript devs w/out taking away the power?
-**TODO**: Check non-Android TV APIs, e.g. Roku, etc.
-
 ## 1. Overview
 App developers need to know which audio and video formats can be successfully played on a Firebolt device.
 
@@ -79,6 +75,7 @@ I want to know what my device *would* support if i upgraded my AV peripherals:
   - [1.3. As a first-party App developer](#13-as-a-first-party-app-developer)
 - [2. Table of Contents](#2-table-of-contents)
 - [3. Format MimeTypes](#3-format-mimetypes)
+- [Resolutions](#resolutions)
 - [4. Device Media Support](#4-device-media-support)
   - [4.1. Negotiated Media Support](#41-negotiated-media-support)
     - [4.1.1. Video Format Supported](#411-video-format-supported)
@@ -86,15 +83,15 @@ I want to know what my device *would* support if i upgraded my AV peripherals:
   - [4.2. Implicit Media Support](#42-implicit-media-support)
     - [4.2.1. Video Format Possible](#421-video-format-possible)
     - [4.2.2. Audio Format Possible](#422-audio-format-possible)
-    - [Hdr Supported / Possible](#hdr-supported--possible)
+    - [4.2.3. Hdr Supported / Possible](#423-hdr-supported--possible)
 - [5. Display Properties](#5-display-properties)
-  - [Color Information...](#color-information)
-  - [5.1. Display Width and Height](#51-display-width-and-height)
-  - [5.2. Current and Optimal Resolution](#52-current-and-optimal-resolution)
-  - [5.3. Supported Resolutions](#53-supported-resolutions)
-  - [Device Supported Resolutions](#device-supported-resolutions)
-  - [5.4. Supported HDR Profiles](#54-supported-hdr-profiles)
-  - [5.5. Use Source Framerate](#55-use-source-framerate)
+  - [5.1. Color Information...](#51-color-information)
+  - [5.2. Display Width and Height](#52-display-width-and-height)
+  - [5.3. Current and Optimal Resolution](#53-current-and-optimal-resolution)
+  - [5.4. Supported Resolutions](#54-supported-resolutions)
+  - [5.5. Device Supported Resolutions](#55-device-supported-resolutions)
+  - [5.6. Supported HDR Profiles](#56-supported-hdr-profiles)
+  - [5.7. Use Source Framerate](#57-use-source-framerate)
 - [6. Audio Output Properties](#6-audio-output-properties)
   - [6.1. Mode](#61-mode)
 - [7. Media Info](#7-media-info)
@@ -104,7 +101,6 @@ I want to know what my device *would* support if i upgraded my AV peripherals:
   - [7.2. Global MediaInfo](#72-global-mediainfo)
     - [7.2.1. Active Video Formats](#721-active-video-formats)
     - [7.2.2. Active Audio Formats](#722-active-audio-formats)
-- [8. Notes](#8-notes)
 
 ## 3. Format MimeTypes
 The Firebolt `Media` module **MUST** have a `Formats` enumeration audio and video formats:
@@ -114,7 +110,7 @@ The Firebolt `Media` module **MUST** have a `Formats` enumeration audio and vide
 | `AUDIO_AAC`      | `audio/mp4a-latm`      |
 | `AUDIO_AC3`      | `audio/ac3`            |
 | `AUDIO_AC4`      | `audio/ac4`            |
-| `AUDIO_DOLBY_MAT`| `audio/vnd.dolby.mat`  | Dolby Metadata-enhanced Audio Transmission, e.g. Dolby Atmos |
+| `AUDIO_DOLBY_MAT`| `audio/vnd.dolby.mat`  | on-device format |
 | `AUDIO_DTS`      | `audio/vnd.dts`        |
 | `AUDIO_DTS_X`    | `audio/vnd.dts.uhd;profile=p2` |
 | `AUDIO_EAC3`     | `audio/eac3`           | Note we call this AC3+ in RDK... |
@@ -141,7 +137,44 @@ The Firebolt `Media` module **MUST** have a `Formats` enumeration audio and vide
 | `UNKNOWN`        | `unknown`              |
 | `NONE`           | `none`                 |
 
+**TODO**: remove ;profile= codecs
+
 **TODO**: Atmos is not always MAT... MAT -> PCM version of Atmos. Can also be carried over AC4 EAC3, AC3+, DolbyTrueHD
+
+## Resolutions
+The `Display.Resolution` enum **MUST** have one of the following values:
+
+- `"480i"`
+- `"480p"`
+- `"576i25"`
+- `"576p50"`
+- `"576p60"`
+- `"720p50"`
+- `"720p"`
+- `"1080i50"`
+- `"1080i"`
+- `"1080p24"`
+- `"1080p25"`
+- `"1080p30"`
+- `"1080p50"`
+- `"1080p60b10"`
+- `"1080p60Dv"`
+- `"1080p"`
+- `UHD`         // convenience value for `2160p*`
+- `"2160p24"`
+- `"2160p25"`
+- `"2160p30"`
+- `"2160p30Dv"`
+- `"2160p50"`
+- `"2160p60"`
+- `"2160p60Dv"`
+- `"2160p24b10"`
+- `"2160p25b10"`
+- `"2160p30b10"`
+- `"2160p50b10"`
+- `"2160p60b10"`
+- `"4320p60"`
+- `"4320p60b10"`
 
 ## 4. Device Media Support
 Apps need to know what types of media the device supports.
@@ -198,30 +231,20 @@ The `videoFormatSupported` API **MUST** have a required `format` parameter which
 - `VIDEO_VP10`
 - `VIDEO_VC1`
 
-The `videoFormatSupported` API **MUST** have an optional `resolution` parameter
-which **MUST** be a string from the following values:
+The `audioFormatSupported` API **MUST** have an optional `options` parameter
+which **MUST** be an object with zero or more of the following properties:
 
-- `480i`
-- `480p`
-- `576i`
-- `576p`
-- `576p50`
-- `720p`
-- `720p50`
-- `1080i`
-- `1080p`
-- `1080p24`
-- `1080i25`
-- `1080p30`
-- `1080i50`
-- `1080p50`
-- `1080p60`
-- `2160p30`
-- `2160p50`
-- `2160p60`
+| Property | Type | Description |
+|----------|------|-------------|
+| profile  | `string` | the Codec profile: <br>**h.265**: "main", "high", "main10"<br>**vp9**: "p0", "p2"<br>**AAC**: "mp2lc", "mp4he" |
+| level    | `string   | the Codec level: <br>**h.265**: "4.1", "4.2", "5.0", "5.1"<br>**vp9**:"3.0", "3.1", "4.0", "4.1", "5.0", "5.1" || atmos    | `boolean` | Whether or not Dolby Atmos support for the given format is being requested |
+| resolution | `Display.Resolution` | The Resolution, e.g. `1080p` of the support being requested. |
 
-If the `resolution` parameter is provided, then the `videoFormatSupported` API **MUST NOT**
-return `true` unless the resolution, and framerate if included, are supported by the format specified.
+**TODO**: Roku also has: Container
+
+If the `options` parameter is provided, then the `videoFormatSupported` API **MUST NOT**
+return `true` unless the format specified is supported with **all** of the properties specified
+by `options` *all at the same time*.
 
 Use of the `videoFormatSupported` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
@@ -230,7 +253,7 @@ Use of the `videoFormatSupported` API requires access to the `use` role of the
 
 The `Device` module **MUST** have an `audioFormatSupported` API that returns
 `true` or `false` depending on whether the format specified is supported by
-the current device configuration. This API **MUST** return `boolean`.
+the current device configuration. This API **MUST** return a `boolean`.
 
 The `audioFormatSupported` API **MUST** have a required `format` parameter which
 **MUST** be one of the following values:
@@ -251,11 +274,6 @@ The `audioFormatSupported` API **MUST** have a required `format` parameter which
 - `AUDIO_TRUEHD`
 - `AUDIO_WAV`
 
-**TODO**: Need to add Codec, Profile, Level (we handle this via additional enums to keep the API flat)
-**TODO**: Need to add atmos flag (and drop _MAT from DOLBY?)
-**TODO**: Need passhthrough flag (to report supported formats of the receiver, if enabled)
-**TODO**: Roku also has: Container, Bitrate
-
 **NOTE**: MAT is decoded on the device, it's not a format you'd have encoded content on a CDN
 
 ```javascript
@@ -264,29 +282,23 @@ if (audioFormatSupported('AUDIO_AC4', { atmos: true })) {
 }
 ```
 
-The `audioFormatSupported` API **MUST** have an optional `channels` parameter
-which **MUST** be a string from the following values if provided:
+The `audioFormatSupported` API **MUST** have an optional `options` parameter
+which **MUST** be an object with zero or more of the following properties:
 
-| Enumeration                   | Notes |
-| ----------------------------- | ----- |
-| `CHANNELS_MONO`               | |
-| `CHANNELS_STEREO`             | |
-| `CHANNELS_SURROUND`           | Aggregation of any SURROUND features |
-| `CHANNELS_SURROUND_5_1`       | |
-| `CHANNELS_SURROUND_7_1`       | |
+| Property | Type | Description |
+|----------|------|-------------|
+| profile  | `string` | the Codec profile: <br>**AAC**: "mp2lc", "mp4he" |
+| level    | `string   | the Codec level. |
+| atmos    | `boolean` | Whether or not Dolby Atmos support for the given format is being requested |
+| channels | `int` | Required number of audio channels |
+| sampleRate | `int` | The sample rate being requested. |
+| mode     | `AudioOutput.Mode` | Specify which mode should be used to evaluate the reqeuest. Defaults to the current mode if not specified. |
 
-**TODO**: Android has lots more channel configs
+**TODO**: Roku also has: Container, Bitrate
 
-If the `channels` parameter is provided, then the `audioFormatSupported` API **MUST NOT**
-return `true` unless all of the features in the array are supported by the format specified.
-
-The `audioFormatSupported` API **MUST** have an optional `sampleRate` parameter
-which **MUST** be a string from the following values:
-
-- TBD
-
-If the `sampleRate` parameter is provided, then the `audioFormatSupported` API **MUST NOT**
-return `true` unless the resolution, and framerate if included, are supported by the format specified.
+If the `options` parameter is provided, then the `audioFormatSupported` API **MUST NOT**
+return `true` unless the format specified is supported with **all** of the properties specified
+by `options` *all at the same time*.
 
 Use of the `videoFormatSupported` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
@@ -303,6 +315,9 @@ These APIs require the same capability permissions as their [Negotiated Media Su
 These values never change without a restart.
 
 #### 4.2.1. Video Format Possible
+
+**TODO**: Is this method even needed? Video is decoded by the device and sent to the display using that display's standards. If a device supports decoding a format, then it can be sent to any display. I propose we drop this method.
+
 The `Device` module **MUST** have a `videoFormatPossible` API that returns
 `true` or `false` depending on whether the format specified is supported by
 the device, regardless of configuration. This API **MUST** return `boolean`.
@@ -314,15 +329,15 @@ const hdr10plusWithVP9 = videoFormatPossible(Media.Formats.VIDEO_VP9_P2)
 The `videoFormatPossible` **MUST** support the same parameters as the [`videoFormatSupported` API](#411-video-format-supported).
 
 #### 4.2.2. Audio Format Possible
+**TODO**: This is literally only needed for the atmos flag... the rest of this is covered by the `mode` parameter. Roku doesn't give you a way to check if a device supports atmos when the soundbar doesn't. Discuss... I propose we drop this method.
+
 The `Device` module **MUST** have a `audioFormatPossible` API that returns
 `true` or `false` depending on whether the format specified is supported by
 the device, regardless of configuration. This API **MUST** return `boolean`.
 
 The `audioFormatPossible` method **MUST** support the same parameters as the [`audioFormatSupported` API](#412-audio-format-supported).
 
-The `audioFormatPossible` also supports passing `mode` to check if a format is possible in a different mode.
-
-#### Hdr Supported / Possible
+#### 4.2.3. Hdr Supported / Possible
 Device module...
 
 ## 5. Display Properties
@@ -333,74 +348,38 @@ These will be surfaced in a new `Display` module.
 
 Access to these APIs is governed by the `xrn:firebolt:capability:display:info` capability.
 
-### Color Information...
+### 5.1. Color Information...
 Expose this so apps can check
 BT2020 BT709
 
-### 5.1. Display Width and Height
+### 5.2. Display Width and Height
 
 The `Display` module **MUST** have a `width` and `height` method that return the width and height of the display, in centimeters from the HDMI edid.
 
 For built-in displays `width` and `height` **MUST** also be provided.
 
-### 5.2. Current and Optimal Resolution
+### 5.3. Current and Optimal Resolution
 
 The `Display` module **MUST** have a `currentResolution` and  `optimalResolution` method that returns a valid resolution for either the current state of the display, or the displays optimal resolution value.
 
-These methods **MUST** return one of the following values:
-
-- `1080p24`
-- `1080i25`
-- `1080p30`
-- `1080i50`
-- `1080p50`
-- `1080p60`
-- `2160p30`
-- `2160p50`
-- `2160p60`
-
-**TODO**: get final list...
+This method **MUST** return a value from the `Display.Resolution` enum.
 
 The `optimalResolution` **MUST** come from the HDMI edid.
 
 For built-in displays `optimalResolution` **MUST** also be provided.
 
-### 5.3. Supported Resolutions
+### 5.4. Supported Resolutions
  
 The `Display` module **MUST** have a `supportedResolutions` method that returns an array of valid resolutions that the display supports.
 
-These methods **MUST** return an array with one or more of the following values:
+This method **MUST** return a value from the `Display.Resolution` enum.
 
-- `1080p24`
-- `1080i25`
-- `1080p30`
-- `1080i50`
-- `1080p50`
-- `1080p60`
-- `2160p30`
-- `2160p50`
-- `2160p60`
-
-### Device Supported Resolutions
+### 5.5. Device Supported Resolutions
 The `Device` module **MUST** have a `supportedResolutions` method that returns an array of valid resolutions that the device supports, regardless of any connected display.
 
-This method **MUST** return an array with one or more of the following values:
+This method **MUST** return an array with one or more of the following values from the `Display.Resolution` enum.
 
-- `1080p24`
-- `1080i25`
-- `1080p30`
-- `1080i50`
-- `1080p50`
-- `1080p60`
-- `2160p30`
-- `2160p50`
-- `2160p60`
-
-**TODO** rationalize this with supported vs possible (possible is ambiguous... lets' go with device vs display/audiooutput, etc.)
-
-**TODO**: check how Roku does this
-
-### 5.4. Supported HDR Profiles
+### 5.6. Supported HDR Profiles
 The `Display` module **MUST** have an `hdr` method that returns an array of valid HDR profiles that the display supports.
 
 The array **MUST** have one or more of the following values:
@@ -415,15 +394,14 @@ The array **MUST** have one or more of the following values:
 
 The `hdr` method **MUST** support an optional `resolution` parameter.
 
-When the `resolution` parameter is provided, the resulting array **MUST** include only HDR profiles that are supported by that resolution.
+When the `resolution` parameter is provided it **MUST** be one of the values in the `Display.Resolution` enumeration.
 
-**TODO**: Do we want generic resolution or `UHD: true` param?
+When the `resolution` parameter is provided, the resulting array **MUST** include only HDR profiles that are supported by that resolution.
 
 ```javascript
 if (Display.supportedResolutions().includes('UHD') ) {
-  Display.hdr('UHD).includes('HDR_HDR10')
+  Display.hdr('UHD').includes('HDR_HDR10')
 }
-
 else {
   Display.hdr('HD').includes('HDR_HDR10')
 }
@@ -435,21 +413,7 @@ or
   Display.hdr().includes('HDR_HDR10')
 ```
 
-```javascript
-Device.hdrPossible()
-```
-
-**TODO**: Add Technicolor
-**TODO**: DolbyVision: Source vs device LED
-**TODO**: Need review w/ luc on HDR use cases:
-  - does display support (this section, 5.4)
-    - should this move to videoFormatSupported
-  - does device implicitly support (not in this doc)
-  - does the current media have it (7.1.1)
-
-**TODO**: do we need to include hdr x resolution support? (max resolution for each profile, e.g. 4K, 1080p)
-
-### 5.5. Use Source Framerate
+### 5.7. Use Source Framerate
 The `Display` module **MUST** have a boolean `useSourceFrameRate` API.
 
 This API **MUST** return `true` if the hdmi output frame rate is set to follow video source frame rate.
@@ -464,26 +428,14 @@ These will be surfaced in a new `AudioOutput` module.
 Access to these APIs is governed by the `xrn:firebolt:capability:audio-output:info` capability.
 
 ### 6.1. Mode
-The `AudioOutput` module  **MUST** include a `mode` string API that returns one of the following values:
+The `AudioOutput` module  **MUST** include a `mode` string API that returns an `AudioOutput.Mode` enum that is one of the following values:
 
-- `MONO`
-- `STEREO`
-- `SURROUND`
-- `PASSTHROUGH`
 - `AUTO`
-- `STEREO_SURROUND_MAT_FOLLOW`
+- `SURROUND`
+- `STEREO`
+- `PASSTHROUGH`
 - `UNKNOWN`
 - `NONE`
-
-New list from call:
-
-- auto (includes mat)
-- dd / surround
-- stereo
-- passthrough
-- none
-
-**TODO**: is this all of them?
 
 ## 7. Media Info
 
@@ -552,28 +504,11 @@ The `videoFormat` result **MUST** have an `hdr` array property with zero or more
 
 If a value is included the `hdr` array then the media currently in the media pipeline **MUST** include the denoted HDR metadata in the decoded video.
 
-The `videoFormat` result **MUST** have a `resolution` string property with one of the following values:
+The `videoFormat` result **MUST** have a `resolution` string property with one of the `Display.Resolution` values.
 
-- `480i`
-- `480p`
-- `576i`
-- `576p`
-- `576p50`
-- `720p`
-- `720p50`
-- `1080i`
-- `1080p`
-- `1080p24`
-- `1080i25`
-- `1080p30`
-- `1080i50`
-- `1080p50`
-- `1080p60`
-- `2160p30`
-- `2160p50`
-- `2160p60`
-- `UNKNOWN`
-- `NONE`
+The `videoFormat` result **MAY** have a `profile` string property that denotes the profile of the codec.
+
+The `videoFormat` result **MAY** have a `level` string property that denotes the level of the codec.
 
 The `videoFormat` API **MUST** be a Firebolt `property:readonly` API, and
 have a corresponding `onVideoFormatChanged` notification.
@@ -605,22 +540,14 @@ The `audioFormat` result **MUST** have a `type` property with one of the followi
 - `AUDIO_TRUEHD`
 - `AUDIO_WAV`
 
-**TODO**: Roku has format, codec, profile, level...
 
-The `audioFormat` result **MUST** have a `channels` string property with one of the following values:
+The `audioFormat` result **MUST** have a `channels` integer property that denotes the number of audio channels.
 
-| Enumeration                   | Notes |
-| ----------------------------- | ----- |
-| `CHANNELS_MONO`               | |
-| `CHANNELS_STEREO`             | |
-| `CHANNELS_SURROUND_5_1`       | |
-| `CHANNELS_SURROUND_7_1`       | |
+The `audioFormat` result **MUST** have a `sampleRate` integer property that denotes the audio sample rate.
 
-**TODO**: get all values...
+The `audioFormat` result **MAY** have a `profile` string property that denotes the profile of the codec.
 
-The `audioFormat` result **MUST** have a `sampleRate` string property with one of the following values:
-
-- TBD
+The `audioFormat` result **MAY** have a `level` string property that denotes the level of the codec.
 
 The `audioFormat` API **MUST** be a Firebolt `property:readonly` API, and
 have a corresponding `onAudioFormatChanged` notification.
@@ -633,7 +560,7 @@ Use of the `audioFormat` APIs require access to the `use` role of the
 First party apps need a way to query which media formats are currently being output to the [media pipeline](./media-pipeline.md), without caring about which pipeline.
 
 #### 7.2.1. Active Video Formats
-The `MediaInfo` module **MUST** have a `activeVideoFormats` API that returns an array of `objects` with the video codec, e.g., H.265, VP9, etc., and sample rate of the media currently in each media pipeline (either playing or paused).
+The `MediaInfo` module **MUST** have a `activeVideoFormats` API that returns an array of `objects` with the video codec, e.g., H.265, VP9, etc., of the media currently in each media pipeline (either playing or paused).
 
 Each item in the `activeVideoFormats` result array **MUST** conform to the same requirements as the indivual results from the [`videoFormat` API](#611-video-format).
 
@@ -653,8 +580,7 @@ MediaInfo.activeVideoFormats((active) => {
 Access to these APIs is gated by `manage` access to the `xrn:firebolt:capability:media-info:video-format` capability.
 
 #### 7.2.2. Active Audio Formats
-The `MediaInfo` module **MUST** have a `activeAudioFormats` API that returns an `object` with the audio codec, e.g., AAC, AC3, etc., and sample rate of the media currently in the
-media pipeline (either playing or paused).
+The `MediaInfo` module **MUST** have a `activeAudioFormats` API that returns an `object` with the audio codec, e.g., AAC, AC3, etc., of the media currently in the media pipeline (either playing or paused).
 
 Each item in the `activeAudioFormats` result array **MUST** conform to the same requirements as the indivual results from the [`audioFormat` API](#612-audio-format).
 
@@ -672,81 +598,3 @@ MediaInfo.activeVideoFormats((active) => {
 ```
 
 Access to these APIs is gated by `manage` access to the `xrn:firebolt:capability:media-info:audio-format` capability.
-
-**TODO**: Group Audio & Video from output 1, output 2, etc.
-
-JL: no, we're trying to support on screen badges here, not more complex use cases
-
-**TODO**: Add display dimensions to video formats in this array, so we know how big they are
-
-JL: it's in there via `resolution`
-
-**TODO**: How do i use this api for just the "main" screen and ignore the other.
-
-JL: we can add a param where you specify the pipeline or display? Out of scope?
-
-## 8. Notes
-
-| API           | Current App | Any Pipeline | Globally | Supported by Chain | Supported by Device |
-|---------------|-------------|--------------|----------|--------------------|---------------------|
-| Video Codec   |  | | | | | 
-| Audio Codec   | | | | | | 
-| Dynamic Range | | | | | | 
-| Audio Profile | | | | | | 
-| Resolution    | | | | | | 
-
-he encoding format for this AudioProfile.
-
-Value is
-
-- AudioFormat.ENCODING_DEFAULT
-- AudioFormat.ENCODING_PCM_16BIT
-- AudioFormat.ENCODING_PCM_8BIT
-- AudioFormat.ENCODING_PCM_FLOAT,
-- AudioFormat.ENCODING_AC3
-- AudioFormat.ENCODING_E_AC3
-- AudioFormat.ENCODING_DTS
-- AudioFormat.ENCODING_DTS_HD
-- AudioFormat.ENCODING_MP3
-- AudioFormat.ENCODING_AAC_LC
-- AudioFormat.ENCODING_AAC_HE_V1
-- AudioFormat.ENCODING_AAC_HE_V2
-- AudioFormat.ENCODING_IEC61937
-- AudioFormat.ENCODING_DOLBY_TRUEHD
-- AudioFormat.ENCODING_AAC_ELD
-- AudioFormat.ENCODING_AAC_XHE
-- AudioFormat.ENCODING_AC4
-- AudioFormat.ENCODING_E_AC3_JOC
-- AudioFormat.ENCODING_DOLBY_MAT
-- AudioFormat.ENCODING_OPUS
-- AudioFormat.ENCODING_PCM_24BIT_PACKED
-- AudioFormat.ENCODING_PCM_32BIT
-- AudioFormat.ENCODING_MPEGH_BL_L3
-- AudioFormat.ENCODING_MPEGH_BL_L4
-- AudioFormat.ENCODING_MPEGH_LC_L3
-- AudioFormat.ENCODING_MPEGH_LC_L4
-- AudioFormat.ENCODING_DTS_UHD_P1
-- AudioFormat.ENCODING_DRA
-- AudioFormat.ENCODING_DTS_HD_MA
-- AudioFormat.ENCODING_DTS_UHD_P2
-- AudioFormat.ENCODING_DSD
-
-
-"Dolby Audio":
-
-- AudioFormat.ENCODING_AC3
-- AudioFormat.ENCODING_E_AC3
-- AudioFormat.ENCODING_E_AC3_JOC
-
-"atmos" -> ENCODING_E_AC3_JOC
-
-Surround has nothing to do w/ codec:
-
-Need `audioChannels()` API that returns stereo, mono, 5.1, 7.1, etc.
-
-On Android, there are Audio Formats, and formats ahve profiles. profiles have channels/sample rates.
-
-https://developer.android.com/reference/android/media/AudioFormat
-
-Video Codecs have Codec Levels/profiles:
-https://developer.android.com/reference/android/media/MediaFormat#KEY_HDR10_PLUS_INFO
