@@ -1,3 +1,10 @@
+# [1.2.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.1...v1.2.0-next.2) (2024-04-08)
+
+
+### Features
+
+* CI/CD docs (next-major) and merges (next-major/main) ([#245](https://github.com/rdkcentral/firebolt-apis/issues/245)) ([49ab03d](https://github.com/rdkcentral/firebolt-apis/commit/49ab03db9986b27dafd279fcc6121abe447784dc))
+
 # [1.2.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.1-next.2...v1.2.0-next.1) (2024-03-27)
 
 
