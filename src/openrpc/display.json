@@ -1,14 +1,14 @@
 {
     "openrpc": "1.2.4",
     "info": {
-        "title": "Display",
-        "description": "A module for query info about e current (or built in) display on a device",
+        "title": "Display Properties",
+        "description": "A module for querying various aspects of the current (or built-in) display on a device",
         "version": "0.0.0"
     },
     "methods": [
         {
             "name": "width",
-            "summary": "Get the width of the display in centimeters.",
+            "summary": "Get the width of the display (in centimeters) from the HDMI EDID.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -20,7 +20,7 @@
             "params": [],
             "result": {
                 "name": "width",
-                "summary": "Width of the display device in centimeters",
+                "summary": "Width of the display device",
                 "schema": {
                     "type": "number"
                 }
@@ -38,7 +38,7 @@
         },
         {
             "name": "height",
-            "summary": "Get the height of the display in centimeters.",
+            "summary": "Get the height of the display (in centimeters) from the HDMI EDID.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -79,8 +79,8 @@
             ],
             "params": [],
             "result": {
-                "name": "height",
-                "summary": "Height of the display device in centimeters",
+                "name": "resolution",
+                "summary": "The current resolution of the display device.",
                 "schema": {
                     "$ref": "#/components/schemas/DisplayResolution"
                 }
@@ -98,7 +98,7 @@
         },
         {
             "name": "optimalResolution",
-            "summary": "Get the optimal resolution of the display device.",
+            "summary": "Get the optimal resolution of the display device.  This value is provided from the HDMI EDID.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -110,7 +110,7 @@
             "params": [],
             "result": {
                 "name": "resolution",
-                "summary": "Height of the display device in centimeters",
+                "summary": "Optional resolution of the display device.",
                 "schema": {
                     "$ref": "#/components/schemas/DisplayResolution"
                 }
@@ -172,7 +172,7 @@
         },
         {
             "name": "hdr",
-            "summary": "Returns an array of valid HDR profiles that the display supports",
+            "summary": "Returns an array of valid HDR profiles that the display supports. ",
             "tags": [
                 {
                     "name": "capabilities",
@@ -184,15 +184,15 @@
             "params": [
                 {
                     "name": "resolution",
-                    "summary": "Video Resolution include only HDR profiles that are supported by that resolution",
+                    "summary": "The video resolution to check against HDR profiles supported by the display. When provided, the result includes only HDR profiles supported by this resolution.",
                     "schema": {
-                      "$ref": "#/components/schemas/VideoFormatResolution"
+                        "$ref": "#/components/schemas/VideoFormatResolution"
                     }
                 }
             ],
             "result": {
                 "name": "resolution",
-                "summary": "An array of valid HDR profiles that the display supports",
+                "summary": "An array of valid HDR profiles that the display supports.",
                 "schema": {
                     "type": "array",
                     "items": {
@@ -213,15 +213,11 @@
                     "result": {
                         "name": "Default Result",
                         "value": [
-                            "1080p24",
-                            "1080i25",
-                            "1080p30",
-                            "1080i50",
-                            "1080p50",
-                            "1080p60",
-                            "2160p30",
-                            "2160p50",
-                            "2160p60"
+                            "DolbyVision",
+                            "Hdr10",
+                            "Hdr10Plus",
+                            "St2084",
+                            "hlg"
                         ]
                     }
                 }
@@ -229,7 +225,7 @@
         },
         {
             "name": "useSourceFrameRate",
-            "summary": "Get the hdmi output frame rate is set to follow video source frame rate.",
+            "summary": "Set the HDMI output frame rate to follow the video source frame rate.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -241,7 +237,7 @@
             "params": [],
             "result": {
                 "name": "useSourceFrameRate",
-                "summary": "Get the hdmi output frame rate is set to follow video source frame rate",
+                "summary": "Whether the HDMI output frame rate was set to follow video source frame rate",
                 "schema": {
                     "type": "boolean"
                 }
@@ -260,34 +256,34 @@
     ],
     "components": {
         "schemas": {
-          "DisplayResolution": {
-            "title": "DisplayResolution",
-            "type": "string",
-            "enum": [
-                "1080p24",
-                "1080i25",
-                "1080p30",
-                "1080i50",
-                "1080p50",
-                "1080p60",
-                "2160p30",
-                "2160p50",
-                "2160p60"
-            ],
-            "description": "The list of resolutions supported by platform"
-          },
-          "HdrProfile": {
-            "title": "HdrProfile",
-            "type": "string",
-            "enum": [
-                "DolbyVision",
-                "Hdr10",
-                "Hdr10Plus",
-                "St2084",
-                "hlg"
-            ],
-            "description": "The list of HDR profiles supported by platform"
-          }
+            "DisplayResolution": {
+                "title": "DisplayResolution",
+                "type": "string",
+                "enum": [
+                    "1080p24",
+                    "1080i25",
+                    "1080p30",
+                    "1080i50",
+                    "1080p50",
+                    "1080p60",
+                    "2160p30",
+                    "2160p50",
+                    "2160p60"
+                ],
+                "description": "The list of resolutions supported by the display"
+            },
+            "HdrProfile": {
+                "title": "HdrProfile",
+                "type": "string",
+                "enum": [
+                    "DolbyVision",
+                    "Hdr10",
+                    "Hdr10Plus",
+                    "St2084",
+                    "hlg"
+                ],
+                "description": "The list of HDR profiles supported by the display"
+            }
         }
     }
 }

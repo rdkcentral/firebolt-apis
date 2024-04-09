@@ -1,14 +1,14 @@
 {
     "openrpc": "1.2.4",
     "info": {
-        "title": "Display",
-        "description": "A module for query info about e current (or built in) display on a device",
+        "title": "Audio Output Properties",
+        "description": "A module for querying various aspects of the current (or built-in) audio output system of a device",
         "version": "0.0.0"
     },
     "methods": [
         {
             "name": "mode",
-            "summary": "Get the Audio mode supported by the platform.",
+            "summary": "Return the audio mode currently supported by the platform.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -20,9 +20,9 @@
             "params": [],
             "result": {
                 "name": "audioMode",
-                "summary": "Get the Audio mode supported by the platform.",
+                "summary": "The audio mode supported by the platform.",
                 "schema": {
-                    "$ref": "#/components/schemas/AudioOutput"
+                    "$ref": "#/components/schemas/AudioMode"
                 }
             },
             "examples": [
@@ -39,8 +39,8 @@
     ],
     "components": {
         "schemas": {
-            "AudioOutput": {
-                "title": "AudioOutput",
+            "AudioMode": {
+                "title": "AudioMode",
                 "type": "string",
                 "enum": [
                     "Mono",
@@ -52,8 +52,8 @@
                     "Unknown",
                     "None"
                 ],
-                "description": "The audio output supported by the platform"
-              }
+                "description": "The audio output mode supported by the platform"
+            }
         }
     }
 }
