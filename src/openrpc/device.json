@@ -707,7 +707,7 @@
             },
             {
               "name": "channels",
-              "value": "mono"
+              "value": "MONO"
             }
           ],
           "result": {
@@ -761,11 +761,11 @@
           "params": [
             {
               "name": "format",
-              "value": "aac"
+              "value": "AAC"
             },
             {
               "name": "channels",
-              "value": "mono"
+              "value": "MONO"
             }
           ],
           "result": {
