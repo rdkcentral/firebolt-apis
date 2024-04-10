@@ -186,7 +186,7 @@
                     "name": "resolution",
                     "summary": "The video resolution to check against HDR profiles supported by the display. When provided, the result includes only HDR profiles supported by this resolution.",
                     "schema": {
-                        "$ref": "#/components/schemas/VideoFormatResolution"
+                        "$ref": "#/components/schemas/DisplayResolution"
                     }
                 }
             ],
@@ -207,7 +207,7 @@
                     "params": [
                         {
                             "name": "resolution",
-                            "value": "1080p"
+                            "value": "1080p60"
                         }
                     ],
                     "result": {
