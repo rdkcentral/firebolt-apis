@@ -566,9 +566,6 @@
       ],
       "tags": [
         {
-          "name": "property:readonly"
-        },
-        {
           "name": "capabilities",
           "x-uses": [
             "xrn:firebolt:capability:device:info"
@@ -623,9 +620,6 @@
         }
       ],
       "tags": [
-        {
-          "name": "property:readonly"
-        },
         {
           "name": "capabilities",
           "x-uses": [
@@ -682,9 +676,6 @@
       ],
       "tags": [
         {
-          "name": "property:readonly"
-        },
-        {
           "name": "capabilities",
           "x-uses": [
             "xrn:firebolt:capability:device:info"
@@ -739,9 +730,6 @@
         }
       ],
       "tags": [
-        {
-          "name": "property:readonly"
-        },
         {
           "name": "capabilities",
           "x-uses": [

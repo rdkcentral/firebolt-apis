@@ -160,9 +160,6 @@
             "summary": "Get the audio profile of the specified media session.",
             "tags": [
                 {
-                    "name": "property"
-                },
-                {
                     "name": "interface",
                     "x-interface": "MediaInfoContext"
                 },
