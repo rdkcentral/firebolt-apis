@@ -98,7 +98,7 @@
         },
         {
             "name": "optimalResolution",
-            "summary": "Get the optimal resolution of the display device.  This value is provided from the HDMI EDID.",
+            "summary": "Get the optimal resolution of the display device.  This will return null if no display is present.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -112,7 +112,14 @@
                 "name": "resolution",
                 "summary": "Optional resolution of the display device.",
                 "schema": {
-                    "$ref": "#/components/schemas/DisplayResolution"
+                    "anyOf": [
+                        {
+                            "type": "null"
+                        },
+                        {
+                            "$ref": "#/components/schemas/DisplayResolution"
+                        }
+                    ]
                 }
             },
             "examples": [
@@ -191,7 +198,7 @@
                 }
             ],
             "result": {
-                "name": "resolution",
+                "name": "HDR profiles",
                 "summary": "An array of valid HDR profiles that the display supports.",
                 "schema": {
                     "type": "array",
