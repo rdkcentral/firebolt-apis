@@ -770,13 +770,13 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:display:info"
+            "xrn:firebolt:capability:device:info"
           ]
         }
       ],
       "params": [],
       "result": {
-        "name": "resolution",
+        "name": "resolutions",
         "summary": "An array of valid resolutions that the device supports",
         "schema": {
           "type": "array",
