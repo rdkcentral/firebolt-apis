@@ -64,7 +64,7 @@ track of which apps are using them separately.
   - [4.5. InterestIntent](#45-interestintent)
 - [5. Discovery SDK APIs](#5-discovery-sdk-apis)
   - [5.1. Content.requestUserInterest](#51-contentrequestuserinterest)
-  - [5.2. Content.onUserInterestedIn](#52-contentonuserinterestedin)
+  - [5.2. Content.onUserInterest](#52-contentonuserinterest)
 
 
 ## 3. User Interest Flows
@@ -80,11 +80,11 @@ Interest API, in addition to any in-app features that it's already
 invoking.
 
 By calling the `Discovery.userInterest` method with the relevant entity
-meta-data, the device\'s Aggregated Experience will be notified of the
+meta-data, the device's Aggregated Experience will be notified of the
 user's interest in that entity:
 
 ```typescript
-Discovery.userInterest(type:InterestType, reason: InterestReason, entity:EntityInfo)
+Discovery.userInterest(type:InterestType, reason: InterestReason, entity:EntityDetails)
 ```
 
 The `type` parameter denotes the directionality of the interest:
@@ -106,15 +106,23 @@ The `reason` parameter denotes why or how the user has expressed interest:
 An app **MUST** `provide` the `xrn:firebolt:capability:discovery:interest`
 capability in order to call `Discovery.userInterest`.
 
-When this method is called with a valid `EntityInfo`, the platform
+When this method is called with a valid `EntityDetails`, the platform
 **MUST** dispatch a `Content.onUserInterest` notification to all Apps
 that have registered for it (typically Aggregated Experience Apps) with
 information about the app, interest type, and the entity.
 
-The `Content.onUserInterest` event has a `UserInterestInfo` object with the `type`, `reason` and `entity` parameters as it's properties.
+The `Content.onUserInterest` event has three context parameters:
+
+| context | type | description |
+|---------|------|-------------|
+| appid   | string | The id of the app that pushed the user interest. |
+| type    | `InterestType` | the type of interest. |
+| reason  | `InterestReason` | the reason for the interest |
+
+The `Content.onUserInterest` event has a result type of `EntityDetails`.
 
 An Aggregated Experience can register for the `Content.onUserInterest`
-notification, and it will receive notifications when an `EntityInfo` is
+notification, and it will receive notifications when an `EntityDetails` is
 returned from the active App after a `Discovery.userInterest` call is
 fulfilled.
 
@@ -123,7 +131,7 @@ An app **MUST** have permissions to `use` the
 listen to the `Content.onUserInterest` notification.
 
 If the result is `null` or is not a valid entity, i.e. does not match
-the [EntityInfo](../entities/) schema, then no `Content.onUserInterestedIn`
+the [EntityDetails](../entities/) schema, then no `Content.onUserInterestedIn`
 notification will be dispatched.
 
 The `Discovery.userInterest` method **SHOULD NOT** be used in place of more
@@ -139,10 +147,10 @@ that is communicating with the app, that implies interest of some kind.
 
 Firebolt platforms may provide a platform UX, e.g. voice or and RCU, to
 express user interest in content from an active App. To facilitate this
-Apps will need to be told about the user\'s expressed interest in their
+Apps will need to be told about the user's expressed interest in their
 content.
 
-First, the Aggregated Experience (or some app with the correct
+First, the Aggregated Experience (or some app with this
 capability) detects that the user is interested in something. In this
 picture the interest is triggered by an RCU button, but how this occurs
 is outside the scope of this document. When this happens, the Aggregated
@@ -153,7 +161,7 @@ by invoking the RPC method `Discovery.onRequestUserInterest`.
 ![](../../../requirements/images/specifications/intents/user-interest/media/image3.png)
 
 Next, the foreground app receives and responds to the request with an 
-EntityInfo, which is returned as the result to the pending
+EntityDetails, which is returned as the result to the pending
 `Content.requestUserInterest` method:
 
 ![](../../../requirements/images/specifications/intents/user-interest/media/image4.png)
@@ -174,7 +182,7 @@ App **MUST** return the currently displayed entity meta-data.
 If there is no valid entity to return, then the method **MUST** throw an
 exception.
 
-If the foreground App returns a valid `EntityInfo` before the timeout,
+If the foreground App returns a valid `EntityDetails` before the timeout,
 then, the returned value **MUST** be used.
 
 If there is no app registered the an error **MUST** be returned.
@@ -228,11 +236,11 @@ This is an enum with the following values:
 This is a push API that allows Apps to push entities that the user has
 expressed interest in to the platform.
 
-To push an entity that the user is interested in pass an `EntityInfo`
+To push an entity that the user is interested in pass an `EntityDetails`
 object to the method:
 
 ```typescript
-Discovery.userInterest(type: InterestType, reason: InterestReason, entity: EntityInfo): Promise<void>
+Discovery.userInterest(type: InterestType, reason: InterestReason, entity: EntityDetails): Promise<void>
 ```
 
 ### 4.4. Discovery Interest Provider
@@ -242,7 +250,7 @@ provider:
 
 ```typescript
 interface IDiscoveryInterestProvider {
-  function userInterest(type: InterestType, reason: InterestReason): Promise<EntityInfo>
+  function userInterest(type: InterestType, reason: InterestReason): Promise<EntityDetails>
 }
 
 Discovery.provide("xrn:firbolt:capability:discovery:interest", IDiscoveryInterestProvider)
@@ -276,10 +284,10 @@ This method triggers the corresponding Discovery provider API for the
 foreground app.
 
 ```typescript
-Content.requestUserInterest(type: InterestType, reason: InterestReason): Promise<EntityInfo>
+Content.requestUserInterest(type: InterestType, reason: InterestReason): Promise<EntityDetails>
 ```
 
-### 5.2. Content.onUserInterestedIn
+### 5.2. Content.onUserInterest
 
 This notification allows Aggregated Experience Apps to be informed when
 a user expresses interest in some Content, and the content resolves to a

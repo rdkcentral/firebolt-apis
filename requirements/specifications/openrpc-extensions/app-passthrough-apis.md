@@ -11,11 +11,11 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Yuri Pasquali   | Sky            |
 
 ## 1. Overview
-This document describes how one Firebolt App can provide a capability that may be used by another Firebolt App leveraging the platform as a permission broker that passes the requests and respones to each app with out feature-specific logic.
+This document describes how one Firebolt App can provide a capability that may be used by another Firebolt App, with the platform as a permission broker that passes the requests and respones to each app with out feature-specific logic.
 
 This document covers the App Pass-through Firebolt OpenRPC extension as well as how Firebolt implementations should detect and execute app provided pass-through APIs.
 
-Some APIs require an app to fulfill the request on behalf of another app, e.g. to provide a UX or cross-app data sharing. Generally the calling app doesn't care or have a say in which other app provides the API, that is up to the Firebolt distributor.
+Some APIs require an app to fulfill the request on behalf of another app, e.g. to provide a UX or cross-app data sharing. Generally the calling app doesn't care, or have a say in, which other app provides the API, that is up to the Firebolt distributor.
 
 To facilitate these APIs, Firebolt denotes an OpenRPC tag with OpenRPC extensions to connect the `provide` API to the `use` API.
 
@@ -30,16 +30,18 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
   - [3.1. Provided By Extension](#31-provided-by-extension)
   - [3.2. Multiple Providers Extension](#32-multiple-providers-extension)
 - [4. Routing App pass-through APIs](#4-routing-app-pass-through-apis)
-- [5. Direct pass-through results](#5-direct-pass-through-results)
-- [6. Aggregated pass-through results](#6-aggregated-pass-through-results)
-- [7. Pass-through notifications](#7-pass-through-notifications)
-- [8. Provider Candidates](#8-provider-candidates)
-- [9. Best Candidate](#9-best-candidate)
-- [10. Session Transformations](#10-session-transformations)
-- [11. Provider Parameter Injection](#11-provider-parameter-injection)
-- [12. API Gateway](#12-api-gateway)
-- [13. Example: User Interest](#13-example-user-interest)
-- [14. Example: Keyboard](#14-example-keyboard)
+  - [4.1. No available providers](#41-no-available-providers)
+  - [4.2. Direct pass-through](#42-direct-pass-through)
+  - [4.3. Aggregated pass-through results](#43-aggregated-pass-through-results)
+  - [4.4. Pass-through notifications](#44-pass-through-notifications)
+- [5. Provider Candidates](#5-provider-candidates)
+- [6. Best Candidate](#6-best-candidate)
+- [7. Result Transformations](#7-result-transformations)
+- [8. Provider Parameter Injection](#8-provider-parameter-injection)
+- [9. API Gateway](#9-api-gateway)
+- [10. Example: User Interest](#10-example-user-interest)
+  - [10.1. User Interest Pull](#101-user-interest-pull)
+  - [10.2. User Interest Push](#102-user-interest-push)
 
 ## 3. Open RPC Extensions
 
@@ -65,13 +67,13 @@ Firebolt OpenRPC **MUST** support a `string` `x-provided-by` extension property 
 }
 ```
 
-The method denoted by `x-provided-by` is referred to as the "provider" or "provider method" for the remainder of this document.
+The method denoted by `x-provided-by` is referred to as the "*provider*" or "*provider method*" for the remainder of this document.
 
-The method with the `x-provided-by` extension is referred to as the "platform method" for the remainder of this document.
+The method with the `x-provided-by` extension is referred to as the "*platform method*" for the remainder of this document.
 
 To prevent unresolvable chaining of methods the `x-provided-by` extension **MUST NOT** be used on a method with any value in the `x-provides` extension.
 
-To prevent compound methods an platform method **MUST** `use` a single capability or `manage` a single capability, but not both.
+To prevent compound methods a platform method **MUST** `use` a single capability or `manage` a single capability, but not both.
 
 The provider method **MUST** provide the same capability that the platform method either uses or manages.
 
@@ -105,9 +107,26 @@ Setting `x-multiple-providers` to `true` means that all available apps that can 
 A platform method with `x-multiple-providers` set to `true` **MUST** have an `array` result type.
 
 ## 4. Routing App pass-through APIs
-When an app calls a platform method the platform **MUST** return an unavailable error if there is no candidate app to execute the provider method.
+App pass-through APIs may be routed in one of several ways.
 
-## 5. Direct pass-through results
+When an app calls a platform method, i.e. one with an `x-provided-by` extension, the platform **MUST** use one of the routing methods defined in this section based on various properties of the method.
+
+### 4.1. No available providers
+When an app calls a platform method with an `x-provided-by` extension, the platform **MUST** return an unavailable error if there is no [candidate app](#7-provider-candidates) to execute the provider method.
+
+```json
+{
+    "id": 1,
+    "error": {
+        "code": -50300,
+        "message": "Capability is unavailable."
+    }
+}
+```
+
+**TODO**: formalize our messages and codes.
+
+### 4.2. Direct pass-through
 A direct pass-through is where a single app provides a single response to a single request by another app.
 
 This section only applies to app provider methods that do not have an `event` tag and do not have the `x-multiple-providers` extension set to `true`.
@@ -121,16 +140,14 @@ The platform method result schema **MUST** either:
 > Have a property that matches the `x-response` schema on the provider method so that the result can
 > be composed and passed through.
 
-When an app calls a platform method the platform **MUST** return an unavailable error if there is no [candidate app](#7-provider-candidates) to execute the provider method.
-
 The platform **MUST** call the provider method from the [best candidate](#8-best-candidate) app and acquire the result.
 
 If the platform method result schema matches the `x-response` schema on the provider method then the value **MUST** be used as-is.
 
-Otherwise if the platform method result schema has a property that matches the `x-response` schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [session transformations](#9-session-transformations) to the composed result.
+Otherwise if the platform method result schema has a property that matches the `x-response` schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the composed result.
 
-## 6. Aggregated pass-through results
-An aggregated pass-through is where many apps provides responses to a single request by another app. The results are aggregated inside of an array.
+### 4.3. Aggregated pass-through results
+An aggregated pass-through is where many apps provide responses to a single request by another app. The results are aggregated inside of an array.
 
 This section only applies to app provider methods that do not have an `event` tag and do have the `x-multiple-providers` extension set to `true`.
 
@@ -145,51 +162,123 @@ The platform method result schema **MUST** have an `items` sub-schema that eithe
 > Has a property that matches the `x-response` schema on the provider method so that the result can be composed
 > and added to the final array.
 
-When an app calls a platform method the platform **MUST** return an unavailable error if there is no [candidate app](#7-provider-candidates) to execute the provider method.
-
 The platform **MUST** call the provider method from each [candidate app](#7-provider-candidates) and aggregated all of the results into an array.
 
 If the platform method result `items` schema matches the `x-response` schema on the provider method then each provier value **MUST** be used as-is.
 
-Otherwise if the platform method result `items` schema has a property that matches the `x-response` schema on the provider method then each provider value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [session transformations](#9-session-transformations) to the composed result.
+Otherwise if the platform method result `items` schema has a property that matches the `x-response` schema on the provider method then each provider value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the composed result.
 
-## 7. Pass-through notifications
+### 4.4. Pass-through notifications
 Firebolt events have a synchronous subscriber registration method, e.g. `Lifecycle.onInactive(true)`, in addition to asynchronous notifications when the event actually happens. For events powered by an app pass-through, only the asynchronous notifications are passed in by the providing app. The initial event registration is handled by the platform, and the success response is not handled by the providing app.
 
 This section only applies to platform methods that have an `event` tag.
 
 App provided event registration **MUST** not return an availability error due to a lack of providers, since one may be launched at a future point.
 
-To ensure that event provider methods all behave the same the provider method **MUST** have a result schema with `"type"` set to the string `"null"`, since it will not expect any result from the platform after pushing the notification.
+**TODO**: do we want to search the catalog and return unavailable if none are possible? Seems overkill.
+
+To ensure that event provider methods all behave the same the provider method **MUST** have a `result` schema with `"type"` set to `"null"`, since it will not expect any data in the response from the platform after pushing the notification.
 
 The platform method result schema **MUST** either:
 
 > Match the *last* parameter schema on the provider method so that the result can be passed through.
 >
-> Have a property that matches the *last* parameter schema on the provider method so that the result can
-> be passed through.
+> Have a property that matches the *last* parameter schema on the provider method so that the result can be passed through.
 
-The platform method event context parameters **MUST** each match the corresponding parameter schema on the provider method so that the result can be passed through.
+**TODO**: Find event context params spec and move into this branch
+
+Example platform method with context:
+```json
+{
+    "name": "onFoo",
+    "tags": [
+        {
+            "name": "capabilities",
+            "x-uses": [
+                "xrn:firebolt:capabilities:example:foo"
+            ],
+            "x-provided-by": "foo"
+        },
+        {
+            "name": "event"
+        }
+    ],
+    "params": [
+        {
+            "name": "context1",
+            "schema":{
+                "type": "string"
+            }
+        },
+        {
+            "name": "context2",
+            "schema": {
+                "type": "number"
+            }
+        }
+    ],
+    "result": {
+        "name": "value",
+        "schema": {
+            "type": "boolean"
+        }
+    }
+}
+```
+
+Matching provider method:
+
+```json
+{
+    "name": "foo",
+    "tags": [
+        {
+            "name": "capabilities",
+            "x-provides": "xrn:firebolt:capabilities:example:foo"
+        },
+        {
+            "name": "event"
+        }
+    ],
+    "params": [
+        {
+            "name": "context1",
+            "schema":{
+                "type": "string"
+            }
+        },
+        {
+            "name": "context2",
+            "schema": {
+                "type": "number"
+            }
+        },
+        {
+            "name": "value",
+            "schema": {
+                "type": "boolean"
+            }
+        }
+    ]
+}
+```
 
 When a provider app calls a provider method mapped to an event the platform **MUST** ignore the notification if the app is not a [candidate app](#7-provider-candidates) for this capability.
 
 If the platform method result schema matches the *last* parameter schema on the provider method then the value **MUST** be used as-is.
 
-Otherwise if the platform method result schema has a property that matches the *last* parameter schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [session transformations](#9-session-transformations) to the composed result.
+Otherwise if the platform method result schema has a property that matches the *last* parameter schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the composed result.
 
 Finally the platform **MUST** dispatch the notification to the app that registered for the event via the original platform method, using all but the last parameter as context.
 
-## 8. Provider Candidates
+## 5. Provider Candidates
 The Firebolt Device Manfist **MUST** have a list of `ProviderPolicy` configurations that map capabilities to policies for determining candidate providers:
 
 ```json
 {
     "providerPolicies": [
         {
-            "lifecycle": [
-                "foreground"
-            ],
-            "allowLaunch": true,
+            "inFocus": true,
             "capabilities": [
                 "xrn:firebolt:capability:foo:bar"
             ]
@@ -197,36 +286,39 @@ The Firebolt Device Manfist **MUST** have a list of `ProviderPolicy` configurati
     ]
 }
 ```
+The policy **MUST** have a list of capabilities that it is applied to.
 
-The policy **MUST** have a list of valid lifecycle states for an app to provide the capability.
+A capability **MUST NOT** be included in more than one policy.
 
-The policy **MUST** have a boolean property `allowLaunch` to denote whether launching provider apps in order to fulfill a platform method is allowed.
+The policy **MAY** have an `inFocus` boolean.
 
-## 9. Best Candidate
+If the policy has `inFocus` set to `true` then any app without RCU input focus when the capability is invoked **MUST NOT** be considered a candidate.
+
+## 6. Best Candidate
 If there is only one candidate then it **MUST** be the best candidate.
 
-If there is more than one candidate, then the app that was most recently in the foreground state **MUST** be the best candidate.
+If there is more than one candidate, then the candidate app that most recently had RCU input focus **MUST** be the best candidate.
 
-If none of the candidates have been in the foreground state then the app that was most recently launched **MUST** be the best candidate.
+If none of the candidates have had focus yet, then the candidate app that was most recently launched **MUST** be the best candidate.
 
-If none of the candidates have been launched and the `ProviderPolicy` has `allowLaunch` set to true then the platform **SHOULD** select a candidate app, launch it, and use it as the best candidate; how this selection occurs is out of scope for this document.
+## 7. Result Transformations
+A platform method may be configured to insert the providing app id into composite values. This is not allowed in non-composite results to avoid collisions with the provder method sending an appId and Firebolt overriding it.
 
-## 10. Session Transformations
-An platform method may be configured to insert the providing app id into composite values. This is not allowed in non-composite results to avoid collisions with the provder method sending an appId and Firebolt overriding it.
+If a "composite result" was used to wrap the provider method value and the platform method's schema has an `appId` `string` property at the top level then the property's value **MUST** be set to the the appId of the providing app for that result.
 
-If a "composite result" was used to wrap the provider method value and the platform method's schema has an `appId` `string` property at the top level then the property's value **MUST** be set to the the appId of the providing app for that calculated result.
-
-## 11. Provider Parameter Injection
+## 8. Provider Parameter Injection
 If the provider method has a parameter named `appId` and the platform method *does not*, then the appId of the app calling the platform method **MUST** be sent to the provider in the `appId` parameter.
 
-## 12. API Gateway
+If the platform method is an `event` and the provider method has context parameters then each context parameter from the provider that has a matching context parameter in the event **MUST** have it's value passed to that parameter.
+
+If the platform method is an `event` with a "composite result" and the provider method has context parameters then each context parameter from the provider that has a matching property on the `result` object **MUST** have it's value copied into that property.
+
+## 9. API Gateway
 The Firebolt API Gateway **MUST** detect app-passthrough APIs and map the `use`/`manage` APIs to the corresponding `provide` APIs by parsing the Firebolt OpenRPC Specification and following the logic outline in this document.
 
-## 13. Example: User Interest
+## 10. Example: User Interest
 
-User Interest does not use the `x-app-method` property because there is only one method and one event in the API, so they can be detected automatically via the capability string.
-
-Schemas
+The following schemas are referenced by these examples:
 
 ```json
 {
@@ -237,6 +329,12 @@ Schemas
                 "enum": [
                     "interest",
                     "disinterest"
+                ]
+            },
+            "InterestReason": {
+                "type": "string",
+                "enum": [
+                    "playlist"
                 ]
             },
             "EntityDetailsFromApp": {
@@ -259,7 +357,9 @@ Schemas
 }
 ```
 
-Content.requestUserInterest (pull, use)
+### 10.1. User Interest Pull
+
+Platform method:
 
 ```json
 {
@@ -282,12 +382,19 @@ Content.requestUserInterest (pull, use)
                     "schema": {
                         "$ref": "#/components/schemas/InterestType"
                     }
+                },
+                {
+                    "name": "reason",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/InterestReason"
+                    }
                 }
             ],
             "result": {
-                "name": "interestedIn",
+                "name": "interest",
                 "schema": {
-                    "$ref": "#/components/schemas/EntityFromApp",
+                    "$ref": "#/components/schemas/EntityDetailsFromApp",
                 }
             }
         }
@@ -295,7 +402,7 @@ Content.requestUserInterest (pull, use)
 }
 ```
 
-Discovery.onRequestUserInterest (1.0, pull, provide)
+Provider method:
 
 ```json
 {
@@ -305,13 +412,12 @@ Discovery.onRequestUserInterest (1.0, pull, provide)
             "tags": [
                 {
                     "name": "capabilities",
-                    "x-provides": "xrn:firebolt:capability:discovery:interest",
-                    "x-lifecycle": ["foreground", "background"],
+                    "x-provides": "xrn:firebolt:capability:discovery:interest"
                 },
                 {
                     "name": "event",
                     "x-response": {
-                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
+                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
                     }
                 }
             ],
@@ -322,6 +428,9 @@ Discovery.onRequestUserInterest (1.0, pull, provide)
                     "properties": {
                         "type": {
                             "$ref": "#/components/schemas/InterestType",
+                        },
+                        "reason": {
+                            "$ref": "#/components/schemas/InterestReason",
                         }
                     }
                 }
@@ -331,7 +440,9 @@ Discovery.onRequestUserInterest (1.0, pull, provide)
 }
 ```
 
-Discovery.userInterest (2.0, pull, provide)
+### 10.2. User Interest Push
+
+Provider method:
 
 ```json
 {
@@ -341,42 +452,7 @@ Discovery.userInterest (2.0, pull, provide)
             "tags": [
                 {
                     "name": "capabilities",
-                    "x-lifecycle": ["foreground", "background"],
                     "x-provides": "xrn:firebolt:capability:discovery:interest"
-                }
-            ],
-            "params": [
-                {
-                  "name": "type",
-                  "schema": {
-                      "$ref": "#/components/schemas/InterestType",
-                  }
-                }
-            ],
-            "result": {
-                "name": "entity",
-                "schema": {
-                    "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
-                }
-            }
-        }
-    ]
-}
-```
-
-
-Discovery.userInterest (push)
-
-```json
-{
-    "methods": [
-        {
-            "name": "userInterest",
-            "tags": [
-                {
-                    "name": "capabilities",
-                    "x-provides": "xrn:firebolt:capability:discovery:interest",
-                    "x-lifecycle": ["foreground", "background"],
                 }
             ],
             "params": [
@@ -387,18 +463,30 @@ Discovery.userInterest (push)
                   }
                 },
                 {
+                  "name": "reason",
+                  "schema": {
+                      "$ref": "#/components/schemas/InterestReason",
+                  }
+                },
+                {
                   "name": "entity",
                   "schema": {
-                      "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
+                      "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
                   }                    
                 }
-            ]
+            ],
+            "result": {
+                "name": "result",
+                "schema": {
+                    "type": "null"
+                }
+            }
         }
     ]
 }
 ```
 
-Content.onUserInterest (push) 
+Platform Method:
 
 ```json
 {
@@ -417,145 +505,28 @@ Content.onUserInterest (push)
                     "name": "event"
                 }
             ],
+            "params": [],
             "result": {
-                "name": "info",
+                "name": "interest",
                 "schema": {
-                    "$ref": "#/components/schemas/InterestedInfo",
+                    "type": "object",
+                    "properties": {
+                        "appId": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "$ref": "#/components/schemas/InterestType"
+                        },
+                        "reason": {
+                            "$ref": "#/components/schemas/InterestReason"
+                        },
+                        "entity": {
+                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+                        }
+                    }
+                    
                 }
             }
-        }
-    ]
-}
-```
-
-## 14. Example: Keyboard
-
-Keyboard *requires* the* `x-app-method` property because there are three methods in the same capability, so the mapping cannot be detected automatically via the capability string.
-
-Schemas
-
-```json
-{
-    "components": {
-        "schemas": {
-
-        }
-    }
-}
-```
-
-Keyboard.standard (use)
-
-```json
-{
-    "methods": [
-		{
-			"name": "Keyboard.standard",
-			"tags": [
-				{
-					"name": "capabilities",
-                    "x-app-provided": true,
-                    "x-app-method": "Keyboard.onRequestStandard",
-					"x-uses": [
-						"xrn:firebolt:capability:input:keyboard"
-					]
-				}
-			],
-			"summary": "Show the standard platform keyboard, and return the submitted value",
-			"params": [
-				{
-					"name": "message",
-					"summary": "The message to display while prompting",
-					"required": true,
-					"schema": {
-						"type": "string"
-					}
-				}
-			],
-			"result": {
-				"name": "value",
-				"summary": "the selected or entered text",
-				"schema": {
-					"type": "string"
-				}
-			}
-        }
-    ]
-}
-```
-
-Keyboard.onRequestStandard (1.0, provide)
-
-```json
-{
-    "methods": [
-		{
-			"name": "Keyboard.onRequestStandard",
-			"params": [
-			],
-			"tags": [
-				{
-					"name": "event",
-					"x-response": {
-						"$ref": "#/components/schemas/KeyboardResult",
-						"examples": [
-							{
-								"text": "username"
-							}
-						]
-					}
-				},
-				{
-					"name": "capabilities",
-					"x-provides": "xrn:firebolt:capability:input:keyboard",
-					"x-allow-focus": true
-				}
-			],
-			"result": {
-				"name": "sessionRequest",
-				"summary": "The request to start a keyboard session",
-				"schema": {
-					{
-						"$ref": "#/components/schemas/KeyboardProviderRequest"
-					}
-				}
-			}
-        }
-    ]
-}
-```
-
-Keyboard.standard (2.0, provide in the app RPC doc):
-
-```json
-{
-    "methods": [
-		{
-			"name": "Keyboard.standard",
-			"params": [
-                {
-                    "name": "message",
-                    "schema": {
-                        "type": "string"
-                    }
-                }
-			],
-			"tags": [
-				{
-					"name": "capabilities",
-					"x-provides": "xrn:firebolt:capability:input:keyboard",
-					"x-allow-focus": true
-				}
-			],
-			"result": {
-				"name": "value",
-				"summary": "The user entered string",
-				"schema": {
-					{
-                        "type": "string"
-					}
-				}
-			}
         }
     ]
 }
