@@ -1,0 +1,59 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Audio Output Properties",
+        "description": "A module for querying various aspects of the current (or built-in) audio output system of a device",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "mode",
+            "summary": "Return the audio mode currently supported by the platform.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:audio-output:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "audioMode",
+                "summary": "The audio mode supported by the platform.",
+                "schema": {
+                    "$ref": "#/components/schemas/AudioMode"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "Stereo"
+                    }
+                }
+            ]
+        }
+    ],
+    "components": {
+        "schemas": {
+            "AudioMode": {
+                "title": "AudioMode",
+                "type": "string",
+                "enum": [
+                    "Mono",
+                    "Stereo",
+                    "Surround",
+                    "Passthrough",
+                    "Auto",
+                    "StereoSurroundMatFollow",
+                    "Unknown",
+                    "None"
+                ],
+                "description": "The audio output mode supported by the platform"
+            }
+        }
+    }
+}

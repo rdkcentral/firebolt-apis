@@ -308,7 +308,7 @@
             },
             "os": {
               "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "**Deprecated** Use `firmware`, instead."
+              "description": "**Deprecated** Use firmware instead"
             },
             "debug": {
               "type": "string",
@@ -398,7 +398,7 @@
     },
     {
       "name": "hdr",
-      "summary": "Get the supported HDR profiles",
+      "summary": "Returns an array of valid HDR profiles that the device supports",
       "params": [],
       "tags": [
         {
@@ -413,14 +413,14 @@
       ],
       "result": {
         "name": "supportedHdrProfiles",
-        "summary": "the supported HDR profiles",
+        "summary": "The supported HDR profiles",
         "schema": {
           "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
         }
       },
       "examples": [
         {
-          "name": "Getting the supported HDR profiles",
+          "name": "The supported HDR profiles",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -539,6 +539,270 @@
             "value": [
               1920,
               1080
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "videoFormatSupported",
+      "summary": "Check whether content of a given a video format and resolution is supported by the device's current configuration.  These values may change as different AV inputs are activated or connected.",
+      "params": [
+        {
+          "name": "format",
+          "summary": "The video format used to check whether its supported by the device's current configuration.",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/VideoFormat"
+          }
+        },
+        {
+          "name": "resolution",
+          "summary": "The video resolution used to check whether its supported by the device's current configuration.",
+          "schema": {
+            "$ref": "#/components/schemas/VideoFormatResolution"
+          }
+        }
+      ],
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "videoFormatSupported",
+        "summary": "Whether content of the provided video format and resolution are supported by the device's current configuration.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Specify the video format and resolution to check",
+          "params": [
+            {
+              "name": "format",
+              "value": "av1"
+            },
+            {
+              "name": "resolution",
+              "value": "1080i"
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "videoFormatPossible",
+      "summary": "Check whether content of a given a video format and resolution is supported by the device regardless of its configuration.  These values will never change without a restart of the device.",
+      "params": [
+        {
+          "name": "format",
+          "summary": "The video format used to check whether its supported by the device.",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/VideoFormat"
+          }
+        },
+        {
+          "name": "resolution",
+          "summary": "The video resolution used to check whether its supported by the device.",
+          "schema": {
+            "$ref": "#/components/schemas/VideoFormatResolution"
+          }
+        }
+      ],
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "videoFormatPossible",
+        "summary": "Whether content of the provided video format and resolution are supported by the device.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Specify the video format and resolution to check.",
+          "params": [
+            {
+              "name": "format",
+              "value": "av1"
+            },
+            {
+              "name": "resolution",
+              "value": "1080i"
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "audioFormatSupported",
+      "summary": "Check whether content of a given audio format and channel output is supported by the device's current configuration. These values may change as different AV inputs are activated or connected.",
+      "params": [
+        {
+          "name": "format",
+          "summary": "Audio format used to check whether its supported.",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/AudioFormat"
+          }
+        },
+        {
+          "name": "channels",
+          "summary": "An audio channels value used to check whether its supported.",
+          "schema": {
+            "$ref": "#/components/schemas/AudioChannels"
+          }
+        }
+      ],
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "audioFormatSupported",
+        "summary": "Whether content of the provided audio format and channels value are supported by the device's current configuration.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Specify the audio format and channel to check",
+          "params": [
+            {
+              "name": "format",
+              "value": "AAC"
+            },
+            {
+              "name": "channels",
+              "value": "MONO"
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "audioFormatPossible",
+      "summary": "Check whether content of a given audio format and channel output is supported by the device regardless of its configuration. These values will never change without a restart of the device.",
+      "params": [
+        {
+          "name": "format",
+          "summary": "Audio format used to check whether its supported.",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/AudioFormat"
+          }
+        },
+        {
+          "name": "channels",
+          "summary": "An audio channels value used to check whether its supported.",
+          "schema": {
+            "$ref": "#/components/schemas/AudioChannels"
+          }
+        }
+      ],
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "audioFormatPossible",
+        "summary": "Whether content of the provided audio format and channels value are supported by the device.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Specify the audio format and channel to check",
+          "params": [
+            {
+              "name": "format",
+              "value": "AAC"
+            },
+            {
+              "name": "channels",
+              "value": "MONO"
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "supportedResolutions",
+      "summary": "Returns an array of valid resolutions that the device supports, regardless of any connected display.",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "params": [],
+      "result": {
+        "name": "resolutions",
+        "summary": "An array of valid resolutions that the device supports",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/DeviceResolution"
+          },
+          "minItems": 1
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": [
+              "1080p24",
+              "1080i25",
+              "1080p30",
+              "1080i50",
+              "1080p50",
+              "1080p60",
+              "2160p30",
+              "2160p50",
+              "2160p60"
             ]
           }
         }
@@ -805,6 +1069,99 @@
             }
           }
         ]
+      },
+      "VideoFormat": {
+        "title": "VideoFormat",
+        "type": "string",
+        "enum": [
+          "av1",
+          "dolbyVision",
+          "h263",
+          "h264",
+          "h265",
+          "h265M10",
+          "mpeg",
+          "vp8",
+          "vp9",
+          "vp9_p2",
+          "vp10",
+          "vc1"
+        ],
+        "description": "The video format supported by the platform"
+      },
+      "VideoFormatResolution": {
+        "title": "VideoFormatResolution",
+        "type": "string",
+        "enum": [
+          "480i",
+          "480p",
+          "576i",
+          "576p",
+          "576p50",
+          "720p",
+          "720p50",
+          "1080i",
+          "1080p",
+          "1080p24",
+          "1080i25",
+          "1080p30",
+          "1080i50",
+          "1080p50",
+          "1080p60",
+          "2160p30",
+          "2160p50",
+          "2160p60"
+        ]
+      },
+      "AudioFormat": {
+        "title": "AudioFormat",
+        "type": "string",
+        "enum": [
+          "AAC",
+          "AC3",
+          "AC4",
+          "DOLBY_MAT",
+          "DTS",
+          "DTS_X",
+          "EAC3",
+          "MPEG",
+          "MPEG1",
+          "MPEG2",
+          "MPEG4",
+          "OPUS",
+          "OGG",
+          "TRUEHD",
+          "WAV"
+        ],
+        "description": "The audio format supported by the platform"
+      },
+      "AudioChannels": {
+        "title": "AudioChannels",
+        "type": "string",
+        "enum": [
+          "MONO",
+          "STEREO",
+          "SURROUND",
+          "SURROUND_5_1",
+          "SURROUND_7_1"
+        ],
+        "description": "The audio channels supported by the platform"
+      },
+      "DeviceResolution": {
+        "title": "DeviceResolution",
+        "type": "string",
+        "enum": [
+          "1080p24",
+          "1080i25",
+          "1080p30",
+          "1080i50",
+          "1080p50",
+          "1080p60",
+          "2160p30",
+          "2160p50",
+          "2160p60"
+        ],
+        "description": "The list of resolutions supported by the device"
       }
     }
   }
