@@ -231,6 +231,42 @@
             ]
         },
         {
+            "name": "supportedColorDepthCapabilities",
+            "summary": "Get the supported color depth capabilities of the display device.",
+            "params": [],
+            "tags": [
+              {
+                "name": "capabilities",
+                "x-uses": [
+                  "xrn:firebolt:capability:display:info"
+                ]
+              }
+            ],
+            "result": {
+              "name": "ColorDepths",
+              "summary": "The supported color depth capabilities",
+              "schema": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/ColorDepth"
+                }
+              }
+            },
+            "examples": [
+              {
+                "name": "Get the supported color depth capabilities",
+                "params": [],
+                "result": {
+                  "name": "Default Result",
+                  "value": [
+                    "8 Bit",
+                    "10 Bit"
+                  ]
+                }
+              }
+            ]
+          },
+        {
             "name": "useSourceFrameRate",
             "summary": "Set the HDMI output frame rate to follow the video source frame rate.",
             "tags": [
@@ -263,6 +299,16 @@
     ],
     "components": {
         "schemas": {
+            "ColorDepth": {
+                "title": "ColorDepth",
+                "type": "string",
+                "enum": [
+                    "8 Bit",
+                    "10 Bit",
+                    "12 Bit"
+                ],
+                "description": "The list of color depth supported by the display"
+            },
             "DisplayResolution": {
                 "title": "DisplayResolution",
                 "type": "string",

@@ -361,7 +361,7 @@
     },
     {
       "name": "hdcp",
-      "summary": "Get the supported HDCP profiles",
+      "summary": "Get the supported HDCP versions available for content transmission",
       "params": [],
       "tags": [
         {
@@ -375,15 +375,15 @@
         }
       ],
       "result": {
-        "name": "supportedHdcpProfiles",
-        "summary": "the supported HDCP profiles",
+        "name": "supportedHdcpVersions",
+        "summary": "the supported HDCP versions",
         "schema": {
           "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
         }
       },
       "examples": [
         {
-          "name": "Getting the supported HDCP profiles",
+          "name": "Getting the supported HDCP versions",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -391,6 +391,72 @@
               "hdcp1.4": true,
               "hdcp2.2": true
             }
+          }
+        }
+      ]
+    },
+    {
+      "name": "currentHdcpVersion",
+      "summary": "Get the current HDCP version used for content transmission",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "HdcpVersion",
+        "summary": "The current HDCP version",
+        "schema": {
+          "$ref": "#/components/schemas/HdcpVersion"
+        }
+      },
+      "examples": [
+        {
+          "name": "Get the current HDCP version",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "hdcp2.2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "onHdcpVersionChanged",
+      "tags": [
+        {
+          "name": "event"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "summary": "Get notified when the HDCP version used for content transmission has changed",
+      "params": [],
+      "result": {
+        "name": "value",
+        "summary": "The updated HDCP version used",
+        "schema": {
+          "$ref": "#/components/schemas/HdcpVersion"
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the device name",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "2.x"
           }
         }
       ]
@@ -429,6 +495,39 @@
               "dolbyVision": true,
               "hlg": true
             }
+          }
+        }
+      ]
+    },
+    {
+      "name": "currentHdrProfile",
+      "summary": "Returns the current HDR profile set by the device",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "HdrProfile",
+        "summary": "The current HDR profile",
+        "schema": {
+          "$ref": "#/components/schemas/HdrProfile"
+        }
+      },
+      "examples": [
+        {
+          "name": "The supported HDR profiles",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "hdr10"
           }
         }
       ]
@@ -545,7 +644,7 @@
     },
     {
       "name": "videoFormatSupported",
-      "summary": "Check whether content of a given a video format and resolution is supported by the device's current configuration.  These values may change as different AV inputs are activated or connected.",
+      "summary": "Check whether content of a given a video format is supported by the device's current configuration.  These values may change as different AV inputs are activated or connected.",
       "params": [
         {
           "name": "format",
@@ -556,10 +655,10 @@
           }
         },
         {
-          "name": "resolution",
-          "summary": "The video resolution used to check whether its supported by the device's current configuration.",
+          "name": "options",
+          "summary": "Additional options to use for checking whether a video format is supported by the device.",
           "schema": {
-            "$ref": "#/components/schemas/VideoFormatResolution"
+            "$ref": "#/components/schemas/VideoFormatOptions"
           }
         }
       ],
@@ -655,7 +754,7 @@
     },
     {
       "name": "audioFormatSupported",
-      "summary": "Check whether content of a given audio format and channel output is supported by the device's current configuration. These values may change as different AV inputs are activated or connected.",
+      "summary": "Check whether content of a given audio format is supported by the device's current configuration. These values may change as different AV inputs are activated or connected.",
       "params": [
         {
           "name": "format",
@@ -666,10 +765,10 @@
           }
         },
         {
-          "name": "channels",
-          "summary": "An audio channels value used to check whether its supported.",
+          "name": "options",
+          "summary": "Additional options to use for checking whether an audio format is supported by the device.",
           "schema": {
-            "$ref": "#/components/schemas/AudioChannels"
+            "$ref": "#/components/schemas/AudioFormatOptions"
           }
         }
       ],
@@ -698,7 +797,7 @@
             },
             {
               "name": "channels",
-              "value": "MONO"
+              "value": 2
             }
           ],
           "result": {
@@ -935,6 +1034,122 @@
       ]
     },
     {
+      "name": "networkInterfaces",
+      "summary": "Get a list of the device's network interfaces and statuses",
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:network:status"
+          ]
+        }
+      ],
+      "params": [],
+      "result": {
+        "name": "The device's network interfaces and statuses",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/NetworkInterface"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "Get the network interfaces and statuses",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": [
+              {
+                "interface": "WIFI",
+                "macAddress": "AA:AA:AA:AA:AA:AA",
+                "enabled": true,
+                "connected": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "defaultNetworkInterface",
+      "summary": "Get the device's default network interface",
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:network:status"
+          ]
+        }
+      ],
+      "params": [],
+      "result": {
+        "name": "The device's network interfaces and status",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/NetworkInterface"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "Get the network interfaces",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": [
+              {
+                "interface": "WIFI",
+                "macAddress": "AA:AA:AA:AA:AA:AA",
+                "enabled": true,
+                "connected": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "hdmiPort",
+      "summary": "Get the name of the device's HDMI output port",
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "params": [],
+      "result": {
+        "name": "hdmiPort",
+        "schema": {
+          "#ref": "#/components/schemas/HDMIPortId"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "HDMI0"
+          }
+        }
+      ]
+    },
+    {
       "name": "provision",
       "summary": "Used by a distributor to push provision info to firebolt.",
       "tags": [
@@ -1055,6 +1270,25 @@
         ],
         "description": "The type of network that is currently active"
       },
+      "NetworkInterface": {
+        "title": "NetworkInterface",
+        "type": "object",
+        "properties": {
+          "connected": {
+            "type": "boolean"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "interface": {
+            "type": "string"
+          },
+          "macAddress": {
+            "type": "string",
+            "pattern": "^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$"
+          }
+        }
+      },
       "AudioProfiles": {
         "title": "AudioProfiles",
         "allOf": [
@@ -1068,6 +1302,10 @@
             }
           }
         ]
+      },
+      "HDMIPortId": {
+        "type": "string",
+        "pattern": "^HDMI[0-9]+$"
       },
       "VideoFormat": {
         "title": "VideoFormat",
@@ -1087,6 +1325,61 @@
           "vc1"
         ],
         "description": "The video format supported by the platform"
+      },
+      "VideoFormatOptions": {
+        "title": "VideoFormatOptions",
+        "type": "object",
+        "properties": {
+          "atmos": {
+            "type": "boolean"
+          },
+          "codec": {
+            "type": "string",
+            "enum": [
+              "VIDEO_AV1",
+              "VIDEO_DOLBYVISION",
+              "VIDEO_H263",
+              "VIDEO_H264",
+              "VIDEO_H265",
+              "VIDEO_MPEG",
+              "VIDEO_VP8",
+              "VIDEO_VP9",
+              "VIDEO_VP9_P2",
+              "VIDEO_VP10",
+              "VIDEO_VC1"
+            ]
+          },
+          "hdr": {
+            "$ref": "#/components/schemas/HdrProfile"
+          },
+          "level": {
+            "type": "string",
+            "enum": [
+              "3.0",
+              "3.1",
+              "4.0",
+              "4.1",
+              "4.2",
+              "5.0",
+              "5.1"
+            ]
+          },
+          "profile": {
+            "type": "string",
+            "enum": [
+              "high",
+              "main",
+              "main10",
+              "mp2lc",
+              "mp4he",
+              "p0",
+              "p2"
+            ]
+          },
+          "resolution": {
+            "$ref": "#/components/schemas/VideoFormatResolution"
+          }
+        }
       },
       "VideoFormatResolution": {
         "title": "VideoFormatResolution",
@@ -1134,6 +1427,34 @@
         ],
         "description": "The audio format supported by the platform"
       },
+      "AudioFormatOptions": {
+        "title": "AudioFormatOptions",
+        "type": "object",
+        "properties": {
+          "atmos": {
+            "type": "boolean"
+          },
+          "channels": {
+            "type": "integer"
+          },
+          "level": {
+            "type": "string"
+          },
+          "mode": {
+            "$ref": "audio_output.json#/components/schemas/AudioMode"
+          },
+          "profile": {
+            "type": "string",
+            "enum": [
+              "mp2lc",
+              "mp4he"
+            ]
+          },
+          "sampleRate": {
+            "type": "integer"
+          }
+        }
+      },
       "AudioChannels": {
         "title": "AudioChannels",
         "type": "string",
@@ -1161,6 +1482,29 @@
           "2160p60"
         ],
         "description": "The list of resolutions supported by the device"
+      },
+      "HdcpVersion": {
+        "title": "HdcpVersion",
+        "type": "string",
+        "enum": [
+          "Hdcp1x",
+          "Hdcp2x",
+          "HdcpAuto",
+          "HdcpUnencrypted"
+        ],
+        "description": "The list of HDCP versions supported by the device"
+      },
+      "HdrProfile": {
+        "title": "HdrProfile",
+        "type": "string",
+        "enum": [
+          "DolbyVision",
+          "Hdr10",
+          "Hdr10Plus",
+          "St2084",
+          "hlg"
+        ],
+        "description": "The list of HDR profiles supported by the device"
       }
     }
   }

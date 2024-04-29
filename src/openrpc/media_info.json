@@ -28,8 +28,7 @@
                     "schema": {
                         "type": "integer",
                         "default": 1
-                    },
-                    "required": true
+                    }
                 }
             ],
             "result": {
@@ -54,6 +53,22 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "videoFormat",
+            "summary": "Returns details on the video content currently in the media pipeline (either playing or paused).",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:video-format"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "onVideoFormatChanged",
+            "summary": ""
         },
         {
             "name": "audioCodec",

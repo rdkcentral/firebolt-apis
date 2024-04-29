@@ -14,7 +14,7 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 ## 1. Overview
 App developers need to know which audio and video formats can be successfully played on a Firebolt device.
 
-Video formats include... 
+Video formats include...
 
 **TODO**: Rewrite this section.
 **TODO**: check Farhan's emails!!
@@ -70,34 +70,35 @@ I want to know what my device *would* support if i upgraded my AV peripherals:
 - I want to know what resolutions and framerates *would* be supported with upgraded peripherals. (e.g. 1080p60).
 
 ## 2. Table of Contents
-- [1. Overview](#1-overview)
-  - [1.1. User Stories](#11-user-stories)
-  - [1.2. As an OTT App developer](#12-as-an-ott-app-developer)
-  - [1.3. As a first-party App developer](#13-as-a-first-party-app-developer)
-- [2. Table of Contents](#2-table-of-contents)
-- [3. Format MimeTypes](#3-format-mimetypes)
-- [Resolutions](#resolutions)
-- [4. Device Media Support](#4-device-media-support)
-  - [4.1. Negotiated Media Support](#41-negotiated-media-support)
-    - [4.1.1. Video Format Supported](#411-video-format-supported)
-    - [4.1.2. Audio Format Supported](#412-audio-format-supported)
-    - [4.2.3. Hdr Supported](#423-hdr-supported)
-- [5. Display Properties](#5-display-properties)
-  - [5.1. Color Information...](#51-color-information)
-  - [5.2. Display Width and Height](#52-display-width-and-height)
-  - [5.3. Current and Optimal Resolution](#53-current-and-optimal-resolution)
-  - [5.4. Supported Resolutions](#54-supported-resolutions)
-  - [5.5. Device Supported Resolutions](#55-device-supported-resolutions)
-  - [5.7. Use Source Framerate](#57-use-source-framerate)
-- [6. Audio Output Properties](#6-audio-output-properties)
-  - [6.1. Mode](#61-mode)
-- [7. Media Info](#7-media-info)
-  - [7.1. MediaInfo for current app](#71-mediainfo-for-current-app)
-    - [7.1.1. Video Format](#711-video-format)
-    - [7.1.2. Audio Format](#712-audio-format)
-  - [7.2. Global MediaInfo](#72-global-mediainfo)
-    - [7.2.1. Active Video Formats](#721-active-video-formats)
-    - [7.2.2. Active Audio Formats](#722-active-audio-formats)
+- [Media Info Requirements](#media-info-requirements)
+  - [1. Overview](#1-overview)
+    - [1.1. User Stories](#11-user-stories)
+    - [1.2. As an OTT App developer](#12-as-an-ott-app-developer)
+    - [1.3. As a first-party App developer](#13-as-a-first-party-app-developer)
+  - [2. Table of Contents](#2-table-of-contents)
+  - [3. Format MimeTypes](#3-format-mimetypes)
+  - [Resolutions](#resolutions)
+  - [4. Device Media Support](#4-device-media-support)
+    - [4.1. Negotiated Media Support](#41-negotiated-media-support)
+      - [4.1.1. Video Format Supported](#411-video-format-supported)
+      - [4.1.2. Audio Format Supported](#412-audio-format-supported)
+      - [4.2.3. Hdr Supported](#423-hdr-supported)
+  - [5. Display Properties](#5-display-properties)
+    - [5.1. Color Information...](#51-color-information)
+    - [5.2. Display Width and Height](#52-display-width-and-height)
+    - [5.3. Current and Optimal Resolution](#53-current-and-optimal-resolution)
+    - [5.4. Supported Resolutions](#54-supported-resolutions)
+    - [5.5. Device Supported Resolutions](#55-device-supported-resolutions)
+    - [5.7. Use Source Framerate](#57-use-source-framerate)
+  - [6. Audio Output Properties](#6-audio-output-properties)
+    - [6.1. Mode](#61-mode)
+  - [7. Media Info](#7-media-info)
+    - [7.1. MediaInfo for current app](#71-mediainfo-for-current-app)
+      - [7.1.1. Video Format](#711-video-format)
+      - [7.1.2. Audio Format](#712-audio-format)
+    - [7.2. Global MediaInfo](#72-global-mediainfo)
+      - [7.2.1. Active Video Formats](#721-active-video-formats)
+      - [7.2.2. Active Audio Formats](#722-active-audio-formats)
 
 ## 3. Format MimeTypes
 The Firebolt `Media` module **MUST** have a `Formats` enumeration audio and video formats:
@@ -111,10 +112,10 @@ The Firebolt `Media` module **MUST** have a `Formats` enumeration audio and vide
 | `AUDIO_DTS`      | `audio/vnd.dts`        |
 | `AUDIO_DTS_X`    | `audio/vnd.dts.uhd;profile=p2` |
 | `AUDIO_EAC3`     | `audio/eac3`           | Note we call this AC3+ in RDK... |
-| `AUDIO_MPEG`     | `audio/mpeg`           | 
-| `AUDIO_MPEG1`    | `audio/mpeg-L1`        | 
-| `AUDIO_MPEG2`    | `audio/mpeg-L2`        | 
-| `AUDIO_MPEG4`    | `audio/mp4`            | 
+| `AUDIO_MPEG`     | `audio/mpeg`           |
+| `AUDIO_MPEG1`    | `audio/mpeg-L1`        |
+| `AUDIO_MPEG2`    | `audio/mpeg-L2`        |
+| `AUDIO_MPEG4`    | `audio/mp4`            |
 | `AUDIO_OPUS`     | `audio/opus`           |
 | `AUDIO_OGG`      | `audio/ogg`            |
 | `AUDIO_TRUEHD`   | `audio/true-hd`        |
@@ -190,14 +191,15 @@ const hdr10plusWithVP9 = videoFormatSupported(Media.Formats.VIDEO_VP9_P2)
 
 When calling videoFormatSupported with a `resolution` parameter, then the Display support for that resolution is factored into the response.
 
-The `audioFormatSupported` API **MUST** have an `options` parameter
+The `videoFormatSupported` API **MUST** have an `options` parameter
 which **MUST** be an object with zero or more of the following properties:
 
 | Property | Type | Description |
 |----------|------|-------------|
-| codec    | `string` | the Code |
+| codec    | `string` | the Codec |
 | profile  | `string` | the Codec profile: <br>**h.265**: "main", "high", "main10"<br>**vp9**: "p0", "p2"<br>**AAC**: "mp2lc", "mp4he" |
-| level    | `string`   | the Codec level: <br>**h.265**: "4.1", "4.2", "5.0", "5.1"<br>**vp9**:"3.0", "3.1", "4.0", "4.1", "5.0", "5.1" || atmos    | `boolean` | Whether or not Dolby Atmos support for the given format is being requested |
+| level    | `string`   | the Codec level: <br>**h.265**: "4.1", "4.2", "5.0", "5.1"<br>**vp9**:"3.0", "3.1", "4.0", "4.1", "5.0", "5.1" |
+| atmos    | `boolean` | Whether or not Dolby Atmos support for the given format is being requested |
 | resolution | `Display.Resolution` | The Resolution, e.g. `1080p` of the support being requested. |
 | hdr      | HDRProfile | The HDR profile that support is being checked for. |
 
@@ -272,7 +274,7 @@ which **MUST** be an object with zero or more of the following properties:
 | atmos    | `boolean` | Whether or not Dolby Atmos support for the given format is being requested |
 | channels | `int` | Required number of audio channels |
 | sampleRate | `int` | The sample rate being requested. |
-| mode     | `AudioOutput.Mode` | Specify which mode should be used to evaluate the reqeuest. Defaults to the current mode if not specified. |
+| mode     | `AudioOutput.Mode` | Specify which mode should be used to evaluate the request. Defaults to the current mode if not specified. |
 
 **TODO**: Roku also has: Container, Bitrate
 
@@ -280,7 +282,7 @@ If the `options` parameter is provided, then the `audioFormatSupported` API **MU
 return `true` unless the format specified is supported with **all** of the properties specified
 by `options` *all at the same time*.
 
-Use of the `videoFormatSupported` API requires access to the `use` role of the
+Use of the `audioFormatSupported` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
 
 #### 4.2.3. Hdr Supported
@@ -317,7 +319,7 @@ The `optimalResolution` **MUST** come from the HDMI edid.
 For built-in displays `optimalResolution` **MUST** also be provided.
 
 ### 5.4. Supported Resolutions
- 
+
 The `Display` module **MUST** have a `supportedResolutions` method that returns an array of valid resolutions that the display supports.
 
 This method **MUST** return a value from the `Display.Resolution` enum.
@@ -358,7 +360,7 @@ about any media actively being decoded by the Media Pipeline or an active HDMI i
 
 ### 7.1. MediaInfo for current app
 
-Apps need a way to query the media info for media currently being played  
+Apps need a way to query the media info for media currently being played
 by the app. All of the following methods take a single `pipeline`
 parameter, which identifies the Media Pipeline in the current app's scope
 that is being queried, e.g.:
