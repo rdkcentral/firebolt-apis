@@ -18,11 +18,11 @@
 
 import MockTransport from '../Transport/MockTransport.mjs'
 
-let inactive = 0 /* ${EXAMPLE:onInactive} */
-let foreground = 0 /* ${EXAMPLE:onForeground} */
-let background = 0 /* ${EXAMPLE:onBackground} */
-let suspended = 0 /* ${EXAMPLE:onSuspended} */
-let unloading = 0 /* ${EXAMPLE:onUnloading} */
+let inactive = 0 /* ${EXAMPLE:inactive} */
+let foreground = 0 /* ${EXAMPLE:foreground} */
+let background = 0 /* ${EXAMPLE:background} */
+let suspended = 0 /* ${EXAMPLE:suspended} */
+let unloading = 0 /* ${EXAMPLE:unloading} */
 
 const emit = (value) => {
   MockTransport.event('Lifecycle', value.state, value)
