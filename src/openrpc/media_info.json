@@ -28,15 +28,14 @@
                     "schema": {
                         "type": "integer",
                         "default": 1
-                    },
-                    "required": true
+                    }
                 }
             ],
             "result": {
                 "name": "Video codec",
                 "summary": "Video codec for the pipeline.",
                 "schema": {
-                    "$ref": "#/components/schemas/VideoCodec"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media/definitions/VideoCodec"
                 }
             },
             "examples": [
@@ -54,6 +53,22 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "videoFormat",
+            "summary": "Returns details on the video content currently in the media pipeline (either playing or paused).",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:video-format"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "onVideoFormatChanged",
+            "summary": ""
         },
         {
             "name": "audioCodec",
@@ -86,7 +101,7 @@
                 "name": "codec",
                 "summary": "the codec",
                 "schema": {
-                    "$ref": "#/components/schemas/AudioCodec"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media/definitions/AudioCodec"
                 }
             },
             "examples": [
@@ -136,7 +151,7 @@
                 "name": "profile",
                 "summary": "the hdr profile",
                 "schema": {
-                    "$ref": "#/components/schemas/DynamicRangeProfile"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media/definitions/DynamicRangeProfile"
                 }
             },
             "examples": [
@@ -207,22 +222,9 @@
     ],
     "components": {
         "schemas": {
-            "DynamicRangeProfile": {
-                "type": "string",
-                "description": "Enumeration of possible HDR profiles.",
-                "enum": [
-                    "dolbyVision",
-                    "hdr10",
-                    "hdr10plus",
-                    "hlg",
-                    "none",
-                    "slHdr1",
-                    "unknown"
-                ]
-            },
             "AudioProfile": {
                 "type": "string",
-                "description": "Enumeration of possible immersive audio profiles.",
+                "description": "Enumeration of audio profiles.",
                 "enum": [
                     "auro3d",
                     "dolbyAtmos",
@@ -230,80 +232,6 @@
                     "mpegh",
                     "none",
                     "unknown"
-                ]
-            },
-            "AudioCodec": {
-                "type": "string",
-                "description": "Enumeration of possible audio codecs.",
-                "enum": [
-                    "aac",
-                    "ac3",
-                    "ac3plus",
-                    "eac3",
-                    "ac4",
-                    "dts",
-                    "mpeg1",
-                    "mpeg2",
-                    "mpeg3",
-                    "mpeg4",
-                    "opus",
-                    "ogg",
-                    "trueHd",
-                    "wav",
-                    "unknown",
-                    "none"
-                ]
-            },
-            "VideoCodec": {
-                "type": "string",
-                "description": "Enumeration of possible video codecs.",
-                "enum": [
-                    "av1",
-                    "h263",
-                    "h264",
-                    "h265",
-                    "mpeg",
-                    "vp8",
-                    "vp9",
-                    "vp10",
-                    "vc1",
-                    "unknown",
-                    "none"
-                ]
-            },
-            "MimeType": {
-                "type": "string",
-                "description": "Enumeration of possible Mimetypes.",
-                "enum": [
-                    "audio/mp4a-latm",
-                    "audio/ac3",
-                    "audio/ac4",
-                    "audio/vnd.dolby.mat",
-                    "audio/vnd.dts",
-                    "audio/vnd.dts.uhd;profile=p2",
-                    "audio/eac3",
-                    "audio/mpeg",
-                    "audio/mpeg-L1",
-                    "audio/mpeg-L2",
-                    "audio/mp4",
-                    "audio/opus",
-                    "audio/ogg",
-                    "audio/true-hd",
-                    "audio/wav",
-                    "video/av01",
-                    "video/dolbyVision",
-                    "video/3gpp",
-                    "video/avc",
-                    "video/hevc",
-                    "video/hevc;profile=main10",
-                    "video/mpeg",
-                    "video/x-vnd.on2.vp8",
-                    "video/x-vnd.on2.vp9",
-                    "video/x-vnd.on2.vp9;profile=p2",
-                    "video/x-vnd.on2.vp10",
-                    "video/wvc1",
-                    "unknown",
-                    "none"
                 ]
             }
         }

@@ -203,7 +203,7 @@
                 "schema": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/components/schemas/HdrProfile"
+                        "$ref": "#/components/schemas/DynamicRangeProfile"
                     },
                     "minItems": 1
                 }
@@ -220,11 +220,47 @@
                     "result": {
                         "name": "Default Result",
                         "value": [
-                            "DolbyVision",
-                            "Hdr10",
-                            "Hdr10Plus",
-                            "St2084",
-                            "hlg"
+                            "dolbyVision",
+                            "hdr10",
+                            "hdr10plus",
+                            "hlg",
+                            "st2084"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "supportedColorDepths",
+            "summary": "Get the supported color depth of the display device.",
+            "params": [],
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "result": {
+                "name": "ColorDepths",
+                "summary": "The supported color depths of the display device.",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/ColorDepth"
+                    }
+                }
+            },
+            "examples": [
+                {
+                    "name": "Get the supported color depth capabilities",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            8,
+                            10
                         ]
                     }
                 }
@@ -232,7 +268,7 @@
         },
         {
             "name": "useSourceFrameRate",
-            "summary": "Set the HDMI output frame rate to follow the video source frame rate.",
+            "summary": "Check whether the HDMI output frame rate is set to follow the video source frame rate.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -244,7 +280,7 @@
             "params": [],
             "result": {
                 "name": "useSourceFrameRate",
-                "summary": "Whether the HDMI output frame rate was set to follow video source frame rate",
+                "summary": "Whether the HDMI output frame rate is set to follow the video source frame rate.",
                 "schema": {
                     "type": "boolean"
                 }
@@ -263,33 +299,51 @@
     ],
     "components": {
         "schemas": {
+            "ColorDepth": {
+                "description": "Enumeration of color depths possibly supported by the display in number of bits",
+                "type": "integer",
+                "enum": [
+                    8,
+                    10,
+                    12
+                ]
+            },
             "DisplayResolution": {
-                "title": "DisplayResolution",
+                "description": "Enumeration of possible display resolutions",
                 "type": "string",
                 "enum": [
-                    "1080p24",
+                    "480i",
+                    "480p",
+                    "576i25",
+                    "576p50",
+                    "576p60",
+                    "720p50",
+                    "720p60",
                     "1080i25",
-                    "1080p30",
                     "1080i50",
+                    "1080i60",
+                    "1080p24",
+                    "1080p30",
                     "1080p50",
                     "1080p60",
                     "2160p30",
                     "2160p50",
-                    "2160p60"
-                ],
-                "description": "The list of resolutions supported by the display"
+                    "2160p60",
+                    "4320p60"
+                ]
             },
-            "HdrProfile": {
-                "title": "HdrProfile",
+            "DynamicRangeProfile": {
+                "description": "Enumeration of possible HDR profiles",
                 "type": "string",
                 "enum": [
-                    "DolbyVision",
-                    "Hdr10",
-                    "Hdr10Plus",
-                    "St2084",
-                    "hlg"
-                ],
-                "description": "The list of HDR profiles supported by the display"
+                    "dolbyVision",
+                    "hdr10",
+                    "hdr10plus",
+                    "hlg",
+                    "none",
+                    "st2084",
+                    "unknown"
+                ]
             }
         }
     }

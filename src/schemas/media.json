@@ -1,0 +1,263 @@
+{
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/media",
+    "title": "Media",
+    "definitions": {
+        "AudioCodec": {
+            "type": "string",
+            "description": "Enumeration of audio codecs.",
+            "enum": [
+                "aac",
+                "ac3",
+                "ac3plus",
+                "ac4",
+                "dts",
+                "eac3",
+                "mpeg1",
+                "mpeg2",
+                "mpeg3",
+                "mpeg4",
+                "none",
+                "ogg",
+                "opus",
+                "truehd",
+                "unknown",
+                "wav"
+            ]
+        },
+        "AudioContainer": {
+            "description": "Enumeration of audio containers.",
+            "type": "string",
+            "enum": [
+                "m4a",
+                "mp2",
+                "mp3",
+                "mp4",
+                "wav"
+            ]
+        },
+        "AudioFormat": {
+            "type": "object",
+            "description": "Details on the audio content format.",
+            "properties": {
+                "channels": {
+                    "type": "integer"
+                },
+                "container": {
+                    "$ref": "#/definitions/AudioContainer"
+                },
+                "level": {
+                    "type": "string",
+                    "enum": [
+                        "3.0",
+                        "3.1",
+                        "4.0",
+                        "4.1",
+                        "4.2",
+                        "5.0",
+                        "5.1"
+                    ]
+                },
+                "profile": {
+                    "type": "string",
+                    "enum": [
+                        "high",
+                        "main",
+                        "main10",
+                        "mp2lc",
+                        "mp4he",
+                        "p0",
+                        "p2"
+                    ]
+                },
+                "sampleRate": {
+                    "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/AudioCodec"
+                }
+            }
+        },
+        "AudioOutputMode": {
+            "description": "Enumeration of audio output modes",
+            "type": "string",
+            "enum": [
+                "auto",
+                "mono",
+                "none",
+                "passthrough",
+                "stereo",
+                "surround",
+                "unknown"
+            ]
+        },
+        "DisplayMode": {
+            "description": "Enumeration of display modes.",
+            "type": "string",
+            "enum": [
+                "480i",
+                "480p",
+                "576i",
+                "576p",
+                "720p",
+                "1080i",
+                "1080p",
+                "2160p",
+                "4320p"
+            ]
+        },
+        "DynamicRangeProfile": {
+            "type": "string",
+            "description": "Enumeration of HDR profiles.",
+            "enum": [
+                "dolbyVision",
+                "hdr10",
+                "hdr10plus",
+                "hlg",
+                "none",
+                "unknown"
+            ]
+        },
+        "MimeType": {
+            "type": "string",
+            "description": "Enumeration of MimeTypes.",
+            "enum": [
+                "audio/ac3",
+                "audio/ac4",
+                "audio/eac3",
+                "audio/mp4",
+                "audio/mp4a-latm",
+                "audio/mpeg-L1",
+                "audio/mpeg-L2",
+                "audio/mpeg",
+                "audio/ogg",
+                "audio/opus",
+                "audio/true-hd",
+                "audio/vnd.dolby.mat",
+                "audio/vnd.dts.uhd;profile=p2",
+                "audio/vnd.dts",
+                "audio/wav",
+                "none",
+                "unknown",
+                "video/3gpp",
+                "video/av01",
+                "video/avc",
+                "video/dolbyVision",
+                "video/hevc;profile=main10",
+                "video/hevc",
+                "video/mpeg",
+                "video/wvc1",
+                "video/x-vnd.on2.vp10",
+                "video/x-vnd.on2.vp8",
+                "video/x-vnd.on2.vp9;profile=p2",
+                "video/x-vnd.on2.vp9"
+            ]
+        },
+        "Resolution": {
+            "type": "array",
+            "description": "The resolution specified as width and height.",
+            "items": [
+                {
+                    "type": "integer"
+                },
+                {
+                    "type": "integer"
+                }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
+        },
+        "VideoCodec": {
+            "type": "string",
+            "description": "Enumeration of video codecs.",
+            "enum": [
+                "av1",
+                "h263",
+                "h264",
+                "h265",
+                "mpeg",
+                "none",
+                "unknown",
+                "vc1",
+                "vp8",
+                "vp9",
+                "vp10"
+            ]
+        },
+        "VideoContainer": {
+            "description": "Enumeration of video container formats.",
+            "type": "string",
+            "enum": [
+                "dash",
+                "hls",
+                "ism",
+                "mkv",
+                "mp4",
+                "ts"
+            ]
+        },
+        "VideoFormat": {
+            "type": "object",
+            "description": "Details on the video content format.",
+            "properties": {
+                "container": {
+                    "$ref": "#/definitions/VideoContainer"
+                },
+                "hdr": {
+                    "$ref": "#/definitions/DynamicRangeProfile"
+                },
+                "level": {
+                    "type": "string",
+                    "enum": [
+                        "4.1",
+                        "4.2",
+                        "5.0",
+                        "5.1",
+                        "high",
+                        "main"
+                    ]
+                },
+                "profile": {
+                    "type": "string",
+                    "enum": [
+                        "high",
+                        "main",
+                        "main10",
+                        "p0",
+                        "p2"
+                    ]
+                },
+                "mode": {
+                    "$ref": "#/definitions/VideoMode"
+                },
+                "type": {
+                    "$ref": "#/definitions/VideoCodec"
+                }
+            }
+        },
+        "VideoMode": {
+            "description": "Enumeration of video playback modes.",
+            "type": "string",
+            "enum": [
+                "480i",
+                "480p",
+                "576i25",
+                "576p50",
+                "576p60",
+                "720p50",
+                "720p60",
+                "1080i25",
+                "1080i50",
+                "1080i60",
+                "1080p24",
+                "1080p30",
+                "1080p50",
+                "1080p60",
+                "2160p30",
+                "2160p50",
+                "2160p60",
+                "4320p60"
+            ]
+        }
+    }
+}
