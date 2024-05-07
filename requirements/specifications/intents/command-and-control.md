@@ -33,9 +33,9 @@ together for easier forwarding to appropriate components.
     - [3.2.2. Mute Intent](#322-mute-intent)
   - [3.3. Channel Intent](#33-channel-intent)
   - [3.4. Media Control Intents](#34-media-control-intents)
-    - [3.4.1. Pause, Resume, Replay, and Stop Intents](#341-pause-resume-replay-and-stop-intents)
+    - [3.4.1. Pause, Play, Replay, and Stop Intents](#341-pause-play-replay-and-stop-intents)
     - [3.4.2. Seek Intent](#342-seek-intent)
-    - [3.4.3. Trick Play Intent](#343-trick-play-intent)
+    - [3.4.3. Fast-forward and Rewind Intents](#343-fast-forward-and-rewind-intents)
   - [3.5. Accessibility Intents](#35-accessibility-intents)
     - [3.5.1. Closed Captions Intent](#351-closed-captions-intent)
     - [3.5.2. Voice Guidance Intent](#352-voice-guidance-intent)
@@ -135,6 +135,8 @@ seconds:
     }
 }
 ```
+
+To cancel a sleep timer, send a new intent without a delay.
 
 While it may not be implemented by all platforms, this could also be
 used to turn on the TV with a timer.
@@ -300,7 +302,7 @@ one of the channel up/down buttons.
 
 ### 3.4. Media Control Intents
 
-#### 3.4.1. Pause, Resume, Replay, and Stop Intents
+#### 3.4.1. Pause, Play, Replay, and Stop Intents
 
 These intents allow the user to pause and resume playback of the current
 Media: 
@@ -315,7 +317,7 @@ Media:
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "pause" | "resume" | "replay" | "stop",
+        "action": "pause" | "play" | "replay" | "stop",
         "context": {
             "source": "voice"
         }
@@ -326,7 +328,11 @@ Media:
 If the action is pause, then the currently playing media should be
 paused, with the frames on-screen and the video decoder ready to resume.
 
-If the action is resume, then the currently paused media should resume.
+If the action is play, and the current media is paused, then the
+currently paused media should resume.
+
+If the action is play, and there is something playbable selected, then
+playback of the selected asset should be initiated.
 
 If the action is replay, then the currently paused media should restart
 from the beginning. This should work even if the decoder has finished,
@@ -393,9 +399,9 @@ For relative seeking, the seconds value may be a positive or negative value.
 
 If a relative seek intent with a seconds value of `0` is received, the platform **SHOULD** ignore it, rather than rebuffering at the current position.
 
-#### 3.4.3. Trick Play Intent
+#### 3.4.3. Fast-forward and Rewind Intents
 
-The Trick Play Intent allows users to fast-forward or rewind:
+These intents allow users to fast-forward or rewind:
 
 ```json
 {
@@ -407,7 +413,7 @@ The Trick Play Intent allows users to fast-forward or rewind:
         "micType": "NEAR_FIELD"
     },
     "intent": {
-        "action": "trickplay",
+        "action": "fast-forward" | "rewind",
         "data": {
             "speed": 2.5
         },
@@ -416,19 +422,23 @@ The Trick Play Intent allows users to fast-forward or rewind:
         }
     }
 }
-
 ```
 
-Speed is a float in the range of -10 to 10, with negative values
-denoting backwards/rewind and values between -1 and 1 denoting slow
-motion.
+TODO: send closed captions vs subtitles 
+
+Speed is a float in the range of 0 (non-includsive) to 10 (inclusive),
+with values between 0 and 1 denoting slow motion.
 
 It is a device-level decision how to implement different speeds, however
 actual fast playback (with audio) should be used where possible and
 reasonable, e.g. a speed of 1.5 should actually be playing the video w/
 sync\'d audio, while a speed of 10 will likely be using iframes and not
-have audio. For speeds less than zero it is not important, and likely
-undesirable, to provide audio.
+have audio. For rewind it is not important, and likely undesirable, to
+provide audio.
+
+If speed is not provided then the device should cycle through a range
+of speeds defined by the device. This range of speeds **COULD** include
+the value `1` so that users can get back to normal speed if desired.
 
 ### 3.5. Accessibility Intents
 
@@ -636,6 +646,32 @@ This intent allows a user to turn audio descriptions of content on or off.
 }
 
 ```
+
+This intent may specify a language:
+
+```json
+{
+    "type": "xrn:firebolt:intent:platform:accessibility",
+    "target": "client",
+    "metadata": {
+        "assistant": "XFINITY",
+        "lang": "eng-USA",
+        "micType": "NEAR_FIELD"
+    },
+    "intent": {
+        "action": "audio-descriptions",
+        "data": {
+            "value": true,
+            "language": "eng"
+        },
+        "context": {
+            "source": "voice"
+        }
+    }
+}
+```
+
+The `language` must be a three character ISO 639 1/2 code, e.g. `eng`.
 
 Additionally, this intent may specify a toggle:
 
@@ -957,5 +993,3 @@ To launch the settings UI, a Launch Intent will be used, with the
 Firebolt application type:
 
 `xrn:firebolt:application-type:settings`
-
-
