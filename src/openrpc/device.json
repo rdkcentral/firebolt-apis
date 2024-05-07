@@ -295,19 +295,19 @@
           "type": "object",
           "properties": {
             "sdk": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+              "$ref": "https://meta.rdkcentral.com/firebolt/types#/definitions/SemanticVersion",
               "description": "The Firebolt SDK version"
             },
             "api": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+              "$ref": "https://meta.rdkcentral.com/firebolt/types#/definitions/SemanticVersion",
               "description": "The lateset Firebolt API version supported by the curent device."
             },
             "firmware": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+              "$ref": "https://meta.rdkcentral.com/firebolt/types#/definitions/SemanticVersion",
               "description": "The device firmware version."
             },
             "os": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+              "$ref": "https://meta.rdkcentral.com/firebolt/types#/definitions/SemanticVersion",
               "description": "**Deprecated** Use firmware instead"
             },
             "debug": {
@@ -383,7 +383,7 @@
         "name": "supportedHdcpVersions",
         "summary": "the supported HDCP versions",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          "$ref": "https://meta.rdkcentral.com/firebolt/types#/definitions/BooleanMap"
         }
       },
       "examples": [
@@ -483,14 +483,14 @@
         {
           "name": "deprecated",
           "x-since": "1.2.0",
-          "x-alternative": "Discovery.contentAccess()"
+          "x-alternative": "Device.supportedDynamicRangeProfiles()"
         }
       ],
       "result": {
-        "name": "supportedHdrProfiles",
+        "name": "hdr",
         "summary": "The supported HDR profiles",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          "$ref": "https://meta.rdkcentral.com/firebolt/types#/definitions/BooleanMap"
         }
       },
       "examples": [
@@ -510,8 +510,8 @@
       ]
     },
     {
-      "name": "currentHdrProfile",
-      "summary": "Returns the current HDR profile set by the device",
+      "name": "currentDynamicRangeProfile",
+      "summary": "Returns the current HDR profile set on the device",
       "params": [],
       "tags": [
         {
@@ -525,7 +525,7 @@
         }
       ],
       "result": {
-        "name": "DynamicRangeProfile",
+        "name": "currentDynamicRangeProfile",
         "summary": "The current HDR profile",
         "schema": {
           "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/DynamicRangeProfile"
@@ -538,6 +538,47 @@
           "result": {
             "name": "Default Result",
             "value": "hdr10"
+          }
+        }
+      ]
+    },
+    {
+      "name": "supportedDynamicRangeProfiles",
+      "summary": "Returns the HDR profiles supported by the device",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "supportedDynamicRangeProfiles",
+        "summary": "The supported HDR profiles",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/DynamicRangeProfile"
+          },
+          "minItems": 1
+        }
+      },
+      "examples": [
+        {
+          "name": "The supported HDR profiles",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": [
+              "hdr10",
+              "hdr10plus",
+              "hlg"
+            ]
           }
         }
       ]
@@ -598,6 +639,11 @@
           "x-uses": [
             "xrn:firebolt:capability:device:info"
           ]
+        },
+        {
+          "name": "deprecated",
+          "x-since": "1.2.0",
+          "x-alternative": "Display.currentResolution()"
         }
       ],
       "result": {
@@ -623,7 +669,7 @@
     },
     {
       "name": "videoResolution",
-      "summary": "Get the width and heigh tof the current video resolution",
+      "summary": "Get the width and height of the current video output resolution",
       "params": [],
       "tags": [
         {
@@ -640,7 +686,7 @@
         "name": "videoResolution",
         "summary": "the resolution",
         "schema": {
-          "$ref": "#/components/schemas/Resolution"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/Resolution"
         }
       },
       "examples": [
@@ -653,120 +699,6 @@
               1920,
               1080
             ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "videoPlaybackSupported",
-      "summary": "Check whether video content of the given format is supported by the device's current configuration.  These values may change as different AV inputs or peripherals are activated or connected.",
-      "params": [
-        {
-          "name": "codec",
-          "summary": "The video codec to check whether its supported by the device's current configuration.",
-          "required": true,
-          "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoCodec"
-          }
-        },
-        {
-          "name": "options",
-          "summary": "Additional options to use for checking whether a video is supported by the device.  All values must be true for the content to be playable.",
-          "schema": {
-            "$ref": "#/components/schemas/VideoPlaybackOptions"
-          }
-        }
-      ],
-      "tags": [
-        {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:device:info"
-          ]
-        }
-      ],
-      "result": {
-        "name": "videoPlaybackSupported",
-        "summary": "Whether video content of a particular format is supported by the device's current configuration.",
-        "schema": {
-          "type": "boolean"
-        }
-      },
-      "examples": [
-        {
-          "name": "Specify the video codec and video mode to check",
-          "params": [
-            {
-              "name": "codec",
-              "value": "av1"
-            },
-            {
-              "name": "options",
-              "value": {
-                "videoMode": "1080p50"
-              }
-            }
-          ],
-          "result": {
-            "name": "Default Result",
-            "value": true
-          }
-        }
-      ]
-    },
-    {
-      "name": "videoPlaybackPossible",
-      "summary": "Check whether video content of the given format is supported by the device regardless of its configuration.  These values will never change without a restart of the device.",
-      "params": [
-        {
-          "name": "codec",
-          "summary": "The video codec to check whether its supported by the device's current configuration.",
-          "required": true,
-          "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoCodec"
-          }
-        },
-        {
-          "name": "options",
-          "summary": "Additional options to use for checking whether a video is supported by the device.  All values must be true for the content to be playable.",
-          "schema": {
-            "$ref": "#/components/schemas/VideoPlaybackOptions"
-          }
-        }
-      ],
-      "tags": [
-        {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:device:info"
-          ]
-        }
-      ],
-      "result": {
-        "name": "videoPlaybackPossible",
-        "summary": "Whether video content of the given format is supported by the device.",
-        "schema": {
-          "type": "boolean"
-        }
-      },
-      "examples": [
-        {
-          "name": "Specify the video format and resolution to check.",
-          "params": [
-            {
-              "name": "format",
-              "value": "av1"
-            },
-            {
-              "name": "options",
-              "value": {
-                "videoMode": "1080p50"
-              }
-            }
-          ],
-          "result": {
-            "name": "Default Result",
-            "value": true
           }
         }
       ]
@@ -787,7 +719,7 @@
           "name": "options",
           "summary": "Additional options to use for checking whether an audio format is supported by the device.  All values must be true for the content to be playable.",
           "schema": {
-            "$ref": "#/components/schemas/AudioPlaybackOptions"
+            "$ref": "#/components/schemas/AudioFormatOptions"
           }
         }
       ],
@@ -844,7 +776,7 @@
           "name": "options",
           "summary": "Additional options to use for checking whether an audio format is supported by the device.  All values must be true for the content to be playable.",
           "schema": {
-            "$ref": "#/components/schemas/AudioPlaybackOptions"
+            "$ref": "#/components/schemas/AudioFormatOptions"
           }
         }
       ],
@@ -858,7 +790,7 @@
       ],
       "result": {
         "name": "audioFormatPossible",
-        "summary": "Whether content of the provided audio format and channels value are supported by the device.",
+        "summary": "Whether content of the given audio format and channels value are supported by the device.",
         "schema": {
           "type": "boolean"
         }
@@ -868,7 +800,7 @@
           "name": "Specify the audio codec and channels value to check",
           "params": [
             {
-              "name": "format",
+              "name": "codec",
               "value": "aac"
             },
             {
@@ -886,8 +818,122 @@
       ]
     },
     {
+      "name": "videoFormatSupported",
+      "summary": "Check whether video content of the given format is supported by the device's current configuration.  These values may change as different AV inputs or peripherals are activated or connected.",
+      "params": [
+        {
+          "name": "codec",
+          "summary": "The video codec to check whether its supported by the device's current configuration.",
+          "required": true,
+          "schema": {
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoCodec"
+          }
+        },
+        {
+          "name": "options",
+          "summary": "Additional options to use for checking whether a video is supported by the device.  All values must be true for the content to be playable.",
+          "schema": {
+            "$ref": "#/components/schemas/VideoFormatOptions"
+          }
+        }
+      ],
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "videoFormatSupported",
+        "summary": "Whether video content of the given format is supported by the device's current configuration.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Specify the video format to check",
+          "params": [
+            {
+              "name": "codec",
+              "value": "av1"
+            },
+            {
+              "name": "options",
+              "value": {
+                "videoMode": "1080p50"
+              }
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "videoFormatPossible",
+      "summary": "Check whether video content of the given format is supported by the device regardless of its configuration.  These values will never change without a restart of the device.",
+      "params": [
+        {
+          "name": "codec",
+          "summary": "The video codec to check whether its supported by the device's current configuration.",
+          "required": true,
+          "schema": {
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoCodec"
+          }
+        },
+        {
+          "name": "options",
+          "summary": "Additional options to use for checking whether a video is supported by the device.  All values must be true for the content to be playable.",
+          "schema": {
+            "$ref": "#/components/schemas/VideoFormatOptions"
+          }
+        }
+      ],
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "videoFormatPossible",
+        "summary": "Whether video content of the given format is supported by the device.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Specify the video format to check.",
+          "params": [
+            {
+              "name": "codec",
+              "value": "av1"
+            },
+            {
+              "name": "options",
+              "value": {
+                "videoMode": "1080p50"
+              }
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
       "name": "supportedVideoModes",
-      "summary": "Returns an array of valid video modes that the device supports, regardless of any connected display.",
+      "summary": "Returns an array of valid video output modes that the device supports, regardless of any connected display.",
       "tags": [
         {
           "name": "capabilities",
@@ -899,7 +945,7 @@
       "params": [],
       "result": {
         "name": "supportedVideoModes",
-        "summary": "An array of valid video modes that the device supports",
+        "summary": "An array of valid video output modes that the device supports",
         "schema": {
           "type": "array",
           "items": {
@@ -1260,21 +1306,6 @@
   ],
   "components": {
     "schemas": {
-      "Resolution": {
-        "type": "array",
-        "description": "The resolution specified as width and height.",
-        "items": [
-          {
-            "type": "integer"
-          },
-          {
-            "type": "integer"
-          }
-        ],
-        "additionalItems": false,
-        "minItems": 2,
-        "maxItems": 2
-      },
       "NetworkType": {
         "description": "The type of network that is currently active",
         "type": "string",
@@ -1315,12 +1346,12 @@
         "title": "AudioProfiles",
         "allOf": [
           {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+            "$ref": "https://meta.rdkcentral.com/firebolt/types#/definitions/BooleanMap"
           },
           {
             "type": "object",
             "propertyNames": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/AudioProfile"
+              "$ref": "https://meta.rdkcentral.com/firebolt/types#/definitions/AudioProfile"
             }
           }
         ]
@@ -1329,7 +1360,7 @@
         "type": "string",
         "pattern": "^HDMI[0-9]+$"
       },
-      "AudioPlaybackOptions": {
+      "AudioFormatOptions": {
         "description": "Options for checking audio playback support",
         "type": "object",
         "properties": {
@@ -1362,7 +1393,7 @@
           }
         }
       },
-      "VideoPlaybackOptions": {
+      "VideoFormatOptions": {
         "description": "Options for checking video playback support",
         "type": "object",
         "properties": {

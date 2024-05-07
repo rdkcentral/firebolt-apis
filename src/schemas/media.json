@@ -24,6 +24,32 @@
                 "wav"
             ]
         },
+        "AudioCodecLevel": {
+            "description": "Enumeration of audio codec levels.",
+            "type": "string",
+            "enum": [
+                "3.0",
+                "3.1",
+                "4.0",
+                "4.1",
+                "4.2",
+                "5.0",
+                "5.1"
+            ]
+        },
+        "AudioCodecProfile": {
+            "description": "Enumeration of audio codec profiles.",
+            "type": "string",
+            "enum": [
+                "high",
+                "main",
+                "main10",
+                "mp2lc",
+                "mp4he",
+                "p0",
+                "p2"
+            ]
+        },
         "AudioContainer": {
             "description": "Enumeration of audio containers.",
             "type": "string",
@@ -42,38 +68,20 @@
                 "channels": {
                     "type": "integer"
                 },
+                "codec": {
+                    "$ref": "#/definitions/AudioCodec"
+                },
                 "container": {
                     "$ref": "#/definitions/AudioContainer"
                 },
-                "level": {
-                    "type": "string",
-                    "enum": [
-                        "3.0",
-                        "3.1",
-                        "4.0",
-                        "4.1",
-                        "4.2",
-                        "5.0",
-                        "5.1"
-                    ]
+                "codecLevel": {
+                    "$ref": "#/definitions/AudioCodecLevel"
                 },
-                "profile": {
-                    "type": "string",
-                    "enum": [
-                        "high",
-                        "main",
-                        "main10",
-                        "mp2lc",
-                        "mp4he",
-                        "p0",
-                        "p2"
-                    ]
+                "codecProfile": {
+                    "$ref": "#/definitions/AudioCodecProfile"
                 },
                 "sampleRate": {
                     "type": "integer"
-                },
-                "type": {
-                    "$ref": "#/definitions/AudioCodec"
                 }
             }
         },
@@ -203,6 +211,9 @@
                 "container": {
                     "$ref": "#/definitions/VideoContainer"
                 },
+                "frameRate": {
+                    "type": "integer"
+                },
                 "hdr": {
                     "$ref": "#/definitions/DynamicRangeProfile"
                 },
@@ -227,8 +238,8 @@
                         "p2"
                     ]
                 },
-                "mode": {
-                    "$ref": "#/definitions/VideoMode"
+                "resolution": {
+                    "$ref": "#/definitions/Resolution"
                 },
                 "type": {
                     "$ref": "#/definitions/VideoCodec"

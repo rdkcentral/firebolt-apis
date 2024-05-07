@@ -2,16 +2,396 @@
     "openrpc": "1.2.4",
     "info": {
         "title": "MediaInfo",
-        "description": "A module for query info about the media currently being played by the app.",
+        "description": "A module for query info about the media currently in the app's media pipeline (either playing or paused).",
         "version": "0.0.0"
     },
     "methods": [
         {
-            "name": "videoCodec",
-            "summary": "Get the video codec of the specified media session.",
+            "name": "audioChannels",
+            "summary": "Get the number of audio channels currently used by the specified media pipeline.",
             "tags": [
                 {
-                    "name": "property",
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:audio-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "audioChannels",
+                "summary": "Number of audio channels used by the pipeline.",
+                "type": "integer"
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 1
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": 2
+                    }
+                }
+            ]
+        },
+        {
+            "name": "audioCodec",
+            "summary": "Get the audio codec currently used by the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:audio-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "audioCodec",
+                "summary": "Audio codec used by the pipeline.",
+                "schema": {
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/AudioCodec"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 1
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "ac3"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "audioCodecLevel",
+            "summary": "Get the audio codec level currently used by the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:audio-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "audioCodecLevel",
+                "summary": "Audio codec level used by the pipeline.",
+                "schema": {
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/AudioCodecLevel"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 1
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "5.1"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "audioCodecProfile",
+            "summary": "Get the audio codec profile currently used by the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:audio-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "audioCodecProfile",
+                "summary": "Audio codec profile used by the pipeline.",
+                "schema": {
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/AudioCodecProfile"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 1
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "high"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "audioContainer",
+            "summary": "Get the audio container currently used by the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:audio-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "audioContainer",
+                "summary": "Audio container used by the pipeline.",
+                "schema": {
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/AudioContainer"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 1
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "m4a"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "audioSampleRate",
+            "summary": "Get the audio sample rate in kHz currently used by the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:audio-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "audioSampleRate",
+                "summary": "Audio sample rate in kHz for the pipeline.",
+                "type": "integer"
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 1
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": 48
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onAudioFormatChanged",
+            "summary": "Subscribe to audio format changes to the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "event",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:audio-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "summary": "The type of audio format change",
+                "schema": {
+                    "$ref": "#/components/schemas/AudioFormatChangeEvent"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 1
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "audioCodec"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onVideoFormatChanged",
+            "summary": "Subscribe to video format changes to the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "event",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:video-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "summary": "The type of video format change",
+                "schema": {
+                    "$ref": "#/components/schemas/VideoFormatChangeEvent"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 1
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "videoResolution"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "videoCodec",
+            "summary": "Get the video codec currently used by the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "property:readonly",
                     "x-session": "sessionId",
                     "x-session-name": "mediaSession"
                 },
@@ -25,9 +405,9 @@
             "params": [
                 {
                     "name": "pipeline",
+                    "required": true,
                     "schema": {
-                        "type": "integer",
-                        "default": 1
+                        "$ref": "#/components/schemas/PipelineId"
                     }
                 }
             ],
@@ -35,7 +415,7 @@
                 "name": "Video codec",
                 "summary": "Video codec for the pipeline.",
                 "schema": {
-                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media/definitions/VideoCodec"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoCodec"
                 }
             },
             "examples": [
@@ -55,103 +435,81 @@
             ]
         },
         {
-            "name": "videoFormat",
-            "summary": "Returns details on the video content currently in the media pipeline (either playing or paused).",
+            "name": "videoCodecLevel",
+            "summary": "Get the video codec level currently used by the specified media pipeline.",
             "tags": [
+                {
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
                 {
                     "name": "capabilities",
                     "x-uses": [
                         "xrn:firebolt:capability:media-info:video-format"
                     ]
                 }
-            ]
-        },
-        {
-            "name": "onVideoFormatChanged",
-            "summary": ""
-        },
-        {
-            "name": "audioCodec",
-            "summary": "Get the audio codec of the specified media session.",
-            "tags": [
-                {
-                    "name": "property",
-                    "x-session": "sessionId",
-                    "x-session-name": "mediaSession"
-                },
-                {
-                    "name": "capabilities",
-                    "x-uses": [
-                        "xrn:firebolt:capability:media-info:audio-codec"
-                    ]
-                }
             ],
             "params": [
                 {
-                    "name": "sessionId",
+                    "name": "pipeline",
+                    "required": true,
                     "schema": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "maximum": 15
-                    },
-                    "required": true
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
                 }
             ],
             "result": {
-                "name": "codec",
-                "summary": "the codec",
-                "schema": {
-                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media/definitions/AudioCodec"
-                }
+                "name": "Video codec level",
+                "summary": "Video codec level for the pipeline.",
+                "type": "string"
             },
             "examples": [
                 {
                     "name": "Default Example",
                     "params": [
                         {
-                            "name": "sessionId",
-                            "value": 0
+                            "name": "pipeline",
+                            "value": 1
                         }
                     ],
                     "result": {
                         "name": "Default Result",
-                        "value": "ac3"
+                        "value": "5.1"
                     }
                 }
             ]
         },
         {
-            "name": "dynamicRangeProfile",
-            "summary": "Get the High Dynamic Range (HDR) profile of the specified media session.",
+            "name": "videoCodecProfile",
+            "summary": "Get the video codec profile currently used by the specified media pipeline.",
             "tags": [
                 {
-                    "name": "property",
+                    "name": "property:readonly",
                     "x-session": "sessionId",
                     "x-session-name": "mediaSession"
                 },
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:media-info:hdr"
+                        "xrn:firebolt:capability:media-info:video-format"
                     ]
                 }
             ],
             "params": [
                 {
-                    "name": "sessionId",
+                    "name": "pipeline",
+                    "required": true,
                     "schema": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "maximum": 15
-                    },
-                    "required": true
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
                 }
             ],
             "result": {
-                "name": "profile",
-                "summary": "the hdr profile",
+                "name": "Video codec profile",
+                "summary": "Video codec profile for the pipeline.",
                 "schema": {
-                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media/definitions/DynamicRangeProfile"
+                    "type": "string"
                 }
             },
             "examples": [
@@ -159,8 +517,89 @@
                     "name": "Default Example",
                     "params": [
                         {
-                            "name": "sessionId",
-                            "value": 0
+                            "name": "pipeline",
+                            "value": 1
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "high"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "videoContainer",
+            "summary": "Get the video container currently used by the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:video-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "Video container",
+                "summary": "Video container for the pipeline.",
+                "schema": {
+                    "ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoContainer"
+                }
+            }
+        },
+        {
+            "name": "videoDynamicRangeProfile",
+            "summary": "Get the High Dynamic Range (HDR) profile currently used by the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:video-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "hdrProfile",
+                "summary": "The HDR profile",
+                "schema": {
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/DynamicRangeProfile"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 1
                         }
                     ],
                     "result": {
@@ -171,36 +610,35 @@
             ]
         },
         {
-            "name": "audioProfile",
-            "summary": "Get the audio profile of the specified media session.",
+            "name": "videoResolution",
+            "summary": "Get the video resolution currently used by the specified media pipeline.",
             "tags": [
                 {
-                    "name": "interface",
-                    "x-interface": "MediaInfoContext"
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
                 },
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:media-info:audio-profile"
+                        "xrn:firebolt:capability:media-info:video-format"
                     ]
                 }
             ],
             "params": [
                 {
-                    "name": "sessionId",
+                    "name": "pipeline",
+                    "required": true,
                     "schema": {
-                        "type": "integer",
-                        "minimum": 0,
-                        "maximum": 15
-                    },
-                    "required": true
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
                 }
             ],
             "result": {
-                "name": "profile",
-                "summary": "the audio profile",
+                "name": "resolution",
+                "summary": "The video resolution",
                 "schema": {
-                    "$ref": "#/components/schemas/AudioProfile"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/Resolution"
                 }
             },
             "examples": [
@@ -208,13 +646,16 @@
                     "name": "Default Example",
                     "params": [
                         {
-                            "name": "sessionId",
-                            "value": 0
+                            "name": "pipeline",
+                            "value": 1
                         }
                     ],
                     "result": {
                         "name": "Default Result",
-                        "value": "dolbyAtmos"
+                        "value": [
+                            1920,
+                            1080
+                        ]
                     }
                 }
             ]
@@ -222,16 +663,34 @@
     ],
     "components": {
         "schemas": {
-            "AudioProfile": {
+            "AudioFormatChangeEvent": {
                 "type": "string",
-                "description": "Enumeration of audio profiles.",
+                "description": "The type of audio format change",
                 "enum": [
-                    "auro3d",
-                    "dolbyAtmos",
-                    "dtsx",
-                    "mpegh",
-                    "none",
-                    "unknown"
+                    "audioChannels",
+                    "audioCodec",
+                    "audioCodecLevel",
+                    "audioCodecProfile",
+                    "audioContainer",
+                    "audioSampleRate"
+                ]
+            },
+            "PipelineId": {
+                "type": "integer",
+                "description": "The media pipeline/session ID",
+                "minimum": 1,
+                "maximum": 15
+            },
+            "VideoFormatChangeEvent": {
+                "type": "string",
+                "description": "The type of video format change",
+                "enum": [
+                    "videoCodec",
+                    "videoCodecLevel",
+                    "videoCodecProfile",
+                    "videoContainer",
+                    "videoDynamicRangeProfile",
+                    "videoResolution"
                 ]
             }
         }

@@ -82,7 +82,7 @@
                 "name": "resolution",
                 "summary": "The current resolution of the display device.",
                 "schema": {
-                    "$ref": "#/components/schemas/DisplayResolution"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/Resolution"
                 }
             },
             "examples": [
@@ -91,7 +91,10 @@
                     "params": [],
                     "result": {
                         "name": "Default Result",
-                        "value": "1080p24"
+                        "value": [
+                            1920,
+                            1080
+                        ]
                     }
                 }
             ]
@@ -110,14 +113,14 @@
             "params": [],
             "result": {
                 "name": "resolution",
-                "summary": "Optional resolution of the display device.",
+                "summary": "Optimal resolution of the display device.",
                 "schema": {
                     "anyOf": [
                         {
                             "type": "null"
                         },
                         {
-                            "$ref": "#/components/schemas/DisplayResolution"
+                            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/Resolution"
                         }
                     ]
                 }
@@ -128,58 +131,17 @@
                     "params": [],
                     "result": {
                         "name": "Default Result",
-                        "value": "2160p60"
-                    }
-                }
-            ]
-        },
-        {
-            "name": "supportedResolutions",
-            "summary": "Returns an array of valid resolutions that the display supports",
-            "tags": [
-                {
-                    "name": "capabilities",
-                    "x-uses": [
-                        "xrn:firebolt:capability:display:info"
-                    ]
-                }
-            ],
-            "params": [],
-            "result": {
-                "name": "resolution",
-                "summary": "An array of valid resolutions that the display supports",
-                "schema": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/components/schemas/DisplayResolution"
-                    },
-                    "minItems": 1
-                }
-            },
-            "examples": [
-                {
-                    "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
                         "value": [
-                            "1080p24",
-                            "1080i25",
-                            "1080p30",
-                            "1080i50",
-                            "1080p50",
-                            "1080p60",
-                            "2160p30",
-                            "2160p50",
-                            "2160p60"
+                            1920,
+                            1080
                         ]
                     }
                 }
             ]
         },
         {
-            "name": "hdr",
-            "summary": "Returns an array of valid HDR profiles that the display supports. ",
+            "name": "supportedDynamicRangeProfiles",
+            "summary": "Returns an array of valid HDR profiles that the display supports.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -193,7 +155,7 @@
                     "name": "resolution",
                     "summary": "The video resolution to check against HDR profiles supported by the display. When provided, the result includes only HDR profiles supported by this resolution.",
                     "schema": {
-                        "$ref": "#/components/schemas/DisplayResolution"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoMode"
                     }
                 }
             ],
@@ -203,7 +165,7 @@
                 "schema": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/components/schemas/DynamicRangeProfile"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/DynamicRangeProfile"
                     },
                     "minItems": 1
                 }
@@ -213,7 +175,7 @@
                     "name": "Default Example",
                     "params": [
                         {
-                            "name": "resolution",
+                            "name": "videoMode",
                             "value": "1080p60"
                         }
                     ],
@@ -223,8 +185,7 @@
                             "dolbyVision",
                             "hdr10",
                             "hdr10plus",
-                            "hlg",
-                            "st2084"
+                            "hlg"
                         ]
                     }
                 }
@@ -267,6 +228,36 @@
             ]
         },
         {
+            "name": "refreshRate",
+            "summary": "Get the native refresh rate of the display device (in Hz).",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "refreshRate",
+                "summary": "The refresh rate of the display device.",
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": 60
+                    }
+                }
+            ]
+        },
+        {
             "name": "useSourceFrameRate",
             "summary": "Check whether the HDMI output frame rate is set to follow the video source frame rate.",
             "tags": [
@@ -300,49 +291,12 @@
     "components": {
         "schemas": {
             "ColorDepth": {
-                "description": "Enumeration of color depths possibly supported by the display in number of bits",
+                "description": "Enumeration of display color depths in number of bits",
                 "type": "integer",
                 "enum": [
                     8,
                     10,
                     12
-                ]
-            },
-            "DisplayResolution": {
-                "description": "Enumeration of possible display resolutions",
-                "type": "string",
-                "enum": [
-                    "480i",
-                    "480p",
-                    "576i25",
-                    "576p50",
-                    "576p60",
-                    "720p50",
-                    "720p60",
-                    "1080i25",
-                    "1080i50",
-                    "1080i60",
-                    "1080p24",
-                    "1080p30",
-                    "1080p50",
-                    "1080p60",
-                    "2160p30",
-                    "2160p50",
-                    "2160p60",
-                    "4320p60"
-                ]
-            },
-            "DynamicRangeProfile": {
-                "description": "Enumeration of possible HDR profiles",
-                "type": "string",
-                "enum": [
-                    "dolbyVision",
-                    "hdr10",
-                    "hdr10plus",
-                    "hlg",
-                    "none",
-                    "st2084",
-                    "unknown"
                 ]
             }
         }
