@@ -11,16 +11,16 @@
                 "ac3plus",
                 "ac4",
                 "dts",
+                "dts-x",
                 "eac3",
                 "mpeg1",
                 "mpeg2",
                 "mpeg3",
-                "mpeg4",
                 "none",
-                "ogg",
                 "opus",
                 "truehd",
                 "unknown",
+                "vorbis",
                 "wav"
             ]
         },
@@ -113,7 +113,7 @@
                 "4320p"
             ]
         },
-        "DynamicRangeProfile": {
+        "HDRProfile": {
             "type": "string",
             "description": "Enumeration of HDR profiles.",
             "enum": [
@@ -215,7 +215,7 @@
                     "type": "integer"
                 },
                 "hdr": {
-                    "$ref": "#/definitions/DynamicRangeProfile"
+                    "$ref": "#/definitions/HDRProfile"
                 },
                 "level": {
                     "type": "string",
@@ -246,8 +246,8 @@
                 }
             }
         },
-        "VideoMode": {
-            "description": "Enumeration of video playback modes.",
+        "VideoOutputMode": {
+            "description": "Enumeration of video output modes.",
             "type": "string",
             "enum": [
                 "480i",

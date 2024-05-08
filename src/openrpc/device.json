@@ -376,11 +376,11 @@
         {
           "name": "deprecated",
           "x-since": "1.2.0",
-          "x-alternative": "FIXMEEEEE"
+          "x-alternative": "Device.supportedHDCPVersions()"
         }
       ],
       "result": {
-        "name": "supportedHdcpVersions",
+        "name": "hdcp",
         "summary": "the supported HDCP versions",
         "schema": {
           "$ref": "https://meta.rdkcentral.com/firebolt/types#/definitions/BooleanMap"
@@ -401,7 +401,7 @@
       ]
     },
     {
-      "name": "currentHdcpVersion",
+      "name": "currentHDCPVersion",
       "summary": "Get the current HDCP version used for content transmission",
       "params": [],
       "tags": [
@@ -434,7 +434,7 @@
       ]
     },
     {
-      "name": "onHdcpVersionChanged",
+      "name": "onHDCPVersionChanged",
       "tags": [
         {
           "name": "event"
@@ -483,7 +483,7 @@
         {
           "name": "deprecated",
           "x-since": "1.2.0",
-          "x-alternative": "Device.supportedDynamicRangeProfiles()"
+          "x-alternative": "Device.supportedHDRProfiles()"
         }
       ],
       "result": {
@@ -510,8 +510,8 @@
       ]
     },
     {
-      "name": "currentDynamicRangeProfile",
-      "summary": "Returns the current HDR profile set on the device",
+      "name": "supportedHDCPVersions",
+      "summary": "Get the HDCP versions supported by the device",
       "params": [],
       "tags": [
         {
@@ -525,10 +525,50 @@
         }
       ],
       "result": {
-        "name": "currentDynamicRangeProfile",
+        "name": "supportedHDCPVersions",
+        "summary": "The supported HDCP version",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/HDCPVersion"
+          },
+          "minItems": 1
+        }
+      },
+      "examples": [
+        {
+          "name": "The supported HDCP versions",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": [
+              "1.x",
+              "2.x"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "currentHDRProfile",
+      "summary": "Get the current HDR profile set on the device",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "currentHDRProfile",
         "summary": "The current HDR profile",
         "schema": {
-          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/DynamicRangeProfile"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/HDRProfile"
         }
       },
       "examples": [
@@ -543,8 +583,8 @@
       ]
     },
     {
-      "name": "supportedDynamicRangeProfiles",
-      "summary": "Returns the HDR profiles supported by the device",
+      "name": "supportedHDRProfiles",
+      "summary": "Get the HDR profiles supported by the device",
       "params": [],
       "tags": [
         {
@@ -558,12 +598,12 @@
         }
       ],
       "result": {
-        "name": "supportedDynamicRangeProfiles",
+        "name": "supportedHDRProfiles",
         "summary": "The supported HDR profiles",
         "schema": {
           "type": "array",
           "items": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/DynamicRangeProfile"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/HDRProfile"
           },
           "minItems": 1
         }
@@ -600,7 +640,7 @@
         {
           "name": "deprecated",
           "x-since": "1.2.0",
-          "x-alternative": "FIXMEEEEE"
+          "x-alternative": "AudioOutput.mode()"
         }
       ],
       "result": {
@@ -643,7 +683,7 @@
         {
           "name": "deprecated",
           "x-since": "1.2.0",
-          "x-alternative": "Display.currentResolution()"
+          "x-alternative": "Device.videoResolution()"
         }
       ],
       "result": {
@@ -936,6 +976,36 @@
       ]
     },
     {
+      "name": "currentVideoOutputMode",
+      "summary": "Get the current video output mode of the device.",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "params": [],
+      "result": {
+        "name": "currentVideoOutputMode",
+        "summary": "The current video output mode.",
+        "schema": {
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoOutputMode"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "1080p60"
+          }
+        }
+      ]
+    },
+    {
       "name": "supportedVideoOutputModes",
       "summary": "Returns an array of valid video output modes that the device supports, regardless of any connected display.",
       "tags": [
@@ -953,7 +1023,7 @@
         "schema": {
           "type": "array",
           "items": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoMode"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoOutputMode"
           },
           "minItems": 1
         }
@@ -1369,27 +1439,29 @@
         "type": "object",
         "properties": {
           "atmos": {
+            "description": "Whether Dolby Atmos support is being requested",
             "type": "boolean"
           },
           "channels": {
+            "description": "The number of audio channels being requested",
             "type": "integer"
           },
           "container": {
             "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/AudioContainer"
           },
-          "level": {
+          "codecLevel": {
             "type": "string"
           },
-          "mode": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/AudioOutputMode"
-          },
-          "profile": {
+          "codecProfile": {
             "description": "The profile of the audio codec",
             "type": "string",
             "enum": [
               "mp2lc",
               "mp4he"
             ]
+          },
+          "mode": {
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/AudioOutputMode"
           },
           "sampleRate": {
             "description": "The sample rate of the audio",
@@ -1413,7 +1485,7 @@
             "type": "integer"
           },
           "hdr": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/DynamicRangeProfile"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/HDRProfile"
           },
           "level": {
             "description": "The level of the video codec",
@@ -1444,7 +1516,7 @@
         }
       },
       "AudioChannels": {
-        "description": "Enumeration of audio channels possibly supported by the platform",
+        "description": "Enumeration of audio channels",
         "type": "string",
         "enum": [
           "MONO",
@@ -1454,8 +1526,8 @@
           "SURROUND_7_1"
         ]
       },
-      "HdcpVersion": {
-        "description": "Enumeration of HDCP versions possibly supported by the device",
+      "HDCPVersion": {
+        "description": "Enumeration of HDCP versions",
         "type": "string",
         "enum": [
           "1.x",

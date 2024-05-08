@@ -559,10 +559,25 @@
                 "schema": {
                     "ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoContainer"
                 }
-            }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 1
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "mp4"
+                    }
+                }
+            ]
         },
         {
-            "name": "videoDynamicRangeProfile",
+            "name": "videoHDRProfile",
             "summary": "Get the High Dynamic Range (HDR) profile currently used by the specified media pipeline.",
             "tags": [
                 {
@@ -587,10 +602,10 @@
                 }
             ],
             "result": {
-                "name": "hdrProfile",
+                "name": "HDRProfile",
                 "summary": "The HDR profile",
                 "schema": {
-                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/DynamicRangeProfile"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/HDRProfile"
                 }
             },
             "examples": [
@@ -689,7 +704,7 @@
                     "videoCodecLevel",
                     "videoCodecProfile",
                     "videoContainer",
-                    "videoDynamicRangeProfile",
+                    "videoHDRProfile",
                     "videoResolution"
                 ]
             }

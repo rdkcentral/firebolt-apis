@@ -140,7 +140,7 @@
             ]
         },
         {
-            "name": "supportedDynamicRangeProfiles",
+            "name": "supportedHDRProfiles",
             "summary": "Returns an array of valid HDR profiles that the display supports.",
             "tags": [
                 {
@@ -152,10 +152,10 @@
             ],
             "params": [
                 {
-                    "name": "videoMode",
+                    "name": "videoOutputMode",
                     "summary": "The video mode to check against HDR profiles supported by the display. When provided, the result includes only HDR profiles supported by this resolution.",
                     "schema": {
-                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoMode"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoOutputMode"
                     }
                 }
             ],
@@ -165,7 +165,7 @@
                 "schema": {
                     "type": "array",
                     "items": {
-                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/DynamicRangeProfile"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/HDRProfile"
                     },
                     "minItems": 1
                 }
@@ -175,7 +175,7 @@
                     "name": "Default Example",
                     "params": [
                         {
-                            "name": "videoMode",
+                            "name": "videoOutputMode",
                             "value": "2160p60"
                         }
                     ],
