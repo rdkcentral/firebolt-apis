@@ -11,7 +11,7 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Yuri Pasquali   | Sky            |
 
 ## 1. Overview
-This document describes how one Firebolt App can provide a capability that may be used by another Firebolt App, with the platform as a permission broker that passes the requests and respones to each app with out feature-specific logic.
+This document describes how one Firebolt App can provide a capability that may be used by another Firebolt App, with the platform as a permission broker that passes the requests and responses to each app without feature-specific logic.
 
 This document covers the App Pass-through Firebolt OpenRPC extension as well as how Firebolt implementations should detect and execute app provided pass-through APIs.
 
@@ -175,8 +175,6 @@ This section only applies to platform methods that have an `event` tag.
 
 App provided event registration **MUST** not return an availability error due to a lack of providers, since one may be launched at a future point.
 
-**TODO**: do we want to search the catalog and return unavailable if none are possible? Seems overkill.
-
 To ensure that event provider methods all behave the same the provider method **MUST** have a `result` schema with `"type"` set to `"null"`, since it will not expect any data in the response from the platform after pushing the notification.
 
 The platform method result schema **MUST** either:
@@ -184,8 +182,6 @@ The platform method result schema **MUST** either:
 > Match the *last* parameter schema on the provider method so that the result can be passed through.
 >
 > Have a property that matches the *last* parameter schema on the provider method so that the result can be passed through.
-
-**TODO**: Find event context params spec and move into this branch
 
 Example platform method with context:
 ```json
@@ -235,9 +231,6 @@ Matching provider method:
         {
             "name": "capabilities",
             "x-provides": "xrn:firebolt:capabilities:example:foo"
-        },
-        {
-            "name": "event"
         }
     ],
     "params": [
@@ -272,7 +265,7 @@ Otherwise if the platform method result schema has a property that matches the *
 Finally the platform **MUST** dispatch the notification to the app that registered for the event via the original platform method, using all but the last parameter as context.
 
 ## 5. Provider Candidates
-The Firebolt Device Manfist **MUST** have a list of `ProviderPolicy` configurations that map capabilities to policies for determining candidate providers:
+The Firebolt Device Manifist **MUST** have a list of `ProviderPolicy` configurations that map capabilities to policies for determining candidate providers:
 
 ```json
 {

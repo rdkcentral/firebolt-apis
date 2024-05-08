@@ -173,14 +173,14 @@ So the following RPC event:
         },
         {
             "name": "b",
-            "required": false,
+            "required": true,
             "schema": {
                 "type": "string"
             }
         },
         {
             "name": "c",
-            "required": false,
+            "required": true,
             "schema": {
                 "type": "number"
             }
@@ -230,7 +230,7 @@ Would have its result transformed to:
                     }
                 },
                 "required": [
-                    "a"
+                    "a", "b", "c"
                 ]
             }
         }

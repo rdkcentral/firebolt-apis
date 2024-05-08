@@ -14,7 +14,7 @@ This document describes the Push / Pull Firebolt OpenRPC extension.
 
 Some APIs require both a push and a pull version so that data can be provided on request, or out of band.
 
-To facilitate these APIs, Firebolt denotes an OpenRPC tag with OpenRPC extensions to auto-genrate the push notifcation, pull provider, and pull request APIs from the main push API.
+To facilitate these APIs, Firebolt denotes an OpenRPC tag with OpenRPC extensions to auto-generate the push notifcation, pull provider, and pull request APIs from the main push API.
 
 This document is written using the [IETF Best Common Practice 14](https://www.rfc-editor.org/rfc/rfc2119.txt) and should include the following summary in the Overview section:
 

@@ -14,7 +14,7 @@ This document describes the the `x-lifecycle` Firebolt OpenRPC extension.
 
 Some APIs require that they are only called when an app is in a certain Lifecycle state.
 
-To facilitate these APIs, Firebolt denotes an OpenRPC extension to limit the states than ap app is allowed to be in when a method request is made.
+To facilitate these APIs, Firebolt denotes an OpenRPC extension to limit the states that an app is allowed to be in when a method request is made.
 
 This document is written using the [IETF Best Common Practice 14](https://www.rfc-editor.org/rfc/rfc2119.txt) and should include the following summary in the Overview section:
 
