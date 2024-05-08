@@ -17,7 +17,6 @@ App developers need to know which audio and video formats can be successfully pl
 Video formats include... 
 
 **TODO**: Rewrite this section.
-**TODO**: check Farhan's emails!!
 
 Apps may need to know what media format, e.g. HDR profile or video codec, is currently playing.
 
@@ -75,20 +74,22 @@ I want to know what my device *would* support if i upgraded my AV peripherals:
   - [1.2. As an OTT App developer](#12-as-an-ott-app-developer)
   - [1.3. As a first-party App developer](#13-as-a-first-party-app-developer)
 - [2. Table of Contents](#2-table-of-contents)
-- [3. Format MimeTypes](#3-format-mimetypes)
-- [Resolutions](#resolutions)
+- [3. Media Constants](#3-media-constants)
+  - [3.1. Media Container Types](#31-media-container-types)
+  - [3.2. Audio Codecs](#32-audio-codecs)
+  - [3.3. Video Codecs](#33-video-codecs)
+  - [3.4. Media Resolutions](#34-media-resolutions)
+  - [3.5. Media HRD Profiles](#35-media-hrd-profiles)
 - [4. Device Media Support](#4-device-media-support)
-  - [4.1. Negotiated Media Support](#41-negotiated-media-support)
-    - [4.1.1. Video Format Supported](#411-video-format-supported)
-    - [4.1.2. Audio Format Supported](#412-audio-format-supported)
-    - [4.2.3. Hdr Supported](#423-hdr-supported)
+  - [4.1. Video Format Supported](#41-video-format-supported)
+    - [4.1.1. Audio Format Supported](#411-audio-format-supported)
 - [5. Display Properties](#5-display-properties)
-  - [5.1. Color Information...](#51-color-information)
+  - [5.1. Display HDR](#51-display-hdr)
   - [5.2. Display Width and Height](#52-display-width-and-height)
   - [5.3. Current and Optimal Resolution](#53-current-and-optimal-resolution)
   - [5.4. Supported Resolutions](#54-supported-resolutions)
   - [5.5. Device Supported Resolutions](#55-device-supported-resolutions)
-  - [5.7. Use Source Framerate](#57-use-source-framerate)
+  - [5.6. Use Source Framerate](#56-use-source-framerate)
 - [6. Audio Output Properties](#6-audio-output-properties)
   - [6.1. Mode](#61-mode)
 - [7. Media Info](#7-media-info)
@@ -99,47 +100,60 @@ I want to know what my device *would* support if i upgraded my AV peripherals:
     - [7.2.1. Active Video Formats](#721-active-video-formats)
     - [7.2.2. Active Audio Formats](#722-active-audio-formats)
 
-## 3. Format MimeTypes
-The Firebolt `Media` module **MUST** have a `Formats` enumeration audio and video formats:
+## 3. Media Constants
 
-| Name             | Value                  | Notes |
-| ---------------- | ---------------------- |------ |
-| `AUDIO_AAC`      | `audio/mp4a-latm`      |
-| `AUDIO_AC3`      | `audio/ac3`            |
-| `AUDIO_AC4`      | `audio/ac4`            |
-| `AUDIO_DOLBY_MAT`| `audio/vnd.dolby.mat`  | on-device format |
-| `AUDIO_DTS`      | `audio/vnd.dts`        |
-| `AUDIO_DTS_X`    | `audio/vnd.dts.uhd;profile=p2` |
-| `AUDIO_EAC3`     | `audio/eac3`           | Note we call this AC3+ in RDK... |
-| `AUDIO_MPEG`     | `audio/mpeg`           | 
-| `AUDIO_MPEG1`    | `audio/mpeg-L1`        | 
-| `AUDIO_MPEG2`    | `audio/mpeg-L2`        | 
-| `AUDIO_MPEG4`    | `audio/mp4`            | 
-| `AUDIO_OPUS`     | `audio/opus`           |
-| `AUDIO_OGG`      | `audio/ogg`            |
-| `AUDIO_TRUEHD`   | `audio/true-hd`        |
-| `AUDIO_WAV`      | `audio/wav`            |
-| `VIDEO_AV1`      | `video/av01`           |
-| `VIDEO_DOLBYVISION`| `video/dolbyVision`    |
-| `VIDEO_H263`     | `video/3gpp`           |
-| `VIDEO_H264`     | `video/avc`            |
-| `VIDEO_H265`     | `video/hevc`           |
-| `VIDEO_H265_M10` | `video/hevc;profile=main10`           |
-| `VIDEO_MPEG`     | `video/mpeg`           |
-| `VIDEO_VP8`      | `video/x-vnd.on2.vp8`  |
-| `VIDEO_VP9`      | `video/x-vnd.on2.vp9`  |
-| `VIDEO_VP9_P2`   | `video/x-vnd.on2.vp9;profile=p2`  |
-| `VIDEO_VP10`     | `video/x-vnd.on2.vp10` |
-| `VIDEO_VC1`      | `video/wvc1`           |
-| `UNKNOWN`        | `unknown`              |
-| `NONE`           | `none`                 |
+### 3.1. Media Container Types
+The Firebolt `Media` module **MUST** have a `Container` enumeration of media container content types:
 
-**TODO**: remove ;profile= codecs
+| Name         | Value        |
+| ------------ | ------------ |
+| `AUDIO_MPEG` | `audio/mpeg` |
+| `AUDIO_MP4`  | `audio/mp4`  |
+| `AUDIO_OGG`  | `audio/ogg`  |
+| `AUDIO_WEBM` | `audio/webm` |
+| `VIDEO_MPEG` | `video/mpeg` |
+| `VIDEO_MP2T` | `video/mp2t` |
+| `VIDEO_MP4`  | `video/mp4`  |
+| `VIDEO_OGG`  | `video/ogg`  |
+| `VIDEO_WEBM` | `video/webm` |
 
-**TODO**: Atmos is not always MAT... MAT -> PCM version of Atmos. Can also be carried over AC4 EAC3, AC3+, DolbyTrueHD
+### 3.2. Audio Codecs
+The Firebolt `Media` module **MUST** have an `AudioCodec` enumeration:
 
-## Resolutions
-The `Display.Resolution` enum **MUST** have one of the following values:
+| Name | Value |
+| ---- | ----- |
+| `MPEG_L1` | `"mpeg1 audio layer 1"` |
+| `MPEG_L2` | `"mpeg1 audio layer 2"` |
+| `MPEG_L3` | `"mpeg1 audio layer 3"` |
+| `MP4`    | `"mp4a"` |
+| `AAC`    | `"aac"` |
+| `AC3`    | `"ac3"` |
+| `EAC3`    | `"eac3"` |
+| `AC4`    | `"ac4"` |
+| `DTS`    | `"dts"` |
+| `DTS_X`    | `"dts x"` |
+| `OPUS`    | `"opus"` |
+| `TRUEHD`  | `"true hd"` |
+| `VORBIS`    | `"vorbis"` |
+
+### 3.3. Video Codecs
+The Firebolt `Media` module **MUST** have an `VideoCodec` enumeration:
+
+| Name    | Value            |
+| ------- | ---------------- |
+| `MPEG1` | `"mpeg1 part 2"` |
+| `MPEG2` | `"mpeg2 part 2"` |
+| `MP4`   | `"mp4v"`         |
+| `AVC`   | `"avc"`          |
+| `AV1`   | `"av01"`         |
+| `3GPP`  | `"3gpp"`         |
+| `HEVC`  | `"hevc"`         |
+| `VP8`   | `"vp8"`          |
+| `VP9`   | `"vp9"`          |
+| `VP10`  | `"vp10"`         |
+
+### 3.4. Media Resolutions
+The `Media.Resolution` enum **MUST** have one of the following values:
 
 - `"480i"`
 - `"480p"`
@@ -163,128 +177,98 @@ The `Display.Resolution` enum **MUST** have one of the following values:
 - `"2160p60"`
 - `"4320p60"`
 
-## 4. Device Media Support
-Apps need to know what types of media the device supports.
+### 3.5. Media HRD Profiles
+The `Media.HDR` enum **MUST** have one of the following values:
 
-### 4.1. Negotiated Media Support
-Apps need to know what types of media support the current *device configuration*,
-e.g. a Firebolt STB connected to an HDMI television, is capable of.
+- `DOLBY_VISION`
+- `HDR10`
+- `HDR10PLUS`
+- `ST2084`
+- `HLG`
+
+## 4. Device Media Support
+Apps need to know what types of media support the current is capable of.
 
 To facilitate this, the `Device` module will have a set of methods that
-return all possible values supported by the current device configuration.
+return possible media capabilities supported by the current device configuration.
 
-These values change and different AV inputs are activated or connected.
+These values do not change without a settings change or a firmware update.
 
-#### 4.1.1. Video Format Supported
+### 4.1. Video Format Supported
 
 The `Device` module **MUST** have a `videoFormatSupported` API that returns
 `true` or `false` depending on whether the format specified is supported by
 the current device configuration. This API **MUST** return `boolean`.
 
 ```javascript
-const hdr10plusWithH265 = videoFormatSupported(Media.Formats.VIDEO_H265_M10, { resolution: '1080p30' } )
-const hdr10plusWithVP9 = videoFormatSupported(Media.Formats.VIDEO_VP9_P2)
+const hdr10plusWithH265 = videoFormatSupported(Media.VideoCodec.HEVC, {
+  profile: "main10",
+  hdr: Media.HDR.HDR10_PLUS
+})
+
+const hdr10plusWithVP9 = videoFormatSupported(Media.VideoCodec.VP9, {
+  profile: "p2",
+  hdr: Media.HDR.HDR10_PLUS
+})
 ```
 
-**TODO**: clear this up:
+The `videoFormatSupported` API **MUST** have a required `codec` parameter with the type `Media.VideoCodec`.
 
-When calling videoFormatSupported with a `resolution` parameter, then the Display support for that resolution is factored into the response.
-
-The `audioFormatSupported` API **MUST** have an `options` parameter
+The `videoFormatSupported` API **MUST** have an optional `info` parameter
 which **MUST** be an object with zero or more of the following properties:
 
 | Property | Type | Description |
 |----------|------|-------------|
-| codec    | `string` | the Code |
+| container | `Media.Container` | The content container format |
 | profile  | `string` | the Codec profile: <br>**h.265**: "main", "high", "main10"<br>**vp9**: "p0", "p2"<br>**AAC**: "mp2lc", "mp4he" |
 | level    | `string`   | the Codec level: <br>**h.265**: "4.1", "4.2", "5.0", "5.1"<br>**vp9**:"3.0", "3.1", "4.0", "4.1", "5.0", "5.1" || atmos    | `boolean` | Whether or not Dolby Atmos support for the given format is being requested |
-| resolution | `Display.Resolution` | The Resolution, e.g. `1080p` of the support being requested. |
-| hdr      | HDRProfile | The HDR profile that support is being checked for. |
+| resolution | `Media.Resolution` | The Resolution, e.g. `1080p` of the support being requested. |
+| hdr      | `Media.HDR` | The HDR profile that support is being checked for. |
 
-```javascript
-videoFormatSupported('', {})
-```
-
-The `codec` property **MUST** be one of the following values:
-
-- `VIDEO_AV1`
-- `VIDEO_DOLBYVISION`
-- `VIDEO_H263`
-- `VIDEO_H264`
-- `VIDEO_H265`
-- `VIDEO_MPEG`
-- `VIDEO_VP8`
-- `VIDEO_VP9`
-- `VIDEO_VP9_P2`
-- `VIDEO_VP10`
-- `VIDEO_VC1`
-
-**TODO**: Add HDRProfile
-**TODO**: Roku also has: Container
+Note that a device supporting a particular HDR format and resolution does not mean that the current display does. See Display.properties() for more info on detecting display HDR support.
 
 The `videoFormatSupported` API **MUST NOT**
-return `true` unless the format specified is supported with **all** of the properties specified
-by `options` *all at the same time*.
+return `true` unless the format specified is supported with **all** of the properties specified in `info` *at the same time*.
 
 Use of the `videoFormatSupported` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
 
-#### 4.1.2. Audio Format Supported
+#### 4.1.1. Audio Format Supported
 
 The `Device` module **MUST** have an `audioFormatSupported` API that returns
 `true` or `false` depending on whether the format specified is supported by
 the current device configuration. This API **MUST** return a `boolean`.
 
-The `audioFormatSupported` API **MUST** have a required `format` parameter which
-**MUST** be one of the following values:
-
-- `AUDIO_AAC`
-- `AUDIO_AC3`
-- `AUDIO_AC4`
-- `AUDIO_DOLBY_MAT`
-- `AUDIO_DTS`
-- `AUDIO_DTS_X`
-- `AUDIO_EAC3`
-- `AUDIO_MPEG`
-- `AUDIO_MPEG1`
-- `AUDIO_MPEG2`
-- `AUDIO_MPEG4`
-- `AUDIO_OPUS`
-- `AUDIO_OGG`
-- `AUDIO_TRUEHD`
-- `AUDIO_WAV`
-
-**NOTE**: MAT is decoded on the device, it's not a format you'd have encoded content on a CDN
-
 ```javascript
-if (audioFormatSupported('AUDIO_AC4', { atmos: true })) {
-  // show badges
-}
+const atmosWithAC4 = audioFormatSupported(Media.AudioCodec.AC4, {
+  atmos: true
+})
+
+const atmosWithEAC3 = videoFormatSupported(Media.AudioCodec.EAC3, {
+  atmos: true
+})
 ```
 
-The `audioFormatSupported` API **MUST** have an optional `options` parameter
+The `audioFormatSupported` API **MUST** have a required `codec` parameter with the type `Media.AudioCodec`.
+
+The `audioFormatSupported` API **MUST** have an optional `info` parameter
 which **MUST** be an object with zero or more of the following properties:
 
 | Property | Type | Description |
 |----------|------|-------------|
+| container | `Media.Container` | The container format type |
 | profile  | `string` | the Codec profile: <br>**AAC**: "mp2lc", "mp4he" |
 | level    | `string   | the Codec level. |
 | atmos    | `boolean` | Whether or not Dolby Atmos support for the given format is being requested |
 | channels | `int` | Required number of audio channels |
 | sampleRate | `int` | The sample rate being requested. |
-| mode     | `AudioOutput.Mode` | Specify which mode should be used to evaluate the reqeuest. Defaults to the current mode if not specified. |
+| mode     | `AudioOutput.Mode` | Specify which mode should be used to evaluate the request. Defaults to the current mode if not specified. |
 
-**TODO**: Roku also has: Container, Bitrate
-
-If the `options` parameter is provided, then the `audioFormatSupported` API **MUST NOT**
-return `true` unless the format specified is supported with **all** of the properties specified
-by `options` *all at the same time*.
+If the `info` parameter is provided, then the `audioFormatSupported` API **MUST NOT**
+return `true` unless the format specified is supported with **all** of the properties specified by `info` *all at the same time*.
 
 Use of the `videoFormatSupported` API requires access to the `use` role of the
 `xrn:firebolt:capability:device:info` capability.
-
-#### 4.2.3. Hdr Supported
-Device module...
 
 ## 5. Display Properties
 
@@ -294,11 +278,12 @@ These will be surfaced in a new `Display` module.
 
 Access to these APIs is governed by the `xrn:firebolt:capability:display:info` capability.
 
-### 5.1. Color Information...
-Expose this so apps can check
-BT2020 BT709
+### 5.1. Display HDR
+The `Display` module **MUST** have an `hdr` method that return the supported HDR profiles as an array of `Media.HDR` values.
 
-**TODO**: ^^
+The `hdr` method **MUST** have an optional `resolution` parameter of type `Media.Resolution`.
+
+If the `resolution` parameter is not provided the method should return values based on the current resolution.
 
 ### 5.2. Display Width and Height
 
@@ -327,7 +312,7 @@ The `Device` module **MUST** have a `supportedResolutions` method that returns a
 
 This method **MUST** return an array with one or more of the following values from the `Display.Resolution` enum.
 
-### 5.7. Use Source Framerate
+### 5.6. Use Source Framerate
 The `Display` module **MUST** have a boolean `useSourceFrameRate` API.
 
 This API **MUST** return `true` if the hdmi output frame rate is set to follow video source frame rate.
@@ -406,15 +391,7 @@ The `videoFormat` result **MUST** have a `type` property with one of the followi
 - `UNKNOWN`
 - `NONE`
 
-The `videoFormat` result **MUST** have an `hdr` array property with zero or more of the following values:
-
-| Enumeration                   | Notes |
-| ----------------------------- | ----- |
-| `HDR_DOLBYVISION`             | Only true for the VIDEO_DOLBYVISION format  |
-| `HDR_HDR10`                   | Any format that supports HDR10 metadata    |
-| `HDR_HDR10PLUS`               | Any format that supports HDR10+ metadata   |
-| `HDR_ST2084`                  | Any format that supports ST2084 color transfer |
-| `HDR_HLG`                     | Any format that supports HLG color transfer |
+The `videoFormat` result **MUST** have an `hdr` array property with zero or more Media.HDRProfile values.
 
 If a value is included the `hdr` array then the media currently in the media pipeline **MUST** include the denoted HDR metadata in the decoded video.
 
