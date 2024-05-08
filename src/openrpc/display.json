@@ -152,8 +152,8 @@
             ],
             "params": [
                 {
-                    "name": "resolution",
-                    "summary": "The video resolution to check against HDR profiles supported by the display. When provided, the result includes only HDR profiles supported by this resolution.",
+                    "name": "videoMode",
+                    "summary": "The video mode to check against HDR profiles supported by the display. When provided, the result includes only HDR profiles supported by this resolution.",
                     "schema": {
                         "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoMode"
                     }
@@ -176,7 +176,7 @@
                     "params": [
                         {
                             "name": "videoMode",
-                            "value": "1080p60"
+                            "value": "2160p60"
                         }
                     ],
                     "result": {

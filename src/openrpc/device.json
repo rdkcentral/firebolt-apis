@@ -863,7 +863,10 @@
             {
               "name": "options",
               "value": {
-                "videoMode": "1080p50"
+                "resolution": [
+                  1920,
+                  1080
+                ]
               }
             }
           ],
@@ -919,9 +922,10 @@
             },
             {
               "name": "options",
-              "value": {
-                "videoMode": "1080p50"
-              }
+              "resolution": [
+                1920,
+                1080
+              ]
             }
           ],
           "result": {
@@ -932,7 +936,7 @@
       ]
     },
     {
-      "name": "supportedVideoModes",
+      "name": "supportedVideoOutputModes",
       "summary": "Returns an array of valid video output modes that the device supports, regardless of any connected display.",
       "tags": [
         {
@@ -944,7 +948,7 @@
       ],
       "params": [],
       "result": {
-        "name": "supportedVideoModes",
+        "name": "supportedVideoOutputModes",
         "summary": "An array of valid video output modes that the device supports",
         "schema": {
           "type": "array",
@@ -1404,6 +1408,10 @@
           "container": {
             "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoContainer"
           },
+          "frameRate": {
+            "description": "The frame rate of the video content",
+            "type": "integer"
+          },
           "hdr": {
             "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/DynamicRangeProfile"
           },
@@ -1430,8 +1438,8 @@
               "p2"
             ]
           },
-          "mode": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoMode"
+          "resolution": {
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/Resolution"
           }
         }
       },
