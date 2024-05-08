@@ -98,21 +98,6 @@
                 "unknown"
             ]
         },
-        "DisplayMode": {
-            "description": "Enumeration of display modes.",
-            "type": "string",
-            "enum": [
-                "480i",
-                "480p",
-                "576i",
-                "576p",
-                "720p",
-                "1080i",
-                "1080p",
-                "2160p",
-                "4320p"
-            ]
-        },
         "HDRProfile": {
             "type": "string",
             "description": "Enumeration of HDR profiles.",
