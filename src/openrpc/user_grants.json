@@ -391,6 +391,14 @@
                         "minItems": 1
                     },
                     "required": true
+                },
+                {
+                    "name": "options",
+                    "summary": "Request options",
+                    "schema": {
+                        "$ref": "#/components/schemas/RequestOptions"
+                    },
+                    "required": false
                 }
             ],
             "result": {
@@ -405,7 +413,7 @@
             },
             "examples": [
                 {
-                    "name": "Default result",
+                    "name": "Default result #1",
                     "params": [
                         {
                             "name": "appId",
@@ -419,6 +427,45 @@
                                     "capability": "xrn:firebolt:capability:localization:postal-code"
                                 }
                             ]
+                        }
+                    ],
+                    "result": {
+                        "name": "defaultResult",
+                        "value": [
+                            {
+                                "app": {
+                                    "id": "certapp",
+                                    "title": "Certification App"
+                                },
+                                "state": "granted",
+                                "capability": "xrn:firebolt:capability:localization:postal-code",
+                                "role": "use",
+                                "lifespan": "powerActive"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "Default result #2",
+                    "params": [
+                        {
+                            "name": "appId",
+                            "value": "certapp"
+                        },
+                        {
+                            "name": "permissions",
+                            "value": [
+                                {
+                                    "role": "use",
+                                    "capability": "xrn:firebolt:capability:localization:postal-code"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "options",
+                            "value": {
+                                "force": true
+                            }
                         }
                     ],
                     "result": {
@@ -528,6 +575,16 @@
                 },
                 "additionalProperties": false,
                 "required": []
+            },
+            "RequestOptions": {
+                "title": "RequestOptions",
+                "type": "object",
+                "properties": {
+                    "force": {
+                        "type": "boolean",
+                        "description": "Whether to force for user grant even if the previous decision stored"
+                    }
+                }
             }
         }
     }

@@ -444,7 +444,7 @@
           "schema": {
             "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/PurchasedContentResult"
           },
-          "summary": "The data for the purachasedContent"
+          "summary": "The data for the purchasedContent"
         }
       ],
       "result": {
@@ -971,7 +971,7 @@
           ]
         }
       ],
-      "summary": "Launch or foreground the specified app, and optionally instructs it to navigate to the specified user action",
+      "summary": "Launch or foreground the specified app, and optionally instructs it to navigate to the specified user action. \n For the Primary Experience, the appId can be any one of:  \n\n - xrn:firebolt:application-type:main \n\n - xrn:firebolt:application-type:settings",
       "params": [
         {
           "name": "appId",
@@ -1079,7 +1079,7 @@
           "params": [
             {
               "name": "appId",
-              "value": "urn:firebolt:apps:main"
+              "value": "xrn:firebolt:application-type:main"
             },
             {
               "name": "intent",
@@ -1106,7 +1106,7 @@
           "params": [
             {
               "name": "appId",
-              "value": "urn:firebolt:apps:main"
+              "value": "xrn:firebolt:application-type:main"
             },
             {
               "name": "intent",
@@ -1131,7 +1131,7 @@
           "params": [
             {
               "name": "appId",
-              "value": "urn:firebolt:apps:main"
+              "value": "xrn:firebolt:application-type:main"
             },
             {
               "name": "intent",
@@ -1153,7 +1153,7 @@
           "params": [
             {
               "name": "appId",
-              "value": "urn:firebolt:apps:main"
+              "value": "xrn:firebolt:application-type:main"
             },
             {
               "name": "intent",
@@ -1175,7 +1175,7 @@
           "params": [
             {
               "name": "appId",
-              "value": "urn:firebolt:apps:main"
+              "value": "xrn:firebolt:application-type:settings "
             },
             {
               "name": "intent",
@@ -1200,7 +1200,7 @@
           "params": [
             {
               "name": "appId",
-              "value": "urn:firebolt:apps:main"
+              "value": "xrn:firebolt:application-type:main"
             },
             {
               "name": "intent",
@@ -1221,11 +1221,11 @@
           }
         },
         {
-          "name": "Launch the Aggregated Experience to the App Store details page for a specfic app with the ID 'foo'.",
+          "name": "Launch the Aggregated Experience to the App Store details page for a specific app with the ID 'foo'.",
           "params": [
             {
               "name": "appId",
-              "value": "urn:firebolt:apps:main"
+              "value": "xrn:firebolt:application-type:main "
             },
             {
               "name": "intent",
@@ -1302,7 +1302,7 @@
           ]
         }
       ],
-      "summary": "Inform the platform that your user is signed in, for increased visiblity in search & discovery. Sign-in state is used separately from what content can be access through entitlements and availabilities. Sign-in state may be used when deciding whether to choose this app to handle a user intent. For instance, if the user tries to launch something generic like playing music from an artist, only a signed-in app will be chosen. If the user wants to tune to a channel, only a signed-in app will be chosen to handle that intent. While signIn can optionally include entitlements as those typically change at signIn time, it is recommended to make a separate call to Discovery.contentAccess for entitlements. signIn is not only for when a user explicitly enters login credentials. If an app does not require any credentials from the user to consume content, such as in a free app, then the app should call signIn immediately on launch.",
+      "summary": "Inform the platform that your user is signed in, for increased visibility in search & discovery. Sign-in state is used separately from what content can be access through entitlements and availabilities. Sign-in state may be used when deciding whether to choose this app to handle a user intent. For instance, if the user tries to launch something generic like playing music from an artist, only a signed-in app will be chosen. If the user wants to tune to a channel, only a signed-in app will be chosen to handle that intent. While signIn can optionally include entitlements as those typically change at signIn time, it is recommended to make a separate call to Discovery.contentAccess for entitlements. signIn is not only for when a user explicitly enters login credentials. If an app does not require any credentials from the user to consume content, such as in a free app, then the app should call signIn immediately on launch.",
       "params": [
         {
           "name": "entitlements",

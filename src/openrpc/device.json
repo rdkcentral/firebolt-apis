@@ -316,7 +316,6 @@
             }
           },
           "required": [
-            "sdk",
             "api",
             "firmware",
             "os"
