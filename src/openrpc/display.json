@@ -229,7 +229,7 @@
         },
         {
             "name": "refreshRate",
-            "summary": "Get the native refresh rate of the display device (in Hz).",
+            "summary": "Get the native refresh rate of the display device.",
             "tags": [
                 {
                     "name": "capabilities",

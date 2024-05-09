@@ -42,7 +42,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -90,7 +90,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -138,7 +138,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -186,7 +186,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -234,7 +234,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -246,7 +246,7 @@
         },
         {
             "name": "audioSampleRate",
-            "summary": "Get the audio sample rate in kHz currently used by the specified media pipeline.",
+            "summary": "Get the audio sample rate currently used by the specified media pipeline.",
             "tags": [
                 {
                     "name": "property:readonly",
@@ -271,7 +271,7 @@
             ],
             "result": {
                 "name": "audioSampleRate",
-                "summary": "Audio sample rate in kHz for the pipeline.",
+                "summary": "Audio sample rate for the pipeline.",
                 "type": "integer"
             },
             "examples": [
@@ -280,7 +280,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -328,7 +328,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -376,7 +376,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -424,7 +424,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -470,7 +470,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -518,7 +518,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -566,7 +566,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -614,7 +614,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -662,7 +662,7 @@
                     "params": [
                         {
                             "name": "pipeline",
-                            "value": 1
+                            "value": 0
                         }
                     ],
                     "result": {
@@ -693,7 +693,7 @@
             "PipelineId": {
                 "type": "integer",
                 "description": "The media pipeline/session ID",
-                "minimum": 1,
+                "minimum": 0,
                 "maximum": 15
             },
             "VideoFormatChangeEvent": {

@@ -66,6 +66,7 @@
             "description": "Details on the audio content format.",
             "properties": {
                 "channels": {
+                    "description": "The number of audio channels.",
                     "type": "integer"
                 },
                 "codec": {
@@ -81,6 +82,7 @@
                     "$ref": "#/definitions/AudioCodecProfile"
                 },
                 "sampleRate": {
+                    "description": "The audio sample rate in kHz.",
                     "type": "integer"
                 }
             }
