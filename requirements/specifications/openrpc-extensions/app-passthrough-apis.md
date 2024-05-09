@@ -77,7 +77,7 @@ To prevent compound methods a platform method **MUST** `use` a single capability
 
 The provider method **MUST** provide the same capability that the platform method either uses or manages.
 
-If an platform method has no provider method then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
+If a platform method has no provider method then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
 
 ### 3.2. Multiple Providers Extension
 Firebolt OpenRPC **MUST** support a `string` `x-multiple-providers` extension property on the `capabilities` tag that denotes a single method request may be provided by multiple apps on the device registering for the specified provider API, e.g.:
@@ -119,12 +119,12 @@ When an app calls a platform method with an `x-provided-by` extension, the platf
     "id": 1,
     "error": {
         "code": -50300,
-        "message": "Capability is unavailable."
+        "message": "Capability <XRN> is unavailable."
     }
 }
 ```
 
-**TODO**: formalize our messages and codes.
+Where `<XRN>` is the capability XRN string, e.g. `xrn:firebolt:capabilities:example:foo`.
 
 ### 4.2. Direct pass-through
 A direct pass-through is where a single app provides a single response to a single request by another app.
@@ -167,6 +167,10 @@ The platform **MUST** call the provider method from each [candidate app](#7-prov
 If the platform method result `items` schema matches the `x-response` schema on the provider method then each provier value **MUST** be used as-is.
 
 Otherwise if the platform method result `items` schema has a property that matches the `x-response` schema on the provider method then each provider value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the composed result.
+
+If some providers time out, the providers that did not time out **MUST** be returned, with the remaining providers omitted.
+
+Time out durations are out of scope for this document, and are specified on a per feature basis.
 
 ### 4.4. Pass-through notifications
 Firebolt events have a synchronous subscriber registration method, e.g. `Lifecycle.onInactive(true)`, in addition to asynchronous notifications when the event actually happens. For events powered by an app pass-through, only the asynchronous notifications are passed in by the providing app. The initial event registration is handled by the platform, and the success response is not handled by the providing app.

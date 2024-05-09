@@ -283,8 +283,8 @@
                     ]
                 }
             ],
-            "summary": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow.",
-            "description": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow. Includes information about the program entity and its relevant associated entities, such as extras, previews, and, in the case of TV series, seasons and episodes.\n\nSee the `EntityInfo` and `WayToWatch` data structures below for more information.\n\nThe app only needs to implement Pull support for `entityInfo` at this time.",
+            "summary": "Provide information about the entity currently displayed or selected on the screen.",
+            "description": "Provide information about the entity currently displayed or selected on the screen.",
             "params": [
                 {
                     "name": "type",
