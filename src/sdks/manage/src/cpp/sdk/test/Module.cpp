@@ -16,24 +16,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#pragma once
+#include "Module.h"
 
-#include "error.h"
-
-class CoreSDKTestGeneratedCode {
-
-public:
-    CoreSDKTestGeneratedCode() = default;
-    virtual ~CoreSDKTestGeneratedCode() = default;
-
-    static void CreateFireboltInstance();
-    static void DestroyFireboltInstance();
-    static void TestCoreStaticSDK();
-    static void GetDeviceName();
-    static bool WaitOnConnectionReady();
-
-private:
-    static void ConnectionChanged(const bool, const Firebolt::Error);
-    static bool _connected;
-};
-
+MODULE_NAME_DECLARATION(BUILD_REFERENCE)

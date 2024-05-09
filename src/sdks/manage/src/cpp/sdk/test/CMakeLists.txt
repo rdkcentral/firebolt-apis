@@ -16,7 +16,7 @@
 
 cmake_minimum_required(VERSION 3.3)
 
-project(FireboltCoreSDKTests)
+project(FireboltManageSDKTests)
 project_version(1.0.0)
 
 set(TESTLIB ${PROJECT_NAME})
@@ -52,7 +52,7 @@ set_target_properties(${TESTLIB} PROPERTIES
     FRAMEWORK FALSE
 )
 
-set(TESTAPP FireboltCoreSDKTestApp)
+set(TESTAPP FireboltManageSDKTestApp)
 
 message("Setup ${TESTAPP} v${PROJECT_VERSION}")
 
