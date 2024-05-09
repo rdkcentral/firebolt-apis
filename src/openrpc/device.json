@@ -467,6 +467,46 @@
       ]
     },
     {
+      "name": "supportedHDCPVersions",
+      "summary": "Get the HDCP versions supported by the device",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "supportedHDCPVersions",
+        "summary": "The supported HDCP version",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/HDCPVersion"
+          },
+          "minItems": 1
+        }
+      },
+      "examples": [
+        {
+          "name": "The supported HDCP versions",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": [
+              "1.x",
+              "2.x"
+            ]
+          }
+        }
+      ]
+    },
+    {
       "name": "hdr",
       "summary": "Returns an array of valid HDR profiles that the device supports",
       "params": [],
@@ -505,46 +545,6 @@
               "dolbyVision": true,
               "hlg": true
             }
-          }
-        }
-      ]
-    },
-    {
-      "name": "supportedHDCPVersions",
-      "summary": "Get the HDCP versions supported by the device",
-      "params": [],
-      "tags": [
-        {
-          "name": "property:readonly"
-        },
-        {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:device:info"
-          ]
-        }
-      ],
-      "result": {
-        "name": "supportedHDCPVersions",
-        "summary": "The supported HDCP version",
-        "schema": {
-          "type": "array",
-          "items": {
-            "$ref": "#/components/schemas/HDCPVersion"
-          },
-          "minItems": 1
-        }
-      },
-      "examples": [
-        {
-          "name": "The supported HDCP versions",
-          "params": [],
-          "result": {
-            "name": "Default Result",
-            "value": [
-              "1.x",
-              "2.x"
-            ]
           }
         }
       ]
