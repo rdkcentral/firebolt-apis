@@ -8,7 +8,7 @@
     "methods": [
         {
             "name": "width",
-            "summary": "Get the width of the display (in centimeters) from the HDMI EDID.",
+            "summary": "Get the width of the display (in centimeters).",
             "tags": [
                 {
                     "name": "capabilities",
@@ -38,7 +38,7 @@
         },
         {
             "name": "height",
-            "summary": "Get the height of the display (in centimeters) from the HDMI EDID.",
+            "summary": "Get the height of the display (in centimeters).",
             "tags": [
                 {
                     "name": "capabilities",
@@ -62,6 +62,36 @@
                     "result": {
                         "name": "Default Result",
                         "value": 1980
+                    }
+                }
+            ]
+        },
+        {
+            "name": "edid",
+            "summary": "Get the display's Extended Display Identification Data (EDID).",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "edid",
+                "summary": "The displays EDID information",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "AP\/\/\/\/\/\/\/wBNEP8QAAAAAP8YAQOAmld4Khu+olU0syYUSlKvzgCpQJBAgYABAQEBAQEBAQEBAjqAGHE4LUBYLEUAA2JjAAAeZiFQsFEAGzBAcDYAAAAAAAAeAAAA\/ABTSEFSUCBIRE1JCiAgAAAA\/QAXTA9LHgAKICAgICAgATUCAzZxSpAgIgUEAwIHBgEpCQcHFQdQPQfAgwEAAOMFAwFxAwwAQAC4PCCgZAECAwFAEEDiAD8BHYA+czgtQH4sRYADYmMAAB4BHYAYcRwWIFgsJQADYmMAAJ4BHQByUdAeIG4oVQADYmMAAB6MCtCKIOAtEBA+lgADYmMAABgA6g=="
                     }
                 }
             ]
