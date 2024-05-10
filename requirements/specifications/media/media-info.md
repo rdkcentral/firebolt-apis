@@ -223,7 +223,8 @@ which **MUST** be an object with zero or more of the following properties:
 |----------|------|-------------|
 | container | `Media.Container` | The content container format |
 | profile  | `string` | the Codec profile: <br>**h.265**: "main", "high", "main10"<br>**vp9**: "p0", "p2"<br>**AAC**: "mp2lc", "mp4he" |
-| level    | `string`   | the Codec level: <br>**h.265**: "4.1", "4.2", "5.0", "5.1"<br>**vp9**:"3.0", "3.1", "4.0", "4.1", "5.0", "5.1" || atmos    | `boolean` | Whether or not Dolby Atmos support for the given format is being requested |
+| level    | `string`   | the Codec level: <br>**h.265**: "4.1", "4.2", "5.0", "5.1"<br>**vp9**:"3.0", "3.1", "4.0", "4.1", "5.0", "5.1" |
+| atmos    | `boolean` | Whether or not Dolby Atmos support for the given format is being requested |
 | resolution | `Media.Resolution` | The Resolution, e.g. `1080p` of the support being requested. |
 | hdr      | `Media.HDR` | The HDR profile that support is being checked for. |
 
