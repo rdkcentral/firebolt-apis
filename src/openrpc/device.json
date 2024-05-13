@@ -442,7 +442,7 @@
         {
           "name": "deprecated",
           "x-since": "1.2.0",
-          "x-alternative": "Device.supportedHDCPVersions()"
+          "x-alternative": "Device.supportedHDCPVersion()"
         }
       ],
       "result": {
@@ -471,6 +471,9 @@
       "summary": "Get the current HDCP status used for content transmission authentication",
       "params": [],
       "tags": [
+        {
+          "name": "property:readonly"
+        },
         {
           "name": "capabilities",
           "x-uses": [
@@ -504,46 +507,6 @@
       ]
     },
     {
-      "name": "onHDCPStatusChanged",
-      "tags": [
-        {
-          "name": "event"
-        },
-        {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:device:info"
-          ]
-        }
-      ],
-      "summary": "Get notified when the HDCP status has changed",
-      "params": [],
-      "result": {
-        "name": "value",
-        "summary": "The updated HDCP status",
-        "schema": {
-          "$ref": "#/components/schemas/HDCPStatus"
-        }
-      },
-      "examples": [
-        {
-          "name": "Getting the hdcp status",
-          "params": [],
-          "result": {
-            "name": "Default Result",
-            "value": {
-              "connected": true,
-              "currentVersion": "2.2",
-              "displayCompliant": true,
-              "protected": true,
-              "receiverVersion": "2.2",
-              "status": "HDCP_SUCCESS"
-            }
-          }
-        }
-      ]
-    },
-    {
       "name": "supportedHDCPVersion",
       "summary": "Get the HDCP version supported by the device",
       "params": [],
@@ -567,7 +530,7 @@
       },
       "examples": [
         {
-          "name": "The supported HDCP versions",
+          "name": "The supported HDCP version",
           "params": [],
           "result": {
             "name": "Default Result",

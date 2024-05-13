@@ -485,7 +485,7 @@ Example:
 ```typescript
 const isDolbyAtmos:boolean = await MediaInfo.activeAudioFormats().find(f => f.type === Media.Formats.AUDIO_DOLBY_MAT)
 
-MediaInfo.activeVideoFormats((active) => {
+MediaInfo.activeAudioFormats((active) => {
   const dolbyAtmos = active.find(f => f.type === Media.Formats.AUDIO_DOLBY_MAT)
   console.log('Dolby atmos is now ' + (dolbyAtmos ? 'active' : 'inactive') + '.')
 })
