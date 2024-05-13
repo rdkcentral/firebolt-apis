@@ -191,14 +191,15 @@
 			"examples": [
 				{
 					"name": "Default Example",
-					"params": [],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "inactive",
-							"previous": "initializing"
+					"params": [
+						{
+							"name": "value",
+							"value": {
+								"state": "inactive",
+								"previous": "initializing"
+							}
 						}
-					}
+					]
 				}
 			]
 		},
@@ -228,26 +229,28 @@
 			"examples": [
 				{
 					"name": "Default Example",
-					"params": [],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "foreground",
-							"previous": "inactive"
-						}
-					}
+					"params": [
+						{
+							"name": "Default Result",
+							"value": {
+								"state": "foreground",
+								"previous": "inactive"
+							}
+						}						
+					]
 				},
 				{
 					"name": "Move to foreground via remote branded buton",
-					"params": [],
-					"result": {
-						"name": "value",
-						"value": {
-							"state": "foreground",
-							"previous": "inactive",
-							"source": "remote"
-						}
-					}
+					"params": [
+						{
+							"name": "value",
+							"value": {
+								"state": "foreground",
+								"previous": "inactive",
+								"source": "remote"
+							}
+						}						
+					]
 				}
 			]
 		},
@@ -277,14 +280,15 @@
 			"examples": [
 				{
 					"name": "Default Example",
-					"params": [],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "background",
-							"previous": "foreground"
-						}
-					}
+					"params": [
+						{
+							"name": "value",
+							"value": {
+								"state": "background",
+								"previous": "foreground"
+							}
+						}						
+					]
 				}
 			]
 		},
@@ -314,14 +318,15 @@
 			"examples": [
 				{
 					"name": "Default Example",
-					"params": [],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "suspended",
-							"previous": "inactive"
-						}
-					}
+					"params": [
+						{
+							"name": "value",
+							"value": {
+								"state": "suspended",
+								"previous": "inactive"
+							}
+						}						
+					]
 				}
 			]
 		},
@@ -351,14 +356,15 @@
 			"examples": [
 				{
 					"name": "Default Example",
-					"params": [],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "unloading",
-							"previous": "inactive"
-						}
-					}
+					"params": [
+						{
+							"name": "value",
+							"value": {
+								"state": "unloading",
+								"previous": "inactive"
+							}
+						}						
+					]
 				}
 			]
 		}
