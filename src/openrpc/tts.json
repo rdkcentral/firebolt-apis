@@ -1,0 +1,420 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Text to Speech",
+        "description": "Methods for managing configurations over HDMI CEC.",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "cancel",
+            "summary": "Cancels the in-progress speech action. Triggers the onSpeechInterrupted event.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:device:info"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "speechID",
+                    "summary": "The ID of the speech action to cancel.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "result": {
+                "name": "cancel",
+                "summary": "The TTS status.",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "speechID",
+                            "value": 1
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "getTTSConfiguration",
+            "summary": "Get the current TTS (Text-To-Speech) configuration.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:device:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "ttsConfiguration",
+                "summary": "The TTS configuration.",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "language": {
+                            "description": "The TTS language",
+                            "type": "string"
+                        },
+                        "rate": {
+                            "description": "The TTS rate",
+                            "type": "number"
+                        },
+                        "speechRate": {
+                            "description": "The TTS speech rate",
+                            "type": "string"
+                        },
+                        "ttsEndpoint": {
+                            "description": "The TTS engine URL",
+                            "type": "string"
+                        },
+                        "ttsEndpointSecured": {
+                            "description": "The secured TTS engine URL",
+                            "type": "string"
+                        },
+                        "ttsStatus": {
+                            "description": "The TTS status",
+                            "$ref": "#/components/schemas/TTSStatus"
+                        },
+                        "voice": {
+                            "description": "The TTS voice",
+                            "type": "string"
+                        },
+                        "volume": {
+                            "description": "The TTS volume",
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "language": "en-US",
+                            "rate": 50,
+                            "speechRate": "medium",
+                            "ttsEndpoint": "http://tts-engine.com",
+                            "ttsEndpointSecured": "https://tts-engine.com",
+                            "ttsStatus": "OK",
+                            "voice": "carol",
+                            "volume": "100.000"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "isTTSEnabled",
+            "summary": "Returns whether the TTS (Text-To-Speech) feature is enabled or disabled. By default, the TTS feature is disabled.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:device:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "isTTSEnabled",
+                "summary": "Whether TTS is enabled.",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "speak",
+            "summary": "Converts the input text to speech when TTS is enabled. Any ongoing speech is interrupted and the newly requested speech is processed. The clients of the previous speech is sent an onSpeechInterrupted upon success.  This API returns an ID, which is used as input to other API methods for controlling the speech (for example, pause, resume, and cancel).",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:device:info"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "text",
+                    "summary": "The text input.",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "callsign",
+                    "summary": "Callsign of the application.",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "result": {
+                "name": "speechID",
+                "summary": "The ID of the speech action.",
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "text",
+                            "value": "Hello world"
+                        },
+                        {
+                            "name": "callsign",
+                            "value": "MyWebApp"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": 1
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onTTSStateChanged",
+            "summary": "Triggered when the TTS feature is enabled or disabled.",
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:device:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "onTTSStateChanged",
+                "summary": "State of the TTS feature.",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onSpeechInterrupted",
+            "summary": "Triggered when the in-progress speech is interrupted either by a next speech request, by calling cancel, or by disabling TTS while speech is in progress.",
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:device:info"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "speechID",
+                    "summary": "The ID of the speech action to watch.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "result": {
+                "name": "onSpeechInterrupted",
+                "summary": "On speech interrupted",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onNetworkError",
+            "summary": "Triggered when a network error occurs while fetching audio from the endpoint.",
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:device:info"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "speechID",
+                    "summary": "The ID of the speech action to watch.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "result": {
+                "name": "onNetworkError",
+                "summary": "On network error",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onPlaybackError",
+            "summary": "Triggered when an error occurs during playback (including pipeline failures).",
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:device:info"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "speechID",
+                    "summary": "The ID of the speech action to watch.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "result": {
+                "name": "onPlaybackError",
+                "summary": "On playback error",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onSpeechComplete",
+            "summary": "Triggered when the speech attempt is complete.",
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:device:info"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "speechID",
+                    "summary": "The ID of the speech action to watch.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "result": {
+                "name": "onSpeechComplete",
+                "summary": "On speech complete",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": true
+                    }
+                }
+            ]
+        }
+    ],
+    "components": {
+        "schemas": {
+            "TTSStatus": {
+                "description": "Enumeration of TTS statuses",
+                "type": "string",
+                "enum": [
+                    "OK",
+                    "FAIL",
+                    "NOT_ENABLED",
+                    "INVALID_CONFIGURATION"
+                ]
+            }
+        }
+    }
+}

@@ -360,6 +360,39 @@
       ]
     },
     {
+      "name": "chipset",
+      "summary": "Get the device's chipset",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:info"
+          ]
+        }
+      ],
+      "result": {
+        "name": "chipset",
+        "summary": "Get the device's chipset",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the device's chipset",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "BCM2711"
+          }
+        }
+      ]
+    },
+    {
       "name": "imageVersion",
       "summary": "Get the device's image version",
       "params": [],
