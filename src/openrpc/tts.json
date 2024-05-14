@@ -13,7 +13,7 @@
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:device:info"
+                        "xrn:firebolt:capability:tts:fixme"
                     ]
                 }
             ],
@@ -49,7 +49,7 @@
             ]
         },
         {
-            "name": "getTTSConfiguration",
+            "name": "configuration",
             "summary": "Get the current TTS (Text-To-Speech) configuration.",
             "tags": [
                 {
@@ -58,17 +58,29 @@
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:device:info"
+                        "xrn:firebolt:capability:tts:fixme"
                     ]
                 }
             ],
             "params": [],
             "result": {
-                "name": "ttsConfiguration",
+                "name": "configuration",
                 "summary": "The TTS configuration.",
                 "schema": {
                     "type": "object",
                     "properties": {
+                        "enabled": {
+                            "description": "Whether or not TTS is currently enabled",
+                            "type": "string"
+                        },
+                        "endpoint": {
+                            "description": "The TTS engine URL",
+                            "type": "string"
+                        },
+                        "endpointSecured": {
+                            "description": "The secured TTS engine URL",
+                            "type": "string"
+                        },
                         "language": {
                             "description": "The TTS language",
                             "type": "string"
@@ -80,18 +92,6 @@
                         "speechRate": {
                             "description": "The TTS speech rate",
                             "type": "string"
-                        },
-                        "ttsEndpoint": {
-                            "description": "The TTS engine URL",
-                            "type": "string"
-                        },
-                        "ttsEndpointSecured": {
-                            "description": "The secured TTS engine URL",
-                            "type": "string"
-                        },
-                        "ttsStatus": {
-                            "description": "The TTS status",
-                            "$ref": "#/components/schemas/TTSStatus"
                         },
                         "voice": {
                             "description": "The TTS voice",
@@ -111,48 +111,15 @@
                     "result": {
                         "name": "Default Result",
                         "value": {
+                            "enabled": true,
+                            "endpoint": "http://tts-engine.com",
+                            "endpointSecured": "https://tts-engine.com",
                             "language": "en-US",
                             "rate": 50,
                             "speechRate": "medium",
-                            "ttsEndpoint": "http://tts-engine.com",
-                            "ttsEndpointSecured": "https://tts-engine.com",
-                            "ttsStatus": "OK",
                             "voice": "carol",
                             "volume": "100.000"
                         }
-                    }
-                }
-            ]
-        },
-        {
-            "name": "isTTSEnabled",
-            "summary": "Returns whether the TTS (Text-To-Speech) feature is enabled or disabled. By default, the TTS feature is disabled.",
-            "tags": [
-                {
-                    "name": "property:readonly"
-                },
-                {
-                    "name": "capabilities",
-                    "x-uses": [
-                        "xrn:firebolt:capability:device:info"
-                    ]
-                }
-            ],
-            "params": [],
-            "result": {
-                "name": "isTTSEnabled",
-                "summary": "Whether TTS is enabled.",
-                "schema": {
-                    "type": "boolean"
-                }
-            },
-            "examples": [
-                {
-                    "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": true
                     }
                 }
             ]
@@ -167,7 +134,7 @@
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:device:info"
+                        "xrn:firebolt:capability:tts:fixme"
                     ]
                 }
             ],
@@ -207,7 +174,7 @@
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:device:info"
+                        "xrn:firebolt:capability:tts:fixme"
                     ]
                 }
             ],
@@ -247,7 +214,7 @@
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:device:info"
+                        "xrn:firebolt:capability:tts:fixme"
                     ]
                 }
             ],
@@ -287,7 +254,7 @@
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:device:info"
+                        "xrn:firebolt:capability:tts:fixme"
                     ]
                 }
             ],
@@ -318,46 +285,13 @@
             ]
         },
         {
-            "name": "onTTSStateChanged",
-            "summary": "Triggered when the TTS feature is enabled or disabled.",
-            "tags": [
-                {
-                    "name": "event"
-                },
-                {
-                    "name": "capabilities",
-                    "x-uses": [
-                        "xrn:firebolt:capability:device:info"
-                    ]
-                }
-            ],
-            "params": [],
-            "result": {
-                "name": "onTTSStateChanged",
-                "summary": "State of the TTS feature.",
-                "schema": {
-                    "type": "boolean"
-                }
-            },
-            "examples": [
-                {
-                    "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": true
-                    }
-                }
-            ]
-        },
-        {
             "name": "speak",
             "summary": "Converts the input text to speech when TTS is enabled. Any ongoing speech is interrupted and the newly requested speech is processed. The clients of the previous speech is sent an onSpeechInterrupted upon success.  This API returns an ID, which is used as input to other API methods for controlling the speech (for example, pause, resume, and cancel).",
             "tags": [
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:device:info"
+                        "xrn:firebolt:capability:tts:fixme"
                     ]
                 }
             ],
@@ -401,6 +335,39 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "status",
+            "summary": "Returns the status of the TTS (Text-To-Speech) feature.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:tts:fixme"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "status",
+                "summary": "The status of the TTS feature.",
+                "schema": {
+                    "$ref": "#/components/schemas/TTSStatus"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "OK"
+                    }
+                }
+            ]
         }
     ],
     "components": {
@@ -409,10 +376,10 @@
                 "description": "Enumeration of TTS statuses",
                 "type": "string",
                 "enum": [
-                    "OK",
                     "FAIL",
+                    "INVALID_CONFIGURATION",
                     "NOT_ENABLED",
-                    "INVALID_CONFIGURATION"
+                    "OK"
                 ]
             }
         }

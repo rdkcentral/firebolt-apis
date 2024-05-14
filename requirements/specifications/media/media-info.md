@@ -377,7 +377,7 @@ The `MediaInfo` module **MUST** have a `videoFormat` API that returns an `object
 video codec, e.g., H.265, VP9, etc., and resolution of the media currently in the
 media pipeline (either playing or paused).
 
-The `videoFormat` result **MUST** have a `type` property with one of the following values from the `Media.Formats` enum:
+The `videoFormat` result **MUST** have a `codec` property with one of the following values from the `Media.Formats` enum:
 
 - `VIDEO_AV1`
 - `VIDEO_DOLBYVISION`
@@ -416,7 +416,7 @@ The `MediaInfo` module **MUST** have a `audioFormat` API that returns an `object
 audio codec, e.g., AAC, AC3, etc., and sample rate of the media currently in the
 media pipeline (either playing or paused).
 
-The `audioFormat` result **MUST** have a `type` property with one of the following values from the `Media.Formats` enum:
+The `audioFormat` result **MUST** have a `codec` property with one of the following values from the `Media.Formats` enum:
 
 - `AUDIO_AAC`
 - `AUDIO_AC3`
@@ -433,7 +433,6 @@ The `audioFormat` result **MUST** have a `type` property with one of the followi
 - `AUDIO_OGG`
 - `AUDIO_TRUEHD`
 - `AUDIO_WAV`
-
 
 The `audioFormat` result **MUST** have a `channels` integer property that denotes the number of audio channels.
 
@@ -463,10 +462,10 @@ Additionally, the `MediaInfo` module **MUST** have an `onActiveVideoFormatsChang
 Example:
 
 ```typescript
-const isDolbyVision:boolean = await MediaInfo.activeVideoFormats().find(f => f.type === Media.Formats.VIDEO_DOLBYVISION)
+const isDolbyVision:boolean = await MediaInfo.activeVideoFormats().find(f => f.codec === Media.Formats.VIDEO_DOLBYVISION)
 
 MediaInfo.activeVideoFormats((active) => {
-  const dolbyVision = active.find(f => f.type === Media.Formats.VIDEO_DOLBYVISION)
+  const dolbyVision = active.find(f => f.codec === Media.Formats.VIDEO_DOLBYVISION)
   console.log('Dolby Vision is now ' + (dolbyVision ? 'active' : 'inactive') + '.')
 })
 ```
@@ -483,10 +482,10 @@ Additionally, the `MediaInfo` module **MUST** have an `onActiveAudioFormatsChang
 Example:
 
 ```typescript
-const isDolbyAtmos:boolean = await MediaInfo.activeAudioFormats().find(f => f.type === Media.Formats.AUDIO_DOLBY_MAT)
+const isDolbyAtmos:boolean = await MediaInfo.activeAudioFormats().find(f => f.codec === Media.Formats.AUDIO_DOLBY_MAT)
 
 MediaInfo.activeAudioFormats((active) => {
-  const dolbyAtmos = active.find(f => f.type === Media.Formats.AUDIO_DOLBY_MAT)
+  const dolbyAtmos = active.find(f => f.codec === Media.Formats.AUDIO_DOLBY_MAT)
   console.log('Dolby atmos is now ' + (dolbyAtmos ? 'active' : 'inactive') + '.')
 })
 ```

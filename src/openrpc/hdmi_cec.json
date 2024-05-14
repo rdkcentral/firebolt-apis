@@ -7,7 +7,7 @@
     },
     "methods": [
         {
-            "name": "activeHDMISource",
+            "name": "isActiveHDMISource",
             "summary": "Whether or not the device is currently the active HDMI source.",
             "tags": [
                 {
@@ -22,7 +22,7 @@
             ],
             "params": [],
             "result": {
-                "name": "activeHDMISource",
+                "name": "isActiveHDMISource",
                 "type": "boolean"
             },
             "examples": [
