@@ -2,7 +2,7 @@
     "openrpc": "1.2.4",
     "info": {
         "title": "Text to Speech",
-        "description": "Methods for managing configurations over HDMI CEC.",
+        "description": "Methods for managing Text-to-Speech (TTS).",
         "version": "0.0.0"
     },
     "methods": [

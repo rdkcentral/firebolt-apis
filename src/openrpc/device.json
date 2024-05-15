@@ -801,63 +801,6 @@
       ]
     },
     {
-      "name": "audioFormatPossible",
-      "summary": "Check whether content of a given audio format and channel output is supported by the device regardless of its configuration. These values will never change without a restart of the device.",
-      "params": [
-        {
-          "name": "codec",
-          "summary": "Audio codec used to check whether its supported.",
-          "required": true,
-          "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/AudioCodec"
-          }
-        },
-        {
-          "name": "options",
-          "summary": "Additional options to use for checking whether an audio format is supported by the device.  All values must be true for the content to be playable.",
-          "schema": {
-            "$ref": "#/components/schemas/AudioFormatOptions"
-          }
-        }
-      ],
-      "tags": [
-        {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:device:info"
-          ]
-        }
-      ],
-      "result": {
-        "name": "audioFormatPossible",
-        "summary": "Whether content of the given audio format and channels value are supported by the device.",
-        "schema": {
-          "type": "boolean"
-        }
-      },
-      "examples": [
-        {
-          "name": "Specify the audio codec and channels value to check",
-          "params": [
-            {
-              "name": "codec",
-              "value": "aac"
-            },
-            {
-              "name": "options",
-              "value": {
-                "channels": 2
-              }
-            }
-          ],
-          "result": {
-            "name": "Default Result",
-            "value": true
-          }
-        }
-      ]
-    },
-    {
       "name": "videoFormatSupported",
       "summary": "Check whether video content of the given format is supported by the device's current configuration.  These values may change as different AV inputs or peripherals are activated or connected.",
       "params": [
@@ -908,64 +851,6 @@
                   1080
                 ]
               }
-            }
-          ],
-          "result": {
-            "name": "Default Result",
-            "value": true
-          }
-        }
-      ]
-    },
-    {
-      "name": "videoFormatPossible",
-      "summary": "Check whether video content of the given format is supported by the device regardless of its configuration.  These values will never change without a restart of the device.",
-      "params": [
-        {
-          "name": "codec",
-          "summary": "The video codec to check whether its supported by the device's current configuration.",
-          "required": true,
-          "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/media#/definitions/VideoCodec"
-          }
-        },
-        {
-          "name": "options",
-          "summary": "Additional options to use for checking whether a video is supported by the device.  All values must be true for the content to be playable.",
-          "schema": {
-            "$ref": "#/components/schemas/VideoFormatOptions"
-          }
-        }
-      ],
-      "tags": [
-        {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:device:info"
-          ]
-        }
-      ],
-      "result": {
-        "name": "videoFormatPossible",
-        "summary": "Whether video content of the given format is supported by the device.",
-        "schema": {
-          "type": "boolean"
-        }
-      },
-      "examples": [
-        {
-          "name": "Specify the video format to check.",
-          "params": [
-            {
-              "name": "codec",
-              "value": "av1"
-            },
-            {
-              "name": "options",
-              "resolution": [
-                1920,
-                1080
-              ]
             }
           ],
           "result": {
