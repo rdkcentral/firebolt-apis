@@ -18,11 +18,9 @@ CE-SDK would required below use cases to adhere.
   - Firebolt Interactions
     - Ability to fetch request and responses coming to/from platform
   - Performance Metrics
-    - Ability to get performance metrics such as load, memory of the device via tools eg., CollectD
-    - Ability to fetch performance metrics such as load, memory for particular process eg., Ripple
     - Ability to fetch app performance snapshot
   - Health check Statistics
-    - Statistics such as how many firebolt connections are currently active, what apps, total requests, success and failure 
+    - Statistics frmo Ripple such as load, memory usage, how many firebolt connections are currently active, what apps, total requests, success and failure
   - Thunder calls
     - Keypress
       - To navigate on the screen
@@ -36,4 +34,4 @@ CE-SDK would required below use cases to adhere.
 
 ## 4. HLA
 
-
+![Sequence Diagram for Certification Extension SDk](CertificationExtensionSDK.png)
