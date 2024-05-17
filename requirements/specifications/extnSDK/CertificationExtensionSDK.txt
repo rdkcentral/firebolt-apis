@@ -2,72 +2,48 @@ title Certification Extension SDK
 
 participant FCS #lightpink
 
-participantgroup #lightgreen **Ripple**
-participant Bolt/Linchpin
+participantgroup #lightgreen <wordwrap:20>**Firebolt Implementation**
 participant Extn-SDK
-participant Core
-participant Rules Engine
 end
 
-participantgroup #lightblue **Thunder**
-participant Thunder Plugin
+participantgroup #lightblue <wordwrap:10>**Firebolt Compatible Provider**
+participant Plugin
 end
 
-participantgroup #lightyellow **Gateway**
-participant App Service
+note over Plugin: e.g. \nWindow Manager \nScreenshot Capture
+
+
+group Firebolt Interactions
+FCS -> Extn-SDK: {"jsonrpc":"2.0","method":"certsdk.onFireboltInterections",\n"params":{"listen":true},"id":1}
+
+Extn-SDK -> FCS: {"jsonrpc":"2.0", "id":1,"result":{"listening":true,\n"event":"onFireboltInterections"}}
+
+Extn-SDK -> FCS: {"jsonrpc": "2.0", id:1, result: {interactions}}
+
 end
 
-note over Rules Engine: e.g. \nSystem, Applications
+group Firebolt Compatible Provider keyPress
+FCS->Extn-SDK: {"jsonrpc": "2.0", "method": "keyPress", \n"params": [<key>], "id": "1"}
+Extn-SDK -> Plugin: Request fullfil and respond back
+Plugin -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: "true"}
+Extn-SDK -> FCS : {id:0, "jsonrpc": "2.0", result: "true"}
 
-note over Thunder Plugin: e.g. \nWindow Manager
-
-
-group Linchpin subscription
-
-note over Bolt/Linchpin: If we remove bolt, \nconnection to Extn-SDK \nwould be local via websocket
-
-FCS -> Bolt/Linchpin: subscribe to <mac_addressess>_boltextn
-Bolt/Linchpin -> FCS: acknowledgement
-Bolt/Linchpin -> Extn-SDK: onFireboltInterections()
 end
 
-group Firebolt Interactions 
-Extn-SDK -> Core: request forward
-Core -> Extn-SDK: Interactions 
-Extn-SDK -> Bolt/Linchpin: {id:0, "jsonrpc": "2.0", result: {interactions}} and bolt stores it
-FCS -> Bolt/Linchpin: Call GetFireboltInteractionsHandler
-Bolt/Linchpin -> FCS: {id:0, "jsonrpc": "2.0", result: {interactions}}
-end
+group Firebolt Compatible Provider screenCapture
 
-group Thunder Calls
-FCS->Bolt/Linchpin: ExecuteThunderCallHandler(keyPress, key)
-Bolt/Linchpin -> Extn-SDK: {"jsonrpc": "2.0", "method": "keyPress", "params": [<key>], "id": "1"}
-Extn-SDK -> Rules Engine: request forward
-Rules Engine -> Thunder Plugin: Request fullfil and respond back
-
-note over Rules Engine, Thunder Plugin: KeyPress request goes to \n WindowManager plugin
-
-Thunder Plugin -> Rules Engine: response forward
-Rules Engine -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: "true"}
-Extn-SDK -> Bolt/Linchpin: {id:0, "jsonrpc": "2.0", result: "true"}
-Bolt/Linchpin -> FCS : {id:0, "jsonrpc": "2.0", result: "true"}
+FCS->Extn-SDK: {"jsonrpc": "2.0", "method": "captureScreenshot", \n"params": [<pathToUpload>], "id": "1"}
+Extn-SDK -> Plugin: Request fullfil
+Plugin -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: "true"}
+Extn-SDK -> FCS : {id:0, "jsonrpc": "2.0", result: "true"}
 end
 
 group Health Check
-FCS -> Bolt/Linchpin: GetRippleHealthCheckHandler(appId)
-Bolt/Linchpin -> Extn-SDK: {"jsonrpc": "2.0", "method": "healthCheck",\n"params":<appId> "id": "1"}
-Extn-SDK -> Core: request forward
+FCS -> Extn-SDK: {"jsonrpc": "2.0", "method": "healthCheck",\n"params":<appId> "id": "1"}
 
-note over Extn-SDK: Healthcheck snapshot includes \nRipple process memory, load \nlive connections, \napp performance snapshots etc.
+note over Extn-SDK: Healthcheck snapshot includes \nprocess memory, load \nlive connections \n app performance snapshot etc.
 
-Core -> App Service: Request app performance snapshot
+Extn-SDK -> FCS: {id:0, "jsonrpc": "2.0", result: {healthCheckData, \nappPerformanceData}}
 
-note over App Service: Snapshot would \nonly be available \nif platform integrates \nwith gateway
-
-App Service -> Core: {appPerformanceData}
-
-Core -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: {healthCheckData, \nappPerformanceData}}
-Extn-SDK -> Bolt/Linchpin: {id:0, "jsonrpc": "2.0", result: {healthCheckData, \nappPerformanceData}}
-Bolt/Linchpin -> FCS : {id:0, "jsonrpc": "2.0", result: {healthCheckData, \nappPerformanceData}}
 end
 

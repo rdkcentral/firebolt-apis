@@ -15,22 +15,21 @@ Document contains the  details around Certification Extension SDK (will be calle
 ## 3. Requirements
 CE-SDK would required below use cases to adhere.
 
-  - Firebolt Interactions
+  - <b>Firebolt Interactions</b>
     - Ability to fetch request and responses coming to/from platform
-  - Performance Metrics
-    - Ability to fetch app performance snapshot
-  - Health check Statistics
-    - Statistics frmo Ripple such as load, memory usage, how many firebolt connections are currently active, what apps, total requests, success and failure
-  - Thunder calls
-    - Keypress
+    - Capability: <b>xrn:firebolt:capability:cert-extension:fireboltinteractions</b>
+  - <b>Health check Statistics</b>
+    - Statistics from Firebolt-Implementation such as load, memory usage, how many firebolt connections are currently active, what apps, total requests, success and failure, app performance snapshot
+    - Capabilities: 
+      - <b>xrn:firebolt:capability:cert-extension:healthcheck</b>
+      - <b>xrn:firebolt:capability:cert-extension:appperformancedata</b>
+  - <b>Firebolt compatible provider calls</b>
+    - <b>Keypress</b>
       - To navigate on the screen
-    - Screenshot
+      - Capability: <b>xrn:firebolt:capability:cert-extension:keypress</b>
+    - <b>Screenshot</b>
       - Fetch, upload and compare
-    - State of the application
-      - Lifecycle state of the application
-    - Device Info
-    - Set & Get system settings
-    - TBD - more would be added as and when new requirement comes in
+      - Capability: <b>xrn:firebolt:capability:cert-extension:screencapture</b>
 
 ## 4. HLA
 
