@@ -24,7 +24,7 @@ end
 
 group Firebolt Compatible Provider keyPress
 FCS->Extn-SDK: {"jsonrpc": "2.0", "method": "keyPress", \n"params": [<key>], "id": "1"}
-Extn-SDK -> Plugin: Request fullfil and respond back
+Extn-SDK -> Plugin: Request fullfil
 Plugin -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: "true"}
 Extn-SDK -> FCS : {id:0, "jsonrpc": "2.0", result: "true"}
 
@@ -51,6 +51,9 @@ group App performance snapshot
 FCS -> Extn-SDK: {"jsonrpc": "2.0", "method": "appPerformance",\n"params":<appId>, "id": "1"}
 
 note over Extn-SDK: App performance snapshot \nincludes memory usage, load etc.
+
+Extn-SDK -> Plugin: Request fullfil
+Plugin -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
 
 Extn-SDK -> FCS: {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
 
