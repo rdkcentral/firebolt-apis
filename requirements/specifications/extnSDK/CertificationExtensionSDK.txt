@@ -14,7 +14,7 @@ note over Plugin: e.g. \nWindow Manager \nScreenshot Capture
 
 
 group Firebolt Interactions
-FCS -> Extn-SDK: {"jsonrpc":"2.0","method":"certsdk.onFireboltInterections",\n"params":{"listen":true},"id":1}
+FCS -> Extn-SDK: {"jsonrpc":"2.0","method":"certsdk.onFireboltInterections", \n"params":{"listen":true},"id":1}
 
 Extn-SDK -> FCS: {"jsonrpc":"2.0", "id":1,"result":{"listening":true,\n"event":"onFireboltInterections"}}
 
@@ -39,11 +39,20 @@ Extn-SDK -> FCS : {id:0, "jsonrpc": "2.0", result: "true"}
 end
 
 group Health Check
-FCS -> Extn-SDK: {"jsonrpc": "2.0", "method": "healthCheck",\n"params":<appId> "id": "1"}
+FCS -> Extn-SDK: {"jsonrpc": "2.0", "method": "healthCheck","id": "1"}
 
-note over Extn-SDK: Healthcheck snapshot includes \nprocess memory, load \nlive connections \n app performance snapshot etc.
+note over Extn-SDK: Healthcheck snapshot includes \nprocess memory usage, load, \nlive connections etc.
 
-Extn-SDK -> FCS: {id:0, "jsonrpc": "2.0", result: {healthCheckData, \nappPerformanceData}}
+Extn-SDK -> FCS: {id:0, "jsonrpc": "2.0", result: {healthCheckData}}
+
+end
+
+group App performance snapshot
+FCS -> Extn-SDK: {"jsonrpc": "2.0", "method": "appPerformance",\n"params":<appId>, "id": "1"}
+
+note over Extn-SDK: App performance snapshot \nincludes memory usage, load etc.
+
+Extn-SDK -> FCS: {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
 
 end
 
