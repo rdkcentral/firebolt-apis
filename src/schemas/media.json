@@ -1,0 +1,168 @@
+{
+    "$id": "https://meta.comcast.com/firebolt/schemas/media",
+    "title": "Media",
+    "definitions": {
+        "AudioCodec": {
+            "type": "string",
+            "description": "Audio codec",
+            "enum": [
+                "aac",
+                "ac3",
+                "ac3plus",
+                "ac4",
+                "dts-x",
+                "eac3",
+                "mpeg3",
+                "opus",
+                "truehd",
+                "unknown",
+                "vorbis"
+            ]
+        },
+        "AudioCodecLevel": {
+            "description": "Audio codec level",
+            "type": "string",
+            "enum": [
+                "3.0",
+                "3.1",
+                "4.0",
+                "4.1",
+                "4.2",
+                "5.0",
+                "5.1"
+            ]
+        },
+        "AudioCodecProfile": {
+            "description": "Audio codec profile",
+            "type": "string",
+            "enum": [
+                "high",
+                "main",
+                "main10",
+                "mp2lc",
+                "mp4he",
+                "p0",
+                "p2"
+            ]
+        },
+        "AudioContainer": {
+            "description": "Audio container",
+            "type": "string",
+            "enum": [
+                "audio/mpeg",
+                "audio/mp4",
+                "audio/ogg",
+                "audio/webm"
+            ]
+        },
+        "AudioOutputMode": {
+            "description": "Aaudio output mode",
+            "type": "string",
+            "enum": [
+                "auto",
+                "mono",
+                "none",
+                "passthrough",
+                "stereo",
+                "surround",
+                "unknown"
+            ]
+        },
+        "ColorDepth": {
+            "description": "Color depth in number of bits",
+            "type": "integer",
+            "enum": [
+                0,
+                8,
+                10,
+                12
+            ]
+        },
+        "Dimensions": {
+            "type": "array",
+            "description": "The dimensions specified as width and height.",
+            "items": [
+                {
+                    "type": "integer"
+                },
+                {
+                    "type": "integer"
+                }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
+        },
+        "HDRProfile": {
+            "type": "string",
+            "description": "HDR profile",
+            "enum": [
+                "dolbyVision",
+                "hdr10",
+                "hdr10plus",
+                "hlg",
+                "sdr",
+                "unknown"
+            ]
+        },
+        "ResolutionName": {
+            "description": "User-friendly resolution name",
+            "type": "string",
+            "enum": [
+                "sd",
+                "hd",
+                "fhd",
+                "uhd",
+                "unknown"
+            ]
+        },
+        "VideoCodec": {
+            "type": "string",
+            "description": "video codec",
+            "enum": [
+                "avc",
+                "hevc",
+                "mpeg1",
+                "mpeg2",
+                "vp8",
+                "vp9",
+                "vp10"
+            ]
+        },
+        "VideoContainer": {
+            "description": "Video container format",
+            "type": "string",
+            "enum": [
+                "video/mpeg",
+                "video/mp2t",
+                "video/mp4",
+                "video/webm"
+            ]
+        },
+        "VideoMode": {
+            "description": "Video output mode, the shorthand resolution and frame rate",
+            "type": "string",
+            "enum": [
+                "480i",
+                "480p",
+                "576i25",
+                "576p50",
+                "576p60",
+                "720p50",
+                "720p60",
+                "1080i25",
+                "1080i50",
+                "1080i60",
+                "1080p24",
+                "1080p30",
+                "1080p50",
+                "1080p60",
+                "2160p30",
+                "2160p50",
+                "2160p60",
+                "4320p60",
+                "unknown"
+            ]
+        }
+    }
+}

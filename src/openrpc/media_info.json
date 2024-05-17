@@ -1,0 +1,411 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "MediaInfo",
+        "description": "A module for query info about the media currently in the media pipeline (either playing or paused).",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "activeAudioFormats",
+            "summary": "Get a list of the active audio formats currently used across all media pipelines.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-manages": [
+                        "xrn:firebolt:capability:media-info:audio-format"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "activeAudioFormats",
+                "summary": "The active audio formats used across all pipelines.",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/AudioFormat"
+                    }
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            {
+                                "bitRate": 128,
+                                "channels": 2,
+                                "codec": "aac",
+                                "codecProfile": "mp2lc",
+                                "container": "audio/mp4",
+                                "sampleRate": 48
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "activeVideoFormats",
+            "summary": "Get a list of the active video formats currently used across all media pipelines.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-manages": [
+                        "xrn:firebolt:capability:media-info:video-format"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "activeVideoFormats",
+                "summary": "The active video formats used across all pipelines.",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/VideoFormat"
+                    }
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            {
+                                "codec": "hevc",
+                                "codecLevel": "4.2",
+                                "codecProfile": "main",
+                                "container": "video/mp4",
+                                "frameRate": 30,
+                                "hdr": [
+                                    "hdr10"
+                                ],
+                                "resolution": [
+                                    1920,
+                                    1080
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "audioFormat",
+            "summary": "Get the audio format currently used by the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:audio-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "audioFormat",
+                "summary": "Audio format used by the pipeline.",
+                "schema": {
+                    "$ref": "#/components/schemas/AudioFormat"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 0
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "bitRate": 128,
+                            "channels": 2,
+                            "codec": "aac",
+                            "container": "audio/mp4",
+                            "sampleRate": 48
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onActiveAudioFormatsChanged",
+            "summary": "Get notified when the active audio formats used across all media pipelines starts, stops, or changes.",
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-manages": [
+                        "xrn:firebolt:capability:media-info:audio-format"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "onActiveAudioFormatsChanged",
+                "summary": "The updated audio formats used across all pipelines.",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/AudioFormat"
+                    }
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            {
+                                "bitRate": 128,
+                                "channels": 2,
+                                "codec": "aac",
+                                "container": "audio/mp4",
+                                "sampleRate": 48
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onActiveVideoFormatsChanged",
+            "summary": "Get notified when the active video formats used across all media pipelines starts, stops, or changes.",
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-manages": [
+                        "xrn:firebolt:capability:media-info:video-format"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "onActiveVideoFormatsChanged",
+                "summary": "The updated video formats used across all pipelines.",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/VideoFormat"
+                    }
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            {
+                                "codec": "hevc",
+                                "codecLevel": "4.2",
+                                "codecProfile": "main",
+                                "container": "video/mp4",
+                                "frameRate": 30,
+                                "hdr": [
+                                    "hdr10"
+                                ],
+                                "resolution": [
+                                    1920,
+                                    1080
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "videoFormat",
+            "summary": "Get the video format currently used by the specified media pipeline.",
+            "tags": [
+                {
+                    "name": "property:readonly",
+                    "x-session": "sessionId",
+                    "x-session-name": "mediaSession"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:media-info:video-format"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "pipeline",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/PipelineId"
+                    }
+                }
+            ],
+            "result": {
+                "name": "videoFormat",
+                "summary": "Video format used by the pipeline.",
+                "schema": {
+                    "$ref": "#/components/schemas/VideoFormat"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "pipeline",
+                            "value": 0
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "codec": "hevc",
+                            "codecLevel": "4.2",
+                            "codecProfile": "main",
+                            "container": "video/mp4",
+                            "frameRate": 30,
+                            "hdr": [
+                                "hdr10"
+                            ],
+                            "resolution": [
+                                1920,
+                                1080
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "components": {
+        "schemas": {
+            "AudioFormat": {
+                "type": "object",
+                "description": "Details on the audio content format.",
+                "properties": {
+                    "bitRate": {
+                        "description": "The audio bit rate in kbps.",
+                        "type": "number"
+                    },
+                    "channels": {
+                        "description": "The number of audio channels.",
+                        "type": "integer"
+                    },
+                    "codec": {
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/AudioCodec"
+                    },
+                    "codecLevel": {
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/AudioCodecLevel"
+                    },
+                    "codecProfile": {
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/AudioCodecProfile"
+                    },
+                    "container": {
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/AudioContainer"
+                    },
+                    "sampleRate": {
+                        "description": "The audio sample rate in kHz.",
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "codec",
+                    "channels",
+                    "sampleRate"
+                ]
+            },
+            "PipelineId": {
+                "type": "integer",
+                "description": "The media pipeline/session ID",
+                "minimum": 0,
+                "maximum": 15
+            },
+            "VideoFormat": {
+                "type": "object",
+                "description": "Details on the video content format.",
+                "properties": {
+                    "codec": {
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/VideoCodec"
+                    },
+                    "codecLevel": {
+                        "type": "string",
+                        "enum": [
+                            "4.1",
+                            "4.2",
+                            "5.0",
+                            "5.1",
+                            "high",
+                            "main"
+                        ]
+                    },
+                    "codecProfile": {
+                        "type": "string",
+                        "enum": [
+                            "high",
+                            "main",
+                            "main10",
+                            "p0",
+                            "p2"
+                        ]
+                    },
+                    "container": {
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/VideoContainer"
+                    },
+                    "frameRate": {
+                        "type": "number"
+                    },
+                    "hdr": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/HDRProfile"
+                        }
+                    },
+                    "resolution": {
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/Dimensions"
+                    }
+                },
+                "required": [
+                    "codec",
+                    "hdr",
+                    "resolution"
+                ]
+            }
+        }
+    }
+}

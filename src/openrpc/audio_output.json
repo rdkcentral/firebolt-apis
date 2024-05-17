@@ -22,7 +22,7 @@
                 "name": "audioMode",
                 "summary": "The audio mode supported by the platform.",
                 "schema": {
-                    "$ref": "#/components/schemas/AudioMode"
+                    "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/AudioOutputMode"
                 }
             },
             "examples": [
@@ -31,29 +31,10 @@
                     "params": [],
                     "result": {
                         "name": "Default Result",
-                        "value": "Stereo"
+                        "value": "stereo"
                     }
                 }
             ]
         }
-    ],
-    "components": {
-        "schemas": {
-            "AudioMode": {
-                "title": "AudioMode",
-                "type": "string",
-                "enum": [
-                    "Mono",
-                    "Stereo",
-                    "Surround",
-                    "Passthrough",
-                    "Auto",
-                    "StereoSurroundMatFollow",
-                    "Unknown",
-                    "None"
-                ],
-                "description": "The audio output mode supported by the platform"
-            }
-        }
-    }
+    ]
 }

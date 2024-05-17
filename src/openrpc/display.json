@@ -7,8 +7,8 @@
     },
     "methods": [
         {
-            "name": "width",
-            "summary": "Get the width of the display (in centimeters) from the HDMI EDID.",
+            "name": "size",
+            "summary": "Get the width and height of the display panel (in centimeters).",
             "tags": [
                 {
                     "name": "capabilities",
@@ -19,141 +19,10 @@
             ],
             "params": [],
             "result": {
-                "name": "width",
-                "summary": "Width of the display device",
+                "name": "size",
+                "summary": "The width and height of the display.",
                 "schema": {
-                    "type": "number"
-                }
-            },
-            "examples": [
-                {
-                    "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": 2166
-                    }
-                }
-            ]
-        },
-        {
-            "name": "height",
-            "summary": "Get the height of the display (in centimeters) from the HDMI EDID.",
-            "tags": [
-                {
-                    "name": "capabilities",
-                    "x-uses": [
-                        "xrn:firebolt:capability:display:info"
-                    ]
-                }
-            ],
-            "params": [],
-            "result": {
-                "name": "height",
-                "summary": "Height of the display device in centimeters",
-                "schema": {
-                    "type": "number"
-                }
-            },
-            "examples": [
-                {
-                    "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": 1980
-                    }
-                }
-            ]
-        },
-        {
-            "name": "currentResolution",
-            "summary": "Get the current resolution of the display device.",
-            "tags": [
-                {
-                    "name": "capabilities",
-                    "x-uses": [
-                        "xrn:firebolt:capability:display:info"
-                    ]
-                }
-            ],
-            "params": [],
-            "result": {
-                "name": "resolution",
-                "summary": "The current resolution of the display device.",
-                "schema": {
-                    "$ref": "#/components/schemas/DisplayResolution"
-                }
-            },
-            "examples": [
-                {
-                    "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": "1080p24"
-                    }
-                }
-            ]
-        },
-        {
-            "name": "optimalResolution",
-            "summary": "Get the optimal resolution of the display device.  This will return null if no display is present.",
-            "tags": [
-                {
-                    "name": "capabilities",
-                    "x-uses": [
-                        "xrn:firebolt:capability:display:info"
-                    ]
-                }
-            ],
-            "params": [],
-            "result": {
-                "name": "resolution",
-                "summary": "Optional resolution of the display device.",
-                "schema": {
-                    "anyOf": [
-                        {
-                            "type": "null"
-                        },
-                        {
-                            "$ref": "#/components/schemas/DisplayResolution"
-                        }
-                    ]
-                }
-            },
-            "examples": [
-                {
-                    "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": "2160p60"
-                    }
-                }
-            ]
-        },
-        {
-            "name": "supportedResolutions",
-            "summary": "Returns an array of valid resolutions that the display supports",
-            "tags": [
-                {
-                    "name": "capabilities",
-                    "x-uses": [
-                        "xrn:firebolt:capability:display:info"
-                    ]
-                }
-            ],
-            "params": [],
-            "result": {
-                "name": "resolution",
-                "summary": "An array of valid resolutions that the display supports",
-                "schema": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/components/schemas/DisplayResolution"
-                    },
-                    "minItems": 1
+                    "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/Dimensions"
                 }
             },
             "examples": [
@@ -163,23 +32,17 @@
                     "result": {
                         "name": "Default Result",
                         "value": [
-                            "1080p24",
-                            "1080i25",
-                            "1080p30",
-                            "1080i50",
-                            "1080p50",
-                            "1080p60",
-                            "2160p30",
-                            "2160p50",
-                            "2160p60"
+                            2166,
+                            1920
                         ]
                     }
                 }
             ]
         },
         {
-            "name": "hdr",
-            "summary": "Returns an array of valid HDR profiles that the display supports. ",
+            "name": "colorDepth",
+            "summary": "Get the maximum color depth supported by the display panel.",
+            "params": [],
             "tags": [
                 {
                     "name": "capabilities",
@@ -188,22 +51,95 @@
                     ]
                 }
             ],
-            "params": [
+            "result": {
+                "name": "colorDepth",
+                "summary": "The color depth supported by the display panel.",
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "examples": [
                 {
-                    "name": "resolution",
-                    "summary": "The video resolution to check against HDR profiles supported by the display. When provided, the result includes only HDR profiles supported by this resolution.",
-                    "schema": {
-                        "$ref": "#/components/schemas/DisplayResolution"
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": 10
+                    }
+                },
+                {
+                    "name": "Example with no display",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": 0
                     }
                 }
+            ]
+        },
+        {
+            "name": "resolution",
+            "summary": "Get the resolution of the display device in pixels. Returns a zero value for width and height if no display is present.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
             ],
+            "params": [],
             "result": {
-                "name": "HDR profiles",
+                "name": "resolution",
+                "summary": "The resolution of the display device.",
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/Dimensions"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            1920,
+                            1080
+                        ]
+                    }
+                },
+                {
+                    "name": "No Display Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            0,
+                            0
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "hdrProfilesSupported",
+            "summary": "Returns an array of valid HDR profiles that the display supports.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "hdrProfilesSupported",
                 "summary": "An array of valid HDR profiles that the display supports.",
                 "schema": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/components/schemas/HdrProfile"
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/HDRProfile"
                     },
                     "minItems": 1
                 }
@@ -211,19 +147,13 @@
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [
-                        {
-                            "name": "resolution",
-                            "value": "1080p60"
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "Default Result",
                         "value": [
-                            "DolbyVision",
-                            "Hdr10",
-                            "Hdr10Plus",
-                            "St2084",
+                            "dolbyVision",
+                            "hdr10",
+                            "hdr10plus",
                             "hlg"
                         ]
                     }
@@ -231,8 +161,8 @@
             ]
         },
         {
-            "name": "useSourceFrameRate",
-            "summary": "Set the HDMI output frame rate to follow the video source frame rate.",
+            "name": "refreshRate",
+            "summary": "Get the native refresh rate of the display device.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -243,10 +173,10 @@
             ],
             "params": [],
             "result": {
-                "name": "useSourceFrameRate",
-                "summary": "Whether the HDMI output frame rate was set to follow video source frame rate",
+                "name": "refreshRate",
+                "summary": "The refresh rate of the display device.",
                 "schema": {
-                    "type": "boolean"
+                    "type": "number"
                 }
             },
             "examples": [
@@ -255,42 +185,40 @@
                     "params": [],
                     "result": {
                         "name": "Default Result",
-                        "value": true
+                        "value": 60
+                    }
+                }
+            ]
+        },
+        {
+            "name": "resolutionName",
+            "summary": "Get a user-friendly resolution name of the display device.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "resolutionName",
+                "summary": "The resoltuion name of the display device.",
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/ResolutionName"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "uhd"
                     }
                 }
             ]
         }
-    ],
-    "components": {
-        "schemas": {
-            "DisplayResolution": {
-                "title": "DisplayResolution",
-                "type": "string",
-                "enum": [
-                    "1080p24",
-                    "1080i25",
-                    "1080p30",
-                    "1080i50",
-                    "1080p50",
-                    "1080p60",
-                    "2160p30",
-                    "2160p50",
-                    "2160p60"
-                ],
-                "description": "The list of resolutions supported by the display"
-            },
-            "HdrProfile": {
-                "title": "HdrProfile",
-                "type": "string",
-                "enum": [
-                    "DolbyVision",
-                    "Hdr10",
-                    "Hdr10Plus",
-                    "St2084",
-                    "hlg"
-                ],
-                "description": "The list of HDR profiles supported by the display"
-            }
-        }
-    }
+    ]
 }
