@@ -83,10 +83,10 @@
             "description": "The dimensions specified as width and height.",
             "items": [
                 {
-                    "type": "integer"
+                    "type": "number"
                 },
                 {
-                    "type": "integer"
+                    "type": "number"
                 }
             ],
             "additionalItems": false,
@@ -140,7 +140,7 @@
             ]
         },
         "VideoMode": {
-            "description": "Video output mode, the shorthand resolution and frame rate",
+            "description": "Video output mode; the shorthand resolution and frame rate",
             "type": "string",
             "enum": [
                 "480i",
