@@ -25,9 +25,6 @@ CE-SDK would required below use cases to adhere.
     - Snapshot of the performance for app such as load, memory etc.
     - Capability: <b>xrn:firebolt:capability:cert-extension:appperformancedata</b>
   - <b>Firebolt compatible provider calls</b>
-    - <b>Keypress</b>
-      - To navigate on the screen
-      - Capability: <b>xrn:firebolt:capability:cert-extension:keypress</b>
     - <b>Screenshot</b>
       - Fetch and upload the screenshot
       - Capability: <b>xrn:firebolt:capability:cert-extension:screencapture</b>
