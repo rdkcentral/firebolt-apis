@@ -396,6 +396,9 @@
                                     "$ref": "#/definitions/MusicEntity"
                                 },
                                 {
+                                    "$ref": "#/definitions/PlaylistEntity"
+                                },
+                                {
                                     "$ref": "#/definitions/AdditionalEntity"
                                 },
                                 {

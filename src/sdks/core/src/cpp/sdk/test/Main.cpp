@@ -16,24 +16,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#pragma once
+#include <iostream>
+#include "CoreSDKTestGeneratedCode.h"
 
-#include "error.h"
+int __cnt = 0;
+int __pass = 0;
 
-class CoreSDKTestGeneratedCode {
+int TotalTests = 0;
+int TotalTestsPassed = 0;
 
-public:
-    CoreSDKTestGeneratedCode() = default;
-    virtual ~CoreSDKTestGeneratedCode() = default;
+int main()
+{
+    CoreSDKTestGeneratedCode::CreateFireboltInstance();
 
-    static void CreateFireboltInstance();
-    static void DestroyFireboltInstance();
-    static void TestCoreStaticSDK();
-    static void GetDeviceName();
-    static bool WaitOnConnectionReady();
-
-private:
-    static void ConnectionChanged(const bool, const Firebolt::Error);
-    static bool _connected;
-};
+    if (CoreSDKTestGeneratedCode::WaitOnConnectionReady() == true) {
+        CoreSDKTestGeneratedCode::GetDeviceName();
+    }
+    CoreSDKTestGeneratedCode::DestroyFireboltInstance();
+    printf("TOTAL: %i tests; %i PASSED, %i FAILED\n", TotalTests, TotalTestsPassed, (TotalTests - TotalTestsPassed));
+}
 
