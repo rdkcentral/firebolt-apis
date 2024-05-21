@@ -334,7 +334,7 @@ currently paused media should resume.
 If the action is play, and there is something playbable selected, then
 playback of the selected asset should be initiated.
 
-If the action is replay, then the currently paused media should restart
+If the action is replay, then the currently paused or playing media should restart
 from the beginning. This should work even if the decoder has finished,
 and its resources have been released.
 
@@ -424,8 +424,6 @@ These intents allow users to fast-forward or rewind:
 }
 ```
 
-TODO: send closed captions vs subtitles 
-
 Speed is a float in the range of 0 (non-includsive) to 10 (inclusive),
 with values between 0 and 1 denoting slow motion.
 
@@ -467,7 +465,6 @@ This intent allows a user to turn closed captions on or off.
         }
     }
 }
-
 ```
 
 Additionally, this intent may specify a toggle:
@@ -588,8 +585,6 @@ When providing a `speed` this intent **MAY** also set the `relative` property to
     }
 }
 ```
-
-The voice guidance intent **MUST** have only one property, `speed`, `toggle`, `value` and **MUST NOT** comebine them in a single intent.
 
 Finally, the intent **MAY** specify a `verbosity` property, which **MUST** use one of the following values is provided:
 
@@ -821,7 +816,7 @@ Setting the scale to `1` turns off magnification. Setting the scale to a value g
 
 Even if a Firebolt platform does not support specifying the numeric scale, it **MUST** turn magnifacation on and off based on them.
 
-The magnification intent **MUST** have only one property, `scale`, `toggle`, `value` and **MUST NOT** comebine them in a single intent.
+The magnification intent **MUST** have only one property, `scale`, `toggle`, `value` and **MUST NOT** combine them in a single intent.
 
 ### 3.6. Interaction Intents
 
@@ -868,11 +863,6 @@ The select intent allows users to tell an app select, e.g.,
 whatever is focused. This is a platform-level intent that effectively
 sends the "Ok" or "Select" key to the current app.
 
-**NOTE**: i don\'t like using "click" here, but i can\'t think of a
-good word that isn\'t super vague. "Select" means highlighting, not
-actually hitting okay, so we can\'t use that. I considered "activate"
-but that seems odd\... Open to discussing this.
-
 ```json
 {
     "type": "xrn:firebolt:intent:platform:interaction",
@@ -917,7 +907,6 @@ up/down/left/right:
         }
     }
 }
-
 ```
 
 The distance is a float that represents how many of units to scroll. All
