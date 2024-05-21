@@ -244,10 +244,34 @@
                     "$ref": "#/definitions/ButtonIntent"
                 },
                 {
+                    "$ref": "#/definitions/ChannelIntent"
+                },
+                {
+                    "$ref": "#/definitions/FocusIntent"
+                },
+                {
+                    "$ref": "#/definitions/SelectIntent"
+                },
+                {
+                    "$ref": "#/definitions/BackIntent"
+                },
+                {
+                    "$ref": "#/definitions/ExitIntent"
+                },
+                {
+                    "$ref": "#/definitions/ChannelIntent"
+                },
+                {
+                    "$ref": "#/definitions/ScrollIntent"
+                },
+                {
                     "$ref": "#/definitions/PowerIntent"
                 },
                 {
                     "$ref": "#/definitions/VolumeIntent"
+                },
+                {
+                    "$ref": "#/definitions/MuteIntent"
                 },
                 {
                     "$ref": "#/definitions/MicrophoneIntent"
@@ -257,6 +281,15 @@
                 },
                 {
                     "$ref": "#/definitions/TuneIntent"
+                },
+                {
+                    "$ref": "#/definitions/VoiceGuidanceIntent"
+                },
+                {
+                    "$ref": "#/definitions/HighContrastIntent"
+                },
+                {
+                    "$ref": "#/definitions/ScreenMagnificationIntent"
                 }
             ]
         },
@@ -264,7 +297,19 @@
             "description": "A Firebolt compliant representation of a user intention to control some aspect of in-progress playback.",
             "anyOf": [
                 {
+                    "$ref": "#/definitions/PlayIntent"
+                },
+                {
                     "$ref": "#/definitions/PauseIntent"
+                },
+                {
+                    "$ref": "#/definitions/ReplayIntent"
+                },
+                {
+                    "$ref": "#/definitions/StopIntent"
+                },
+                {
+                    "$ref": "#/definitions/PlaybackSpeedIntent"
                 },
                 {
                     "$ref": "#/definitions/SeekIntent"
@@ -282,7 +327,7 @@
                     "$ref": "#/definitions/ClosedCaptionsIntent"
                 },
                 {
-                    "$ref": "#/definitions/AudioDescriptionIntent"
+                    "$ref": "#/definitions/AudioDescriptionsIntent"
                 }
             ]
         },
@@ -2047,10 +2092,7 @@
                                 "interface": {
                                     "type": "string",
                                     "enum": [
-                                        "hdmi",
-                                        "rca",
-                                        "vga",
-                                        "etc..."
+                                        "hdmi"
                                     ]
                                 },
                                 "number": {
@@ -2672,9 +2714,9 @@
                 }
             ]
         },
-        "AudioDescriptionIntent": {
+        "AudioDescriptionsIntent": {
             "description": "A Firebolt compliant representation of a user intention to enable/disable audio descriptions.",
-            "title": "AudioDescriptionIntent",
+            "title": "AudioDescriptionsIntent",
             "allOf": [
                 {
                     "$ref": "#/definitions/Intent"
