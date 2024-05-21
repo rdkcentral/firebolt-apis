@@ -816,7 +816,9 @@ Setting the scale to `1` turns off magnification. Setting the scale to a value g
 
 Even if a Firebolt platform does not support specifying the numeric scale, it **MUST** turn magnifacation on and off based on them.
 
-The magnification intent **MUST** have only one property, `scale`, `toggle`, `value` and **MUST NOT** combine them in a single intent.
+If the intent has the `toggle` property, then it **MUST NOT** have the `scale` or `value` property.
+
+If the intent has the `value` property, then it **MUST NOT** have the `toggle`.
 
 ### 3.6. Interaction Intents
 
@@ -899,8 +901,7 @@ up/down/left/right:
         "action": "scroll",
         "data": {
             "direction": "up" | "down" | "left" | "right",
-            "unit": "page" | "line" | "percent",
-            "distance": 2.5
+            "unit": "page" | "line" | "percent"
         },
         "context": {
             "source": "voice"
@@ -909,8 +910,7 @@ up/down/left/right:
 }
 ```
 
-The distance is a float that represents how many of units to scroll. All
-three data properties are required.
+Both `direction` and `unit` are required.
 
 These Intents will generate appropriate browser / DOM scrolling
 operations that don\'t require custom APIs.

@@ -1114,6 +1114,7 @@
                                 "type": "object",
                                 "properties": {
                                     "options": {
+                                        "type": "object",
                                         "maxProperties": 1
                                     }
                                 }
@@ -1122,6 +1123,7 @@
                                 "type": "object",
                                 "properties": {
                                     "options": {
+                                        "type": "object",
                                         "maxProperties": 0
                                     }
                                 }                                
@@ -1707,10 +1709,6 @@
                                         "page",
                                         "percent"
                                     ]
-                                },
-                                "distance": {
-                                    "type": "number",
-                                    "minimum": 0
                                 }
                             },
                             "additionalProperties": false
@@ -1817,12 +1815,22 @@
                                 "required": [ "relative" ]
                             },
                             "then": {
-                                "minimum": 0,
-                                "maximum": 100
+                                "properties": {
+                                    "value": {
+                                        "type": "number",
+                                        "minimum": -50,
+                                        "maximum": 50        
+                                    }
+                                }
                             },
                             "else": {
-                                "minimum": -50,
-                                "maximum": 50
+                                "properties": {
+                                    "value": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 100
+                                    }
+                                }
                             },
                             "additionalProperties": false
                         }
@@ -1963,7 +1971,7 @@
                     "action": "power",
                     "data": {
                         "value": false,
-                        "delay": "900"
+                        "delay": 900
                     },
                     "context": {
                         "source": "voice"
@@ -2383,9 +2391,7 @@
                                     "type": "object",
                                     "properties": {
                                         "seconds": {
-                                            "type": "number",
-                                            "minimum": 0,
-                                            "maximum": 1800
+                                            "type": "number"
                                         },
                                         "relative": {
                                             "const": true
@@ -2400,7 +2406,18 @@
                                     "then": {
                                         "properties": {
                                             "seconds": {
-                                                "minimum": 0
+                                                "type": "number",
+                                                "minimum": 0,
+                                                "maximum": 86400
+                                            }
+                                        }
+                                    },
+                                    "else": {
+                                        "properties": {
+                                            "seconds": {
+                                                "type": "number",
+                                                "minimum": -43200,
+                                                "maximum": 43200
                                             }
                                         }
                                     }
@@ -2521,7 +2538,7 @@
             ],
             "examples": [
                 {
-                    "action": "closedcaptions",
+                    "action": "closed-captions",
                     "data": {
                         "value": false
                     },
@@ -2530,7 +2547,7 @@
                     }
                 },
                 {
-                    "action": "closedcaptions",
+                    "action": "closed-captions",
                     "data": {
                         "toggle": true
                     },
@@ -2540,9 +2557,9 @@
                 }
             ]
         },
-        "VoiceGuideanceIntent": {
+        "VoiceGuidanceIntent": {
             "description": "A Firebolt compliant representation of a user intention to enable/disable voice guidance.",
-            "title": "VoiceGuideanceIntent",
+            "title": "VoiceGuidanceIntent",
             "allOf": [
                 {
                     "$ref": "#/definitions/Intent"
@@ -2592,6 +2609,7 @@
                                 "then": {
                                     "properties": {
                                         "speed": {
+                                            "type": "integer",
                                             "minimum": -10,
                                             "maximum": 10        
                                         }
@@ -2600,6 +2618,7 @@
                                 "else": {
                                     "properties": {
                                         "speed": {
+                                            "type": "integer",
                                             "exclusiveMinimum": 0,
                                             "maximum": 10        
                                         }
@@ -2607,11 +2626,13 @@
                                 }
                             },
                             "else": {
-                                "required": [ "toggle" ],
-                                "not": {
-                                    "required": [
-                                        "speed"
-                                    ]
+                                "if": {
+                                    "required": [ "toggle" ]
+                                },
+                                "then": {
+                                    "not": {
+                                        "required": [ "value" ]
+                                    }
                                 }
                             },
                             "additionalProperties": false
@@ -2801,8 +2822,15 @@
                                     "maximum": 10
                                 }
                             },
-                            "maxProperties": 1,
-                            "minProperties": 1,
+                            "if": {
+                                "required": [
+                                    "toggle"
+                                ]
+                            },
+                            "then": {
+                                "type": "object",
+                                "maxProperties": 1
+                            },
                             "additionalProperties": false
                         }
                     }
@@ -2810,7 +2838,7 @@
             ],
             "examples": [
                 {
-                    "action": "power",
+                    "action": "screen-magnification",
                     "data": {
                         "value": false
                     },
@@ -2819,7 +2847,17 @@
                     }
                 },
                 {
-                    "action": "power",
+                    "action": "screen-magnification",
+                    "data": {
+                        "value": true,
+                        "scale": 2.5
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                },                
+                {
+                    "action": "screen-magnification",
                     "data": {
                         "toggle": true
                     },
@@ -2828,10 +2866,9 @@
                     }
                 },
                 {
-                    "action": "power",
+                    "action": "screen-magnification",
                     "data": {
-                        "value": false,
-                        "delay": "900"
+                        "value": false
                     },
                     "context": {
                         "source": "voice"
