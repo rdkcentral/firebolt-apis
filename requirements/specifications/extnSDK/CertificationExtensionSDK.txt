@@ -22,6 +22,13 @@ Extn-SDK -> FCS: {"jsonrpc": "2.0", id:1, result: {interactions}}
 
 end
 
+group Firebolt Compatible Provider keyPress
+FCS->Extn-SDK: {"jsonrpc": "2.0", "method": "keyPress", \n"params": [<key>], "id": "1"}
+Extn-SDK -> Plugin: Request fullfil
+Plugin -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: "true"}
+Extn-SDK -> FCS : {id:0, "jsonrpc": "2.0", result: "true"}
+
+end
 
 group Firebolt Compatible Provider screenCapture
 
@@ -51,4 +58,3 @@ Plugin -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
 Extn-SDK -> FCS: {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
 
 end
-

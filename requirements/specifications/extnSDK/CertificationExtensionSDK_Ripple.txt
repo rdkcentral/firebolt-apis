@@ -1,4 +1,4 @@
-title Certification Extension SDK
+title Certification Extension SDK on Ripple
 
 participant FCS #lightpink
 
@@ -28,8 +28,7 @@ note over Bolt/Linchpin: If we remove bolt, \nconnection to Extn-SDK \nwould be 
 
 FCS -> Bolt/Linchpin: subscribe to <mac_addressess>_boltextn
 Bolt/Linchpin -> FCS: acknowledgement
-Bolt/Linchpin -> Extn-SDK: {"jsonrpc":"2.0","method":"certsdk.onFireboltInterections",\n"params":{"listen":true},"id":1}
-Extn-SDK -> Bolt/Linchpin: {"jsonrpc":"2.0", "id":1,"result":{"listening":true,\n"event":"onFireboltInterections"}}
+Bolt/Linchpin -> Extn-SDK: onFireboltInterections()
 end
 
 group Firebolt Interactions 
@@ -42,11 +41,11 @@ end
 
 group Thunder Calls
 FCS->Bolt/Linchpin: ExecuteThunderCallHandler(keyPress, key)
-Bolt/Linchpin -> Extn-SDK: {"jsonrpc": "2.0", "method": "screenCapture", "params": [<uploadUrl>], "id": "1"}
+Bolt/Linchpin -> Extn-SDK: {"jsonrpc": "2.0", "method": "keyPress", "params": [<key>], "id": "1"}
 Extn-SDK -> Rules Engine: request forward
 Rules Engine -> Thunder Plugin: Request fullfil and respond back
 
-note over Rules Engine, Thunder Plugin: ScreenCapture request goes to \n WindowManager plugin
+note over Rules Engine, Thunder Plugin: KeyPress request goes to \n WindowManager plugin
 
 Thunder Plugin -> Rules Engine: response forward
 Rules Engine -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: "true"}
@@ -55,23 +54,11 @@ Bolt/Linchpin -> FCS : {id:0, "jsonrpc": "2.0", result: "true"}
 end
 
 group Health Check
-FCS -> Bolt/Linchpin: GetRippleHealthCheckHandler
-Bolt/Linchpin -> Extn-SDK: {"jsonrpc": "2.0", "method": "healthCheck", "id": "1"}
+FCS -> Bolt/Linchpin: GetRippleHealthCheckHandler(appId)
+Bolt/Linchpin -> Extn-SDK: {"jsonrpc": "2.0", "method": "healthCheck",\n"params":<appId> "id": "1"}
 Extn-SDK -> Core: request forward
 
-note over Extn-SDK: Healthcheck snapshot includes \nRipple process memory, load \nlive connections, etc.
-
-Core -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: {healthCheckData}}
-Extn-SDK -> Bolt/Linchpin: {id:0, "jsonrpc": "2.0", result: {healthCheckData}}
-Bolt/Linchpin -> FCS : {id:0, "jsonrpc": "2.0", result: {healthCheckData}}
-end
-
-group App performance snapshot
-FCS -> Bolt/Linchpin: GetAppPerformanceSnapshotHandler(appId)
-Bolt/Linchpin -> Extn-SDK: {"jsonrpc": "2.0", "method":"appPerformance",\n"params":<appId> "id": "1"}
-Extn-SDK -> Core: request forward
-
-note over Extn-SDK: App performance snapshot includes \nRipple process memory, load \nlive connections, \napp performance snapshots etc.
+note over Extn-SDK: Healthcheck snapshot includes \nRipple process memory, load \nlive connections, \napp performance snapshots etc.
 
 Core -> App Service: Request app performance snapshot
 
@@ -79,8 +66,7 @@ note over App Service: Snapshot would \nonly be available \nif platform integrat
 
 App Service -> Core: {appPerformanceData}
 
-Core -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
-Extn-SDK -> Bolt/Linchpin: {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
-Bolt/Linchpin -> FCS : {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
+Core -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: {healthCheckData, \nappPerformanceData}}
+Extn-SDK -> Bolt/Linchpin: {id:0, "jsonrpc": "2.0", result: {healthCheckData, \nappPerformanceData}}
+Bolt/Linchpin -> FCS : {id:0, "jsonrpc": "2.0", result: {healthCheckData, \nappPerformanceData}}
 end
-
