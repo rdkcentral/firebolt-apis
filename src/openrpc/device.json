@@ -910,7 +910,7 @@
     },
     {
       "name": "videoModes",
-      "summary": "Returns an array of all valid video output modes that both the device and display support.  Returns an empty array if no display is present.",
+      "summary": "Returns an array of all valid video output modes that the device and display together support.",
       "tags": [
         {
           "name": "capabilities",
@@ -947,14 +947,6 @@
               "1080p50",
               "1080p60"
             ]
-          }
-        },
-        {
-          "name": "Example with no display connected",
-          "params": [],
-          "result": {
-            "name": "Default Result",
-            "value": []
           }
         }
       ]

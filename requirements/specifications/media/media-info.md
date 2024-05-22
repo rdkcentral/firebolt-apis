@@ -84,7 +84,7 @@ I want to show an audio/videophile overlay with detailed information:
   - [5.6. Refresh Rate](#56-refresh-rate)
 - [6. Device Properties](#6-device-properties)
   - [6.1. Current Video Mode](#61-current-video-mode)
-  - [6.2. Video Modes Supported](#62-video-modes-supported)
+  - [6.2. Supported Video Modes](#62-supported-video-modes)
   - [6.3. Video Resolution](#63-video-resolution)
   - [6.4. Current HDR Profile](#64-current-hdr-profile)
   - [6.5. Supported HDR Profiles](#65-supported-hdr-profiles)
@@ -250,7 +250,7 @@ The `videoFormatSupported` API **MUST** have an optional `info` parameter which 
 | `profile`    | `string`               | The codec profile: <br>**hevc**: `main`, `high`, `main10`<br>**vp9**: `p0`, `p2`                              |
 | `resolution` | `array`                | The resolution in width and height (e.g. `[1920, 1080]`) of the media content being requested                 |
 
-> **NOTE**: A device supporting a particular HDR profile and resolution does not mean that the current display also supports that profile and resolution. See `Display.hdrProfilesSupported()` for more info on detecting display HDR support.
+> **NOTE**: A device supporting a particular HDR profile and resolution does not mean that the current display also supports that profile and resolution. See `Display.hdrProfiles()` for more info on detecting display HDR support.
 
 The `videoFormatSupported` API **MUST NOT** return `true` unless the format specified is supported with **all** of the properties specified in `options` *at the same time*.
 
@@ -298,13 +298,13 @@ Access to these APIs is governed by the `xrn:firebolt:capability:display:info` c
 
 ### 5.1. Supported HDR Profiles
 
-The `Display` module **MUST** have an `hdrProfilesSupported` method that returns the display's supported HDR profiles as an array of `Media.HDRProfile` values.
+The `Display` module **MUST** have an `hdrProfiles` method that returns the display's supported HDR profiles as an array of `Media.HDRProfile` values.
 
 If no display is present, an empty array is returned.
 
 ### 5.2. Supported Color Depth
 
-The `Display` module **MUST** have a `colorDepthSupported` method that returns a `Media.ColorDepth` value.
+The `Display` module **MUST** have a `colorDepth` method that returns a `Media.ColorDepth` value.
 
 If no display is present, a value of zero is returned.
 
@@ -348,9 +348,9 @@ This method **MUST** return a value from the `Media.VideoMode` enum.
 
 If no display is present, a value of `unknown` is returned.
 
-### 6.2. Video Modes Supported
+### 6.2. Supported Video Modes
 
-The `Device` module **MUST** have a `videoModesSupported` method that returns an array of valid video modes that the device supports, regardless of any connected display.
+The `Device` module **MUST** have a `videoModes` method that returns an array of valid video modes that the device and display together support.
 
 This method **MUST** return an array with one or more values from the `Media.VideoMode` enum.
 
@@ -368,11 +368,11 @@ This method **MUST** return a value from the `Media.HDRProfile` enum.
 
 ### 6.5. Supported HDR Profiles
 
-The `Device` module **MUST** have an `hdrProfilesSupported` method that returns the HDR profiles that the device supports, regardless of any connected display.
+The `Device` module **MUST** have an `hdrProfiles` method that returns the HDR profiles that the device supports, regardless of any connected display.
 
 ### 6.6. Supported HDCP Version
 
-The `Device` module **MUST** have a `hdcpVersionSupported` method that returns the latest HDCP version supported by the device.
+The `Device` module **MUST** have a `hdcpVersion` method that returns the latest HDCP version supported by the device.
 
 This method **MUST** return a value such as:
 
