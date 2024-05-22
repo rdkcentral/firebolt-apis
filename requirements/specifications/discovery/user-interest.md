@@ -117,6 +117,8 @@ The `Content.onUserInterest` event has a result type of `Interest`:
 | property | type | description |
 |---------|------|-------------|
 | appId   | string | The id of the app that pushed the user interest. |
+| type    | `InterestType` | the type of interest. |
+| reason  | `InterestReason` | the reason for the interest |
 | entity  | `EntityDetails` | The entity the user expressed interest in. |
 
 An Aggregated Experience can register for the `Content.onUserInterest`
@@ -286,9 +288,10 @@ type InterestType = "interest" | "disinterest"
 type InterestReason = "playlist" | "reaction" | "recording" | "share"
 
 type Interest {
-  type: InterestType
-  reason: InterestReason
+  appId: string
   entity: EntityDetails
+  type?: InterestType
+  reason?: InterestReason
 }
 ```
 
