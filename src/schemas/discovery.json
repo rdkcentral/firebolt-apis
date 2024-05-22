@@ -74,28 +74,6 @@
           "reaction",
           "recording"
         ]
-      },
-      "Interest": {
-        "title": "Interest",
-        "type": "object",
-        "properties": {
-          "appId": {
-            "type": "string"
-          },
-          "type": {
-            "$ref": "#/definitions/InterestType"
-          },
-          "reason": {
-            "$ref": "#/definitions/InterestReason"
-          },
-          "entity": {
-            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
-          }
-        },
-        "required": [
-          "appId",
-          "entity"
-        ]
       }
-    }  
+    }
   }

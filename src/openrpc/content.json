@@ -41,7 +41,7 @@
             "result": {
                 "name": "interest",
                 "schema": {
-                    "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/Interest"
+                    "$ref": "#/components/schemas/InterestResult"
                 },
                 "summary": "The EntityDetails data."
             },
@@ -109,7 +109,7 @@
             "result": {
                 "name": "interest",
                 "schema": {
-                    "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/Interest"
+                    "$ref": "#/components/schemas/InterestEvent"
                 },
                 "summary": "The EntityDetails data."
             },
@@ -149,6 +149,50 @@
                     }
                 }
             ]
-        }        
-    ]
+        }
+    ],
+    "components": {
+        "schemas": {
+            "InterestResult": {
+                "title": "InterestResult",
+                "type": "object",
+                "properties": {
+                    "appId": {
+                        "type": "string"
+                    },
+                    "entity": {
+                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+                    }
+                },
+                "required": [
+                    "appId",
+                    "entity"
+                ]
+            },
+            "InterestEvent": {
+                "title": "InterestEvent",
+                "type": "object",
+                "properties": {
+                    "appId": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
+                    },
+                    "reason": {
+                        "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
+                    },
+                    "entity": {
+                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+                    }
+                },
+                "required": [
+                    "appId",
+                    "entity",
+                    "type",
+                    "reason"
+                ]
+            }
+        }
+    }
 }

@@ -20,9 +20,22 @@ import { test, expect } from "@jest/globals";
 import { Content } from "../../build/javascript/src/firebolt-discovery";
 
 test("Content.requestUserInterest()", () => {
-  return Content.requestUserInterest(Content.InterestType.INTEREST, Content.InterestReason.PLAYLIST).then((interest: Content.Interest) => {
+  return Content.requestUserInterest(Content.InterestType.INTEREST, Content.InterestReason.PLAYLIST).then((interest: Content.InterestResult) => {
     const entity = interest.entity
     const appId = interest.appId
+    expect(appId).toBeDefined()
+    expect(entity).toBeDefined()
+    expect(entity.info.title).toBe("Cool Runnings")
+  })
+});
+
+test("Content.onUserInterest()", () => {
+  return Content.listen('userInterest', (interest: Content.InterestEvent) => {
+    const entity = interest.entity
+    const appId = interest.appId
+    const reason = interest.reason
+    expect(interest['type']).toBeDefined()
+    expect(reason).toBeDefined()
     expect(appId).toBeDefined()
     expect(entity).toBeDefined()
     expect(entity.info.title).toBe("Cool Runnings")
