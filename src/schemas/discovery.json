@@ -58,50 +58,6 @@
         ],
         "additionalProperties": false
       },
-      "DetailsResult": {
-        "title": "DetailsResult",
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "expires",
-          "details"
-        ],
-        "properties": {
-          "expires": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "details": {
-            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
-          }
-        }
-      },
-      "DetailsArrayResult": {
-        "title": "DetailsArrayResult",
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "expires",
-          "entries",
-          "totalCount"
-        ],
-        "properties": {
-          "expires": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "totalCount": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "entries": {
-            "type": "array",
-            "items": {
-              "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
-            }
-          }
-        }
-      },
       "InterestType": {
         "title": "InterestType",
         "type": "string",
@@ -117,6 +73,28 @@
           "playlist",
           "reaction",
           "recording"
+        ]
+      },
+      "Interest": {
+        "title": "Interest",
+        "type": "object",
+        "properties": {
+          "appId": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/definitions/InterestType"
+          },
+          "reason": {
+            "$ref": "#/definitions/InterestReason"
+          },
+          "entity": {
+            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+          }
+        },
+        "required": [
+          "appId",
+          "entity"
         ]
       }
     }  

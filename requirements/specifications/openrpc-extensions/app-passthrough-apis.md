@@ -100,7 +100,7 @@ Where `<XRN>` is the capability XRN string, e.g. `xrn:firebolt:capabilities:exam
 ### 4.2. Direct pass-through
 A direct pass-through is where a single app provides a single response to a single request by another app.
 
-This section only applies to app provider methods that do not have an `event` tag and do not have the `x-multiple-providers` extension set to `true`.
+This section only applies to app provider methods that do not have an `event` tag.
 
 The platform method result schema **MUST** either:
 

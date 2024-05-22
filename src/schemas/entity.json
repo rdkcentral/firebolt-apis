@@ -36,8 +36,7 @@
             "title": "EntityDetails",
             "type": "object",
             "required": [
-                "identifiers",
-                "info"
+                "identifiers"
             ],
             "properties": {
                 "identifiers": {

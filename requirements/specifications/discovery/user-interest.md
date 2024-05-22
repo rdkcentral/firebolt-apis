@@ -63,8 +63,9 @@ track of which apps are using them separately.
   - [4.4. Discovery Interest Provider](#44-discovery-interest-provider)
   - [4.5. InterestIntent](#45-interestintent)
 - [5. Discovery SDK APIs](#5-discovery-sdk-apis)
-  - [5.1. Content.requestUserInterest](#51-contentrequestuserinterest)
-  - [5.2. Content.onUserInterest](#52-contentonuserinterest)
+  - [5.1. Interest Types](#51-interest-types)
+  - [5.2. Content.requestUserInterest](#52-contentrequestuserinterest)
+  - [5.3. Content.onUserInterest](#53-contentonuserinterest)
 
 
 ## 3. User Interest Flows
@@ -84,7 +85,7 @@ meta-data, the device's Aggregated Experience will be notified of the
 user's interest in that entity:
 
 ```typescript
-Discovery.userInterest(type:InterestType, reason: InterestReason, entity:EntityDetails)
+Discovery.userInterest(type: InterestType, reason: InterestReason, entity: EntityDetails)
 ```
 
 The `type` parameter denotes the directionality of the interest:
@@ -111,15 +112,12 @@ When this method is called with a valid `EntityDetails`, the platform
 that have registered for it (typically Aggregated Experience Apps) with
 information about the app, interest type, and the entity.
 
-The `Content.onUserInterest` event has three context parameters:
+The `Content.onUserInterest` event has a result type of `Interest`:
 
-| context | type | description |
+| property | type | description |
 |---------|------|-------------|
-| appid   | string | The id of the app that pushed the user interest. |
-| type    | `InterestType` | the type of interest. |
-| reason  | `InterestReason` | the reason for the interest |
-
-The `Content.onUserInterest` event has a result type of `EntityDetails`.
+| appId   | string | The id of the app that pushed the user interest. |
+| entity  | `EntityDetails` | The entity the user expressed interest in. |
 
 An Aggregated Experience can register for the `Content.onUserInterest`
 notification, and it will receive notifications when an `EntityDetails` is
@@ -280,21 +278,35 @@ type InterestIntent {
 The following APIs are exposed by the Firebolt Discovery SDK as part of the
 `Content` module.
 
-### 5.1. Content.requestUserInterest
+### 5.1. Interest Types
+This type stores the various attributes of an Interest response or event:
+
+```typescript
+type InterestType = "interest" | "disinterest"
+type InterestReason = "playlist" | "reaction" | "recording" | "share"
+
+type Interest {
+  type: InterestType
+  reason: InterestReason
+  entity: EntityDetails
+}
+```
+
+### 5.2. Content.requestUserInterest
 This method triggers the corresponding Discovery provider API for the
 provider app.
 
 ```typescript
-Content.requestUserInterest(type: InterestType, reason: InterestReason): Promise<EntityDetails>
+Content.requestUserInterest(type: InterestType, reason: InterestReason): Promise<Interest>
 ```
 
-### 5.2. Content.onUserInterest
+### 5.3. Content.onUserInterest
 
 This notification allows Aggregated Experience Apps to be informed when
 a user expresses interest in some Content, and the content resolves to a
 valid Entity from some App.
 
-`Content.listen('userInterest', UserInterestInfo => void): Promise<void>`
+`Content.listen('userInterest', Interest => void): Promise<void>`
 
-The callback will be passed an `UserInterestInfo` object with
-the type, reason, and information about the entity that the user expressed interest in.
+The callback will be passed an `Interest` object with
+the appId, type, reason, and information about the entity that the user expressed interest in.
