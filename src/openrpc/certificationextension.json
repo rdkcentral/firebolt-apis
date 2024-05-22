@@ -208,7 +208,16 @@
                     "x-allow-focus": true
                 }
             ],
-            "params": [],
+            "params": [
+                {
+                    "name": "appId",
+                    "required": true,
+                    "summary": "The id of the app for which the performance snapshot is required",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
             "result": {
                 "name": "appPerformanceResult",
                 "summary": "Result of the interaction",
@@ -218,8 +227,13 @@
             },
             "examples": [
                 {
-                    "name": "Snapshots for the device and process",
-                    "params": [],
+                    "name": "Performance snapshot for the given app",
+                    "params": [
+                        {
+                            "name": "appId",
+                            "value": "foo"
+                        }
+                    ],
                     "result": {
                         "name": "appPerformanceResult",
                         "value": {
@@ -278,7 +292,7 @@
                             },
                             "state": {
                                 "type": "boolean",
-                                "description": "The method name"
+                                "description": "The state of the response whether it is success or failure"
                             }
                         },
                         "description": "JSON object that represents the state of the interaction response"
