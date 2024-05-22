@@ -28,11 +28,9 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [2. Table of Contents](#2-table-of-contents)
 - [3. Open RPC Extensions](#3-open-rpc-extensions)
   - [3.1. Provided By Extension](#31-provided-by-extension)
-  - [3.2. Multiple Providers Extension](#32-multiple-providers-extension)
 - [4. Routing App pass-through APIs](#4-routing-app-pass-through-apis)
   - [4.1. No available providers](#41-no-available-providers)
   - [4.2. Direct pass-through](#42-direct-pass-through)
-  - [4.3. Aggregated pass-through results](#43-aggregated-pass-through-results)
   - [4.4. Pass-through notifications](#44-pass-through-notifications)
 - [5. Provider Candidates](#5-provider-candidates)
 - [6. Best Candidate](#6-best-candidate)
@@ -79,33 +77,6 @@ The provider method **MUST** provide the same capability that the platform metho
 
 If a platform method has no provider method then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
 
-### 3.2. Multiple Providers Extension
-Firebolt OpenRPC **MUST** support a `string` `x-multiple-providers` extension property on the `capabilities` tag that denotes a single method request may be provided by multiple apps on the device registering for the specified provider API, e.g.:
-
-```json
-{
-    "methods": [
-        {
-            "name": "Content.search",
-            "tags": [
-                {
-                    "name": "capabilities",
-                    "x-provided-by": "Discover.onRequestSearch",
-                    "x-multiple-providers": true,
-                    "x-uses": [
-                        "xrn:firebolt:capability:discovery:search"
-                    ]
-                }
-            ]
-        }
-    ]
-}
-```
-
-Setting `x-multiple-providers` to `true` means that all available apps that can provide the capability **MUST** be called and their results aggregated into an array for the final result.
-
-A platform method with `x-multiple-providers` set to `true` **MUST** have an `array` result type.
-
 ## 4. Routing App pass-through APIs
 App pass-through APIs may be routed in one of several ways.
 
@@ -145,32 +116,6 @@ The platform **MUST** call the provider method from the [best candidate](#8-best
 If the platform method result schema matches the `x-response` schema on the provider method then the value **MUST** be used as-is.
 
 Otherwise if the platform method result schema has a property that matches the `x-response` schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the composed result.
-
-### 4.3. Aggregated pass-through results
-An aggregated pass-through is where many apps provide responses to a single request by another app. The results are aggregated inside of an array.
-
-This section only applies to app provider methods that do not have an `event` tag and do have the `x-multiple-providers` extension set to `true`.
-
-The platform method result schema **MUST** have a type of `array`.
-
-The platform method result schema **MUST** have an `items` sub-schema that either:
-
-> Matches the `x-response` schema on the provider method so that the result can be added to the final array.
->
-> or
->
-> Has a property that matches the `x-response` schema on the provider method so that the result can be composed
-> and added to the final array.
-
-The platform **MUST** call the provider method from each [candidate app](#7-provider-candidates) and aggregated all of the results into an array.
-
-If the platform method result `items` schema matches the `x-response` schema on the provider method then each provier value **MUST** be used as-is.
-
-Otherwise if the platform method result `items` schema has a property that matches the `x-response` schema on the provider method then each provider value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the composed result.
-
-If some providers time out, the providers that did not time out **MUST** be returned, with the remaining providers omitted.
-
-Time out durations are out of scope for this document, and are specified on a per feature basis.
 
 ### 4.4. Pass-through notifications
 Firebolt events have a synchronous subscriber registration method, e.g. `Lifecycle.onInactive(true)`, in addition to asynchronous notifications when the event actually happens. For events powered by an app pass-through, only the asynchronous notifications are passed in by the providing app. The initial event registration is handled by the platform, and the success response is not handled by the providing app.
