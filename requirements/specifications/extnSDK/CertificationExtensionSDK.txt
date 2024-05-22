@@ -1,9 +1,10 @@
-title Certification Extension SDK
+title Firebolt Extension for Certification
 
-participant FCS #lightpink
+participant DeveloperTools #lightpink
+note over DeveloperTools: e.g. FCS
 
 participantgroup #lightgreen <wordwrap:20>**Firebolt Implementation**
-participant Extn-SDK
+participant FireboltExtn
 end
 
 participantgroup #lightblue <wordwrap:10>**Firebolt Compatible Provider**
@@ -14,47 +15,47 @@ note over Plugin: e.g. \nWindow Manager \nScreenshot Capture
 
 
 group Firebolt Interactions
-FCS -> Extn-SDK: {"jsonrpc":"2.0","method":"certsdk.onFireboltInterections", \n"params":{"listen":true},"id":1}
+DeveloperTools -> FireboltExtn: {"jsonrpc":"2.0","method":"certsdk.onFireboltInterections", \n"params":{"listen":true},"id":1}
 
-Extn-SDK -> FCS: {"jsonrpc":"2.0", "id":1,"result":{"listening":true,\n"event":"onFireboltInterections"}}
+FireboltExtn -> DeveloperTools: {"jsonrpc":"2.0", "id":1,"result":{"listening":true,\n"event":"onFireboltInterections"}}
 
-Extn-SDK -> FCS: {"jsonrpc": "2.0", id:1, result: {interactions}}
-
-end
-
-group Firebolt Compatible Provider keyPress
-FCS->Extn-SDK: {"jsonrpc": "2.0", "method": "keyPress", \n"params": [<key>], "id": "1"}
-Extn-SDK -> Plugin: Request fullfil
-Plugin -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: "true"}
-Extn-SDK -> FCS : {id:0, "jsonrpc": "2.0", result: "true"}
+FireboltExtn -> DeveloperTools: {"jsonrpc": "2.0", id:1, result: {interactions}}
 
 end
 
-group Firebolt Compatible Provider screenCapture
+group Firebolt compatible provider command and control
+DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0", "method": "commandAndControl", \n"params": [<intent>], "id": "1"}
+FireboltExtn -> Plugin: Request fullfil
+Plugin -> FireboltExtn: {id:0, "jsonrpc": "2.0", result: "true"}
+FireboltExtn -> DeveloperTools : {id:0, "jsonrpc": "2.0", result: "true"}
 
-FCS->Extn-SDK: {"jsonrpc": "2.0", "method": "captureScreenshot", \n"params": [<pathToUpload>], "id": "1"}
-Extn-SDK -> Plugin: Request fullfil
-Plugin -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: "true"}
-Extn-SDK -> FCS : {id:0, "jsonrpc": "2.0", result: "true"}
+end
+
+group Firebolt compatible provider screen capture
+
+DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0", "method": "captureScreenshot", \n"params": [<pathToUpload>], "id": "1"}
+FireboltExtn -> Plugin: Request fullfil
+Plugin -> FireboltExtn: {id:0, "jsonrpc": "2.0", result: "true"}
+FireboltExtn -> DeveloperTools : {id:0, "jsonrpc": "2.0", result: "true"}
 end
 
 group Health Check
-FCS -> Extn-SDK: {"jsonrpc": "2.0", "method": "healthCheck","id": "1"}
+DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0", "method": "healthCheck","id": "1"}
 
-note over Extn-SDK: Healthcheck snapshot includes \nprocess memory usage, load, \nlive connections etc.
+note over FireboltExtn: Healthcheck snapshot includes \nprocess memory usage, load, \nlive connections etc.
 
-Extn-SDK -> FCS: {id:0, "jsonrpc": "2.0", result: {healthCheckData}}
+FireboltExtn -> DeveloperTools: {id:0, "jsonrpc": "2.0", result: {healthCheckData}}
 
 end
 
 group App performance snapshot
-FCS -> Extn-SDK: {"jsonrpc": "2.0", "method": "appPerformance",\n"params":<appId>, "id": "1"}
+DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0", "method": "appPerformance",\n"params":<appId>, "id": "1"}
 
-note over Extn-SDK: App performance snapshot \nincludes memory usage, load etc.
+note over FireboltExtn: App performance snapshot \nincludes memory usage, load etc.
 
-Extn-SDK -> Plugin: Request fullfil
-Plugin -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
+FireboltExtn -> Plugin: Request fullfil
+Plugin -> FireboltExtn: {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
 
-Extn-SDK -> FCS: {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
+FireboltExtn -> DeveloperTools: {id:0, "jsonrpc": "2.0", result: {appPerformanceData}}
 
 end

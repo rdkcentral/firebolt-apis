@@ -1,11 +1,11 @@
-# Certification Extension SDK
+# Firebolt Extension for Certification
 
 Document Status: Proposed Specification 
 
 See [Firebolt Requirements Governance](../../governance.md) for more info.
 
 ## 1. Overview
-Document contains the  details around Certification Extension SDK (will be called as CE-SDK in rest of the document) and HLA for the same.
+Document contains the  details around Firebolt Extension for Certification (will be called as FEC in rest of the document) and HLA for the same.
 
 
 ## 2. Table of Contents
@@ -13,7 +13,7 @@ Document contains the  details around Certification Extension SDK (will be calle
 - [HLA](#hla)
 
 ## 3. Requirements
-CE-SDK would required below use cases to adhere.
+FEC would required below use cases to adhere.
 
   - <b>Firebolt Interactions</b>
     - Ability to fetch request and responses coming to/from platform
@@ -25,9 +25,9 @@ CE-SDK would required below use cases to adhere.
     - Snapshot of the performance for app such as load, memory etc.
     - Capability: <b>xrn:firebolt:capability:cert-extension:appperformancedata</b>
   - <b>Firebolt compatible provider calls</b>
-    - <b>Keypress</b>
-      - To navigate on the screen
-      - Capability: <b>xrn:firebolt:capability:cert-extension:keypress</b>
+    - <b>Command and Control</b>
+      - To control the firebolt compatible device e.g. interaction on screen, media control
+      - Capability: <b>xrn:firebolt:capability:cert-extension:commandandcontrol</b>
     - <b>Screenshot</b>
       - Fetch and upload the screenshot
       - Capability: <b>xrn:firebolt:capability:cert-extension:screencapture</b>

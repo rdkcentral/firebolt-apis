@@ -1,10 +1,14 @@
-title Certification Extension SDK on Ripple
+title Firebolt Extension on Ripple for Certification
 
-participant FCS #lightpink
+participant DeveloperTools #lightpink
+note over DeveloperTools: e.g. FCS
 
 participantgroup #lightgreen **Ripple**
-participant Bolt/Linchpin
-participant Extn-SDK
+
+participant Communication
+note over Communication: e.g. \nBolt-Linchpin \nWebsocket
+
+participant FireboltExtn
 participant Core
 participant Rules Engine
 end
@@ -22,51 +26,73 @@ note over Rules Engine: e.g. \nSystem, Applications
 note over Thunder Plugin: e.g. \nWindow Manager
 
 
-group Linchpin subscription
+group communication subscription
+DeveloperTools -> Communication: Establish communication
+note over DeveloperTools, Communication: subscribe linchpin or \nwebsocket connection
 
-note over Bolt/Linchpin: If we remove bolt, \nconnection to Extn-SDK \nwould be local via websocket
-
-FCS -> Bolt/Linchpin: subscribe to <mac_addressess>_boltextn
-Bolt/Linchpin -> FCS: acknowledgement
-Bolt/Linchpin -> Extn-SDK: onFireboltInterections()
+Communication -> DeveloperTools: acknowledgement
+Communication -> FireboltExtn: {"jsonrpc":"2.0","method":"onFireboltInterections", \n"params":{"listen":true},"id":1}
+FireboltExtn -> Communication: {"jsonrpc":"2.0", "id":1,"result":{"listening":true,\n"event":"onFireboltInterections"}}
 end
 
 group Firebolt Interactions 
-Extn-SDK -> Core: request forward
-Core -> Extn-SDK: Interactions 
-Extn-SDK -> Bolt/Linchpin: {id:0, "jsonrpc": "2.0", result: {interactions}} and bolt stores it
-FCS -> Bolt/Linchpin: Call GetFireboltInteractionsHandler
-Bolt/Linchpin -> FCS: {id:0, "jsonrpc": "2.0", result: {interactions}}
+FireboltExtn -> Core: request forward
+Core -> FireboltExtn: Interactions 
+FireboltExtn -> Communication: {id:0, "jsonrpc": "2.0", result: {interactions}}
+Communication -> DeveloperTools: {id:0, "jsonrpc": "2.0", result: {interactions}}
 end
 
-group Thunder Calls
-FCS->Bolt/Linchpin: ExecuteThunderCallHandler(keyPress, key)
-Bolt/Linchpin -> Extn-SDK: {"jsonrpc": "2.0", "method": "keyPress", "params": [<key>], "id": "1"}
-Extn-SDK -> Rules Engine: request forward
+group Thunder call for Command and Control
+DeveloperTools -> Communication: Instructions to execute thunder call \nfor command and control
+Communication -> FireboltExtn: {"jsonrpc": "2.0", "method": "commandAndControl", \n"params": [<intent>], "id": "1"}
+FireboltExtn -> Rules Engine: request forward
 Rules Engine -> Thunder Plugin: Request fullfil and respond back
 
-note over Rules Engine, Thunder Plugin: KeyPress request goes to \n WindowManager plugin
+note over Rules Engine, Thunder Plugin: Request goes to \nWindowManager or \nrelated plugin
 
 Thunder Plugin -> Rules Engine: response forward
-Rules Engine -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: "true"}
-Extn-SDK -> Bolt/Linchpin: {id:0, "jsonrpc": "2.0", result: "true"}
-Bolt/Linchpin -> FCS : {id:0, "jsonrpc": "2.0", result: "true"}
+Rules Engine -> FireboltExtn: {id:0, "jsonrpc": "2.0", result: "true"}
+FireboltExtn -> Communication: {id:0, "jsonrpc": "2.0", result: "true"}
+Communication -> DeveloperTools : {id:0, "jsonrpc": "2.0", result: "true"}
+end
+
+group Thunder call for Screen Capture
+DeveloperTools -> Communication: Instructions to execute thunder call \nfor Screen Capture
+Communication -> FireboltExtn: {"jsonrpc": "2.0", "method": "screenCapture", \n"params": [<uploadPath>], "id": "1"}
+FireboltExtn -> Rules Engine: request forward
+Rules Engine -> Thunder Plugin: Request fullfil and respond back
+
+note over Rules Engine, Thunder Plugin: Request goes to \nScreenCapture or \nrelated plugin
+
+Thunder Plugin -> Rules Engine: response forward
+Rules Engine -> FireboltExtn: {id:0, "jsonrpc": "2.0", result: "true"}
+FireboltExtn -> Communication: {id:0, "jsonrpc": "2.0", result: "true"}
+Communication -> DeveloperTools : {id:0, "jsonrpc": "2.0", result: "true"}
 end
 
 group Health Check
-FCS -> Bolt/Linchpin: GetRippleHealthCheckHandler(appId)
-Bolt/Linchpin -> Extn-SDK: {"jsonrpc": "2.0", "method": "healthCheck",\n"params":<appId> "id": "1"}
-Extn-SDK -> Core: request forward
+DeveloperTools -> Communication: Instructions to get platform \nhealth check snapshot
+Communication -> FireboltExtn: {"jsonrpc": "2.0", "method": "healthCheck","id": "1"}
+FireboltExtn -> Core: request forward
 
-note over Extn-SDK: Healthcheck snapshot includes \nRipple process memory, load \nlive connections, \napp performance snapshots etc.
+note over FireboltExtn: Healthcheck snapshot includes \nRipple process memory, load \nlive connections, etc.
 
-Core -> App Service: Request app performance snapshot
 
-note over App Service: Snapshot would \nonly be available \nif platform integrates \nwith gateway
+Core -> FireboltExtn: {id:0, "jsonrpc": "2.0", result: {healthCheckData}
+FireboltExtn -> Communication: {id:0, "jsonrpc": "2.0", result: {healthCheckData}
+Communication -> DeveloperTools : {id:0, "jsonrpc": "2.0", result: {healthCheckData}}
+end
 
-App Service -> Core: {appPerformanceData}
+group App performance snapshot
+DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0", "method": "appPerformance",\n"params":<appId>, "id": "1"}
 
-Core -> Extn-SDK: {id:0, "jsonrpc": "2.0", result: {healthCheckData, \nappPerformanceData}}
-Extn-SDK -> Bolt/Linchpin: {id:0, "jsonrpc": "2.0", result: {healthCheckData, \nappPerformanceData}}
-Bolt/Linchpin -> FCS : {id:0, "jsonrpc": "2.0", result: {healthCheckData, \nappPerformanceData}}
+note over FireboltExtn: App performance snapshot \nincludes memory usage, load etc.
+
+FireboltExtn -> Thunder Plugin: Request fullfil
+Thunder Plugin -> App Service: Request fullfil
+App Service -> Thunder Plugin: {id:0, "jsonrpc": "2.0", \nresult: {appPerformanceData}}
+Thunder Plugin -> Rules Engine: {id:0, "jsonrpc": "2.0", \nresult: {appPerformanceData}}
+Rules Engine -> FireboltExtn: {id:0, "jsonrpc": "2.0", \nresult: {appPerformanceData}}
+FireboltExtn -> DeveloperTools: {id:0, "jsonrpc": "2.0", \nresult: {appPerformanceData}}
+
 end
