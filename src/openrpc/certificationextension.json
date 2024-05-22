@@ -1,0 +1,369 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "CertificationExtension",
+        "description": "CertificationExtension provides various methods to get platform and/or app specific details which would be required for certification.",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "onFireboltInteractions",
+            "summary": "",
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-provides": "xrn:firebolt:capability:certification:fireboltinteractions",
+                    "x-allow-focus": true
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "value",
+                "summary": "Result of the interaction",
+                "schema": {
+                    "$ref": "#/components/schemas/InteractionResult"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Firebolt interaction to acquire platform token",
+                    "params": [],
+                    "result": {
+                        "name": "event",
+                        "value": {
+                            "interactionRequest": {
+                                "id": "1",
+                                "jsonrpc": "2.0",
+                                "method": "token",
+                                "params": {
+                                    "type": "platform"
+                                }
+                            },
+                            "interactionResponse": {
+                                "id": "1",
+                                "jsonrpc": "2.0",
+                                "state": true
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "commandAndControl",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:certification:commandandcontrol"
+                    ]
+                }
+            ],
+            "summary": "Performs interaction and media control on firebolt compatible devices.",
+            "params": [
+                {
+                    "name": "intent",
+                    "required": true,
+                    "summary": "An `PlatformIntent` with details what interaction or control needs to be performed.",
+                    "schema": {
+                        "$ref": "#/components/schemas/PlatformIntent"
+                    }
+                }
+            ],
+            "result": {
+                "name": "success",
+                "summary": "whether the call was successful or not",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Interact with the app and go to Menu screen",
+                    "params": [
+                        {
+                            "name": "intent",
+                            "value": {
+                                "action": "button",
+                                "data": {
+                                    "operation": "menu"
+                                },
+                                "context": {
+                                    "source": "voice"
+                                }
+                            }
+                        }
+                    ],
+                    "result": {
+                        "name": "success",
+                        "value": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "screenCapture",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:certification:screencapture"
+                    ]
+                }
+            ],
+            "summary": "Fetch the current screen on the device and upload to the given server",
+            "params": [
+                {
+                    "name": "uploadPath",
+                    "required": false,
+                    "summary": "An optional `path` where screenshot can be uploaded. If not provided, base64 encoded image stream will be returned in the response.",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "result": {
+                "name": "success",
+                "summary": "whether the call was successful or not",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "name": "Screen capture and sends back the image stream with base64 encoded",
+                    "params": [],
+                    "result": {
+                        "name": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgMBApDPF90AAAAASUVORK5CYII=",
+                        "value": true
+                    }
+                },
+                {
+                    "name": "Screen capture and sends back the status",
+                    "params": [
+                        {
+                            "name": "uploadPath",
+                            "value": "http://example.com/upload"
+                        }
+                    ],
+                    "result": {
+                        "name": "success",
+                        "value": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "healthCheck",
+            "summary": "",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-provides": "xrn:firebolt:capability:certification:healthcheck",
+                    "x-allow-focus": true
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "healthCheckResult",
+                "summary": "Result of the interaction",
+                "schema": {
+                    "$ref": "#/components/schemas/HealthCheckResult"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Snapshots for the device and process",
+                    "params": [],
+                    "result": {
+                        "name": "healthCheckResult",
+                        "value": {
+                            "load": 0.5,
+                            "deviceMemory": 0.5,
+                            "processMemory": 0.5,
+                            "cpu": 0.5,
+                            "connections": 10
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "appPerformance",
+            "summary": "",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-provides": "xrn:firebolt:capability:certification:appperformancedata",
+                    "x-allow-focus": true
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "appPerformanceResult",
+                "summary": "Result of the interaction",
+                "schema": {
+                    "$ref": "#/components/schemas/AppPerformanceSnapshotResult"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Snapshots for the device and process",
+                    "params": [],
+                    "result": {
+                        "name": "appPerformanceResult",
+                        "value": {
+                            "memory": 0.5,
+                            "cpu": 0.5
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "components": {
+        "schemas": {
+            "InteractionResult": {
+                "title": "InteractionResult",
+                "type": "object",
+                "required": [
+                    "interactionRequest",
+                    "interactionResponse"
+                ],
+                "properties": {
+                    "interactionRequest": {
+                        "type": "object",
+                        "required": [
+                            "method",
+                            "params"
+                        ],
+                        "properties": {
+                            "method": {
+                                "type": "string",
+                                "description": "The method name"
+                            },
+                            "params": {
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "description": "JSON object that represents the interaction request"
+                                    },
+                                    {
+                                        "const": null
+                                    }
+                                ]
+                            }
+                        },
+                        "description": "JSON object that represents the interaction request"
+                    },
+                    "interactionResponse": {
+                        "type": "object",
+                        "required": [
+                            "state"
+                        ],
+                        "properties": {
+                            "method": {
+                                "type": "string",
+                                "description": "The method name"
+                            },
+                            "state": {
+                                "type": "boolean",
+                                "description": "The method name"
+                            }
+                        },
+                        "description": "JSON object that represents the state of the interaction response"
+                    }
+                },
+                "examples": [
+                    {
+                        "interactionRequest": {
+                            "id": "1",
+                            "jsonrpc": "2.0",
+                            "method": "token",
+                            "params": {
+                                "type": "platform"
+                            }
+                        },
+                        "interactionResponse": {
+                            "id": "1",
+                            "jsonrpc": "2.0",
+                            "state": true
+                        }
+                    }
+                ]
+            },
+            "PlatformIntent": {
+                "title": "PlatformIntent",
+                "description": "A Firebolt compliant representation of a user intention to interact to a specific place in an app or control the media",
+                "anyOf": [
+                    {
+                        "$ref": "https://meta.comcast.com/firebolt/intents#/definitions/DeviceIntent"
+                    }
+                ]
+            },
+            "HealthCheckResult": {
+                "title": "HealthCheckResult",
+                "description": "Performance and healthcheck snapshot for the device and process which includes load, memory, cpu usage. It also provides total live firebolt connections.",
+                "type": "object",
+                "required": [
+                    "load",
+                    "processMemory",
+                    "cpu",
+                    "deviceMemory",
+                    "connections"
+                ],
+                "properties": {
+                    "load": {
+                        "type": "number",
+                        "description": "The load average of the system"
+                    },
+                    "processMemory": {
+                        "type": "number",
+                        "description": "The memory usage of the process"
+                    },
+                    "cpu": {
+                        "type": "number",
+                        "description": "The cpu usage of the system"
+                    },
+                    "deviceMemory": {
+                        "type": "number",
+                        "description": "The memory usage of the device"
+                    },
+                    "connections": {
+                        "type": "number",
+                        "description": "The total number of live firebolt connections"
+                    }
+                }
+            },
+            "AppPerformanceSnapshotResult": {
+                "title": "AppPerformanceSnapshotResult",
+                "description": "Performance snapshot for the given appId which includes memory usage, cpu usage.",
+                "type": "object",
+                "required": [
+                    "memory",
+                    "cpu"
+                ],
+                "properties": {
+                    "memory": {
+                        "type": "number",
+                        "description": "The memory usage of the app"
+                    },
+                    "cpu": {
+                        "type": "number",
+                        "description": "The cpu usage of the the app"
+                    }
+                }
+            }
+        }
+    }
+}
