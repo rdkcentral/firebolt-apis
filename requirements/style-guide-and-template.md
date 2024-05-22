@@ -6,9 +6,9 @@ See [Firebolt Requirements Governance](./governance.md) for more info.
 
 **NOTE**: Update this link based on your directory depth ^^
 
-| Contributor    | Organization   |
-| -------------- | -------------- |
-| TBD            | TBD            |
+| Contributor | Organization |
+| ----------- | ------------ |
+| TBD         | TBD          |
 
 ## 1. Overview
 This document is both a style guide *and* a template for Firebolt Requirements Specifications.
@@ -24,15 +24,14 @@ Requirements documents are written using the [IETF Best Common Practice 14](http
 The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL NOT**", "**SHOULD**", "**SHOULD NOT**", "**RECOMMENDED**", "**NOT RECOMMENDED**", "**MAY**", and "**OPTIONAL**" in this document are to be interpreted as described in [BCP 14](https://www.rfc-editor.org/rfc/rfc2119.txt) [RFC2119] [RFC8174] when, and only when, they appear in all capitals, as shown here.
 
 ## 2. Table of Contents
-- [Requirements Style Guide](#requirements-style-guide)
-  - [1. Overview](#1-overview)
-  - [2. Table of Contents](#2-table-of-contents)
-  - [3. Specification Style Requirements](#3-specification-style-requirements)
-    - [3.1. General Style Requirements](#31-general-style-requirements)
-    - [3.2. Firebolt Style Requirements](#32-firebolt-style-requirements)
-    - [3.3. Firebolt Method Templates](#33-firebolt-method-templates)
-  - [4. Example Section](#4-example-section)
-    - [4.1. Example Feature](#41-example-feature)
+- [1. Overview](#1-overview)
+- [2. Table of Contents](#2-table-of-contents)
+- [3. Specification Style Requirements](#3-specification-style-requirements)
+  - [3.1. General Style Requirements](#31-general-style-requirements)
+  - [3.2. Firebolt Style Requirements](#32-firebolt-style-requirements)
+  - [3.3. Firebolt Method Templates](#33-firebolt-method-templates)
+- [4. Example Section](#4-example-section)
+  - [4.1. Example Feature](#41-example-feature)
 
 **NOTE**: This is a simple table of contents. It should include links to all headers in the document, except for the top-level header (i.e. `# Title`). It is recommended to use a Markdown plugin to generate this based on headers ranging from level two to level six. Delete this note from your actual spec :)
 

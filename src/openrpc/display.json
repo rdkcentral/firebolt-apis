@@ -122,8 +122,8 @@
             ]
         },
         {
-            "name": "hdrProfilesSupported",
-            "summary": "Returns an array of valid HDR profiles that the display supports.",
+            "name": "hdrProfiles",
+            "summary": "Get all HDR profiles supported by the display.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -134,8 +134,8 @@
             ],
             "params": [],
             "result": {
-                "name": "hdrProfilesSupported",
-                "summary": "An array of valid HDR profiles that the display supports.",
+                "name": "hdrProfiles",
+                "summary": "An array of all valid HDR profiles that the display supports.",
                 "schema": {
                     "type": "array",
                     "items": {

@@ -6,16 +6,16 @@ See [Firebolt Requirements Governance](./governance.md) for more info.
 
 **NOTE**: Update this link based on your directory depth ^^
 
-| Contributor    | Organization   |
-| -------------- | -------------- |
-| Lucien Kennedy-Lamb            | Sky            |
-| Bijal Shah            | Sky            |
-| Yuri Pasquali            | Sky            |
-| Stuart Pett            | Sky            |
-| Wouter Meek            | Comcast            |
-| Jeremy LaCivita            | Comcast            |
-| Kevin Pearson            | Comcast            |
-| Phillip Stroffolino            | Comcast            |
+| Contributor         | Organization |
+| ------------------- | ------------ |
+| Lucien Kennedy-Lamb | Sky          |
+| Bijal Shah          | Sky          |
+| Yuri Pasquali       | Sky          |
+| Stuart Pett         | Sky          |
+| Wouter Meek         | Comcast      |
+| Jeremy LaCivita     | Comcast      |
+| Kevin Pearson       | Comcast      |
+| Phillip Stroffolino | Comcast      |
 
 ## 1. Overview
 
@@ -56,23 +56,22 @@ to the `use` role of the `xrn:firebolt:capability:device:audio-settings` capabil
 generated](../../../../requirements/images/specifications/media/media-pipeline/media/image1.png)
 
 ## 2. Table of Contents
-- [Media Pipeline Requirements](#media-pipeline-requirements)
-  - [1. Overview](#1-overview)
-  - [2. Table of Contents](#2-table-of-contents)
-  - [3. Media Pipeline](#3-media-pipeline)
-    - [3.1. Media Pipeline Commands](#31-media-pipeline-commands)
-    - [3.2. MediaPipeline Notifications](#32-mediapipeline-notifications)
-    - [3.3. Media Pipeline Management](#33-media-pipeline-management)
-  - [4. W3C Media APIs](#4-w3c-media-apis)
-    - [4.1. MediaSource](#41-mediasource)
-    - [4.2. MediaElement](#42-mediaelement)
-  - [5. Supported Media](#5-supported-media)
-    - [5.1. Container formats](#51-container-formats)
-    - [5.2. Video codecs](#52-video-codecs)
-    - [5.3. Audio codecs](#53-audio-codecs)
-  - [6. Supported Decryption](#6-supported-decryption)
-    - [6.1. DRM Key Systems](#61-drm-key-systems)
-    - [6.2. Decryption Schemes](#62-decryption-schemes)
+- [1. Overview](#1-overview)
+- [2. Table of Contents](#2-table-of-contents)
+- [3. Media Pipeline](#3-media-pipeline)
+  - [3.1. Media Pipeline Commands](#31-media-pipeline-commands)
+  - [3.2. MediaPipeline Notifications](#32-mediapipeline-notifications)
+  - [3.3. Media Pipeline Management](#33-media-pipeline-management)
+- [4. W3C Media APIs](#4-w3c-media-apis)
+  - [4.1. MediaSource](#41-mediasource)
+  - [4.2. MediaElement](#42-mediaelement)
+- [5. Supported Media](#5-supported-media)
+  - [5.1. Container formats](#51-container-formats)
+  - [5.2. Video codecs](#52-video-codecs)
+  - [5.3. Audio codecs](#53-audio-codecs)
+- [6. Supported Decryption](#6-supported-decryption)
+  - [6.1. DRM Key Systems](#61-drm-key-systems)
+  - [6.2. Decryption Schemes](#62-decryption-schemes)
 
 ## 3. Media Pipeline
 

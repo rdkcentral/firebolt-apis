@@ -528,7 +528,7 @@
         {
           "name": "deprecated",
           "x-since": "1.2.0",
-          "x-alternative": "Device.hdrProfilesSupported()"
+          "x-alternative": "Device.hdrProfiles()"
         }
       ],
       "params": [],
@@ -589,8 +589,8 @@
       ]
     },
     {
-      "name": "hdrProfilesSupported",
-      "summary": "Get the HDR profiles supported by the device, regardless of any connected display.",
+      "name": "hdrProfiles",
+      "summary": "Get all HDR profiles supported by the device, regardless of any connected display.",
       "tags": [
         {
           "name": "property:readonly"
@@ -604,7 +604,7 @@
       ],
       "params": [],
       "result": {
-        "name": "hdrProfilesSupported",
+        "name": "hdrProfiles",
         "summary": "The supported HDR profiles",
         "schema": {
           "type": "array",
@@ -909,8 +909,8 @@
       ]
     },
     {
-      "name": "videoModesSupported",
-      "summary": "Returns an array of valid video output modes that together the device and display support. Returns an empty array if no display is present.",
+      "name": "videoModes",
+      "summary": "Returns an array of all valid video output modes that both the device and display support.  Returns an empty array if no display is present.",
       "tags": [
         {
           "name": "capabilities",
@@ -921,7 +921,7 @@
       ],
       "params": [],
       "result": {
-        "name": "videoModesSupported",
+        "name": "videoModes",
         "summary": "An array of video output modes",
         "schema": {
           "type": "array",
@@ -950,7 +950,7 @@
           }
         },
         {
-          "name": "Example with no display present",
+          "name": "Example with no display connected",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -1093,7 +1093,7 @@
       ]
     },
     {
-      "name": "isSourceFrameRateUsed",
+      "name": "sourceFrameRateUsed",
       "summary": "Check whether the HDMI output frame rate is set to follow the video source frame rate.",
       "tags": [
         {
@@ -1105,7 +1105,7 @@
       ],
       "params": [],
       "result": {
-        "name": "isSourceFrameRateUsed",
+        "name": "sourceFrameRateUsed",
         "summary": "Whether the HDMI output frame rate is set to follow the video source frame rate.",
         "schema": {
           "type": "boolean"

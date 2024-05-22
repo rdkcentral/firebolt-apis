@@ -9,6 +9,7 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Anthony Borzota | Comcast        |
 | Jeremy LaCivita | Comcast        |
 | Stuart Harris   | Sky            |
+| Joe Martin      | Comcast        |
 | Farhan Mood     | Liberty Global |
 
 ## 1. Overview
@@ -26,8 +27,6 @@ An app may need to check IP video playback that it has initiated to see if Dolby
 A first-party app may need to check all [Media Pipelines](./media-pipeline.md) for media format characteristics to display a global badge.
 
 Additionally, apps may need to know what is supported by the device, *before* initiating any media playback.
-
-As a W3C-based platform, there is no standard API for detecting media formats or codecs that works in all cases, short of inspecting the bytes of the media in the app itself.
 
 To solve this, Firebolt APIs will be created to detect the formats and codecs currently being decoded by the [Media Pipeline](./media-pipeline.md).  Firebolt APIs will also be created to query whether the device supports playing content of various formats.
 
@@ -60,47 +59,46 @@ I want to show an audio/videophile overlay with detailed information:
 
 ## 2. Table of Contents
 
-- [Media Info Requirements](#media-info-requirements)
-  - [1. Overview](#1-overview)
-    - [1.1. User Stories](#11-user-stories)
-    - [1.2. As an OTT App developer](#12-as-an-ott-app-developer)
-    - [1.3. As a first-party App developer](#13-as-a-first-party-app-developer)
-  - [2. Table of Contents](#2-table-of-contents)
-  - [3. Media Constants and Schemas](#3-media-constants-and-schemas)
-    - [3.1. Media Container Types](#31-media-container-types)
-    - [3.2. Media Codecs](#32-media-codecs)
-    - [3.3. Resolutions](#33-resolutions)
-    - [3.4. Resolution User-Friendly Name](#34-resolution-user-friendly-name)
-    - [3.5. Video Modes](#35-video-modes)
-    - [3.6. Media HDR Profiles](#36-media-hdr-profiles)
-    - [3.7. Color Depth](#37-color-depth)
-  - [4. Device Media Support](#4-device-media-support)
-    - [4.1. Video Format Supported](#41-video-format-supported)
-      - [4.1.1. Audio Format Supported](#411-audio-format-supported)
-  - [5. Display Properties](#5-display-properties)
-    - [5.1. Supported HDR Profiles](#51-supported-hdr-profiles)
-    - [5.2. Supported Color Depth](#52-supported-color-depth)
-    - [5.3. Display Size](#53-display-size)
-    - [5.4. Display Resolution](#54-display-resolution)
-    - [5.5. Display Resolution Name](#55-display-resolution-name)
-    - [5.5. Refresh Rate](#55-refresh-rate)
-    - [6. Device Properties](#6-device-properties)
-    - [6.1. Current Video Mode](#61-current-video-mode)
-    - [6.1. Video Modes Supported](#61-video-modes-supported)
-    - [6.2 Video Resolution](#62-video-resolution)
-    - [6.2 Current HDR Profile](#62-current-hdr-profile)
-    - [6.3 Supported HDR Profiles](#63-supported-hdr-profiles)
-    - [6.4 Supported HDCP Version](#64-supported-hdcp-version)
-    - [5.6. Is Source Frame Rate Used](#56-is-source-frame-rate-used)
-  - [6. Audio Output Properties](#6-audio-output-properties)
-    - [6.1. Mode](#61-mode)
-  - [7. Media Info](#7-media-info)
-    - [7.1. MediaInfo for Current App](#71-mediainfo-for-current-app)
-      - [7.1.1. Video Format](#711-video-format)
-      - [7.1.2. Audio Format](#712-audio-format)
-    - [7.2. Global MediaInfo](#72-global-mediainfo)
-      - [7.2.1. Active Video Formats](#721-active-video-formats)
-      - [7.2.2. Active Audio Formats](#722-active-audio-formats)
+- [1. Overview](#1-overview)
+  - [1.1. User Stories](#11-user-stories)
+  - [1.2. As an OTT App developer](#12-as-an-ott-app-developer)
+  - [1.3. As a first-party App developer](#13-as-a-first-party-app-developer)
+- [2. Table of Contents](#2-table-of-contents)
+- [3. Media Constants and Schemas](#3-media-constants-and-schemas)
+  - [3.1. Media Container Types](#31-media-container-types)
+  - [3.2. Media Codecs](#32-media-codecs)
+  - [3.3. Resolutions](#33-resolutions)
+  - [3.4. Resolution User-Friendly Name](#34-resolution-user-friendly-name)
+  - [3.5. Video Modes](#35-video-modes)
+  - [3.6. Media HDR Profiles](#36-media-hdr-profiles)
+  - [3.7. Color Depth](#37-color-depth)
+- [4. Device Media Support](#4-device-media-support)
+  - [4.1. Video Format Supported](#41-video-format-supported)
+  - [4.2. Audio Format Supported](#42-audio-format-supported)
+- [5. Display Properties](#5-display-properties)
+  - [5.1. Supported HDR Profiles](#51-supported-hdr-profiles)
+  - [5.2. Supported Color Depth](#52-supported-color-depth)
+  - [5.3. Display Size](#53-display-size)
+  - [5.4. Display Resolution](#54-display-resolution)
+  - [5.5. Display Resolution Name](#55-display-resolution-name)
+  - [5.6. Refresh Rate](#56-refresh-rate)
+- [6. Device Properties](#6-device-properties)
+  - [6.1. Current Video Mode](#61-current-video-mode)
+  - [6.2. Video Modes Supported](#62-video-modes-supported)
+  - [6.3. Video Resolution](#63-video-resolution)
+  - [6.4. Current HDR Profile](#64-current-hdr-profile)
+  - [6.5. Supported HDR Profiles](#65-supported-hdr-profiles)
+  - [6.6. Supported HDCP Version](#66-supported-hdcp-version)
+  - [6.7. Source Frame Rate Used](#67-source-frame-rate-used)
+- [7. Audio Output Properties](#7-audio-output-properties)
+  - [7.1. Mode](#71-mode)
+- [7. Media Info](#7-media-info)
+  - [7.1. MediaInfo for Current App](#71-mediainfo-for-current-app)
+    - [7.1.1. Video Format](#711-video-format)
+    - [7.1.2. Audio Format](#712-audio-format)
+  - [7.2. Global MediaInfo](#72-global-mediainfo)
+    - [7.2.1. Active Video Formats](#721-active-video-formats)
+    - [7.2.2. Active Audio Formats](#722-active-audio-formats)
 
 ## 3. Media Constants and Schemas
 
@@ -108,39 +106,38 @@ I want to show an audio/videophile overlay with detailed information:
 
 The Firebolt `Media` module **MUST** have an `AudioContainer` enumeration of the following media container content types:
 
-- `audio/mpeg`
 - `audio/mp4`
+- `audio/mpeg`
 - `audio/ogg`
 - `audio/webm`
 
 The Firebolt `Media` module **MUST** have a `VideoContainer` enumeration of the following media container content types:
 
-- `video/mpeg`
 - `video/mp2t`
 - `video/mp4`
+- `video/mpeg`
 - `video/webm`
 
 ### 3.2. Media Codecs
 
 The Firebolt `Media` module **MUST** have an `AudioCodec` enumeration:
 
-| Name       | Value                                |
-|------------|--------------------------------------|
-| `aac`      | Advanced Audio Coding                |
-| `ac3`      | Dolby Digital / Dolby Audio Codec 3  |
-| `ac3plus`  | AC3 Plus (Dolby Digital Plus or DD+) |
-| `ac4`      | Dolby Audio Codec 4                  |
-| `dts-x`    | Digital Theater Systems X            |
-| `eac3`     | Dolby Enhanced AC-3                  |
-| `mpeg3`    | MPEG-1 Part 3 & MPEG-2 Part 3        |
-| `opus`     | IETF Opus                            |
-| `truehd`   | Dolby TrueHD                         |
-| `vorbis`   | Xiph.org Vorbis                      |
+| Name     | Value                                          |
+| -------- | ---------------------------------------------- |
+| `aac`    | Advanced Audio Coding                          |
+| `ac3`    | Dolby Digital / Dolby Audio Codec 3            |
+| `ac4`    | Dolby Audio Codec 4                            |
+| `dts-x`  | Digital Theater Systems X                      |
+| `eac3`   | Dolby Digital Plus / Dolby Enhanced AC-3 / DD+ |
+| `mpeg3`  | MPEG-1 Part 3 & MPEG-2 Part 3                  |
+| `opus`   | IETF Opus                                      |
+| `truehd` | Dolby TrueHD                                   |
+| `vorbis` | Xiph.org Vorbis                                |
 
 The Firebolt `Media` module **MUST** have a `VideoCodec` enumeration:
 
 | Name    | Description                          |
-|---------|--------------------------------------|
+| ------- | ------------------------------------ |
 | `avc`   | Advanced Video Coding (H.264)        |
 | `hevc`  | High Efficiency Video Coding (H.265) |
 | `mpeg1` | MPEG-1 Part 2 Visual                 |
@@ -162,7 +159,7 @@ Any methods relating to a resolution (such as the supported resolution of a disp
 The Firebolt `Media` module **MUST** have a `ResolutionName` enumeration:
 
 | Class     | Applicable Resolutions |
-|-----------|------------------------|
+| --------- | ---------------------- |
 | `sd`      | `576p` and lower       |
 | `hd`      | `720p`                 |
 | `fhd`     | `1080p`                |
@@ -245,13 +242,13 @@ The `videoFormatSupported` API **MUST** have a required `codec` parameter with t
 
 The `videoFormatSupported` API **MUST** have an optional `info` parameter which **MUST** be an object with zero or more of the following properties:
 
-| Property     | Type                   | Description |
-|--------------|------------------------|-------------|
-| `container`  | `Media.VideoContainer` | The content container format |
-| `hdr`        | `Media.HDRProfile`     | The HDR profile that support is being checked for |
+| Property     | Type                   | Description                                                                                                   |
+| ------------ | ---------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `container`  | `Media.VideoContainer` | The content container format                                                                                  |
+| `hdr`        | `Media.HDRProfile`     | The HDR profile that support is being checked for                                                             |
 | `level`      | `string`               | The codec level: <br>**hevc**: `4.1`, `4.2`, `5.0`, `5.1`<br>**vp9**:`3.0`, `3.1`, `4.0`, `4.1`, `5.0`, `5.1` |
-| `profile`    | `string`               | The codec profile: <br>**hevc**: `main`, `high`, `main10`<br>**vp9**: `p0`, `p2` |
-| `resolution` | `array`               | The resolution in width and height (e.g. `[1920, 1080]`) of the media content being requested |
+| `profile`    | `string`               | The codec profile: <br>**hevc**: `main`, `high`, `main10`<br>**vp9**: `p0`, `p2`                              |
+| `resolution` | `array`                | The resolution in width and height (e.g. `[1920, 1080]`) of the media content being requested                 |
 
 > **NOTE**: A device supporting a particular HDR profile and resolution does not mean that the current display also supports that profile and resolution. See `Display.hdrProfilesSupported()` for more info on detecting display HDR support.
 
@@ -259,7 +256,7 @@ The `videoFormatSupported` API **MUST NOT** return `true` unless the format spec
 
 Use of the `videoFormatSupported` API requires access to the `use` role of the `xrn:firebolt:capability:device:info` capability.
 
-#### 4.1.1. Audio Format Supported
+### 4.2. Audio Format Supported
 
 The `Device` module **MUST** have an `audioFormatSupported` API that returns `true` or `false` depending on whether the format specified is supported by the current device configuration and its AV chain. This API **MUST** return a `boolean`.
 
@@ -277,15 +274,15 @@ The `audioFormatSupported` API **MUST** have a required `codec` parameter with t
 
 The `audioFormatSupported` API **MUST** have an optional `options` parameter which **MUST** be an object with zero or more of the following properties:
 
-| Property       | Type                    | Description |
-|----------------|-------------------------|-------------|
-| `atmos`        | `boolean`               | Whether or not Dolby Atmos support for the given format is being requested |
-| `channels`     | `int`                   | Required number of audio channels |
-| `codecLevel`   | `string`                | The codec level |
-| `codecProfile` | `string`                | The codec profile: <br>**aac**: `mp2lc`, `mp4he` |
-| `container`    | `Media.Container`       | The container format type |
+| Property       | Type                    | Description                                                                                                     |
+| -------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `atmos`        | `boolean`               | Whether or not Dolby Atmos support for the given format is being requested                                      |
+| `channels`     | `int`                   | Required number of audio channels                                                                               |
+| `codecLevel`   | `string`                | The codec level                                                                                                 |
+| `codecProfile` | `string`                | The codec profile: <br>**aac**: `mp2lc`, `mp4he`                                                                |
+| `container`    | `Media.Container`       | The container format type                                                                                       |
 | `mode`         | `Media.AudioOutputMode` | Specify which mode should be used to evaluate the request. Defaults to the current audio mode if not specified. |
-| `sampleRate`   | `number`                | The sample rate being requested, in kHz |
+| `sampleRate`   | `number`                | The sample rate being requested, in kHz                                                                         |
 
 If the `options` parameter is provided, then the `audioFormatSupported` API **MUST NOT** return `true` unless the format specified is supported with **all** of the properties specified by `options` *all at the same time*.
 
@@ -329,13 +326,13 @@ The `Display` module **MUST** have a `resolutionName` method that returns a user
 
 If no display is present, a value of `unknown` is returned.
 
-### 5.5. Refresh Rate
+### 5.6. Refresh Rate
 
 The `Display` module **MUST** have a `refreshRate` method that returns an number value for the refresh rate that the display supports (in Hz).
 
 If no display is present, a value of zero is returned.
 
-### 6. Device Properties
+## 6. Device Properties
 
 Apps need to know various aspects of the device, including its media playing capabilities.
 
@@ -351,29 +348,29 @@ This method **MUST** return a value from the `Media.VideoMode` enum.
 
 If no display is present, a value of `unknown` is returned.
 
-### 6.1. Video Modes Supported
+### 6.2. Video Modes Supported
 
 The `Device` module **MUST** have a `videoModesSupported` method that returns an array of valid video modes that the device supports, regardless of any connected display.
 
 This method **MUST** return an array with one or more values from the `Media.VideoMode` enum.
 
-### 6.2 Video Resolution
+### 6.3. Video Resolution
 
 The `Device` module **MUST** have a `videoResolution` method that returns the width and height of the current video output resolution.
 
 If no display is present, both returned values **MUST** be zero.
 
-### 6.2 Current HDR Profile
+### 6.4. Current HDR Profile
 
 The `Device` module **MUST** have a `hdrProfile` method that returns the HDR profile currently used by the device for video output.
 
 This method **MUST** return a value from the `Media.HDRProfile` enum.
 
-### 6.3 Supported HDR Profiles
+### 6.5. Supported HDR Profiles
 
 The `Device` module **MUST** have an `hdrProfilesSupported` method that returns the HDR profiles that the device supports, regardless of any connected display.
 
-### 6.4 Supported HDCP Version
+### 6.6. Supported HDCP Version
 
 The `Device` module **MUST** have a `hdcpVersionSupported` method that returns the latest HDCP version supported by the device.
 
@@ -383,22 +380,22 @@ This method **MUST** return a value such as:
 - `2.2`
 - `unknown`
 
-### 5.6. Is Source Frame Rate Used
+### 6.7. Source Frame Rate Used
 
-The `Device` module **MUST** have a boolean `isSourceFrameRateUsed` API.
+The `Device` module **MUST** have a boolean `sourceFrameRateUsed` API.
 
 This API **MUST** return `true` if the HDMI output frame rate is set to follow video source frame rate.
 
 Otherwise, this API **MUST** return `false`.
 
-## 6. Audio Output Properties
+## 7. Audio Output Properties
 Apps need to know various aspects of the current (or built in) audio output system on a device.
 
 These will be surfaced in a new `AudioOutput` module.
 
 Access to these APIs is governed by the `xrn:firebolt:capability:audio-output:info` capability.
 
-### 6.1. Mode
+### 7.1. Mode
 
 The `AudioOutput` module **MUST** include a `mode` string API that returns an `Media.AudioOutputMode` enum that is one of the following values:
 
