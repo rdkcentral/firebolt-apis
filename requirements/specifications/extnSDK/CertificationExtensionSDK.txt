@@ -15,7 +15,7 @@ note over Plugin: e.g. \nWindow Manager \nScreenshot Capture
 
 
 group Firebolt Interactions
-DeveloperTools -> FireboltExtn: {"jsonrpc":"2.0","method":"certsdk.onFireboltInterections", \n"params":{"listen":true},"id":1}
+DeveloperTools -> FireboltExtn: {"jsonrpc":"2.0","method":"onFireboltInterections", \n"params":{"listen":true},"id":1}
 
 FireboltExtn -> DeveloperTools: {"jsonrpc":"2.0", "id":1,"result":{"listening":true,\n"event":"onFireboltInterections"}}
 
