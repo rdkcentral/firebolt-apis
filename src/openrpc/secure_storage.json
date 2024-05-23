@@ -318,7 +318,7 @@
       },
       "examples": [
         {
-          "name": "Set a refresh token with name authRefreshToken with optional paramter for appId foo",
+          "name": "Set a refresh token with name authRefreshToken with optional parameter for appId foo",
           "params": [
             {
               "name": "appId",

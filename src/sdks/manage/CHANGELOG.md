@@ -1,3 +1,62 @@
+# [1.1.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0...v1.1.0) (2024-02-09)
+
+### Bug Fixes
+
+    * Modified account:uid to SHOULD (#224 (https://github.com/rdkcentral/firebolt-apis/issues/224)) (70c8b24 (https://github.com/rdkcentral/firebolt-apis/commit/70c8b24decfcbff2c32fb1b0d21290afc00a8432))
+
+### Features
+
+    * HDMI Low Latency Mode (#156 (https://github.com/rdkcentral/firebolt-apis/issues/156)) (06d3624 (https://github.com/rdkcentral/firebolt-apis/commit/06d3624b69ee0529d4c1a1c78a15dbfdf54c8b16))
+
+# [1.0.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1...v1.0.0) (2023-11-03)
+
+Upgraded to 1.0 at part of RDK6 release. This API is still compatibile with 0.x versions.
+
+### Bug Fixes
+
+    * Account.session params to be mandatory (#196 (https://github.com/rdkcentral/firebolt-apis/issues/196)) (fc5c638 (https://github.com/rdkcentral/firebolt-apis/commit/fc5c63886d9b4eb30b32c1edc75f0f6afe80a827))
+    * CI looking for legacy 0.x version (923d02a (https://github.com/rdkcentral/firebolt-apis/commit/923d02ae96716a5272c5507e864f366012824642))
+    * Permission schema with Capability as required (74d9de9 (https://github.com/rdkcentral/firebolt-apis/commit/74d9de9b125baffb415e11ba3888c1c464cf5b12))
+    * Provider error (#202 (https://github.com/rdkcentral/firebolt-apis/issues/202)) (4666a5e (https://github.com/rdkcentral/firebolt-apis/commit/4666a5ee56846f14dd1ba79dab82891505b5a2ec))
+    * schemas version upgraded to 2.0.0-next.1 (#199 (https://github.com/rdkcentral/firebolt-apis/issues/199)) (b0fb8cf (https://github.com/rdkcentral/firebolt-apis/commit/b0fb8cfbda6bbef055000dc9911f344ab9ee8771))
+    * Update schemas & 1.0.0 version! (#200 (https://github.com/rdkcentral/firebolt-apis/issues/200)) (ea29f33 (https://github.com/rdkcentral/firebolt-apis/commit/ea29f3323a22ffa36904bdc6cf6e76a31fa8cb76))
+    * Updated metrics:distributor capability to could (#185 (https://github.com/rdkcentral/firebolt-apis/issues/185)) (9ca2206 (https://github.com/rdkcentral/firebolt-apis/commit/9ca2206a2dca7149dcf93df3d303806d136785ed))
+
+### Features
+  
+    * Added optional parameter 'force' in usergrants.request (#186 (https://github.com/rdkcentral/firebolt-apis/issues/186)) (31801ca (https://github.com/rdkcentral/firebolt-apis/commit/31801caec6bea0e8b295ea6a9ec54ca1d8e08d16))
+
+# [0.17.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.0...v0.17.1) (2023-09-15)
+
+### Bug Fixes
+
+fix: Add enumerated values for fontFamily/fontEdge (#181)
+
+# [0.17.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.16.0...v0.17.0) (2023-09-07)
+
+### Bug Fixes
+
+* fix: Using 3 letter ISO639 language codes ([#173](https://github.com/rdkcentral/firebolt-apis/issues/173))
+
+# [0.16.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.15.0...v0.16.0) (2023-08-14)
+
+### Features
+
+* Added Manage APIs for `windlowColor` and `windowOpacity` ([#157](https://github.com/rdkcentral/firebolt-apis/issues/157)) ([f508358](https://github.com/rdkcentral/firebolt-apis/commit/f508358aeb2f58bb3893bbfaf09e2340fcadac8f))
+
+# [0.15.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.14.0...v0.15.0) (2023-07-31)
+
+### Bug Fixes
+
+* Rename Advisory "Committee" to "Board" ([#135](https://github.com/rdkcentral/firebolt-apis/issues/135)) ([ef410c4](https://github.com/rdkcentral/firebolt-apis/commit/ef410c43bbb32414c3aa1d11b43093565cc90edf))
+* window fix from firebolt-openrpc 2.0.3 ([8c06dd1](https://github.com/rdkcentral/firebolt-apis/commit/8c06dd1432822719f5634e2877b36efdf02a4809))
+
+### Features
+
+* **Nullable CC Styles** Added support to set and get null in ClosedCaptions style fields ([#150](https://github.com/rdkcentral/firebolt-apis/issues/150)) ([9c511e4](https://github.com/rdkcentral/firebolt-apis/commit/9c511e4fddebcdf5dfc04e9e8e31f98ab7eef680))
+* **Window CC Styles** Added windowColor and windowOpacity to closedCaptions style ([#145](https://github.com/rdkcentral/firebolt-apis/issues/145)) ([f65b901](https://github.com/rdkcentral/firebolt-apis/commit/f65b9019bda22400df9b9634c332e720db38118d))
+* **Audio Descriptions** Audio Description and Preferred Audio Languages Settings ([#45](https://github.com/rdkcentral/firebolt-apis/issues/45)) ([58f6ea1](https://github.com/rdkcentral/firebolt-apis/commit/58f6ea1dde7a819883eb3da24f879b6a9ecc9a41))
+
 # [0.14.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.13.0...v0.14.0) (2023-06-22)
 
 ### Bug Fixes

@@ -49,6 +49,15 @@
             ]
         },
         {
+            "module": "AudioDescriptions",
+            "use": [
+                "xrn:firebolt:capability:accessibility:audiodescriptions"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:accessibility:audiodescriptions"
+            ]
+        },
+        {
             "module": "VoiceGuidance",
             "use": [
                 "xrn:firebolt:capability:accessibility:voiceguidance"
@@ -131,6 +140,15 @@
             "module": "Discovery",
             "manage": [
                 "xrn:firebolt:capability:discovery:sign-in-status"
+            ]
+        },
+        {
+            "module": "HDMIInput",
+            "use": [
+                "xrn:firebolt:capability:inputs:hdmi"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:inputs:hdmi"
             ]
         }
     ]

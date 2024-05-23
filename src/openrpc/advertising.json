@@ -158,7 +158,16 @@
         }
       ],
       "summary": "Get the advertising ID",
-      "params": [],
+      "params": [
+        {
+          "name": "options",
+          "summary": "AdvertisingId options",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/AdvertisingIdOptions"
+          }
+        }
+      ],
       "result": {
         "name": "advertisingId",
         "summary": "the advertising ID",
@@ -184,6 +193,50 @@
         {
           "name": "Getting the advertising ID",
           "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "ifa": "01234567-89AB-CDEF-GH01-23456789ABCD",
+              "ifa_type": "idfa",
+              "lmt": "0"
+            }
+          }
+        },
+        {
+          "name": "Getting the advertising ID with scope browse",
+          "params": [
+            {
+              "name": "options",
+              "value": {
+                "scope": {
+                  "type": "browse",
+                  "id": "paidPlacement"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "ifa": "01234567-89AB-CDEF-GH01-23456789ABCD",
+              "ifa_type": "idfa",
+              "lmt": "0"
+            }
+          }
+        },
+        {
+          "name": "Getting the advertising ID with scope content",
+          "params": [
+            {
+              "name": "options",
+              "value": {
+                "scope": {
+                  "type": "content",
+                  "id": "metadata:linear:station:123"
+                }
+              }
+            }
+          ],
           "result": {
             "name": "Default Result",
             "value": {
@@ -320,6 +373,35 @@
           "authenticationEntity": {
             "type": "string",
             "description": "The authentication provider, when it is separate entity than the app provider, e.g. an MVPD."
+          }
+        }
+      },
+      "AdvertisingIdOptions": {
+        "title": "AdvertisingIdOptions",
+        "type": "object",
+        "properties": {
+          "scope": {
+            "type": "object",
+            "description": "Provides the options to send scope type and id to select desired advertising id",
+            "required": [
+              "type",
+              "id"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "browse",
+                  "content"
+                ],
+                "default": "browse",
+                "description": "The scope type, which will determine where to show advertisement"
+              },
+              "id": {
+                "type": "string",
+                "description": "A value that identifies a specific scope within the scope type"
+              }
+            }
           }
         }
       }
