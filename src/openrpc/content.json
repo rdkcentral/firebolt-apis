@@ -10,9 +10,6 @@
             "name": "requestUserInterest",
             "tags": [
                 {
-                    "name": "push-pull"
-                },
-                {
                     "name": "capabilities",
                     "x-provided-by": "Discovery.onRequestUserInterest",
                     "x-uses": [
