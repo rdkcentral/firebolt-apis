@@ -108,8 +108,8 @@ The platform method result schema **MUST** either:
 >
 > or
 > 
-> Have a property that matches the `x-response` schema on the provider method so that the result can
-> be composed and passed through.
+> Have a property that matches the `x-response-name` string and `x-response` schema on the
+> provider method so that the result can be composed and passed through.
 
 The platform **MUST** call the provider method from the [best candidate](#8-best-candidate) app and acquire the result.
 
@@ -130,7 +130,7 @@ The platform method result schema **MUST** either:
 
 > Match the *last* parameter schema on the provider method so that the result can be passed through.
 >
-> Have a property that matches the *last* parameter schema on the provider method so that the result can be passed through.
+> Have a property that matches the *last* parameter name and schema on the provider method so that the result can be passed through.
 
 Example platform method with context:
 ```json
@@ -210,6 +210,8 @@ When a provider app calls a provider method mapped to an event the platform **MU
 If the platform method result schema matches the *last* parameter schema on the provider method then the value **MUST** be used as-is.
 
 Otherwise if the platform method result schema has a property that matches the *last* parameter schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the composed result.
+
+If the value was composed into the platform method result under a matching property, then any context parameter values from the provider method that correspond to a property name and schema in the platform method result **MUST** also be composed into the platform method result under those properties.
 
 Finally the platform **MUST** dispatch the notification to the app that registered for the event via the original platform method, using all but the last parameter as context.
 

@@ -1555,6 +1555,7 @@
 				},
 				{
 					"name": "event",
+          "x-response-name": "entity",
 					"x-response": {
 						"$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails",
 						"examples": [
