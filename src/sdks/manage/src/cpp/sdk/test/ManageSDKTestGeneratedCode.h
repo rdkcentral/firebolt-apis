@@ -16,20 +16,25 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef CORESDK_C_TESTS_H
-#define CORESDK_C_TESTS_H
+#pragma once
 
-#include <OpenRPCCTests.h>
+#include "error.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+class ManageSDKTestGeneratedCode {
 
-int32_t test_firebolt_core_main();
-int32_t test_properties_get_policy();
+public:
+    ManageSDKTestGeneratedCode() = default;
+    virtual ~ManageSDKTestGeneratedCode() = default;
 
-#ifdef __cplusplus
-}
-#endif
+    static void CreateFireboltInstance();
+    static void DestroyFireboltInstance();
+    static void TestManageStaticSDK();
+    static void GetDeviceName();
+    static void SetDeviceName();
+    static bool WaitOnConnectionReady();
 
-#endif //CORESDK_C_TESTS_H
+private:
+    static void ConnectionChanged(const bool, const Firebolt::Error);
+    static bool _connected;
+};
+
