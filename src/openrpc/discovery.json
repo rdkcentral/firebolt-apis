@@ -1949,6 +1949,10 @@
       "UserInterestProviderParameters": {
         "title": "UserInterestProviderParameters",
         "type": "object",
+        "required": [
+          "type",
+          "reason"
+        ],
         "properties": {
           "type": {
             "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
