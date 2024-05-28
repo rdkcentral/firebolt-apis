@@ -132,7 +132,7 @@ An app **MUST** have permissions to `use` the
 listen to the `Content.onUserInterest` notification.
 
 If the result is not a valid entity, i.e. does not match
-the [EntityDetails](../entities/) schema, then no `Content.onUserInterestedIn`
+the [EntityDetails](../entities/) schema, then no `Content.onUserInterest`
 notification will be dispatched.
 
 The `Discovery.userInterest` method **SHOULD NOT** be used in place of more

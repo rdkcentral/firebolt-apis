@@ -432,7 +432,7 @@
         {
           "name": "deprecated",
           "x-alternative": "Discovery.purchases"
-        }        
+        }
       ],
       "summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
       "params": [
@@ -1534,9 +1534,7 @@
                   "entityType": "program",
                   "programType": "movie"
                 },
-                "info": {
-
-                }
+                "info": {}
               }
             }
           ],
@@ -1547,19 +1545,19 @@
         }
       ]
     },
-		{
-			"name": "Discovery.onRequestUserInterest",
-			"tags": [
-				{
-					"name": "rpc-only"
-				},
-				{
-					"name": "event",
+    {
+      "name": "Discovery.onRequestUserInterest",
+      "tags": [
+        {
+          "name": "rpc-only"
+        },
+        {
+          "name": "event",
           "x-response-name": "entity",
-					"x-response": {
-						"$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails",
-						"examples": [
-							{
+          "x-response": {
+            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails",
+            "examples": [
+              {
                 "identifiers": {
                   "entityId": "345",
                   "entityType": "program",
@@ -1580,54 +1578,54 @@
                     }
                   ]
                 }
-							}
-						]            
-					}
-				},
-				{
-					"name": "capabilities",
-					"x-provides": "xrn:firebolt:capability:discovery:interest"
-				}
-			],
-			"summary": "Provide information about the entity currently displayed or selected on the screen.",
-			"description": "Provide information about the entity currently displayed or selected on the screen.",
-			"params": [],
-			"result": {
-				"name": "request",
-				"schema": {
-							"type": "object",
-							"required": [
-								"correlationId",
-								"parameters"
-							],
-							"properties": {
-								"correlationId": {
-									"type": "string"
-								},
-								"parameters": {
-									"$ref": "#/components/schemas/UserInterestProviderParameters"
-								}
-							},
-							"additionalProperties": false
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [],
-					"result": {
-						"name": "request",
-						"value": {
-							"correlationId": "xyz",
-							"parameters": {
-								"type": "interest",
-								"reason": "playlist"
-							}
-						}
-					}
-				}
-			]
-		}    
+              }
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:discovery:interest"
+        }
+      ],
+      "summary": "Provide information about the entity currently displayed or selected on the screen.",
+      "description": "Provide information about the entity currently displayed or selected on the screen.",
+      "params": [],
+      "result": {
+        "name": "request",
+        "schema": {
+          "type": "object",
+          "required": [
+            "correlationId",
+            "parameters"
+          ],
+          "properties": {
+            "correlationId": {
+              "type": "string"
+            },
+            "parameters": {
+              "$ref": "#/components/schemas/UserInterestProviderParameters"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "request",
+            "value": {
+              "correlationId": "xyz",
+              "parameters": {
+                "type": "interest",
+                "reason": "playlist"
+              }
+            }
+          }
+        }
+      ]
+    }
   ],
   "components": {
     "schemas": {
