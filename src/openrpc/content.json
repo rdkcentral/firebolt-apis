@@ -13,7 +13,7 @@
                     "name": "capabilities",
                     "x-provided-by": "Discovery.onRequestUserInterest",
                     "x-uses": [
-                        "xrn:firebolt:capability:discovery:user-interest"
+                        "xrn:firebolt:capability:discovery:interest"
                     ]
                 }
             ],
@@ -96,7 +96,7 @@
                     "name": "capabilities",
                     "x-provided-by": "Discovery.userInterest",
                     "x-uses": [
-                        "xrn:firebolt:capability:discovery:user-interest"
+                        "xrn:firebolt:capability:discovery:interest"
                     ]
                 }
             ],

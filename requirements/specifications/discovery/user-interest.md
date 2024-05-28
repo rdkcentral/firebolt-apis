@@ -54,6 +54,7 @@ track of which apps are using them separately.
 - [3. User Interest Flows](#3-user-interest-flows)
   - [3.1. User Interest from an in-app UX](#31-user-interest-from-an-in-app-ux)
   - [3.2. User Interest from a platform UX](#32-user-interest-from-a-platform-ux)
+    - [User Interest Errors](#user-interest-errors)
   - [3.3. Upstream User Interest Intent](#33-upstream-user-interest-intent)
   - [3.4. User Interest Bulk Updates](#34-user-interest-bulk-updates)
 - [4. Core SDK APIs](#4-core-sdk-apis)
@@ -130,7 +131,7 @@ An app **MUST** have permissions to `use` the
 `xrn:firebolt:capability:discovery:interest` capability in order to 
 listen to the `Content.onUserInterest` notification.
 
-If the result is `null` or is not a valid entity, i.e. does not match
+If the result is not a valid entity, i.e. does not match
 the [EntityDetails](../entities/) schema, then no `Content.onUserInterestedIn`
 notification will be dispatched.
 
@@ -187,6 +188,51 @@ If the provider app returns a valid `EntityDetails` before the timeout,
 then, the returned value **MUST** be used.
 
 If there is no app registered the an error **MUST** be returned.
+
+#### User Interest Errors
+An app is expected return either a valid result or an appriate error.
+
+If neither happens before `interestTimeout` expires then the platform **MUST** return a Provider timed-out error:
+
+```json
+{
+  "id": 1,
+  "error": {
+    "code": -50400,
+    "message": "Provider timed-out",
+    "data": {
+      "capability": "xrn:firebolt:capability:discovery:interest",
+    }
+  }
+}
+```
+
+If an app recieves a request for user interest when there is nothing appropriate to return, e.g. nothing selected or presented that maps to an Entity, then the app **SHOULD** return an error with a valid JSON-RPC error response, e.g.:
+
+```json
+{
+  "id": 1,
+  "error": {
+    "code": -40400,
+    "message": "No entities currently presented."
+  }
+}
+```
+
+The platform API Gateway **MUST** append, or overwrite, the `data.capability` value to any errors returned by the app, e.g.:
+
+```json
+{
+  "id": 1,
+  "error": {
+    "code": -40400,
+    "message": "No entities currently presented.",
+    "data": {
+      "capability": "xrn:firebolt:capability:discovery:interest",
+    }
+  }
+}
+```
 
 ### 3.3. Upstream User Interest Intent
 In some cases, e.g. a voice assistant, some upstream component will inform
