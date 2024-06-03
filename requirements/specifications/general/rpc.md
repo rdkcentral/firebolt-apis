@@ -279,7 +279,7 @@ If a Firebolt App has registered as a capability provider, e.g. "xrn:firebolt:ca
 The app **MUST** respond either either a result or an error.
 
 #### 3.4.1. Interface OpenRPC Extension
-The Platform provider registration API **MUST** have a `provider` tag and an `x-interface` string parameter denoting the name of the interface from the Application OpenRPC that this registration API is enabling.
+The Platform provider registration API **MUST** have a `registration` tag and an `x-interface` string parameter denoting the name of the interface from the Application OpenRPC that this registration API is enabling.
 
 ```json
 {
@@ -291,7 +291,7 @@ The Platform provider registration API **MUST** have a `provider` tag and an `x-
             "name": "Sky.provideSun",
             "tags": [
 				{
-					"name": "provider",
+					"name": "registration",
                     "x-interface": "Sun"
 				}
             ],
@@ -330,6 +330,13 @@ The Application OpenRPC definition for the interface **MUST** have one or more m
         },
         {
             "name": "Sun.set",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-provides": "xrn:firebolt:capability:sky:sun",
+                    "x-allow-focus": true
+                }
+            ],
             "params": []
         }
     ]
@@ -366,7 +373,7 @@ The Firebolt Implementation OpenRPC would include:
             "name": "Lifecycle.provideApplication",
             "tags": [
 				{
-					"name": "provider",
+					"name": "registration",
                     "x-interface": "Application"
 				}
             ],

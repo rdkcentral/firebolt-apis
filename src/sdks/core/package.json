@@ -10,7 +10,9 @@
 	"type": "module",
 	"scripts": {
 		"validate": "npx firebolt-openrpc validate --input ./dist/firebolt-open-rpc.json",
-		"sdk": "npx firebolt-openrpc sdk --server ./dist/firebolt-open-rpc.json --client ./dist/firebolt-app-open-rpc.json --template ./src/js --output ./build/javascript/src",
+		"sdk": "npm run sdk1",
+		"sdk1": "npx firebolt-openrpc sdk --server ./dist/firebolt-open-rpc.json --template ./src/js --output ./build/javascript/src",
+		"sdk2": "npx firebolt-openrpc sdk --server ./dist/firebolt-open-rpc.json --client ./dist/firebolt-app-open-rpc.json --template ./src/js --output ./build/javascript/src",
 		"native": "npx firebolt-openrpc sdk --server ./dist/firebolt-open-rpc.json --client ./dist/firebolt-app-open-rpc.json --template ./src/cpp --output ./build/c/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/cpp",
 		"compile": "cd ../../.. && npm run compile",
 		"slice": "npm run slice:server; npm run slice:client",

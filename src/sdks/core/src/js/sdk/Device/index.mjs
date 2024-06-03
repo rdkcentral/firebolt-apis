@@ -41,7 +41,7 @@ function version() {
 export default {
 
   /* ${EVENTS_ENUM} */
-  /* ${ENUMS} */
+  /* ${ENUM_IMPLEMENTATIONS} */
 
   version,
   /* ${METHOD_LIST} */

@@ -175,7 +175,8 @@
 			"tags": [
 				{
 					"name": "capabilities",
-					"x-provides": "xrn:firebolt:capability:input:keyboard"
+					"x-provides": "xrn:firebolt:capability:input:keyboard",
+					"x-allow-focus": true
 				}
 			],
 			"summary": "Prompt the user for their email address with a simplified list of choices.",
@@ -246,7 +247,8 @@
 			"tags": [
 				{
 					"name": "capabilities",
-					"x-provides": "xrn:firebolt:capability:input:keyboard"
+					"x-provides": "xrn:firebolt:capability:input:keyboard",
+					"x-allow-focus": true
 				}
 			],
 			"summary": "Show the password entry keyboard, with typing obfuscated from visibility",
@@ -288,7 +290,8 @@
 			"tags": [
 				{
 					"name": "capabilities",
-					"x-provides": "xrn:firebolt:capability:input:keyboard"
+					"x-provides": "xrn:firebolt:capability:input:keyboard",
+					"x-allow-focus": true
 				}
 			],
 			"summary": "Show the standard platform keyboard, and return the submitted value",
