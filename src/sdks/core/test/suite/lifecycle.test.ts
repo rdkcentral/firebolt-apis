@@ -18,7 +18,7 @@
 
 import { jest, test, expect, beforeAll } from "@jest/globals";
 import { testHarness } from "../../../../../test/Setup";
-import { Lifecycle } from "../../build/javascript/src/firebolt";
+import { Lifecycle, Settings } from "../../build/javascript/src/firebolt";
 
 let readyResolved: boolean = false;
 let readyCalled: boolean = false;
@@ -41,6 +41,8 @@ const callback = jest.fn();
 const startupState: Lifecycle.LifecycleState = Lifecycle.state();
 
 beforeAll(() => {
+  Settings.setLogLevel('DEBUG')
+
   Lifecycle.listen((event: string, _) => {
     callback(event);
   });

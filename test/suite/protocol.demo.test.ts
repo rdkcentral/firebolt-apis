@@ -17,13 +17,13 @@
  */
 
 import { test, expect, beforeAll } from "@jest/globals";
-import { Keyboard, Settings } from "../../build/javascript/src/firebolt-manage";
+import { Keyboard, Settings } from "../../src/sdks/manage/build/javascript/src/firebolt-manage";
 
 const state = {
   cb: null,
   eventId: null,
   pending: [],
-  id: 1
+  id: 0
 }
 
 class MockProviderBroker {
@@ -121,12 +121,9 @@ test("Keyboard.provide() declarations", async () => {
   })
   provider.delegate = new KBProvider()
   broker.triggerProvider({
-    message: 'Enter name',
-    type: 'standard'
+    message: 'Enter name'
   }, callback)
   let result = await promise
-  console.log(result)
-//  expect(result.method).toStrictEqual('keyboard.standardResponse')
   expect(result.result).toStrictEqual('foo')
 });
 
@@ -137,12 +134,9 @@ test("Keyboard.provide() with error response", async () => {
   })
   provider.delegate = new KBProviderWithError()
   broker.triggerProvider({
-    message: 'Enter name',
-    type: 'standard'
+    message: 'Enter name'
   }, callback)
   let result = await promise
-  console.log(result)
-//  expect(result.method).toStrictEqual('keyboard.standardError')
   expect(result.error.message).toStrictEqual('failed')
   expect(result.error.code).toStrictEqual(1000)
 });
