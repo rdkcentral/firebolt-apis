@@ -244,9 +244,6 @@
                     "$ref": "#/definitions/ButtonIntent"
                 },
                 {
-                    "$ref": "#/definitions/ChannelIntent"
-                },
-                {
                     "$ref": "#/definitions/FocusIntent"
                 },
                 {
@@ -439,6 +436,34 @@
                         "entityType": "program",
                         "programType": "movie",
                         "entityId": "el-camino"
+                    }
+                }
+            ]
+        },
+        "ChannelIntent": {
+            "description": "A Firebolt compliant representation of a user intent to 'surf' to the next or previous channel.",
+            "title": "ChannelIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "required": [ "data" ],
+                    "properties": {
+                        "action": {
+                            "const": "channel"
+                        },
+                        "data": {
+                            "type": "string",
+                            "enum": [
+                                "next",
+                                "previous"
+                            ]
+                        }
                     }
                 }
             ]
