@@ -1,3 +1,10 @@
+# [1.2.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.2...v1.2.0-next.3) (2024-06-06)
+
+
+### Features
+
+* User Interest ([#170](https://github.com/rdkcentral/firebolt-apis/issues/170)) ([48a1094](https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+
 # [1.2.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.1...v1.2.0-next.2) (2024-04-08)
 
 
