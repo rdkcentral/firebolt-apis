@@ -424,32 +424,7 @@
                             "const": "entity"
                         },
                         "data": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/definitions/MovieEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/TVEpisodeEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/TVSeriesEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/TVSeasonEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/MusicEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/PlaylistEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/AdditionalEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/UntypedEntity"
-                                }
-                            ]
+                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
                         }
                     }
                 }
@@ -464,426 +439,6 @@
                         "entityType": "program",
                         "programType": "movie",
                         "entityId": "el-camino"
-                    }
-                }
-            ]
-        },
-        "ChannelEntity": {
-            "title": "ChannelEntity",
-            "type": "object",
-            "properties": {
-                "entityType": {
-                    "const": "channel"
-                },
-                "channelType": {
-                    "type": "string",
-                    "enum": [
-                        "streaming",
-                        "overTheAir"
-                    ]
-                },
-                "entityId": {
-                    "type": "string",
-                    "description": "ID of the channel, in the target App's scope."
-                },
-                "appContentData": {
-                    "type": "string",
-                    "maxLength": 256
-                }
-            },
-            "required": [
-                "entityType",
-                "channelType",
-                "entityId"
-            ],
-            "additionalProperties": false
-        },
-        "ProgramEntity": {
-            "title": "ProgramEntity",
-            "type": "object",
-            "properties": {
-                "entityType": {
-                    "const": "program"
-                },
-                "programType": {
-                    "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ProgramType"
-                },
-                "entityId": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "entityType",
-                "programType",
-                "entityId"
-            ]
-        },
-        "MusicEntity": {
-            "title": "MusicEntity",
-            "type": "object",
-            "properties": {
-                "entityType": {
-                    "const": "music"
-                },
-                "musicType": {
-                    "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/MusicType"
-                },
-                "entityId": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "entityType",
-                "musicType",
-                "entityId"
-            ]
-        },        
-        "MovieEntity": {
-            "title": "MovieEntity",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ProgramEntity"
-                },
-                {
-                    "description": "A Firebolt compliant representation of a Movie entity.",
-                    "title": "MovieEntity",
-                    "type": "object",
-                    "required": [
-                        "entityType",
-                        "programType",
-                        "entityId"
-                    ],
-                    "properties": {
-                        "entityType": {
-                            "const": "program"
-                        },
-                        "programType": {
-                            "const": "movie"
-                        },
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityType": "program",
-                    "programType": "movie",
-                    "entityId": "el-camino"
-                }
-            ]
-        },
-        "TVEpisodeEntity": {
-            "title": "TVEpisodeEntity",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ProgramEntity"
-                },
-                {
-                    "description": "A Firebolt compliant representation of a TV Episode entity.",
-                    "title": "TVEpisodeEntity",
-                    "type": "object",
-                    "required": [
-                        "entityType",
-                        "programType",
-                        "entityId",
-                        "seriesId",
-                        "seasonId"
-                    ],
-                    "properties": {
-                        "entityType": {
-                            "const": "program"
-                        },
-                        "programType": {
-                            "const": "episode"
-                        },
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "seriesId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "seasonId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityType": "program",
-                    "programType": "episode",
-                    "entityId": "breaking-bad-pilot",
-                    "seriesId": "breaking-bad",
-                    "seasonId": "breaking-bad-season-1"
-                }
-            ]
-        },
-        "TVSeasonEntity": {
-            "title": "TVSeasonEntity",
-            "description": "A Firebolt compliant representation of a TV Season entity.",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ProgramEntity"
-                },
-                {
-                    "type": "object",
-                    "required": [
-                        "entityType",
-                        "programType",
-                        "entityId",
-                        "seriesId"
-                    ],
-                    "properties": {
-                        "entityType": {
-                            "const": "program"
-                        },
-                        "programType": {
-                            "const": "season"
-                        },
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "seriesId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityType": "program",
-                    "programType": "season",
-                    "entityId": "breaking-bad-season-1",
-                    "seriesId": "breaking-bad"
-                }
-            ]
-        },
-        "TVSeriesEntity": {
-            "title": "TVSeriesEntity",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ProgramEntity"
-                },
-                {
-                    "description": "A Firebolt compliant representation of a TV Series entity.",
-                    "type": "object",
-                    "required": [
-                        "entityType",
-                        "programType",
-                        "entityId"
-                    ],
-                    "properties": {
-                        "entityType": {
-                            "const": "program"
-                        },
-                        "programType": {
-                            "const": "series"
-                        },
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityType": "program",
-                    "programType": "series",
-                    "entityId": "breaking-bad"
-                }
-            ]
-        },
-        "PlaylistEntity": {
-            "title": "PlaylistEntity",
-            "description": "A Firebolt compliant representation of a Playlist entity.",
-            "type": "object",
-            "required": [
-                "entityType",
-                "entityId"
-            ],
-            "properties": {
-                "entityType": {
-                    "const": "playlist"
-                },
-                "entityId": {
-                    "$ref": "#/definitions/Identifier"
-                },
-                "assetId": {
-                    "$ref": "#/definitions/Identifier"
-                },
-                "appContentData": {
-                    "type": "string",
-                    "maxLength": 256
-                }
-            },
-            "additionalProperties": false,
-            "examples": [
-                {
-                    "entityType": "playlist",
-                    "entityId": "playlist/xyz"
-                }
-            ]
-        },
-        "PlayableEntity": {
-            "title": "PlayableEntity",
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/MovieEntity"
-                },
-                {
-                    "$ref": "#/definitions/TVEpisodeEntity"
-                },
-                {
-                    "$ref": "#/definitions/PlaylistEntity"
-                },
-                {
-                    "$ref": "#/definitions/MusicEntity"
-                },
-                {
-                    "$ref": "#/definitions/AdditionalEntity"
-                }
-            ]
-        },
-        "AdditionalEntity": {
-            "title": "AdditionalEntity",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ProgramEntity"
-                },
-                {
-                    "description": "A Firebolt compliant representation of the remaining entity types.",
-                    "type": "object",
-                    "required": [
-                        "entityType",
-                        "entityId"
-                    ],
-                    "properties": {
-                        "entityType": {
-                            "const": "program"
-                        },
-                        "programType": {
-                            "type": "string",
-                            "enum": [
-                                "concert",
-                                "sportingEvent",
-                                "preview",
-                                "other",
-                                "advertisement",
-                                "musicVideo",
-                                "minisode",
-                                "extra"
-                            ]
-                        },
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityType": "program",
-                    "programType": "concert",
-                    "entityId": "live-aid"
-                }
-            ]
-        },
-        "UntypedEntity": {
-            "title": "UntypedEntity",
-            "allOf": [
-                {
-                    "description": "A Firebolt compliant representation of the remaining entity types.",
-                    "type": "object",
-                    "required": [
-                        "entityId"
-                    ],
-                    "properties": {
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityId": "an-entity"
-                }
-            ]
-        },
-        "ChannelIntent": {
-            "description": "A Firebolt compliant representation of a user intent to 'surf' to the next or previous channel.",
-            "title": "ChannelIntent",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/Intent"
-                },
-                {
-                    "$ref": "#/definitions/IntentProperties"
-                },
-                {
-                    "type": "object",
-                    "required": [ "data" ],
-                    "properties": {
-                        "action": {
-                            "const": "channel"
-                        },
-                        "data": {
-                            "type": "string",
-                            "enum": [
-                                "next",
-                                "previous"
-                            ]
-                        }
                     }
                 }
             ]
@@ -915,7 +470,7 @@
                             "additionalProperties": false,
                             "properties": {
                                 "entity": {
-                                    "$ref": "#/definitions/ChannelEntity"
+                                    "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/ChannelEntity"
                                 },
                                 "options": {
                                     "description": "The options property of the data property MUST have only one of the following fields.",
@@ -984,7 +539,7 @@
                             "const": "playback"
                         },
                         "data": {
-                            "$ref": "#/definitions/PlayableEntity"
+                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/PlayableEntity"
                         }
                     }
                 }
@@ -1115,7 +670,7 @@
                             "type": "object",
                             "properties": {
                                 "entity": {
-                                    "$ref": "#/definitions/PlayableEntity"
+                                    "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/PlayableEntity"
                                 },
                                 "options": {
                                     "type": "object",
@@ -1357,7 +912,7 @@
                                 "menus": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/Identifier"
+                                        "type": "string"
                                     },
                                     "minItems": 1,
                                     "maxItems": 100
@@ -1368,7 +923,7 @@
                                         "type": "object",
                                         "properties": {
                                             "appId": {
-                                                "$ref": "#/definitions/Identifier"
+                                                "type": "string"
                                             },
                                             "exclude": {
                                                 "type": "boolean"
@@ -1454,19 +1009,19 @@
                                 "entity": {
                                     "anyOf": [
                                         {
-                                            "$ref": "#/definitions/MovieEntity"
+                                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/MovieEntity"
                                         },
                                         {
-                                            "$ref": "#/definitions/TVEpisodeEntity"
+                                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVEpisodeEntity"
                                         },
                                         {
-                                            "$ref": "#/definitions/TVSeriesEntity"
+                                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVSeriesEntity"
                                         },
                                         {
-                                            "$ref": "#/definitions/TVSeasonEntity"
+                                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVSeasonEntity"
                                         },
                                         {
-                                            "$ref": "#/definitions/AdditionalEntity"
+                                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/AdditionalEntity"
                                         }
                                     ]
                                 },
@@ -1476,24 +1031,24 @@
                                         "type": "object",
                                         "properties": {
                                             "appId": {
-                                                "$ref": "#/definitions/Identifier"
+                                                "type": "string"
                                             },
                                             "entity": {
                                                 "anyOf": [
                                                     {
-                                                        "$ref": "#/definitions/MovieEntity"
+                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/MovieEntity"
                                                     },
                                                     {
-                                                        "$ref": "#/definitions/TVEpisodeEntity"
+                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVEpisodeEntity"
                                                     },
                                                     {
-                                                        "$ref": "#/definitions/TVSeriesEntity"
+                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVSeriesEntity"
                                                     },
                                                     {
-                                                        "$ref": "#/definitions/TVSeasonEntity"
+                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVSeasonEntity"
                                                     },
                                                     {
-                                                        "$ref": "#/definitions/AdditionalEntity"
+                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/AdditionalEntity"
                                                     }
                                                 ]
                                             }
@@ -1504,7 +1059,7 @@
                                 "menus": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/Identifier"
+                                        "type": "string"
                                     },
                                     "minItems": 1,
                                     "maxItems": 100
@@ -1515,7 +1070,7 @@
                                         "type": "object",
                                         "properties": {
                                             "appId": {
-                                                "$ref": "#/definitions/Identifier"
+                                                "type": "string"
                                             },
                                             "exclude": {
                                                 "type": "boolean"
@@ -2957,6 +2512,7 @@
                 }
             ]
         },
+ 
         "Identifier": {
             "type": "string"
         },
@@ -2981,7 +2537,7 @@
                     "type": "string"
                 },
                 "appId": {
-                    "$ref": "#/definitions/Identifier"
+                    "type": "string"
                 }
             }
         },

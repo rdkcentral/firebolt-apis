@@ -52,6 +52,10 @@
         {
           "name": "capabilities",
           "x-provides": "xrn:firebolt:capability:discovery:entity-info"
+        },
+        {
+          "name": "deprecated",
+          "x-alternative": "Discovery.details"
         }
       ],
       "summary": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow.",
@@ -409,7 +413,7 @@
             }
           ],
           "result": {
-            "name": "success",
+            "name": "result",
             "value": true
           }
         }
@@ -424,6 +428,10 @@
         {
           "name": "capabilities",
           "x-provides": "xrn:firebolt:capability:discovery:purchased-content"
+        },
+        {
+          "name": "deprecated",
+          "x-alternative": "Discovery.purchases"
         }
       ],
       "summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
@@ -636,7 +644,7 @@
           "name": "identifiers",
           "summary": "A set of content identifiers for this call to action",
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ContentIdentifiers"
+            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
           },
           "required": true
         },
@@ -1467,6 +1475,156 @@
           }
         }
       ]
+    },
+    {
+      "name": "userInterest",
+      "summary": "Send an entity that the user has expressed interest in to the platform.",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:discovery:interest"
+        }
+      ],
+      "params": [
+        {
+          "name": "type",
+          "required": true,
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
+          }
+        },
+        {
+          "name": "reason",
+          "required": true,
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
+          }
+        },
+        {
+          "name": "entity",
+          "required": true,
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "type": "null"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [
+            {
+              "name": "type",
+              "value": "interest"
+            },
+            {
+              "name": "reason",
+              "value": "playlist"
+            },
+            {
+              "name": "entity",
+              "value": {
+                "identifiers": {
+                  "entityId": "345",
+                  "entityType": "program",
+                  "programType": "movie"
+                },
+                "info": {}
+              }
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "Discovery.onRequestUserInterest",
+      "tags": [
+        {
+          "name": "rpc-only"
+        },
+        {
+          "name": "event",
+          "x-response-name": "entity",
+          "x-response": {
+            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails",
+            "examples": [
+              {
+                "identifiers": {
+                  "entityId": "345",
+                  "entityType": "program",
+                  "programType": "movie"
+                },
+                "info": {
+                  "title": "Cool Runnings",
+                  "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+                  "releaseDate": "1993-01-01T00:00:00.000Z",
+                  "contentRatings": [
+                    {
+                      "scheme": "US-Movie",
+                      "rating": "PG"
+                    },
+                    {
+                      "scheme": "CA-Movie",
+                      "rating": "G"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:discovery:interest"
+        }
+      ],
+      "summary": "Provide information about the entity currently displayed or selected on the screen.",
+      "description": "Provide information about the entity currently displayed or selected on the screen.",
+      "params": [],
+      "result": {
+        "name": "request",
+        "schema": {
+          "type": "object",
+          "required": [
+            "correlationId",
+            "parameters"
+          ],
+          "properties": {
+            "correlationId": {
+              "type": "string"
+            },
+            "parameters": {
+              "$ref": "#/components/schemas/UserInterestProviderParameters"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "request",
+            "value": {
+              "correlationId": "xyz",
+              "parameters": {
+                "type": "interest",
+                "reason": "playlist"
+              }
+            }
+          }
+        }
+      ]
     }
   ],
   "components": {
@@ -1785,6 +1943,22 @@
         "enum": [
           "xrn:firebolt:channel:any"
         ]
+      },
+      "UserInterestProviderParameters": {
+        "title": "UserInterestProviderParameters",
+        "type": "object",
+        "required": [
+          "type",
+          "reason"
+        ],
+        "properties": {
+          "type": {
+            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
+          },
+          "reason": {
+            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
+          }
+        }
       }
     }
   }
