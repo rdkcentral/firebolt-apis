@@ -1,6 +1,6 @@
 {
   "name": "@firebolt-js/sdks",
-  "version": "0.16.0-next.3",
+  "version": "1.2.0-next.4",
   "description": "The Firebolt JS SDK",
   "type": "module",
   "bin": {
@@ -8,12 +8,13 @@
   },
   "workspaces": [
     "src/sdks/core",
-    "src/sdks/manage"
+    "src/sdks/manage",
+    "src/sdks/discovery"
   ],
   "scripts": {
     "fs:setup": "npm run clean ; mkdir -p dist",
     "validate:each": "npx firebolt-openrpc validate --input src/openrpc --schemas src/schemas --transformations --bidirectional",
-    "validate:compiled": "npx firebolt-openrpc validate --server dist/firebolt-open-rpc.json --client dist/firebolt-app-open-rpc.json ; npm run validate --workspaces",
+    "validate:compiled": "npx firebolt-openrpc validate --server dist/firebolt-open-rpc.json --client dist/firebolt-app-open-rpc.json --pass-throughs; npm run validate --workspaces",
     "validate": "npm run validate:each ; npm run validate:compiled ",
     "compile": "npx firebolt-openrpc openrpc --input src --template src/template/openrpc/template.json --server ./dist/firebolt-open-rpc.json --client ./dist/firebolt-app-open-rpc.json --schemas src/schemas",
     "update": "npx firebolt-openrpc update --input src --schemas src/schemas",
@@ -46,19 +47,20 @@
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
     "@firebolt-js/openrpc": "../firebolt-openrpc",
-    "@firebolt-js/schemas": "1.0.0-next.0",
+    "@firebolt-js/schemas": "2.0.0",
+    "@saithodev/semantic-release-backmerge": "^3.2.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.1",
     "ajv": "^6.12.6",
-    "production-changelog": "./src/js/production-changelog/",
     "husky": "^8.0.0",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.3",
     "mkdirp": "^2.1.6",
     "nopt": "^7.1.0",
-    "semantic-release": "^19.0.5",
+    "production-changelog": "./src/js/production-changelog/",
+    "semantic-release": "^21.1.1",
     "typescript": "^4.6.4"
   },
   "keywords": [

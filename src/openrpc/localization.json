@@ -101,7 +101,7 @@
 					]
 				}
 			],
-			"summary": "Get the ISO 3166 code for the counrty device is located in",
+			"summary": "Get the ISO 3166-1 alpha-2 code for the country device is located in",
 			"params": [],
 			"result": {
 				"name": "code",
@@ -136,6 +136,11 @@
 			"tags": [
 				{
 					"name": "property"
+				},
+				{
+					"name": "deprecated",
+					"x-since": "0.17.0",
+					"x-alternative": "Localization.locale"
 				},
 				{
 					"name": "capabilities",
@@ -191,7 +196,7 @@
 				"schema": {
 					"type": "array",
 					"items": {
-						"type": "string"
+						"$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639_2Language"
 					}
 				}
 			},
@@ -202,8 +207,8 @@
 					"result": {
 						"name": "Default Result",
 						"value": [
-							"es",
-							"en"
+							"spa",
+							"eng"
 						]
 					}
 				},
@@ -213,8 +218,8 @@
 					"result": {
 						"name": "Default Result",
 						"value": [
-							"en",
-							"es"
+							"eng",
+							"spa"
 						]
 					}
 				}

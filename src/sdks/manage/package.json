@@ -1,6 +1,6 @@
 {
 	"name": "@firebolt-js/manage-sdk",
-	"version": "0.16.0-next.3",
+	"version": "1.2.0-next.4",
 	"description": "The Firebolt Manage JS SDK",
 	"main": "./dist/lib/firebolt-manage.mjs",
 	"types": "./dist/lib/firebolt-manage.d.ts",
@@ -11,6 +11,9 @@
 	"scripts": {
 		"validate": "npx firebolt-openrpc validate --input ./dist/firebolt-manage-open-rpc.json",
 		"sdk": "npx firebolt-openrpc sdk --server ./dist/firebolt-manage-open-rpc.json --client ./dist/firebolt-manage-app-open-rpc.json --template ./src/js --output ./build/javascript/src",
+		"cpp": "npm run cpp:compile && npm run cpp:install",
+		"cpp:compile": "npx firebolt-openrpc sdk --input ./dist/firebolt-manage-open-rpc.json --template ./src/cpp --output ./build/cpp/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/cpp",
+		"cpp:install": "./build/cpp/src/scripts/install.sh -i ./build/cpp/src -s ./build/cpp/src/ -m manage",
 		"native": "npx firebolt-openrpc sdk --input ./dist/firebolt-manage-open-rpc.json --template ./src/js --output ./build/c/src --language ../../../node_modules/@firebolt-js/openrpc/languages/c",
 		"compile": "cd ../../.. ; npm run compile",
 		"slice": "npm run slice:server; npm run slice:client",

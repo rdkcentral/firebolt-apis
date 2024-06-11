@@ -1,6 +1,6 @@
 {
 	"name": "@firebolt-js/sdk",
-	"version": "0.16.0-next.3",
+	"version": "1.2.0-next.4",
 	"description": "The Firebolt JS SDK",
 	"main": "./dist/lib/firebolt.mjs",
 	"types": "./dist/lib/firebolt.d.ts",
@@ -13,6 +13,9 @@
 		"sdk": "npx firebolt-openrpc sdk --server ./dist/firebolt-open-rpc.json --client ./dist/firebolt-app-open-rpc.json --template ./src/js --output ./build/javascript/src",
 		"native": "npx firebolt-openrpc sdk --server ./dist/firebolt-open-rpc.json --client ./dist/firebolt-app-open-rpc.json --template ./src/cpp --output ./build/c/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/cpp",
 		"compile": "cd ../../.. ; npm run compile",
+		"cpp": "npm run cpp:compile && npm run cpp:install",
+		"cpp:compile": "npx firebolt-openrpc sdk --input ./dist/firebolt-core-open-rpc.json --template ./src/cpp --output ./build/cpp/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/cpp",
+		"cpp:install": "./build/cpp/src/scripts/install.sh -i ./build/cpp/src -s ./build/cpp/src/ -m core",
 		"slice": "npm run slice:server; npm run slice:client",
 		"slice:server": "npx firebolt-openrpc slice -i ../../../dist/firebolt-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-open-rpc.json",
 		"slice:client": "npx firebolt-openrpc slice -i ../../../dist/firebolt-app-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-app-open-rpc.json",
