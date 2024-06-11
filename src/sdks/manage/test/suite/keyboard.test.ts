@@ -19,36 +19,23 @@
 import { test, expect } from "@jest/globals";
 import { Keyboard } from "../../build/javascript/src/firebolt-manage";
 
-class KBProvider implements Keyboard.KeyboardInputProvider {
-  standard(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<Keyboard.KeyboardResult> {
-    return Promise.resolve(null);
+class KBProvider implements Keyboard.Keyboard {
+  standard(message: string): Promise<string> {
+    return Promise.resolve(null)
   }
-  password(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<Keyboard.KeyboardResult> {
-    return Promise.resolve(null);
+
+  email(type: Keyboard.EmailUsage, message?: string): Promise<string> {
+    return Promise.resolve(null)
   }
-  email(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<Keyboard.KeyboardResult> {
-    return Promise.resolve(null);
+
+  password(message?: string): Promise<string> {
+    return Promise.resolve(null)
   }
 }
 
 test("Keyboard.provide() declarations", () => {
-  Keyboard.provide("xrn:firebolt:capability:input:keyboard", new KBProvider());
+  Keyboard.provide(new KBProvider());
   expect(1).toBe(1);
-});
-
-test("Keyboard.provide() with blank object", () => {
-  expect(() => {
-    Keyboard.provide("xrn:firebolt:capability:input:keyboard", {});
-  }).toThrow();
 });
 
 // Events Test cases

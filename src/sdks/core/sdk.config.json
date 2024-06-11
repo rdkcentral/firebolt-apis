@@ -87,9 +87,34 @@
         {
             "module": "Lifecycle",
             "use": [
-                "xrn:firebolt:capability:lifecycle:ready",
-                "xrn:firebolt:capability:lifecycle:state"
+                "xrn:firebolt:capability:lifecycle:state",
+                "xrn:firebolt:capability:lifecycle:application",
+                "xrn:firebolt:capability:lifecycle:activatable",
+                "xrn:firebolt:capability:lifecycle:sleepable"
+            ],
+            "provide": [
+                "xrn:firebolt:capability:lifecycle:application",
+                "xrn:firebolt:capability:lifecycle:activatable",
+                "xrn:firebolt:capability:lifecycle:sleepable"
             ]
+        },
+        {
+            "module": "Application",
+            "provide": [
+                "xrn:firebolt:capability:lifecycle:application"
+            ]            
+        },
+        {
+            "module": "Activatable",
+            "provide": [
+                "xrn:firebolt:capability:lifecycle:activatable"
+            ]            
+        },
+        {
+            "module": "Sleepable",
+            "provide": [
+                "xrn:firebolt:capability:lifecycle:sleepable"
+            ]            
         },
         {
             "module": "Localization",

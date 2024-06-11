@@ -20,12 +20,12 @@
 // setup for Firebolt SDK/TL handshake
 
 import { test, expect, beforeAll } from "@jest/globals";
-import { Lifecycle, Discovery } from '../../build/javascript/src/firebolt'
+import { Lifecycle, Discovery, Entertainment, Types } from '../../build/javascript/src/firebolt'
 
 // holds test transport layer state, e.g. callback
 
 const state = {
-  callback:(a:string) => {}
+  callback:(a:object) => {}
 }
 
 let pullEntityInfoListenCount = 0
@@ -40,9 +40,8 @@ let secondRegistrationFailed = false
 beforeAll(() => {
     return new Promise( (resolve, reject) => {
         const transport = {
-            send: function(message: string) {
+            send: function(json: any) {
                 sendCalled = true
-                const json = JSON.parse(message)
                 if (json.method.toLowerCase() === 'discovery.onpullentityinfo') {
                     // we'll assert on this later...
                     pullEntityInfoListenCount++
@@ -54,12 +53,12 @@ beforeAll(() => {
                             id: json.id,
                             result: {
                                 listening: true,
-                                event: 'discovery.onPullEntityInfo'
+                                event: 'Discovery.onPullEntityInfo'
                             }
                         }
                         // catching errors, so all tests don't fail if this breaks
                         try {
-                            state.callback(JSON.stringify(response))
+                            state.callback(response)
                         }
                         catch (err) {
                             throw err
@@ -71,27 +70,31 @@ beforeAll(() => {
                             try {
                                 response = {
                                     jsonrpc: '2.0',
-                                    id: json.id,
-                                    result: {
-                                        correlationId: correlationId,
-                                        parameters: {
-                                            entityId: "345"
+                                    method: 'Discovery.pullEntityInfo',
+                                    params: {
+                                        value: {
+                                            correlationId: correlationId,
+                                            parameters: {
+                                                entityId: "345"
+                                            }    
                                         }
                                     }
                                 }
         
-                                state.callback(JSON.stringify(response))
+                                state.callback(response)
         
-                                state.callback(JSON.stringify({
+                                state.callback({
                                     jsonrpc: '2.0',
-                                    id: json.id,
-                                    result: {
-                                        correlationId: 'this-will-fail',
-                                        parameters: {
-                                            entityId: "this-will-fail"
+                                    method: 'Discovery.pullEntityInfo',
+                                    params: {
+                                        value: {
+                                            correlationId: 'this-will-fail',
+                                            parameters: {
+                                                entityId: "this-will-fail"
+                                            }
                                         }
                                     }
-                                }))
+                                })
                             }
                             catch (err) {
                                 throw err
@@ -111,21 +114,24 @@ beforeAll(() => {
                     else if (!json.params.correlationId && json.params.result.entity.identifiers.entityId === "PUSH:345") {
                         entityInfoPushed = true
                     }
-                    state.callback(JSON.stringify({
-                        jsonrpc: '2.0',
-                        id: json.id,
-                        result: true
-                    }))
+                    
+                    setTimeout(() => {
+                        state.callback({
+                            jsonrpc: '2.0',
+                            id: json.id,
+                            result: true
+                        })
+                    }, 100)
                 }
             },
-            receive: function(callback: (a:string) => void) {
+            receive: function(callback: (a:object) => void) {
                 // store the callback
                 state.callback = callback
             }
         }
         
         const win:any = window;
-        win.__firebolt.setTransportLayer(transport)
+        win.__firebolt.transport = transport
 
         const result:Discovery.EntityInfoResult = {
             "expires": "2025-01-01T00:00:00.000Z",
@@ -134,7 +140,7 @@ beforeAll(() => {
                 "entityId": "PUSH:345"
                 },
                 "entityType": "program",
-                "programType": Discovery.ProgramType.MOVIE,
+                "programType": Entertainment.ProgramType.MOVIE,
                 "title": "Cool Runnings",
                 "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
                 "releaseDate": "1993-01-01T00:00:00.000Z",
@@ -156,9 +162,9 @@ beforeAll(() => {
                         "expires": "2025-01-01T00:00:00.000Z",
                         "entitled": true,
                         "entitledExpires": "2025-01-01T00:00:00.000Z",
-                        "offeringType": Discovery.OfferingType.BUY,
+                        "offeringType": Entertainment.OfferingType.BUY,
                         "price": 2.99,
-                        "audioProfile": [Discovery.AudioProfile.DOLBY_ATMOS],
+                        "audioProfile": [Types.AudioProfile.DOLBY_ATMOS],
                         "videoQuality": ["UHD"],
                         "audioLanguages": [
                         "en"
@@ -180,6 +186,8 @@ beforeAll(() => {
         // Setup a callback that returns the correct payload
         Discovery.entityInfo((parameters:Discovery.EntityInfoParameters) => {
 
+            console.dir(parameters)
+
             if (parameters.entityId === 'this-will-fail') {
                 throw "Intentional Test failure"
             }
@@ -196,7 +204,7 @@ beforeAll(() => {
         //     secondRegistrationFailed = true
         // })
 
-        Lifecycle.ready()
+        //Lifecycle.ready()
         })
 })
 
@@ -209,6 +217,7 @@ test('Transport was sent each listener only once', () => {
 });
 
 test('Entity Info was pulled from the app', ()=> {
+    expect(callbackWiredUp).toBe(true)
     expect(entityInfoPulled).toBe(true)
     expect(entityInfoReceived).toBe(true)
 });
