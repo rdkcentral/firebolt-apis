@@ -643,7 +643,7 @@
                 "schema": {
                     "type": "array",
                     "items": {
-                        "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639_2Language"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/ISO639_2Language"
                     }
                 }
             },

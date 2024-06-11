@@ -1497,21 +1497,21 @@
           "name": "type",
           "required": true,
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestType"
           }
         },
         {
           "name": "reason",
           "required": true,
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestReason"
           }
         },
         {
           "name": "entity",
           "required": true,
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
           }
         }
       ],
@@ -1553,18 +1553,61 @@
       ]
     },
     {
-      "name": "Discovery.onRequestUserInterest",
+      "name": "Discovery.userInterest2",
       "tags": [
         {
-          "name": "rpc-only"
+          "name": "push"
         },
         {
-          "name": "event",
-          "x-response-name": "entity",
-          "x-response": {
-            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails",
-            "examples": [
-              {
+          "name": "capabilities",
+          "x-provides": "xrn:firebolt:capability:discovery:interest"
+        }
+      ],
+      "summary": "Provide information about the entity currently displayed or selected on the screen.",
+      "description": "Provide information about the entity currently displayed or selected on the screen.",
+      "params": [
+        {
+          "name": "type",
+          "required": true,
+          "schema": {
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestType"
+          }
+        },
+        {
+          "name": "reason",
+          "required": true,
+          "schema": {
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestReason"
+          }
+        },
+        {
+          "name": "entity",
+          "schema": {
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
+          }
+        }        
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "type": "null"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default Example",
+          "params": [
+            {
+              "name": "type",
+              "value": "interest"
+            },
+            {
+              "name": "reason",
+              "value": "playlist"
+            },
+            {
+              "name": "entity",
+              "value": {
                 "identifiers": {
                   "entityId": "345",
                   "entityType": "program",
@@ -1586,9 +1629,18 @@
                   ]
                 }
               }
-            ]
+            }            
+          ],
+          "result": {
+            "name": "result",
+            "value": null
           }
-        },
+        }
+      ]
+    },
+    {
+      "name": "Discovery.userInterest",
+      "tags": [
         {
           "name": "capabilities",
           "x-provides": "xrn:firebolt:capability:discovery:interest"
@@ -1596,43 +1648,69 @@
       ],
       "summary": "Provide information about the entity currently displayed or selected on the screen.",
       "description": "Provide information about the entity currently displayed or selected on the screen.",
-      "params": [],
+      "params": [
+        {
+          "name": "type",
+          "required": true,
+          "schema": {
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestType"
+          }
+        },
+        {
+          "name": "reason",
+          "required": true,
+          "schema": {
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestReason"
+          }
+        }
+      ],
       "result": {
-        "name": "request",
+        "name": "entity",
         "schema": {
-          "type": "object",
-          "required": [
-            "correlationId",
-            "parameters"
-          ],
-          "properties": {
-            "correlationId": {
-              "type": "string"
-            },
-            "parameters": {
-              "$ref": "#/components/schemas/UserInterestProviderParameters"
-            }
-          },
-          "additionalProperties": false
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
         }
       },
       "examples": [
         {
           "name": "Default Example",
-          "params": [],
+          "params": [
+            {
+              "name": "type",
+              "value": "interest"
+            },
+            {
+              "name": "reason",
+              "value": "playlist"
+            }            
+          ],
           "result": {
-            "name": "request",
+            "name": "entity",
             "value": {
-              "correlationId": "xyz",
-              "parameters": {
-                "type": "interest",
-                "reason": "playlist"
+              "identifiers": {
+                "entityId": "345",
+                "entityType": "program",
+                "programType": "movie"
+              },
+              "info": {
+                "title": "Cool Runnings",
+                "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+                "releaseDate": "1993-01-01T00:00:00.000Z",
+                "contentRatings": [
+                  {
+                    "scheme": "US-Movie",
+                    "rating": "PG"
+                  },
+                  {
+                    "scheme": "CA-Movie",
+                    "rating": "G"
+                  }
+                ]
               }
             }
           }
         }
       ]
-    }    
+    }        
 	],
 	"components": {
 		"schemas": {
@@ -1960,10 +2038,10 @@
         ],
         "properties": {
           "type": {
-            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestType"
           },
           "reason": {
-            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestReason"
           }
         }
       }      
