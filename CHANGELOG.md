@@ -1,3 +1,59 @@
+# [2.0.0-next-major.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v2.0.0-next-major.1) (2024-06-12)
+
+
+### Bug Fixes
+
+* Add PlaylistEntity to EntityIntent ([9769d6d](https://github.com/rdkcentral/firebolt-apis/commit/9769d6d7d43f1d61dfcda16ba4806175c5cf7658))
+* Add some context for events vs transitions ([ee9dd21](https://github.com/rdkcentral/firebolt-apis/commit/ee9dd219ec48c234955cc72e9931e2ffdcf587eb))
+* Added code example ([2049199](https://github.com/rdkcentral/firebolt-apis/commit/2049199fd050f251c5ef475dd00912e23d53067f))
+* Adding more details ([55e6fc3](https://github.com/rdkcentral/firebolt-apis/commit/55e6fc383fe42e03980851180fb7654b10fcf0a5))
+* Aligning Presentation w/ Lifecycle ([68d67c8](https://github.com/rdkcentral/firebolt-apis/commit/68d67c819225b085e6e56ab5af5a0314cc14a789))
+* Cleaned up Presentation spec ([06a0f40](https://github.com/rdkcentral/firebolt-apis/commit/06a0f40938a935c3828f0ec02aedbca996e3a34f))
+* Comment out sanity tests ([1b719e1](https://github.com/rdkcentral/firebolt-apis/commit/1b719e14767d2a6312224aaed142717c48418025))
+* Extra newline for really long words ([9e8c7fd](https://github.com/rdkcentral/firebolt-apis/commit/9e8c7fd0d2f4fadd58750acdfe030271147c1587))
+* Formatting ([1608784](https://github.com/rdkcentral/firebolt-apis/commit/1608784a64319650c9cd1e51b047c2b54ac486fd))
+* latest udpates ([c64aab6](https://github.com/rdkcentral/firebolt-apis/commit/c64aab6b77d508b1f4f655d5f4045a7f6190fc33))
+* Latest WG edits ([0feb4d6](https://github.com/rdkcentral/firebolt-apis/commit/0feb4d6d853a6255e5a245f86ad31a8a01bef20f))
+* Latest working group changes ([de7fc82](https://github.com/rdkcentral/firebolt-apis/commit/de7fc8270e74b567d21757b07eef4d7cdf89b8d1))
+* Legacy specification support fix ([08beac4](https://github.com/rdkcentral/firebolt-apis/commit/08beac419d107874c6a78ecff72cb2afe3788084))
+* more ntoes ([88f29b1](https://github.com/rdkcentral/firebolt-apis/commit/88f29b173cb0cd89886978332b9e65221ce785dc))
+* Move HDMI, UserInterest over to new RPC paradigm ([462d6a1](https://github.com/rdkcentral/firebolt-apis/commit/462d6a1386b8bdd19e227c9833b942a92b937ee1))
+* Piotr's feedback/edits ([84c9d65](https://github.com/rdkcentral/firebolt-apis/commit/84c9d6571b4969fcb7a253a13a0550a4e14d69d4))
+* Post-merge cleanup ([c6f8767](https://github.com/rdkcentral/firebolt-apis/commit/c6f87676e3ff7dfc986865114205a20982763836))
+* Presentation Working Group Edits ([b559ea7](https://github.com/rdkcentral/firebolt-apis/commit/b559ea7d757240cc940e0c45930203beb8a0a9f0))
+* Removed sdk as required field from Device.version ([#231](https://github.com/rdkcentral/firebolt-apis/issues/231)) ([ef3de3e](https://github.com/rdkcentral/firebolt-apis/commit/ef3de3e68619c6f666dd1d751b0acc25f6438122))
+* table clean up ([24e17e1](https://github.com/rdkcentral/firebolt-apis/commit/24e17e1718920ef64f60c94eaf520aeeaefea501))
+* Today's working group edits ([31cebed](https://github.com/rdkcentral/firebolt-apis/commit/31cebed5bcc27113dfa86e3d9e4d1965f3055460))
+* Trigger major version build ([247d20c](https://github.com/rdkcentral/firebolt-apis/commit/247d20c3280c1bc9acf800a04b781489ad12c6a7))
+* Typos ([71ce04b](https://github.com/rdkcentral/firebolt-apis/commit/71ce04ba511e4349458bff359f32b3d674169a5a))
+* Update CI to use new npm script name ([543afc4](https://github.com/rdkcentral/firebolt-apis/commit/543afc4c2a7e0b9895b410badbedb3078e1c24be))
+* Updates form today's WG ([ab21aac](https://github.com/rdkcentral/firebolt-apis/commit/ab21aac7e96304a239bbda78b62ee19ec54137ff))
+* Updates from today's WG ([cb3d6ac](https://github.com/rdkcentral/firebolt-apis/commit/cb3d6ace2944b302292d972f82109ae363ac391e))
+* Updates from today's working group ([218cefb](https://github.com/rdkcentral/firebolt-apis/commit/218cefb5039a533fe1bbe11b70499bc35910bf60))
+* Word publish scripts ([#78](https://github.com/rdkcentral/firebolt-apis/issues/78)) ([0e50c01](https://github.com/rdkcentral/firebolt-apis/commit/0e50c0196d396f64c097c62d722ec5ee9828a08b))
+
+
+### chore
+
+* Tag for next-major ([#76](https://github.com/rdkcentral/firebolt-apis/issues/76)) ([42d7435](https://github.com/rdkcentral/firebolt-apis/commit/42d74357b25a7e5edc32b856e24d7f0f6162978f))
+
+
+### Features
+
+* Add content-access api, deprecate entitlements, remove availabi… ([#83](https://github.com/rdkcentral/firebolt-apis/issues/83)) ([a87dd03](https://github.com/rdkcentral/firebolt-apis/commit/a87dd03bd6d2b63650ef22119c3972d37ad244cf))
+* CI/CD docs (next-major) and merges (next-major/main) ([#245](https://github.com/rdkcentral/firebolt-apis/issues/245)) ([49ab03d](https://github.com/rdkcentral/firebolt-apis/commit/49ab03db9986b27dafd279fcc6121abe447784dc))
+* Command and Control Intents ([#251](https://github.com/rdkcentral/firebolt-apis/issues/251)) ([c8f8dae](https://github.com/rdkcentral/firebolt-apis/commit/c8f8dae5a9a0f14a3815c04df5a55763823d4898))
+* Firebolt CPP SDKs ([5ea5d4e](https://github.com/rdkcentral/firebolt-apis/commit/5ea5d4e2f486a7bc3861955cd98323fc2c26cce1)), closes [#189](https://github.com/rdkcentral/firebolt-apis/issues/189) [#190](https://github.com/rdkcentral/firebolt-apis/issues/190) [#191](https://github.com/rdkcentral/firebolt-apis/issues/191) [#192](https://github.com/rdkcentral/firebolt-apis/issues/192) [#205](https://github.com/rdkcentral/firebolt-apis/issues/205) [#209](https://github.com/rdkcentral/firebolt-apis/issues/209) [#218](https://github.com/rdkcentral/firebolt-apis/issues/218) [#222](https://github.com/rdkcentral/firebolt-apis/issues/222) [#228](https://github.com/rdkcentral/firebolt-apis/issues/228) [#230](https://github.com/rdkcentral/firebolt-apis/issues/230) [#237](https://github.com/rdkcentral/firebolt-apis/issues/237) [#238](https://github.com/rdkcentral/firebolt-apis/issues/238) [#249](https://github.com/rdkcentral/firebolt-apis/issues/249)
+* First Draft based on today's working group ([b51ee9e](https://github.com/rdkcentral/firebolt-apis/commit/b51ee9e5c88e50b787b116fa8f59d435363f0c8e))
+* Resource Deallocators and Loading Screens ([61e9379](https://github.com/rdkcentral/firebolt-apis/commit/61e937998dcb70709d54a722e6d0801ee418a07e))
+* User Interest ([#170](https://github.com/rdkcentral/firebolt-apis/issues/170)) ([48a1094](https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+
+
+### BREAKING CHANGES
+
+* Capabilities support in firebolt 1.0
+* previous breaking change commit had this in the wrong place, putting it here now.
+
 # [1.2.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.3...v1.2.0-next.4) (2024-06-06)
 
 
