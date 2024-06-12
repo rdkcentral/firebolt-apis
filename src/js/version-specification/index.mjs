@@ -16,13 +16,13 @@ const knownOpts = {
 
 const defaultOpts = {
     'capabilities': true,
-    'legacy-versions': 2,
+    'legacy-support': 2,
     'source': './src/json/firebolt-specification.json',
     'report': false
 }
 
 const shortHands = {
-    'l': '--legacy-versions',
+    'l': '--legacy-support',
     'c': '--capabilities',
     't': '--target',
     's': '--source',
