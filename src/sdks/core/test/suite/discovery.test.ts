@@ -17,7 +17,7 @@
  */
 
 import { test, expect } from "@jest/globals";
-import { Discovery, Entertainment } from "../../build/javascript/src/firebolt";
+import { Discovery, Entertainment, Entity } from "../../build/javascript/src/firebolt";
 
 test("watched(entityId)", () => {
   return Discovery.watched("abc").then((success: boolean) => {
@@ -153,9 +153,9 @@ test("clear()", () => {
 
 test("details() provider", () => {
 
-  class myUserInterestProvider implements Discovery.UserInterestProvider {
-    userInterest(parameters?: object, session?: Discovery.ProviderSession): Promise<Discovery.EntityDetails> {
-      return null
+  class myUserInterestProvider implements Discovery.Interest {
+    userInterest(type: Discovery.InterestType, reason: Discovery.InterestReason): Promise<Entity.EntityDetails> {
+      return Promise.resolve(null)
     }
   }
 })

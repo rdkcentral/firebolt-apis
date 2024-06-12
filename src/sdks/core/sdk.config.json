@@ -118,6 +118,12 @@
             ]            
         },
         {
+            "module": "Interest",
+            "provide": [
+                "xrn:firebolt:capability:discovery:interest"
+            ]            
+        },
+        {
             "module": "Localization",
             "use": [
                 "xrn:firebolt:capability:localization:country-code",

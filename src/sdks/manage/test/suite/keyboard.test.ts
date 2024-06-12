@@ -30,9 +30,8 @@ class MockProviderBroker {
   constructor() {
   }
 
-  send(msg) {
-    let parsed = JSON.parse(msg)
-    if (parsed.method === 'keyboard.onRequestStandard') {
+  send(parsed) {
+    if (parsed.method === 'Keyboard.provide') {
       state.eventId = parsed.id
     }
     if ((parsed.method === 'keyboard.standardResponse') || (parsed.method === 'keyboard.standardError')) {
@@ -61,7 +60,7 @@ class MockProviderBroker {
       correlationId: fullMsg.result.correlationId,
       callback: providerCallback
     })
-    state.cb(JSON.stringify(fullMsg))
+    state.cb(fullMsg)
   }
 }
 const broker = new MockProviderBroker()
@@ -69,33 +68,26 @@ let provider = null
 
 beforeAll(async () => {
   Settings.setLogLevel('DEBUG')
-  window['__firebolt'].setTransportLayer(new MockProviderBroker())
+  window['__firebolt'].transport = new MockProviderBroker()
   provider = new DelegatingKBProvider(new KBProvider())
-  await Keyboard.provide("xrn:firebolt:capability:input:keyboard", provider);
+  Keyboard.provide(provider);
 })
 
-class DelegatingKBProvider implements Keyboard.KeyboardInputProvider {
-  delegate: Keyboard.KeyboardInputProvider;
-  constructor(delegate: Keyboard.KeyboardInputProvider) {
+class DelegatingKBProvider implements Keyboard.Keyboard {
+  delegate: Keyboard.Keyboard;
+  constructor(delegate: Keyboard.Keyboard) {
     this.delegate = delegate;
   }
-  standard(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<string> {
-    return this.delegate.standard(parameters, session)
+  standard(message: string): Promise<string> {
+    return this.delegate.standard(message)
   }
-  password(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<string> {
-    return this.delegate.password(parameters, session)
+
+  password(message?: string): Promise<string> {
+    return this.delegate.password(message)
   }
-  email(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<string> {
-    return this.delegate.email(parameters, session)
+
+  email(type: Keyboard.EmailUsage, message?: string): Promise<string> {
+    return this.delegate.email(type, message)
   }
 }
 

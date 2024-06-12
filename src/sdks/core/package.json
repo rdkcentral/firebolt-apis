@@ -20,7 +20,7 @@
 		"slice:server": "npx firebolt-openrpc slice -i ../../../dist/firebolt-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-open-rpc.json",
 		"slice:client": "npx firebolt-openrpc slice -i ../../../dist/firebolt-app-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-app-open-rpc.json",
 		"docs": "npx firebolt-openrpc docs --server ./dist/firebolt-open-rpc.json --client ./dist/firebolt-app-open-rpc.json --output build/docs/markdown --as-path",
-		"wiki": "npx firebolt-openrpc docs --input ./dist/firebolt-open-rpc.json --output build/docs/markdown",
+		"wiki": "npx firebolt-openrpc docs --server ./dist/firebolt-open-rpc.json --client ./dist/firebolt-app-open-rpc.json --output build/docs/markdown",
 		"dist:notest": "npm run clean && npm run slice && npm run validate && npm run sdk && npm run docs && npm run prettier && npm run dist:copy && echo 'Firebolt Core SDK /dist/ is ready.\n'",
 		"dist:copy": "npm run dist:copy:sdk && npm run dist:copy:docs",
 		"dist:copy:sdk": "mkdirp ./dist && cp -R build/javascript/src dist/lib && cp ./dist/firebolt-open-rpc.json ../../../dist/firebolt-core-open-rpc.json && cp ./dist/firebolt-app-open-rpc.json ../../../dist/firebolt-core-app-open-rpc.json",

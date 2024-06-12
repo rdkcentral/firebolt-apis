@@ -11,7 +11,7 @@
             "tags": [
                 {
                     "name": "capabilities",
-                    "x-provided-by": "Discovery.onRequestUserInterest",
+                    "x-provided-by": "Interest.userInterest",
                     "x-uses": [
                         "xrn:firebolt:capability:discovery:interest"
                     ]

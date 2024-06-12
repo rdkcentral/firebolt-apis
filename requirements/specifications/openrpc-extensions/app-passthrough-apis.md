@@ -115,7 +115,7 @@ The platform **MUST** call the provider method from the [best candidate](#8-best
 
 If the platform method result schema matches the `x-response` schema on the provider method then the value **MUST** be used as-is.
 
-Otherwise if the platform method result schema has a property that matches the `x-response` schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the composed result.
+Otherwise if the platform method result schema has any properties that matches the `x-response` schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the composed result.
 
 ### 4.4. Pass-through notifications
 Firebolt events have a synchronous subscriber registration method, e.g. `Lifecycle.onInactive(true)`, in addition to asynchronous notifications when the event actually happens. For events powered by an app pass-through, only the asynchronous notifications are passed in by the providing app. The initial event registration is handled by the platform, and the success response is not handled by the providing app.
@@ -239,6 +239,11 @@ The policy **MAY** have an `inFocus` boolean.
 If the policy has `inFocus` set to `true` then any app without RCU input focus when the capability is invoked **MUST NOT** be considered a candidate.
 
 ## 6. Best Candidate
+
+**TODO**: fix section 5 and this section...
+
+Candidate apps are all apps that have registered to provide the capability.
+
 If there is only one candidate then it **MUST** be the best candidate.
 
 If there is more than one candidate, then the candidate app that most recently had RCU input focus **MUST** be the best candidate.
