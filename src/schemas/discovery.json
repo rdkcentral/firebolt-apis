@@ -1,6 +1,6 @@
 {
-    "$id": "https://meta.comcast.com/firebolt/discovery",
     "title": "Discovery",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/discovery",
     "anyOf": [
       {
         "$ref": "#/definitions/PurchasedContentResult"
@@ -22,7 +22,7 @@
           "entries": {
             "type": "array",
             "items": {
-              "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
             }
           }
         },
@@ -43,12 +43,12 @@
             "format": "date-time"
           },
           "entity": {
-            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
           },
           "related": {
             "type": "array",
             "items": {
-              "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
             }
           }
         },

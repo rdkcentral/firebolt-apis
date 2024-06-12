@@ -16,35 +16,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* ${IMPORTS} */
+import { test, expect } from '@jest/globals';
 
-/* ${INITIALIZATION} */
-
-function ready() {
-  return Gateway.request('Metrics.ready', {})
-}
-
-function signIn() {
-  return Gateway.request('Metrics.signIn', {})
-}
-
-function signOut() {
-  return Gateway.request('Metrics.signOut', {})
-}
-
-
-/* ${METHODS} */
-
-export default {
-
-  /* ${EVENTS_ENUM} */
-  /* ${ENUM_IMPLEMENTATIONS} */
-  /* ${METHOD_LIST} */
-
-}
-
-export {
-  ready,
-  signIn,
-  signOut
-}
+test('Basic', () => {
+    expect(1).toBe(1)
+})

@@ -1,6 +1,6 @@
 {
-    "$id": "https://meta.comcast.com/firebolt/accessibility",
     "title": "Accessibility",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/accessibility",
     "anyOf": [
         {
             "$ref": "#/definitions/ClosedCaptionsStyles"
@@ -13,7 +13,7 @@
         "FontFamily": {
             "type": ["string", "null"],
             "enum": [
-                "monospaced_serif",
+                "monospace_serif",
                 "proportional_serif",
                 "monospaced_sanserif",
                 "proportional_sanserif",
@@ -114,7 +114,7 @@
                 "preferredLanguages": {
                     "type": "array",
                     "items": {
-                        "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639_2Language"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/ISO639_2Language"
                     }
                 }
             },
@@ -122,7 +122,7 @@
                 {
                     "enabled": true,
                     "styles": {
-                        "fontFamily": "monospaced_serif",
+                        "fontFamily": "monospace_serif",
                         "fontSize": 1,
                         "fontColor": "#ffffff",
                         "fontEdge": "none",
@@ -161,7 +161,7 @@
                     "description": "Whether or not voice guidance should be enabled by default"
                 },
                 "speed": {
-                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VoiceSpeed",
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/VoiceSpeed",
                     "description": "The speed at which voice guidance speech will be read back to the user"
                 }
             },

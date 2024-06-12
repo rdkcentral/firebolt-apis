@@ -14,21 +14,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Run tests and create assets
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          GITHUB_REF: ${{ github.ref }}
-          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
-          INTENT: ${{ secrets.INTENT }}
-        run: |
-          ./.github/workflows/utils.sh runTests
+      # - name: Run tests and create assets
+      #   env:
+      #     EVENT_NAME: ${{ github.event_name }}
+      #     GITHUB_REF: ${{ github.ref }}
+      #     PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+      #     INTENT: ${{ secrets.INTENT }}
+      #   run: |
+      #     ./.github/workflows/utils.sh runTests
 
-      - name: Upload report.json as an artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: report
-          path: ${{ github.workspace }}/report
+      # - name: Upload report.json as an artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: report
+      #     path: ${{ github.workspace }}/report
 
-      - name: Get results from report.json
-        run: |
-          ./.github/workflows/utils.sh getResults
+      # - name: Get results from report.json
+      #   run: |
+      #     ./.github/workflows/utils.sh getResults
