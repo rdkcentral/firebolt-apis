@@ -173,10 +173,10 @@
             ]
         },
         {
-            "name": "onConnectionChanged",
+            "name": "connectionChanged",
             "tags": [
                 {
-                    "name": "event"
+                    "name": "notifier"
                 },
                 {
                     "name": "capabilities",
@@ -186,32 +186,35 @@
                 }
             ],
             "summary": "Notification for when any HDMI port has a connection physically engaged or disengaged.",
-            "params": [],
-            "result": {
-                "name": "info",
-                "schema": {
-                    "$ref": "#/components/schemas/ConnectionChangedInfo"
+            "params": [
+                {
+                    "name": "info",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/ConnectionChangedInfo"
+                    }
                 }
-            },
+            ],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "info",
-                        "value": {
-                            "port": "HDMI1",
-                            "connected": true
+                    "params": [
+                        {
+                            "name": "info",
+                            "value": {
+                                "port": "HDMI1",
+                                "connected": true
+                            }
                         }
-                    }
+                    ]
                 }
             ]
         },
         {
-            "name": "onSignalChanged",
+            "name": "signalChanged",
             "tags": [
                 {
-                    "name": "event"
+                    "name": "notifier"
                 },
                 {
                     "name": "capabilities",
@@ -221,24 +224,27 @@
                 }
             ],
             "summary": "Notification for when any HDMI port has it's signal status changed.",
-            "params": [],
-            "result": {
-                "name": "info",
-                "schema": {
-                    "$ref": "#/components/schemas/SignalChangedInfo"
-                }
-            },
+            "params": [
+                {
+                    "name": "info",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/SignalChangedInfo"
+                    }
+                }                
+            ],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "info",
-                        "value": {
-                            "port": "HDMI1",
-                            "signal": "stable"
+                    "params": [
+                        {
+                            "name": "info",
+                            "value": {
+                                "port": "HDMI1",
+                                "signal": "stable"
+                            }
                         }
-                    }
+                    ]
                 }
             ]
         },
@@ -284,7 +290,7 @@
             ]
         },
         {
-            "name": "onAutoLowLatencyModeSignalChanged",
+            "name": "autoLowLatencyModeSignalChanged",
             "summary": "Notification for changes to ALLM status of any input device.",
             "tags": [
                 {
@@ -294,27 +300,30 @@
                     ]
                 },
                 {
-                    "name": "event"
+                    "name": "notifier"
                 } 
             ],
-            "params": [],
-            "result": {
-                "name": "info",
-                "schema": {
-                    "$ref": "#/components/schemas/AutoLowLatencyModeSignalChangedInfo"
-                }
-            },
+            "params": [
+                {
+                    "name": "info",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/AutoLowLatencyModeSignalChangedInfo"
+                    }
+                }                
+            ],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "info",
-                        "value": {
-                            "port": "HDMI1",
-                            "autoLowLatencyModeSignalled": true
+                    "params": [
+                        {
+                            "name": "info",
+                            "value": {
+                                "port": "HDMI1",
+                                "autoLowLatencyModeSignalled": true
+                            }
                         }
-                    }
+                    ]
                 }
             ]
         },

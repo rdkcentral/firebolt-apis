@@ -1,6 +1,6 @@
 {
-    "$id": "https://meta.comcast.com/firebolt/types",
     "title": "Types",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/types",
     "definitions": {
         "SemanticVersion": {
             "title": "SemanticVersion",

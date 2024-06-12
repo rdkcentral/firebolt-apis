@@ -168,6 +168,13 @@ EntityDetails, which is returned as the result to the pending
 
 ![](../../../requirements/images/specifications/intents/user-interest/media/image4.png)
 
+**TODO**: clean this up and add to spec
+
+1. When an Aggregated Experience app calls `Content.requestUserInterst` the platform MUST dispatch a `Discovery.onRequestUserInterest` notification to the best candidated provider app.
+2. The Firebolt SDK embedded in the provider app parses out the parameters from onRequestUserInterest API and calls the apps `Provider.userInterest` method, which was passed in via Discovery.provide()
+3. The SDK waits for the response from `Provider.userInterest` and then it calls `Discovery.userInterestResponse`
+4. If the app threw an error, the SDK calls `Discovery.userInterestError`
+
 Once an App's callback is invoked, that app will have `interestTimeout`
 milliseconds to return a value or throw an error. Values returned after
 that time **MUST** be ignored. The timeout value is stored in the

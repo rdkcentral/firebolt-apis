@@ -1,6 +1,6 @@
 {
-    "$id": "https://meta.comcast.com/firebolt/entertainment",
     "title": "Entertainment",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/entertainment",
     "anyOf": [
         {
             "$ref": "#/definitions/ProgramType"
@@ -99,10 +99,10 @@
                     "description": "The type of the entity, e.g. `program` or `music`."
                 },
                 "programType": {
-                    "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ProgramType"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ProgramType"
                 },
                 "musicType": {
-                    "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/MusicType"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/MusicType"
                 },
                 "synopsis": {
                     "type": "string",
@@ -209,7 +209,7 @@
                     "description": "Time when the entity is no longer entitled."
                 },
                 "offeringType": {
-                    "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/OfferingType"
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/OfferingType"
                 },
                 "hasAds": {
                     "type": "boolean",
@@ -234,7 +234,7 @@
                 "audioProfile": {
                     "type": "array",
                     "items": {
-                        "$ref": "https://meta.comcast.com/firebolt/types#/definitions/AudioProfile"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/AudioProfile"
                     },
                     "description": "List of the audio types available via the WayToWatch."
                 },

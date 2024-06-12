@@ -17,7 +17,7 @@
  */
 
 import { test, expect } from "@jest/globals";
-import { Discovery } from "../../build/javascript/src/firebolt";
+import { Discovery, Entertainment, Entity } from "../../build/javascript/src/firebolt";
 
 test("watched(entityId)", () => {
   return Discovery.watched("abc").then((success: boolean) => {
@@ -50,7 +50,7 @@ test("entityInfo(EntityInfoResult)", () => {
       },
       title: "Test",
       entityType: "program",
-      programType: Discovery.ProgramType.MOVIE,
+      programType: Entertainment.ProgramType.MOVIE,
     },
   };
   return Discovery.entityInfo(dummyData).then((res: boolean) => {
@@ -65,7 +65,7 @@ test("watchNext(title?: LocalizedString, identifiers: ContentIdentifiers, expire
 });
 
 test("entitlements(entitlements: Entitlement[])", () => {
-  const dummyData: Array<Discovery.Entitlement> = [
+  const dummyData: Array<Entertainment.Entitlement> = [
     {
       entitlementId: "test123",
       startTime: `${new Date().getTime()}`,
@@ -84,7 +84,7 @@ test("launch(appId)", () => {
 });
 
 test("signIn(appId)", () => {
-  const dummyData: Array<Discovery.Entitlement> = [
+  const dummyData: Array<Entertainment.Entitlement> = [
     {
       entitlementId: "test123",
       startTime: `${new Date().getTime()}`,
@@ -113,7 +113,7 @@ test("purchasedContent()", () => {
         },
         title: "TEST",
         entityType: "program",
-        programType: Discovery.ProgramType.MOVIE,
+        programType: Entertainment.ProgramType.MOVIE,
       },
     ],
   };
@@ -153,9 +153,9 @@ test("clear()", () => {
 
 test("details() provider", () => {
 
-  class myUserInterestProvider implements Discovery.UserInterestProvider {
-    userInterest(parameters?: object, session?: Discovery.ProviderSession): Promise<Discovery.EntityDetails> {
-      return null
+  class myUserInterestProvider implements Discovery.Interest {
+    userInterest(type: Discovery.InterestType, reason: Discovery.InterestReason): Promise<Entity.EntityDetails> {
+      return Promise.resolve(null)
     }
   }
 })

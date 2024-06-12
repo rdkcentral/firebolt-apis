@@ -17,10 +17,10 @@
  */
 
 import { test, expect } from "@jest/globals";
-import { Content } from "../../build/javascript/src/firebolt-discovery";
+import { Content, Discovery } from "../../build/javascript/src/firebolt-discovery";
 
 test("Content.requestUserInterest()", () => {
-  return Content.requestUserInterest(Content.InterestType.INTEREST, Content.InterestReason.PLAYLIST).then((interest: Content.InterestResult) => {
+  return Content.requestUserInterest(Discovery.InterestType.INTEREST, Discovery.InterestReason.PLAYLIST).then((interest: Content.InterestResult) => {
     const entity = interest.entity
     const appId = interest.appId
     expect(appId).toBeDefined()
