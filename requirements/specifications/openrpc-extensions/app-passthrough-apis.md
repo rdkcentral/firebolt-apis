@@ -216,32 +216,18 @@ If the value was composed into the platform method result under a matching prope
 Finally the platform **MUST** dispatch the notification to the app that registered for the event via the original platform method, using all but the last parameter as context.
 
 ## 5. Provider Candidates
-The Firebolt Device Manifist **MUST** have a list of `ProviderPolicy` configurations that map capabilities to policies for determining candidate providers:
-
-```json
-{
-    "providerPolicies": [
-        {
-            "inFocus": true,
-            "capabilities": [
-                "xrn:firebolt:capability:foo:bar"
-            ]
-        }
-    ]
-}
-```
-The policy **MUST** have a list of capabilities that it is applied to.
-
-A capability **MUST NOT** be included in more than one policy.
-
-The policy **MAY** have an `inFocus` boolean.
-
-If the policy has `inFocus` set to `true` then any app without RCU input focus when the capability is invoked **MUST NOT** be considered a candidate.
+When a platform method with an `x-provided-by` extension is called, then
+all loaded apps that have permission to provide the capability **MUST** be
+considered as candidates to fulfill the method.
 
 ## 6. Best Candidate
-If there is only one candidate then it **MUST** be the best candidate.
+Any provider candidates that have not registered to provide the method in
+question **MUST NOT** be considered the best candidate and removed from
+consideration.
 
-If there is more than one candidate, then the candidate app that most recently had RCU input focus **MUST** be the best candidate.
+If there is only one candidate left then it **MUST** be the best candidate.
+
+If there is more than one candidate left, then the candidate app that most recently had RCU input focus **MUST** be the best candidate.
 
 If none of the candidates have had focus yet, then the candidate app that was most recently launched **MUST** be the best candidate.
 
