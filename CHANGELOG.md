@@ -1,3 +1,38 @@
+# [1.2.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.4...v1.2.0-next.5) (2024-06-13)
+
+
+### Bug Fixes
+
+* Remove x-alternatives that don't exist ([#278](https://github.com/rdkcentral/firebolt-apis/issues/278)) ([e38ad5a](https://github.com/rdkcentral/firebolt-apis/commit/e38ad5a508fccb5c724cf0f03cbd67ad4a28378c))
+
+# [1.2.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.3...v1.2.0-next.4) (2024-06-06)
+
+
+### Features
+
+* Command and Control Intents ([#251](https://github.com/rdkcentral/firebolt-apis/issues/251)) ([c8f8dae](https://github.com/rdkcentral/firebolt-apis/commit/c8f8dae5a9a0f14a3815c04df5a55763823d4898))
+
+# [1.2.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.2...v1.2.0-next.3) (2024-06-06)
+
+
+### Features
+
+* User Interest ([#170](https://github.com/rdkcentral/firebolt-apis/issues/170)) ([48a1094](https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+
+# [1.2.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.1...v1.2.0-next.2) (2024-04-08)
+
+
+### Features
+
+* CI/CD docs (next-major) and merges (next-major/main) ([#245](https://github.com/rdkcentral/firebolt-apis/issues/245)) ([49ab03d](https://github.com/rdkcentral/firebolt-apis/commit/49ab03db9986b27dafd279fcc6121abe447784dc))
+
+# [1.2.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.1-next.2...v1.2.0-next.1) (2024-03-27)
+
+
+### Features
+
+* Firebolt CPP SDKs ([5ea5d4e](https://github.com/rdkcentral/firebolt-apis/commit/5ea5d4e2f486a7bc3861955cd98323fc2c26cce1)), closes [#189](https://github.com/rdkcentral/firebolt-apis/issues/189) [#190](https://github.com/rdkcentral/firebolt-apis/issues/190) [#191](https://github.com/rdkcentral/firebolt-apis/issues/191) [#192](https://github.com/rdkcentral/firebolt-apis/issues/192) [#205](https://github.com/rdkcentral/firebolt-apis/issues/205) [#209](https://github.com/rdkcentral/firebolt-apis/issues/209) [#218](https://github.com/rdkcentral/firebolt-apis/issues/218) [#222](https://github.com/rdkcentral/firebolt-apis/issues/222) [#228](https://github.com/rdkcentral/firebolt-apis/issues/228) [#230](https://github.com/rdkcentral/firebolt-apis/issues/230) [#237](https://github.com/rdkcentral/firebolt-apis/issues/237) [#238](https://github.com/rdkcentral/firebolt-apis/issues/238) [#249](https://github.com/rdkcentral/firebolt-apis/issues/249)
+
 ## [1.1.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.1-next.1...v1.1.1-next.2) (2024-03-06)
 
 

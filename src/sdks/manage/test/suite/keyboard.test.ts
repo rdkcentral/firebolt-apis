@@ -78,39 +78,65 @@ class DelegatingKBProvider implements Keyboard.Keyboard {
   constructor(delegate: Keyboard.Keyboard) {
     this.delegate = delegate;
   }
-
-  standard(message: string): Promise<string> {
-    return this.delegate.standard(message)
+  standard(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<string> {
+    return this.delegate.standard(parameters, session)
   }
-  password(message: string): Promise<string> {
-    return this.delegate.password(message)
+  password(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<string> {
+    return this.delegate.password(parameters, session)
   }
-  email(type: Keyboard.EmailUsage, message: string): Promise<string> {
-    return this.delegate.email(type, message)
+  email(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<string> {
+    return this.delegate.email(parameters, session)
   }
 }
 
-class KBProvider implements Keyboard.Keyboard {
-  standard(message: string): Promise<string> {
+class KBProvider implements Keyboard.KeyboardInputProvider {
+  standard(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<string> {
     return Promise.resolve('foo');
   }
-  password(message: string): Promise<string> {
+  password(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<string> {
     return Promise.resolve(null);
   }
-  email(type: Keyboard.EmailUsage, message: string): Promise<string> {
+  email(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<string> {
     return Promise.resolve(null);
   }
 }
 
-class KBProviderWithError implements Keyboard.Keyboard {
-  standard(message: string): Promise<string> {
-    throw { message: 'failed', code: 1000} //new Error('failed')
+class KBProviderWithError implements Keyboard.KeyboardInputProvider {
+  async standard(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<string> {
+    throw new Error('failed')
   }
-  password(message: string): Promise<string> {
-    throw { message: 'failed', code: 1000} //new Error('failed')
+  async password(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<string> {
+    throw new Error('failed')
   }
-  email(type: Keyboard.EmailUsage, message: string): Promise<string> {
-    throw { message: 'failed', code: 1000} //new Error('failed')
+  async email(
+    parameters: Keyboard.KeyboardParameters,
+    session: Keyboard.FocusableProviderSession
+  ): Promise<string> {
+    throw new Error('failed')
   }
 }
 
@@ -126,8 +152,14 @@ test("Keyboard.provide() declarations", async () => {
   }, callback)
   let result = await promise
   console.log(result)
-//  expect(result.method).toStrictEqual('keyboard.standardResponse')
-  expect(result.result).toStrictEqual('foo')
+  expect(result.method).toStrictEqual('keyboard.standardResponse')
+  expect(result.params.result).toStrictEqual('foo')
+});
+
+test("Keyboard.provide() with blank object", () => {
+  expect(() => {
+    Keyboard.provide("xrn:firebolt:capability:input:keyboard", {});
+  }).toThrow();
 });
 
 test("Keyboard.provide() with error response", async () => {

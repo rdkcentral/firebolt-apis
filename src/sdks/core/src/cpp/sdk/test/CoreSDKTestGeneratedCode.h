@@ -16,27 +16,24 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef CORESDK_TEST_GENERATED_CODE_H
-#define CORESDK_TEST_GENERATED_CODE_H
+#pragma once
 
+#include "error.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+class CoreSDKTestGeneratedCode {
 
-//int32_t test_generated_properties_get_device_version();
-int32_t test_generated_properties_get_device_id();
-int32_t test_generated_properties_get_accessibility_closedcaption();
-int32_t test_generated_properties_get_accessibility_voiceguidancesettings();
-int32_t test_generated_properties_get_advertising_policy();
-int32_t test_generated_event_device_name();
-int32_t test_generated_event_device_name_with_register_same_callback();
-int32_t test_generated_event_device_screenresolution();
-int32_t test_generated_event_accessibility_voice_guidance_settings();
-//int32_t test_generated_calls_metrics_lifecycle_ready();
+public:
+    CoreSDKTestGeneratedCode() = default;
+    virtual ~CoreSDKTestGeneratedCode() = default;
 
-#ifdef __cplusplus
-}
-#endif
+    static void CreateFireboltInstance();
+    static void DestroyFireboltInstance();
+    static void TestCoreStaticSDK();
+    static void GetDeviceName();
+    static bool WaitOnConnectionReady();
 
-#endif // CORESDK_TEST_GENERATED_CODE_H
+private:
+    static void ConnectionChanged(const bool, const Firebolt::Error);
+    static bool _connected;
+};
+
