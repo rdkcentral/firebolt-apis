@@ -1,6 +1,6 @@
 {
 	"name": "@firebolt-js/manage-sdk",
-	"version": "1.2.0-next.5",
+	"version": "1.2.0",
 	"description": "The Firebolt Manage JS SDK",
 	"main": "./dist/lib/firebolt-manage.mjs",
 	"types": "./dist/lib/firebolt-manage.d.ts",
