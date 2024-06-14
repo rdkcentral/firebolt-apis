@@ -1,3 +1,10 @@
+# [1.2.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.4...v1.2.0-next.5) (2024-06-13)
+
+
+### Bug Fixes
+
+* Remove x-alternatives that don't exist ([#278](https://github.com/rdkcentral/firebolt-apis/issues/278)) ([e38ad5a](https://github.com/rdkcentral/firebolt-apis/commit/e38ad5a508fccb5c724cf0f03cbd67ad4a28378c))
+
 # [1.2.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.3...v1.2.0-next.4) (2024-06-06)
 
 

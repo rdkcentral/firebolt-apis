@@ -1,6 +1,6 @@
 {
 	"name": "@firebolt-js/sdk",
-	"version": "1.2.0-next.4",
+	"version": "1.2.0-next.5",
 	"description": "The Firebolt JS SDK",
 	"main": "./dist/lib/firebolt.mjs",
 	"types": "./dist/lib/firebolt.d.ts",
