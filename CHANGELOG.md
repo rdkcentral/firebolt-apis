@@ -1,3 +1,16 @@
+# [1.2.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.5...v1.2.0-next.6) (2024-06-17)
+
+
+### Bug Fixes
+
+* CHANGELOG formatting for Core SDK ([de051a4](https://github.com/rdkcentral/firebolt-apis/commit/de051a427ec4e9b287efd0c8b64d53e656539343))
+* Update CHANGELOG.md ([85e6ccb](https://github.com/rdkcentral/firebolt-apis/commit/85e6ccb0f6d4f73a5a244a9914a78c2afc3e04aa))
+
+
+### Features
+
+* Updated CHANGELOGS for SDKs for version 1.2.0 ([b20b38d](https://github.com/rdkcentral/firebolt-apis/commit/b20b38db5bd59efb7c31c562ba00666161dbf783))
+
 # [1.2.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-14)
 
 
