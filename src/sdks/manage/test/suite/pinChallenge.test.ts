@@ -19,14 +19,14 @@
 import { test, expect } from "@jest/globals";
 import { PinChallenge } from "../../build/javascript/src/firebolt-manage";
 
-class PCProvider implements PinChallenge.PinChallenge {
-  challenge(requestor: PinChallenge.ChallengeRequestor, pinSpace: 'purchase' | 'content', capability?: string): Promise<PinChallenge.PinChallengeResult> {
+class PCProvider implements PinChallenge.ChallengeProvider {
+  challenge(parameters: PinChallenge.ChallengeParameters, session: PinChallenge.FocusableProviderSession): Promise<PinChallenge.PinChallengeResult> {
     return Promise.resolve(null)
   }
 }
 
 test("PinChallenge.provide() declarations", () => {
-  PinChallenge.provide(new PCProvider());
+  PinChallenge.provide('xrn:firebolt:capability:usergrant:pinchallenge', new PCProvider());
   expect(1).toBe(1);
 });
 

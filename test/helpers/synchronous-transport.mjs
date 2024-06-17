@@ -7,7 +7,7 @@ let receiveCallback
 let first = false
 let _history = []
 
-window.__firebolt.transport = {
+const transport = {
     send: function(message) {
         const json = JSON.parse(message)
         _history.push(json)
@@ -29,6 +29,15 @@ window.__firebolt.transport = {
     instantiatedBeforeSdk() {
         return first
     }
+}
+
+if (!window.__firebolt.setTransportLayer) {
+    first = true
+}
+
+window.__firebolt.getTransportLayer = function() {
+    // we'll assert on this later...
+    return transport
 }
 
 export default transport

@@ -17,7 +17,7 @@
  */
 
 import { test, expect } from "@jest/globals";
-import { Discovery, Entertainment } from "../../build/javascript/src/firebolt";
+import { Discovery } from "../../build/javascript/src/firebolt";
 
 test("watched(entityId)", () => {
   return Discovery.watched("abc").then((success: boolean) => {
@@ -50,7 +50,7 @@ test("entityInfo(EntityInfoResult)", () => {
       },
       title: "Test",
       entityType: "program",
-      programType: Entertainment.ProgramType.MOVIE,
+      programType: Discovery.ProgramType.MOVIE,
     },
   };
   return Discovery.entityInfo(dummyData).then((res: boolean) => {
@@ -65,7 +65,7 @@ test("watchNext(title?: LocalizedString, identifiers: ContentIdentifiers, expire
 });
 
 test("entitlements(entitlements: Entitlement[])", () => {
-  const dummyData: Array<Entertainment.Entitlement> = [
+  const dummyData: Array<Discovery.Entitlement> = [
     {
       entitlementId: "test123",
       startTime: `${new Date().getTime()}`,
@@ -84,7 +84,7 @@ test("launch(appId)", () => {
 });
 
 test("signIn(appId)", () => {
-  const dummyData: Array<Entertainment.Entitlement> = [
+  const dummyData: Array<Discovery.Entitlement> = [
     {
       entitlementId: "test123",
       startTime: `${new Date().getTime()}`,
@@ -113,7 +113,7 @@ test("purchasedContent()", () => {
         },
         title: "TEST",
         entityType: "program",
-        programType: Entertainment.ProgramType.MOVIE,
+        programType: Discovery.ProgramType.MOVIE,
       },
     ],
   };

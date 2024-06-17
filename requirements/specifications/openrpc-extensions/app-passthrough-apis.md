@@ -274,7 +274,7 @@ The following schemas are referenced by these examples:
                         "type": "string"
                     },
                     "entity": {
-                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
                     }
                 },
                 "required": [
@@ -347,7 +347,7 @@ Provider method:
                 {
                     "name": "event",
                     "x-response": {
-                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
                     }
                 }
             ],
@@ -401,7 +401,7 @@ Provider method:
                 {
                   "name": "entity",
                   "schema": {
-                      "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+                      "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
                   }                    
                 }
             ],
@@ -451,7 +451,7 @@ Platform Method:
                             "$ref": "#/components/schemas/InterestReason"
                         },
                         "entity": {
-                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+                            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
                         }
                     }
                     

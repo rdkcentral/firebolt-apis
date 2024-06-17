@@ -11,7 +11,7 @@
             "tags": [
                 {
                     "name": "capabilities",
-                    "x-provided-by": "Discovery.onRequestUserInterest",
+                    "x-provided-by": "Discovery.userInterest",
                     "x-uses": [
                         "xrn:firebolt:capability:discovery:interest"
                     ]
@@ -24,14 +24,14 @@
                     "name": "type",
                     "required": true,
                     "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestType"
                     }
                 },
                 {
                     "name": "reason",
                     "required": true,
                     "schema": {
-                        "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestReason"
                     }
                 }
             ],
@@ -87,10 +87,10 @@
             ]
         },
         {
-            "name": "onUserInterest",
+            "name": "userInterest",
             "tags": [
                 {
-                    "name": "event"
+                    "name": "notifier"
                 },
                 {
                     "name": "capabilities",
@@ -102,48 +102,51 @@
             ],
             "summary": "Provide information about the entity currently displayed or selected on the screen.",
             "description": "Provide information about the entity currently displayed or selected on the screen.",
-            "params": [],
-            "result": {
-                "name": "interest",
-                "schema": {
-                    "$ref": "#/components/schemas/InterestEvent"
-                },
-                "summary": "The EntityDetails data."
-            },
+            "params": [
+                {
+                    "name": "interest",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/InterestEvent"
+                    },
+                    "summary": "The EntityDetails data."
+                }
+            ],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "interest",
-                        "value": {
-                            "appId": "cool-app",
-                            "type": "interest",
-                            "reason": "playlist",
-                            "entity": {
-                                "identifiers": {
-                                    "entityId": "345",
-                                    "entityType": "program",
-                                    "programType": "movie"
-                                },
-                                "info": {
-                                    "title": "Cool Runnings",
-                                    "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
-                                    "releaseDate": "1993-01-01T00:00:00.000Z",
-                                    "contentRatings": [
-                                        {
-                                            "scheme": "US-Movie",
-                                            "rating": "PG"
-                                        },
-                                        {
-                                            "scheme": "CA-Movie",
-                                            "rating": "G"
-                                        }
-                                    ]
+                    "params": [
+                        {
+                            "name": "interest",
+                            "value": {
+                                "appId": "cool-app",
+                                "type": "interest",
+                                "reason": "playlist",
+                                "entity": {
+                                    "identifiers": {
+                                        "entityId": "345",
+                                        "entityType": "program",
+                                        "programType": "movie"
+                                    },
+                                    "info": {
+                                        "title": "Cool Runnings",
+                                        "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+                                        "releaseDate": "1993-01-01T00:00:00.000Z",
+                                        "contentRatings": [
+                                            {
+                                                "scheme": "US-Movie",
+                                                "rating": "PG"
+                                            },
+                                            {
+                                                "scheme": "CA-Movie",
+                                                "rating": "G"
+                                            }
+                                        ]
+                                    }
                                 }
                             }
-                        }
-                    }
+                        }                        
+                    ]
                 }
             ]
         }
@@ -158,7 +161,7 @@
                         "type": "string"
                     },
                     "entity": {
-                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
                     }
                 },
                 "required": [
@@ -174,13 +177,13 @@
                         "type": "string"
                     },
                     "type": {
-                        "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestType"
                     },
                     "reason": {
-                        "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestReason"
                     },
                     "entity": {
-                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
                     }
                 },
                 "required": [

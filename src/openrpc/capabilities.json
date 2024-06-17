@@ -650,31 +650,31 @@
 						{
 							"name": "capability",
 							"value": "xrn:firebolt:capability:token:platform"
-						}
-					],
-					"result": {
-						"name": "Default result",
-						"value": {
-							"capability": "xrn:firebolt:capability:token:platform",
-							"supported": true,
-							"available": true,
-							"use": {
-								"permitted": true,
-								"granted": true
-							},
-							"manage": {
-								"permitted": true,
-								"granted": true
-							},
-							"provide": {
-								"permitted": true,
-								"granted": true
-							},
-							"details": [
-								"unpermitted"
-							]
-						}
-					}
+						},
+						{
+							"name": "value",
+							"value": {
+								"capability": "xrn:firebolt:capability:token:platform",
+								"supported": true,
+								"available": true,
+								"use": {
+									"permitted": true,
+									"granted": true
+								},
+								"manage": {
+									"permitted": true,
+									"granted": true
+								},
+								"provide": {
+									"permitted": true,
+									"granted": true
+								},
+								"details": [
+									"unpermitted"
+								]
+							}
+						}						
+					]
 				}
 			]
 		},
@@ -716,31 +716,31 @@
 						{
 							"name": "capability",
 							"value": "xrn:firebolt:capability:token:platform"
-						}
-					],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"capability": "xrn:firebolt:capability:token:platform",
-							"supported": true,
-							"available": false,
-							"use": {
-								"permitted": true,
-								"granted": true
-							},
-							"manage": {
-								"permitted": true,
-								"granted": true
-							},
-							"provide": {
-								"permitted": true,
-								"granted": true
-							},
-							"details": [
-								"unavailable"
-							]
-						}
-					}
+						},
+						{
+							"name": "value",
+							"value": {
+								"capability": "xrn:firebolt:capability:token:platform",
+								"supported": true,
+								"available": false,
+								"use": {
+									"permitted": true,
+									"granted": true
+								},
+								"manage": {
+									"permitted": true,
+									"granted": true
+								},
+								"provide": {
+									"permitted": true,
+									"granted": true
+								},
+								"details": [
+									"unavailable"
+								]
+							}
+						}						
+					]
 				}
 			]
 		},
@@ -793,28 +793,28 @@
 						{
 							"name": "capability",
 							"value": "xrn:firebolt:capability:localization:postal-code"
-						}
-					],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"capability": "xrn:firebolt:capability:localization:postal-code",
-							"supported": true,
-							"available": true,
-							"use": {
-								"permitted": true,
-								"granted": true
-							},
-							"manage": {
-								"permitted": true,
-								"granted": true
-							},
-							"provide": {
-								"permitted": true,
-								"granted": true
+						},
+						{
+							"name": "value",
+							"value": {
+								"capability": "xrn:firebolt:capability:localization:postal-code",
+								"supported": true,
+								"available": true,
+								"use": {
+									"permitted": true,
+									"granted": true
+								},
+								"manage": {
+									"permitted": true,
+									"granted": true
+								},
+								"provide": {
+									"permitted": true,
+									"granted": true
+								}
 							}
-						}
-					}
+						}						
+					]
 				}
 			]
 		},
@@ -867,31 +867,31 @@
 						{
 							"name": "capability",
 							"value": "xrn:firebolt:capability:localization:postal-code"
+						},
+						{
+							"name": "value",
+							"value": {
+								"capability": "xrn:firebolt:capability:localization:postal-code",
+								"supported": true,
+								"available": true,
+								"use": {
+									"permitted": true,
+									"granted": true
+								},
+								"manage": {
+									"permitted": true,
+									"granted": true
+								},
+								"provide": {
+									"permitted": true,
+									"granted": true
+								},
+								"details": [
+									"grantDenied"
+								]
+							}
 						}
-					],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"capability": "xrn:firebolt:capability:localization:postal-code",
-							"supported": true,
-							"available": true,
-							"use": {
-								"permitted": true,
-								"granted": true
-							},
-							"manage": {
-								"permitted": true,
-								"granted": true
-							},
-							"provide": {
-								"permitted": true,
-								"granted": true
-							},
-							"details": [
-								"grantDenied"
-							]
-						}
-					}
+					]
 				}
 			]
 		}

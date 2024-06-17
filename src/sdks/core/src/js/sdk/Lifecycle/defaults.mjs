@@ -16,7 +16,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import MockTransport from '../Transport/MockTransport.mjs'
+import Gateway from '../Gateway/index.mjs'
 
 let inactive = 0 /* ${EXAMPLE:inactive} */
 let foreground = 0 /* ${EXAMPLE:foreground} */
@@ -25,7 +25,7 @@ let suspended = 0 /* ${EXAMPLE:suspended} */
 let unloading = 0 /* ${EXAMPLE:unloading} */
 
 const emit = (value) => {
-  MockTransport.event('Lifecycle', value.state, value)
+  Gateway.simulate(`Lifecycle.${value.state}`, value)
 }
 
 const win = typeof window !== 'undefined' ? window : {}

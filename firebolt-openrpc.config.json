@@ -1,0 +1,10 @@
+{
+    "sdk": {
+
+    },
+    "languages": {
+        "javascript": {
+            "copySchemasIntoModules": true
+        }
+    }
+}

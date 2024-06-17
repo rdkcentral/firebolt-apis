@@ -2,7 +2,7 @@ import Setup from "../../../../../test/Setup"
 import { sent } from "../../../../../test/Setup"
 
 import { test, expect  } from "@jest/globals"
-import { Lifecycle, Device, Discovery, Entertainment } from "../../build/javascript/src/firebolt";
+import { Lifecycle, Device, Discovery } from "../../build/javascript/src/firebolt";
 
 let listenerId:number
 
@@ -39,7 +39,7 @@ const result: Discovery.EntityInfoResult = {
         "identifiers": {
             "entityId": "123"
         },
-        "programType": Entertainment.ProgramType.MOVIE,
+        "programType": Discovery.ProgramType.MOVIE,
         "title": "A title"
     },
     "expires": ""

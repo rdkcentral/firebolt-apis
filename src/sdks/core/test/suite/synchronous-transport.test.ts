@@ -16,39 +16,36 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-const win: any = window;
+import transport from "../../../../../test/helpers/synchronous-transport.mjs";
 
-let sendCalled = false
-let inactiveCalled = false
-let _callback: Function;
-let firstId: Number
+// These all get set synchronously, so we'll update them as they happen
+let sendCalled: boolean = false;
+let inactiveListened: boolean = false;
+let callbackWiredUp: boolean = false;
 
-win.__firebolt = {
-  transport: {
-    send: function(json: any) {
-      if (firstId === undefined) {
-        firstId = json.id
-      }
-      sendCalled = true
-      if (json.method === 'Lifecycle.onInactive') {
-        inactiveCalled = true
-      }
-      else if (json.method === 'Device.name') {
-        console.dir(json)
-        _callback && setTimeout(() => {
-            _callback({
-            jsonrpc: '2.0',
-            id: json.id,
-            result: 'Test Name'
-          })
-        }, 100)
-      }
-    },
-    receive: function(callback: Function) {
-      _callback = callback
+transport.onSend((json) => {
+  // we'll assert on this later...
+  sendCalled = true;
+  if (json.method.toLowerCase() === "device.name") {
+    // we'll assert on this later...
+    inactiveListened = true;
+
+    // we'll assert on this later...
+    callbackWiredUp = true;
+    let response = {
+      jsonrpc: "2.0",
+      id: json.id,
+      result: "Test Name",
+    };
+    // catching errors, so all tests don't fail if this breaks
+    try {
+      // send back the onInactive event immediately, to test for race conditions
+      transport.response(response);
+    } catch (err) {
+      // fail silenetly (the boolean-based tests below will figure it out...)
     }
   }
-}
+});
 
 import { test, expect, beforeAll } from "@jest/globals";
 import { Lifecycle, Device } from "../../build/javascript/src/firebolt";
@@ -63,11 +60,7 @@ beforeAll(() => {
 });
 
 test("Transport injected before SDK", () => {
-  // NOTE: this assumes an implementation detail that we start at 1 (we do at time of this test writing)
-  //       this isn't the best test, since there's no requirement that we start at 1 or even use numbers
-  //       at all (could be strings or even null).
-  //       if this test ever fails, we should find a better way to test that we didn't miss any requests
-  expect(firstId).toBe(1)
+  expect(transport.instantiatedBeforeSdk()).toBe(true);
 });
 
 test("Transport send method working", () => {
@@ -75,7 +68,11 @@ test("Transport send method working", () => {
 });
 
 test("Transport was sent `Lifecycle.onInactive` listener", () => {
-  expect(inactiveCalled).toBe(true);
+  expect(
+    !!transport
+      .history()
+      .find((json) => json.method.toLowerCase() === "lifecycle.oninactive")
+  ).toBe(true);
 });
 
 test("Transport `receive` callback wired up", () => {
