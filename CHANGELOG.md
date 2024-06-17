@@ -1,3 +1,10 @@
+# [1.2.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.6...v1.2.0-next.7) (2024-06-17)
+
+
+### Bug Fixes
+
+* Add discovery to semantic-release ([#282](https://github.com/rdkcentral/firebolt-apis/issues/282)) ([7966bd3](https://github.com/rdkcentral/firebolt-apis/commit/7966bd34f7a5cdfa4d65c6a5e0e304ee777925c5))
+
 # [1.2.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-17)
 
 
