@@ -25,7 +25,8 @@ let firstId: Number
 
 win.__firebolt = {
   transport: {
-    send: function(json: any) {
+    send: function(message: string) {
+      const json = JSON.parse(message)
       if (firstId === undefined) {
         firstId = json.id
       }
@@ -36,11 +37,11 @@ win.__firebolt = {
       else if (json.method === 'Device.name') {
         console.dir(json)
         _callback && setTimeout(() => {
-            _callback({
-            jsonrpc: '2.0',
-            id: json.id,
-            result: 'Test Name'
-          })
+            _callback(JSON.stringify({
+              jsonrpc: '2.0',
+              id: json.id,
+              result: 'Test Name'
+            }))
         }, 100)
       }
     },

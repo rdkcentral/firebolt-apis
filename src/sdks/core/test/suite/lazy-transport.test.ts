@@ -71,7 +71,8 @@ let callbackWiredUp = false
 let sendCalled = false
 
 const transport = {
-    send: function(json) {
+    send: function(message: string) {
+        const json = JSON.parse(message)
         sendCalled = true
         if (json.method === 'Lifecycle.provideApplication') {
             // we'll assert on this later...
@@ -87,7 +88,7 @@ const transport = {
                 // catching errors, so all tests don't fail if this breaks
                 try {
                     // send back the onInactive event immediately, to test for race conditions
-                    state.callback(response)
+                    state.callback(JSON.stringify(response))
                 }
                 catch (err) {
                     // fail silenetly (the boolean-based tests below will figure it out...)

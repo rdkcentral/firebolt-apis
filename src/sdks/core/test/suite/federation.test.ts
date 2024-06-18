@@ -25,7 +25,7 @@ import { Lifecycle, Discovery, Entertainment, Types } from '../../build/javascri
 // holds test transport layer state, e.g. callback
 
 const state = {
-  callback:(a:object) => {}
+  callback:(a:string) => {}
 }
 
 let pullEntityInfoListenCount = 0
@@ -40,7 +40,8 @@ let secondRegistrationFailed = false
 beforeAll(() => {
     return new Promise( (resolve, reject) => {
         const transport = {
-            send: function(json: any) {
+            send: function(message: string) {
+                const json = JSON.parse(message)
                 sendCalled = true
                 if (json.method.toLowerCase() === 'discovery.onpullentityinfo') {
                     // we'll assert on this later...
@@ -58,7 +59,7 @@ beforeAll(() => {
                         }
                         // catching errors, so all tests don't fail if this breaks
                         try {
-                            state.callback(response)
+                            state.callback(JSON.stringify(response))
                         }
                         catch (err) {
                             throw err
@@ -81,9 +82,9 @@ beforeAll(() => {
                                     }
                                 }
         
-                                state.callback(response)
+                                state.callback(JSON.stringify(response))
         
-                                state.callback({
+                                state.callback(JSON.stringify({
                                     jsonrpc: '2.0',
                                     method: 'Discovery.pullEntityInfo',
                                     params: {
@@ -94,7 +95,7 @@ beforeAll(() => {
                                             }
                                         }
                                     }
-                                })
+                                }))
                             }
                             catch (err) {
                                 throw err
@@ -116,15 +117,15 @@ beforeAll(() => {
                     }
                     
                     setTimeout(() => {
-                        state.callback({
+                        state.callback(JSON.stringify({
                             jsonrpc: '2.0',
                             id: json.id,
                             result: true
-                        })
+                        }))
                     }, 100)
                 }
             },
-            receive: function(callback: (a:object) => void) {
+            receive: function(callback: (a:string) => void) {
                 // store the callback
                 state.callback = callback
             }
