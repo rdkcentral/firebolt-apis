@@ -6,16 +6,16 @@ See [Firebolt Requirements Governance](./governance.md) for more info.
 
 **NOTE**: Update this link based on your directory depth ^^
 
-| Contributor    | Organization   |
-| -------------- | -------------- |
-| Lucien Kennedy-Lamb            | Sky            |
-| Bijal Shah            | Sky            |
-| Yuri Pasquali            | Sky            |
-| Stuart Pett            | Sky            |
-| Wouter Meek            | Comcast            |
-| Jeremy LaCivita            | Comcast            |
-| Kevin Pearson            | Comcast            |
-| Phillip Stroffolino            | Comcast            |
+| Contributor         | Organization |
+| ------------------- | ------------ |
+| Lucien Kennedy-Lamb | Sky          |
+| Bijal Shah          | Sky          |
+| Yuri Pasquali       | Sky          |
+| Stuart Pett         | Sky          |
+| Wouter Meek         | Comcast      |
+| Jeremy LaCivita     | Comcast      |
+| Kevin Pearson       | Comcast      |
+| Phillip Stroffolino | Comcast      |
 
 ## 1. Overview
 
@@ -30,6 +30,27 @@ both environments and can have resources managed in the same way.
 
 This is achieved with the open source [Rialto Media
 Pipeline](https://github.com/rdkcentral/rialto) API and implementation:
+
+TODO: we need a few additions to support Netflix:
+
+**TODO**: the rest of these need to move to Rialto:
+
+
+- Preferred resolution/framerate
+- atmos lock
+- loudness eq
+The audioSettings **MUST** include an `atmosOutputLock` boolean property.
+
+The audioSettings **MUST** include an `audioLoudnessEquivalence` boolean property.
+
+The audioSettings API **MUST** be a Firebolt `property:readonly` API, and
+have a corresponding `onAudioSettingsChanged` notification.
+
+Use of the `audioSettings` and `onAudioSettingsChanged` APIs require access
+to the `use` role of the `xrn:firebolt:capability:device:audio-settings` capability.
+
+**TODO**: Netflix needs to be able to *set* atmosOutputLock...
+
 
 ![Diagram Description automatically
 generated](../../../../requirements/images/specifications/media/media-pipeline/media/image1.png)
