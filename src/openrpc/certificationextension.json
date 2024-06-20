@@ -8,7 +8,7 @@
     "methods": [
         {
             "name": "onFireboltInteractions",
-            "summary": "",
+            "summary": "Event to fetch the interaction details for the firebolt api call",
             "tags": [
                 {
                     "name": "event"
@@ -29,24 +29,12 @@
             },
             "examples": [
                 {
-                    "name": "Firebolt interaction to acquire platform token",
+                    "name": "Firebolt interaction to acquire device token",
                     "params": [],
                     "result": {
-                        "name": "event",
+                        "name": "Default Result",
                         "value": {
-                            "interactionRequest": {
-                                "id": "1",
-                                "jsonrpc": "2.0",
-                                "method": "token",
-                                "params": {
-                                    "type": "platform"
-                                }
-                            },
-                            "interactionResponse": {
-                                "id": "1",
-                                "jsonrpc": "2.0",
-                                "state": true
-                            }
+                            "payload": "{\"request\":{\"type\":\"method\",\"method\":\"Authentication.device\"},\"response\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"}"
                         }
                     }
                 }
@@ -98,7 +86,7 @@
                         }
                     ],
                     "result": {
-                        "name": "success",
+                       "name": "Default Result",
                         "value": true
                     }
                 }
@@ -157,15 +145,15 @@
                         }
                     ],
                     "result": {
-                        "name": "success",
+                        "name": "Default Result",
                         "value": true
                     }
                 }
             ]
         },
         {
-            "name": "healthCheck",
-            "summary": "",
+            "name": "platformHealthCheck",
+            "summary": "Health check for the device and process. It provides the load, memory, cpu usage and total live firebolt connections.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -188,19 +176,21 @@
                     "result": {
                         "name": "healthCheckResult",
                         "value": {
-                            "load": 0.5,
-                            "deviceMemory": 0.5,
-                            "processMemory": 0.5,
-                            "cpu": 0.5,
-                            "connections": 10
+                            "cpuLoad1minAverage": 2.2,
+                            "cpuLoad5minAverage": 1.8,
+                            "deviceMemoryUsed": 886,
+                            "deviceMemoryLimit": 1024,
+                            "processMemoryPSS": 500,
+                            "processMemoryRSS": 600,
+                            "activeConnections": 10
                         }
                     }
                 }
             ]
         },
         {
-            "name": "appPerformance",
-            "summary": "",
+            "name": "appHealthCheck",
+            "summary": "App healthCheck",
             "tags": [
                 {
                     "name": "capabilities",
@@ -251,70 +241,14 @@
                 "title": "InteractionResult",
                 "type": "object",
                 "required": [
-                    "interactionRequest",
-                    "interactionResponse"
+                    "payload"
                 ],
                 "properties": {
-                    "interactionRequest": {
-                        "type": "object",
-                        "required": [
-                            "method",
-                            "params"
-                        ],
-                        "properties": {
-                            "method": {
-                                "type": "string",
-                                "description": "The method name"
-                            },
-                            "params": {
-                                "oneOf": [
-                                    {
-                                        "type": "object",
-                                        "description": "JSON object that represents the interaction request"
-                                    },
-                                    {
-                                        "const": null
-                                    }
-                                ]
-                            }
-                        },
-                        "description": "JSON object that represents the interaction request"
-                    },
-                    "interactionResponse": {
-                        "type": "object",
-                        "required": [
-                            "state"
-                        ],
-                        "properties": {
-                            "method": {
-                                "type": "string",
-                                "description": "The method name"
-                            },
-                            "state": {
-                                "type": "boolean",
-                                "description": "The state of the response whether it is success or failure"
-                            }
-                        },
-                        "description": "JSON object that represents the state of the interaction response"
+                    "payload": {
+                        "type": "string",
+                        "description": "The stringyfy payload of the interaction contains firebolt api request and response"
                     }
-                },
-                "examples": [
-                    {
-                        "interactionRequest": {
-                            "id": "1",
-                            "jsonrpc": "2.0",
-                            "method": "token",
-                            "params": {
-                                "type": "platform"
-                            }
-                        },
-                        "interactionResponse": {
-                            "id": "1",
-                            "jsonrpc": "2.0",
-                            "state": true
-                        }
-                    }
-                ]
+                }
             },
             "PlatformIntent": {
                 "title": "PlatformIntent",
@@ -330,32 +264,42 @@
                 "description": "Performance and healthcheck snapshot for the device and process which includes load, memory, cpu usage. It also provides total live firebolt connections.",
                 "type": "object",
                 "required": [
-                    "load",
-                    "processMemory",
-                    "cpu",
-                    "deviceMemory",
-                    "connections"
+                    "cpuLoad1minAverage",
+                    "cpuLoad5minAverage",
+                    "deviceMemoryUsed",
+                    "deviceMemoryLimit",
+                    "processMemoryPSS",
+                    "processMemoryRSS",
+                    "activeConnections"
                 ],
                 "properties": {
-                    "load": {
+                    "cpuLoad1minAverage": {
                         "type": "number",
-                        "description": "The load average of the system"
+                        "description": "The load average of the system for 1 min, typically known as short term load."
                     },
-                    "processMemory": {
+                    "cpuLoad5minAverage": {
                         "type": "number",
-                        "description": "The memory usage of the process"
+                        "description": "The load average of the system for 5 min, typically known as mid term load."
                     },
-                    "cpu": {
+                    "processMemoryPSS": {
                         "type": "number",
-                        "description": "The cpu usage of the system"
+                        "description": "Process memory usage as proportional set size (PSS) in KB. This data provides a way to account for memory shared between processes more accurately"
                     },
-                    "deviceMemory": {
+                    "processMemoryRSS": {
+                        "type": "number",
+                        "description": "Process memory usage as resident set size (RSS) in KB. It represents the portion of a process's memory that is held in RAM"
+                    },
+                    "deviceMemoryUsed": {
                         "type": "number",
                         "description": "The memory usage of the device"
                     },
-                    "connections": {
+                    "deviceMemoryLimit": {
                         "type": "number",
-                        "description": "The total number of live firebolt connections"
+                        "description": "Total memory limit of the device"
+                    },
+                    "activeConnections": {
+                        "type": "number",
+                        "description": "The total number of active firebolt connections"
                     }
                 }
             },
