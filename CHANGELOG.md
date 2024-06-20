@@ -1,3 +1,125 @@
+# [1.2.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-17)
+
+
+### Bug Fixes
+
+* Add discovery to semantic-release ([#282](https://github.com/rdkcentral/firebolt-apis/issues/282)) ([7966bd3](https://github.com/rdkcentral/firebolt-apis/commit/7966bd34f7a5cdfa4d65c6a5e0e304ee777925c5))
+* Add PlaylistEntity to EntityIntent ([9769d6d](https://github.com/rdkcentral/firebolt-apis/commit/9769d6d7d43f1d61dfcda16ba4806175c5cf7658))
+* CHANGELOG formatting for Core SDK ([de051a4](https://github.com/rdkcentral/firebolt-apis/commit/de051a427ec4e9b287efd0c8b64d53e656539343))
+* Remove x-alternatives that don't exist ([#278](https://github.com/rdkcentral/firebolt-apis/issues/278)) ([e38ad5a](https://github.com/rdkcentral/firebolt-apis/commit/e38ad5a508fccb5c724cf0f03cbd67ad4a28378c))
+* Removed sdk as required field from Device.version ([#231](https://github.com/rdkcentral/firebolt-apis/issues/231)) ([ef3de3e](https://github.com/rdkcentral/firebolt-apis/commit/ef3de3e68619c6f666dd1d751b0acc25f6438122))
+* Update CHANGELOG.md ([85e6ccb](https://github.com/rdkcentral/firebolt-apis/commit/85e6ccb0f6d4f73a5a244a9914a78c2afc3e04aa))
+
+
+### Features
+
+* CI/CD docs (next-major) and merges (next-major/main) ([#245](https://github.com/rdkcentral/firebolt-apis/issues/245)) ([49ab03d](https://github.com/rdkcentral/firebolt-apis/commit/49ab03db9986b27dafd279fcc6121abe447784dc))
+* Command and Control Intents ([#251](https://github.com/rdkcentral/firebolt-apis/issues/251)) ([c8f8dae](https://github.com/rdkcentral/firebolt-apis/commit/c8f8dae5a9a0f14a3815c04df5a55763823d4898))
+* Firebolt CPP SDKs ([5ea5d4e](https://github.com/rdkcentral/firebolt-apis/commit/5ea5d4e2f486a7bc3861955cd98323fc2c26cce1)), closes [#189](https://github.com/rdkcentral/firebolt-apis/issues/189) [#190](https://github.com/rdkcentral/firebolt-apis/issues/190) [#191](https://github.com/rdkcentral/firebolt-apis/issues/191) [#192](https://github.com/rdkcentral/firebolt-apis/issues/192) [#205](https://github.com/rdkcentral/firebolt-apis/issues/205) [#209](https://github.com/rdkcentral/firebolt-apis/issues/209) [#218](https://github.com/rdkcentral/firebolt-apis/issues/218) [#222](https://github.com/rdkcentral/firebolt-apis/issues/222) [#228](https://github.com/rdkcentral/firebolt-apis/issues/228) [#230](https://github.com/rdkcentral/firebolt-apis/issues/230) [#237](https://github.com/rdkcentral/firebolt-apis/issues/237) [#238](https://github.com/rdkcentral/firebolt-apis/issues/238) [#249](https://github.com/rdkcentral/firebolt-apis/issues/249)
+* Updated CHANGELOGS for SDKs for version 1.2.0 ([b20b38d](https://github.com/rdkcentral/firebolt-apis/commit/b20b38db5bd59efb7c31c562ba00666161dbf783))
+* User Interest ([#170](https://github.com/rdkcentral/firebolt-apis/issues/170)) ([48a1094](https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+
+# [1.2.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-17)
+
+
+### Bug Fixes
+
+* Add PlaylistEntity to EntityIntent ([9769d6d](https://github.com/rdkcentral/firebolt-apis/commit/9769d6d7d43f1d61dfcda16ba4806175c5cf7658))
+* CHANGELOG formatting for Core SDK ([de051a4](https://github.com/rdkcentral/firebolt-apis/commit/de051a427ec4e9b287efd0c8b64d53e656539343))
+* Remove x-alternatives that don't exist ([#278](https://github.com/rdkcentral/firebolt-apis/issues/278)) ([e38ad5a](https://github.com/rdkcentral/firebolt-apis/commit/e38ad5a508fccb5c724cf0f03cbd67ad4a28378c))
+* Removed sdk as required field from Device.version ([#231](https://github.com/rdkcentral/firebolt-apis/issues/231)) ([ef3de3e](https://github.com/rdkcentral/firebolt-apis/commit/ef3de3e68619c6f666dd1d751b0acc25f6438122))
+* Update CHANGELOG.md ([85e6ccb](https://github.com/rdkcentral/firebolt-apis/commit/85e6ccb0f6d4f73a5a244a9914a78c2afc3e04aa))
+
+
+### Features
+
+* CI/CD docs (next-major) and merges (next-major/main) ([#245](https://github.com/rdkcentral/firebolt-apis/issues/245)) ([49ab03d](https://github.com/rdkcentral/firebolt-apis/commit/49ab03db9986b27dafd279fcc6121abe447784dc))
+* Command and Control Intents ([#251](https://github.com/rdkcentral/firebolt-apis/issues/251)) ([c8f8dae](https://github.com/rdkcentral/firebolt-apis/commit/c8f8dae5a9a0f14a3815c04df5a55763823d4898))
+* Firebolt CPP SDKs ([5ea5d4e](https://github.com/rdkcentral/firebolt-apis/commit/5ea5d4e2f486a7bc3861955cd98323fc2c26cce1)), closes [#189](https://github.com/rdkcentral/firebolt-apis/issues/189) [#190](https://github.com/rdkcentral/firebolt-apis/issues/190) [#191](https://github.com/rdkcentral/firebolt-apis/issues/191) [#192](https://github.com/rdkcentral/firebolt-apis/issues/192) [#205](https://github.com/rdkcentral/firebolt-apis/issues/205) [#209](https://github.com/rdkcentral/firebolt-apis/issues/209) [#218](https://github.com/rdkcentral/firebolt-apis/issues/218) [#222](https://github.com/rdkcentral/firebolt-apis/issues/222) [#228](https://github.com/rdkcentral/firebolt-apis/issues/228) [#230](https://github.com/rdkcentral/firebolt-apis/issues/230) [#237](https://github.com/rdkcentral/firebolt-apis/issues/237) [#238](https://github.com/rdkcentral/firebolt-apis/issues/238) [#249](https://github.com/rdkcentral/firebolt-apis/issues/249)
+* Updated CHANGELOGS for SDKs for version 1.2.0 ([b20b38d](https://github.com/rdkcentral/firebolt-apis/commit/b20b38db5bd59efb7c31c562ba00666161dbf783))
+* User Interest ([#170](https://github.com/rdkcentral/firebolt-apis/issues/170)) ([48a1094](https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+
+# [1.2.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-17)
+
+
+### Bug Fixes
+
+* Add PlaylistEntity to EntityIntent ([9769d6d](https://github.com/rdkcentral/firebolt-apis/commit/9769d6d7d43f1d61dfcda16ba4806175c5cf7658))
+* CHANGELOG formatting for Core SDK ([de051a4](https://github.com/rdkcentral/firebolt-apis/commit/de051a427ec4e9b287efd0c8b64d53e656539343))
+* Remove x-alternatives that don't exist ([#278](https://github.com/rdkcentral/firebolt-apis/issues/278)) ([e38ad5a](https://github.com/rdkcentral/firebolt-apis/commit/e38ad5a508fccb5c724cf0f03cbd67ad4a28378c))
+* Removed sdk as required field from Device.version ([#231](https://github.com/rdkcentral/firebolt-apis/issues/231)) ([ef3de3e](https://github.com/rdkcentral/firebolt-apis/commit/ef3de3e68619c6f666dd1d751b0acc25f6438122))
+* Update CHANGELOG.md ([85e6ccb](https://github.com/rdkcentral/firebolt-apis/commit/85e6ccb0f6d4f73a5a244a9914a78c2afc3e04aa))
+
+
+### Features
+
+* CI/CD docs (next-major) and merges (next-major/main) ([#245](https://github.com/rdkcentral/firebolt-apis/issues/245)) ([49ab03d](https://github.com/rdkcentral/firebolt-apis/commit/49ab03db9986b27dafd279fcc6121abe447784dc))
+* Command and Control Intents ([#251](https://github.com/rdkcentral/firebolt-apis/issues/251)) ([c8f8dae](https://github.com/rdkcentral/firebolt-apis/commit/c8f8dae5a9a0f14a3815c04df5a55763823d4898))
+* Firebolt CPP SDKs ([5ea5d4e](https://github.com/rdkcentral/firebolt-apis/commit/5ea5d4e2f486a7bc3861955cd98323fc2c26cce1)), closes [#189](https://github.com/rdkcentral/firebolt-apis/issues/189) [#190](https://github.com/rdkcentral/firebolt-apis/issues/190) [#191](https://github.com/rdkcentral/firebolt-apis/issues/191) [#192](https://github.com/rdkcentral/firebolt-apis/issues/192) [#205](https://github.com/rdkcentral/firebolt-apis/issues/205) [#209](https://github.com/rdkcentral/firebolt-apis/issues/209) [#218](https://github.com/rdkcentral/firebolt-apis/issues/218) [#222](https://github.com/rdkcentral/firebolt-apis/issues/222) [#228](https://github.com/rdkcentral/firebolt-apis/issues/228) [#230](https://github.com/rdkcentral/firebolt-apis/issues/230) [#237](https://github.com/rdkcentral/firebolt-apis/issues/237) [#238](https://github.com/rdkcentral/firebolt-apis/issues/238) [#249](https://github.com/rdkcentral/firebolt-apis/issues/249)
+* Updated CHANGELOGS for SDKs for version 1.2.0 ([b20b38d](https://github.com/rdkcentral/firebolt-apis/commit/b20b38db5bd59efb7c31c562ba00666161dbf783))
+* User Interest ([#170](https://github.com/rdkcentral/firebolt-apis/issues/170)) ([48a1094](https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+
+# [1.2.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-14)
+
+
+### Bug Fixes
+
+* Add PlaylistEntity to EntityIntent ([9769d6d](https://github.com/rdkcentral/firebolt-apis/commit/9769d6d7d43f1d61dfcda16ba4806175c5cf7658))
+* CHANGELOG formatting for Core SDK ([de051a4](https://github.com/rdkcentral/firebolt-apis/commit/de051a427ec4e9b287efd0c8b64d53e656539343))
+* Remove x-alternatives that don't exist ([#278](https://github.com/rdkcentral/firebolt-apis/issues/278)) ([e38ad5a](https://github.com/rdkcentral/firebolt-apis/commit/e38ad5a508fccb5c724cf0f03cbd67ad4a28378c))
+* Removed sdk as required field from Device.version ([#231](https://github.com/rdkcentral/firebolt-apis/issues/231)) ([ef3de3e](https://github.com/rdkcentral/firebolt-apis/commit/ef3de3e68619c6f666dd1d751b0acc25f6438122))
+* Update CHANGELOG.md ([85e6ccb](https://github.com/rdkcentral/firebolt-apis/commit/85e6ccb0f6d4f73a5a244a9914a78c2afc3e04aa))
+
+
+### Features
+
+* CI/CD docs (next-major) and merges (next-major/main) ([#245](https://github.com/rdkcentral/firebolt-apis/issues/245)) ([49ab03d](https://github.com/rdkcentral/firebolt-apis/commit/49ab03db9986b27dafd279fcc6121abe447784dc))
+* Command and Control Intents ([#251](https://github.com/rdkcentral/firebolt-apis/issues/251)) ([c8f8dae](https://github.com/rdkcentral/firebolt-apis/commit/c8f8dae5a9a0f14a3815c04df5a55763823d4898))
+* Firebolt CPP SDKs ([5ea5d4e](https://github.com/rdkcentral/firebolt-apis/commit/5ea5d4e2f486a7bc3861955cd98323fc2c26cce1)), closes [#189](https://github.com/rdkcentral/firebolt-apis/issues/189) [#190](https://github.com/rdkcentral/firebolt-apis/issues/190) [#191](https://github.com/rdkcentral/firebolt-apis/issues/191) [#192](https://github.com/rdkcentral/firebolt-apis/issues/192) [#205](https://github.com/rdkcentral/firebolt-apis/issues/205) [#209](https://github.com/rdkcentral/firebolt-apis/issues/209) [#218](https://github.com/rdkcentral/firebolt-apis/issues/218) [#222](https://github.com/rdkcentral/firebolt-apis/issues/222) [#228](https://github.com/rdkcentral/firebolt-apis/issues/228) [#230](https://github.com/rdkcentral/firebolt-apis/issues/230) [#237](https://github.com/rdkcentral/firebolt-apis/issues/237) [#238](https://github.com/rdkcentral/firebolt-apis/issues/238) [#249](https://github.com/rdkcentral/firebolt-apis/issues/249)
+* Updated CHANGELOGS for SDKs for version 1.2.0 ([b20b38d](https://github.com/rdkcentral/firebolt-apis/commit/b20b38db5bd59efb7c31c562ba00666161dbf783))
+* User Interest ([#170](https://github.com/rdkcentral/firebolt-apis/issues/170)) ([48a1094](https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+
+# [1.2.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-14)
+
+
+### Bug Fixes
+
+* Add PlaylistEntity to EntityIntent ([9769d6d](https://github.com/rdkcentral/firebolt-apis/commit/9769d6d7d43f1d61dfcda16ba4806175c5cf7658))
+* CHANGELOG formatting for Core SDK ([de051a4](https://github.com/rdkcentral/firebolt-apis/commit/de051a427ec4e9b287efd0c8b64d53e656539343))
+* Remove x-alternatives that don't exist ([#278](https://github.com/rdkcentral/firebolt-apis/issues/278)) ([e38ad5a](https://github.com/rdkcentral/firebolt-apis/commit/e38ad5a508fccb5c724cf0f03cbd67ad4a28378c))
+* Removed sdk as required field from Device.version ([#231](https://github.com/rdkcentral/firebolt-apis/issues/231)) ([ef3de3e](https://github.com/rdkcentral/firebolt-apis/commit/ef3de3e68619c6f666dd1d751b0acc25f6438122))
+* Update CHANGELOG.md ([85e6ccb](https://github.com/rdkcentral/firebolt-apis/commit/85e6ccb0f6d4f73a5a244a9914a78c2afc3e04aa))
+
+
+### Features
+
+* CI/CD docs (next-major) and merges (next-major/main) ([#245](https://github.com/rdkcentral/firebolt-apis/issues/245)) ([49ab03d](https://github.com/rdkcentral/firebolt-apis/commit/49ab03db9986b27dafd279fcc6121abe447784dc))
+* Command and Control Intents ([#251](https://github.com/rdkcentral/firebolt-apis/issues/251)) ([c8f8dae](https://github.com/rdkcentral/firebolt-apis/commit/c8f8dae5a9a0f14a3815c04df5a55763823d4898))
+* Firebolt CPP SDKs ([5ea5d4e](https://github.com/rdkcentral/firebolt-apis/commit/5ea5d4e2f486a7bc3861955cd98323fc2c26cce1)), closes [#189](https://github.com/rdkcentral/firebolt-apis/issues/189) [#190](https://github.com/rdkcentral/firebolt-apis/issues/190) [#191](https://github.com/rdkcentral/firebolt-apis/issues/191) [#192](https://github.com/rdkcentral/firebolt-apis/issues/192) [#205](https://github.com/rdkcentral/firebolt-apis/issues/205) [#209](https://github.com/rdkcentral/firebolt-apis/issues/209) [#218](https://github.com/rdkcentral/firebolt-apis/issues/218) [#222](https://github.com/rdkcentral/firebolt-apis/issues/222) [#228](https://github.com/rdkcentral/firebolt-apis/issues/228) [#230](https://github.com/rdkcentral/firebolt-apis/issues/230) [#237](https://github.com/rdkcentral/firebolt-apis/issues/237) [#238](https://github.com/rdkcentral/firebolt-apis/issues/238) [#249](https://github.com/rdkcentral/firebolt-apis/issues/249)
+* Updated CHANGELOGS for SDKs for version 1.2.0 ([b20b38d](https://github.com/rdkcentral/firebolt-apis/commit/b20b38db5bd59efb7c31c562ba00666161dbf783))
+* User Interest ([#170](https://github.com/rdkcentral/firebolt-apis/issues/170)) ([48a1094](https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+
+# [1.2.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.4...v1.2.0-next.5) (2024-06-13)
+
+
+### Bug Fixes
+
+* Remove x-alternatives that don't exist ([#278](https://github.com/rdkcentral/firebolt-apis/issues/278)) ([e38ad5a](https://github.com/rdkcentral/firebolt-apis/commit/e38ad5a508fccb5c724cf0f03cbd67ad4a28378c))
+
+# [1.2.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.3...v1.2.0-next.4) (2024-06-06)
+
+
+### Features
+
+* Command and Control Intents ([#251](https://github.com/rdkcentral/firebolt-apis/issues/251)) ([c8f8dae](https://github.com/rdkcentral/firebolt-apis/commit/c8f8dae5a9a0f14a3815c04df5a55763823d4898))
+
+# [1.2.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.2...v1.2.0-next.3) (2024-06-06)
+
+
+### Features
+
+* User Interest ([#170](https://github.com/rdkcentral/firebolt-apis/issues/170)) ([48a1094](https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+
 # [1.2.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0-next.1...v1.2.0-next.2) (2024-04-08)
 
 

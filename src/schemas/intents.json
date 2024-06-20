@@ -244,10 +244,31 @@
                     "$ref": "#/definitions/ButtonIntent"
                 },
                 {
+                    "$ref": "#/definitions/FocusIntent"
+                },
+                {
+                    "$ref": "#/definitions/SelectIntent"
+                },
+                {
+                    "$ref": "#/definitions/BackIntent"
+                },
+                {
+                    "$ref": "#/definitions/ExitIntent"
+                },
+                {
+                    "$ref": "#/definitions/ChannelIntent"
+                },
+                {
+                    "$ref": "#/definitions/ScrollIntent"
+                },
+                {
                     "$ref": "#/definitions/PowerIntent"
                 },
                 {
                     "$ref": "#/definitions/VolumeIntent"
+                },
+                {
+                    "$ref": "#/definitions/MuteIntent"
                 },
                 {
                     "$ref": "#/definitions/MicrophoneIntent"
@@ -257,6 +278,15 @@
                 },
                 {
                     "$ref": "#/definitions/TuneIntent"
+                },
+                {
+                    "$ref": "#/definitions/VoiceGuidanceIntent"
+                },
+                {
+                    "$ref": "#/definitions/HighContrastIntent"
+                },
+                {
+                    "$ref": "#/definitions/ScreenMagnificationIntent"
                 }
             ]
         },
@@ -264,7 +294,19 @@
             "description": "A Firebolt compliant representation of a user intention to control some aspect of in-progress playback.",
             "anyOf": [
                 {
+                    "$ref": "#/definitions/PlayIntent"
+                },
+                {
                     "$ref": "#/definitions/PauseIntent"
+                },
+                {
+                    "$ref": "#/definitions/ReplayIntent"
+                },
+                {
+                    "$ref": "#/definitions/StopIntent"
+                },
+                {
+                    "$ref": "#/definitions/PlaybackSpeedIntent"
                 },
                 {
                     "$ref": "#/definitions/SeekIntent"
@@ -273,13 +315,16 @@
                     "$ref": "#/definitions/SkipIntent"
                 },
                 {
-                    "$ref": "#/definitions/TrickPlayIntent"
+                    "$ref": "#/definitions/FastForwardIntent"
+                },
+                {
+                    "$ref": "#/definitions/RewindIntent"
                 },
                 {
                     "$ref": "#/definitions/ClosedCaptionsIntent"
                 },
                 {
-                    "$ref": "#/definitions/AudioDescriptionIntent"
+                    "$ref": "#/definitions/AudioDescriptionsIntent"
                 }
             ]
         },
@@ -307,6 +352,9 @@
                         "action": {
                             "const": "launch"
                         }
+                    },
+                    "not": {
+                        "required": [ "data" ]
                     }
                 }
             ],
@@ -338,6 +386,9 @@
                         "action": {
                             "const": "home"
                         }
+                    },
+                    "not": {
+                        "required": [ "data" ]
                     }
                 }
             ],
@@ -370,32 +421,7 @@
                             "const": "entity"
                         },
                         "data": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/definitions/MovieEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/TVEpisodeEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/TVSeriesEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/TVSeasonEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/MusicEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/PlaylistEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/AdditionalEntity"
-                                },
-                                {
-                                    "$ref": "#/definitions/UntypedEntity"
-                                }
-                            ]
+                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
                         }
                     }
                 }
@@ -414,395 +440,31 @@
                 }
             ]
         },
-        "ChannelEntity": {
-            "title": "ChannelEntity",
-            "type": "object",
-            "properties": {
-                "entityType": {
-                    "const": "channel"
-                },
-                "channelType": {
-                    "type": "string",
-                    "enum": [
-                        "streaming",
-                        "overTheAir"
-                    ]
-                },
-                "entityId": {
-                    "type": "string",
-                    "description": "ID of the channel, in the target App's scope."
-                },
-                "appContentData": {
-                    "type": "string",
-                    "maxLength": 256
-                }
-            },
-            "required": [
-                "entityType",
-                "channelType",
-                "entityId"
-            ],
-            "additionalProperties": false
-        },
-        "ProgramEntity": {
-            "title": "ProgramEntity",
-            "type": "object",
-            "properties": {
-                "entityType": {
-                    "const": "program"
-                },
-                "programType": {
-                    "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ProgramType"
-                },
-                "entityId": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "entityType",
-                "programType",
-                "entityId"
-            ]
-        },
-        "MusicEntity": {
-            "title": "MusicEntity",
-            "type": "object",
-            "properties": {
-                "entityType": {
-                    "const": "music"
-                },
-                "musicType": {
-                    "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/MusicType"
-                },
-                "entityId": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "entityType",
-                "musicType",
-                "entityId"
-            ]
-        },        
-        "MovieEntity": {
-            "title": "MovieEntity",
+        "ChannelIntent": {
+            "description": "A Firebolt compliant representation of a user intent to 'surf' to the next or previous channel.",
+            "title": "ChannelIntent",
             "allOf": [
                 {
-                    "$ref": "#/definitions/ProgramEntity"
+                    "$ref": "#/definitions/Intent"
                 },
                 {
-                    "description": "A Firebolt compliant representation of a Movie entity.",
-                    "title": "MovieEntity",
-                    "type": "object",
-                    "required": [
-                        "entityType",
-                        "programType",
-                        "entityId"
-                    ],
-                    "properties": {
-                        "entityType": {
-                            "const": "program"
-                        },
-                        "programType": {
-                            "const": "movie"
-                        },
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityType": "program",
-                    "programType": "movie",
-                    "entityId": "el-camino"
-                }
-            ]
-        },
-        "TVEpisodeEntity": {
-            "title": "TVEpisodeEntity",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ProgramEntity"
-                },
-                {
-                    "description": "A Firebolt compliant representation of a TV Episode entity.",
-                    "title": "TVEpisodeEntity",
-                    "type": "object",
-                    "required": [
-                        "entityType",
-                        "programType",
-                        "entityId",
-                        "seriesId",
-                        "seasonId"
-                    ],
-                    "properties": {
-                        "entityType": {
-                            "const": "program"
-                        },
-                        "programType": {
-                            "const": "episode"
-                        },
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "seriesId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "seasonId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityType": "program",
-                    "programType": "episode",
-                    "entityId": "breaking-bad-pilot",
-                    "seriesId": "breaking-bad",
-                    "seasonId": "breaking-bad-season-1"
-                }
-            ]
-        },
-        "TVSeasonEntity": {
-            "title": "TVSeasonEntity",
-            "description": "A Firebolt compliant representation of a TV Season entity.",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ProgramEntity"
+                    "$ref": "#/definitions/IntentProperties"
                 },
                 {
                     "type": "object",
-                    "required": [
-                        "entityType",
-                        "programType",
-                        "entityId",
-                        "seriesId"
-                    ],
+                    "required": [ "data" ],
                     "properties": {
-                        "entityType": {
-                            "const": "program"
+                        "action": {
+                            "const": "channel"
                         },
-                        "programType": {
-                            "const": "season"
-                        },
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "seriesId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityType": "program",
-                    "programType": "season",
-                    "entityId": "breaking-bad-season-1",
-                    "seriesId": "breaking-bad"
-                }
-            ]
-        },
-        "TVSeriesEntity": {
-            "title": "TVSeriesEntity",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ProgramEntity"
-                },
-                {
-                    "description": "A Firebolt compliant representation of a TV Series entity.",
-                    "type": "object",
-                    "required": [
-                        "entityType",
-                        "programType",
-                        "entityId"
-                    ],
-                    "properties": {
-                        "entityType": {
-                            "const": "program"
-                        },
-                        "programType": {
-                            "const": "series"
-                        },
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityType": "program",
-                    "programType": "series",
-                    "entityId": "breaking-bad"
-                }
-            ]
-        },
-        "PlaylistEntity": {
-            "title": "PlaylistEntity",
-            "description": "A Firebolt compliant representation of a Playlist entity.",
-            "type": "object",
-            "required": [
-                "entityType",
-                "entityId"
-            ],
-            "properties": {
-                "entityType": {
-                    "const": "playlist"
-                },
-                "entityId": {
-                    "$ref": "#/definitions/Identifier"
-                },
-                "assetId": {
-                    "$ref": "#/definitions/Identifier"
-                },
-                "appContentData": {
-                    "type": "string",
-                    "maxLength": 256
-                }
-            },
-            "additionalProperties": false,
-            "examples": [
-                {
-                    "entityType": "playlist",
-                    "entityId": "playlist/xyz"
-                }
-            ]
-        },
-        "PlayableEntity": {
-            "title": "PlayableEntity",
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/MovieEntity"
-                },
-                {
-                    "$ref": "#/definitions/TVEpisodeEntity"
-                },
-                {
-                    "$ref": "#/definitions/PlaylistEntity"
-                },
-                {
-                    "$ref": "#/definitions/MusicEntity"
-                },
-                {
-                    "$ref": "#/definitions/AdditionalEntity"
-                }
-            ]
-        },
-        "AdditionalEntity": {
-            "title": "AdditionalEntity",
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ProgramEntity"
-                },
-                {
-                    "description": "A Firebolt compliant representation of the remaining entity types.",
-                    "type": "object",
-                    "required": [
-                        "entityType",
-                        "entityId"
-                    ],
-                    "properties": {
-                        "entityType": {
-                            "const": "program"
-                        },
-                        "programType": {
+                        "data": {
                             "type": "string",
                             "enum": [
-                                "concert",
-                                "sportingEvent",
-                                "preview",
-                                "other",
-                                "advertisement",
-                                "musicVideo",
-                                "minisode",
-                                "extra"
+                                "next",
+                                "previous"
                             ]
-                        },
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
                         }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityType": "program",
-                    "programType": "concert",
-                    "entityId": "live-aid"
-                }
-            ]
-        },
-        "UntypedEntity": {
-            "title": "UntypedEntity",
-            "allOf": [
-                {
-                    "description": "A Firebolt compliant representation of the remaining entity types.",
-                    "type": "object",
-                    "required": [
-                        "entityId"
-                    ],
-                    "properties": {
-                        "entityId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "assetId": {
-                            "$ref": "#/definitions/Identifier"
-                        },
-                        "appContentData": {
-                            "type": "string",
-                            "maxLength": 256
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ],
-            "examples": [
-                {
-                    "entityId": "an-entity"
+                    }
                 }
             ]
         },
@@ -833,7 +495,7 @@
                             "additionalProperties": false,
                             "properties": {
                                 "entity": {
-                                    "$ref": "#/definitions/ChannelEntity"
+                                    "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/ChannelEntity"
                                 },
                                 "options": {
                                     "description": "The options property of the data property MUST have only one of the following fields.",
@@ -902,7 +564,7 @@
                             "const": "playback"
                         },
                         "data": {
-                            "$ref": "#/definitions/PlayableEntity"
+                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/PlayableEntity"
                         }
                     }
                 }
@@ -994,7 +656,8 @@
                             },
                             "additionalProperties": false
                         }
-                    }
+                    },
+                    "required": [ "data" ]
                 }
             ],
             "examples": [
@@ -1032,7 +695,7 @@
                             "type": "object",
                             "properties": {
                                 "entity": {
-                                    "$ref": "#/definitions/PlayableEntity"
+                                    "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/PlayableEntity"
                                 },
                                 "options": {
                                     "type": "object",
@@ -1076,6 +739,7 @@
                                 "type": "object",
                                 "properties": {
                                     "options": {
+                                        "type": "object",
                                         "maxProperties": 1
                                     }
                                 }
@@ -1084,6 +748,7 @@
                                 "type": "object",
                                 "properties": {
                                     "options": {
+                                        "type": "object",
                                         "maxProperties": 0
                                     }
                                 }                                
@@ -1272,7 +937,7 @@
                                 "menus": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/Identifier"
+                                        "type": "string"
                                     },
                                     "minItems": 1,
                                     "maxItems": 100
@@ -1283,7 +948,7 @@
                                         "type": "object",
                                         "properties": {
                                             "appId": {
-                                                "$ref": "#/definitions/Identifier"
+                                                "type": "string"
                                             },
                                             "exclude": {
                                                 "type": "boolean"
@@ -1369,19 +1034,19 @@
                                 "entity": {
                                     "anyOf": [
                                         {
-                                            "$ref": "#/definitions/MovieEntity"
+                                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/MovieEntity"
                                         },
                                         {
-                                            "$ref": "#/definitions/TVEpisodeEntity"
+                                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVEpisodeEntity"
                                         },
                                         {
-                                            "$ref": "#/definitions/TVSeriesEntity"
+                                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVSeriesEntity"
                                         },
                                         {
-                                            "$ref": "#/definitions/TVSeasonEntity"
+                                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVSeasonEntity"
                                         },
                                         {
-                                            "$ref": "#/definitions/AdditionalEntity"
+                                            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/AdditionalEntity"
                                         }
                                     ]
                                 },
@@ -1391,24 +1056,24 @@
                                         "type": "object",
                                         "properties": {
                                             "appId": {
-                                                "$ref": "#/definitions/Identifier"
+                                                "type": "string"
                                             },
                                             "entity": {
                                                 "anyOf": [
                                                     {
-                                                        "$ref": "#/definitions/MovieEntity"
+                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/MovieEntity"
                                                     },
                                                     {
-                                                        "$ref": "#/definitions/TVEpisodeEntity"
+                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVEpisodeEntity"
                                                     },
                                                     {
-                                                        "$ref": "#/definitions/TVSeriesEntity"
+                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVSeriesEntity"
                                                     },
                                                     {
-                                                        "$ref": "#/definitions/TVSeasonEntity"
+                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVSeasonEntity"
                                                     },
                                                     {
-                                                        "$ref": "#/definitions/AdditionalEntity"
+                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/AdditionalEntity"
                                                     }
                                                 ]
                                             }
@@ -1419,7 +1084,7 @@
                                 "menus": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/Identifier"
+                                        "type": "string"
                                     },
                                     "minItems": 1,
                                     "maxItems": 100
@@ -1430,7 +1095,7 @@
                                         "type": "object",
                                         "properties": {
                                             "appId": {
-                                                "$ref": "#/definitions/Identifier"
+                                                "type": "string"
                                             },
                                             "exclude": {
                                                 "type": "boolean"
@@ -1483,6 +1148,207 @@
                         "menusIds": [
                             "123"
                         ]
+                    }
+                }
+            ]
+        },
+        "FocusIntent": {
+            "description": "A Firebolt compliant representation of a user intention to interact with their device in a way analogous to pressing remote directional pad buttons.",
+            "title": "FocusIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "required": [ "data" ],
+                    "properties": {
+                        "action": {
+                            "const": "focus"
+                        },
+                        "data": {
+                            "type": "object",
+                            "required": [
+                                "direction"
+                            ],
+                            "properties": {
+                                "direction": {
+                                    "type": "string",
+                                    "enum": [
+                                        "up",
+                                        "down",
+                                        "left",
+                                        "right"
+                                    ]
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "focus",
+                    "data": {
+                        "direction": "up"
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                }
+            ]
+        },
+        "SelectIntent": {
+            "description": "A Firebolt compliant representation of a user intention to interact with their device in a way analogous to pressing the remote 'select' button.",
+            "title": "SelectIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "select"
+                        }
+                    },
+                    "not": {
+                        "required": [ "data" ]
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "select",
+                    "context": {
+                        "source": "voice"
+                    }
+                }
+            ]
+        },
+        "BackIntent": {
+            "description": "A Firebolt compliant representation of a user intention to interact with their device in a way analogous to pressing the remote 'back' button.",
+            "title": "BackIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "back"
+                        }
+                    },
+                    "not": {
+                        "required": [ "data" ]
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "back",
+                    "context": {
+                        "source": "voice"
+                    }
+                }
+            ]
+        },
+        "ExitIntent": {
+            "description": "A Firebolt compliant representation of a user intention to interact with their device in a way analogous to pressing the remote 'back' button.",
+            "title": "ExitIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "exit"
+                        }
+                    },
+                    "not": {
+                        "required": [ "data" ]
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "exit",
+                    "context": {
+                        "source": "voice"
+                    }
+                }
+            ]
+        },           
+        "ScrollIntent": {
+            "description": "A Firebolt compliant representation of a user intention to interact with their device in a way analogous to pressing remote directional pad buttons.",
+            "title": "ScrollIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "required": [ "data" ],
+                    "properties": {
+                        "action": {
+                            "const": "scroll"
+                        },
+                        "data": {
+                            "type": "object",
+                            "required": [
+                                "direction"
+                            ],
+                            "properties": {
+                                "direction": {
+                                    "type": "string",
+                                    "enum": [
+                                        "up",
+                                        "down",
+                                        "left",
+                                        "right"
+                                    ]
+                                },
+                                "unit": {
+                                    "type": "string",
+                                    "enum": [
+                                        "line",
+                                        "page",
+                                        "percent"
+                                    ]
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "scroll",
+                    "data": {
+                        "direction": "up"
+                    },
+                    "context": {
+                        "source": "voice"
                     }
                 }
             ]
@@ -1560,38 +1426,38 @@
                             "const": "volume"
                         },
                         "data": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "value": {
-                                            "type": "number",
-                                            "minimum": 0,
-                                            "maximum": 1
-                                        },
-                                        "toggle": {
-                                            "const": true
-                                        }
-                                    },
-                                    "minProperties": 1,
-                                    "maxProperties": 1,
-                                    "additionalProperties": false
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "number"
                                 },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "value": {
-                                            "type": "number",
-                                            "minimum": 0,
-                                            "maximum": 1
-                                        },
-                                        "relative": {
-                                            "const": true
-                                        }
-                                    },
-                                    "additionalProperties": false
+                                "relative": {
+                                    "const": true
                                 }
-                            ]
+                            },
+                            "required": [ "value" ],
+                            "if": {
+                                "required": [ "relative" ]
+                            },
+                            "then": {
+                                "properties": {
+                                    "value": {
+                                        "type": "number",
+                                        "minimum": -50,
+                                        "maximum": 50        
+                                    }
+                                }
+                            },
+                            "else": {
+                                "properties": {
+                                    "value": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 100
+                                    }
+                                }
+                            },
+                            "additionalProperties": false
                         }
                     }
                 }
@@ -1600,7 +1466,7 @@
                 {
                     "action": "volume",
                     "data": {
-                        "toggle": true
+                        "value": 70
                     },
                     "context": {
                         "source": "voice"
@@ -1609,17 +1475,51 @@
                 {
                     "action": "volume",
                     "data": {
-                        "value": 0.7
-                    },
-                    "context": {
-                        "source": "voice"
-                    }
-                },
-                {
-                    "action": "volume",
-                    "data": {
-                        "value": 0.1,
+                        "value": 10,
                         "relative": true
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                }
+            ]
+        },
+        "MuteIntent": {
+            "description": "A Firebolt compliant representation of a user intention to mute or unmute the device.",
+            "title": "MuteIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "mute"
+                        },
+                        "data": {
+                            "$ref": "#/definitions/BooleanToggle"
+                        }
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "mute",
+                    "data": {
+                        "value": false
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                },
+                {
+                    "action": "mute",
+                    "data": {
+                        "toggle": true
                     },
                     "context": {
                         "source": "voice"
@@ -1644,7 +1544,31 @@
                             "const": "power"
                         },
                         "data": {
-                            "$ref": "#/definitions/BooleanToggle"
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "boolean"
+                                },
+                                "toggle": {
+                                    "const": true
+                                },
+                                "delay": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                }
+                            },
+                            "if": {
+                                "required": [ "value" ]
+                            },
+                            "then": {
+                                "not": {
+                                    "required": [ "toggle" ]
+                                }
+                            },
+                            "else": {
+                                "required": [ "toggle" ]
+                            },
+                            "additionalProperties": false
                         }
                     }
                 }
@@ -1667,7 +1591,17 @@
                     "context": {
                         "source": "voice"
                     }
-                }
+                },
+                {
+                    "action": "power",
+                    "data": {
+                        "value": false,
+                        "delay": 900
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                }                
             ]
         },
         "MicrophoneIntent": {
@@ -1738,10 +1672,7 @@
                                 "interface": {
                                     "type": "string",
                                     "enum": [
-                                        "hdmi",
-                                        "rca",
-                                        "vga",
-                                        "etc..."
+                                        "hdmi"
                                     ]
                                 },
                                 "number": {
@@ -1778,7 +1709,7 @@
             ]
         },
         "PauseIntent": {
-            "description": "A Firebolt compliant representation of a user intention to pause/unpause in-progress playback.",
+            "description": "A Firebolt compliant representation of a user intention to pause in-progress playback.",
             "title": "PauseIntent",
             "allOf": [
                 {
@@ -1792,9 +1723,6 @@
                     "properties": {
                         "action": {
                             "const": "pause"
-                        },
-                        "data": {
-                            "$ref": "#/definitions/BooleanToggle"
                         }
                     }
                 }
@@ -1802,24 +1730,96 @@
             "examples": [
                 {
                     "action": "pause",
-                    "data": {
-                        "value": false
-                    },
-                    "context": {
-                        "source": "voice"
-                    }
-                },
-                {
-                    "action": "pause",
-                    "data": {
-                        "toggle": true
-                    },
                     "context": {
                         "source": "voice"
                     }
                 }
             ]
         },
+        "PlayIntent": {
+            "description": "A Firebolt compliant representation of a user intention to play/resume content.",
+            "title": "PlayIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "play"
+                        }
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "play",
+                    "context": {
+                        "source": "voice"
+                    }
+                }
+            ]
+        },        
+        "ReplayIntent": {
+            "description": "A Firebolt compliant representation of a user intention to replay content.",
+            "title": "ReplayIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "replay"
+                        }
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "replay",
+                    "context": {
+                        "source": "voice"
+                    }
+                }
+            ]
+        },       
+        "StopIntent": {
+            "description": "A Firebolt compliant representation of a user intention to stop content.",
+            "title": "StopIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "stop"
+                        }
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "stop",
+                    "context": {
+                        "source": "voice"
+                    }
+                }
+            ]
+        },                  
         "PlaybackSpeedIntent": {
             "description": "A Firebolt compliant representation of a user intention to change the speed of in-progress playback.",
             "title": "PlaybackSpeedIntent",
@@ -1876,9 +1876,9 @@
                 }
             ]
         },
-        "TrickPlayIntent": {
-            "description": "A Firebolt compliant representation of a user intention to fast-forward or rewind in-progress playback.",
-            "title": "TrickPlayIntent",
+        "FastForwardIntent": {
+            "description": "A Firebolt compliant representation of a user intention to fast-forward in-progress playback.",
+            "title": "FastForwardIntent",
             "allOf": [
                 {
                     "$ref": "#/definitions/Intent"
@@ -1890,39 +1890,25 @@
                     "type": "object",
                     "properties": {
                         "action": {
-                            "const": "trickplay"
+                            "const": "fast-forward"
                         },
                         "data": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/DirectionalOperation"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "speed": {
-                                            "type": "number",
-                                            "exclusiveMinimum": 0,
-                                            "maximum": 10
-                                        }
-                                    },
-                                    "propertyNames": {
-                                        "enum": [
-                                            "direction",
-                                            "speed"
-                                        ]
-                                    }
+                            "type": "object",
+                            "properties": {
+                                "speed": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 10
                                 }
-                            ]
+                            }
                         }
                     }
                 }
             ],
             "examples": [
                 {
-                    "action": "trickplay",
+                    "action": "fast-forward",
                     "data": {
-                        "direction": "forward",
                         "speed": 2
                     },
                     "context": {
@@ -1930,17 +1916,78 @@
                     }
                 },
                 {
-                    "action": "trickplay",
+                    "action": "fast-forward",
                     "data": {
-                        "direction": "backward",
+                        "speed": 0.5
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                },
+                {
+                    "action": "fast-forward",
+                    "context": {
+                        "source": "voice"
+                    }
+                }                
+            ]
+        },
+        "RewindIntent": {
+            "description": "A Firebolt compliant representation of a user intention to rewind in-progress playback.",
+            "title": "RewindIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "rewind"
+                        },
+                        "data": {
+                            "type": "object",
+                            "properties": {
+                                "speed": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 10
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "rewind",
+                    "data": {
                         "speed": 2
                     },
                     "context": {
                         "source": "voice"
                     }
-                }
+                },
+                {
+                    "action": "rewind",
+                    "data": {
+                        "speed": 0.5
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                },
+                {
+                    "action": "rewind",
+                    "context": {
+                        "source": "voice"
+                    }
+                }                
             ]
-        },
+        },        
         "SeekIntent": {
             "description": "A Firebolt compliant representation of a user intention to seek to a different time for in-progress playback.",
             "title": "SeekIntent",
@@ -1966,16 +2013,35 @@
                                     "type": "object",
                                     "properties": {
                                         "seconds": {
-                                            "type": "number",
-                                            "minimum": 0,
-                                            "maximum": 1800
+                                            "type": "number"
+                                        },
+                                        "relative": {
+                                            "const": true
                                         }
                                     },
-                                    "propertyNames": {
-                                        "enum": [
-                                            "direction",
-                                            "seconds"
-                                        ]
+                                    "required": [ "seconds" ],
+                                    "if": {
+                                        "not": {
+                                            "required": [ "relative" ]
+                                        }
+                                    },
+                                    "then": {
+                                        "properties": {
+                                            "seconds": {
+                                                "type": "number",
+                                                "minimum": 0,
+                                                "maximum": 86400
+                                            }
+                                        }
+                                    },
+                                    "else": {
+                                        "properties": {
+                                            "seconds": {
+                                                "type": "number",
+                                                "minimum": -43200,
+                                                "maximum": 43200
+                                            }
+                                        }
                                     }
                                 }
                             ]
@@ -1996,18 +2062,8 @@
                 {
                     "action": "seek",
                     "data": {
-                        "direction": "forward",
-                        "seconds": 30
-                    },
-                    "context": {
-                        "source": "voice"
-                    }
-                },
-                {
-                    "action": "seek",
-                    "data": {
-                        "direction": "backward",
-                        "seconds": 30
+                        "relative": true,
+                        "seconds": -30
                     },
                     "context": {
                         "source": "voice"
@@ -2094,7 +2150,7 @@
                     "type": "object",
                     "properties": {
                         "action": {
-                            "const": "closedcaptions"
+                            "const": "closed-captions"
                         },
                         "data": {
                             "$ref": "#/definitions/BooleanToggle"
@@ -2104,7 +2160,7 @@
             ],
             "examples": [
                 {
-                    "action": "closedcaptions",
+                    "action": "closed-captions",
                     "data": {
                         "value": false
                     },
@@ -2113,7 +2169,7 @@
                     }
                 },
                 {
-                    "action": "closedcaptions",
+                    "action": "closed-captions",
                     "data": {
                         "toggle": true
                     },
@@ -2123,9 +2179,9 @@
                 }
             ]
         },
-        "AudioDescriptionIntent": {
-            "description": "A Firebolt compliant representation of a user intention to enable/disable audio descriptions.",
-            "title": "AudioDescriptionIntent",
+        "VoiceGuidanceIntent": {
+            "description": "A Firebolt compliant representation of a user intention to enable/disable voice guidance.",
+            "title": "VoiceGuidanceIntent",
             "allOf": [
                 {
                     "$ref": "#/definitions/Intent"
@@ -2137,7 +2193,198 @@
                     "type": "object",
                     "properties": {
                         "action": {
-                            "const": "audiodescriptions"
+                            "const": "voice-guidance"
+                        },
+                        "data": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "boolean"
+                                },
+                                "toggle": {
+                                    "const": true
+                                },
+                                "speed": {
+                                    "type": "integer"
+                                },
+                                "relative": {
+                                    "const": true
+                                },
+                                "verbosity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "low",
+                                        "hight"
+                                    ]
+                                }
+                            },
+                            "if": {
+                                "required": [ "value" ]
+                            },
+                            "then": {
+                                "not": {
+                                    "required": [ "toggle" ]
+                                },
+                                "if": {
+                                    "required": [ "relative" ]                                    
+                                },
+                                "then": {
+                                    "properties": {
+                                        "speed": {
+                                            "type": "integer",
+                                            "minimum": -10,
+                                            "maximum": 10        
+                                        }
+                                    }
+                                },
+                                "else": {
+                                    "properties": {
+                                        "speed": {
+                                            "type": "integer",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 10        
+                                        }
+                                    }
+                                }
+                            },
+                            "else": {
+                                "if": {
+                                    "required": [ "toggle" ]
+                                },
+                                "then": {
+                                    "not": {
+                                        "required": [ "value" ]
+                                    }
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "voice-guidance",
+                    "data": {
+                        "value": true,
+                        "verbosity": "low"
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                },
+                {
+                    "action": "voice-guidance",
+                    "data": {
+                        "speed": -1,
+                        "relative": true
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                },                
+                {
+                    "action": "voice-guidance",
+                    "data": {
+                        "toggle": true
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                }
+            ]
+        },
+        "AudioDescriptionsIntent": {
+            "description": "A Firebolt compliant representation of a user intention to enable/disable audio descriptions.",
+            "title": "AudioDescriptionsIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "audio-descriptions"
+                        },
+                        "data": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "boolean"
+                                },
+                                "toggle": {
+                                    "const": true
+                                },
+                                "language": {
+                                    "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639_2Language"
+                                }
+                            },
+                            "if": {
+                                "required": [ "value" ]
+                            },
+                            "then": {
+                                "not": {
+                                    "required": [ "toggle" ]
+                                }
+                            },
+                            "else": {
+                                "required": [ "toggle" ]
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "audio-descriptions",
+                    "data": {
+                        "value": false
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                },
+                {
+                    "action": "audio-descriptions",
+                    "data": {
+                        "toggle": true
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                },
+                {
+                    "action": "audio-descriptions",
+                    "data": {
+                        "value": true,
+                        "language": "eng"
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                }
+            ]
+        },
+        "HighContrastIntent": {
+            "description": "A Firebolt compliant representation of a user intention to enable or disable high contrast mode.",
+            "title": "HighContrastIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "high-contrast"
                         },
                         "data": {
                             "$ref": "#/definitions/BooleanToggle"
@@ -2147,7 +2394,7 @@
             ],
             "examples": [
                 {
-                    "action": "audiodescriptions",
+                    "action": "high-contrast",
                     "data": {
                         "value": false
                     },
@@ -2156,7 +2403,7 @@
                     }
                 },
                 {
-                    "action": "audiodescriptions",
+                    "action": "high-contrast",
                     "data": {
                         "toggle": true
                     },
@@ -2164,6 +2411,91 @@
                         "source": "voice"
                     }
                 }
+            ]
+        },        
+        "ScreenMagnificationIntent": {
+            "description": "A Firebolt compliant representation of a user intention to turn screen magnification on or off.",
+            "title": "ScreenMagnificationIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "screen-magnification"
+                        },
+                        "data": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "boolean"
+                                },
+                                "toggle": {
+                                    "const": true
+                                },
+                                "scale": {
+                                    "type": "number",
+                                    "minimum": 1,
+                                    "maximum": 10
+                                }
+                            },
+                            "if": {
+                                "required": [
+                                    "toggle"
+                                ]
+                            },
+                            "then": {
+                                "type": "object",
+                                "maxProperties": 1
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "screen-magnification",
+                    "data": {
+                        "value": false
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                },
+                {
+                    "action": "screen-magnification",
+                    "data": {
+                        "value": true,
+                        "scale": 2.5
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                },                
+                {
+                    "action": "screen-magnification",
+                    "data": {
+                        "toggle": true
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                },
+                {
+                    "action": "screen-magnification",
+                    "data": {
+                        "value": false
+                    },
+                    "context": {
+                        "source": "voice"
+                    }
+                }                
             ]
         },
         "MessageIntent": {
@@ -2205,6 +2537,7 @@
                 }
             ]
         },
+ 
         "Identifier": {
             "type": "string"
         },
@@ -2229,7 +2562,7 @@
                     "type": "string"
                 },
                 "appId": {
-                    "$ref": "#/definitions/Identifier"
+                    "type": "string"
                 }
             }
         },
