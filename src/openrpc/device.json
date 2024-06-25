@@ -616,11 +616,12 @@
 			"examples": [
 				{
 					"name": "Getting the device name",
-					"params": [],
-					"result": {
-						"name": "Default Result",
-						"value": "Living Room"
-					}
+					"params": [
+						{
+							"name": "value",
+							"value": "Living Room"
+						}						
+					]
 				}
 			]
 		},

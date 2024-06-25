@@ -99,10 +99,10 @@
                     "description": "The type of the entity, e.g. `program` or `music`."
                 },
                 "programType": {
-                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ProgramType"
+                    "$ref": "#/definitions/ProgramType"
                 },
                 "musicType": {
-                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/MusicType"
+                    "$ref": "#/definitions/MusicType"
                 },
                 "synopsis": {
                     "type": "string",
