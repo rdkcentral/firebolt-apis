@@ -119,7 +119,7 @@
                 },
                 "parameters": {
                     "description": "The result of the provider response.",
-                    "type": ["object", "null"]
+                    "type": "object"
                 }
             }
         },
