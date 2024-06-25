@@ -18,11 +18,9 @@
 
 import Gateway from '../Gateway/index.mjs'
 
-let inactive = 0 /* ${EXAMPLE:inactive} */
-let foreground = 0 /* ${EXAMPLE:foreground} */
-let background = 0 /* ${EXAMPLE:background} */
-let suspended = 0 /* ${EXAMPLE:suspended} */
-let unloading = 0 /* ${EXAMPLE:unloading} */
+let inactive = { previous: '', state: 'inactive' }
+let foreground = { previous: '', state: 'foreground' }
+let unloading = { previous: '', state: 'unloading' }
 
 const emit = (value) => {
   Gateway.simulate(`Lifecycle.${value.state}`, value)
