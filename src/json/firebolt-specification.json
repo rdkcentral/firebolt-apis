@@ -19,19 +19,19 @@
 			"level": "could"
 		},
 		"xrn:firebolt:capability:account:uid": {
-			"level": "could"
+			"level": "should"
 		},
 		"xrn:firebolt:capability:advertising:configuration": {
 			"level": "could"
 		},
 		"xrn:firebolt:capability:advertising:identifier": {
-			"level": "should"
+			"level": "could"
 		},
 		"xrn:firebolt:capability:approve:content": {
-			"level": "should"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:approve:purchase": {
-			"level": "could"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:capabilities:info": {
 			"level": "must",
@@ -51,7 +51,7 @@
 			"level": "must"
 		},
 		"xrn:firebolt:capability:device:id": {
-			"level": "could"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:device:info": {
 			"level": "must"
@@ -63,19 +63,19 @@
 			"level": "must"
 		},
 		"xrn:firebolt:capability:device:name": {
-			"level": "should"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:device:sku": {
-			"level": "could"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:device:uid": {
-			"level": "could"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:discovery:content-access": {
 			"level": "must"
 		},
 		"xrn:firebolt:capability:discovery:entity-info": {
-			"level": "could"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:discovery:interest": {
 			"level": "must"
@@ -87,25 +87,25 @@
 			"level": "must"
 		},
 		"xrn:firebolt:capability:discovery:purchased-content": {
-			"level": "could"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:discovery:sign-in-status": {
-			"level": "should"
+			"level": "could"
 		},
 		"xrn:firebolt:capability:discovery:watch-next": {
 			"level": "could"
 		},
 		"xrn:firebolt:capability:discovery:watched": {
-			"level": "should"
+			"level": "could"
 		},
 		"xrn:firebolt:capability:grants:state": {
-			"level": "must"
+			"level": "should"
 		},
 		"xrn:firebolt:capability:input:keyboard": {
 			"level": "should"
 		},
 		"xrn:firebolt:capability:inputs:hdmi": {
-			"level": "should"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:lifecycle:initialize": {
 			"level": "must",
@@ -115,7 +115,7 @@
 			}
 		},
 		"xrn:firebolt:capability:lifecycle:launch": {
-			"level": "could"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:lifecycle:ready": {
 			"level": "must",
@@ -132,7 +132,7 @@
 			}
 		},
 		"xrn:firebolt:capability:localization:additional-info": {
-			"level": "could"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:localization:country-code": {
 			"level": "must"
@@ -153,7 +153,7 @@
 			"level": "could"
 		},
 		"xrn:firebolt:capability:localization:time-zone": {
-			"level": "must"
+			"level": "could"
 		},
 		"xrn:firebolt:capability:metrics:distributor": {
 			"level": "could"
@@ -168,13 +168,13 @@
 			"level": "must"
 		},
 		"xrn:firebolt:capability:privacy:advertising": {
-			"level": "should"
+			"level": "could"
 		},
 		"xrn:firebolt:capability:privacy:settings": {
 			"level": "could"
 		},
 		"xrn:firebolt:capability:profile:flags": {
-			"level": "could"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:protocol:dial": {
 			"level": "could"
@@ -183,39 +183,31 @@
 			"level": "could"
 		},
 		"xrn:firebolt:capability:rpc:discover": {
-			"level": "should"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:storage:secure": {
-			"level": "should"
+			"level": "could"
 		},
 		"xrn:firebolt:capability:token:account": {
-			"level": "could"
+			"level": "should"
 		},
 		"xrn:firebolt:capability:token:device": {
-			"level": "could"
+			"level": "should"
 		},
 		"xrn:firebolt:capability:token:platform": {
-			"level": "could"
+			"level": "should"
 		},
 		"xrn:firebolt:capability:token:root": {
-			"level": "could"
+			"level": "should"
 		},
 		"xrn:firebolt:capability:token:session": {
-			"level": "could"
+			"level": "should"
 		},
 		"xrn:firebolt:capability:usergrant:acknowledgechallenge": {
-			"level": "must",
-			"use": {
-				"public": false,
-				"negotiable": false
-			}
+			"level": "should"
 		},
 		"xrn:firebolt:capability:usergrant:pinchallenge": {
-			"level": "should",
-			"use": {
-				"public": false,
-				"negotiable": false
-			}
+			"level": "should"
 		}
 	}
 }
