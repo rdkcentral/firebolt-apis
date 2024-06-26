@@ -204,18 +204,10 @@
 			"level": "could"
 		},
 		"xrn:firebolt:capability:usergrant:acknowledgechallenge": {
-			"level": "must",
-			"use": {
-				"public": false,
-				"negotiable": false
-			}
+			"level": "must"
 		},
 		"xrn:firebolt:capability:usergrant:pinchallenge": {
-			"level": "should",
-			"use": {
-				"public": false,
-				"negotiable": false
-			}
+			"level": "should"
 		}
 	}
 }
