@@ -14,14 +14,6 @@ end
 note over Plugin: e.g. \nWindow Manager \nScreenshot Capture
 
 
-group Firebolt Interactions
-DeveloperTools -> FireboltExtn: {"jsonrpc":"2.0","method":"onFireboltInterections", \n"params":{"listen":true},"id":1}
-
-FireboltExtn -> DeveloperTools: {"jsonrpc":"2.0", "id":1,"result":{"listening":true,\n"event":"onFireboltInterections"}}
-
-FireboltExtn -> DeveloperTools: {"jsonrpc": "2.0", id:1, result: {interactions}}
-
-end
 
 group Firebolt compatible provider command and control
 DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0", "method": "commandAndControl", \n"params": [<intent>], "id": "1"}
@@ -33,14 +25,14 @@ end
 
 group Firebolt compatible provider screen capture
 
-DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0", "method": "captureScreenshot", \n"params": [<pathToUpload>], "id": "1"}
+DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0",\n "method": "captureScreenshot", "id": "1"}
 FireboltExtn -> Plugin: Request fullfil
 Plugin -> FireboltExtn: {id:0, "jsonrpc": "2.0", result: "true"}
 FireboltExtn -> DeveloperTools : {id:0, "jsonrpc": "2.0", result: "true"}
 end
 
 group Health Check
-DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0", "method": "healthCheck","id": "1"}
+DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0",\n "method": "platformHealthCheck","id": "1"}
 
 note over FireboltExtn: Healthcheck snapshot includes \nprocess memory usage, load, \nlive connections etc.
 
@@ -49,7 +41,7 @@ FireboltExtn -> DeveloperTools: {id:0, "jsonrpc": "2.0", result: {healthCheckDat
 end
 
 group App performance snapshot
-DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0", "method": "appPerformance",\n"params":<appId>, "id": "1"}
+DeveloperTools -> FireboltExtn: {"jsonrpc": "2.0", \n"method": "appHealthCheck",\n"params":<appId>, "id": "1"}
 
 note over FireboltExtn: App performance snapshot \nincludes memory usage, load etc.
 

@@ -7,57 +7,23 @@
     },
     "methods": [
         {
-            "name": "onFireboltInteractions",
-            "summary": "Event to fetch the interaction details for the firebolt api call",
-            "tags": [
-                {
-                    "name": "event"
-                },
-                {
-                    "name": "capabilities",
-                    "x-provides": "xrn:firebolt:capability:certification:fireboltinteractions",
-                    "x-allow-focus": true
-                }
-            ],
-            "params": [],
-            "result": {
-                "name": "value",
-                "summary": "Result of the interaction",
-                "schema": {
-                    "$ref": "#/components/schemas/InteractionResult"
-                }
-            },
-            "examples": [
-                {
-                    "name": "Firebolt interaction to acquire device token",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": {
-                            "payload": "{\"request\":{\"type\":\"method\",\"method\":\"Authentication.device\"},\"response\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"}"
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "name": "commandAndControl",
+            "name": "deviceInteractions",
             "tags": [
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:certification:commandandcontrol"
+                        "xrn:firebolt:capability:certification:interactions"
                     ]
                 }
             ],
-            "summary": "Performs interaction and media control on firebolt compatible devices.",
+            "summary": "Performs interactions on firebolt compatible devices.",
             "params": [
                 {
                     "name": "intent",
                     "required": true,
-                    "summary": "An `PlatformIntent` with details what interaction or control needs to be performed.",
+                    "summary": "A `DeviceIntent` with details what interaction needs to be performed.",
                     "schema": {
-                        "$ref": "#/components/schemas/PlatformIntent"
+                        "$ref": "https://meta.comcast.com/firebolt/intents#/definitions/DeviceIntent"
                     }
                 }
             ],
@@ -93,7 +59,56 @@
             ]
         },
         {
-            "name": "screenCapture",
+            "name": "playbackControl",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:certification:interactions"
+                    ]
+                }
+            ],
+            "summary": "Performs controlling actions of in-progress playback on firebolt compatible devices.",
+            "params": [
+                {
+                    "name": "intent",
+                    "required": true,
+                    "summary": "A `PlaybackControlIntent` with details what playback control needs to be performed.",
+                    "schema": {
+                        "$ref": "https://meta.comcast.com/firebolt/intents#/definitions/PlaybackControlIntent"
+                    }
+                }
+            ],
+            "result": {
+                "name": "success",
+                "summary": "whether the call was successful or not",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Pause the in-progress playback",
+                    "params": [
+                        {
+                            "name": "intent",
+                            "value": {
+                                "action": "pause",
+                                "context": {
+                                    "source": "voice"
+                                }
+                            }
+                        }
+                    ],
+                    "result": {
+                       "name": "Default Result",
+                        "value": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "getScreenshot",
             "tags": [
                 {
                     "name": "capabilities",
@@ -103,50 +118,53 @@
                 }
             ],
             "summary": "Fetch the current screen on the device and upload to the given server",
-            "params": [
-                {
-                    "name": "uploadPath",
-                    "required": false,
-                    "summary": "An optional `path` where screenshot can be uploaded. If not provided, base64 encoded image stream will be returned in the response.",
-                    "schema": {
-                        "type": "string"
-                    }
-                }
-            ],
+            "params": [],
             "result": {
                 "name": "success",
                 "summary": "whether the call was successful or not",
                 "schema": {
-                    "oneOf": [
-                        {
-                            "type": "boolean"
-                        },
-                        {
-                            "type": "string"
-                        }
-                    ]
+                    "type": "boolean"
                 }
             },
             "examples": [
                 {
-                    "name": "Screen capture and sends back the image stream with base64 encoded",
-                    "params": [],
-                    "result": {
-                        "name": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgMBApDPF90AAAAASUVORK5CYII=",
-                        "value": true
-                    }
-                },
-                {
                     "name": "Screen capture and sends back the status",
-                    "params": [
-                        {
-                            "name": "uploadPath",
-                            "value": "http://example.com/upload"
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "Default Result",
                         "value": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onScreenshotComplete",
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:certification:screencapture"
+                    ]
+                }
+            ],
+            "summary": "Listens for capturing the screenshot and provides the image data back in Base64 encoded format.",
+            "params": [],
+            "result": {
+                "name": "imageStream",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Screenshot is taken",
+                    "params": [],
+                    "result": {
+                        "name": "imageStream",
+                        "value": "AAAAAAAAAA"
                     }
                 }
             ]
@@ -166,7 +184,7 @@
                 "name": "healthCheckResult",
                 "summary": "Result of the interaction",
                 "schema": {
-                    "$ref": "#/components/schemas/HealthCheckResult"
+                    "$ref": "#/components/schemas/PlatformHealthCheckResult"
                 }
             },
             "examples": [
@@ -212,7 +230,7 @@
                 "name": "appPerformanceResult",
                 "summary": "Result of the interaction",
                 "schema": {
-                    "$ref": "#/components/schemas/AppPerformanceSnapshotResult"
+                    "$ref": "#/components/schemas/AppHealthCheckResult"
                 }
             },
             "examples": [
@@ -237,30 +255,8 @@
     ],
     "components": {
         "schemas": {
-            "InteractionResult": {
-                "title": "InteractionResult",
-                "type": "object",
-                "required": [
-                    "payload"
-                ],
-                "properties": {
-                    "payload": {
-                        "type": "string",
-                        "description": "The stringyfy payload of the interaction contains firebolt api request and response"
-                    }
-                }
-            },
-            "PlatformIntent": {
-                "title": "PlatformIntent",
-                "description": "A Firebolt compliant representation of a user intention to interact to a specific place in an app or control the media",
-                "anyOf": [
-                    {
-                        "$ref": "https://meta.comcast.com/firebolt/intents#/definitions/DeviceIntent"
-                    }
-                ]
-            },
-            "HealthCheckResult": {
-                "title": "HealthCheckResult",
+            "PlatformHealthCheckResult": {
+                "title": "PlatformHealthCheckResult",
                 "description": "Performance and healthcheck snapshot for the device and process which includes load, memory, cpu usage. It also provides total live firebolt connections.",
                 "type": "object",
                 "required": [
@@ -303,8 +299,8 @@
                     }
                 }
             },
-            "AppPerformanceSnapshotResult": {
-                "title": "AppPerformanceSnapshotResult",
+            "AppHealthCheckResult": {
+                "title": "AppHealthCheckResult",
                 "description": "Performance snapshot for the given appId which includes memory usage, cpu usage.",
                 "type": "object",
                 "required": [

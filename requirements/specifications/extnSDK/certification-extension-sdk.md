@@ -15,21 +15,18 @@ Document contains the  details around Firebolt Extension for Certification (will
 ## 3. Requirements
 FEC would required below use cases to adhere.
 
-  - <b>Firebolt Interactions</b>
-    - Ability to fetch request and state of the response coming to/from platform
-    - Capability: <b>xrn:firebolt:capability:certification:fireboltinteractions</b>
-  - <b>Health check Statistics</b>
-    - Statistics from Firebolt-Implementation such as load, memory usage, how many firebolt connections are currently active, what apps, total requests, success and failure
+  - <b>Platform Health check Statistics</b>
+    - Statistics from Firebolt-Implementation such as load, memory usage, how many firebolt connections are currently active, and what apps
     - Capability: <b>xrn:firebolt:capability:certification:healthcheck</b>
-  - <b>App performance Snapshot</b>
-    - Snapshot of the performance for app such as load, memory etc.
-    - Capability: <b>xrn:firebolt:capability:certification:appperformancedata</b>
+  - <b>App Health check Statistics</b>
+    - Snapshot of the performance for app such as load, and memory
+    - Capability: <b>xrn:firebolt:capability:certification:healthcheck</b>
   - <b>Firebolt compatible provider calls</b>
     - <b>Command and Control</b>
-      - To control the firebolt compatible device e.g. interaction on screen, media control
+      - To control the firebolt compatible device e.g. interaction on screen, media playback control
       - Capability: <b>xrn:firebolt:capability:certification:commandandcontrol</b>
     - <b>Screenshot</b>
-      - Fetch and upload the screenshot
+      - Fetch the screenshot and uploads stores in the device
       - Capability: <b>xrn:firebolt:capability:certification:screencapture</b>
 
 ## 4. HLA
