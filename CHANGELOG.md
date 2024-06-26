@@ -1,3 +1,10 @@
+## [1.2.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0...v1.2.1-next.1) (2024-06-26)
+
+
+### Bug Fixes
+
+* Sort capabilities in Firebolt Specification JSON ([46dd188](https://github.com/rdkcentral/firebolt-apis/commit/46dd1887e09cc3c75ebb7b41028b10b3a8d3596e))
+
 # [1.2.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-17)
 
 
