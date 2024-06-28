@@ -20,6 +20,7 @@
 #include <iomanip>
 #include "CoreSDKTest.h"
 
+
 using namespace std;
 bool CoreSDKTest::_connected;
 CoreSDKTest::OnPolicyChangedNotification CoreSDKTest::_policyChangedNotification;
@@ -642,8 +643,8 @@ EnumMap<Firebolt::Lifecycle::LifecycleEventSource> lifecycleEventSourceMap = {
 };
 void CoreSDKTest::LifecycleReady()
 {
-   Firebolt::Error error = Firebolt::Error::None;
-   Firebolt::IFireboltAccessor::Instance().LifecycleInterface().ready(&error);
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().LifecycleInterface().ready(&error);
     if (error == Firebolt::Error::None) {
         cout << "Lifecycle ready is success" << endl;
     } else {
@@ -665,7 +666,7 @@ void CoreSDKTest::LifecycleFinished()
 void CoreSDKTest::LifecycleState()
 {
    Firebolt::Error error = Firebolt::Error::None;
-   const std::string state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state();
+   const std::string state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state(&error);
     if (error == Firebolt::Error::None) {
         cout << "Lifecycle state is success and its current state" << state.c_str() << endl;
     } else {

@@ -14,11 +14,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-
 #pragma once
 
 #include "FireboltSDK.h"
 #include "IModule.h"
+#include "lifecycle.h"
+
 #include "metrics_impl.h"
 #include <string>
 #include <functional> // Needed for std::function
@@ -40,24 +41,18 @@ ${if.types}
 ${if.methods}class ${info.Title}Impl : public I${info.Title}, public IModule {
 
 public:
-    ${info.Title}Impl() : currentState("initializing") {}
+    ${info.Title}Impl() = default;
     ${info.Title}Impl(const ${info.Title}Impl&) = delete;
     ${info.Title}Impl& operator=(const ${info.Title}Impl&) = delete;
 
     ~${info.Title}Impl() override = default;
-
-    void ready( Firebolt::Error *err = nullptr ) ;
-    std::string state();
-    void finished( Firebolt::Error *err = nullptr );
+    
     // Methods & Events
     /* ${METHODS:declarations-override} */
 
-private:
-    std::string currentState;
-
-    void setState(const std::string& newState) {
-        currentState = newState;
-    }
+    void ready(Firebolt::Error *err = nullptr) override;
+    void finished(Firebolt::Error *err = nullptr) override ;
+  
 };${end.if.methods}
 
 } // namespace ${info.Title}
