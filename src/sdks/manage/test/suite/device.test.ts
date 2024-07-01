@@ -30,3 +30,9 @@ test("Device.provision()", () => {
     expect(res).toEqual(null);
   });
 });
+
+test("Device.developerMode()", () => {
+  return Device.developerMode().then((res: boolean) => {
+    expect(res).toBe(true);
+  });
+});
