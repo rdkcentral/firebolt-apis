@@ -20,6 +20,7 @@
 #include <iomanip>
 #include "CoreSDKTest.h"
 
+
 using namespace std;
 bool CoreSDKTest::_connected;
 CoreSDKTest::OnPolicyChangedNotification CoreSDKTest::_policyChangedNotification;
@@ -640,6 +641,28 @@ EnumMap<Firebolt::Lifecycle::LifecycleEventSource> lifecycleEventSourceMap = {
     { Firebolt::Lifecycle::LifecycleEventSource::VOICE, "voice" },
     { Firebolt::Lifecycle::LifecycleEventSource::REMOTE, "remote" }
 };
+void CoreSDKTest::LifecycleReady()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().LifecycleInterface().ready(&error);
+    if (error == Firebolt::Error::None) {
+        cout << "Lifecycle ready is success" << endl;
+    } else {
+        cout << "Lifecycle ready status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::LifecycleFinished()
+{
+   Firebolt::Error error = Firebolt::Error::None;
+   Firebolt::IFireboltAccessor::Instance().LifecycleInterface().finished(&error);
+    if (error == Firebolt::Error::None) {
+        cout << "Lifecycle finished is success" << endl;
+    } else {
+        cout << "Lifecycle finished status = " << static_cast<int>(error) << endl;
+    }
+}
+
 void CoreSDKTest::OnBackgroundNotification::onBackground( const Firebolt::Lifecycle::LifecycleEvent& lifecycleEvent)
 {
     cout <<"onBackground event is triggered" << endl;
@@ -1413,3 +1436,4 @@ void CoreSDKTest::OnNavigateToTuneIntentNotification::onNavigateTo( const Firebo
 {
     cout << "onNavigateTo for action : " << intent.action << endl;
 }
+

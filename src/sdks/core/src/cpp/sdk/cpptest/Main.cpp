@@ -88,6 +88,9 @@ void ShowLifecycleMenu()
 {
     printf("Options: \n"
          "\tC : Close lifecycle of the app\n"
+         "\tR : Ready lifecycle of the app\n"
+         "\tS : State lifecycle of the app\n"
+         "\tU : Finished lifecycle of the app\n"
          "\tB : Subscribe/Unsubscribe Background notification\n"
          "\tF : Subscribe/Unsubscribe Foreground notification\n"
          "\tQ : Quit\n");
@@ -361,6 +364,18 @@ void HandleLifecycleMethod()
         switch (opt) {
         case 'C': {
             CoreSDKTest::LifecycleClose();
+            break;
+        }
+        case 'R':{
+            CoreSDKTest::LifecycleReady();
+            break;
+        }
+        case 'S':{
+            CoreSDKTest::LifecycleState();
+            break;
+        }
+        case 'U':{
+            CoreSDKTest::LifecycleFinished();
             break;
         }
         case 'B': {
@@ -652,3 +667,4 @@ int main (int argc, char* argv[])
 
     return 0;
 }
+
