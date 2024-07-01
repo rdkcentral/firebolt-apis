@@ -18,7 +18,6 @@ static void readyDispatcher(const void* result) {
 /* ready - Notify the platform that the app is ready */
 void ${info.Title}Impl::ready(Firebolt::Error *err) 
 {
-        std::cout << "Inside the ready template" << std::endl;
         Firebolt::Error status = Firebolt::Error::NotConnected;
 
         FireboltSDK::Transport<WPEFramework::Core::JSON::IElement>* transport = FireboltSDK::Accessor::Instance().GetTransport();
