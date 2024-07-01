@@ -663,18 +663,6 @@ void CoreSDKTest::LifecycleFinished()
     }
 }
 
-void CoreSDKTest::LifecycleState()
-{
-   Firebolt::Error error = Firebolt::Error::None;
-   const std::string state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state(&error);
-    if (error == Firebolt::Error::None) {
-        cout << "Lifecycle state is success and its current state" << state.c_str() << endl;
-    } else {
-        cout << "Lifecycle state status = " << static_cast<int>(error) << endl;
-    }
-}
-
-
 void CoreSDKTest::OnBackgroundNotification::onBackground( const Firebolt::Lifecycle::LifecycleEvent& lifecycleEvent)
 {
     cout <<"onBackground event is triggered" << endl;
