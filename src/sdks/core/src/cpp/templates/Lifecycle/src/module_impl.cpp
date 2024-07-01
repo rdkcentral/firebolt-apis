@@ -11,7 +11,7 @@ ${if.providers}
 /* ${PROVIDERS} */${end.if.providers}
 
 
-/* ready - Notify the platform that the app is ready */
+/* readyDispatcher - Calls Metrics.ready to Inform the platform that your app is minimally usable */
 static void readyDispatcher(const void* result) {
     Metrics::MetricsImpl::ready();
 }
