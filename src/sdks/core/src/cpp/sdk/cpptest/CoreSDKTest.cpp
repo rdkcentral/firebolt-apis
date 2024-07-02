@@ -1110,6 +1110,31 @@ void CoreSDKTest::DiscoveryWatchNext()
         cout << "Discovery Watched Next status = " << static_cast<int>(error) << endl;
     }
 }
+void CoreSDKTest::DiscoveryUserInterest()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Discovery::InterestType type = Firebolt::Discovery::InterestType::INTEREST;
+    Firebolt::Discovery::InterestReason reason = Firebolt::Discovery::InterestReason::PLAYLIST;
+    
+    // Set up the entity details
+    Firebolt::Entity::EntityDetails entity;
+    
+    // Identifiers
+    entity.identifiers = "{\"entityId\": \"123\"}";
+
+    // Optional Info Metadata
+    entity.info = Firebolt::Entity::Metadata();
+    entity.info->title = "A Cool Show";
+    entity.info->synopsis = "A cool show synopsis";
+
+    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().userInterest(type, reason, entity, &error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery User Interest is success" << endl;
+    } else {
+        cout << "Discovery User Interest status = " << static_cast<int>(error) << endl;
+    }
+}
 void CoreSDKTest::DiscoveryPolicy()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1269,7 +1294,7 @@ void CoreSDKTest::DiscoveryLaunch()
         std::optional<Firebolt::Intents::TuneIntent> intent = std::make_optional<Firebolt::Intents::TuneIntent>();
         intent.value().action = "tune";
         intent.value().data.entity.entityType = "channel";
-        intent.value().data.entity.channelType = Firebolt::Intents::ChannelEntityChannelType::STREAMING;
+        intent.value().data.entity.channelType = Firebolt::Entity::ChannelEntityChannelType::STREAMING;
         intent.value().data.entity.entityId = "an-ott-channel";
         std::string entityId;
         std::optional<std::string> appContentData;

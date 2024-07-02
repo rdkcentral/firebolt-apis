@@ -122,6 +122,7 @@ void ShowDiscoveryMenu()
          "\tP : Policy\n"
          "\tU : PurchasedContent\n"
          "\tN : WatchNext\n"
+         "\tF : UserInterest\n"
          "\tL : Launch\n"
 #ifdef POLYMORPHICS_REDUCER_METHODS
          "\tW : Watched\n"
@@ -470,6 +471,10 @@ void HandleDiscoveryMethod()
         }
         case 'N': {
             CoreSDKTest::DiscoveryWatchNext();
+            break;
+        }
+        case 'F': {
+            CoreSDKTest::DiscoveryUserInterest();
             break;
         }
         case 'L': {
