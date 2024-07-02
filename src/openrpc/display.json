@@ -1,0 +1,404 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Display",
+        "description": "A module for querying various aspects of the current (or built-in) display on a device",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "colorDepth",
+            "summary": "Get the maximum color depth supported by the display panel.",
+            "params": [],
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "result": {
+                "name": "colorDepth",
+                "summary": "The color depth supported by the display panel.",
+                "schema": {
+                    "type": "number"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": 10
+                    }
+                },
+                {
+                    "name": "Example with no display",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": 0
+                    }
+                }
+            ]
+        },
+        {
+            "name": "colorimetry",
+            "summary": "Get all colorimetry values from the display panel.",
+            "params": [],
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "result": {
+                "name": "colorimetry",
+                "summary": "The colorimetry values supported by the display panel.",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/Colorimetry"
+                    }
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            "BT2020RGB",
+                            "BT2020YCC",
+                            "xvYCC601",
+                            "xvYCC709"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "hdrProfiles",
+            "summary": "Get all HDR profiles supported by the display.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "hdrProfiles",
+                "summary": "An array of all valid HDR profiles that the display supports.",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/HDRProfile"
+                    },
+                    "minItems": 1
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            "dolbyVision",
+                            "hdr10",
+                            "hdr10plus",
+                            "hlg"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "manufacturer",
+            "summary": "Get the manufacturer of the display device.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "manufacturer",
+                "summary": "The manufacturer of the display device.",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "Samsung Electric Company"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "productName",
+            "summary": "Get the product/model name of the display device.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "productName",
+                "summary": "The product/model name of the display device.",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "Q80A"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "refreshRate",
+            "summary": "Get the native refresh rate of the display device.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "refreshRate",
+                "summary": "The refresh rate of the display device.",
+                "schema": {
+                    "type": "number"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": 60
+                    }
+                }
+            ]
+        },
+        {
+            "name": "resolution",
+            "summary": "Get the resolution of the display device in pixels. Returns a zero value for width and height if no display is present.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "resolution",
+                "summary": "The resolution of the display device.",
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/Dimensions"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            1920,
+                            1080
+                        ]
+                    }
+                },
+                {
+                    "name": "No Display Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            0,
+                            0
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "resolutionName",
+            "summary": "Get a user-friendly resolution name of the display device.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "resolutionName",
+                "summary": "The resoltuion name of the display device.",
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/ResolutionName"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "uhd"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "size",
+            "summary": "Get the width and height of the display panel (in centimeters).",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "size",
+                "summary": "The width and height of the display.",
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/schemas/media#/definitions/Dimensions"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            157,
+                            91
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "sourcePhysicalAddress",
+            "summary": "Get the source physical address of the display device.",
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:display:info"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "sourcePhysicalAddress",
+                "summary": "The source physical address of the display device.",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "3.0.0.0"
+                    }
+                }
+            ]
+        }
+    ],
+    "components": {
+        "schemas": {
+            "EDIDProperties": {
+                "description": "Properties of the display",
+                "type": "object",
+                "properties": {
+                    "productName": {
+                        "description": "Product name of the display device",
+                        "type": "string"
+                    },
+                    "manufacturerName": {
+                        "description": "Manufacturer of the display device",
+                        "type": "string"
+                    },
+                    "sourcePhysicalAddress": {
+                        "description": "Source physical address of the display device",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

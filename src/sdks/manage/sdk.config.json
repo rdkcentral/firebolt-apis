@@ -28,6 +28,13 @@
             ]
         },
         {
+            "module": "MediaInfo",
+            "manage": [
+                "xrn:firebolt:capability:media-info:audio-format",
+                "xrn:firebolt:capability:media-info:video-format"
+            ]
+        },
+        {
             "module": "Metrics",
             "use": [
                 "xrn:firebolt:capability:metrics:distributor"

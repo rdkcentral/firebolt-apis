@@ -74,9 +74,15 @@
             ]
         },
         {
+            "module": "Display",
+            "use": [
+                "xrn:firebolt:capability:display:info"
+            ]
+        },
+        {
             "module": "Internal",
             "use": [
-                "xrn:firebolt:capability:lifecycle:initialize"        
+                "xrn:firebolt:capability:lifecycle:initialize"
             ]
         },
         {
@@ -102,6 +108,13 @@
                 "xrn:firebolt:capability:localization:location",
                 "xrn:firebolt:capability:localization:postal-code",
                 "xrn:firebolt:capability:localization:additional-info"
+            ]
+        },
+        {
+            "module": "MediaInfo",
+            "use": [
+                "xrn:firebolt:capability:media-info:audio-format",
+                "xrn:firebolt:capability:media-info:video-format"
             ]
         },
         {

@@ -1,0 +1,179 @@
+{
+    "$id": "https://meta.comcast.com/firebolt/schemas/media",
+    "title": "Media",
+    "definitions": {
+        "AudioCodec": {
+            "type": "string",
+            "description": "Audio codec",
+            "enum": [
+                "aac",
+                "ac3",
+                "ac4",
+                "dts-x",
+                "eac3",
+                "mpeg3",
+                "opus",
+                "truehd",
+                "unknown",
+                "vorbis"
+            ]
+        },
+        "AudioCodecLevel": {
+            "description": "Audio codec level",
+            "type": "string",
+            "enumKeyPrefix": "level",
+            "enum": [
+                "3.0",
+                "3.1",
+                "4.0",
+                "4.1",
+                "4.2",
+                "5.0",
+                "5.1"
+            ]
+        },
+        "AudioCodecProfile": {
+            "description": "Audio codec profile",
+            "type": "string",
+            "enum": [
+                "high",
+                "main",
+                "main10",
+                "mp2lc",
+                "mp4he",
+                "p0",
+                "p2"
+            ]
+        },
+        "AudioContainer": {
+            "description": "Audio container",
+            "type": "string",
+            "enum": [
+                "audio/mpeg",
+                "audio/mp4",
+                "audio/ogg",
+                "audio/webm"
+            ]
+        },
+        "AudioMode": {
+            "description": "Audio output mode",
+            "type": "string",
+            "enum": [
+                "auto",
+                "mono",
+                "none",
+                "passthrough",
+                "stereo",
+                "surround",
+                "unknown"
+            ]
+        },
+        "Colorimetry": {
+            "description": "Colorimetry",
+            "type": "string",
+            "enum": [
+                "BT2020cYCC",
+                "BT2020RGB",
+                "BT2020YCC",
+                "DCI-P3",
+                "ICtCp",
+                "opRGB",
+                "opYCC601",
+                "sYCC601",
+                "xvYCC601",
+                "xvYCC709",
+                "unknown"
+            ]
+        },
+        "Dimensions": {
+            "type": "array",
+            "description": "The dimensions specified as width and height.",
+            "items": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "number"
+                }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
+        },
+        "HDRProfile": {
+            "type": "string",
+            "description": "HDR profile",
+            "enum": [
+                "dolbyVision",
+                "hdr10",
+                "hdr10plus",
+                "hlg",
+                "sdr",
+                "unknown"
+            ]
+        },
+        "ResolutionName": {
+            "description": "User-friendly resolution name",
+            "type": "string",
+            "enum": [
+                "sd",
+                "hd",
+                "fhd",
+                "uhd",
+                "unknown"
+            ]
+        },
+        "VideoCodec": {
+            "type": "string",
+            "description": "video codec",
+            "enum": [
+                "av1",
+                "avc",
+                "hevc",
+                "mpeg1",
+                "mpeg2",
+                "vp8",
+                "vp9",
+                "vp10"
+            ]
+        },
+        "VideoContainer": {
+            "description": "Video container format",
+            "type": "string",
+            "enum": [
+                "video/mpeg",
+                "video/mp2t",
+                "video/mp4",
+                "video/webm"
+            ]
+        },
+        "VideoMode": {
+            "description": "Video output mode; the shorthand resolution and frame rate",
+            "type": "string",
+            "enumKeyPrefix": "mode",
+            "enum": [
+                "480i",
+                "480p",
+                "576i25",
+                "576p50",
+                "576p60",
+                "720p50",
+                "720p60",
+                "1080i50",
+                "1080i60",
+                "1080p24",
+                "1080p25",
+                "1080p30",
+                "1080p50",
+                "1080p60",
+                "2160p24",
+                "2160p25",
+                "2160p30",
+                "2160p50",
+                "2160p60",
+                "4320p60",
+                "unknown"
+            ]
+        }
+    }
+}
