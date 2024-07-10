@@ -37,11 +37,11 @@ In the Firebolt Specification JSON, every capability is given a `level` of eithe
 - `"should"`
 - `"could"`
 
-A capability with the level set to `"must"` **MUST** be supported.
+A capability with the level set to `"must"` **MUST** be supported or the implementation in question is not a certified Firebolt implementation.
 
-A capability with the level set to `"should"` **SHOULD** be supported.
+A capability with the level set to `"should"` **SHOULD** be supported, especially if the implementation supports similar requirements in a non-Firebolt interface.
 
-A capability with the level set to `"could"` **COULD** be supported.
+A capability with the level set to `"could"` **COULD** be supported at the implementations discretion.
 
 #### 3.1.1. Should vs Could
 This section is non-normative and does not denote any requiements.
