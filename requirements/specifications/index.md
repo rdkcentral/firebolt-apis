@@ -44,11 +44,13 @@ A capability with the level set to `"should"` **SHOULD** be supported.
 A capability with the level set to `"could"` **COULD** be supported.
 
 #### 3.1.1. Should vs Could
-This section is non-normative.
+This section is non-normative and does not denote any requiements.
 
 "Should" means that not supporting a capability has a detremental impact on a Firebolt platform, and care should be taken when deciding not to support a `"should"` capability.
 
 For example, a capability supporting HDMI outputs would likely be assigned a level of `"should"`, since most STB devices have HDMI outputs, while most TV devices do not.
+
+If a capability has a level of `"should"` and the device exposes the functionality in question through hardware or software, then it should either be treated as a `"must"` or a really good reason should exist for why it was not implemented.
 
 If a device has HDMI output ports, then it probably should implement this capability. While a device w/out HDMI output ports does not need to.
 
