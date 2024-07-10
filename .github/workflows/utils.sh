@@ -147,6 +147,52 @@ function unzipArtifact(){
   echo "Failures=$failures" >> "$GITHUB_ENV"
 }
 
+function generateSource() {
+  echo " ************ Generate Source ************"
+  pwd
+  ls -la
+
+  echo "Generate source for Core SDK"
+  cd src/sdks/core
+  npm run cpp
+
+  if [ $? -eq 0 ]
+  then
+        echo "Native Core SDK generated successfully"
+  else
+    echo "Native Core SDK generation failed"
+    exit 1
+  fi
+
+  echo "Generate source for Manage SDK"
+  cd ../manage
+  npm run cpp
+
+  if [ $? -eq 0 ]
+  then
+        echo "Native Manage SDK generated successfully"
+  else
+    echo "Native Manage SDK generation failed"
+    exit 1
+  fi
+
+  echo "Generate source for Discovery SDK"
+  cd ../discovery
+  npm run cpp
+
+  if [ $? -eq 0 ]
+  then
+        echo "Native Discovery SDK generated successfully"
+  else
+    echo "Native Discovery SDK generation failed"
+    exit 1
+  fi
+
+  echo "************ Source Generation Completed ************"
+  pwd
+  ls -la
+}
+
 # Check argument and call corresponding function
 if [ "$1" == "runTests" ]; then
     runTests
@@ -156,6 +202,8 @@ elif [ "$1" == "getArtifactData" ]; then
     getArtifactData
 elif [ "$1" == "unzipArtifact" ]; then
     unzipArtifact
+elif [ "$1" == "generateSource" ]; then
+    generateSource
 else
     echo "Invalid function specified."
     exit 1

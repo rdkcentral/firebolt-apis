@@ -89,6 +89,9 @@ jobs:
         uses: andstor/file-existence-action@v2
         with:
           files: './src/sdks/core/dist/lib/firebolt.mjs'
+      - name: Generate native sdk source
+        run: |
+          .github/workflows/utils.sh generateSource
       - name: Release Firebolt SDKs to NPM
         if: steps.check_build.outputs.files_exists == 'true' && github.event_name != 'pull_request' && (github.ref_name != 'main' || github.event_name == 'workflow_dispatch')
         env:
