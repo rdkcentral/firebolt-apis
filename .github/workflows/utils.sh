@@ -159,34 +159,40 @@ function generateSource() {
   if [ $? -eq 0 ]
   then
         echo "Native Core SDK generated successfully"
+        echo " Core SDK Location"
+        cd build/cpp/src/
+        ls -la
   else
     echo "Native Core SDK generation failed"
     exit 1
   fi
 
   echo "Generate source for Manage SDK"
-  cd ../manage
+  cd ../../../../manage
   npm run cpp
 
   if [ $? -eq 0 ]
   then
         echo "Native Manage SDK generated successfully"
+        echo " Manage SDK Location"
+        cd build/cpp/src/
+        ls -la
   else
     echo "Native Manage SDK generation failed"
     exit 1
   fi
 
-  echo "Generate source for Discovery SDK"
-  cd ../discovery
-  npm run cpp
+  # echo "Generate source for Discovery SDK"
+  # cd ../discovery
+  # npm run cpp
 
-  if [ $? -eq 0 ]
-  then
-        echo "Native Discovery SDK generated successfully"
-  else
-    echo "Native Discovery SDK generation failed"
-    exit 1
-  fi
+  # if [ $? -eq 0 ]
+  # then
+  #       echo "Native Discovery SDK generated successfully"
+  # else
+  #   echo "Native Discovery SDK generation failed"
+  #   exit 1
+  # fi
 
   echo "************ Source Generation Completed ************"
   pwd
