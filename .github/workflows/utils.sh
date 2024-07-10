@@ -162,6 +162,7 @@ function generateSource() {
         echo " Core SDK Location"
         cd build/cpp/src/
         ls -la
+        echo " ************ Source Generation Completed for Core SDK ************"
   else
     echo "Native Core SDK generation failed"
     exit 1
@@ -177,6 +178,7 @@ function generateSource() {
         echo " Manage SDK Location"
         cd build/cpp/src/
         ls -la
+        echo " ************ Source Generation Completed for Manage SDK ************"
   else
     echo "Native Manage SDK generation failed"
     exit 1
@@ -193,10 +195,6 @@ function generateSource() {
   #   echo "Native Discovery SDK generation failed"
   #   exit 1
   # fi
-
-  echo "************ Source Generation Completed ************"
-  pwd
-  ls -la
 }
 
 # Check argument and call corresponding function
