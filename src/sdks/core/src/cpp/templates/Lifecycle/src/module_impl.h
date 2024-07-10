@@ -46,13 +46,17 @@ public:
     ${info.Title}Impl& operator=(const ${info.Title}Impl&) = delete;
 
     ~${info.Title}Impl() override = default;
-    
     // Methods & Events
     /* ${METHODS:declarations-override} */
 
-    void ready(Firebolt::Error *err = nullptr) override;
     void finished(Firebolt::Error *err = nullptr) override ;
-  
+    void ready(Firebolt::Error *err = nullptr) override;
+    std::string state(Firebolt::Error *err = nullptr) override;
+
+private:
+    
+    std::string currentState = "INITIALIZING";
+
 };${end.if.methods}
 
 } // namespace ${info.Title}

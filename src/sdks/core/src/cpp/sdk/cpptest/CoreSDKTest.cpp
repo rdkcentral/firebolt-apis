@@ -641,10 +641,12 @@ EnumMap<Firebolt::Lifecycle::LifecycleEventSource> lifecycleEventSourceMap = {
     { Firebolt::Lifecycle::LifecycleEventSource::VOICE, "voice" },
     { Firebolt::Lifecycle::LifecycleEventSource::REMOTE, "remote" }
 };
+
 void CoreSDKTest::LifecycleReady()
 {
-    Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::IFireboltAccessor::Instance().LifecycleInterface().ready(&error);
+   cout << "Inside Ready Lifecycle" << endl;
+   Firebolt::Error error = Firebolt::Error::None;
+   Firebolt::IFireboltAccessor::Instance().LifecycleInterface().ready(&error);
     if (error == Firebolt::Error::None) {
         cout << "Lifecycle ready is success" << endl;
     } else {
@@ -660,6 +662,18 @@ void CoreSDKTest::LifecycleFinished()
         cout << "Lifecycle finished is success" << endl;
     } else {
         cout << "Lifecycle finished status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::LifecycleState()
+{
+   Firebolt::Error error = Firebolt::Error::None;
+   const std::string state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "State of the App = " << state.c_str() << endl;
+    } else {
+        cout << "State of the App throws an error = " << static_cast<int>(error) << endl;
     }
 }
 

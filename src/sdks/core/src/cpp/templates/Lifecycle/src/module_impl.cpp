@@ -11,62 +11,92 @@ ${if.providers}
 /* ${PROVIDERS} */${end.if.providers}
 
 
-/* readyDispatcher - Calls Metrics.ready to Inform the platform that your app is minimally usable */
+/* ready - Notify the platform that the app is ready */
 static void readyDispatcher(const void* result) {
     Metrics::MetricsImpl::ready();
 }
 /* ready - Notify the platform that the app is ready */
-void ${info.Title}Impl::ready(Firebolt::Error *err) 
-{
-        Firebolt::Error status = Firebolt::Error::NotConnected;
-
-        FireboltSDK::Transport<WPEFramework::Core::JSON::IElement>* transport = FireboltSDK::Accessor::Instance().GetTransport();
-        if (transport != nullptr) {
-
-            JsonObject jsonParameters;
+void ${info.Title}Impl::ready(Firebolt::Error *err) {
+     std::cout << "******Inside Ready******" << std::endl;
     
-            WPEFramework::Core::JSON::VariantContainer jsonResult;
-            status = transport->Invoke("lifecycle.ready", jsonParameters, jsonResult);
-            if (status == Firebolt::Error::None) {
-                FIREBOLT_LOG_INFO(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Lifecycle.ready is successfully invoked");
-    
-                WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch> job = WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch>(WPEFramework::Core::ProxyType<FireboltSDK::Worker>::Create(readyDispatcher, nullptr));
-                WPEFramework::Core::IWorkerPool::Instance().Submit(job);
-            }
+    Firebolt::Error status = Firebolt::Error::NotConnected;
 
+    // Parameters for the event
+    JsonObject jsonParameters;
+
+    
+    // Call Prioritize with lambda callback
+    //  Firebolt::Error updateState = FireboltSDK::Event::Instance().Prioritize<JsonData_LifecycleEvent>("lifecycle.ready", jsonParameters, onReadyInnerCallback, (void*)nullptr, nullptr);
+  
+    // if (updateState != Firebolt::Error::None) {
+    //     FIREBOLT_LOG_ERROR(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Error in prioritizing event: %d", updateState);
+    //     if (err != nullptr) {
+    //         *err = updateState;
+    //     }
+    // }
+
+
+
+    FireboltSDK::Transport<WPEFramework::Core::JSON::IElement>* transport = FireboltSDK::Accessor::Instance().GetTransport();
+    if (transport != nullptr) {
+
+        WPEFramework::Core::JSON::VariantContainer jsonResult;
+        status = transport->Invoke("lifecycle.ready", jsonParameters, jsonResult);
+        if (status == Firebolt::Error::None) {
+            FIREBOLT_LOG_INFO(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Lifecycle.ready is successfully invoked");
+
+            WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch> job = WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch>(WPEFramework::Core::ProxyType<FireboltSDK::Worker>::Create(readyDispatcher, nullptr));
+            WPEFramework::Core::IWorkerPool::Instance().Submit(job);
         } else {
-            FIREBOLT_LOG_ERROR(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Error in getting Transport err = %d", status);
+            FIREBOLT_LOG_ERROR(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Error in invoking lifecycle.ready: %d", status);
+            if (err != nullptr) {
+                *err = status;
+            }
         }
 
-        return;
+    } else {
+        FIREBOLT_LOG_ERROR(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Error in getting Transport err = %d", status);
+        if (err != nullptr) {
+            *err = status;
+        }
+    }
+}  
+
+
+/* state - return the state of the app */
+std::string ${info.Title}Impl::state(Firebolt::Error *err)  {
+    std::cout << "******Divya Index.cpp state function for Lifecycle******" << std::endl;
+    std::cout << "******CURRENT STATE******" << currentState << std::endl;
+    return currentState;
 }
+
 
 
 /* finished - Notify the platform that the app is done unloading */
 void ${info.Title}Impl::finished(Firebolt::Error *err) 
 {
     Firebolt::Error status = Firebolt::Error::NotConnected;
-
-        FireboltSDK::Transport<WPEFramework::Core::JSON::IElement>* transport = FireboltSDK::Accessor::Instance().GetTransport();
-        if (transport != nullptr) {
+        if(currentState == "unloading")
+        {
+            FireboltSDK::Transport<WPEFramework::Core::JSON::IElement>* transport = FireboltSDK::Accessor::Instance().GetTransport();
+            if (transport != nullptr) {
+            
+                JsonObject jsonParameters;
         
-            JsonObject jsonParameters;
-    
-            WPEFramework::Core::JSON::VariantContainer jsonResult;
-            status = transport->Invoke("lifecycle.finished", jsonParameters, jsonResult);
-            if (status == Firebolt::Error::None) {
-                FIREBOLT_LOG_INFO(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Lifecycle.finished is successfully invoked");
-    
+                WPEFramework::Core::JSON::VariantContainer jsonResult;
+                status = transport->Invoke("lifecycle.finished", jsonParameters, jsonResult);
+                if (status == Firebolt::Error::None) {
+                    FIREBOLT_LOG_INFO(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Lifecycle.finished is successfully invoked");
+        
+                }
+
+            } else {
+                FIREBOLT_LOG_ERROR(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Error in getting Transport err = %d", status);
             }
-
-        } else {
-            FIREBOLT_LOG_ERROR(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Error in getting Transport err = %d", status);
         }
-    
 
-        return;
+    return;
 }
-
 
 
 // Methods
