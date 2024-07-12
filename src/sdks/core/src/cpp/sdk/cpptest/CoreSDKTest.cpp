@@ -917,6 +917,45 @@ void CoreSDKTest::MetricsStopContent()
     }
 }
 
+void CoreSDKTest::MetricsReady()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::optional<std::string> entityId;
+    bool status = Firebolt::IFireboltAccessor::Instance().MetricsInterface().ready(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Metrics Ready status = " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Metrics Ready status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::MetricsSignIn()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::optional<std::string> entityId;
+    bool status = Firebolt::IFireboltAccessor::Instance().MetricsInterface().signIn(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Metrics signIn status = " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Metrics signIn status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::MetricsSignOut()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::optional<std::string> entityId;
+    bool status = Firebolt::IFireboltAccessor::Instance().MetricsInterface().signOut(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Metrics signOut status = " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Metrics signOut status = " << static_cast<int>(error) << endl;
+    }
+}
+
 void CoreSDKTest::GetSecondScreenDevice()
 {
     Firebolt::Error error = Firebolt::Error::None;

@@ -95,7 +95,10 @@ void ShowLifecycleMenu()
 
 void ShowMetricsMenu()
 {
-    printf("Options: \n"
+    printf("Options: \n"  
+         "\tR : Ready\n"
+         "\tI : SignIn\n"
+         "\tO : SignOut\n"
          "\tS : Start Content\n"
          "\tT : Stop Content\n"
          "\tQ : Quit\n");
@@ -386,6 +389,19 @@ void HandleMetricsMethod()
         printf("Enter option : ");
         opt = toupper(getchar());
         switch (opt) {
+        case 'R': {
+            CoreSDKTest::MetricsReady();
+            break;
+        }
+        case 'I': {
+            CoreSDKTest::MetricsSignIn();
+            break;
+        }
+        case 'O': {
+            CoreSDKTest::MetricsSignOut();
+            break;
+        }
+
         case 'S': {
             CoreSDKTest::MetricsStartContent();
             break;
