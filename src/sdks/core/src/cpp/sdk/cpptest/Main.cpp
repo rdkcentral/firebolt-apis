@@ -116,8 +116,9 @@ void RunAllTests() {
         runTest(CoreSDKTest::MetricsReady, "MetricsReady");
         runTest(CoreSDKTest::MetricsSignIn, "MetricsSignIn");
         runTest(CoreSDKTest::MetricsSignOut, "MetricsSignOut");
-        runTest(CoreSDKTest::MetricsStopContent, "MetricsStopContent");
         runTest(CoreSDKTest::MetricsStartContent, "MetricsStartContent");
+        runTest(CoreSDKTest::MetricsStopContent, "MetricsStopContent");
+       
      
 
         // SecondScreen methods
