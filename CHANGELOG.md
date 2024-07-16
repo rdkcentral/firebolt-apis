@@ -1,3 +1,10 @@
+## [1.2.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.1...v1.2.1-next.2) (2024-07-01)
+
+
+### Bug Fixes
+
+* **core, manage:** update C++ tests to run simultaneously for core and manage SDKs ([ef7bc4c](https://github.com/rdkcentral/firebolt-apis/commit/ef7bc4ce117cbce799ddab8c9b44522730374514))
+
 ## [1.2.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0...v1.2.1-next.1) (2024-06-26)
 
 
