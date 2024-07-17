@@ -26,18 +26,22 @@ ${if.providers}
     std::string ${info.Title}Impl::version(Firebolt::Error *err) const
     {
         JsonObject jsonParameters;
-        FireboltSDK::JSON::String jsonResult;
+        JsonData_Versions jsonResult;
         std::string version;
 
         Firebolt::Error status = Firebolt::Error::NotConnected;
         FireboltSDK::Transport<WPEFramework::Core::JSON::IElement>* transport = FireboltSDK::Accessor::Instance().GetTransport();
         if (transport != nullptr) {
-
+            
             status = transport->Invoke("${info.title.lowercase}.version", jsonParameters, jsonResult);
             if (status == Firebolt::Error::None) {
-                FIREBOLT_LOG_INFO(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "${info.Title}.version is successfully invoked, status: %s", jsonResult.Value().c_str());
-                version = jsonResult.Value().c_str();
-                /* TODO: Set major, minor values here*/
+                !jsonResult.IsSet() ? jsonResult.Clear() : (void)0;
+                !jsonResult.Sdk.IsSet() ? jsonResult.Sdk.Clear() : (void)0;
+                jsonResult.Sdk.Major = static_cast<int32_t>(${major});
+                jsonResult.Sdk.Minor = static_cast<int32_t>(${minor});
+                jsonResult.Sdk.Patch = static_cast<int32_t>(${patch});
+                jsonResult.Sdk.Readable = "${readable}";
+                jsonResult.ToString(version);
             }
 
         } else {
