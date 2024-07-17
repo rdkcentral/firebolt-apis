@@ -40,6 +40,7 @@ void RunAllTests() {
         runTest(CoreSDKTest::GetDeviceModel, "GetDeviceModel");
         runTest(CoreSDKTest::GetDeviceSku, "GetDeviceSku");
         runTest(CoreSDKTest::GetDeviceName, "GetDeviceName");
+        runTest(CoreSDKTest::GetDeviceName, "GetDeviceVersion");
         runTest(CoreSDKTest::SubscribeDeviceNameChanged, "SubscribeDeviceNameChanged");
         runTest(CoreSDKTest::UnsubscribeDeviceNameChanged, "UnsubscribeDeviceNameChanged");
         runTest(CoreSDKTest::GetDeviceAudio, "GetDeviceAudio");
