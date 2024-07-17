@@ -37,5 +37,4 @@ echo "${TestPath}"
 echo "FireboltPath"
 echo ${FireboltPath}
 cmake -B${TestPath}/build -S${TestPath} -DSYSROOT_PATH=${SysrootPath} -DFIREBOLT_PATH=${FireboltPath}
-# -DPOLYMORPHICS_METHODS=ON // Enable this to test 
 cmake --build ${TestPath}/build

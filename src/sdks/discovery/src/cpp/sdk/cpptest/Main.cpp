@@ -44,7 +44,7 @@ void RunAllTests() {
     if (DiscoverySDKTest::WaitOnConnectionReady()) {
         // Add tests here
         
-        // runTest(DiscoverySDKTest::TestName, "TestName");
+        runTest(DiscoverySDKTest::SampleTest, "SampleTest");
 
         if (allTestsPassed) {
             cout << "============================" << endl;

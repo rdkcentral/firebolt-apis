@@ -93,7 +93,7 @@ void DiscoverySDKTest::SampleTest()
 {
     Firebolt::Error error = Firebolt::Error::None;
 
-    if (error === Firebolt::Error::None) {
+    if (error == Firebolt::Error::None) {
         cout << "Sample Test Passed!" << endl;
     } else {
         std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
