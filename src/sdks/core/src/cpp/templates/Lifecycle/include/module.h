@@ -14,30 +14,48 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
 #pragma once
 
 #include "error.h"
+#include <string>
 /* ${IMPORTS} */
 
 ${if.declarations}namespace Firebolt {
 namespace ${info.Title} {
-${if.enums}
 
+${if.enums}
 // Enums
 /* ${ENUMS} */${end.if.enums}
+
 ${if.types}
 // Types
 /* ${TYPES} */${end.if.types}
+
 ${if.providers}/* ${PROVIDERS} */${end.if.providers}${if.xuses}/* ${XUSES} */${end.if.xuses}
+
 ${if.methods}struct I${info.Title} {
 
     virtual ~I${info.Title}() = default;
     virtual void ready(Firebolt::Error *err = nullptr) = 0;
     virtual void finished(Firebolt::Error *err = nullptr) = 0;
+    virtual std::string state(Firebolt::Error *err = nullptr) = 0;
 
     // Methods & Events
     /* ${METHODS:declarations} */
 };${end.if.methods}
 
+// Template for mapping enums to strings
+template<typename T>
+using EnumMap = std::unordered_map<T, std::string>;
+
+// Function to convert enum values to string representations
+template <typename T>
+inline const std::string& ConvertEnum(EnumMap<T> enumMap, T type)
+{
+    return enumMap[type];
+}
+
 } //namespace ${info.Title}
 }${end.if.declarations}
+

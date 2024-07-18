@@ -18,16 +18,12 @@
 
 #include "FireboltSDK.h"
 #include "IModule.h"
-#include "lifecycle.h"
-
-#include "metrics_impl.h"
-#include <string>
-#include <functional> // Needed for std::function
-#include <iostream> // Needed for std::cout
-
+#include "firebolt.h"
+#include "jsondata_lifecycle.h"
+#include "${info.title.lowercase}.h"
 
 /* ${IMPORTS} */
-#include "${info.title.lowercase}.h"
+
 
 ${if.implementations}
 namespace Firebolt {
@@ -44,24 +40,19 @@ public:
     ${info.Title}Impl() = default;
     ${info.Title}Impl(const ${info.Title}Impl&) = delete;
     ${info.Title}Impl& operator=(const ${info.Title}Impl&) = delete;
-
     ~${info.Title}Impl() override = default;
+
+    std::string currentState = "INITIALIZING";
+
     // Methods & Events
     /* ${METHODS:declarations-override} */
 
     void finished(Firebolt::Error *err = nullptr) override ;
     void ready(Firebolt::Error *err = nullptr) override;
     std::string state(Firebolt::Error *err = nullptr) override;
-
-private:
-    
-    std::string currentState = "INITIALIZING";
-
+ 
 };${end.if.methods}
 
 } // namespace ${info.Title}
 } // namespace Firebolt
 ${end.if.implementations}
-
-
-  
