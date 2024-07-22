@@ -34,12 +34,13 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
   - [4.4. Pass-through notifications](#44-pass-through-notifications)
 - [5. Provider Candidates](#5-provider-candidates)
 - [6. Best Candidate](#6-best-candidate)
-- [7. Result Transformations](#7-result-transformations)
-- [8. Provider Parameter Injection](#8-provider-parameter-injection)
-- [9. API Gateway](#9-api-gateway)
-- [10. Example: User Interest](#10-example-user-interest)
-  - [10.1. User Interest Pull](#101-user-interest-pull)
-  - [10.2. User Interest Push](#102-user-interest-push)
+- [7. Application Context](#7-application-context)
+    - [7.1 Application Context Sharing](#71-application-context-sharing)
+    - [7.2 Application Context Setting](#72-application-context-setting)
+- [8. API Gateway](#9-api-gateway)
+- [9. Example: User Interest](#10-example-user-interest)
+  - [9.1. User Interest Pull](#101-user-interest-pull)
+  - [9.2. User Interest Push](#102-user-interest-push)
 
 ## 3. Open RPC Extensions
 
@@ -227,26 +228,36 @@ consideration.
 
 If there is only one candidate left then it **MUST** be the best candidate.
 
+If appId is set in the request [(See Application Context Setting)](#72-application-context-setting), then that app must be used for selecting the provider.
+
 If there is more than one candidate left, then the candidate app that most recently had RCU input focus **MUST** be the best candidate.
 
 If none of the candidates have had focus yet, then the candidate app that was most recently launched **MUST** be the best candidate.
 
-## 7. Result Transformations
-A platform method may be configured to insert the providing app id into composite values. This is not allowed in non-composite results to avoid collisions with the provder method sending an appId and Firebolt overriding it.
+
+## 7. Application Context
+
+Application Context provides a mechanism for applications to know the identity of the applications they are communicating with. Application Context can be given in both directions. An application that uses a capability can know which app is providing that capability. An application that provides a capability can know which app is using that capability.
+
+### 7.1 Application Context Sharing
+
+Application Context is shared by having either a "composite result" or a "composite request".
 
 If a "composite result" was used to wrap the provider method value and the platform method's schema has an `appId` `string` property at the top level then the property's value **MUST** be set to the the appId of the providing app for that result.
 
-## 8. Provider Parameter Injection
-If the provider method has a parameter named `appId` and the platform method *does not*, then the appId of the app calling the platform method **MUST** be sent to the provider in the `appId` parameter.
+If a platform method is an `event` and the event result is a "composite result" with an `appId` `string` property at the top level, then the property **MUST** be set to the appId that initiated the provider (push) call.
 
-If the platform method is an `event` and the provider method has context parameters then each context parameter from the provider that has a matching context parameter in the event **MUST** have it's value passed to that parameter.
+If the provider method is a "composite request" with `appId` `string` property at the top level but the platform method does not have `appId`, then the id of app that initiated the platform method call should be used to set the `appId` in the provider method request.
 
-If the platform method is an `event` with a "composite result" and the provider method has context parameters then each context parameter from the provider that has a matching property on the `result` object **MUST** have it's value copied into that property.
+### 7.2 Application Context Setting
 
-## 9. API Gateway
+When a platform method is invoked, the gateway will find the provider using the `Provider Candidate` rules as described above. However, some Firebolt APIs allow selecting the provider that should be used. If a platform method request schema is a "composite request" with `appId` `string` property at the top level but the provider method request schema is not a composite request, then the given appId shall be used to select the provider. 
+If "appId" is a required parameter in the platform method request schema, then it must be supplied. If it is not, then the request should fail with invalid parameters. If it is an optional parameter and it is not supplied, then the gateway should use rules in "Provider Candidate" section for selecting the candidate.
+
+## 8. API Gateway
 The Firebolt API Gateway **MUST** detect app-passthrough APIs and map the `use`/`manage` APIs to the corresponding `provide` APIs by parsing the Firebolt OpenRPC Specification and following the logic outline in this document.
 
-## 10. Example: User Interest
+## 9. Example: User Interest
 
 The following schemas are referenced by these examples:
 
@@ -287,7 +298,7 @@ The following schemas are referenced by these examples:
 }
 ```
 
-### 10.1. User Interest Pull
+### 9.1. User Interest Pull
 
 Platform method:
 
@@ -370,7 +381,7 @@ Provider method:
 }
 ```
 
-### 10.2. User Interest Push
+### 9.2. User Interest Push
 
 Provider method:
 
