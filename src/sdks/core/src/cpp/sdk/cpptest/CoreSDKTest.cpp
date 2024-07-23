@@ -18,6 +18,8 @@
 
 #include <unistd.h>
 #include <iomanip>
+#include <stdexcept>
+#include <string>
 #include "CoreSDKTest.h"
 
 
@@ -94,9 +96,11 @@ void CoreSDKTest::GetAccountId()
     if (error == Firebolt::Error::None) {
         cout << "Get Account Id = " << id.c_str() << endl;
     } else {
-        cout << "Get Account Id status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetAccountId failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetAccountUid()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -104,7 +108,8 @@ void CoreSDKTest::GetAccountUid()
     if (error == Firebolt::Error::None) {
         cout << "Get Account Uid = " << uid.c_str() << endl;
     } else {
-        cout << "Get Account Uid status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetAccountUid failed. " + errorMessage);
     }
 }
 
@@ -144,6 +149,7 @@ void PrintAdvertisingPolicy(const Firebolt::Advertising::AdPolicy& policy)
         cout << "\tlimitAdTracking : " << policy.limitAdTracking.value() << endl;
     }
 }
+
 void CoreSDKTest::GetAdvertisingPolicy()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -152,14 +158,17 @@ void CoreSDKTest::GetAdvertisingPolicy()
         cout << "Get Advertising policy --> " << endl;
         PrintAdvertisingPolicy(policy);
     } else {
-        cout << "Get Advertising policy status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetAdvertisingPolicy failed. " + errorMessage);
     }
 }
-void CoreSDKTest::OnPolicyChangedNotification::onPolicyChanged( const Firebolt::Advertising::AdPolicy& policy )
+
+void CoreSDKTest::OnPolicyChangedNotification::onPolicyChanged(const Firebolt::Advertising::AdPolicy& policy)
 {
     cout << "New policy --> " << endl;
     PrintAdvertisingPolicy(policy);
 }
+
 void CoreSDKTest::SubscribeAdvertisingPolicyChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -167,9 +176,11 @@ void CoreSDKTest::SubscribeAdvertisingPolicyChanged()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Advertising PolicyChange is success" << endl;
     } else {
-        cout << "Subscribe Advertising PolicyChange status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeAdvertisingPolicyChanged failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::UnsubscribeAdvertisingPolicyChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -177,9 +188,11 @@ void CoreSDKTest::UnsubscribeAdvertisingPolicyChanged()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Advertising PolicyChange is success" << endl;
     } else {
-        cout << "Unsubscribe Advertising PolicyChange status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeAdvertisingPolicyChanged failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::BuildAdvertisingConfiguration()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -192,9 +205,11 @@ void CoreSDKTest::BuildAdvertisingConfiguration()
     if (error == Firebolt::Error::None) {
         cout << "Build AdvertisingConfiguration is success, adFrameworkConfig : " << adFrameworkConfig << endl;
     } else {
-        cout << "Build AdvertisingConfiguration status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("BuildAdvertisingConfiguration failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetAdvertisingDeviceAttributes()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -202,7 +217,8 @@ void CoreSDKTest::GetAdvertisingDeviceAttributes()
     if (error == Firebolt::Error::None) {
         cout << "Get Advertising DeviceAttributes is success, deviceAttributes : " << deviceAttributes << endl;
     } else {
-        cout << "Get Advertising DeviceAttributes status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetAdvertisingDeviceAttributes failed. " + errorMessage);
     }
 }
 
@@ -214,11 +230,12 @@ void CoreSDKTest::GetDeviceName()
     if (error == Firebolt::Error::None) {
         cout << "Get Device Name = " << name.c_str() << endl;
     } else {
-        cout << "Get Device Name status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetDeviceName failed. " + errorMessage);
     }
 }
 
-void CoreSDKTest::OnDeviceNameChangedNotification::onDeviceNameChanged( const std::string& name)
+void CoreSDKTest::OnDeviceNameChangedNotification::onDeviceNameChanged(const std::string& name)
 {
     cout << "Name changed, new name --> " << name << endl;
 }
@@ -230,7 +247,8 @@ void CoreSDKTest::SubscribeDeviceNameChanged()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Device NameChange is success" << endl;
     } else {
-        cout << "Subscribe Device NameChange status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeDeviceNameChanged failed. " + errorMessage);
     }
 }
 
@@ -241,7 +259,8 @@ void CoreSDKTest::UnsubscribeDeviceNameChanged()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Device NameChange is success" << endl;
     } else {
-        cout << "Unsubscribe Device NameChange status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeDeviceNameChanged failed. " + errorMessage);
     }
 }
 
@@ -253,7 +272,8 @@ void CoreSDKTest::GetDeviceModel()
     if (error == Firebolt::Error::None) {
         cout << "Get Device Model = " << model.c_str() << endl;
     } else {
-        cout << "Get Device Model status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetDeviceModel failed. " + errorMessage);
     }
 }
 
@@ -265,17 +285,19 @@ void CoreSDKTest::GetDeviceSku()
     if (error == Firebolt::Error::None) {
         cout << "Get Device Sku = " << sku.c_str() << endl;
     } else {
-        cout << "Get Device Sku status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetDeviceSku failed. " + errorMessage);
     }
 }
 
-void PrintDeviceAudioProfiles( const Firebolt::Device::AudioProfiles& audioProfiles )
+void PrintDeviceAudioProfiles(const Firebolt::Device::AudioProfiles& audioProfiles)
 {
     cout << "Get Device AudioProfiles :-> " << endl;
     for (auto& item : audioProfiles) {
         cout << "Profile: " << static_cast<int>(item.first) << " status: " << item.second << endl;
     }
 }
+
 void CoreSDKTest::GetDeviceAudio()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -283,14 +305,17 @@ void CoreSDKTest::GetDeviceAudio()
     if (error == Firebolt::Error::None) {
         PrintDeviceAudioProfiles(audioProfiles);
     } else {
-        cout << "Get Device AudioProfiles status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetDeviceAudio failed. " + errorMessage);
     }
 }
-void CoreSDKTest::OnAudioChangedNotification::onAudioChanged( const Firebolt::Device::AudioProfiles& audioProfiles )
+
+void CoreSDKTest::OnAudioChangedNotification::onAudioChanged(const Firebolt::Device::AudioProfiles& audioProfiles)
 {
     cout << "onAudioChanged event " << endl;
     PrintDeviceAudioProfiles(audioProfiles);
 }
+
 void CoreSDKTest::SubscribeDeviceAudioChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -298,9 +323,11 @@ void CoreSDKTest::SubscribeDeviceAudioChanged()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Device Audio Change is success" << endl;
     } else {
-        cout << "Subscribe Device Audio Change status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeDeviceAudioChanged failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::UnsubscribeDeviceAudioChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -308,15 +335,17 @@ void CoreSDKTest::UnsubscribeDeviceAudioChanged()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Device Audio Change is success" << endl;
     } else {
-        cout << "Unsubscribe Device Audio Change status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeDeviceAudioChanged failed. " + errorMessage);
     }
 }
 
-void PrintDeviceScreenResolution( const Firebolt::Device::Resolution& resolution )
+void PrintDeviceScreenResolution(const Firebolt::Device::Resolution& resolution)
 {
     cout << "Get Device ScreenResolution :-> " << endl;
     cout << resolution.first << " X " << resolution.second << endl;
 }
+
 void CoreSDKTest::GetDeviceScreenResolution()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -324,14 +353,17 @@ void CoreSDKTest::GetDeviceScreenResolution()
     if (error == Firebolt::Error::None) {
         PrintDeviceScreenResolution(resolution);
     } else {
-        cout << "Get Device ScreenResolution status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetDeviceScreenResolution failed. " + errorMessage);
     }
 }
-void CoreSDKTest::OnScreenResolutionChangedNotification::onScreenResolutionChanged( const Firebolt::Device::Resolution& resolution )
+
+void CoreSDKTest::OnScreenResolutionChangedNotification::onScreenResolutionChanged(const Firebolt::Device::Resolution& resolution)
 {
     cout << "onScreenResolutionChanged event " << endl;
     PrintDeviceScreenResolution(resolution);
 }
+
 void CoreSDKTest::SubscribeDeviceScreenResolutionChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -339,9 +371,11 @@ void CoreSDKTest::SubscribeDeviceScreenResolutionChanged()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Device ScreenResolution Change is success" << endl;
     } else {
-        cout << "Subscribe Device ScreenResolution Change status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeDeviceScreenResolutionChanged failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::UnsubscribeDeviceScreenResolutionChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -349,11 +383,12 @@ void CoreSDKTest::UnsubscribeDeviceScreenResolutionChanged()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Device ScreenResolution Change is success" << endl;
     } else {
-        cout << "Unsubscribe Device ScreenResolution Change status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeDeviceScreenResolutionChanged failed. " + errorMessage);
     }
 }
 
-void PrintClosedCaptionsSettings( const Firebolt::Accessibility::ClosedCaptionsSettings& closedCaptionsSettings)
+void PrintClosedCaptionsSettings(const Firebolt::Accessibility::ClosedCaptionsSettings& closedCaptionsSettings)
 {
     cout << "Get Accessibility ClosedCaptionsSettings :-> " << endl;
     cout << "ClosedCaptionsSettings::Enabled : " << closedCaptionsSettings.enabled << endl;
@@ -401,6 +436,7 @@ void PrintClosedCaptionsSettings( const Firebolt::Accessibility::ClosedCaptionsS
         cout << endl;
     }
 }
+
 void CoreSDKTest::GetAccessibilityClosedCaptionsSettings()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -408,14 +444,17 @@ void CoreSDKTest::GetAccessibilityClosedCaptionsSettings()
     if (error == Firebolt::Error::None) {
         PrintClosedCaptionsSettings(closedCaptionsSettings);
     } else {
-        cout << "Get Accessibility ClosedCaptionsSettings status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetAccessibilityClosedCaptionsSettings failed. " + errorMessage);
     }
 }
-void CoreSDKTest::OnClosedCaptionsSettingsChangedNotification::onClosedCaptionsSettingsChanged( const Firebolt::Accessibility::ClosedCaptionsSettings& closedCaptionsSettings )
+
+void CoreSDKTest::OnClosedCaptionsSettingsChangedNotification::onClosedCaptionsSettingsChanged(const Firebolt::Accessibility::ClosedCaptionsSettings& closedCaptionsSettings)
 {
     cout << "ClosedCaptionsSettingsChanged event " << endl;
     PrintClosedCaptionsSettings(closedCaptionsSettings);
 }
+
 void CoreSDKTest::SubscribeAccessibilityClosedCaptionsSettingsChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -423,9 +462,11 @@ void CoreSDKTest::SubscribeAccessibilityClosedCaptionsSettingsChanged()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Accessibilty ClosedCaptionSettings Change is success" << endl;
     } else {
-        cout << "Subscribe Accessibilty ClosedCaptionSettings Change status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeAccessibilityClosedCaptionsSettingsChanged failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::UnsubscribeAccessibilityClosedCaptionsSettingsChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -433,7 +474,8 @@ void CoreSDKTest::UnsubscribeAccessibilityClosedCaptionsSettingsChanged()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Accessibilty ClosedCaptionSettings Change is success" << endl;
     } else {
-        cout << "Unsubscribe Accessibilty ClosedCaptionSettings Change status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeAccessibilityClosedCaptionsSettingsChanged failed. " + errorMessage);
     }
 }
 
@@ -448,9 +490,11 @@ void CoreSDKTest::GetLocalizationAdditionalInfo()
             cout << "key : " << element.first << ", value : " << element.second << endl;
         }
     } else {
-        cout << "Get Localization AdditionalInfo status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetLocalizationAdditionalInfo failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetLocalizationLatlon()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -460,9 +504,11 @@ void CoreSDKTest::GetLocalizationLatlon()
         cout << "Get Localization LatLon pair value : " << endl;
         cout << "key : " << latlon.first << ", value : " << latlon.second << endl;
     } else {
-        cout << "Get Localization LatLon status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetLocalizationLatlon failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetLocalizationPreferredAudioLanguages()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -471,19 +517,22 @@ void CoreSDKTest::GetLocalizationPreferredAudioLanguages()
     if (error == Firebolt::Error::None) {
         cout << "Get Localization PreferredAudioLanguages : " << endl;
         for (auto language: languages) {
-            cout << "----- > " <<language << endl;
+            cout << "----- > " << language << endl;
         }
     } else {
-        cout << "Get Localization PreferredAudioLanguages status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetLocalizationPreferredAudioLanguages failed. " + errorMessage);
     }
 }
-void CoreSDKTest::OnPreferredAudioLanguagesChangedNotification::onPreferredAudioLanguagesChanged( const std::vector<std::string>& languages)
+
+void CoreSDKTest::OnPreferredAudioLanguagesChangedNotification::onPreferredAudioLanguagesChanged(const std::vector<std::string>& languages)
 {
     cout << "PreferredAudioLanguages Changed, new languages --> " << endl;
     for (auto language : languages) {
         cout << " -> " << language << endl;
     }
 }
+
 void CoreSDKTest::SubscribeLocalizationPreferredAudioLanguagesChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -491,9 +540,11 @@ void CoreSDKTest::SubscribeLocalizationPreferredAudioLanguagesChanged()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Localization PreferredAudioLanguagesChange is success" << endl;
     } else {
-        cout << "Subscribe Localization PreferredAudioLanguagesChange status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeLocalizationPreferredAudioLanguagesChanged failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::UnsubscribeLocalizationPreferredAudioLanguagesChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -501,7 +552,8 @@ void CoreSDKTest::UnsubscribeLocalizationPreferredAudioLanguagesChanged()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Localization PreferredAudioLanguagesChange is success" << endl;
     } else {
-        cout << "Unsubscribe Localization PreferredAudioLanguagesChange status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeLocalizationPreferredAudioLanguagesChanged failed. " + errorMessage);
     }
 }
 
@@ -513,23 +565,28 @@ void CoreSDKTest::KeyboardStandardAsyncResponse::response(const std::string& res
         cout << "Keyboard standard response: " << response << endl;
     }
 }
+
 void CoreSDKTest::InvokeKeyboardStandard()
 {
     Firebolt::Error error = Firebolt::Error::None;
     std::string message = "Enter the name you'd like to associate with this device";
     Firebolt::IFireboltAccessor::Instance().KeyboardInterface().requestStandard(message, _keyboardStandardAsyncResponse, &error);
     if (error != Firebolt::Error::None) {
-       cout << "Error with keyboard standard request method invoke, error = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("InvokeKeyboardStandard failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::AbortKeyboardStandard()
 {
     Firebolt::Error error = Firebolt::Error::None;
     Firebolt::IFireboltAccessor::Instance().KeyboardInterface().abortStandard(_keyboardStandardAsyncResponse, &error);
     if (error != Firebolt::Error::None) {
-       cout << "Error with keyboard standard abort method invoke, error = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("AbortKeyboardStandard failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::KeyboardPasswordAsyncResponse::response(const std::string& response, Firebolt::Error* error)
 {
     if (error && (*error != Firebolt::Error::None)) {
@@ -538,23 +595,28 @@ void CoreSDKTest::KeyboardPasswordAsyncResponse::response(const std::string& res
         cout << "Keyboard password response: " << response << endl;
     }
 }
+
 void CoreSDKTest::InvokeKeyboardPassword()
 {
     Firebolt::Error error = Firebolt::Error::None;
     std::string message = "Enter the password to associate with this device";
     Firebolt::IFireboltAccessor::Instance().KeyboardInterface().requestPassword(message, _keyboardPasswordAsyncResponse, &error);
     if (error != Firebolt::Error::None) {
-       cout << "Error with keyboard password request method invoke, error = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("InvokeKeyboardPassword failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::AbortKeyboardPassword()
 {
     Firebolt::Error error = Firebolt::Error::None;
     Firebolt::IFireboltAccessor::Instance().KeyboardInterface().abortPassword(_keyboardPasswordAsyncResponse, &error);
     if (error != Firebolt::Error::None) {
-       cout << "Error with keyboard password abort method invoke, error = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("AbortKeyboardPassword failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::KeyboardEmailAsyncResponse::response(const std::string& response, Firebolt::Error* error)
 {
     if (error && (*error != Firebolt::Error::None)) {
@@ -563,6 +625,7 @@ void CoreSDKTest::KeyboardEmailAsyncResponse::response(const std::string& respon
         cout << "Keyboard email response: " << response << endl;
     }
 }
+
 void CoreSDKTest::InvokeKeyboardEmail()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -570,15 +633,18 @@ void CoreSDKTest::InvokeKeyboardEmail()
     std::string message = "Enter your email to sign into this app/device";
     Firebolt::IFireboltAccessor::Instance().KeyboardInterface().requestEmail(type, message, _keyboardEmailAsyncResponse, &error);
     if (error != Firebolt::Error::None) {
-       cout << "Error with keyboard email requeset method invoke, error = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("InvokeKeyboardEmail failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::AbortKeyboardEmail()
 {
     Firebolt::Error error = Firebolt::Error::None;
     Firebolt::IFireboltAccessor::Instance().KeyboardInterface().abortEmail(_keyboardEmailAsyncResponse, &error);
     if (error != Firebolt::Error::None) {
-       cout << "Error with keyboard email abort method invoke, error = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("AbortKeyboardEmail failed. " + errorMessage);
     }
 }
 
@@ -589,9 +655,11 @@ void CoreSDKTest::VerifyProfileApproveContentRating()
     if (error == Firebolt::Error::None) {
         cout << "Verify Profile ApproveContentRating is success value : " << allow << endl;
     } else {
-        cout << "Verify Profile ApproveContentRating status : " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("VerifyProfileApproveContentRating failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::VerifyProfileApprovePurchase()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -599,36 +667,41 @@ void CoreSDKTest::VerifyProfileApprovePurchase()
     if (error == Firebolt::Error::None) {
         cout << "Verify Profile ApprovePurchase is success value : " << allow << endl;
     } else {
-        cout << "Verify Profile ApprovePurchase status : " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("VerifyProfileApprovePurchase failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetProfileFlags()
 {
-   Firebolt::Error error = Firebolt::Error::None;
-   Firebolt::Types::FlatMap flatMap = Firebolt::IFireboltAccessor::Instance().ProfileInterface().flags(&error);
-   if (error == Firebolt::Error::None) {
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Types::FlatMap flatMap = Firebolt::IFireboltAccessor::Instance().ProfileInterface().flags(&error);
+    if (error == Firebolt::Error::None) {
         cout << "Get Profile flags is success value : " << endl;
         for (const auto& item : flatMap) {
-            cout << "\t" << item.first << " : " << item.second << endl; 
+            cout << "\t" << item.first << " : " << item.second << endl;
         }
     } else {
-        cout << "Get Profile flags status : " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetProfileFlags failed. " + errorMessage);
     }
 }
 
 void CoreSDKTest::LifecycleClose()
 {
-   Firebolt::Error error = Firebolt::Error::None;
-   cout << "Enter close reason remote button(0), user exit(1), done(2) or error(3)" << endl;
-   int32_t reason;
-   cin >> reason;
-   Firebolt::IFireboltAccessor::Instance().LifecycleInterface().close(static_cast<Firebolt::Lifecycle::CloseReason>(reason), &error);
+    Firebolt::Error error = Firebolt::Error::None;
+    cout << "Enter close reason remote button(0), user exit(1), done(2) or error(3)" << endl;
+    int32_t reason;
+    cin >> reason;
+    Firebolt::IFireboltAccessor::Instance().LifecycleInterface().close(static_cast<Firebolt::Lifecycle::CloseReason>(reason), &error);
     if (error == Firebolt::Error::None) {
         cout << "Lifecycle close is success" << endl;
     } else {
-        cout << "Lifecycle close status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("LifecycleClose failed. " + errorMessage);
     }
 }
+
 EnumMap<Firebolt::Lifecycle::LifecycleState> lifecycleStateMap = {
     { Firebolt::Lifecycle::LifecycleState::INITIALIZING, "initializing" },
     { Firebolt::Lifecycle::LifecycleState::INACTIVE, "inactive" },
@@ -637,6 +710,7 @@ EnumMap<Firebolt::Lifecycle::LifecycleState> lifecycleStateMap = {
     { Firebolt::Lifecycle::LifecycleState::UNLOADING, "unloading" },
     { Firebolt::Lifecycle::LifecycleState::SUSPENDED, "suspended" }
 };
+
 EnumMap<Firebolt::Lifecycle::LifecycleEventSource> lifecycleEventSourceMap = {
     { Firebolt::Lifecycle::LifecycleEventSource::VOICE, "voice" },
     { Firebolt::Lifecycle::LifecycleEventSource::REMOTE, "remote" }
@@ -682,9 +756,10 @@ void CoreSDKTest::OnBackgroundNotification::onBackground( const Firebolt::Lifecy
     cout <<"\tstate: " << ConvertFromEnum<Firebolt::Lifecycle::LifecycleState>(lifecycleStateMap, lifecycleEvent.state) << endl;
     cout <<"\tprevious: " << ConvertFromEnum<Firebolt::Lifecycle::LifecycleState>(lifecycleStateMap, lifecycleEvent.previous) << endl;
     if (lifecycleEvent.source.has_value()) {
-    cout <<"\tsource: " << ConvertFromEnum<Firebolt::Lifecycle::LifecycleEventSource>(lifecycleEventSourceMap, lifecycleEvent.source.value()) << endl;
+        cout <<"\tsource: " << ConvertFromEnum<Firebolt::Lifecycle::LifecycleEventSource>(lifecycleEventSourceMap, lifecycleEvent.source.value()) << endl;
     }
 }
+
 void CoreSDKTest::SubscribeLifecycleBackgroundNotification()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -692,9 +767,11 @@ void CoreSDKTest::SubscribeLifecycleBackgroundNotification()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Lifecycle BackgroundNotification is success" << endl;
     } else {
-        cout << "Subscribe Lifecycle BackgroundNotification status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeLifecycleBackgroundNotification failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::UnsubscribeLifecycleBackgroundNotification()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -702,18 +779,21 @@ void CoreSDKTest::UnsubscribeLifecycleBackgroundNotification()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Lifecycle BackgroundNotification is success" << endl;
     } else {
-        cout << "Unsubscribe Lifecycle BackgroundNotification status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeLifecycleBackgroundNotification failed. " + errorMessage);
     }
 }
-void CoreSDKTest::OnForegroundNotification::onForeground( const Firebolt::Lifecycle::LifecycleEvent& lifecycleEvent)
+
+void CoreSDKTest::OnForegroundNotification::onForeground(const Firebolt::Lifecycle::LifecycleEvent& lifecycleEvent)
 {
     cout <<"onForeground event is triggered" << endl;
     cout <<"\tstate: " << ConvertFromEnum<Firebolt::Lifecycle::LifecycleState>(lifecycleStateMap, lifecycleEvent.state) << endl;
     cout <<"\tprevious: " << ConvertFromEnum<Firebolt::Lifecycle::LifecycleState>(lifecycleStateMap, lifecycleEvent.previous) << endl;
     if (lifecycleEvent.source.has_value()) {
-    cout <<"\tsource: " << ConvertFromEnum<Firebolt::Lifecycle::LifecycleEventSource>(lifecycleEventSourceMap, lifecycleEvent.source.value()) << endl;
+        cout <<"\tsource: " << ConvertFromEnum<Firebolt::Lifecycle::LifecycleEventSource>(lifecycleEventSourceMap, lifecycleEvent.source.value()) << endl;
     }
 }
+
 void CoreSDKTest::SubscribeLifecycleForegroundNotification()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -721,9 +801,11 @@ void CoreSDKTest::SubscribeLifecycleForegroundNotification()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Lifecycle ForegroundNotification is success" << endl;
     } else {
-        cout << "Subscribe Lifecycle ForegroundNotification status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeLifecycleForegroundNotification failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::UnsubscribeLifecycleForegroundNotification()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -731,7 +813,8 @@ void CoreSDKTest::UnsubscribeLifecycleForegroundNotification()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Lifecycle ForegroundNotification is success" << endl;
     } else {
-        cout << "Unsubscribe Lifecycle ForegroundNotification status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeLifecycleForegroundNotification failed. " + errorMessage);
     }
 }
 
@@ -743,9 +826,11 @@ void CoreSDKTest::GetAuthenticationDevice()
     if (error == Firebolt::Error::None) {
         cout << "Get Authentication of Device = " << device.c_str() << endl;
     } else {
-        cout << "Get Authentication of Device status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetAuthenticationDevice failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetAuthenticationSession()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -754,9 +839,11 @@ void CoreSDKTest::GetAuthenticationSession()
     if (error == Firebolt::Error::None) {
         cout << "Get Authentication of Session = " << session.c_str() << endl;
     } else {
-        cout << "Get Authentication of Session status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetAuthenticationSession failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetAuthenticationRoot()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -765,9 +852,11 @@ void CoreSDKTest::GetAuthenticationRoot()
     if (error == Firebolt::Error::None) {
         cout << "Get Authentication of Root = " << root.c_str() << endl;
     } else {
-        cout << "Get Authentication of Root status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetAuthenticationRoot failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetAuthenticationToken()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -786,14 +875,15 @@ void CoreSDKTest::GetAuthenticationToken()
             cout << "\ttype : " << token.type.value().c_str() << endl;
         }
     } else {
-        cout << "Get Authentication of Device status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetAuthenticationToken failed. " + errorMessage);
     }
 }
 
 EnumMap<Firebolt::Capabilities::DenyReason> denyReasonMap = {
     { Firebolt::Capabilities::DenyReason::UNPERMITTED, "unpermitted" },
     { Firebolt::Capabilities::DenyReason::UNSUPPORTED, "unsupported" },
-    { Firebolt::Capabilities::DenyReason::DISABLED, "disbaled" },
+    { Firebolt::Capabilities::DenyReason::DISABLED, "disabled" },
     { Firebolt::Capabilities::DenyReason::UNAVAILABLE, "unavailable" },
     { Firebolt::Capabilities::DenyReason::GRANT_DENIED, "grant_denied" },
     { Firebolt::Capabilities::DenyReason::UNGRANTED, "ungranted" }
@@ -833,10 +923,11 @@ static void PrintCapabilityInfo(const Firebolt::Capabilities::CapabilityInfo& in
     if (info.details.has_value()) {
         cout << "\tdetails: " << endl;
         for (auto item : info.details.value()) {
-             cout << "\t\t" << ConvertFromEnum<Firebolt::Capabilities::DenyReason>(denyReasonMap, item) << endl;
+            cout << "\t\t" << ConvertFromEnum<Firebolt::Capabilities::DenyReason>(denyReasonMap, item) << endl;
         }
     }
 }
+
 void CoreSDKTest::GetCapabilitiesAvailable()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -845,9 +936,11 @@ void CoreSDKTest::GetCapabilitiesAvailable()
     if (error == Firebolt::Error::None) {
         cout << "Capabilities Available = " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Capabilities Available status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetCapabilitiesAvailable failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::SubscribeCapabilitiesAvailableChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -856,9 +949,11 @@ void CoreSDKTest::SubscribeCapabilitiesAvailableChanged()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Capabilities AvailableNotification is success" << endl;
     } else {
-        cout << "Subscribe Capabilities AvailableNotification status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeCapabilitiesAvailableChanged failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::UnsubscribeCapabilitiesAvailableChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -866,15 +961,18 @@ void CoreSDKTest::UnsubscribeCapabilitiesAvailableChanged()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Capabilities AvailableNotification is success" << endl;
     } else {
-        cout << "Unsubscribe Capabilities AvailableNotification status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeCapabilitiesAvailableChanged failed. " + errorMessage);
     }
 }
-void CoreSDKTest::OnAvailableNotification::onAvailable( const Firebolt::Capabilities::CapabilityInfo& info)
+
+void CoreSDKTest::OnAvailableNotification::onAvailable(const Firebolt::Capabilities::CapabilityInfo& info)
 {
     cout << "OnAvailableNotification is invoked " << endl;
     cout << "capabilityInfo: " << endl;
     PrintCapabilityInfo(info);
 }
+
 void CoreSDKTest::GetCapabilitiesGranted()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -884,9 +982,11 @@ void CoreSDKTest::GetCapabilitiesGranted()
     if (error == Firebolt::Error::None) {
         cout << "Capabilities Granted = " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Capabilities Granted status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetCapabilitiesGranted failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetCapabilitiesPermitted()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -898,9 +998,11 @@ void CoreSDKTest::GetCapabilitiesPermitted()
     if (error == Firebolt::Error::None) {
         cout << "Capabilities Permitted = " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Capabilities Permitted status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetCapabilitiesPermitted failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetCapabilitiesSupported()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -909,9 +1011,11 @@ void CoreSDKTest::GetCapabilitiesSupported()
     if (error == Firebolt::Error::None) {
         cout << "Capabilities Supported = " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Capabilities Supported status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetCapabilitiesSupported failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetCapabilitiesInfo()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -921,10 +1025,11 @@ void CoreSDKTest::GetCapabilitiesInfo()
         cout << "Capabilities Info : " << endl;
         for (auto element : info) {
             PrintCapabilityInfo(element);
-	    cout << endl;
+            cout << endl;
         }
     } else {
-        cout << "Capabilities Info status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetCapabilitiesInfo failed. " + errorMessage);
     }
 }
 
@@ -937,9 +1042,11 @@ void CoreSDKTest::MetricsStartContent()
     if (error == Firebolt::Error::None) {
         cout << "Metrics Start Content = " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Metrics Start Content status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("MetricsStartContent failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::MetricsStopContent()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -949,7 +1056,8 @@ void CoreSDKTest::MetricsStopContent()
     if (error == Firebolt::Error::None) {
         cout << "Metrics Stop Content = " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Metrics Stop Content status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("MetricsStopContent failed. " + errorMessage);
     }
 }
 
@@ -962,9 +1070,11 @@ void CoreSDKTest::GetSecondScreenDevice()
     if (error == Firebolt::Error::None) {
         cout << "Get SecondScreen Device : " << deviceId.c_str() << endl;
     } else {
-        cout << "Get SecondScreen Device status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetSecondScreenDevice failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetSecondScreenProtocols()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -975,9 +1085,11 @@ void CoreSDKTest::GetSecondScreenProtocols()
             cout << element.first << " : " << (element.second ? "true" : "false") << endl;
         }
     } else {
-        cout << "Get SecondScreen Protocols status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetSecondScreenProtocols failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::GetSecondScreenFriendlyName()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -986,13 +1098,16 @@ void CoreSDKTest::GetSecondScreenFriendlyName()
     if (error == Firebolt::Error::None) {
         cout << "Get SecondScreen FriendlyName : " << friendlyName.c_str() << endl;
     } else {
-        cout << "Get SecondScreen FriendlyName status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetSecondScreenFriendlyName failed. " + errorMessage);
     }
 }
-void CoreSDKTest::OnFriendlyNameChangedNotification::onFriendlyNameChanged( const std::string& friendlyName)
+
+void CoreSDKTest::OnFriendlyNameChangedNotification::onFriendlyNameChanged(const std::string& friendlyName)
 {
     cout << "OnFriendlyNameChangedNotification friendlyName : " << friendlyName.c_str() << endl;
 }
+
 void CoreSDKTest::SubscribeSecondScreenFriendlyNameChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1000,9 +1115,11 @@ void CoreSDKTest::SubscribeSecondScreenFriendlyNameChanged()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe SecondScreen FriendlyNameChangedNotification is success" << endl;
     } else {
-        cout << "Subscribe SecondScreen FriendlyNameChangedNotification status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeSecondScreenFriendlyNameChanged failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::UnsubscribeSecondScreenFriendlyNameChanged()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1010,13 +1127,15 @@ void CoreSDKTest::UnsubscribeSecondScreenFriendlyNameChanged()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe SecondScreen FriendlyNameChangedNotification is success" << endl;
     } else {
-        cout << "Unsubscribe SecondScreen FriendlyNameChangedNotification status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeSecondScreenFriendlyNameChanged failed. " + errorMessage);
     }
 }
 
 EnumMap<Firebolt::SecondScreen::SecondScreenEventType> secondScreenEventTypeMap = {
     { Firebolt::SecondScreen::SecondScreenEventType::DIAL, "dial" }
 };
+
 void CoreSDKTest::ParametersInitialization()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1037,17 +1156,18 @@ void CoreSDKTest::ParametersInitialization()
         if (appInitialization.secondScreen.has_value()) {
             if (appInitialization.secondScreen.value().launchRequest.has_value()) {
                 Firebolt::SecondScreen::SecondScreenEvent event = appInitialization.secondScreen.value().launchRequest.value();
-                cout <<"\tsecondScreen:launchRequest:type : " << ConvertFromEnum<Firebolt::SecondScreen::SecondScreenEventType>(secondScreenEventTypeMap, event.type) << endl;
+                cout << "\tsecondScreen:launchRequest:type : " << ConvertFromEnum<Firebolt::SecondScreen::SecondScreenEventType>(secondScreenEventTypeMap, event.type) << endl;
                 if (event.version.has_value()) {
-                    cout <<"\tsecondScreen:launchRequest:version : " << event.version.value().c_str() << endl;
+                    cout << "\tsecondScreen:launchRequest:version : " << event.version.value().c_str() << endl;
                 }
                 if (event.data.has_value()) {
-                    cout <<"\tsecondScreen:launchRequest:data : " << event.data.value().c_str() << endl;
+                    cout << "\tsecondScreen:launchRequest:data : " << event.data.value().c_str() << endl;
                 }
             }
         }
     } else {
-        cout << "Parameters Initialization status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("ParametersInitialization failed. " + errorMessage);
     }
 }
 
@@ -1064,9 +1184,11 @@ void CoreSDKTest::DiscoverySignIn()
     if (error == Firebolt::Error::None) {
         cout << "Discovery SignIn is " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Discovery SignIn status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("DiscoverySignIn failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::DiscoverySignOut()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1074,7 +1196,8 @@ void CoreSDKTest::DiscoverySignOut()
     if (error == Firebolt::Error::None) {
         cout << "Discovery SignOut is " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Discovery SignOut status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("DiscoverySignOut failed. " + errorMessage);
     }
 }
 
@@ -1082,7 +1205,7 @@ void CoreSDKTest::DiscoveryContentAccess()
 {
     Firebolt::Error error = Firebolt::Error::None;
     Firebolt::Discovery::ContentAccessIdentifiers contentAccessIdentifiers;
-    contentAccessIdentifiers.availabilities =  std::make_optional<std::vector<Firebolt::Discovery::Availability>>();
+    contentAccessIdentifiers.availabilities = std::make_optional<std::vector<Firebolt::Discovery::Availability>>();
     Firebolt::Discovery::Availability availability;
     availability.type = Firebolt::Discovery::AvailabilityType::CHANNEL_LINEUP;
     availability.id = "partner.com/availability/123";
@@ -1100,9 +1223,11 @@ void CoreSDKTest::DiscoveryContentAccess()
     if (error == Firebolt::Error::None) {
         cout << "Discovery ContentAccess is success" << endl;
     } else {
-        cout << "Discovery ContentAccess status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("DiscoveryContentAccess failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::DiscoveryClearContentAccess()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1110,9 +1235,11 @@ void CoreSDKTest::DiscoveryClearContentAccess()
     if (error == Firebolt::Error::None) {
         cout << "Discovery ClearContentAccess is success" << endl;
     } else {
-        cout << "Discovery ClearContentAccess status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("DiscoveryClearContentAccess failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::DiscoveryEntitlements()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1126,9 +1253,11 @@ void CoreSDKTest::DiscoveryEntitlements()
     if (error == Firebolt::Error::None) {
         cout << "Discovery Entitlements is " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Discovery Entitlements status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("DiscoveryEntitlements failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::DiscoveryWatchNext()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1143,9 +1272,11 @@ void CoreSDKTest::DiscoveryWatchNext()
     if (error == Firebolt::Error::None) {
         cout << "Discovery Watched Next is " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Discovery Watched Next status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("DiscoveryWatchNext failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::DiscoveryPolicy()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1156,9 +1287,11 @@ void CoreSDKTest::DiscoveryPolicy()
         cout << "\tshareWatchHistory: " << policy.shareWatchHistory << endl;
         cout << "\trememberWatchedPrograms: " << policy.rememberWatchedPrograms << endl;
     } else {
-        cout << "Discovery Policy status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("DiscoveryPolicy failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::DiscoveryEntityInfo()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1235,9 +1368,11 @@ void CoreSDKTest::DiscoveryEntityInfo()
     if (error == Firebolt::Error::None) {
         cout << "Discovery EntityInfo is " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Discovery EntityInfo status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("DiscoveryEntityInfo failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::DiscoveryPurchasedContent()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1291,9 +1426,11 @@ void CoreSDKTest::DiscoveryPurchasedContent()
     if (error == Firebolt::Error::None) {
         cout << "Discovery PurchasedContent is " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Discovery PurchasedContent status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("DiscoveryPurchasedContent failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::DiscoveryLaunch()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1317,11 +1454,12 @@ void CoreSDKTest::DiscoveryLaunch()
         if (error == Firebolt::Error::None) {
             cout << "Discovery Launch TuneIntent is " << (status ? "true" : "false") << endl;
         } else {
-            cout << "Discovery Launch TuneIntent status = " << static_cast<int>(error) << endl;
+            std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+            throw std::runtime_error("DiscoveryLaunch failed. " + errorMessage);
         }
     }
 
-    { 
+    {
         std::optional<Firebolt::Intents::EntityIntent> intent = std::make_optional<Firebolt::Intents::EntityIntent>();
         intent.value().action = "entity";
         intent.value().context.source = "voice";
@@ -1332,7 +1470,8 @@ void CoreSDKTest::DiscoveryLaunch()
         if (error == Firebolt::Error::None) {
             cout << "Discovery Launch EntityIntent is " << (status ? "true" : "false") << endl;
         } else {
-            cout << "Discovery Launch EntityIntent status = " << static_cast<int>(error) << endl;
+            std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+            throw std::runtime_error("DiscoveryLaunch failed. " + errorMessage);
         }
     }
 
@@ -1345,7 +1484,8 @@ void CoreSDKTest::DiscoveryLaunch()
         if (error == Firebolt::Error::None) {
             cout << "Discovery Launch HomeIntent is " << (status ? "true" : "false") << endl;
         } else {
-            cout << "Discovery Launch HomeIntent status = " << static_cast<int>(error) << endl;
+            std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+            throw std::runtime_error("DiscoveryLaunch failed. " + errorMessage);
         }
     }
     cin.putback('\n');
@@ -1363,9 +1503,11 @@ void CoreSDKTest::DiscoveryWatched()
     if (error == Firebolt::Error::None) {
         cout << "Discovery Watched is " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Discovery Watched status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("DiscoveryWatched failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::DiscoveryWatchedReduced()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1381,10 +1523,12 @@ void CoreSDKTest::DiscoveryWatchedReduced()
     if (error == Firebolt::Error::None) {
         cout << "Discovery Watched Reduced is " << (status ? "true" : "false") << endl;
     } else {
-        cout << "Discovery Watched Reduced status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("DiscoveryWatchedReduced failed. " + errorMessage);
     }
 }
 #endif
+
 void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchNotification()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1392,7 +1536,8 @@ void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchNotification()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Discovery OnNavigateToLaunch HomeIntent is success" << endl;
     } else {
-        cout << "Subscribe Discovery OnNavigateToLaunch HomeIntent status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeDiscoveryOnNavigateToLaunchNotification failed. " + errorMessage);
     }
 
     error = Firebolt::Error::None;
@@ -1400,7 +1545,8 @@ void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchNotification()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Discovery OnNavigateToLaunch EntityIntent is success" << endl;
     } else {
-        cout << "Subscribe Discovery OnNavigateToLaunch EntityIntent status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeDiscoveryOnNavigateToLaunchNotification failed. " + errorMessage);
     }
 
     error = Firebolt::Error::None;
@@ -1408,9 +1554,11 @@ void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchNotification()
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Discovery OnNavigateToLaunch TuneIntent is success" << endl;
     } else {
-        cout << "Subscribe Discovery OnNavigateToLaunch TuneIntent status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeDiscoveryOnNavigateToLaunchNotification failed. " + errorMessage);
     }
 }
+
 void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchNotification()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1418,7 +1566,8 @@ void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchNotification()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Discovery OnNavigateToLaunch HomeIntent is success" << endl;
     } else {
-        cout << "Unsubscribe Discovery OnNavigateToLaunch HomeIntent status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeDiscoveryOnNavigateToLaunchNotification failed. " + errorMessage);
     }
 
     error = Firebolt::Error::None;
@@ -1426,7 +1575,8 @@ void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchNotification()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Discovery OnNavigateToLaunch EntityIntent is success" << endl;
     } else {
-        cout << "Unsubscribe Discovery OnNavigateToLaunch EntityIntent status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeDiscoveryOnNavigateToLaunchNotification failed. " + errorMessage);
     }
 
     error = Firebolt::Error::None;
@@ -1434,18 +1584,22 @@ void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchNotification()
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Discovery OnNavigateToLaunch TuneIntent is success" << endl;
     } else {
-        cout << "Unsubscribe Discovery OnNavigateToLaunch TuneIntent status = " << static_cast<int>(error) << endl;
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeDiscoveryOnNavigateToLaunchNotification failed. " + errorMessage);
     }
 }
-void CoreSDKTest::OnNavigateToHomeIntentNotification::onNavigateTo( const Firebolt::Intents::HomeIntent& intent)
+
+void CoreSDKTest::OnNavigateToHomeIntentNotification::onNavigateTo(const Firebolt::Intents::HomeIntent& intent)
 {
     cout << "onNavigateTo for action : " << intent.action << endl;
 }
-void CoreSDKTest::OnNavigateToEntityIntentNotification::onNavigateTo( const Firebolt::Intents::EntityIntent& intent)
+
+void CoreSDKTest::OnNavigateToEntityIntentNotification::onNavigateTo(const Firebolt::Intents::EntityIntent& intent)
 {
     cout << "onNavigateTo for action : " << intent.action << endl;
 }
-void CoreSDKTest::OnNavigateToTuneIntentNotification::onNavigateTo( const Firebolt::Intents::TuneIntent& intent)
+
+void CoreSDKTest::OnNavigateToTuneIntentNotification::onNavigateTo(const Firebolt::Intents::TuneIntent& intent)
 {
     cout << "onNavigateTo for action : " << intent.action << endl;
 }

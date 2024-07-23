@@ -1,3 +1,5 @@
+# 1.2.0 (https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-14)
+
 # [1.1.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0...v1.1.0) (2024-02-09)
 
 ### Bug Fixes
