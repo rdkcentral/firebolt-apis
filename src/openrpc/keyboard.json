@@ -11,6 +11,7 @@
       "tags": [
         {
           "name": "capabilities",
+          "x-provided-by": "Keyboard.onRequestEmail",
           "x-uses": [
             "xrn:firebolt:capability:input:keyboard"
           ]
@@ -84,6 +85,7 @@
       "tags": [
         {
           "name": "capabilities",
+          "x-provided-by": "Keyboard.onRequestPassword",
           "x-uses": [
             "xrn:firebolt:capability:input:keyboard"
           ]
@@ -128,6 +130,7 @@
       "tags": [
         {
           "name": "capabilities",
+          "x-provided-by": "Keyboard.onRequestStandard",
           "x-uses": [
             "xrn:firebolt:capability:input:keyboard"
           ]
@@ -175,11 +178,9 @@
         {
           "name": "event",
           "x-response": {
-            "$ref": "#/components/schemas/KeyboardResult",
+            "type": "string",
             "examples": [
-              {
-                "text": "username"
-              }
+              "username"
             ]
           }
         },
@@ -220,11 +221,9 @@
         {
           "name": "event",
           "x-response": {
-            "$ref": "#/components/schemas/KeyboardResult",
+            "type": "string",
             "examples": [
-              {
-                "text": "password"
-              }
+                "password"
             ]
           }
         },
@@ -265,11 +264,9 @@
         {
           "name": "event",
           "x-response": {
-            "$ref": "#/components/schemas/KeyboardResult",
+            "type": "string",
             "examples": [
-              {
-                "text": "email@address.com"
-              }
+                "email@address.com"
             ]
           }
         },
@@ -357,23 +354,6 @@
           "parameters": {
             "description": "The request to start a keyboard session",
             "$ref": "#/components/schemas/KeyboardParameters"
-          }
-        }
-      },
-      "KeyboardResult": {
-        "title": "KeyboardResult",
-        "type": "object",
-        "required": [
-          "text"
-        ],
-        "properties": {
-          "text": {
-            "type": "string",
-            "description": "The text the user entered into the keyboard"
-          },
-          "canceled": {
-            "type": "boolean",
-            "description": "Whether the user canceled entering text before they were finished typing on the keyboard"
           }
         }
       }
