@@ -644,7 +644,6 @@ EnumMap<Firebolt::Lifecycle::LifecycleEventSource> lifecycleEventSourceMap = {
 
 void CoreSDKTest::LifecycleReady()
 {
-   cout << "Inside Ready Lifecycle" << endl;
    Firebolt::Error error = Firebolt::Error::None;
    Firebolt::IFireboltAccessor::Instance().LifecycleInterface().ready(&error);
     if (error == Firebolt::Error::None) {
