@@ -18,6 +18,8 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    container:
+      image: kevinshahfws/node-c:2.0
     steps:
       #  Checkout/install project
       - name: Checkout
@@ -64,13 +66,19 @@ jobs:
           echo "NPM_DIST_TAG=test" >> $GITHUB_ENV
           echo "DOCS_TAG=pr-$(node ./src/js/version.mjs branch-to-prerelease ${{ github.head_ref }})" >> $GITHUB_ENV
           echo "FEATURE_BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
-
+      - name: Set file permissions
+        run: |
+          chmod -R 755 ./
+          chown -R $(id -u):$(id -g) ./
       # Perform real (When not a PR) or dry-run (When PR) semantic-release
       - name: Release mono-artifact to GitHub
         if: (github.ref_name != 'main' && github.event_name != 'pull_request') || github.event_name == 'workflow_dispatch'
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
-        run: npx semantic-release
+          DEBUG: semantic-release:*
+        run: |
+          git config --global --add safe.directory /__w/firebolt-apis/firebolt-apis
+          npx semantic-release
       - name: Dry-run mono-artifact
         if: (github.ref_name == 'main' && github.event_name != 'workflow_dispatch') || github.event_name == 'pull_request'
         env:
@@ -89,9 +97,40 @@ jobs:
         uses: andstor/file-existence-action@v2
         with:
           files: './src/sdks/core/dist/lib/firebolt.mjs'
+      - name: Get version from package.json
+        run: |
+          RELEASE_VERSION=$(node -p "require('./package.json').version")
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+          echo "build_cpp_source=true" >> $GITHUB_ENV
+      - name: Set cpp build source Condition
+        if: steps.check_build.outputs.files_exists == 'false' || (github.ref_name == 'main' && github.event_name != 'pull_request' && github.event_name != 'workflow_dispatch')
+        run: echo "build_cpp_source=false" >> $GITHUB_ENV
+      
       - name: Generate native sdk source
+        if: env.build_cpp_source == 'true'
         run: |
           .github/workflows/utils.sh generateSource
+      - name: Clone and Install Thunder
+        if: env.build_cpp_source == 'true'
+        id: install_thunder
+        run: |
+          .github/workflows/utils.sh cloneAndInstallThunder
+      - name: Build Core SDK CPP
+        if: env.build_cpp_source == 'true'
+        id: build_core_cpp
+        run: |
+          .github/workflows/utils.sh buildCoreCPPSDK $RELEASE_VERSION
+      # - name: Build Manage SDK CPP
+      #   if: env.build_cpp_source == 'true'
+      #   id: build_manage_cpp
+      #   run: |
+      #     .github/workflows/utils.sh buildManageCPPSDK $RELEASE_VERSION
+      # - name: Build Discovery SDK CPP
+      #   if: env.build_cpp_source == 'true'
+      #   id: build_discovery_cpp
+      #   run: |
+      #     .github/workflows/utils.sh buildDiscoveryCPPSDK $RELEASE_VERSION
+      
       - name: Release Firebolt SDKs to NPM
         if: steps.check_build.outputs.files_exists == 'true' && github.event_name != 'pull_request' && (github.ref_name != 'main' || github.event_name == 'workflow_dispatch')
         env:
