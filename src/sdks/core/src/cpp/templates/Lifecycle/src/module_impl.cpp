@@ -70,7 +70,7 @@ void ${info.Title}Impl::ready(Firebolt::Error *err) {
 
     JsonObject jsonParameters;
 
-    // Call Prioritize with  callback
+    // Call Prioritize to subscribe to corresponding event, add to internalMap, and prioritize its callback
     status = FireboltSDK::Event::Instance().Prioritize<JsonData_LifecycleEvent>("lifecycle.onForeground", jsonParameters, onReadyInnerCallback, (void*)nullptr, this);
     status = FireboltSDK::Event::Instance().Prioritize<JsonData_LifecycleEvent>("lifecycle.onBackground", jsonParameters, onReadyInnerCallback, (void*)nullptr, this);
     status = FireboltSDK::Event::Instance().Prioritize<JsonData_LifecycleEvent>("lifecycle.onInactive", jsonParameters, onReadyInnerCallback, (void*)nullptr, this);
