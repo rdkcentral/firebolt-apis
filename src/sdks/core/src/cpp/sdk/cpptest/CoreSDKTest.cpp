@@ -234,6 +234,18 @@ void CoreSDKTest::GetDeviceName()
     }
 }
 
+void CoreSDKTest::GetDeviceVersion()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    const std::string version = Firebolt::IFireboltAccessor::Instance().DeviceInterface().version(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Get Device Version = " << version.c_str() << endl;
+    } else {
+        cout << "Get Device Version status = " << static_cast<int>(error) << endl;
+    }
+}
+
 void CoreSDKTest::OnDeviceNameChangedNotification::onDeviceNameChanged(const std::string& name)
 {
     cout << "Name changed, new name --> " << name << endl;

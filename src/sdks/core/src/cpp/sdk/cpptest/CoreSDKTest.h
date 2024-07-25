@@ -92,6 +92,7 @@ public:
     static void GetAccountUid();
 
     static void GetDeviceName();
+    static void GetDeviceVersion();
     static void SubscribeDeviceNameChanged();
     static void UnsubscribeDeviceNameChanged();
     static void GetDeviceModel();
