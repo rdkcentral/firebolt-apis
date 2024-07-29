@@ -132,6 +132,9 @@ public:
     static void GetProfileFlags();
 
     static void LifecycleClose();
+    static void LifecycleFinished();
+    static void LifecycleReady();
+    static void LifecycleState();
     static void SubscribeLifecycleBackgroundNotification();
     static void UnsubscribeLifecycleBackgroundNotification();
     static void SubscribeLifecycleForegroundNotification();
