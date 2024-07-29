@@ -181,6 +181,7 @@ public:
     static void SubscribeDiscoveryOnNavigateToLaunchNotification();
     static void UnsubscribeDiscoveryOnNavigateToLaunchNotification();
     static void DiscoveryWatchNext();
+    static void DiscoveryUserInterest();
 
     static void ParametersInitialization();
 
