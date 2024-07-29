@@ -155,6 +155,9 @@ public:
 
     static void MetricsStartContent();
     static void MetricsStopContent();
+    static void MetricsReady();
+    static void MetricsSignIn();
+    static void MetricsSignOut();
 
     static void GetSecondScreenDevice();
     static void GetSecondScreenProtocols();
@@ -203,4 +206,3 @@ private:
     static KeyboardPasswordAsyncResponse _keyboardPasswordAsyncResponse;
     static KeyboardStandardAsyncResponse _keyboardStandardAsyncResponse;
 };
-
