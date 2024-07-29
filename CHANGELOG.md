@@ -1,3 +1,10 @@
+## [1.2.1-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.2...v1.2.1-next.3) (2024-07-29)
+
+
+### Bug Fixes
+
+* Added Lifecycle template in cpp ([#292](https://github.com/rdkcentral/firebolt-apis/issues/292)) ([046adc1](https://github.com/rdkcentral/firebolt-apis/commit/046adc18ca7f2d35d02b9ce597be6f330c3b1972))
+
 ## [1.2.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.1...v1.2.1-next.2) (2024-07-01)
 
 
