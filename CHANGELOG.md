@@ -1,3 +1,10 @@
+## [1.2.1-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.3...v1.2.1-next.4) (2024-07-29)
+
+
+### Bug Fixes
+
+* Added Static Metrics template in CPP ([#293](https://github.com/rdkcentral/firebolt-apis/issues/293)) ([a1f75cb](https://github.com/rdkcentral/firebolt-apis/commit/a1f75cb22577c3eded0968ca51ca656336a88506))
+
 ## [1.2.1-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.2...v1.2.1-next.3) (2024-07-29)
 
 
