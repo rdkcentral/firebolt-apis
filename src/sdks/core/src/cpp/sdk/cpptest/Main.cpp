@@ -90,6 +90,9 @@ void RunAllTests() {
 
         // Lifecycle methods
         // runTest(CoreSDKTest::LifecycleClose, "LifecycleClose");
+        runTest(CoreSDKTest::LifecycleReady, "LifecycleReady");
+        runTest(CoreSDKTest::LifecycleFinished, "LifecycleFinished");
+        runTest(CoreSDKTest::LifecycleState, "LifecycleState");
         runTest(CoreSDKTest::SubscribeLifecycleBackgroundNotification, "SubscribeLifecycleBackgroundNotification");
         runTest(CoreSDKTest::UnsubscribeLifecycleBackgroundNotification, "UnsubscribeLifecycleBackgroundNotification");
         runTest(CoreSDKTest::SubscribeLifecycleForegroundNotification, "SubscribeLifecycleForegroundNotification");
