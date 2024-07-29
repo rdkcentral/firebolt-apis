@@ -1,3 +1,10 @@
+# [1.3.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.4...v1.3.0-next.1) (2024-07-29)
+
+
+### Features
+
+* CPP App-Passthrough Logic ([#286](https://github.com/rdkcentral/firebolt-apis/issues/286)) ([4eb84ee](https://github.com/rdkcentral/firebolt-apis/commit/4eb84ee08c463915e3b13afec6603541ea0b1ae4))
+
 ## [1.2.1-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.3...v1.2.1-next.4) (2024-07-29)
 
 
