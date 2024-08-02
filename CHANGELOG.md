@@ -1,3 +1,10 @@
+# [1.3.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0-next.1...v1.3.0-next.2) (2024-08-02)
+
+
+### Features
+
+* Add Metrics.appInfo API ([#294](https://github.com/rdkcentral/firebolt-apis/issues/294)) ([47264b5](https://github.com/rdkcentral/firebolt-apis/commit/47264b5c5c71fd117a52ca50f2e57315932905ad))
+
 # [1.3.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.4...v1.3.0-next.1) (2024-07-29)
 
 
