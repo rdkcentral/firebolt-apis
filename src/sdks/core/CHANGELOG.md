@@ -1,9 +1,22 @@
+# 1.2.0 (https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-14)
+
+### Bug Fixes
+
+* Add PlaylistEntity to EntityIntent (9769d6d (https://github.com/rdkcentral/firebolt-apis/commit/9769d6d7d43f1d61dfcda16ba4806175c5cf7658))
+* Remove x-alternatives that don't exist (#278 (https://github.com/rdkcentral/firebolt-apis/issues/278)) (e38ad5a (https://github.com/rdkcentral/firebolt-apis/commit/e38ad5a508fccb5c724cf0f03cbd67ad4a28378c))
+* Removed sdk as required field from Device.version (#231 (https://github.com/rdkcentral/firebolt-apis/issues/231)) (ef3de3e (https://github.com/rdkcentral/firebolt-apis/commit/ef3de3e68619c6f666dd1d751b0acc25f6438122))
+
+### Features
+
+* [Command and Control Intents](https://github.com/rdkcentral/firebolt-apis/blob/main/requirements/specifications/intents/command-and-control.md) (#251 (https://github.com/rdkcentral/firebolt-apis/issues/251)) (c8f8dae (https://github.com/rdkcentral/firebolt-apis/commit/c8f8dae5a9a0f14a3815c04df5a55763823d4898))
+* [User Interest](https://github.com/rdkcentral/firebolt-apis/blob/main/requirements/specifications/discovery/user-interest.md) (#170 (https://github.com/rdkcentral/firebolt-apis/issues/170)) (48a1094 (https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+
 # [1.1.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0...v1.1.0) (2024-02-09)
 
 ### Bug Fixes
 
-    * Add Music to Playable entities (#225 (https://github.com/rdkcentral/firebolt-apis/issues/225)) (22c9b71 (https://github.com/rdkcentral/firebolt-apis/commit/22c9b71d3c0ee98d32585d1b365afabf8e64d6ed))
-    * Modified account:uid to SHOULD (#224 (https://github.com/rdkcentral/firebolt-apis/issues/224)) (70c8b24 (https://github.com/rdkcentral/firebolt-apis/commit/70c8b24decfcbff2c32fb1b0d21290afc00a8432))
+* Add Music to Playable entities (#225 (https://github.com/rdkcentral/firebolt-apis/issues/225)) (22c9b71 (https://github.com/rdkcentral/firebolt-apis/commit/22c9b71d3c0ee98d32585d1b365afabf8e64d6ed))
+* Modified account:uid to SHOULD (#224 (https://github.com/rdkcentral/firebolt-apis/issues/224)) (70c8b24 (https://github.com/rdkcentral/firebolt-apis/commit/70c8b24decfcbff2c32fb1b0d21290afc00a8432))
 
 # [1.0.0](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.1...v1.0.0) (2023-11-03)
 
@@ -11,12 +24,12 @@ Upgraded to 1.0 at part of RDK6 release. This API is still compatibile with 0.x 
 
 ### Bug Fixes
 
-    * Updated Discovery.launch example with xrn:firebolt: application-type (#187 (https://github.com/rdkcentral/firebolt-apis/issues/187)) (4dbbab3 (https://github.com/rdkcentral/firebolt-apis/commit/4dbbab3d9fa68c0e5185ca72fd0170bae8a30139))
+* Updated Discovery.launch example with xrn:firebolt: application-type (#187 (https://github.com/rdkcentral/firebolt-apis/issues/187)) (4dbbab3 (https://github.com/rdkcentral/firebolt-apis/commit/4dbbab3d9fa68c0e5185ca72fd0170bae8a30139))
 
 ### Features
   
-    * Added scope parameter for advertisingId (#188 (https://github.com/rdkcentral/firebolt-apis/issues/188))
-    * Play Intent (#151 (https://github.com/rdkcentral/firebolt-apis/issues/151)) (d1ddf3f (https://github.com/rdkcentral/firebolt-apis/commit/d1ddf3fb3b1f758315686ad2f6dc57c2b270f33a))
+* Added scope parameter for advertisingId (#188 (https://github.com/rdkcentral/firebolt-apis/issues/188))
+* Play Intent (#151 (https://github.com/rdkcentral/firebolt-apis/issues/151)) (d1ddf3f (https://github.com/rdkcentral/firebolt-apis/commit/d1ddf3fb3b1f758315686ad2f6dc57c2b270f33a))
 
 # [0.17.1](https://github.com/rdkcentral/firebolt-apis/compare/v0.17.0...v0.17.1) (2023-09-15)
 
