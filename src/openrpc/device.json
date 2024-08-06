@@ -414,7 +414,7 @@
         "name": "supportedHdrProfiles",
         "summary": "the supported HDR profiles",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          "$ref": "#/components/schemas/HDRType"
         }
       },
       "examples": [
@@ -804,6 +804,38 @@
             }
           }
         ]
+      },
+      "HDRType": {
+        "title": "HDRType",
+        "type": "object",
+        "properties": {
+          "hdr10": {
+            "type": "boolean"
+          },
+          "hdr10plus": {
+            "type": "boolean"
+          },
+          "dolbyVision": {
+            "type": "boolean"
+          },
+          "hlg": {
+            "type": "boolean"
+          }
+        },
+        "description": "The type of HDR that is supported"
+      },
+      "HDCPType": {
+        "title": "HDCPType",
+        "type": "object",
+        "properties": {
+          "hdcp1.4": {
+            "type": "boolean"
+          },
+          "hdcp2.2": {
+            "type": "boolean"
+          }
+        },
+        "description": "The type of HDCP that is supported"
       }
     }
   }

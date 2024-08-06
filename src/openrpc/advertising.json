@@ -303,7 +303,7 @@
           "params": [],
           "result": {
             "name": "Default Result",
-            "value": "operator.app"
+            "value": "app.operator"
           }
         }
       ]
