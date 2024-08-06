@@ -378,7 +378,7 @@
         "name": "supportedHdcpProfiles",
         "summary": "the supported HDCP profiles",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          "$ref": "#/components/schemas/HDCPType"
         }
       },
       "examples": [
