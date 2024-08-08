@@ -617,9 +617,7 @@ void ManageSDKTest::KeyboardProvider::SendMessage(bool response)
         cout << _parameters.message << " : ";
         getline(cin, key);
         if (response) {
-            Firebolt::Keyboard::KeyboardResult keyboardResult;
-            keyboardResult.text = key;
-            keyboardResult.canceled = false;
+            std::string keyboardResult = key;
             cout << " Invoking _session->result " << endl;
             _session->result(keyboardResult);
         } else {
