@@ -1,3 +1,10 @@
+# [1.3.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0-next.2...v1.3.0-next.3) (2024-08-08)
+
+
+### Bug Fixes
+
+* Small update to Manage SDK test ([#297](https://github.com/rdkcentral/firebolt-apis/issues/297)) ([95e3b0f](https://github.com/rdkcentral/firebolt-apis/commit/95e3b0f211f4a80d4573adc9c1b35d2e74a78777))
+
 # [1.3.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0-next.1...v1.3.0-next.2) (2024-08-02)
 
 
