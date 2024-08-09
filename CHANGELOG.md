@@ -1,3 +1,10 @@
+# [1.3.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0-next.3...v1.3.0-next.4) (2024-08-09)
+
+
+### Bug Fixes
+
+* Pointed to latest OpenRPC release ([#298](https://github.com/rdkcentral/firebolt-apis/issues/298)) ([16b3305](https://github.com/rdkcentral/firebolt-apis/commit/16b3305201624acf904c98d8c414b9756d42aaa7))
+
 # [1.3.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0-next.2...v1.3.0-next.3) (2024-08-08)
 
 
