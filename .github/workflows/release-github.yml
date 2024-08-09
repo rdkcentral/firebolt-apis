@@ -19,7 +19,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     container:
-      image: kevinshahfws/node-c:2.0
+      image: kevinshahfws/node-c:3.0
     steps:
       #  Checkout/install project
       - name: Checkout
