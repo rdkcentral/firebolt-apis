@@ -642,7 +642,7 @@
           "name": "identifiers",
           "summary": "A set of content identifiers for this call to action",
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
+            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ContentIdentifiers"
           },
           "required": true
         },

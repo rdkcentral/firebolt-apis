@@ -20,6 +20,8 @@
 
 #include "FireboltSDK.h"
 #include "IModule.h"
+#include <string>
+
 
 /* ${IMPORTS} */
 #include "${info.title.lowercase}.h"
@@ -42,12 +44,7 @@ ${if.types}
 
         ~${info.Title}Impl() override = default;
 
-   
-         bool ready( Firebolt::Error *err = nullptr )   ;
-         bool signIn( Firebolt::Error *err = nullptr )  ;
-         bool signOut( Firebolt::Error *err = nullptr ) ;
-    
-
+        std::string version(Firebolt::Error *err = nullptr) const override;
 
         // Methods & Events
         /* ${METHODS:declarations-override} */

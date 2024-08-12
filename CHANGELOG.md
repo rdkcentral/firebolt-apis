@@ -1,3 +1,59 @@
+# [1.3.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0-next.3...v1.3.0-next.4) (2024-08-09)
+
+
+### Bug Fixes
+
+* Pointed to latest OpenRPC release ([#298](https://github.com/rdkcentral/firebolt-apis/issues/298)) ([16b3305](https://github.com/rdkcentral/firebolt-apis/commit/16b3305201624acf904c98d8c414b9756d42aaa7))
+
+# [1.3.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0-next.2...v1.3.0-next.3) (2024-08-08)
+
+
+### Bug Fixes
+
+* Small update to Manage SDK test ([#297](https://github.com/rdkcentral/firebolt-apis/issues/297)) ([95e3b0f](https://github.com/rdkcentral/firebolt-apis/commit/95e3b0f211f4a80d4573adc9c1b35d2e74a78777))
+
+# [1.3.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0-next.1...v1.3.0-next.2) (2024-08-02)
+
+
+### Features
+
+* Add Metrics.appInfo API ([#294](https://github.com/rdkcentral/firebolt-apis/issues/294)) ([47264b5](https://github.com/rdkcentral/firebolt-apis/commit/47264b5c5c71fd117a52ca50f2e57315932905ad))
+
+# [1.3.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.4...v1.3.0-next.1) (2024-07-29)
+
+
+### Features
+
+* CPP App-Passthrough Logic ([#286](https://github.com/rdkcentral/firebolt-apis/issues/286)) ([4eb84ee](https://github.com/rdkcentral/firebolt-apis/commit/4eb84ee08c463915e3b13afec6603541ea0b1ae4))
+
+## [1.2.1-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.3...v1.2.1-next.4) (2024-07-29)
+
+
+### Bug Fixes
+
+* Added Static Metrics template in CPP ([#293](https://github.com/rdkcentral/firebolt-apis/issues/293)) ([a1f75cb](https://github.com/rdkcentral/firebolt-apis/commit/a1f75cb22577c3eded0968ca51ca656336a88506))
+
+## [1.2.1-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.2...v1.2.1-next.3) (2024-07-29)
+
+
+### Bug Fixes
+
+* Added Lifecycle template in cpp ([#292](https://github.com/rdkcentral/firebolt-apis/issues/292)) ([046adc1](https://github.com/rdkcentral/firebolt-apis/commit/046adc18ca7f2d35d02b9ce597be6f330c3b1972))
+
+## [1.2.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.1-next.1...v1.2.1-next.2) (2024-07-01)
+
+
+### Bug Fixes
+
+* **core, manage:** update C++ tests to run simultaneously for core and manage SDKs ([ef7bc4c](https://github.com/rdkcentral/firebolt-apis/commit/ef7bc4ce117cbce799ddab8c9b44522730374514))
+
+## [1.2.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0...v1.2.1-next.1) (2024-06-26)
+
+
+### Bug Fixes
+
+* Sort capabilities in Firebolt Specification JSON ([46dd188](https://github.com/rdkcentral/firebolt-apis/commit/46dd1887e09cc3c75ebb7b41028b10b3a8d3596e))
+
 # [1.2.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-17)
 
 
