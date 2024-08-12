@@ -1,3 +1,11 @@
+# 1.3.0 (https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0...v1.3.0) (2024-08-12)
+
+### Features
+
+* Add Metrics.appInfo API ([#294](https://github.com/rdkcentral/firebolt-apis/issues/294)) ([47264b5](https://github.com/rdkcentral/firebolt-apis/commit/47264b5c5c71fd117a52ca50f2e57315932905ad))
+* CPP App-Passthrough Logic ([#286](https://github.com/rdkcentral/firebolt-apis/issues/286)) ([4eb84ee](https://github.com/rdkcentral/firebolt-apis/commit/4eb84ee08c463915e3b13afec6603541ea0b1ae4))
+* OpenRPC version upgraded to 3.1.0 ([#298](https://github.com/rdkcentral/firebolt-apis/issues/298)) ([16b3305](https://github.com/rdkcentral/firebolt-apis/commit/16b3305201624acf904c98d8c414b9756d42aaa7))
+
 # 1.2.0 (https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-14)
 
 ### Bug Fixes
