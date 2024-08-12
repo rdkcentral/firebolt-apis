@@ -108,7 +108,7 @@ The platform method result schema **MUST** either:
 > Match the `x-response` schema on the provider method so that the result can be passed through.
 >
 > or
-> 
+>
 > Have a property that matches the `x-response-name` string and `x-response` schema on the
 > provider method so that the result can be composed and passed through.
 
@@ -251,7 +251,7 @@ If the provider method is a "composite request" with `appId` `string` property a
 
 ### 7.2 Application Context Setting
 
-When a platform method is invoked, the gateway will find the provider using the `Provider Candidate` rules as described above. However, some Firebolt APIs allow selecting the provider that should be used. If a platform method request schema is a "composite request" with `appId` `string` property at the top level but the provider method request schema is not a composite request, then the given appId shall be used to select the provider. 
+When a platform method is invoked, the gateway will find the provider using the `Provider Candidate` rules as described above. However, some Firebolt APIs allow selecting the provider that should be used. If a platform method request schema is a "composite request" with `appId` `string` parameter but the provider method request schema is not a composite request, then the given appId shall be used to select the provider. 
 If "appId" is a required parameter in the platform method request schema, then it must be supplied. If it is not, then the request should fail with invalid parameters. If it is an optional parameter and it is not supplied, then the gateway should use rules in "Provider Candidate" section for selecting the candidate.
 
 ## 8. API Gateway
@@ -465,7 +465,7 @@ Platform Method:
                             "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
                         }
                     }
-                    
+
                 }
             }
         }
