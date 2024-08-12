@@ -42,14 +42,44 @@ find_package(${NAMESPACE}Core CONFIG REQUIRED)
 find_package(Firebolt CONFIG REQUIRED)
 find_package(${FIREBOLT_NAMESPACE}SDK CONFIG REQUIRED)
 
+message("Fetching googletest... ")
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest
+    GIT_TAG v1.15.2
+)
+FetchContent_GetProperties(googletest)
+if(NOT googletest_POPULATED)
+    FetchContent_Populate(googletest)
+    add_subdirectory(${googletest_SOURCE_DIR} ${google_BUILD_DIR})
+endif()
+
 set(TESTAPP TestFireboltCore)
 
 message("Setup ${TESTAPP}")
 
-add_executable(${TESTAPP} CoreSDKTest.cpp Main.cpp)
+if(UNIT_TEST STREQUAL "ON")
+    add_definitions(-DUNIT_TEST)
+
+    file(GLOB UNIT_TESTS "unit/*")
+
+    add_executable(${TESTAPP} 
+        CoreSDKTest.cpp 
+        Unit.cpp 
+        ${UNIT_TESTS}
+    )
+else()
+    add_executable(${TESTAPP} 
+    CoreSDKTest.cpp 
+    Main.cpp 
+    )
+endif()
 
 target_link_libraries(${TESTAPP}
     PRIVATE
+        gtest_main
+        gmock_main
         ${NAMESPACE}Core::${NAMESPACE}Core
         ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
 )
@@ -59,6 +89,7 @@ target_include_directories(${TESTAPP}
         $<BUILD_INTERFACE:${FIREBOLT_PATH}/usr/include/${FIREBOLT_NAMESPACE}SDK>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/../>
+        ${CMAKE_SOURCE_DIR}/../build/_deps/json-src/include
 )
 
 if (POLYMORPHICS_REDUCER_METHODS)
