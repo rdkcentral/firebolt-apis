@@ -28,6 +28,7 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [2. Table of Contents](#2-table-of-contents)
 - [3. Open RPC Extensions](#3-open-rpc-extensions)
   - [3.1. Provided By Extension](#31-provided-by-extension)
+  - [Provider Hint Extension](#provider-hint-extension)
 - [4. Routing App pass-through APIs](#4-routing-app-pass-through-apis)
   - [4.1. No available providers](#41-no-available-providers)
   - [4.2. Direct pass-through](#42-direct-pass-through)
@@ -35,12 +36,12 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [5. Provider Candidates](#5-provider-candidates)
 - [6. Best Candidate](#6-best-candidate)
 - [7. Application Context](#7-application-context)
-    - [7.1 Application Context Sharing](#71-application-context-sharing)
-    - [7.2 Application Context Setting](#72-application-context-setting)
-- [8. API Gateway](#9-api-gateway)
-- [9. Example: User Interest](#10-example-user-interest)
-  - [9.1. User Interest Pull](#101-user-interest-pull)
-  - [9.2. User Interest Push](#102-user-interest-push)
+  - [7.1 Application Context Surfacing](#71-application-context-surfacing)
+  - [7.2 Application Context Selection](#72-application-context-selection)
+- [8. API Gateway](#8-api-gateway)
+- [9. Example: User Interest](#9-example-user-interest)
+  - [9.1. User Interest Pull](#91-user-interest-pull)
+  - [9.2. User Interest Push](#92-user-interest-push)
 
 ## 3. Open RPC Extensions
 
@@ -77,6 +78,37 @@ To prevent compound methods a platform method **MUST** `use` a single capability
 The provider method **MUST** provide the same capability that the platform method either uses or manages.
 
 If a platform method has no provider method then it is not a valid Firebolt OpenRPC method schema, and a validation error **MUST** be generated.
+
+### Provider Hint Extension
+Firebolt OpenRPC **MUST** support a `string` `x-provider-hint-parameter` extension property on the `capabilities` tag that denotes a method has a parameter for influencing provider selection, e.g.:
+
+```json
+{
+    "methods": [
+        {
+            "name": "Keyboard.standard",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-provided-by": "Keyboard.onRequestStandard",
+                    "x-provider-hint-parameter": "appId"
+                    "x-uses": [
+                        "xrn:firebolt:capability:input:keyboard"
+                    ]
+                }
+            ],
+            "parameters": [
+                {
+                    "name": "appId",
+                    "type": "string"
+                }
+            ]
+        }
+    ]
+}
+```
+
+The parameter denoted by `x-provider-hint-parameter` **MUST** exist and be a string.
 
 ## 4. Routing App pass-through APIs
 App pass-through APIs may be routed in one of several ways.
@@ -116,7 +148,7 @@ The platform **MUST** call the provider method from the [best candidate](#8-best
 
 If the platform method result schema matches the `x-response` schema on the provider method then the value **MUST** be used as-is.
 
-Otherwise if the platform method result schema has a property that matches the `x-response` schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the composed result.
+Otherwise if the platform method result schema has a property that matches the `x-response` schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the "composite result".
 
 ### 4.4. Pass-through notifications
 Firebolt events have a synchronous subscriber registration method, e.g. `Lifecycle.onInactive(true)`, in addition to asynchronous notifications when the event actually happens. For events powered by an app pass-through, only the asynchronous notifications are passed in by the providing app. The initial event registration is handled by the platform, and the success response is not handled by the providing app.
@@ -210,7 +242,7 @@ When a provider app calls a provider method mapped to an event the platform **MU
 
 If the platform method result schema matches the *last* parameter schema on the provider method then the value **MUST** be used as-is.
 
-Otherwise if the platform method result schema has a property that matches the *last* parameter schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the composed result.
+Otherwise if the platform method result schema has a property that matches the *last* parameter schema on the provider method then the value **MUST** be composed into an object under the corresponding property name and the platform **MUST** apply any [result transformations](#9-result-transformations) to the "composite result".
 
 If the value was composed into the platform method result under a matching property, then any context parameter values from the provider method that correspond to a property name and schema in the platform method result **MUST** also be composed into the platform method result under those properties.
 
@@ -222,34 +254,44 @@ all loaded apps that have permission to provide the capability **MUST** be
 considered as candidates to fulfill the method.
 
 ## 6. Best Candidate
-Any provider candidates that have not registered to provide the method in
-question **MUST NOT** be considered the best candidate and removed from
-consideration.
+A provider candidate app **MUST** include the capability in the `provide` section of the app manifest.
 
-If there is only one candidate left then it **MUST** be the best candidate.
+If a provider candidate is currently running, it **MUST** have already registered to provide the capability in
+question.
 
-If appId is set in the request [(See Application Context Setting)](#72-application-context-setting), then that app must be used for selecting the provider.
+If there is exactly one provider candidate then it **MUST** be the best candidate.
 
-If there is more than one candidate left, then the candidate app that most recently had RCU input focus **MUST** be the best candidate.
+If there is more than one provider candidate then the following requirements **MUST** be used to select the best candidate, in order:
 
-If none of the candidates have had focus yet, then the candidate app that was most recently launched **MUST** be the best candidate.
-
+> If the platform method has an `x-provider-hint-parameter` extension on the `capabilities` tag then the app with an appId that matches the value of that parameter **MUST** be the best candidate.
+>
+> **OR**
+>
+> The candidate app that most recently had RCU input focus **MUST** be the best candidate.
+>
+> **OR**
+>
+> The candidate app that was most recently launched **MUST** be the best candidate.
 
 ## 7. Application Context
 
 Application Context provides a mechanism for applications to know the identity of the applications they are communicating with. Application Context can be given in both directions. An application that uses a capability can know which app is providing that capability. An application that provides a capability can know which app is using that capability.
 
-### 7.1 Application Context Sharing
+### 7.1 Application Context Surfacing
 
-Application Context is shared by having either a "composite result" or a "composite request".
+A method may be configured to surface application context by inserting the "other" appId into the request or response and is triggered by the presense of an `appId` in either the platform method or the provider method, but not both.
 
 If a "composite result" was used to wrap the provider method value and the platform method's schema has an `appId` `string` property at the top level then the property's value **MUST** be set to the the appId of the providing app for that result.
 
 If a platform method is an `event` and the event result is a "composite result" with an `appId` `string` property at the top level, then the property **MUST** be set to the appId that initiated the provider (push) call.
 
-If the provider method is a "composite request" with `appId` `string` property at the top level but the platform method does not have `appId`, then the id of app that initiated the platform method call should be used to set the `appId` in the provider method request.
+If a platform method is an `event` and the event has an `appId` `string` context parameter and the provider method *does not* have an `appId` parameter, then the `appId` context parameter **MUST** be set to the appId that initiated the provider (push) call.
 
-### 7.2 Application Context Setting
+If the provider method has an `appId` `string` parameter and the platform method does not have an `appId` parameter, then the id of app that initiated the platform method call **MUST** be used to set the `appId` in the provider method request.
+
+### 7.2 Application Context Selection
+
+A method may be configured to enabled application context selection by exposing an appId parameter to allow the calling app to influence which app will provide it.
 
 When a platform method is invoked, the gateway will find the provider using the `Provider Candidate` rules as described above. However, some Firebolt APIs allow selecting the provider that should be used. If a platform method request schema is a "composite request" with `appId` `string` parameter but the provider method request schema is not a composite request, then the given appId shall be used to select the provider. 
 If "appId" is a required parameter in the platform method request schema, then it must be supplied. If it is not, then the request should fail with invalid parameters. If it is an optional parameter and it is not supplied, then the gateway should use rules in "Provider Candidate" section for selecting the candidate.
