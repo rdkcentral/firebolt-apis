@@ -6,6 +6,8 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Contributor                | Organization       |
 | -------------------------- | ------------------ |
 | Jeremy LaCivita            | Comcast            |
+| Bertwin Wolf               | Sky                |
+| Peter Yu                   | Comcast            |
 
 ## 1. Overview
 This document outlines a set of audio / video quality of service metrics APIs.
@@ -50,9 +52,9 @@ An app **SHOULD** differentiate, as appropriate, between previewing content curr
 
 Once content has been identified to be started, apps **SHOULD** wait until any loading is complete before calling `startContent`.
 
-If content requires user interaction before starting, e.g. a prompt to select language, region, game difficulty, etc, apps **SHOULD** wait until all of such prompts are completed before calling `startContent`.
+If the content is streaming media content, and will leverage the Media Metrics APIs, then `startContent` **SHOULD** be called immediately before the first `mediaPlaying` call.
 
-The `startContent` API **SHOULD** be called before *any* `media*` APIs.
+If content requires user interaction before starting, e.g. a prompt to select language, region, game difficulty, etc, apps **SHOULD** wait until all of such prompts are completed before calling `startContent`.
 
 ### 3.2. Content Stop
 The `Metrics` module **MUST** include an `stopContent` API so that an app may report when the user finished being engaged in "primary content."
@@ -72,6 +74,8 @@ The `stopContent` API **SHOULD** be called after *all* `media*` APIs.
 
 The term "media" is used to denote primary content that is either a live, linear, or pre-recorded audio video content that can be played using the provided media pipeline of the device.
 
+Switching assets during playback, e.g. freezing the primary content in order to load and play an advertisement 
+
 ### 4.1. Load Start
 The `Metrics` module **MUST** include a `mediaLoadStart` API for denoting when the "initial request" (see below) for the media asset is made, so that the media load time may be calculated.
 
@@ -84,6 +88,10 @@ The "initial request" for the media **SHOULD** be the earliest possible request 
 Bespoke calls to a content management, digital rights management, or other business / discovery logic **MAY** happen before the media starts to play, but **SHOULD NOT** be considered the "initial request."
 
 The "initial request" **MAY** be TCP/IP, file-system, or bytes embedded into the application, e.g. [Data URI](https://datatracker.ietf.org/doc/html/rfc2397).
+
+The `mediaLoadStart` API **SHOULD** only be called once for the first asset loaded as part of the playback experience, which could be the main asset, an advertisement, or a short branding clip.
+
+The `mediaLoadStart` API **SHOULD NOT** be called again when switching assets during playback, e.g. switching from the primary content to load and play an advertisement.
 
 ### 4.2. Play
 The `Metrics` module **MUST** include a `mediaPlay` API for denoting when the "intent to play" the media happens (see below), so that the platform knows when the user is expecting media to be playing.
@@ -102,6 +110,10 @@ The `mediaPlay` API **SHOULD** also be called when a subsequent "intent to play"
 
 The `mediaPlay` API **SHOULD NOT** be used when playback resumes after an interuption, e.g. buffering.
 
+The `mediaPlay` API **SHOULD NOT** be called when switching assets during playback, e.g. switching back to the primary content after an advertisement.
+
+The `mediaPlay` API **SHOULD NOT** be called when switching renditions during playback, e.g. switching from one HLS bitrate to another.
+
 ### 4.3. Playing
 The `Metrics` module **MUST** include a `mediaPlaying` API for denoting when the media is actually playing, i.e. frames are being rasterized by the media pipeline.
 
@@ -110,6 +122,12 @@ The `mediaPlaying` API **MUST** have a required `entityId` parameter to specify 
 The remainder of this section outlines guidelines that apps should consider when calling `mediaPlaying`.
 
 The `mediaPlaying` API **SHOULD** be called when the media pipeline confirms that frames of the media are actually being rasterized to denote a change in the playing state, i.e. the media was previously not playing (due to being paused, waiting, or not yet started) and has now started or resumed playing.
+
+The `mediaPlaying` API **SHOULD NOT** be called when switching assets during playback, e.g. switching back to the primary content after an advertisement.
+
+The `mediaPlaying` API **SHOULD NOT** be called when switching renditions during playback, e.g. switching from one HLS bitrate to another, unless the switch resulted in a `mediaWaiting` due to interupted playback.
+
+The `mediaPlaying` API **SHOULD NOT** be called when switching from trick play back to normal play, unless the switch resulted in a `mediaWaiting` due to interupted playback.
 
 Once called, the `mediaPlaying` API **SHOULD NOT** be called again unless a `mediaPlay`, `mediaPause`, `mediaWaiting`, or `mediaSeeking` call has been made since.
 
@@ -120,9 +138,15 @@ The `mediaPause` API **MUST** have a required `entityId` parameter to specify wh
 
 The remainder of this section outlines guidelines that apps should consider when calling `mediaPause`.
 
-The `mediaPause` API **SHOULD** be called when an "intent to pause" occurs. An "intent to pause" is either an explicit user intent, e.g. clicking a pause control, an indirect user action, e.g. opening a settings UX, or app business logic, e.g. an advertisement is displayed over the content.
+The `mediaPause` API **SHOULD** be called when an "intent to pause" occurs. An "intent to pause" is either an explicit user intent, e.g. clicking a pause control, an indirect user action, e.g. opening a settings UX, or app business logic, e.g. an overlay display advertisement is displayed over the content.
 
 The `mediaPause` API **SHOULD NOT** be called to denote an unexpected interuption, e.g. buffering or other non-user, non-business logic reasons that frames might stop rasterizing.
+
+The `mediaPause` API **SHOULD NOT** be called when switching assets during playback, e.g. switching from the primary content to play an advertisement, unless the advertisment is loaded into a paused state and requires user interaction to play.
+
+The `mediaPause` API **SHOULD NOT** be called when switching renditions during playback, e.g. switching from one HLS bitrate to another, unless the switch resulted in a `mediaWaiting` due to interupted playback.
+
+The `mediaPause` API **SHOULD NOT** be called when switching to trick play from normal play.
 
 Once called, the `mediaPause` API **SHOULD NOT** be called again unless a `mediaPlay` call has been made since.
 
@@ -175,6 +199,8 @@ The remainder of this section outlines guidelines that apps should consider when
 
 The `mediaSeeking` API **SHOULD** be called when an "intent to seek" occurs, e.g. the user or the app's business logic initiats a seek.
 
+The `mediaSeeking` API **SHOULD** be called for each user intention to seek, even those that may be ignored or cancelled due to rapid successive user interactions.
+
 The `target` value **SHOULD** be a number greater than 0 and less than 1 denoting the percent of the content intended to seek to, if the duration of the content is static and known, e.g. VOD content.
 
 The `target` value **SHOULD** be an integer number of secionds from 1 to 86400 denoting the number of seconds from the "beginning" of the content intended to seek to, if the duration of the content is dynamic or not known, e.g. live content.
@@ -190,7 +216,9 @@ The `mediaSeeked` API **MUST** have a required `position` parameter denoting the
 
 The remainder of this section outlines guidelines that apps should consider when calling `mediaSeeked`.
 
-The `mediaSeeked` API **SHOULD** be called when an "intent to seek" is fulfilled and right before `mediaPlaying` is called due to the seek operation resulting in playback.
+The `mediaSeeked` API **SHOULD** be called when an "intent to seek" is successfully fulfilled and right before `mediaPlaying` is called due to the seek operation resulting in playback.
+
+The `mediaSeeked` API **SHOULD NOT** be called for any cancelled or ignored intents to seek, to ensure that every `mediaSeeked` correlates to the preceding `mediaSeeking` call.
 
 The `position` value **SHOULD** be a number greater than 0 and less than 1 denoting the percent of the content intended to seek to, if the duration of the content is static and known, e.g. VOD content.
 
@@ -231,20 +259,28 @@ The `mediaRenditionChanged` API **SHOULD** be called when the stream of bytes be
 The `mediaRenditionChanged` API **SHOULD** be called regardless of whether the rate change is due to the user selecting a higher quality or an automatic change for QoS reasons.
 
 ### 4.11. Ended
-The `Metrics` module **MUST** include a `mediaEnded` API for denoting when the media reaches the last frame.
+The `Metrics` module **MUST** include a `mediaEnded` API for denoting when the media reaches the natural end, from the user's perspective.
 
 The `mediaEnded` API **MUST** have a required `entityId` parameter to specify what entity from the app has ended.
 
 The remainder of this section outlines guidelines that apps should consider when calling `mediaEnded`.
 
-The `mediaEnded` API **SHOULD** be called when the media reaches the last frame or runs out of frames.
+The `mediaEnded` API **SHOULD** be called when the media reaches the end of a "predetermined playback experience."
+
+A "predetermined playback experience" **COULD** be the end of all VOD assets in the experience playlists, including advertisements, etc.
+
+A "predetermined playback experience" **COULD** be reaching a program boundary in a linear or live stream.
+
+A "predetermined playback experience" **COULD** be reaching then end of a live stream.
+
+Running out of frames unexpectedly **SHOULD NOT** be considered a "predetermined playback experience."
 
 The `mediaEnded` API **SHOULD NOT** be called again unless a `mediaPlay` call has been made since.
 
 The `mediaEnded` API **SHOULD NOT** be used when the user stops or cancels media that is not at the end.
 
 ### 4.12. Error
-The `Metrics` module **MUST** include a `error` API for denoting when an unrecoverable error with the media occurs and playback will be cancelled.
+The `Metrics` module **MUST** include a `error` API for denoting when an unrecoverable error with the media occurs and playback will be cancelled, e.g. after the initial `mediaPlaying` or fail to begin, e.g. before.
 
 The `error` API **MUST** have a required `entityId` parameter to specify what entity from the app has had an error.
 
@@ -255,5 +291,3 @@ The `type` parameter **SHOULD** always be set to `media` for media-related error
 The remainder of this section outlines guidelines that apps should consider when calling `error`.
 
 The `error` API **SHOULD** be called whenever the app decides to cancel media playback due to an unrecoverable error.
-
-The `error` API **SHOULD** be called whenever the app decides to repeat the initial request to the media in order to recover from an error. In this case, the metrics flow should restart from `mediaLoadStart` once again.
