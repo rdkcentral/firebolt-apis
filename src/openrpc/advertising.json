@@ -404,11 +404,17 @@
           },
           "lmt": {
             "type": "string",
+            "enum": [
+              "0",
+              "1"
+            ],
             "description": "boolean that if set to 1, user has requested ad tracking and measurement is disabled"
           }
         },
         "required": [
-          "ifa"
+          "ifa",
+          "ifa_type",
+          "lmt"
         ]
       }
     }
