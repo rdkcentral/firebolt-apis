@@ -292,34 +292,7 @@
         "name": "versions",
         "summary": "the versions",
         "schema": {
-          "type": "object",
-          "properties": {
-            "sdk": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "The Firebolt SDK version"
-            },
-            "api": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "The lateset Firebolt API version supported by the curent device."
-            },
-            "firmware": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "The device firmware version."
-            },
-            "os": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "**Deprecated** Use `firmware`, instead."
-            },
-            "debug": {
-              "type": "string",
-              "description": "Detail version as a string, for debugging purposes"
-            }
-          },
-          "required": [
-            "api",
-            "firmware",
-            "os"
-          ]
+          "$ref": "#/components/schemas/HDCPType"
         }
       },
       "examples": [
@@ -378,7 +351,7 @@
         "name": "supportedHdcpProfiles",
         "summary": "the supported HDCP profiles",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          "$ref": "#/components/schemas/HDCPType"
         }
       },
       "examples": [
@@ -414,7 +387,7 @@
         "name": "supportedHdrProfiles",
         "summary": "the supported HDR profiles",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          "$ref": "#/components/schemas/HDRType"
         }
       },
       "examples": [
@@ -435,7 +408,7 @@
     },
     {
       "name": "audio",
-      "summary": "Get the supported audio profiles",
+      "summary": "Get the supported audio profiles for the connected devices. \n\n It is not recommended to use this API for visual badging on content within your app since this does not reflect the settings of the user. \n\n  **Note:** This method is planned to be deprecated with a future Firebolt release",
       "params": [],
       "tags": [
         {
@@ -473,7 +446,7 @@
     },
     {
       "name": "screenResolution",
-      "summary": "Get the current screen resolution",
+      "summary": "Get the maximum supported video resolution for the graphical surface of the app. \n\nThe pairs returned will be of a [width, height] format and will correspond to the following values: \n\nNTSC Standard Definition (SD): [720, 480] \n\nPAL Standard Definition (SD): [720, 576] \n\nHigh Definition (HD): [1280, 720] \n\nFull HD (FHD): [1920, 1080]\n\n4K Ultra High Definition (UHD): [1920, 1080] \n\n**Note:** This method will be deprecated with a future Firebolt release",
       "params": [],
       "tags": [
         {
@@ -509,7 +482,7 @@
     },
     {
       "name": "videoResolution",
-      "summary": "Get the current video resolution",
+      "summary": "Get the maximum supported video resolution of the currently connected device and display. \n\nThe pairs returned will be of a [width, height] format and will correspond to the following values: \n\nNTSC Standard Definition (SD): [720, 480] \n\nPAL Standard Definition (SD): [720, 576] \n\nHigh Definition (HD): [1280, 720] \n\nFull HD (FHD): [1920, 1080]\n\n4K Ultra High Definition (UHD): [1920, 1080] \n\n**Note:** This method will be deprecated with a future Firebolt release",
       "params": [],
       "tags": [
         {
@@ -641,19 +614,7 @@
         "name": "networkInfo",
         "summary": "the status and type",
         "schema": {
-          "type": "object",
-          "properties": {
-            "state": {
-              "$ref": "#/components/schemas/NetworkState"
-            },
-            "type": {
-              "$ref": "#/components/schemas/NetworkType"
-            }
-          },
-          "required": [
-            "state",
-            "type"
-          ]
+          "$ref": "#/components/schemas/NetworkInfoResult"
         }
       },
       "examples": [
@@ -759,18 +720,98 @@
   "components": {
     "schemas": {
       "Resolution": {
-        "type": "array",
-        "items": [
+        "oneOf": [
           {
-            "type": "integer"
+            "type": "array",
+            "items": [
+              {
+                "type": "integer",
+                "const": 720,
+                "description": "Width in pixels"
+              },
+              {
+                "type": "integer",
+                "const": 480,
+                "description": "Height in pixels"
+              }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
           },
           {
-            "type": "integer"
+            "type": "array",
+            "items": [
+              {
+                "type": "integer",
+                "const": 720,
+                "description": "Width in pixels"
+              },
+              {
+                "type": "integer",
+                "const": 576,
+                "description": "Height in pixels"
+              }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
+          },
+          {
+            "type": "array",
+            "items": [
+              {
+                "type": "integer",
+                "const": 1280,
+                "description": "Width in pixels"
+              },
+              {
+                "type": "integer",
+                "const": 720,
+                "description": "Height in pixels"
+              }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
+          },
+          {
+            "type": "array",
+            "items": [
+              {
+                "type": "integer",
+                "const": 1920,
+                "description": "Width in pixels"
+              },
+              {
+                "type": "integer",
+                "const": 1080,
+                "description": "Height in pixels"
+              }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
+          },
+          {
+            "type": "array",
+            "items": [
+              {
+                "type": "integer",
+                "const": 3840,
+                "description": "Width in pixels"
+              },
+              {
+                "type": "integer",
+                "const": 2160,
+                "description": "Height in pixels"
+              }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
           }
-        ],
-        "additionalItems": false,
-        "minItems": 2,
-        "maxItems": 2
+        ]
       },
       "NetworkType": {
         "title": "NetworkType",
@@ -793,16 +834,98 @@
       },
       "AudioProfiles": {
         "title": "AudioProfiles",
-        "allOf": [
-          {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+        "properties": {
+          "stereo": {
+            "type": "boolean"
           },
-          {
-            "type": "object",
-            "propertyNames": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/AudioProfile"
-            }
+          "dolbyDigital5.1": {
+            "type": "boolean"
+          },
+          "dolbyDigital5.1+": {
+            "type": "boolean"
+          },
+          "dolbyAtmos": {
+            "type": "boolean"
           }
+        }
+      },
+      "HDRType": {
+        "title": "HDRType",
+        "type": "object",
+        "properties": {
+          "hdr10": {
+            "type": "boolean"
+          },
+          "hdr10plus": {
+            "type": "boolean"
+          },
+          "dolbyVision": {
+            "type": "boolean"
+          },
+          "hlg": {
+            "type": "boolean"
+          }
+        },
+        "description": "The type of HDR that is supported"
+      },
+      "HDCPType": {
+        "title": "HDCPType",
+        "type": "object",
+        "properties": {
+          "hdcp1.4": {
+            "type": "boolean"
+          },
+          "hdcp2.2": {
+            "type": "boolean"
+          }
+        },
+        "description": "The type of HDCP that is supported"
+      },
+      "DeviceVersion": {
+        "title": "DeviceVersion",
+        "type": "object",
+        "properties": {
+          "sdk": {
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+            "description": "The Firebolt SDK version"
+          },
+          "api": {
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+            "description": "The lateset Firebolt API version supported by the curent device."
+          },
+          "firmware": {
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+            "description": "The device firmware version."
+          },
+          "os": {
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+            "description": "**Deprecated** Use `firmware`, instead."
+          },
+          "debug": {
+            "type": "string",
+            "description": "Detail version as a string, for debugging purposes"
+          }
+        },
+        "required": [
+          "api",
+          "firmware",
+          "os"
+        ]
+      },
+      "NetworkInfoResult": {
+        "title": "NetworkInfoResult",
+        "type": "object",
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/NetworkState"
+          },
+          "type": {
+            "$ref": "#/components/schemas/NetworkType"
+          }
+        },
+        "required": [
+          "state",
+          "type"
         ]
       }
     }
