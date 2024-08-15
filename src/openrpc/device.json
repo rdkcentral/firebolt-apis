@@ -348,15 +348,15 @@
         }
       ],
       "result": {
-        "name": "supportedHdcpProfiles",
-        "summary": "the supported HDCP profiles",
+        "name": "supportedHdcpVersions",
+        "summary": "the supported HDCP versions",
         "schema": {
           "$ref": "#/components/schemas/HDCPVersion"
         }
       },
       "examples": [
         {
-          "name": "Getting the supported HDCP profiles",
+          "name": "Getting the supported HDCP versions",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -384,15 +384,15 @@
         }
       ],
       "result": {
-        "name": "supportedHdrProfiles",
-        "summary": "the supported HDR profiles",
+        "name": "supportedHdrFormats",
+        "summary": "the supported HDR formats",
         "schema": {
           "$ref": "#/components/schemas/HDRFormat"
         }
       },
       "examples": [
         {
-          "name": "Getting the supported HDR profiles",
+          "name": "Getting the supported HDR formats",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -446,7 +446,7 @@
     },
     {
       "name": "screenResolution",
-      "summary": "Get the maximum supported screen resolution for the graphical surface of the app. \n\nThe pairs returned will be of a [width, height] format and will correspond to the following values: \n\nNTSC Standard Definition (SD): [720, 480] \n\nPAL Standard Definition (SD): [720, 576] \n\nHigh Definition (HD): [1280, 720] \n\nFull HD (FHD): [1920, 1080]\n\n4K Ultra High Definition (UHD): [1920, 1080]",
+      "summary": "Get the resolution for the graphical surface of the app. \n\nThe pairs returned will be of a [width, height] format and will correspond to the following values: \n\nNTSC Standard Definition (SD): [720, 480] \n\nPAL Standard Definition (SD): [720, 576] \n\nHigh Definition (HD): [1280, 720] \n\nFull HD (FHD): [1920, 1080]\n\n4K Ultra High Definition (UHD): [3840, 2160]",
       "params": [],
       "tags": [
         {
@@ -482,7 +482,7 @@
     },
     {
       "name": "videoResolution",
-      "summary": "Get the maximum supported video resolution of the currently connected device and display. \n\nThe pairs returned will be of a [width, height] format and will correspond to the following values: \n\nNTSC Standard Definition (SD): [720, 480] \n\nPAL Standard Definition (SD): [720, 576] \n\nHigh Definition (HD): [1280, 720] \n\nFull HD (FHD): [1920, 1080]\n\n4K Ultra High Definition (UHD): [1920, 1080]",
+      "summary": "Get the maximum supported video resolution of the currently connected device and display. \n\nThe pairs returned will be of a [width, height] format and will correspond to the following values: \n\nNTSC Standard Definition (SD): [720, 480] \n\nPAL Standard Definition (SD): [720, 576] \n\nHigh Definition (HD): [1280, 720] \n\nFull HD (FHD): [1920, 1080]\n\n4K Ultra High Definition (UHD): [3840, 2160]",
       "params": [],
       "tags": [
         {

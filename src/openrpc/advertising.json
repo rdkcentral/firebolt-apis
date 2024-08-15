@@ -182,7 +182,7 @@
             "name": "Default Result",
             "value": {
               "ifa": "01234567-89AB-CDEF-GH01-23456789ABCD",
-              "ifa_type": "idfa",
+              "ifa_type": "sspid",
               "lmt": "0"
             }
           }
@@ -204,7 +204,7 @@
             "name": "Default Result",
             "value": {
               "ifa": "01234567-89AB-CDEF-GH01-23456789ABCD",
-              "ifa_type": "idfa",
+              "ifa_type": "sspid",
               "lmt": "0"
             }
           }
