@@ -36,8 +36,8 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
 - [5. Provider Candidates](#5-provider-candidates)
 - [6. Best Candidate](#6-best-candidate)
 - [7. Application Context](#7-application-context)
-  - [7.1. 7.1 Application Context Surfacing](#71-71-application-context-surfacing)
-  - [7.2. 7.2 Application Context Selection](#72-72-application-context-selection)
+  - [7.1. Application Context Surfacing](#71-application-context-surfacing)
+  - [7.2. Application Context Selection](#72-application-context-selection)
 - [8. API Gateway](#8-api-gateway)
 - [9. Example: User Interest](#9-example-user-interest)
   - [9.1. User Interest Pull](#91-user-interest-pull)
@@ -107,8 +107,6 @@ Firebolt OpenRPC **MUST** support a `string` `x-provider-selection` extension pr
     ]
 }
 ```
-
-The parameter denoted by `x-provider-selection` **MUST** exist and be a string.
 
 The value of `x-provider-selection`, if defined, **MUST** be either `"appId"` or `"focus"`.
 
@@ -277,7 +275,7 @@ If there is more than one provider candidate then the following requirements **M
 
 Application Context provides a mechanism for applications to know the identity of the applications they are communicating with. Application Context can be given in both directions. An application that uses a capability can know which app is providing that capability. An application that provides a capability can know which app is using that capability.
 
-### 7.1. 7.1 Application Context Surfacing
+### 7.1. Application Context Surfacing
 
 A method may be configured to surface application context by inserting the "other" appId into the request or response and is triggered by the presense of an `appId` in either the platform method or the provider method, but not both.
 
@@ -289,7 +287,7 @@ If a platform method is an `event` and the event has an `appId` `string` context
 
 If the provider method has an `appId` `string` parameter and the platform method does not have an `appId` parameter, then the id of app that initiated the platform method call **MUST** be used to set the `appId` in the provider method request.
 
-### 7.2. 7.2 Application Context Selection
+### 7.2. Application Context Selection
 
 A method may be configured to enabled application context selection by exposing an appId parameter to allow the calling app to influence which app will provide it.
 
