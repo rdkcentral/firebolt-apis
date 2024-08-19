@@ -879,7 +879,7 @@
           "dolbyVision",
           "hlg"
         ],
-        "description": "The type of HDR that is supported"
+        "description": "The type of HDR format that is supported"
       },
       "HDCPVersionMap": {
         "title": "HDCPVersionMap",
@@ -896,7 +896,7 @@
           "hdcp1.4",
           "hdcp2.2"
         ],
-        "description": "The type of HDCP that is supported"
+        "description": "The type of HDCP versions that is supported"
       },
       "DeviceVersion": {
         "title": "DeviceVersion",
