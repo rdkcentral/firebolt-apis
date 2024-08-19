@@ -1,3 +1,10 @@
+## [1.3.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0...v1.3.1-next.1) (2024-08-19)
+
+
+### Bug Fixes
+
+* Spec and Doc fixes ([#302](https://github.com/rdkcentral/firebolt-apis/issues/302)) ([6010a85](https://github.com/rdkcentral/firebolt-apis/commit/6010a85e9883480aba71378391f5b6223645fb28))
+
 # [1.3.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0...v1.3.0) (2024-08-12)
 
 
