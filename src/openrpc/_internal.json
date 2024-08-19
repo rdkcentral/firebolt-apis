@@ -35,15 +35,7 @@
         "name": "session",
         "summary": "Info about the SDK/FEE session",
         "schema": {
-          "type": "object",
-          "required": ["version"],
-          "properties": {
-            "version": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "The semantic version of the FEE."
-            }
-          },
-          "additionalProperties": false
+          "$ref": "#/components/schemas/InitializeResult"
         }
       },
       "examples": [
@@ -76,7 +68,19 @@
     }
   ],
   "components": {
-    "schemas": {    
+    "schemas": {
+      "InitializeResult": {
+        "title": "InitializeResult",
+        "type": "object",
+        "required": ["version"],
+        "properties": {
+          "version": {
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+            "description": "The semantic version of the FEE."
+          }
+        },
+        "additionalProperties": false
+      }
     }
   }
 }

@@ -81,8 +81,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:privacy:advertising",
-            "xrn:firebolt:capability:advertising:configuration"
+            "xrn:firebolt:capability:advertising:policy"
           ]
         }
       ],
@@ -157,7 +156,7 @@
           ]
         }
       ],
-      "summary": "Get the advertising ID",
+      "summary": "Get the IAB compliant identifier for advertising (IFA). It is recommended to use the IFA to manage advertising related activities while respecting the user's privacy settings.",
       "params": [
         {
           "name": "options",
@@ -172,21 +171,7 @@
         "name": "advertisingId",
         "summary": "the advertising ID",
         "schema": {
-          "type": "object",
-          "properties": {
-            "ifa": {
-              "type": "string"
-            },
-            "ifa_type": {
-              "type": "string"
-            },
-            "lmt": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "ifa"
-          ]
+          "$ref": "#/components/schemas/AdvertisingIdResult"
         }
       },
       "examples": [
@@ -197,7 +182,7 @@
             "name": "Default Result",
             "value": {
               "ifa": "01234567-89AB-CDEF-GH01-23456789ABCD",
-              "ifa_type": "idfa",
+              "ifa_type": "sspid",
               "lmt": "0"
             }
           }
@@ -219,7 +204,7 @@
             "name": "Default Result",
             "value": {
               "ifa": "01234567-89AB-CDEF-GH01-23456789ABCD",
-              "ifa_type": "idfa",
+              "ifa_type": "sspid",
               "lmt": "0"
             }
           }
@@ -303,7 +288,7 @@
           "params": [],
           "result": {
             "name": "Default Result",
-            "value": "operator.app"
+            "value": "app.operator"
           }
         }
       ]
@@ -404,6 +389,33 @@
             }
           }
         }
+      },
+      "AdvertisingIdResult": {
+        "title": "AdvertisingIdResult",
+        "type": "object",
+        "properties": {
+          "ifa": {
+            "type": "string",
+            "description": "UUID conforming to IAB standard"
+          },
+          "ifa_type": {
+            "type": "string",
+            "description": "source of the IFA as defined by IAB"
+          },
+          "lmt": {
+            "type": "string",
+            "enum": [
+              "0",
+              "1"
+            ],
+            "description": "boolean that if set to 1, user has requested ad tracking and measurement is disabled"
+          }
+        },
+        "required": [
+          "ifa",
+          "ifa_type",
+          "lmt"
+        ]
       }
     }
   }
