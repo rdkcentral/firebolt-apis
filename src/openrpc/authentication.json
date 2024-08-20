@@ -44,22 +44,7 @@
         "name": "token",
         "summary": "the token value, type, and expiration",
         "schema": {
-          "type": "object",
-          "properties": {
-            "value": {
-              "type": "string"
-            },
-            "expires": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "type": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "value"
-          ]
+          "$ref": "#/components/schemas/AuthenticationTokenResult"
         }
       },
       "examples": [
@@ -232,6 +217,25 @@
           "platform",
           "device",
           "distributor"
+        ]
+      },
+      "AuthenticationTokenResult": {
+        "title": "AuthenticationTokenResult",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
         ]
       }
     }
