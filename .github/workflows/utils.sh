@@ -287,6 +287,22 @@ function buildCoreCPPSDK() {
   chmod +x ./build.sh
   sed -i -e 's/prefix=/prefix /g' build.sh
   cat ./build.sh
+
+  echo "***************** CMakeLists *****************"
+  cat CMakeLists.txt
+
+  echo "***************** CMakeLists in src *****************"
+  cat src/CMakeLists.txt
+
+  echo "***************** firebolt.h *****************"
+  cat include/firebolt.h
+
+  echo "***************** discovery_impl.cpp *****************"
+  cat src/discovery_impl.cpp
+
+  echo "***************** metrics_impl.cpp *****************"
+  cat src/metrics_impl.cpp
+
   ./build.sh -s "$current_dir/install" || exit 9999
   ./build.sh -f "$current_dir/data/firebolt-core-native-sdk-${FIREBOLT_VERSION}/build/Firebolt" -s "$current_dir/install"
 
