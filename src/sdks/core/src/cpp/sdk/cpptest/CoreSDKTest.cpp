@@ -22,6 +22,7 @@
 #include <string>
 #include "CoreSDKTest.h"
 
+
 using namespace std;
 bool CoreSDKTest::_connected;
 CoreSDKTest::OnPolicyChangedNotification CoreSDKTest::_policyChangedNotification;
@@ -231,6 +232,18 @@ void CoreSDKTest::GetDeviceName()
     } else {
         std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
         throw std::runtime_error("GetDeviceName failed. " + errorMessage);
+    }
+}
+
+void CoreSDKTest::GetDeviceVersion()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    const std::string version = Firebolt::IFireboltAccessor::Instance().DeviceInterface().version(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Get Device Version = " << version.c_str() << endl;
+    } else {
+        cout << "Get Device Version status = " << static_cast<int>(error) << endl;
     }
 }
 
@@ -715,7 +728,41 @@ EnumMap<Firebolt::Lifecycle::LifecycleEventSource> lifecycleEventSourceMap = {
     { Firebolt::Lifecycle::LifecycleEventSource::REMOTE, "remote" }
 };
 
-void CoreSDKTest::OnBackgroundNotification::onBackground(const Firebolt::Lifecycle::LifecycleEvent& lifecycleEvent)
+void CoreSDKTest::LifecycleReady()
+{
+   Firebolt::Error error = Firebolt::Error::None;
+   Firebolt::IFireboltAccessor::Instance().LifecycleInterface().ready(&error);
+    if (error == Firebolt::Error::None) {
+        cout << "Lifecycle ready is success" << endl;
+    } else {
+        cout << "Lifecycle ready status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::LifecycleFinished()
+{
+   Firebolt::Error error = Firebolt::Error::None;
+   Firebolt::IFireboltAccessor::Instance().LifecycleInterface().finished(&error);
+    if (error == Firebolt::Error::None) {
+        cout << "Lifecycle finished is success" << endl;
+    } else {
+        cout << "Lifecycle finished status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::LifecycleState()
+{
+   Firebolt::Error error = Firebolt::Error::None;
+   const std::string state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "State of the App = " << state.c_str() << endl;
+    } else {
+        cout << "State of the App throws an error = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::OnBackgroundNotification::onBackground( const Firebolt::Lifecycle::LifecycleEvent& lifecycleEvent)
 {
     cout <<"onBackground event is triggered" << endl;
     cout <<"\tstate: " << ConvertFromEnum<Firebolt::Lifecycle::LifecycleState>(lifecycleStateMap, lifecycleEvent.state) << endl;
@@ -1026,6 +1073,45 @@ void CoreSDKTest::MetricsStopContent()
     }
 }
 
+void CoreSDKTest::MetricsReady()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::optional<std::string> entityId;
+    bool status = Firebolt::IFireboltAccessor::Instance().MetricsInterface().ready(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Metrics Ready status = " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Metrics Ready status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::MetricsSignIn()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::optional<std::string> entityId;
+    bool status = Firebolt::IFireboltAccessor::Instance().MetricsInterface().signIn(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Metrics signIn status = " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Metrics signIn status = " << static_cast<int>(error) << endl;
+    }
+}
+
+void CoreSDKTest::MetricsSignOut()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::optional<std::string> entityId;
+    bool status = Firebolt::IFireboltAccessor::Instance().MetricsInterface().signOut(&error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Metrics signOut status = " << (status ? "true" : "false") << endl;
+    } else {
+        cout << "Metrics signOut status = " << static_cast<int>(error) << endl;
+    }
+}
+
 void CoreSDKTest::GetSecondScreenDevice()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1242,6 +1328,32 @@ void CoreSDKTest::DiscoveryWatchNext()
     }
 }
 
+void CoreSDKTest::DiscoveryUserInterest()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::Discovery::InterestType type = Firebolt::Discovery::InterestType::INTEREST;
+    Firebolt::Discovery::InterestReason reason = Firebolt::Discovery::InterestReason::PLAYLIST;
+
+    // Set up the entity details
+    Firebolt::Entity::EntityDetails entity;
+
+    // Identifiers
+    entity.identifiers = "{\"entityId\": \"123\"}";
+
+    // Optional Info Metadata
+    entity.info = Firebolt::Entity::Metadata();
+    entity.info->title = "A Cool Show";
+    entity.info->synopsis = "A cool show synopsis";
+
+    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().userInterest(type, reason, entity, &error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "Discovery User Interest is success" << endl;
+    } else {
+        cout << "Discovery User Interest status = " << static_cast<int>(error) << endl;
+    }
+}
+
 void CoreSDKTest::DiscoveryPolicy()
 {
     Firebolt::Error error = Firebolt::Error::None;
@@ -1399,15 +1511,12 @@ void CoreSDKTest::DiscoveryPurchasedContent()
 void CoreSDKTest::DiscoveryLaunch()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    cout << "Enter appId :";
-    getchar();
-    std::string appId;
-    getline(cin, appId);
+    std::string appId = "123";
     {
         std::optional<Firebolt::Intents::TuneIntent> intent = std::make_optional<Firebolt::Intents::TuneIntent>();
         intent.value().action = "tune";
         intent.value().data.entity.entityType = "channel";
-        intent.value().data.entity.channelType = Firebolt::Intents::ChannelEntityChannelType::STREAMING;
+        intent.value().data.entity.channelType = Firebolt::Entity::ChannelEntityChannelType::STREAMING;
         intent.value().data.entity.entityId = "an-ott-channel";
         std::string entityId;
         std::optional<std::string> appContentData;
@@ -1416,6 +1525,7 @@ void CoreSDKTest::DiscoveryLaunch()
         intent.value().context.source = "voice";
         cout << "Calling Discovery Launch TuneIntent method " << endl;
         bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
+        
         if (error == Firebolt::Error::None) {
             cout << "Discovery Launch TuneIntent is " << (status ? "true" : "false") << endl;
         } else {
@@ -1453,7 +1563,6 @@ void CoreSDKTest::DiscoveryLaunch()
             throw std::runtime_error("DiscoveryLaunch failed. " + errorMessage);
         }
     }
-    cin.putback('\n');
 }
 #ifdef POLYMORPHICS_REDUCER_METHODS
 void CoreSDKTest::DiscoveryWatched()
