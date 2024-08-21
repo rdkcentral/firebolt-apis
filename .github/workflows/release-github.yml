@@ -115,16 +115,16 @@ jobs:
         if: env.build_cpp_source == 'true'
         run: |
           .github/workflows/utils.sh generateSource
-      # - name: Build Core SDK CPP
-      #   if: env.build_cpp_source == 'true'
-      #   id: build_core_cpp
-      #   run: |
-      #     .github/workflows/utils.sh buildCoreCPPSDK $RELEASE_VERSION
-      - name: Build Manage SDK CPP
+      - name: Build Core SDK CPP
         if: env.build_cpp_source == 'true'
-        id: build_manage_cpp
+        id: build_core_cpp
         run: |
-          .github/workflows/utils.sh buildManageCPPSDK $RELEASE_VERSION
+          .github/workflows/utils.sh buildCoreCPPSDK $RELEASE_VERSION
+      # - name: Build Manage SDK CPP
+      #   if: env.build_cpp_source == 'true'
+      #   id: build_manage_cpp
+      #   run: |
+      #     .github/workflows/utils.sh buildManageCPPSDK $RELEASE_VERSION
       # - name: Build Discovery SDK CPP
       #   if: env.build_cpp_source == 'true'
       #   id: build_discovery_cpp
