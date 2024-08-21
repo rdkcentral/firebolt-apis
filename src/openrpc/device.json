@@ -719,98 +719,20 @@
   "components": {
     "schemas": {
       "Resolution": {
-        "oneOf": [
+        "type": "array",
+        "items": [
           {
-            "type": "array",
-            "items": [
-              {
-                "type": "integer",
-                "const": 720,
-                "description": "Width in pixels"
-              },
-              {
-                "type": "integer",
-                "const": 480,
-                "description": "Height in pixels"
-              }
-            ],
-            "additionalItems": false,
-            "minItems": 2,
-            "maxItems": 2
+            "type": "integer",
+            "description": "Width in pixels"
           },
           {
-            "type": "array",
-            "items": [
-              {
-                "type": "integer",
-                "const": 720,
-                "description": "Width in pixels"
-              },
-              {
-                "type": "integer",
-                "const": 576,
-                "description": "Height in pixels"
-              }
-            ],
-            "additionalItems": false,
-            "minItems": 2,
-            "maxItems": 2
-          },
-          {
-            "type": "array",
-            "items": [
-              {
-                "type": "integer",
-                "const": 1280,
-                "description": "Width in pixels"
-              },
-              {
-                "type": "integer",
-                "const": 720,
-                "description": "Height in pixels"
-              }
-            ],
-            "additionalItems": false,
-            "minItems": 2,
-            "maxItems": 2
-          },
-          {
-            "type": "array",
-            "items": [
-              {
-                "type": "integer",
-                "const": 1920,
-                "description": "Width in pixels"
-              },
-              {
-                "type": "integer",
-                "const": 1080,
-                "description": "Height in pixels"
-              }
-            ],
-            "additionalItems": false,
-            "minItems": 2,
-            "maxItems": 2
-          },
-          {
-            "type": "array",
-            "items": [
-              {
-                "type": "integer",
-                "const": 3840,
-                "description": "Width in pixels"
-              },
-              {
-                "type": "integer",
-                "const": 2160,
-                "description": "Height in pixels"
-              }
-            ],
-            "additionalItems": false,
-            "minItems": 2,
-            "maxItems": 2
+            "type": "integer",
+            "description": "Height in pixels"
           }
-        ]
+        ],
+        "additionalItems": false,
+        "minItems": 2,
+        "maxItems": 2
       },
       "NetworkType": {
         "title": "NetworkType",
