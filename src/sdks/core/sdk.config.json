@@ -23,7 +23,7 @@
             "use": [
                 "xrn:firebolt:capability:advertising:configuration",
                 "xrn:firebolt:capability:advertising:identifier",
-                "xrn:firebolt:capability:privacy:advertising"
+                "xrn:firebolt:capability:advertising:policy"
             ]
         },
         {

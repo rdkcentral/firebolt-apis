@@ -1064,7 +1064,50 @@
           }
         }     
       ]
-    }    
+    },
+    {
+      "name": "appInfo",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:general"
+          ]
+        }
+      ],
+      "summary": "Inform the platform about an app's build info.",
+      "params": [
+        {
+          "name": "build",
+          "summary": "The build / version of this app.",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "type": "null"
+        }
+      },
+      "examples": [
+        {
+          "name": "Send appInfo metric",
+          "params": [
+            {
+              "name": "build",
+              "value": "1.2.2"
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        }
+      ]
+    }
   ],
   "components": {
     "schemas": {
