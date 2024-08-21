@@ -838,10 +838,7 @@
           "stereo": {
             "type": "boolean"
           },
-          "dolbyDigital5.1": {
-            "type": "boolean"
-          },
-          "dolbyDigital5.1+": {
+          "dolbyDigital51": {
             "type": "boolean"
           },
           "dolbyAtmos": {
