@@ -361,8 +361,8 @@
           "result": {
             "name": "Default Result",
             "value": {
-              "hdcp1.4": true,
-              "hdcp2.2": true
+              "hdcp14": true,
+              "hdcp22": true
             }
           }
         }
@@ -436,8 +436,7 @@
             "name": "Default Result",
             "value": {
               "stereo": true,
-              "dolbyDigital5.1": true,
-              "dolbyDigital5.1+": true,
+              "dolbyDigital51": true,
               "dolbyAtmos": true
             }
           }
@@ -851,8 +850,7 @@
         },
         "required": [
           "stereo",
-          "dolbyDigital5.1",
-          "dolbyDigital5.1+",
+          "dolbyDigital51",
           "dolbyAtmos"
         ]
       },
@@ -885,16 +883,16 @@
         "title": "HDCPVersionMap",
         "type": "object",
         "properties": {
-          "hdcp1.4": {
+          "hdcp14": {
             "type": "boolean"
           },
-          "hdcp2.2": {
+          "hdcp22": {
             "type": "boolean"
           }
         },
         "required": [
-          "hdcp1.4",
-          "hdcp2.2"
+          "hdcp14",
+          "hdcp22"
         ],
         "description": "The type of HDCP versions that is supported"
       },
