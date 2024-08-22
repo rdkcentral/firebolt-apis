@@ -1250,6 +1250,43 @@
             "name": "success",
             "value": true
           }
+        },
+        {
+          "name": "Launch the Aggregated Experience to it's search screen.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "xrn:firebolt:application-type:main"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "search",
+                "data": {
+                  "query": "a cool show",
+                  "suggestions": [
+                    {
+                      "entityType": "program",
+                      "programType": "movie",
+                      "entityId": "xyz"
+                    },
+                    {
+                        "entityType": "program",
+                        "programType": "movie",
+                        "entityId": "abc"
+                    }
+                  ]
+                },
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
         }
       ]
     },
