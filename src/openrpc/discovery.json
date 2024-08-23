@@ -1271,8 +1271,8 @@
                       "entityId": "xyz"
                     },
                     {
-                        "entityType": "program",
-                        "programType": "movie",
+                        "entityType": "music",
+                        "musicType": "song",
                         "entityId": "abc"
                     }
                   ]
