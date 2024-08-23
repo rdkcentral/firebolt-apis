@@ -4,9 +4,6 @@
 	"description": "The Firebolt Manage JS SDK",
 	"main": "./dist/lib/firebolt-manage.mjs",
 	"types": "./dist/lib/firebolt-manage.d.ts",
-	"exports": {
-		".": "./dist/lib/firebolt-manage.mjs"
-	},
 	"type": "module",
 	"scripts": {
 		"validate": "npx firebolt-openrpc validate --input ./dist/firebolt-manage-open-rpc.json",
