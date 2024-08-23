@@ -612,34 +612,13 @@
                                 },
                                 "suggestions": {
                                     "type": "array",
-                                    "properties": {
-                                        "entity": {
-                                            "type": "object",
-                                            "items": {
-                                                "anyOf": [
-                                                    {
-                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/MovieEntity"
-                                                    },
-                                                    {
-                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVEpisodeEntity"
-                                                    },
-                                                    {
-                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVSeriesEntity"
-                                                    },
-                                                    {
-                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/TVSeasonEntity"
-                                                    },
-                                                    {
-                                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/AdditionalEntity"
-                                                    }
-                                                ]
-                                            }
-                                        }
+                                    "items": {
+                                        "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
                                     }
                                 }
                             },
                             "additionalProperties": false
-                        }
+                        }   
                     }
                 }
             ],
