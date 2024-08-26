@@ -189,17 +189,17 @@ function generateSource() {
     exit 1
   fi
 
-  # echo "Generate source for Discovery SDK"
-  # cd ../discovery
-  # npm run cpp
+  echo "Generate source for Discovery SDK"
+  cd ../discovery
+  npm run cpp
 
-  # if [ $? -eq 0 ]
-  # then
-  #       echo "Native Discovery SDK generated successfully"
-  # else
-  #   echo "Native Discovery SDK generation failed"
-  #   exit 1
-  # fi
+  if [ $? -eq 0 ]
+  then
+        echo "Native Discovery SDK generated successfully"
+  else
+    echo "Native Discovery SDK generation failed"
+    exit 1
+  fi
 }
 
 function cloneAndInstallThunder() {
@@ -288,12 +288,6 @@ function buildCoreCPPSDK() {
   sed -i -e 's/prefix=/prefix /g' build.sh
   cat ./build.sh
 
-  echo "***************** CMakeLists *****************"
-  cat CMakeLists.txt
-
-  echo "***************** CMakeLists in src *****************"
-  cat src/CMakeLists.txt
-
   echo "***************** firebolt.h *****************"
   cat include/firebolt.h
 
@@ -319,12 +313,6 @@ function buildManageCPPSDK() {
   sed -i -e 's/prefix=/prefix /g' build.sh
   cat ./build.sh
 
-   echo "***************** CMakeLists *****************"
-  cat CMakeLists.txt
-
-  echo "***************** CMakeLists in src *****************"
-  cat src/CMakeLists.txt
-
   echo "***************** firebolt.h *****************"
   cat include/firebolt.h
 
@@ -347,6 +335,10 @@ function buildDiscoveryCPPSDK() {
   chmod +x ./build.sh
   sed -i -e 's/prefix=/prefix /g' build.sh
   cat ./build.sh
+
+  echo "***************** firebolt.h *****************"
+  cat include/firebolt.h
+
   ./build.sh -s "$current_dir/install" || exit 9999
   ./build.sh -f "$current_dir/data/firebolt-discovery-native-sdk-${FIREBOLT_VERSION}/build/Firebolt" -s "$current_dir/install"
 }

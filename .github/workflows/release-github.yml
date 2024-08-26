@@ -125,11 +125,11 @@ jobs:
         id: build_manage_cpp
         run: |
           .github/workflows/utils.sh buildManageCPPSDK $RELEASE_VERSION
-      # - name: Build Discovery SDK CPP
-      #   if: env.build_cpp_source == 'true'
-      #   id: build_discovery_cpp
-      #   run: |
-      #     .github/workflows/utils.sh buildDiscoveryCPPSDK $RELEASE_VERSION
+      - name: Build Discovery SDK CPP
+        if: env.build_cpp_source == 'true'
+        id: build_discovery_cpp
+        run: |
+          .github/workflows/utils.sh buildDiscoveryCPPSDK $RELEASE_VERSION
       
       - name: Release Firebolt SDKs to NPM
         if: steps.check_build.outputs.files_exists == 'true' && github.event_name != 'pull_request' && (github.ref_name != 'main' || github.event_name == 'workflow_dispatch')
