@@ -190,7 +190,7 @@ function generateSource() {
   fi
 
   echo "Generate source for Discovery SDK"
-  cd ../discovery
+  cd ../../../../discovery
   npm run cpp
 
   if [ $? -eq 0 ]
