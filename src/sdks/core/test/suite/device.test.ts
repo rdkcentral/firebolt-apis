@@ -113,8 +113,8 @@ test("Device.make()", () => {
 
 test("Device.hdcp()", () => {
   const expectedOutput: Device.BooleanMap = {
-    "hdcp1.4": true,
-    "hdcp2.2": true,
+    "hdcp14": true,
+    "hdcp22": true,
   };
   return Device.hdcp().then((res: Device.BooleanMap) => {
     expect(res).toEqual(expectedOutput);
@@ -133,8 +133,7 @@ test("Device.audio()", () => {
   return Device.audio().then((res: Device.AudioProfiles) => {
     expect(res).toEqual({
       dolbyAtmos: true,
-      "dolbyDigital5.1": true,
-      "dolbyDigital5.1+": true,
+      "dolbyDigital51": true,
       stereo: true,
     });
   });
