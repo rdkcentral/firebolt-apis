@@ -35,7 +35,8 @@
             "type": "string",
             "enum": [
                 "stereo",
-                "dolbyDigital51",
+                "dolbyDigital5.1",
+                "dolbyDigital5.1+",
                 "dolbyAtmos"
             ]
         },
