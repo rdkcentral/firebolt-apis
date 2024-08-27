@@ -1,3 +1,10 @@
+## [1.3.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.1-next.1...v1.3.1-next.2) (2024-08-23)
+
+
+### Bug Fixes
+
+* Bump firebolt-openrpc to fix typescript ([#305](https://github.com/rdkcentral/firebolt-apis/issues/305)) ([62887cf](https://github.com/rdkcentral/firebolt-apis/commit/62887cf73b2e2202446e9a7cce6ec26d8d5a5842))
+
 ## [1.3.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0...v1.3.1-next.1) (2024-08-19)
 
 
