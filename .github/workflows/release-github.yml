@@ -106,7 +106,8 @@ jobs:
             const path = './src/sdks/core/dist/lib/firebolt.mjs';
             return fs.existsSync(path);
       - name: File Existence Output
-        run: echo "File exists: ${{ steps.check_file.outputs.result }}"
+        run: |
+          echo "File exists: ${{ steps.check_file.outputs.result }}"
       - name: Get version from package.json
         run: |
           RELEASE_VERSION=$(node -p "require('./package.json').version")
