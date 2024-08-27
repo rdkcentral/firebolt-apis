@@ -92,11 +92,19 @@ jobs:
           npm version prerelease --preid $PRERELEASE --git-tag-version false
           npm version prerelease --preid $PRERELEASE --workspaces --git-tag-version false
           npm run dist
+      # - name: Check if semantic-release created a build
+      #   id: check_build
+      #   uses: andstor/file-existence-action@v2
+      #   with:
+      #     files: './src/sdks/core/dist/lib/firebolt.mjs'
       - name: Check if semantic-release created a build
         id: check_build
-        uses: andstor/file-existence-action@v2
+        uses: actions/github-script@v6
         with:
-          files: './src/sdks/core/dist/lib/firebolt.mjs'
+          script: |
+            const fs = require('fs');
+            const path = './src/sdks/core/dist/lib/firebolt.mjs';
+            return fs.existsSync(path);
       - name: Get version from package.json
         run: |
           RELEASE_VERSION=$(node -p "require('./package.json').version")
