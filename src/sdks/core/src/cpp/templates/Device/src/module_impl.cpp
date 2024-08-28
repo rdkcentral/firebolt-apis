@@ -26,7 +26,7 @@ ${if.providers}
     std::string ${info.Title}Impl::version(Firebolt::Error *err) const
     {
         JsonObject jsonParameters;
-        JsonData_Versions jsonResult;
+        JsonData_DeviceVersion jsonResult;
         std::string version;
 
         Firebolt::Error status = Firebolt::Error::NotConnected;
