@@ -561,7 +561,7 @@
         },
         {
           "name": "progress",
-          "summary": "How much of the content has been watched (percentage as 0-1 for VOD, number of seconds for live)",
+          "summary": "How much of the content has been watched (percentage as (0-0.999) for VOD, number of seconds for live)",
           "schema": {
             "type": "number",
             "minimum": 0
