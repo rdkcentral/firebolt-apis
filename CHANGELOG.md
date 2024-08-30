@@ -1,3 +1,10 @@
+## [1.3.1-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.1-next.2...v1.3.1-next.3) (2024-08-30)
+
+
+### Bug Fixes
+
+* Adjust type in CPP device template due to openrpc change ([#307](https://github.com/rdkcentral/firebolt-apis/issues/307)) ([1f10a15](https://github.com/rdkcentral/firebolt-apis/commit/1f10a154c45d1c5f6fff45448e0a1d6db243275e))
+
 ## [1.3.1-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.1-next.1...v1.3.1-next.2) (2024-08-23)
 
 
