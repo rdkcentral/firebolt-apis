@@ -1,3 +1,10 @@
+# [1.4.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.1...v1.4.0-next.2) (2024-09-03)
+
+
+### Bug Fixes
+
+* CI fix for file exists ([#308](https://github.com/rdkcentral/firebolt-apis/issues/308)) ([b44c11a](https://github.com/rdkcentral/firebolt-apis/commit/b44c11ac3fd96e0a035bf306a064a1acf8ce654f))
+
 # [1.4.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.1-next.3...v1.4.0-next.1) (2024-09-03)
 
 
