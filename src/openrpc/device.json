@@ -173,7 +173,7 @@
     },
     {
       "name": "model",
-      "summary": "Get the manufacturer designated model of the device, equivalent to the PMI of the device",
+      "summary": "Get the manufacturer designated model of the device",
       "params": [],
       "tags": [
         {
