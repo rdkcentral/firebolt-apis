@@ -1,3 +1,10 @@
+# [1.4.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.2...v1.4.0-next.3) (2024-09-03)
+
+
+### Bug Fixes
+
+* Updated xrn:firebolt:capability:secondscreen:protocol to should ([#310](https://github.com/rdkcentral/firebolt-apis/issues/310)) ([1895fe6](https://github.com/rdkcentral/firebolt-apis/commit/1895fe69d91f7f31a955103c80a17f1f4beb149a))
+
 # [1.4.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.1...v1.4.0-next.2) (2024-09-03)
 
 
