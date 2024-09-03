@@ -41,7 +41,7 @@
     },
     {
       "name": "distributor",
-      "summary": "Get the distributor ID for this device",
+      "summary": "Get the name of the entity which is distributing the current device. There can be multiple distributors which distribute the same device model.",
       "params": [],
       "tags": [
         {
@@ -74,7 +74,7 @@
     },
     {
       "name": "platform",
-      "summary": "Get the platform ID for this device",
+      "summary": "Get a transient platform identifier for the device. This API should be used to correlate metrics on the device only and cannot be guaranteed to have consistent responses across platforms.",
       "params": [],
       "tags": [
         {
@@ -173,7 +173,7 @@
     },
     {
       "name": "model",
-      "summary": "Get the device model",
+      "summary": "Get the manufacturer designated model of the device",
       "params": [],
       "tags": [
         {
@@ -239,7 +239,7 @@
     },
     {
       "name": "make",
-      "summary": "Get the device make",
+      "summary": "Get the manufacturer of the device model",
       "params": [],
       "tags": [
         {

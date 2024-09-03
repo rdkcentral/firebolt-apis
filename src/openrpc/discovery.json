@@ -561,7 +561,7 @@
         },
         {
           "name": "progress",
-          "summary": "How much of the content has been watched (percentage as 0-1 for VOD, number of seconds for live)",
+          "summary": "How much of the content has been watched (percentage as (0-0.999) for VOD, number of seconds for live)",
           "schema": {
             "type": "number",
             "minimum": 0
@@ -1181,7 +1181,7 @@
           "params": [
             {
               "name": "appId",
-              "value": "xrn:firebolt:application-type:settings "
+              "value": "xrn:firebolt:application-type:settings"
             },
             {
               "name": "intent",
@@ -1239,6 +1239,43 @@
                 "action": "section",
                 "data": {
                   "sectionName": "app:foo"
+                },
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Launch the Aggregated Experience to it's search screen.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "xrn:firebolt:application-type:main"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "search",
+                "data": {
+                  "query": "a cool show",
+                  "suggestions": [
+                    {
+                      "entityType": "program",
+                      "programType": "movie",
+                      "entityId": "xyz"
+                    },
+                    {
+                        "entityType": "music",
+                        "musicType": "song",
+                        "entityId": "abc"
+                    }
+                  ]
                 },
                 "context": {
                   "source": "voice"
