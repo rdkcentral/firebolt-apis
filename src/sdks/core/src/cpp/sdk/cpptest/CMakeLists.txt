@@ -42,21 +42,64 @@ find_package(${NAMESPACE}Core CONFIG REQUIRED)
 find_package(Firebolt CONFIG REQUIRED)
 find_package(${FIREBOLT_NAMESPACE}SDK CONFIG REQUIRED)
 
+# Manually add the library
+add_library(nlohmann_json_schema_validator SHARED IMPORTED)
+set_target_properties(nlohmann_json_schema_validator PROPERTIES
+    IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../build/build/_deps/nlohmann_json_schema_validator-src/libnlohmann_json_schema_validator.a
+)
+add_library(gmock_main SHARED IMPORTED)
+set_target_properties(gmock_main PROPERTIES
+    IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../build/lib/libgmock.a
+)
+add_library(gtest SHARED IMPORTED)
+set_target_properties(gtest PROPERTIES
+    IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../build/lib/libgtest.a
+)
+
+add_library(gtest_main SHARED IMPORTED)
+set_target_properties(gtest_main PROPERTIES
+    IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/../build/lib/libgtest_main.a
+)
+
+include_directories(${CMAKE_SOURCE_DIR}/build/_deps/json-src/include)
+
 set(TESTAPP TestFireboltCore)
 
 message("Setup ${TESTAPP}")
 
-add_executable(${TESTAPP} CoreSDKTest.cpp Main.cpp)
+if(UNIT_TEST STREQUAL "ON")
+    add_definitions(-DUNIT_TEST)
+
+    file(GLOB UNIT_TESTS "unit/advertisingTest.cpp")
+
+    add_executable(${TESTAPP} 
+        CoreSDKTest.cpp 
+        Unit.cpp 
+        ${UNIT_TESTS}
+    )
+else()
+    add_executable(${TESTAPP} 
+    CoreSDKTest.cpp 
+    Main.cpp 
+    )
+endif()
 
 target_link_libraries(${TESTAPP}
     PRIVATE
         ${NAMESPACE}Core::${NAMESPACE}Core
         ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
+        nlohmann_json_schema_validator
+        gmock_main
+        gtest_main
+        gtest
 )
 
 target_include_directories(${TESTAPP}
     PRIVATE
         $<BUILD_INTERFACE:${FIREBOLT_PATH}/usr/include/${FIREBOLT_NAMESPACE}SDK>
+        $<BUILD_INTERFACE:${FIREBOLT_PATH}/usr/include/>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/../build/_deps/nlohmann_json-src/include/>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/../build/_deps/nlohmann_json_schema_validator-src/src/>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/../>
 )
