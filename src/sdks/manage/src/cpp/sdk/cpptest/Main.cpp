@@ -121,6 +121,9 @@ void RunAllTests() {
         runTest(ManageSDKTest::SendResponseMessageToPinChallengeProvider, "SendResponseMessageToPinChallengeProvider");
         runTest(ManageSDKTest::SendErrorMessageToPinChallengeProvider, "SendErrorMessageToPinChallengeProvider");
 
+        runTest(ManageSDKTest::GlobalSubscribeHdmiAutoLowLatencyModeCapableChanged, "GlobalSubscribeHdmiAutoLowLatencyModeCapableChanged");
+        runTest(ManageSDKTest::GlobalUnsubscribeHdmiAutoLowLatencyModeCapableChanged, "GlobalUnsubscribeHdmiAutoLowLatencyModeCapableChanged");
+
         if (allTestsPassed) {
             cout << "============================" << endl;
             cout << "ALL MANAGE SDK TESTS SUCCEEDED!" << endl;
