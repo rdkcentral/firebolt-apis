@@ -304,10 +304,12 @@ void CoreSDKTest::GetDeviceSku()
 
 void PrintDeviceAudioProfiles(const Firebolt::Device::AudioProfiles& audioProfiles)
 {
-    cout << "Get Device AudioProfiles :-> " << endl;
-    for (auto& item : audioProfiles) {
-        cout << "Profile: " << static_cast<int>(item.first) << " status: " << item.second << endl;
-    }
+   cout << "Get Device AudioProfiles :-> " << endl;
+    
+   cout << "Profile: Stereo, Status: " << audioProfiles.stereo << endl;
+   cout << "Profile: Dolby Digital 5.1, Status: " << audioProfiles.dolbyDigital5_1 << endl;
+   cout << "Profile: Dolby Digital 5.1 Plus, Status: " << audioProfiles.dolbyDigital5_1_plus << endl;
+   cout << "Profile: Dolby Atmos, Status: " << audioProfiles.dolbyAtmos << endl;
 }
 
 void CoreSDKTest::GetDeviceAudio()
@@ -352,28 +354,28 @@ void CoreSDKTest::UnsubscribeDeviceAudioChanged()
     }
 }
 
-void PrintDeviceScreenResolution(const Firebolt::Device::Resolution& resolution)
+void PrintDeviceScreenResolution(const std::string screenResolution)
 {
     cout << "Get Device ScreenResolution :-> " << endl;
-    cout << resolution.first << " X " << resolution.second << endl;
+    cout << screenResolution << endl;
 }
 
 void CoreSDKTest::GetDeviceScreenResolution()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    const Firebolt::Device::Resolution resolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution(&error);
+    const std::string screenResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution(&error);
     if (error == Firebolt::Error::None) {
-        PrintDeviceScreenResolution(resolution);
+        PrintDeviceScreenResolution(screenResolution);
     } else {
         std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
         throw std::runtime_error("GetDeviceScreenResolution failed. " + errorMessage);
     }
 }
 
-void CoreSDKTest::OnScreenResolutionChangedNotification::onScreenResolutionChanged(const Firebolt::Device::Resolution& resolution)
+void CoreSDKTest::OnScreenResolutionChangedNotification::onScreenResolutionChanged(const std::string& screenResolution)
 {
     cout << "onScreenResolutionChanged event " << endl;
-    PrintDeviceScreenResolution(resolution);
+    PrintDeviceScreenResolution(screenResolution);
 }
 
 void CoreSDKTest::SubscribeDeviceScreenResolutionChanged()
@@ -404,42 +406,60 @@ void PrintClosedCaptionsSettings(const Firebolt::Accessibility::ClosedCaptionsSe
 {
     cout << "Get Accessibility ClosedCaptionsSettings :-> " << endl;
     cout << "ClosedCaptionsSettings::Enabled : " << closedCaptionsSettings.enabled << endl;
-    if (closedCaptionsSettings.styles.fontFamily.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::FontFamily : " << static_cast<int>(closedCaptionsSettings.styles.fontFamily.value()) << endl;
+    
+    if (closedCaptionsSettings.styles.has_value()) {
+        const auto& styles = closedCaptionsSettings.styles.value();
+
+        if (styles.fontFamily.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::FontFamily : " << static_cast<int>(styles.fontFamily.value()) << endl;
+        }
+    
+        if (styles.fontSize.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::FontSize : " << setprecision(3) << styles.fontSize.value() << endl;
+        }
+        
+        if (styles.fontColor.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::FontColor : " << styles.fontColor.value() << endl;
+        }
+        
+        if (styles.fontEdge.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::FontEdge : " << static_cast<int>(styles.fontEdge.value()) << endl;
+        }
+        
+        if (styles.fontEdgeColor.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::FontEdgeColor : " << styles.fontEdgeColor.value() << endl;
+        }
+        
+        if (styles.fontOpacity.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::FontOpacity : " << styles.fontOpacity.value() << endl;
+        }
+        
+        if (styles.backgroundColor.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::BackgroundColor : " << styles.backgroundColor.value() << endl;
+        }
+        
+        if (styles.backgroundOpacity.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::BackgroundOpacity : " << styles.backgroundOpacity.value() << endl;
+        }
+        
+        if (styles.textAlign.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::TextAlign : " << styles.textAlign.value() << endl;
+        }
+        
+        if (styles.textAlignVertical.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::TextAlignVertical : " << styles.textAlignVertical.value() << endl;
+        }
+        
+        if (styles.windowColor.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::WindowColor : " << styles.windowColor.value() << endl;
+        }
+        
+        if (styles.windowOpacity.has_value()) {
+            cout << "ClosedCaptionsSettings::Styles::WindowOpacity : " << styles.windowOpacity.value() << endl;
+        }
     }
-    if (closedCaptionsSettings.styles.fontSize.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::FontSize : " << setprecision(3) << closedCaptionsSettings.styles.fontSize.value() << endl;
-    }
-    if (closedCaptionsSettings.styles.fontColor.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::FontColor : " << closedCaptionsSettings.styles.fontColor.value() << endl;
-    }
-    if (closedCaptionsSettings.styles.fontEdge.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::FontEdge : " << static_cast<int>(closedCaptionsSettings.styles.fontEdge.value()) << endl;
-    }
-    if (closedCaptionsSettings.styles.fontEdgeColor.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::FontEdgeColor : " << closedCaptionsSettings.styles.fontEdgeColor.value() << endl;
-    }
-    if (closedCaptionsSettings.styles.fontOpacity.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::FontOpacity : " << closedCaptionsSettings.styles.fontOpacity.value() << endl;
-    }
-    if (closedCaptionsSettings.styles.backgroundColor.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::BackgroundColor : " << closedCaptionsSettings.styles.backgroundColor.value() << endl;
-    }
-    if (closedCaptionsSettings.styles.backgroundOpacity.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::BackgroundOpacity : " << closedCaptionsSettings.styles.backgroundOpacity.value() << endl;
-    }
-    if (closedCaptionsSettings.styles.textAlign.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::TextAlign : " << closedCaptionsSettings.styles.textAlign.value() << endl;
-    }
-    if (closedCaptionsSettings.styles.textAlignVertical.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::TextAlignVertical : " << closedCaptionsSettings.styles.textAlignVertical.value() << endl;
-    }
-    if (closedCaptionsSettings.styles.windowColor.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::WindowColor : " << closedCaptionsSettings.styles.windowColor.value() << endl;
-    }
-    if (closedCaptionsSettings.styles.windowOpacity.has_value()) {
-        cout << "ClosedCaptionsSettings::Styles::WindowOpacity : " << closedCaptionsSettings.styles.windowOpacity.value() << endl;
-    }
+    
+    
     if (closedCaptionsSettings.preferredLanguages.has_value()) {
         cout << "ClosedCaptionsSettings::PreferredLanguages :";
         for (auto index: closedCaptionsSettings.preferredLanguages.value()) {
@@ -875,7 +895,7 @@ void CoreSDKTest::GetAuthenticationToken()
     Firebolt::Authentication::TokenType type = Firebolt::Authentication::TokenType::DEVICE;
     std::optional<Firebolt::Authentication::Options> options;
 
-    const Firebolt::Authentication::Token token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().token(type, options, &error);
+    const Firebolt::Authentication::AuthenticationTokenResult token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().token(type, options, &error);
 
     if (error == Firebolt::Error::None) {
         cout << "Get Authentication of token : " << endl;
