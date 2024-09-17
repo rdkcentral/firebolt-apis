@@ -115,16 +115,31 @@ function runTests(){
   echo "report/${MODULE}"
   mkdir -p report/$MODULE
   # Move the report.json to the correct location
-  if [ -f report.json ]; then
-    mv report.json report/$MODULE/
-  else
-    echo "report.json not found for $MODULE"
+    if [ -f report.json ]; then
+      mv report.json report/$MODULE/
+    else
+      echo "report.json not found for $MODULE"
+      exit 1
+    fi
+
+     # Check if the module directory exists
+  if [ ! -d report/$MODULE ]; then
+    echo "Module directory report/$MODULE does not exist."
     exit 1
   fi
-  ls -ltr
-  echo "HELLO "
-  jq -r '.' report/$MODULE/report.json > tmp.json && mv tmp.json report/$MODULE/report.json
-  jq '.report' report/$MODULE/report.json > tmp.json && mv tmp.json report/$MODULE/report.json
+
+  # Debugging output to see the directory contents
+  ls -ltr report/$MODULE/
+  
+  # Process report.json
+  echo "HELLO"
+  if [ -f report/$MODULE/report.json ]; then
+    jq -r '.' report/$MODULE/report.json > tmp.json && mv tmp.json report/$MODULE/report.json
+    jq '.report' report/$MODULE/report.json > tmp.json && mv tmp.json report/$MODULE/report.json
+  else
+    echo "report.json not found at report/$MODULE/report.json"
+    exit 1
+  fi
 
   node -e '
   const marge = require("mochawesome-report-generator/bin/cli-main");
