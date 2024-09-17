@@ -9,7 +9,7 @@
 		"validate": "npx firebolt-openrpc validate --input ./dist/firebolt-manage-open-rpc.json",
 		"sdk": "npx firebolt-openrpc sdk --input ./dist/firebolt-manage-open-rpc.json --template ./src/js --output ./build/javascript/src",
 		"native": "npx firebolt-openrpc sdk --input ./dist/firebolt-manage-open-rpc.json --template ./src/js --output ./build/c/src --language ../../../node_modules/@firebolt-js/openrpc/languages/c",
-		"cpp": "npm run cpp:compile && npm run cpp:install",
+		"cpp": "npm run cpp:compile && cp ./dist/firebolt-manage-open-rpc.json ./build/cpp/src && npm run cpp:install",
 		"cpp:compile": "npx firebolt-openrpc sdk --input ./dist/firebolt-manage-open-rpc.json --template ./src/cpp --output ./build/cpp/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/cpp",
 		"cpp:install": "./build/cpp/src/scripts/install.sh -i ./build/cpp/src -s ./build/cpp/src/ -m manage",
 		"compile": "cd ../../.. && npm run compile",
