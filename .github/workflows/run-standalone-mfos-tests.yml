@@ -1,4 +1,4 @@
-name: Core SDK - MFOS standalone sanity report
+name: MFOS standalone sanity report for Core/Manage/Discovery
 
 on:
   pull_request:
@@ -14,21 +14,68 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Run tests and create assets
+      # Run Core tests
+      - name: Run Core tests and create assets
         env:
           EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
           INTENT: ${{ secrets.INTENT }}
         run: |
-          ./.github/workflows/utils.sh runTests
+          ./.github/workflows/utils.sh runTests core
 
-      - name: Upload report.json as an artifact
+      # Upload Core report as an artifact
+      - name: Upload Core report.json as an artifact
         uses: actions/upload-artifact@v4
         with:
-          name: report
-          path: ${{ github.workspace }}/report
+          name: core-report
+          path: ${{ github.workspace }}/report/core-report.json
 
-      - name: Get results from report.json
+      # Get results from Core report.json
+      - name: Get results from Core report.json
         run: |
           ./.github/workflows/utils.sh getResults
+
+      # Run Manage tests
+      - name: Run Manage tests and create assets
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF: ${{ github.ref }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          INTENT: ${{ secrets.INTENT }}
+        run: |
+          ./.github/workflows/utils.sh runTests manage
+
+      # Upload Manage report as an artifact
+      - name: Upload Manage report.json as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: manage-report
+          path: ${{ github.workspace }}/report/manage-report.json
+
+      # Get results from Manage report.json
+      - name: Get results from Manage report.json
+        run: |
+          ./.github/workflows/utils.sh getResults 
+
+      # Run Discovery tests
+      - name: Run Discovery tests and create assets
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF: ${{ github.ref }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          INTENT: ${{ secrets.INTENT }}
+        run: |
+          ./.github/workflows/utils.sh runTests discovery
+
+      # Upload Discovery report as an artifact
+      - name: Upload Discovery report.json as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: discovery-report
+          path: ${{ github.workspace }}/report/discovery-report.json
+
+      # Get results from Discovery report.json
+      - name: Get results from Discovery report.json
+        run: |
+          ./.github/workflows/utils.sh getResults 

@@ -2,6 +2,8 @@
 set -o pipefail
 
 function runTests(){
+  MODULE="$1" # Pass the module name (core, manage, discovery)
+
   echo "Clone firebolt-apis repo with pr branch"
   PR_BRANCH=$(echo "$EVENT_NAME" | tr '[:upper:]' '[:lower:]')
   if [ "${PR_BRANCH}" == "pull_request" ]; then
@@ -36,7 +38,18 @@ function runTests(){
   echo "clone fca repo and start it in the background"
   git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
-  jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
+  
+  if [ "$MODULE" == "manage" ]; then
+    echo "Updating dependency to Manage SDK"
+    jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/manage"' package.json > package.json.tmp && mv package.json.tmp package.json
+  elif [ "$MODULE" == "discovery" ]; then
+    echo "Updating dependency to Discovery SDK"
+    jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/discovery"' package.json > package.json.tmp && mv package.json.tmp package.json
+  else
+    echo "Running Core by default"
+    jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
+  fi
+
   npm install
   npm start &
   sleep 5s
@@ -95,17 +108,18 @@ function runTests(){
       await browser.close();
     })();
   '
-  echo "create html and json assets"
+  echo "Create HTML and JSON assets for ${MODULE}"
   npm i mochawesome-report-generator
-  mkdir report
-  mv report.json report/
-  jq -r '.' report/report.json > tmp.json && mv tmp.json report/report.json
-  jq '.report' report/report.json > tmp.json && mv tmp.json report/report.json
+  mkdir -p report
+  mv report/${MODULE}-report.json report/
+  jq -r '.' report/${MODULE}-report.json > tmp.json && mv tmp.json report/${MODULE}-report.json
+  jq '.report' report/${MODULE}-report.json > tmp.json && mv tmp.json report/${MODULE}-report.json
+
   node -e '
   const marge = require("mochawesome-report-generator/bin/cli-main");
   marge({
-    _: ["report/report.json"],
-    reportFileName: "report.json",
+      _: ["report/${MODULE}-report.json"],
+      reportFileName: "${MODULE}-report.json",
     reportTitle: "FireboltCertificationTestReport",
     reportPageTitle: "FireboltCertificationTestReport",
     reportDir: "./report",
@@ -149,7 +163,7 @@ function unzipArtifact(){
 
 # Check argument and call corresponding function
 if [ "$1" == "runTests" ]; then
-    runTests
+    runTests "$2"
 elif [ "$1" == "getResults" ]; then
     getResults
 elif [ "$1" == "getArtifactData" ]; then
