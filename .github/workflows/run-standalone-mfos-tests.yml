@@ -24,19 +24,7 @@ jobs:
         run: |
           ./.github/workflows/utils.sh runTests core
 
-      # Upload Core report as an artifact
-      - name: Upload Core report.json as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: core-report
-          path: ${{ github.workspace }}/report/core-report.json
-
-      # Get results from Core report.json
-      - name: Get results from Core report.json
-        run: |
-          ./.github/workflows/utils.sh getResults
-
-      # Run Manage tests
+       # Run Manage tests
       - name: Run Manage tests and create assets
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -46,19 +34,7 @@ jobs:
         run: |
           ./.github/workflows/utils.sh runTests manage
 
-      # Upload Manage report as an artifact
-      - name: Upload Manage report.json as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: manage-report
-          path: ${{ github.workspace }}/report/manage-report.json
-
-      # Get results from Manage report.json
-      - name: Get results from Manage report.json
-        run: |
-          ./.github/workflows/utils.sh getResults 
-
-      # Run Discovery tests
+        # Run Discovery tests
       - name: Run Discovery tests and create assets
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -68,14 +44,57 @@ jobs:
         run: |
           ./.github/workflows/utils.sh runTests discovery
 
-      # Upload Discovery report as an artifact
-      - name: Upload Discovery report.json as an artifact
+      - name: Compress all reports
+        run: |
+          mkdir -p ${{ github.workspace }}/combined-reports
+          cp ${{ github.workspace }}/report/core/report.json ${{ github.workspace }}/combined-reports/core-report.json
+          cp ${{ github.workspace }}/report/manage/report.json ${{ github.workspace }}/combined-reports/manage-report.json
+          cp ${{ github.workspace }}/report/discovery/report.json ${{ github.workspace }}/combined-reports/discovery-report.json
+          tar -czvf combined-reports.tar.gz -C ${{ github.workspace }}/combined-reports .
+
+      # Upload combined report as an artifact
+      - name: Upload combined report
         uses: actions/upload-artifact@v4
         with:
-          name: discovery-report
-          path: ${{ github.workspace }}/report/discovery-report.json
+          name: combined-reports
+          path: {{ github.workspace }}/combined-reports.tar.gz
 
-      # Get results from Discovery report.json
-      - name: Get results from Discovery report.json
-        run: |
-          ./.github/workflows/utils.sh getResults 
+
+      # # Upload Core report as an artifact
+      # - name: Upload Core report.json as an artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: core-report
+      #     path: ${{ github.workspace }}/report/core-report.json
+
+      # # Get results from Core report.json
+      # - name: Get results from Core report.json
+      #   run: |
+      #     ./.github/workflows/utils.sh getResults
+
+     
+
+      # # Upload Manage report as an artifact
+      # - name: Upload Manage report.json as an artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: manage-report
+      #     path: ${{ github.workspace }}/report/manage-report.json
+
+      # # Get results from Manage report.json
+      # - name: Get results from Manage report.json
+      #   run: |
+      #     ./.github/workflows/utils.sh getResults 
+
+     
+      # # Upload Discovery report as an artifact
+      # - name: Upload Discovery report.json as an artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: discovery-report
+      #     path: ${{ github.workspace }}/report/discovery-report.json
+
+      # # Get results from Discovery report.json
+      # - name: Get results from Discovery report.json
+      #   run: |
+      #     ./.github/workflows/utils.sh getResults 

@@ -110,19 +110,19 @@ function runTests(){
   '
   echo "Create HTML and JSON assets for ${MODULE}"
   npm i mochawesome-report-generator
-  mkdir -p report
-  mv report/${MODULE}-report.json report/
-  jq -r '.' report/${MODULE}-report.json > tmp.json && mv tmp.json report/${MODULE}-report.json
-  jq '.report' report/${MODULE}-report.json > tmp.json && mv tmp.json report/${MODULE}-report.json
+  mkdir -p report/${MODULE}
+  mv report.json report/${MODULE}/
+  jq -r '.' report/${MODULE}/report.json > tmp.json && mv tmp.json report/${MODULE}/report.json
+  jq '.report' report/${MODULE}/report.json > tmp.json && mv tmp.json report/${MODULE}/report.json
 
   node -e '
   const marge = require("mochawesome-report-generator/bin/cli-main");
   marge({
-      _: ["report/${MODULE}-report.json"],
-      reportFileName: "${MODULE}-report.json",
+    _: ["report/${MODULE}/report.json"],
+    reportFileName: "report.json",
     reportTitle: "FireboltCertificationTestReport",
     reportPageTitle: "FireboltCertificationTestReport",
-    reportDir: "./report",
+    reportDir: "./report/${MODULE}",
   });
   '
 }
