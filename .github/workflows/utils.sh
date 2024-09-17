@@ -110,6 +110,9 @@ function runTests(){
   '
   echo "Create HTML and JSON assets for ${MODULE}"
   npm i mochawesome-report-generator
+  echo $MODULE
+  echo "report/$MODULE"
+  echo "report/${MODULE}"
   mkdir -p report/$MODULE
   # Move the report.json to the correct location
   if [ -f report.json ]; then
@@ -118,6 +121,8 @@ function runTests(){
     echo "report.json not found for $MODULE"
     exit 1
   fi
+  ls -ltr
+  echo "HELLO "
   jq -r '.' report/$MODULE/report.json > tmp.json && mv tmp.json report/$MODULE/report.json
   jq '.report' report/$MODULE/report.json > tmp.json && mv tmp.json report/$MODULE/report.json
 
