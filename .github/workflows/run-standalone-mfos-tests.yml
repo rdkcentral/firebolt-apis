@@ -57,7 +57,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: combined-reports
-          path: {{ github.workspace }}/combined-reports.tar.gz
+          path: combined-reports.tar.gz
 
 
       # # Upload Core report as an artifact
