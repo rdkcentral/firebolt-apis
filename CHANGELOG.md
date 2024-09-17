@@ -1,3 +1,10 @@
+# [1.4.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.4...v1.4.0-next.5) (2024-09-17)
+
+
+### Bug Fixes
+
+* Updated the artifact upload version for workflow ([#317](https://github.com/rdkcentral/firebolt-apis/issues/317)) ([ef9b441](https://github.com/rdkcentral/firebolt-apis/commit/ef9b441590229e3f4d5abb1eddd8068f2ed997d4))
+
 # [1.4.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.3...v1.4.0-next.4) (2024-09-12)
 
 
