@@ -1,3 +1,10 @@
+# [1.4.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.3...v1.4.0-next.4) (2024-09-12)
+
+
+### Bug Fixes
+
+* Added individual sdk openrpcs to the doc specification ([#311](https://github.com/rdkcentral/firebolt-apis/issues/311)) ([ace1d64](https://github.com/rdkcentral/firebolt-apis/commit/ace1d644cac114c457a739a4e4cdfe8990a96fc8))
+
 # [1.4.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.2...v1.4.0-next.3) (2024-09-03)
 
 
