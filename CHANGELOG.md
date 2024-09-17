@@ -1,3 +1,10 @@
+# [1.4.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.5...v1.4.0-next.6) (2024-09-17)
+
+
+### Features
+
+* Add OpenRPC to generated C++ SDK ([#314](https://github.com/rdkcentral/firebolt-apis/issues/314)) ([6ed96cb](https://github.com/rdkcentral/firebolt-apis/commit/6ed96cb2a83216baf1aacedf220e9a83beb50a68))
+
 # [1.4.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.4...v1.4.0-next.5) (2024-09-17)
 
 
