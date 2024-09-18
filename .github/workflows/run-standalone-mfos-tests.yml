@@ -15,14 +15,14 @@ jobs:
         uses: actions/checkout@v2
 
       # Run Core tests
-      # - name: Run Core tests and create assets
-      #   env:
-      #     EVENT_NAME: ${{ github.event_name }}
-      #     GITHUB_REF: ${{ github.ref }}
-      #     PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
-      #     INTENT: ${{ secrets.INTENT }}
-      #   run: |
-      #     ./.github/workflows/utils.sh runTests core
+      - name: Run Core tests and create assets
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          GITHUB_REF: ${{ github.ref }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          INTENT: ${{ secrets.INTENT }}
+        run: |
+          ./.github/workflows/utils.sh runTests core
 
        # Run Manage tests
       - name: Run Manage tests and create assets
@@ -35,21 +35,21 @@ jobs:
           ./.github/workflows/utils.sh runTests manage
 
         # Run Discovery tests
-      - name: Run Discovery tests and create assets
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          GITHUB_REF: ${{ github.ref }}
-          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
-          INTENT: ${{ secrets.INTENT }}
-        run: |
-          ./.github/workflows/utils.sh runTests discovery
+      # - name: Run Discovery tests and create assets
+      #   env:
+      #     EVENT_NAME: ${{ github.event_name }}
+      #     GITHUB_REF: ${{ github.ref }}
+      #     PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+      #     INTENT: ${{ secrets.INTENT }}
+      #   run: |
+      #     ./.github/workflows/utils.sh runTests discovery
 
       - name: Compress all reports
         run: |
           mkdir -p ${{ github.workspace }}/combined-reports
           cp ${{ github.workspace }}/report/core/report.json ${{ github.workspace }}/combined-reports/core-report.json
           cp ${{ github.workspace }}/report/manage/report.json ${{ github.workspace }}/combined-reports/manage-report.json
-          cp ${{ github.workspace }}/report/discovery/report.json ${{ github.workspace }}/combined-reports/discovery-report.json
+        # cp ${{ github.workspace }}/report/discovery/report.json ${{ github.workspace }}/combined-reports/discovery-report.json
           tar -czvf combined-reports.tar.gz -C ${{ github.workspace }}/combined-reports .
 
       # Upload combined report as an artifact
