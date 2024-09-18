@@ -151,16 +151,17 @@ function runTests(){
       exit 1
   fi
   echo "Checking for report generator"
-  node -e '
-  const marge = require("mochawesome-report-generator/bin/cli-main");
+
+  node -e "
+  const marge = require('mochawesome-report-generator/bin/cli-main');
   marge({
-    _: ["report/${MODULE}/report.json"],
-    reportFileName: "report.json",
-    reportTitle: "FireboltCertificationTestReport",
-    reportPageTitle: "FireboltCertificationTestReport",
-    reportDir: "./report/${MODULE}",
+    _: ['report/${MODULE}/report.json'],
+    reportFileName: 'report.json',
+    reportTitle: 'FireboltCertificationTestReport',
+    reportPageTitle: 'FireboltCertificationTestReport',
+    reportDir: './report/${MODULE}',
   });
-  '
+"
 }
 
 function getResults(){
