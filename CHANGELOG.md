@@ -1,3 +1,10 @@
+# [1.4.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.6...v1.4.0-next.7) (2024-09-18)
+
+
+### Bug Fixes
+
+* Addressed architectural review comments ([#316](https://github.com/rdkcentral/firebolt-apis/issues/316)) ([a89275a](https://github.com/rdkcentral/firebolt-apis/commit/a89275a1f6b204e0626a6267f5096116094cb520))
+
 # [1.4.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.5...v1.4.0-next.6) (2024-09-17)
 
 
