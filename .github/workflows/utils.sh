@@ -254,10 +254,10 @@ function runTests(){
   sleep 5s
   cd ..
 
-  
+  echo "INTENT value: $INTENT"
   echo "curl request with runTest install on initialization"
- # response=$(curl -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
-  response=$(curl -X POST -H "Content-Type: application/json" -d "MANAGE" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
+  response=$(curl -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
+  # response=$(curl -X POST -H "Content-Type: application/json" -d "MANAGE" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
   echo "run mfos tests in a headless browser"
   npm install puppeteer
   echo "Start xvfb"
