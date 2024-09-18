@@ -165,7 +165,7 @@ set -o pipefail
 # }
 
 function runTests(){
-  MODULE="$1" # Pass the module name (core, manage, discovery)
+  MODULE="$1" # Pass the module name 
 
   # Clone firebolt-apis repo if it doesn't already exist
   if [ ! -d "firebolt-apis" ]; then
