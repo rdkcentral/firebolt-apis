@@ -221,7 +221,7 @@ function runTests(){
   
   if [ "$MODULE" == "manage" ]; then
     echo "Updating dependency to Manage SDK"
-    jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/manage"' package.json > package.json.tmp && mv package.json.tmp package.json
+    jq '.dependencies["@firebolt-js/manage-sdk"] = "file:../firebolt-apis/src/sdks/manage"' package.json > package.json.tmp && mv package.json.tmp package.json
   elif [ "$MODULE" == "discovery" ]; then
     echo "Updating dependency to Discovery SDK"
     jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/discovery"' package.json > package.json.tmp && mv package.json.tmp package.json
