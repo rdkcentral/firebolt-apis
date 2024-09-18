@@ -186,7 +186,7 @@ function runTests(){
   MODULE="$1" # Pass the module name (core, manage, discovery)
 
   # Clone firebolt-apis repo if it doesn't already exist
-  if [ ! -d "firebolt-apis" ]; then
+ # if [ ! -d "firebolt-apis" ]; then
     echo "Clone firebolt-apis repo with PR branch"
     PR_BRANCH=$(echo "$EVENT_NAME" | tr '[:upper:]' '[:lower:]')
     if [ "${PR_BRANCH}" == "pull_request" ]; then
@@ -206,9 +206,9 @@ function runTests(){
     npm run compile
     npm run dist
     cd ..
-  else
-    echo "firebolt-apis repo already exists. Skipping clone."
-  fi
+ # else
+  #  echo "firebolt-apis repo already exists. Skipping clone."
+  #fi
 
   # Clone mock-firebolt repo if it doesn't already exist
   if [ ! -d "mock-firebolt" ]; then
