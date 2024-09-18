@@ -185,6 +185,10 @@ function check_port() {
 function runTests(){
   MODULE="$1" # Pass the module name (core, manage, discovery)
 
+
+ # Check port availability (8081 in this case)
+  check_port 8081
+
   # Clone firebolt-apis repo if it doesn't already exist
  # if [ ! -d "firebolt-apis" ]; then
     echo "Clone firebolt-apis repo with PR branch"
@@ -211,7 +215,7 @@ function runTests(){
   #fi
 
   # Clone mock-firebolt repo if it doesn't already exist
-  if [ ! -d "mock-firebolt" ]; then
+  #if [ ! -d "mock-firebolt" ]; then
     echo "Cloning mfos repo and start it in the background"
     git clone https://github.com/rdkcentral/mock-firebolt.git
     cd mock-firebolt/server
@@ -222,9 +226,9 @@ function runTests(){
     npm install
     npm start &
     cd ../..
-  else
-    echo "mock-firebolt repo already exists. Skipping clone."
-  fi
+ # else
+  #  echo "mock-firebolt repo already exists. Skipping clone."
+  # fi
 
   # Clone Firebolt Certification App (FCA) if it doesn't exist
   echo "Clone FCA repo"
@@ -233,9 +237,6 @@ function runTests(){
 
   echo "Updating dependency for ${MODULE} in FCA"
   cd firebolt-certification-app
-
-  # Check and update port availability (8081 in this case)
-  check_port 8081
   
   if [ "$MODULE" == "manage" ]; then
     echo "Updating dependency to Manage SDK"
