@@ -135,7 +135,7 @@ function runTests(){
   echo "HELLO"
   # Check if the module directory exists
   echo "Checking if directory report/${MODULE} exists"
-  if [ ! -d report/${MODULE}]; then
+  if [ ! -d report/${MODULE} ]; then
       echo "Module directory report/${MODULE} does not exist."
       exit 1
   fi
@@ -150,7 +150,7 @@ function runTests(){
       echo "report.json not found at report/${MODULE}/report.json"
       exit 1
   fi
-
+  echo "Checking for report generator"
   node -e '
   const marge = require("mochawesome-report-generator/bin/cli-main");
   marge({
