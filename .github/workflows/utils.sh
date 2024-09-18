@@ -164,6 +164,24 @@ set -o pipefail
 # "
 # }
 
+
+function check_port() {
+  local PORT=$1
+  # Check if port is in use
+  if lsof -i :$PORT > /dev/null; then
+    echo "Port $PORT is already in use"
+    # Kill the process using the port
+    PID=$(lsof -t -i :$PORT)
+    if [ ! -z "$PID" ]; then
+      echo "Killing process $PID using port $PORT"
+      kill -9 $PID
+      echo "Port $PORT is now free"
+    fi
+  else
+    echo "Port $PORT is available"
+  fi
+}
+
 function runTests(){
   MODULE="$1" # Pass the module name (core, manage, discovery)
 
@@ -215,6 +233,9 @@ function runTests(){
 
   echo "Updating dependency for ${MODULE} in FCA"
   cd firebolt-certification-app
+
+  # Check and update port availability (8081 in this case)
+  check_port 8081
   
   if [ "$MODULE" == "manage" ]; then
     echo "Updating dependency to Manage SDK"
