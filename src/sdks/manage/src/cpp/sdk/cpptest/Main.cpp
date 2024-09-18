@@ -124,6 +124,12 @@ void RunAllTests() {
         runTest(ManageSDKTest::GlobalSubscribeHdmiAutoLowLatencyModeCapableChanged, "GlobalSubscribeHdmiAutoLowLatencyModeCapableChanged");
         runTest(ManageSDKTest::GlobalUnsubscribeHdmiAutoLowLatencyModeCapableChanged, "GlobalUnsubscribeHdmiAutoLowLatencyModeCapableChanged");
 
+        runTest(ManageSDKTest::GetAutoLowLatencyModeCapable, "GetAutoLowLatencyModeCapable");
+        runTest(ManageSDKTest::SetAutoLowLatencyModeCapable, "SetAutoLowLatencyModeCapable");
+        runTest(ManageSDKTest::GetEdidVersion, "GetEdidVersion");
+        runTest(ManageSDKTest::SetEdidVersion, "SetEdidVersion");
+        runTest(ManageSDKTest::GetHdmiPortInfo, "GetHdmiPortInfo");
+        
         if (allTestsPassed) {
             cout << "============================" << endl;
             cout << "ALL MANAGE SDK TESTS SUCCEEDED!" << endl;

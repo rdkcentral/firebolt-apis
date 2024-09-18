@@ -191,6 +191,12 @@ public:
     static void GlobalSubscribeHdmiAutoLowLatencyModeCapableChanged();
     static void GlobalUnsubscribeHdmiAutoLowLatencyModeCapableChanged();
 
+    static void GetAutoLowLatencyModeCapable();
+    static void SetAutoLowLatencyModeCapable();
+    static void GetEdidVersion();
+    static void SetEdidVersion();
+    static void GetHdmiPortInfo();
+
     static bool WaitOnConnectionReady();
 
 private:
