@@ -1,3 +1,10 @@
+# [1.4.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.7...v1.4.0-next.8) (2024-09-18)
+
+
+### Bug Fixes
+
+* Modified device.hdr description ([#319](https://github.com/rdkcentral/firebolt-apis/issues/319)) ([fd2bfb0](https://github.com/rdkcentral/firebolt-apis/commit/fd2bfb04d349e634f96d614713399467f238e1b3))
+
 # [1.4.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.6...v1.4.0-next.7) (2024-09-18)
 
 
