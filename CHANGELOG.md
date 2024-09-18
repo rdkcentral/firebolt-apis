@@ -1,3 +1,31 @@
+# [1.4.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.7...v1.4.0-next.8) (2024-09-18)
+
+
+### Bug Fixes
+
+* Modified device.hdr description ([#319](https://github.com/rdkcentral/firebolt-apis/issues/319)) ([fd2bfb0](https://github.com/rdkcentral/firebolt-apis/commit/fd2bfb04d349e634f96d614713399467f238e1b3))
+
+# [1.4.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.6...v1.4.0-next.7) (2024-09-18)
+
+
+### Bug Fixes
+
+* Addressed architectural review comments ([#316](https://github.com/rdkcentral/firebolt-apis/issues/316)) ([a89275a](https://github.com/rdkcentral/firebolt-apis/commit/a89275a1f6b204e0626a6267f5096116094cb520))
+
+# [1.4.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.5...v1.4.0-next.6) (2024-09-17)
+
+
+### Features
+
+* Add OpenRPC to generated C++ SDK ([#314](https://github.com/rdkcentral/firebolt-apis/issues/314)) ([6ed96cb](https://github.com/rdkcentral/firebolt-apis/commit/6ed96cb2a83216baf1aacedf220e9a83beb50a68))
+
+# [1.4.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.4...v1.4.0-next.5) (2024-09-17)
+
+
+### Bug Fixes
+
+* Updated the artifact upload version for workflow ([#317](https://github.com/rdkcentral/firebolt-apis/issues/317)) ([ef9b441](https://github.com/rdkcentral/firebolt-apis/commit/ef9b441590229e3f4d5abb1eddd8068f2ed997d4))
+
 # [1.4.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.3...v1.4.0-next.4) (2024-09-12)
 
 
