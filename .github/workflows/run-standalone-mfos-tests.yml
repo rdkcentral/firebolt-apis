@@ -38,7 +38,6 @@ jobs:
       - name: Compress all reports
         run: |
           mkdir -p ${{ github.workspace }}/combined-reports
-          cp ${{ github.workspace }}/report/core/report.json ${{ github.workspace }}/combined-reports/core-report.json
           cp ${{ github.workspace }}/report/manage/report.json ${{ github.workspace }}/combined-reports/manage-report.json
           tar -czvf combined-reports.tar.gz -C ${{ github.workspace }}/combined-reports .
 
