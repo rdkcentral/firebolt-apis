@@ -1555,15 +1555,15 @@ void CoreSDKTest::DiscoveryLaunch()
     }
 
     {
-        std::optional<Firebolt::Intents::EntityIntent> intent = std::make_optional<Firebolt::Intents::EntityIntent>();
-        intent.value().action = "entity";
+        std::optional<Firebolt::Intents::SearchIntent> intent = std::make_optional<Firebolt::Intents::SearchIntent>();
+        intent.value().action = "search";
         intent.value().context.source = "voice";
-        intent.value().data = "{\"entityId\":\"example-movie-id\",\"entityType\":\"program\",\"programType\":\"movie\"}";
-        intent.value().context.source = "voice";
-        cout << "Calling Discovery Launch EntityIntent method " << endl;
+        intent.value().data = std::make_optional<Firebolt::Intents::SearchIntentData>();
+        intent.value().data->query = "searching for a movie";
+        cout << "Calling Discovery Launch SearchIntent method " << endl;
         bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
         if (error == Firebolt::Error::None) {
-            cout << "Discovery Launch EntityIntent is " << (status ? "true" : "false") << endl;
+            cout << "Discovery Launch HomeIntent is " << (status ? "true" : "false") << endl;
         } else {
             std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
             throw std::runtime_error("DiscoveryLaunch failed. " + errorMessage);
