@@ -134,31 +134,31 @@ function runTests(){
   # Process report.json
   echo "HELLO"
   # Check if the module directory exists
-  echo "Checking if directory report/$MODULE exists"
-  if [ ! -d report/$MODULE ]; then
-      echo "Module directory report/$MODULE does not exist."
+  echo "Checking if directory report/${MODULE} exists"
+  if [ ! -d report/${MODULE}]; then
+      echo "Module directory report/${MODULE} does not exist."
       exit 1
   fi
 
   # Now check for the report.json file in the correct directory
-  echo "Checking for report.json at report/$MODULE/report.json"
-  if [ -f report/$MODULE/report.json ]; then
+  echo "Checking for report.json at report/${MODULE}/report.json"
+  if [ -f report/${MODULE}/report.json ]; then
       echo "Found report.json"
-      jq -r '.' report/$MODULE/report.json > tmp.json && mv tmp.json report/$MODULE/report.json
-      jq '.report' report/$MODULE/report.json > tmp.json && mv tmp.json report/$MODULE/report.json
+      jq -r '.' report/${MODULE}/report.json > tmp.json && mv tmp.json report/${MODULE}/report.json
+      jq '.report' report/${MODULE}/report.json > tmp.json && mv tmp.json report/${MODULE}/report.json
   else
-      echo "report.json not found at report/$MODULE/report.json"
+      echo "report.json not found at report/${MODULE}/report.json"
       exit 1
   fi
 
   node -e '
   const marge = require("mochawesome-report-generator/bin/cli-main");
   marge({
-    _: ["report/$MODULE/report.json"],
+    _: ["report/${MODULE}/report.json"],
     reportFileName: "report.json",
     reportTitle: "FireboltCertificationTestReport",
     reportPageTitle: "FireboltCertificationTestReport",
-    reportDir: "./report/$MODULE",
+    reportDir: "./report/${MODULE}",
   });
   '
 }
