@@ -209,10 +209,9 @@ function runTests(){
   fi
 
   # Clone Firebolt Certification App (FCA) if it doesn't exist
-  if [ ! -d "firebolt-certification-app" ]; then
-    echo "Clone FCA repo"
-    git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
-  fi
+  echo "Clone FCA repo"
+  git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
+
 
   echo "Updating dependency for ${MODULE} in FCA"
   cd firebolt-certification-app
