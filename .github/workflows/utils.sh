@@ -164,33 +164,11 @@ set -o pipefail
 # "
 # }
 
-
-function check_port() {
-  local PORT=$1
-  # Check if port is in use
-  if lsof -i :$PORT > /dev/null; then
-    echo "Port $PORT is already in use"
-    # Kill the process using the port
-    PID=$(lsof -t -i :$PORT)
-    if [ ! -z "$PID" ]; then
-      echo "Killing process $PID using port $PORT"
-      kill -9 $PID
-      echo "Port $PORT is now free"
-    fi
-  else
-    echo "Port $PORT is available"
-  fi
-}
-
 function runTests(){
   MODULE="$1" # Pass the module name (core, manage, discovery)
 
-
- # Check port availability (8081 in this case)
-  check_port 8081
-
   # Clone firebolt-apis repo if it doesn't already exist
- # if [ ! -d "firebolt-apis" ]; then
+  if [ ! -d "firebolt-apis" ]; then
     echo "Clone firebolt-apis repo with PR branch"
     PR_BRANCH=$(echo "$EVENT_NAME" | tr '[:upper:]' '[:lower:]')
     if [ "${PR_BRANCH}" == "pull_request" ]; then
@@ -210,30 +188,33 @@ function runTests(){
     npm run compile
     npm run dist
     cd ..
- # else
-  #  echo "firebolt-apis repo already exists. Skipping clone."
-  #fi
+  else
+    echo "firebolt-apis repo already exists. Skipping clone."
+  fi
 
   # Clone mock-firebolt repo if it doesn't already exist
-  #if [ ! -d "mock-firebolt" ]; then
+  if [ ! -d "mock-firebolt" ]; then
     echo "Cloning mfos repo and start it in the background"
     git clone https://github.com/rdkcentral/mock-firebolt.git
     cd mock-firebolt/server
     cp ../../firebolt-apis/dist/firebolt-open-rpc.json ../../mock-firebolt/server/src/firebolt-open-rpc.json
-    jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
-    jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
+    jq --arg MODULE "$MODULE" 'del(.supportedOpenRPCs[] | select(.name == $MODULE))' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
+    jq --arg MODULE "$MODULE" '.supportedOpenRPCs += [{"name": $MODULE, "cliFlag": null, "cliShortFlag": null, "fileName": "firebolt-open-rpc.json", "enabled": true}]' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
+   # jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
+   # jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
     cp src/.mf.config.SAMPLE.json src/.mf.config.json
     npm install
     npm start &
     cd ../..
- # else
-  #  echo "mock-firebolt repo already exists. Skipping clone."
-  # fi
+  else
+    echo "mock-firebolt repo already exists. Skipping clone."
+  fi
 
   # Clone Firebolt Certification App (FCA) if it doesn't exist
-  echo "Clone FCA repo"
-  git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
-
+  if [ ! -d "firebolt-certification-app" ]; then
+    echo "Clone FCA repo"
+    git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
+  fi
 
   echo "Updating dependency for ${MODULE} in FCA"
   cd firebolt-certification-app
