@@ -254,9 +254,35 @@ function runTests(){
   sleep 5s
   cd ..
 
-  
-  echo "curl request with runTest install on initialization"
-  response=$(curl -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
+ #Define the INTENT1 variable correctly
+INTENT1=$(cat <<EOF
+{
+  "result": {
+    "lmt": 0,
+    "us_privacy": "1-N-",
+    "discovery": {
+      "navigateTo": {
+        "action": "search",
+        "data": {
+          "query": "{\"task\":\"runTest\",\"params\":{\"certification\":true,\"exceptionMethods\":[],\"methodsToBeExcluded\":[\"Lifecycle.finished\"]},\"action\":\"MANAGE\",\"context\":{\"communicationMode\":\"SDK\"},\"metadata\":{\"target\":\"MFOS\",\"targetVersion\":\"NIL\",\"deviceModel\":\"NIL\",\"fbVersion\":\"NA\"},\"asynchronous\":false,\"appType\":\"firebolt\"}"
+        },
+        "context": {
+          "source": "voice"
+        }
+      }
+    }
+  }
+}
+EOF
+)
+
+echo "curl request with runTest install on initialization"
+response=$(curl -X POST -H "Content-Type: application/json" -d "$INTENT1" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
+
+# Check the response
+echo "Response: $response"
+ # echo "curl request with runTest install on initialization"
+ # response=$(curl -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
   # response=$(curl -X POST -H "Content-Type: application/json" -d "MANAGE" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
   echo "run mfos tests in a headless browser"
   npm install puppeteer
