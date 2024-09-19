@@ -154,7 +154,7 @@ function unzipArtifact(){
 
 # Check argument and call corresponding function
 if [ "$1" == "runTests" ]; then
-    runTests "$2"
+    runTests 
 elif [ "$1" == "getResults" ]; then
     getResults
 elif [ "$1" == "getArtifactData" ]; then
