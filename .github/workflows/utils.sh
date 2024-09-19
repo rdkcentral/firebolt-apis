@@ -210,7 +210,7 @@ function runTests(){
   # fi
 
   # Clone mock-firebolt repo if it doesn't already exist
- # if [ ! -d "mock-firebolt" ]; then
+  if [ ! -d "mock-firebolt" ]; then
     echo "Cloning mfos repo and start it in the background"
     git clone https://github.com/rdkcentral/mock-firebolt.git
     cd mock-firebolt/server
@@ -223,9 +223,9 @@ function runTests(){
     npm install
     npm start &
     cd ../..
- # else
- #   echo "mock-firebolt repo already exists. Skipping clone."
-  # fi
+  else
+    echo "mock-firebolt repo already exists. Skipping clone."
+  fi
 
   # Clone Firebolt Certification App (FCA) if it doesn't exist
  # if [ ! -d "firebolt-certification-app" ]; then
