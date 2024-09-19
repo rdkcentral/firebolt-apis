@@ -20,7 +20,7 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
-          INTENT: ${{ var.INTENT }}
+          INTENT: ${{ vars.INTENT }}
         run: |
           ./.github/workflows/utils.sh runTests 
 
