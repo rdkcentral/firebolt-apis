@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
 
-      Run Core tests
+      #Run Core tests
       - name: Run Core tests and create assets
         env:
           EVENT_NAME: ${{ github.event_name }}
