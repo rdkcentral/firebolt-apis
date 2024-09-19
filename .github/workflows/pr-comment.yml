@@ -5,7 +5,7 @@ on:
     types:
       - "completed"
     workflows:
-      - "MFOS standalone sanity report for Core/Manage/Discovery"
+      - "Core SDK - MFOS standalone sanity report"
 
 jobs:
   comment-on-pr:
