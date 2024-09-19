@@ -70,7 +70,7 @@ message("Setup ${TESTAPP}")
 if(UNIT_TEST STREQUAL "ON")
     add_definitions(-DUNIT_TEST)
 
-    file(GLOB UNIT_TESTS "unit/advertisingTest.cpp")
+    file(GLOB UNIT_TESTS "unit/*")
 
     add_executable(${TESTAPP} 
         CoreSDKTest.cpp 
