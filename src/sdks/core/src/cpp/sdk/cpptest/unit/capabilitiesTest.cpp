@@ -23,7 +23,7 @@ TEST_F(CapabilitiesTest, Supported)
 	nlohmann::json_abi_v3_11_3::json expectedValues = nlohmann::json::parse(jsonEngine->get_value("Capabilities.supported"));
 
 
-	bool supported = Firebolt::IFireboltAccessor::Instance().CapabilitiesInterface().supported("example", &error);
+	bool supported = Firebolt::IFireboltAccessor::Instance().CapabilitiesInterface().supported("xrn:firebolt:capability:wifi:scan", &error);
 
 	EXPECT_EQ(error, Firebolt::Error::None);
 	EXPECT_EQ(supported, expectedValues);
