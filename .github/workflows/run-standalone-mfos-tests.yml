@@ -15,41 +15,45 @@ jobs:
         uses: actions/checkout@v2
 
 
-      # Run Core tests
-      # - name: Run Core tests and create assets
-      #   env:
-      #     EVENT_NAME: ${{ github.event_name }}
-      #     GITHUB_REF: ${{ github.ref }}
-      #     PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
-      #     INTENT: ${{ secrets.INTENT }}
-      #   run: |
-      #     ./.github/workflows/utils.sh runTests core
-
-       # Run Manage tests
-      - name: Run Manage tests and create assets
+      Run Core tests
+      - name: Run Core tests and create assets
         env:
           EVENT_NAME: ${{ github.event_name }}
           GITHUB_REF: ${{ github.ref }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
           INTENT: ${{ secrets.INTENT }}
         run: |
-          ./.github/workflows/utils.sh runTests manage
+          ./.github/workflows/utils.sh runTests 
+
+       # Run Manage tests
+      # - name: Run Manage tests and create assets
+      #   env:
+      #     EVENT_NAME: ${{ github.event_name }}
+      #     GITHUB_REF: ${{ github.ref }}
+      #     PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+      #     INTENT: ${{ secrets.INTENT }}
+      #   run: |
+      #     ./.github/workflows/utils.sh runTests manage
 
 
 
 
-      - name: Compress all reports
-        run: |
-          mkdir -p ${{ github.workspace }}/combined-reports
-          cp ${{ github.workspace }}/report/manage/report.json ${{ github.workspace }}/combined-reports/manage-report.json
-          tar -czvf combined-reports.tar.gz -C ${{ github.workspace }}/combined-reports .
+      # - name: Compress all reports
+      #   run: |
+      #     mkdir -p ${{ github.workspace }}/combined-reports
+      #     cp ${{ github.workspace }}/report/core/report.json ${{ github.workspace }}/combined-reports/core-report.json
+      #     cp ${{ github.workspace }}/report/manage/report.json ${{ github.workspace }}/combined-reports/manage-report.json
+      #     tar -czvf combined-reports.tar.gz -C ${{ github.workspace }}/combined-reports .
 
-      # Upload combined report as an artifact
-      - name: Upload combined report
+      - name: Upload report.json as an artifact
         uses: actions/upload-artifact@v4
         with:
-          name: combined-reports
-          path: combined-reports.tar.gz
+          name: report
+          path: ${{ github.workspace }}/report
+
+      - name: Get results from report.json
+        run: |
+          ./.github/workflows/utils.sh getResults
 
 
       # # Upload Core report as an artifact
