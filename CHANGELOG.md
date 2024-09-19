@@ -1,3 +1,10 @@
+# [1.4.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.8...v1.4.0-next.9) (2024-09-19)
+
+
+### Features
+
+* Fix Core SDK test app ([#321](https://github.com/rdkcentral/firebolt-apis/issues/321)) ([3a78534](https://github.com/rdkcentral/firebolt-apis/commit/3a78534480928b14723e18eb4f90304de4077160))
+
 # [1.4.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.7...v1.4.0-next.8) (2024-09-18)
 
 
