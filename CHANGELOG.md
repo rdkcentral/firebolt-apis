@@ -1,3 +1,10 @@
+# [1.4.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.9...v1.4.0-next.10) (2024-09-19)
+
+
+### Features
+
+* Add global subscribe & HDMI tests to manage test app ([#320](https://github.com/rdkcentral/firebolt-apis/issues/320)) ([63962ab](https://github.com/rdkcentral/firebolt-apis/commit/63962ab3131358f77e97af73bc3e4207f958e5fb))
+
 # [1.4.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.8...v1.4.0-next.9) (2024-09-19)
 
 
