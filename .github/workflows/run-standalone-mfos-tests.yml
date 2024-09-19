@@ -1,4 +1,4 @@
-name: Core SDK - MFOS standalone sanity report
+name: MFOS standalone sanity report - CORE,MANAGE,DISCOVERY
 
 on:
   pull_request:
