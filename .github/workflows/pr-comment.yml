@@ -5,7 +5,7 @@ on:
     types:
       - "completed"
     workflows:
-      - "MFOS standalone sanity report - CORE"
+      - "MFOS standalone sanity report - CORE,MANAGE,DISCOVERY"
 
 jobs:
   comment-on-pr:
