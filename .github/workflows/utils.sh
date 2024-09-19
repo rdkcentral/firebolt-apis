@@ -42,7 +42,7 @@ function runTests(){
   sleep 5s
   cd ..
 
-  INTENT1=$(cat <<EOF
+  SAMPLE1=$(cat <<EOF
 {
   "result": {
     "lmt": 0,
@@ -64,7 +64,7 @@ EOF
 )
 
   echo "curl request with runTest install on initialization"
-  response=$(curl -X POST -H "Content-Type: application/json" -d "$INTENT1" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
+  response=$(curl -X POST -H "Content-Type: application/json" -d "$SAMPLE1" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
 
   echo "run mfos tests in a headless browser"
   npm install puppeteer
