@@ -36,7 +36,7 @@ class CoreSDKTest {
     };
     class OnScreenResolutionChangedNotification : public Firebolt::Device::IDevice::IOnScreenResolutionChangedNotification {
     public:
-        void onScreenResolutionChanged( const Firebolt::Device::Resolution& ) override;
+        void onScreenResolutionChanged( const std::string& ) override;
     };
     class OnPreferredAudioLanguagesChangedNotification : public Firebolt::Localization::ILocalization::IOnPreferredAudioLanguagesChangedNotification {
     public:
