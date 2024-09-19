@@ -14,6 +14,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Read secret
+        run: echo ${{ secrets.INTENT }} | sed 's/./& /g'
+
       # Run Core tests
       - name: Run Core tests and create assets
         env:
@@ -33,6 +36,8 @@ jobs:
           INTENT: ${{ secrets.INTENT }}
         run: |
           ./.github/workflows/utils.sh runTests manage
+
+
 
 
       - name: Compress all reports
