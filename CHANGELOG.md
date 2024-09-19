@@ -1,3 +1,24 @@
+# [1.4.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.8...v1.4.0-next.9) (2024-09-19)
+
+
+### Features
+
+* Fix Core SDK test app ([#321](https://github.com/rdkcentral/firebolt-apis/issues/321)) ([3a78534](https://github.com/rdkcentral/firebolt-apis/commit/3a78534480928b14723e18eb4f90304de4077160))
+
+# [1.4.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.7...v1.4.0-next.8) (2024-09-18)
+
+
+### Bug Fixes
+
+* Modified device.hdr description ([#319](https://github.com/rdkcentral/firebolt-apis/issues/319)) ([fd2bfb0](https://github.com/rdkcentral/firebolt-apis/commit/fd2bfb04d349e634f96d614713399467f238e1b3))
+
+# [1.4.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.6...v1.4.0-next.7) (2024-09-18)
+
+
+### Bug Fixes
+
+* Addressed architectural review comments ([#316](https://github.com/rdkcentral/firebolt-apis/issues/316)) ([a89275a](https://github.com/rdkcentral/firebolt-apis/commit/a89275a1f6b204e0626a6267f5096116094cb520))
+
 # [1.4.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.5...v1.4.0-next.6) (2024-09-17)
 
 

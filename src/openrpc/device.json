@@ -74,7 +74,7 @@
     },
     {
       "name": "platform",
-      "summary": "Get a transient platform identifier for the device. This API should be used to correlate metrics on the device only and cannot be guaranteed to have consistent responses across platforms.",
+      "summary": "Get a platform identifier for the device. This API should be used to correlate metrics on the device only and cannot be guaranteed to have consistent responses across platforms.",
       "params": [],
       "tags": [
         {
@@ -348,15 +348,15 @@
         }
       ],
       "result": {
-        "name": "supportedHdcpVersions",
-        "summary": "the supported HDCP versions",
+        "name": "negotiatedHdcpVersions",
+        "summary": "the negotiated HDCP versions",
         "schema": {
           "$ref": "#/components/schemas/HDCPVersionMap"
         }
       },
       "examples": [
         {
-          "name": "Getting the supported HDCP versions",
+          "name": "Getting the negotiated HDCP versions",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -384,15 +384,15 @@
         }
       ],
       "result": {
-        "name": "supportedHdrFormats",
-        "summary": "the supported HDR formats",
+        "name": "negotiatedHdrFormats",
+        "summary": "the negotiated HDR formats",
         "schema": {
           "$ref": "#/components/schemas/HDRFormatMap"
         }
       },
       "examples": [
         {
-          "name": "Getting the supported HDR formats",
+          "name": "Getting the negotiated HDR formats",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -457,6 +457,9 @@
           "x-uses": [
             "xrn:firebolt:capability:device:info"
           ]
+        },
+        {
+          "name": "deprecated"
         }
       ],
       "result": {
@@ -879,7 +882,7 @@
           "dolbyVision",
           "hlg"
         ],
-        "description": "The type of HDR format that is supported"
+        "description": "The type of HDR format"
       },
       "HDCPVersionMap": {
         "title": "HDCPVersionMap",
@@ -896,7 +899,7 @@
           "hdcp1.4",
           "hdcp2.2"
         ],
-        "description": "The type of HDCP versions that is supported"
+        "description": "The type of HDCP versions"
       },
       "DeviceVersion": {
         "title": "DeviceVersion",
