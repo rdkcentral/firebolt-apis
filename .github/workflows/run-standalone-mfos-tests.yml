@@ -1,4 +1,4 @@
-name: MFOS standalone sanity report - CORE,MANAGE,DISCOVERY
+name: MFOS standalone sanity report - CORE
 
 on:
   pull_request:
