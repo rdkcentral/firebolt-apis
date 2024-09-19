@@ -185,7 +185,7 @@ function runTests(){
   MODULE="$1" # Pass the module name 
 
   # Clone firebolt-apis repo if it doesn't already exist
-  if [ ! -d "firebolt-apis" ]; then
+ # if [ ! -d "firebolt-apis" ]; then
     echo "Clone firebolt-apis repo with PR branch"
     PR_BRANCH=$(echo "$EVENT_NAME" | tr '[:upper:]' '[:lower:]')
     if [ "${PR_BRANCH}" == "pull_request" ]; then
@@ -205,12 +205,12 @@ function runTests(){
     npm run compile
     npm run dist
     cd ..
-  else
-    echo "firebolt-apis repo already exists. Skipping clone."
-  fi
+ # else
+ #   echo "firebolt-apis repo already exists. Skipping clone."
+  # fi
 
   # Clone mock-firebolt repo if it doesn't already exist
-  if [ ! -d "mock-firebolt" ]; then
+ # if [ ! -d "mock-firebolt" ]; then
     echo "Cloning mfos repo and start it in the background"
     git clone https://github.com/rdkcentral/mock-firebolt.git
     cd mock-firebolt/server
@@ -223,15 +223,15 @@ function runTests(){
     npm install
     npm start &
     cd ../..
-  else
-    echo "mock-firebolt repo already exists. Skipping clone."
-  fi
+ # else
+ #   echo "mock-firebolt repo already exists. Skipping clone."
+  # fi
 
   # Clone Firebolt Certification App (FCA) if it doesn't exist
-  if [ ! -d "firebolt-certification-app" ]; then
+ # if [ ! -d "firebolt-certification-app" ]; then
     echo "Clone FCA repo"
     git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
-  fi
+ # fi
 
   echo "Updating dependency for ${MODULE} in FCA"
   cd firebolt-certification-app
@@ -254,7 +254,7 @@ function runTests(){
   sleep 5s
   cd ..
 
-  echo "INTENT value: $INTENT"
+  
   echo "curl request with runTest install on initialization"
   response=$(curl -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
   # response=$(curl -X POST -H "Content-Type: application/json" -d "MANAGE" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
