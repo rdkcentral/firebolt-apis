@@ -1,3 +1,10 @@
+# [1.4.0-next.11](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.10...v1.4.0-next.11) (2024-09-20)
+
+
+### Bug Fixes
+
+* Reverted App selection tag change ([#322](https://github.com/rdkcentral/firebolt-apis/issues/322)) ([eee90e4](https://github.com/rdkcentral/firebolt-apis/commit/eee90e4f17deedc689ff858021199de8de772c8e))
+
 # [1.4.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.9...v1.4.0-next.10) (2024-09-19)
 
 
