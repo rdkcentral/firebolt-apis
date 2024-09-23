@@ -7,4 +7,4 @@
 ### Features
 
 * Introduced Discovery SDK for first-party aggregated experiences to connect with third-party apps.
-* [User Interest](https://github.com/rdkcentral/firebolt-apis/blob/main/requirements/specifications/discovery/user-interest.md) (#170 (https://github.com/rdkcentral/firebolt-apis/issues/170)) (48a1094 (https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+* [User Interest](https://github.com/rdkcentral/firebolt-apis/blob/main/requirements/specifications/discovery/user-interest.md) ([#170](https://github.com/rdkcentral/firebolt-apis/issues/170)) ([48a1094](https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
