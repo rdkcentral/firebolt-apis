@@ -1,4 +1,21 @@
-# 1.3.0 (https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0...v1.3.0) (2024-08-12)
+# [1.4.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0...v1.4.0) (2024-23-09)
+
+### Minor Fixes
+
+* Spec and Doc fixes 
+  * ([#302](https://github.com/rdkcentral/firebolt-apis/issues/302)) ([6010a85](https://github.com/rdkcentral/firebolt-apis/commit/6010a85e9883480aba71378391f5b6223645fb28))
+    * Modified BooleanMap to enum for Device module. hdr(), hdcp() audio(), screenResolution(), and videoResolution() now have defined enums as result.
+    * Method descriptions have been updated for advertisingId(), hdcp(), hdr(), audio(), screenResolution(), and videoResolution().
+    * Advertising.policy() now has associated with single capability - xrn:firebolt:capability:advertising:policy.
+    * Only enabled is the required field now for both ClosedCaptionsSettings and VoiceGuidanceSettings.
+  * ([#304](https://github.com/rdkcentral/firebolt-apis/issues/304)) ([191664b](https://github.com/rdkcentral/firebolt-apis/commit/191664b18355cca130d783f850727caf058e116a))
+    * Search Intent now has suggested entities.
+    * Method descriptions have been updated for distributor(), platform(), model(), make(), and progress().
+    * Localization.additionalInfo() now accepts number and boolean type additional properties along with string.
+    * SecondScreen.protocol() got new capability - xrn:firebolt:capability:secondscreen:protocol.
+* Added individual sdk openrpcs to the doc specification ([#311](https://github.com/rdkcentral/firebolt-apis/issues/311)) ([ace1d64](https://github.com/rdkcentral/firebolt-apis/commit/ace1d644cac114c457a739a4e4cdfe8990a96fc8))
+
+# [1.3.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.2.0...v1.3.0) (2024-08-12)
 
 ### Features
 
@@ -6,7 +23,7 @@
 * CPP App-Passthrough Logic ([#286](https://github.com/rdkcentral/firebolt-apis/issues/286)) ([4eb84ee](https://github.com/rdkcentral/firebolt-apis/commit/4eb84ee08c463915e3b13afec6603541ea0b1ae4))
 * OpenRPC version upgraded to 3.1.0 ([#298](https://github.com/rdkcentral/firebolt-apis/issues/298)) ([16b3305](https://github.com/rdkcentral/firebolt-apis/commit/16b3305201624acf904c98d8c414b9756d42aaa7))
 
-# 1.2.0 (https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-14)
+# [1.2.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.1.0...v1.2.0) (2024-06-14)
 
 ### Bug Fixes
 
