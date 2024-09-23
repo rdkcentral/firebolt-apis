@@ -34,7 +34,7 @@
 ### Features
 
 * [Command and Control Intents](https://github.com/rdkcentral/firebolt-apis/blob/main/requirements/specifications/intents/command-and-control.md) ([#251](https://github.com/rdkcentral/firebolt-apis/issues/251)) ([c8f8dae](https://github.com/rdkcentral/firebolt-apis/commit/c8f8dae5a9a0f14a3815c04df5a55763823d4898))
-* [User Interest](https://github.com/rdkcentral/firebolt-apis/blob/main/requirements/specifications/discovery/user-interest.md) (#170 (https://github.com/rdkcentral/firebolt-apis/issues/170)) (48a1094 (https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
+* [User Interest](https://github.com/rdkcentral/firebolt-apis/blob/main/requirements/specifications/discovery/user-interest.md) ([#170](https://github.com/rdkcentral/firebolt-apis/issues/170)) ([48a1094](https://github.com/rdkcentral/firebolt-apis/commit/48a1094aaab6418f09db662dbc81f090a34f32ed))
 
 # [1.1.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.0.0...v1.1.0) (2024-02-09)
 
