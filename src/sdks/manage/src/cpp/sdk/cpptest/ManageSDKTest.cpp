@@ -31,6 +31,7 @@ ManageSDKTest::OnPreferredAudioLanguagesChangedNotification ManageSDKTest::_pref
 ManageSDKTest::OnAllowACRCollectionChangedNotification ManageSDKTest::_allowACRCollectionChangedNotification;
 ManageSDKTest::OnSignInNotification ManageSDKTest::_signInNotification;
 ManageSDKTest::OnSignOutNotification ManageSDKTest::_signOutNotification;
+ManageSDKTest::OnAutoLowLatencyModeCapableChangedNotification ManageSDKTest::_autoLowLatencyModeCapableChangedNotification;
 ManageSDKTest::KeyboardProvider ManageSDKTest::_keyboardProvider;
 ManageSDKTest::AcknowledgeChallengeProvider ManageSDKTest::_acknowledgeChallengeProvider;
 ManageSDKTest::PinChallengeProvider ManageSDKTest::_pinChallengeProvider;
@@ -1010,5 +1011,106 @@ void ManageSDKTest::WifiDisconnect()
     } else {
         std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
         throw std::runtime_error("WifiDisconnect failed. " + errorMessage);
+    }
+}
+
+void ManageSDKTest::OnAutoLowLatencyModeCapableChangedNotification::onAutoLowLatencyModeCapableChanged( const Firebolt::HDMIInput::AutoLowLatencyModeCapableChangedInfo& info)
+{
+    cout << "Low latency capable changed"  << endl;
+}
+
+void ManageSDKTest::GlobalSubscribeHdmiAutoLowLatencyModeCapableChanged()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().globalSubscribe(_autoLowLatencyModeCapableChangedNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Global Subscribe for HDMIInput AutoLowLatencyModeCapable is a success." << endl;
+    } else {
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SubscribeHDMIInputAutoLowLatencyModeCapable failed." + errorMessage);
+    }
+}
+
+void ManageSDKTest::GlobalUnsubscribeHdmiAutoLowLatencyModeCapableChanged()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().globalUnsubscribe(_autoLowLatencyModeCapableChangedNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Global Unsubscribe for HDMIInput AutoLowLatencyModeCapable is a success." << endl;
+    } else {
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("UnsubscribeHDMIInputAutoLowLatencyModeCapable failed." + errorMessage);
+    }
+}
+
+void ManageSDKTest::GetAutoLowLatencyModeCapable()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string port = "HDMI1";
+    bool result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().autoLowLatencyModeCapable(port, &error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "GetAutoLowLatencyModeCapable is a success." << endl;
+    } else {
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetAutoLowLatencyModeCapable failed. " + errorMessage);
+    }
+}
+
+void ManageSDKTest::SetAutoLowLatencyModeCapable()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string port = "HDMI1";
+    bool value = false;
+    Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().setAutoLowLatencyModeCapable(port, value, &error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "SetAutoLowLatencyModeCapable is a success." << endl;
+    } else {
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SetAutoLowLatencyModeCapable failed. " + errorMessage);
+    }
+}
+
+void ManageSDKTest::GetEdidVersion()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string port = "HDMI1";
+    Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().edidVersion(port, &error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "GetEdidVersion is a success." << endl;
+    } else {
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetEdidVersion failed. " + errorMessage);
+    }
+}
+
+void ManageSDKTest::SetEdidVersion()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string port = "HDMI1";
+    Firebolt::HDMIInput::EDIDVersion value = Firebolt::HDMIInput::EDIDVersion::V1_4;
+    Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().setEdidVersion(port, value, &error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "SetEdidVersion is a success." << endl;
+    } else {
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("SetEdidVersionfailed. " + errorMessage);
+    }
+}
+
+void ManageSDKTest::GetHdmiPortInfo()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string portId = "HDMI1";
+    Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().port(portId, &error);
+
+    if (error == Firebolt::Error::None) {
+        cout << "GetHdmiPortInfo is a success." << endl;
+    } else {
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("GetHdmiPortInfo failed. " + errorMessage);
     }
 }

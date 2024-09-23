@@ -41,7 +41,7 @@
     },
     {
       "name": "distributor",
-      "summary": "Get the distributor ID for this device",
+      "summary": "Get the name of the entity which is distributing the current device. There can be multiple distributors which distribute the same device model.",
       "params": [],
       "tags": [
         {
@@ -74,7 +74,7 @@
     },
     {
       "name": "platform",
-      "summary": "Get the platform ID for this device",
+      "summary": "Get a platform identifier for the device. This API should be used to correlate metrics on the device only and cannot be guaranteed to have consistent responses across platforms.",
       "params": [],
       "tags": [
         {
@@ -173,7 +173,7 @@
     },
     {
       "name": "model",
-      "summary": "Get the device model",
+      "summary": "Get the manufacturer designated model of the device",
       "params": [],
       "tags": [
         {
@@ -239,7 +239,7 @@
     },
     {
       "name": "make",
-      "summary": "Get the device make",
+      "summary": "Get the manufacturer of the device model",
       "params": [],
       "tags": [
         {
@@ -292,34 +292,7 @@
         "name": "versions",
         "summary": "the versions",
         "schema": {
-          "type": "object",
-          "properties": {
-            "sdk": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "The Firebolt SDK version"
-            },
-            "api": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "The lateset Firebolt API version supported by the curent device."
-            },
-            "firmware": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "The device firmware version."
-            },
-            "os": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-              "description": "**Deprecated** Use `firmware`, instead."
-            },
-            "debug": {
-              "type": "string",
-              "description": "Detail version as a string, for debugging purposes"
-            }
-          },
-          "required": [
-            "api",
-            "firmware",
-            "os"
-          ]
+          "$ref": "#/components/schemas/DeviceVersion"
         }
       },
       "examples": [
@@ -361,7 +334,7 @@
     },
     {
       "name": "hdcp",
-      "summary": "Get the supported HDCP profiles",
+      "summary": "Get the negotiated HDCP profiles for a connected device. \n\n For devices that do not require additional connections (e.g. panels), `true` will be returned for all profiles.",
       "params": [],
       "tags": [
         {
@@ -375,15 +348,15 @@
         }
       ],
       "result": {
-        "name": "supportedHdcpProfiles",
-        "summary": "the supported HDCP profiles",
+        "name": "negotiatedHdcpVersions",
+        "summary": "the negotiated HDCP versions",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          "$ref": "#/components/schemas/HDCPVersionMap"
         }
       },
       "examples": [
         {
-          "name": "Getting the supported HDCP profiles",
+          "name": "Getting the negotiated HDCP versions",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -397,7 +370,7 @@
     },
     {
       "name": "hdr",
-      "summary": "Get the supported HDR profiles",
+      "summary": "Get the negotiated HDR formats for the connected display and device",
       "params": [],
       "tags": [
         {
@@ -411,15 +384,15 @@
         }
       ],
       "result": {
-        "name": "supportedHdrProfiles",
-        "summary": "the supported HDR profiles",
+        "name": "negotiatedHdrFormats",
+        "summary": "the negotiated HDR formats",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+          "$ref": "#/components/schemas/HDRFormatMap"
         }
       },
       "examples": [
         {
-          "name": "Getting the supported HDR profiles",
+          "name": "Getting the negotiated HDR formats",
           "params": [],
           "result": {
             "name": "Default Result",
@@ -435,7 +408,7 @@
     },
     {
       "name": "audio",
-      "summary": "Get the supported audio profiles",
+      "summary": "Get the supported audio profiles for the connected devices. \n\n It is not recommended to use this API for visual badging on content within your app since this does not reflect the settings of the user.",
       "params": [],
       "tags": [
         {
@@ -473,7 +446,7 @@
     },
     {
       "name": "screenResolution",
-      "summary": "Get the current screen resolution",
+      "summary": "Get the resolution for the graphical surface of the app. \n\nThe pairs returned will be of a [width, height] format and will correspond to the following values: \n\nNTSC Standard Definition (SD): [720, 480] \n\nPAL Standard Definition (SD): [720, 576] \n\nHigh Definition (HD): [1280, 720] \n\nFull HD (FHD): [1920, 1080]\n\n4K Ultra High Definition (UHD): [3840, 2160] \n\n**Deprecated:** Use non-Firebolt APIs specific to your platform, e.g. W3C APIs",
       "params": [],
       "tags": [
         {
@@ -484,6 +457,11 @@
           "x-uses": [
             "xrn:firebolt:capability:device:info"
           ]
+        },
+        {
+          "name": "deprecated",
+          "x-alternative": "Use non-Firebolt APIs specific to your platform, e.g. W3C APIs",
+          "x-since": "1.4.0"
         }
       ],
       "result": {
@@ -509,7 +487,7 @@
     },
     {
       "name": "videoResolution",
-      "summary": "Get the current video resolution",
+      "summary": "Get the maximum supported video resolution of the currently connected device and display. \n\nThe pairs returned will be of a [width, height] format and will correspond to the following values: \n\nNTSC Standard Definition (SD): [720, 480] \n\nPAL Standard Definition (SD): [720, 576] \n\nHigh Definition (HD): [1280, 720] \n\nFull HD (FHD): [1920, 1080]\n\n4K Ultra High Definition (UHD): [3840, 2160]",
       "params": [],
       "tags": [
         {
@@ -641,19 +619,7 @@
         "name": "networkInfo",
         "summary": "the status and type",
         "schema": {
-          "type": "object",
-          "properties": {
-            "state": {
-              "$ref": "#/components/schemas/NetworkState"
-            },
-            "type": {
-              "$ref": "#/components/schemas/NetworkType"
-            }
-          },
-          "required": [
-            "state",
-            "type"
-          ]
+          "$ref": "#/components/schemas/NetworkInfoResult"
         }
       },
       "examples": [
@@ -759,18 +725,98 @@
   "components": {
     "schemas": {
       "Resolution": {
-        "type": "array",
-        "items": [
+        "oneOf": [
           {
-            "type": "integer"
+            "type": "array",
+            "items": [
+              {
+                "type": "integer",
+                "const": 720,
+                "description": "Width in pixels"
+              },
+              {
+                "type": "integer",
+                "const": 480,
+                "description": "Height in pixels"
+              }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
           },
           {
-            "type": "integer"
+            "type": "array",
+            "items": [
+              {
+                "type": "integer",
+                "const": 720,
+                "description": "Width in pixels"
+              },
+              {
+                "type": "integer",
+                "const": 576,
+                "description": "Height in pixels"
+              }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
+          },
+          {
+            "type": "array",
+            "items": [
+              {
+                "type": "integer",
+                "const": 1280,
+                "description": "Width in pixels"
+              },
+              {
+                "type": "integer",
+                "const": 720,
+                "description": "Height in pixels"
+              }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
+          },
+          {
+            "type": "array",
+            "items": [
+              {
+                "type": "integer",
+                "const": 1920,
+                "description": "Width in pixels"
+              },
+              {
+                "type": "integer",
+                "const": 1080,
+                "description": "Height in pixels"
+              }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
+          },
+          {
+            "type": "array",
+            "items": [
+              {
+                "type": "integer",
+                "const": 3840,
+                "description": "Width in pixels"
+              },
+              {
+                "type": "integer",
+                "const": 2160,
+                "description": "Height in pixels"
+              }
+            ],
+            "additionalItems": false,
+            "minItems": 2,
+            "maxItems": 2
           }
-        ],
-        "additionalItems": false,
-        "minItems": 2,
-        "maxItems": 2
+        ]
       },
       "NetworkType": {
         "title": "NetworkType",
@@ -793,16 +839,115 @@
       },
       "AudioProfiles": {
         "title": "AudioProfiles",
-        "allOf": [
-          {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
+        "type": "object",
+        "properties": {
+          "stereo": {
+            "type": "boolean"
           },
-          {
-            "type": "object",
-            "propertyNames": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/AudioProfile"
-            }
+          "dolbyDigital5.1": {
+            "type": "boolean"
+          },
+          "dolbyDigital5.1+": {
+            "type": "boolean"
+          },
+          "dolbyAtmos": {
+            "type": "boolean"
           }
+        },
+        "required": [
+          "stereo",
+          "dolbyDigital5.1",
+          "dolbyDigital5.1+",
+          "dolbyAtmos"
+        ]
+      },
+      "HDRFormatMap": {
+        "title": "HDRFormatMap",
+        "type": "object",
+        "properties": {
+          "hdr10": {
+            "type": "boolean"
+          },
+          "hdr10Plus": {
+            "type": "boolean"
+          },
+          "dolbyVision": {
+            "type": "boolean"
+          },
+          "hlg": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "hdr10",
+          "hdr10Plus",
+          "dolbyVision",
+          "hlg"
+        ],
+        "description": "The type of HDR format"
+      },
+      "HDCPVersionMap": {
+        "title": "HDCPVersionMap",
+        "type": "object",
+        "properties": {
+          "hdcp1.4": {
+            "type": "boolean"
+          },
+          "hdcp2.2": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "hdcp1.4",
+          "hdcp2.2"
+        ],
+        "description": "The type of HDCP versions"
+      },
+      "DeviceVersion": {
+        "title": "DeviceVersion",
+        "type": "object",
+        "properties": {
+          "sdk": {
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+            "description": "The Firebolt SDK version"
+          },
+          "api": {
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+            "description": "The latest Firebolt API version supported by the current device."
+          },
+          "firmware": {
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+            "description": "The firmware version as reported by the device"
+          },
+          "os": {
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
+            "description": "**Deprecated** Use `firmware`, instead."
+          },
+          "debug": {
+            "type": "string",
+            "description": "Detailed version as a string, for debugging purposes"
+          }
+        },
+        "required": [
+          "api",
+          "firmware",
+          "os"
+        ]
+      },
+      "NetworkInfoResult": {
+        "title": "NetworkInfoResult",
+        "type": "object",
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/NetworkState"
+          },
+          "type": {
+            "$ref": "#/components/schemas/NetworkType"
+          }
+        },
+        "required": [
+          "state",
+          "type"
         ]
       }
     }
