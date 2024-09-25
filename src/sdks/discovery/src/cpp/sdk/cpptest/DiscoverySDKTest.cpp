@@ -23,6 +23,7 @@
 
 using namespace std;
 bool DiscoverySDKTest::_connected;
+DiscoverySDKTest::OnUserInterestNotification DiscoverySDKTest::_userInterestNotification;
 
 void DiscoverySDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
@@ -89,14 +90,47 @@ inline const T ConvertToEnum(EnumMap<T> enumMap, const string& str)
      return value;
 }
 
-void DiscoverySDKTest::SampleTest()
+void DiscoverySDKTest::OnUserInterestNotification::onUserInterest( const Firebolt::Content::InterestEvent& interest)
+{
+    cout << "User Interest changed notification"  << endl;
+}
+
+void DiscoverySDKTest::SubscribeUserInterest()
 {
     Firebolt::Error error = Firebolt::Error::None;
-
+    Firebolt::IFireboltAccessor::Instance().ContentInterface().subscribe(_userInterestNotification, &error);
     if (error == Firebolt::Error::None) {
-        cout << "Sample Test Passed!" << endl;
+        cout << "Subscribe Content.UserInterest is a success." << endl;
     } else {
         std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
-        throw std::runtime_error("SampleTest failed. " + errorMessage);
+        throw std::runtime_error("Subscribe Content.UserInterest failed. " + errorMessage);
+    }
+}
+
+void DiscoverySDKTest::UnsubscribeUserInterest()
+{
+    Firebolt::Error error = Firebolt::Error::None;
+    Firebolt::IFireboltAccessor::Instance().ContentInterface().unsubscribe(_userInterestNotification, &error);
+    if (error == Firebolt::Error::None) {
+        cout << "Unsubscribe Content.UserInterest is a success." << endl;
+    } else {
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("Unsubscribe Content.UserInterest failed." + errorMessage);
+    }
+}
+
+void DiscoverySDKTest::RequestUserInterest()
+{
+    Firebolt::Discovery::InterestType type = Firebolt::Discovery::InterestType::INTEREST;
+    Firebolt::Discovery::InterestReason reason = Firebolt::Discovery::InterestReason::REACTION;
+    Firebolt::Error error = Firebolt::Error::None;
+
+    Firebolt::IFireboltAccessor::Instance().ContentInterface().requestUserInterest(type, reason, &error);
+    
+    if (error == Firebolt::Error::None) {
+        cout << "Content.requestuserInterest call is a success." << endl;
+    } else {
+        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
+        throw std::runtime_error("Content.requestUserInterest failed." + errorMessage);
     }
 }
