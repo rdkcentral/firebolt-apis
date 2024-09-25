@@ -1,3 +1,38 @@
+## [1.4.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0...v1.4.1-next.1) (2024-09-25)
+
+
+### Bug Fixes
+
+* Add Manage,Discovery to end-to-end Functional Testing ([#318](https://github.com/rdkcentral/firebolt-apis/issues/318)) ([41fdf27](https://github.com/rdkcentral/firebolt-apis/commit/41fdf2777183d85a5cdeb86874ec94ce3a6a3fe4))
+
+# [1.4.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0...v1.4.0) (2024-09-23)
+
+
+### Bug Fixes
+
+* Added deprecation note in screen resolution method ([#323](https://github.com/rdkcentral/firebolt-apis/issues/323)) ([e146c43](https://github.com/rdkcentral/firebolt-apis/commit/e146c4343d9c7989cd9ca1578a5efae4c346f1f3))
+* Added individual sdk openrpcs to the doc specification ([#311](https://github.com/rdkcentral/firebolt-apis/issues/311)) ([ace1d64](https://github.com/rdkcentral/firebolt-apis/commit/ace1d644cac114c457a739a4e4cdfe8990a96fc8))
+* Addressed architectural review comments ([#316](https://github.com/rdkcentral/firebolt-apis/issues/316)) ([a89275a](https://github.com/rdkcentral/firebolt-apis/commit/a89275a1f6b204e0626a6267f5096116094cb520))
+* Adjust type in CPP device template due to openrpc change ([#307](https://github.com/rdkcentral/firebolt-apis/issues/307)) ([1f10a15](https://github.com/rdkcentral/firebolt-apis/commit/1f10a154c45d1c5f6fff45448e0a1d6db243275e))
+* Bump firebolt-openrpc to fix typescript ([#305](https://github.com/rdkcentral/firebolt-apis/issues/305)) ([62887cf](https://github.com/rdkcentral/firebolt-apis/commit/62887cf73b2e2202446e9a7cce6ec26d8d5a5842))
+* CHANGELOG.md links ([972ab20](https://github.com/rdkcentral/firebolt-apis/commit/972ab20ec445fa0b8addb3bf8396a185c4ffdfa8))
+* CI fix for file exists ([#308](https://github.com/rdkcentral/firebolt-apis/issues/308)) ([b44c11a](https://github.com/rdkcentral/firebolt-apis/commit/b44c11ac3fd96e0a035bf306a064a1acf8ce654f))
+* core CHANGELOG.md links ([9987742](https://github.com/rdkcentral/firebolt-apis/commit/9987742af6e5e5c33d8a452495f308568c9aa09f))
+* Modified device.hdr description ([#319](https://github.com/rdkcentral/firebolt-apis/issues/319)) ([fd2bfb0](https://github.com/rdkcentral/firebolt-apis/commit/fd2bfb04d349e634f96d614713399467f238e1b3))
+* Reverted App selection tag change ([#322](https://github.com/rdkcentral/firebolt-apis/issues/322)) ([eee90e4](https://github.com/rdkcentral/firebolt-apis/commit/eee90e4f17deedc689ff858021199de8de772c8e))
+* Spec and Doc fixes ([#302](https://github.com/rdkcentral/firebolt-apis/issues/302)) ([6010a85](https://github.com/rdkcentral/firebolt-apis/commit/6010a85e9883480aba71378391f5b6223645fb28))
+* Update to CHANGELOG.md for Release 1.4.0 ([a509cb6](https://github.com/rdkcentral/firebolt-apis/commit/a509cb61ac53be8c54c7502c53a7bb0c85a4571b))
+* Updated the artifact upload version for workflow ([#317](https://github.com/rdkcentral/firebolt-apis/issues/317)) ([ef9b441](https://github.com/rdkcentral/firebolt-apis/commit/ef9b441590229e3f4d5abb1eddd8068f2ed997d4))
+* Updated xrn:firebolt:capability:secondscreen:protocol to should ([#310](https://github.com/rdkcentral/firebolt-apis/issues/310)) ([1895fe6](https://github.com/rdkcentral/firebolt-apis/commit/1895fe69d91f7f31a955103c80a17f1f4beb149a))
+
+
+### Features
+
+* Add global subscribe & HDMI tests to manage test app ([#320](https://github.com/rdkcentral/firebolt-apis/issues/320)) ([63962ab](https://github.com/rdkcentral/firebolt-apis/commit/63962ab3131358f77e97af73bc3e4207f958e5fb))
+* Add OpenRPC to generated C++ SDK ([#314](https://github.com/rdkcentral/firebolt-apis/issues/314)) ([6ed96cb](https://github.com/rdkcentral/firebolt-apis/commit/6ed96cb2a83216baf1aacedf220e9a83beb50a68))
+* Fix Core SDK test app ([#321](https://github.com/rdkcentral/firebolt-apis/issues/321)) ([3a78534](https://github.com/rdkcentral/firebolt-apis/commit/3a78534480928b14723e18eb4f90304de4077160))
+* Spec and Doc fixes for Release 1.4.0 ([#304](https://github.com/rdkcentral/firebolt-apis/issues/304)) ([191664b](https://github.com/rdkcentral/firebolt-apis/commit/191664b18355cca130d783f850727caf058e116a))
+
 # [1.4.0-next.12](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0-next.11...v1.4.0-next.12) (2024-09-20)
 
 
