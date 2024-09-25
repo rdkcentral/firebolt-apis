@@ -22,6 +22,10 @@
 #include "firebolt.h"
 
 class DiscoverySDKTest {
+    class OnUserInterestNotification : public Firebolt::Content::IContent::IOnUserInterestNotification {
+    public:
+        void onUserInterest( const Firebolt::Content::InterestEvent& ) override;
+    };
 
 public:
     DiscoverySDKTest() = default;
@@ -31,11 +35,15 @@ public:
     static void DestroyFireboltInstance();
     static void TestDiscoveryStaticSDK();
 
-    static void SampleTest();
+    static void SubscribeUserInterest();
+    static void UnsubscribeUserInterest();
+    static void RequestUserInterest();
 
     static bool WaitOnConnectionReady();
 
 private:
     static void ConnectionChanged(const bool, const Firebolt::Error);
     static bool _connected;
+    static OnUserInterestNotification _userInterestNotification;
+
 };

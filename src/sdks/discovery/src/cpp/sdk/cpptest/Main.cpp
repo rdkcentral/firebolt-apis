@@ -42,9 +42,10 @@ void RunAllTests() {
 
     // Ensure the connection is ready before running tests
     if (DiscoverySDKTest::WaitOnConnectionReady()) {
-        // Add tests here
         
-        runTest(DiscoverySDKTest::SampleTest, "SampleTest");
+        runTest(DiscoverySDKTest::SubscribeUserInterest, "SubscribeUserInterest");
+        runTest(DiscoverySDKTest::UnsubscribeUserInterest, "UnsubscribeUserInterest");
+        runTest(DiscoverySDKTest::RequestUserInterest, "RequestUserInterest");
 
         if (allTestsPassed) {
             cout << "============================" << endl;
