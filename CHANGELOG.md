@@ -1,3 +1,10 @@
+## [1.4.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0...v1.4.1-next.1) (2024-09-25)
+
+
+### Bug Fixes
+
+* Add Manage,Discovery to end-to-end Functional Testing ([#318](https://github.com/rdkcentral/firebolt-apis/issues/318)) ([41fdf27](https://github.com/rdkcentral/firebolt-apis/commit/41fdf2777183d85a5cdeb86874ec94ce3a6a3fe4))
+
 # [1.4.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0...v1.4.0) (2024-09-23)
 
 
