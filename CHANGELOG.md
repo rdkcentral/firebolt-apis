@@ -1,3 +1,10 @@
+# [1.5.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.1-next.1...v1.5.0-next.1) (2024-09-25)
+
+
+### Features
+
+* Add native discovery test app ([#324](https://github.com/rdkcentral/firebolt-apis/issues/324)) ([93bc083](https://github.com/rdkcentral/firebolt-apis/commit/93bc083f76fc03c95c6f7c595259e3c78e7436f7))
+
 ## [1.4.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0...v1.4.1-next.1) (2024-09-25)
 
 
