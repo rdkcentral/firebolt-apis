@@ -36,7 +36,12 @@ function runTests(){
   echo "clone fca repo and start it in the background"
   git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
+  echo "Updating Core SDK dependency"
   jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
+  echo "Updating Manage SDK dependency"
+  jq '.dependencies["@firebolt-js/manage-sdk"] = "file:../firebolt-apis/src/sdks/manage"' package.json > package.json.tmp && mv package.json.tmp package.json
+  echo "Updating Discovery SDK dependency"
+  jq '.dependencies["@firebolt-js/discovery-sdk"] = "file:../firebolt-apis/src/sdks/discovery"' package.json > package.json.tmp && mv package.json.tmp package.json
   npm install
   npm start &
   sleep 5s
@@ -149,7 +154,7 @@ function unzipArtifact(){
 
 # Check argument and call corresponding function
 if [ "$1" == "runTests" ]; then
-    runTests
+    runTests 
 elif [ "$1" == "getResults" ]; then
     getResults
 elif [ "$1" == "getArtifactData" ]; then
