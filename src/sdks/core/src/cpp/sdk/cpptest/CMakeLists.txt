@@ -83,8 +83,6 @@ if(ENABLE_UNIT_TESTS)
 
     message("Setup ${UNIT_TESTS_APP}")
 
-    add_definitions(-DUNIT_TEST)
-
     file(GLOB UNIT_TESTS "unit/*")
 
     add_executable(${UNIT_TESTS_APP} 

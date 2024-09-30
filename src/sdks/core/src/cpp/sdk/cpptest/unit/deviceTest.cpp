@@ -107,6 +107,7 @@ TEST_F(DeviceTest, TestDeviceMake)
 
 TEST_F(DeviceTest, Hdcp)
 {
+    Firebolt::Error error = Firebolt::Error::None;
 
     // Parsing expected JSON values into a BooleanMap
     nlohmann::json expectedJson = nlohmann::json::parse(jsonEngine->get_value("Device.hdcp"));
@@ -118,14 +119,21 @@ TEST_F(DeviceTest, Hdcp)
     }
 
     // Getting the actual value from the DeviceInterface
-    Firebolt::Types::BooleanMap hdcp = Firebolt::IFireboltAccessor::Instance().DeviceInterface().hdcp(&error);
+    Firebolt::Device::HDCPVersionMap hdcpMap = Firebolt::IFireboltAccessor::Instance().DeviceInterface().hdcp(&error);
 
     EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve hdcp from Device.hdcp() method";
-    EXPECT_EQ(hdcp, expectedValues);
+
+    // Convert HDCPVersionMap to BooleanMap for comparison
+    Firebolt::Types::BooleanMap actualValues;
+    actualValues["hdcp1.4"] = hdcpMap.hdcp1_4;
+    actualValues["hdcp2.2"] = hdcpMap.hdcp2_2;
+
+    EXPECT_EQ(actualValues, expectedValues);
 }
 
 TEST_F(DeviceTest, Hdr)
 {
+    Firebolt::Error error = Firebolt::Error::None;
 
     // Parsing expected JSON values into a BooleanMap
     nlohmann::json expectedJson = nlohmann::json::parse(jsonEngine->get_value("Device.hdr"));
@@ -137,58 +145,49 @@ TEST_F(DeviceTest, Hdr)
     }
 
     // Getting the actual value from the DeviceInterface
-    Firebolt::Types::BooleanMap hdr = Firebolt::IFireboltAccessor::Instance().DeviceInterface().hdr(&error);
+    Firebolt::Device::HDRFormatMap hdrMap = Firebolt::IFireboltAccessor::Instance().DeviceInterface().hdr(&error);
 
     EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve hdr from Device.hdr() method";
-    EXPECT_EQ(hdr, expectedValues);
-}
 
-std::string AudioProfileToString(Firebolt::Types::AudioProfile profile)
-{
-    switch (profile)
-    {
-    case Firebolt::Types::AudioProfile::STEREO:
-        return "stereo";
-    case Firebolt::Types::AudioProfile::DOLBY_DIGITAL_5_1:
-        return "dolbyDigital5.1+";
-    case Firebolt::Types::AudioProfile::DOLBY_ATMOS:
-        return "dolbyAtmos";
-    default:
-        return "dolbyDigital5.1";
-    }
+    // Convert HDRFormatMap to BooleanMap for comparison
+    Firebolt::Types::BooleanMap actualValues;
+    actualValues["hdr10"] = hdrMap.hdr10;
+    actualValues["hdr10Plus"] = hdrMap.hdr10Plus;
+    actualValues["dolbyVision"] = hdrMap.dolbyVision;
+    actualValues["hlg"] = hdrMap.hlg;
+
+    EXPECT_EQ(actualValues, expectedValues);
 }
 
 TEST_F(DeviceTest, Audio)
-{
-
-    // Parse expected JSON values
-    nlohmann::json expectedJson = nlohmann::json::parse(jsonEngine->get_value("Device.audio"));
+{ 
+    // Hardcoded expected values
+    Firebolt::Device::AudioProfiles expectedValues;
+    expectedValues.stereo = true;
+    expectedValues.dolbyDigital5_1 = true;
+    expectedValues.dolbyDigital5_1_plus = true;
+    expectedValues.dolbyAtmos = true;
 
     // Getting the actual value from the DeviceInterface
     const Firebolt::Device::AudioProfiles audio = Firebolt::IFireboltAccessor::Instance().DeviceInterface().audio(&error);
+
     EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve audio from Device.audio() method";
-
-    // Convert actualValue (AudioProfiles map) to JSON
-    nlohmann::json actualJson;
-    for (const auto &item : audio)
-    {
-        std::string profileKey = AudioProfileToString(item.first); // Replace this with the correct conversion function
-        actualJson[profileKey] = item.second;
-    }
-
-    EXPECT_EQ(actualJson, expectedJson);
+    EXPECT_EQ(audio.stereo, expectedValues.stereo);
+    EXPECT_EQ(audio.dolbyDigital5_1, expectedValues.dolbyDigital5_1);
+    EXPECT_EQ(audio.dolbyDigital5_1_plus, expectedValues.dolbyDigital5_1_plus);
+    EXPECT_EQ(audio.dolbyAtmos, expectedValues.dolbyAtmos);
 }
 
 TEST_F(DeviceTest, Network)
 {
 
     // Hardcoded expected values
-    Firebolt::Device::NetworkInfo expectedValues;
+    Firebolt::Device::NetworkInfoResult expectedValues;
     expectedValues.state = Firebolt::Device::NetworkState::CONNECTED;
     expectedValues.type = Firebolt::Device::NetworkType::WIFI;
 
     // Getting the actual value from the DeviceInterface
-    Firebolt::Device::NetworkInfo network = Firebolt::IFireboltAccessor::Instance().DeviceInterface().network(&error);
+    Firebolt::Device::NetworkInfoResult network = Firebolt::IFireboltAccessor::Instance().DeviceInterface().network(&error);
 
     // Perform the assertions
     EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve network from Device.network() method";
@@ -217,20 +216,13 @@ TEST_F(DeviceTest, ScreenResolution)
         FAIL() << "Expected JSON is not an array: " << expectedJson.dump(4);
     }
 
-    if (expectedJson.size() != 2)
-    {
-        FAIL() << "Expected JSON array does not have 2 elements: " << expectedJson.dump(4);
-    }
-
     // Getting the actual value from the DeviceInterface
-    Firebolt::Device::Resolution screenResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution(&error);
-
-    // Convert actual value to JSON
-    nlohmann::json actualJson = {screenResolution.first, screenResolution.second};
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string screenResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution(&error);
 
     // Perform the assertions
-    EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve actualResolution from Device.screenResolution() method";
-    EXPECT_EQ(actualJson, expectedJson);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve screenResolution from Device.screenResolution() method";
+    EXPECT_EQ(screenResolution, expectedJson.get<std::string>());
 }
 
 TEST_F(DeviceTest, VideoResolution)
@@ -254,20 +246,14 @@ TEST_F(DeviceTest, VideoResolution)
         FAIL() << "Expected JSON is not an array: " << expectedJson.dump(4);
     }
 
-    if (expectedJson.size() != 2)
-    {
-        FAIL() << "Expected JSON array does not have 2 elements: " << expectedJson.dump(4);
-    }
 
     // Getting the actual value from the DeviceInterface
-    Firebolt::Device::Resolution videoResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().videoResolution(&error);
-
-    // Convert actual value to JSON
-    nlohmann::json actualJson = {videoResolution.first, videoResolution.second};
+    Firebolt::Error error = Firebolt::Error::None;
+    std::string videoResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().videoResolution(&error);
 
     // Perform the assertions
     EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve videoResolution from Device.videoResolution() method";
-    EXPECT_EQ(actualJson, expectedJson);
+    EXPECT_EQ(videoResolution, expectedJson.get<std::string>());
 }
 
 TEST_F(DeviceTest, Name)

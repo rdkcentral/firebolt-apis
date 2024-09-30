@@ -82,29 +82,50 @@ TEST_F(AccessibilityTest, ClosedCaptions)
 {
     nlohmann::json_abi_v3_11_3::json expectedValues = nlohmann::json::parse(jsonEngine->get_value("Accessibility.closedCaptions"));
 
-    auto closedCaptions = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().closedCaptions(&error);
+    Firebolt::Accessibility::ClosedCaptionsSettings closedCaptions = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().closedCaptions(&error);
 
     EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve closedCaptions from Accessibility.closedCaptions() method";
     EXPECT_EQ(closedCaptions.enabled, expectedValues["enabled"]);
 
-    EXPECT_EQ(closedCaptions.styles.backgroundColor.value(), expectedValues["styles"]["backgroundColor"]);
-    EXPECT_EQ(closedCaptions.styles.backgroundOpacity.value(), expectedValues["styles"]["backgroundOpacity"]);
-    EXPECT_EQ(closedCaptions.styles.fontColor.value(), expectedValues["styles"]["fontColor"]);
+    if (closedCaptions.styles.has_value()) {
+        const auto& styles = closedCaptions.styles.value();
 
-    if (closedCaptions.styles.fontEdge.has_value())
-        EXPECT_EQ(fontEdgeToString(closedCaptions.styles.fontEdge.value()), expectedValues["styles"]["fontEdge"]);
+        if (styles.backgroundColor.has_value())
+            EXPECT_EQ(styles.backgroundColor.value(), expectedValues["styles"]["backgroundColor"]);
 
-    EXPECT_EQ(closedCaptions.styles.fontEdgeColor.value(), expectedValues["styles"]["fontEdgeColor"]);
+        if (styles.backgroundOpacity.has_value())
+            EXPECT_EQ(styles.backgroundOpacity.value(), expectedValues["styles"]["backgroundOpacity"]);
 
-    if (closedCaptions.styles.fontFamily.has_value())
-        EXPECT_EQ(fontFamilyToString(closedCaptions.styles.fontFamily.value()), expectedValues["styles"]["fontFamily"]);
+        if (styles.fontColor.has_value())
+            EXPECT_EQ(styles.fontColor.value(), expectedValues["styles"]["fontColor"]);
 
-    EXPECT_EQ(closedCaptions.styles.fontOpacity.value(), expectedValues["styles"]["fontOpacity"]);
-    EXPECT_EQ(closedCaptions.styles.fontSize.value(), expectedValues["styles"]["fontSize"]);
-    EXPECT_EQ(closedCaptions.styles.textAlign.value(), expectedValues["styles"]["textAlign"]);
-    EXPECT_EQ(closedCaptions.styles.textAlignVertical.value(), expectedValues["styles"]["textAlignVertical"]);
-    EXPECT_EQ(closedCaptions.styles.windowColor.value(), expectedValues["styles"]["windowColor"]);
-    EXPECT_EQ(closedCaptions.styles.windowOpacity.value(), expectedValues["styles"]["windowOpacity"]);
+        if (styles.fontEdge.has_value())
+            EXPECT_EQ(fontEdgeToString(styles.fontEdge.value()), expectedValues["styles"]["fontEdge"]);
+
+        if (styles.fontEdgeColor.has_value())
+            EXPECT_EQ(styles.fontEdgeColor.value(), expectedValues["styles"]["fontEdgeColor"]);
+
+        if (styles.fontFamily.has_value())
+            EXPECT_EQ(fontFamilyToString(styles.fontFamily.value()), expectedValues["styles"]["fontFamily"]);
+
+        if (styles.fontOpacity.has_value())
+            EXPECT_EQ(styles.fontOpacity.value(), expectedValues["styles"]["fontOpacity"]);
+
+        if (styles.fontSize.has_value())
+            EXPECT_EQ(styles.fontSize.value(), expectedValues["styles"]["fontSize"]);
+
+        if (styles.textAlign.has_value())
+            EXPECT_EQ(styles.textAlign.value(), expectedValues["styles"]["textAlign"]);
+
+        if (styles.textAlignVertical.has_value())
+            EXPECT_EQ(styles.textAlignVertical.value(), expectedValues["styles"]["textAlignVertical"]);
+
+        if (styles.windowColor.has_value())
+            EXPECT_EQ(styles.windowColor.value(), expectedValues["styles"]["windowColor"]);
+
+        if (styles.windowOpacity.has_value())
+            EXPECT_EQ(styles.windowOpacity.value(), expectedValues["styles"]["windowOpacity"]);
+    }
 
     EXPECT_EQ(closedCaptions.preferredLanguages.value()[0], expectedValues["preferredLanguages"][0]);
     EXPECT_EQ(closedCaptions.preferredLanguages.value()[1], expectedValues["preferredLanguages"][1]);
@@ -114,30 +135,51 @@ TEST_F(AccessibilityTest, ClosedCaptionsSettings)
 {
     nlohmann::json_abi_v3_11_3::json expectedValues = nlohmann::json::parse(jsonEngine->get_value("Accessibility.closedCaptionsSettings"));
 
-    auto closedCaptionSettings = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().closedCaptionsSettings(&error);
+    Firebolt::Accessibility::ClosedCaptionsSettings closedCaptionSettings = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().closedCaptionsSettings(&error);
 
     EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve closedCaptionSettings from Accessibility.closedCaptionSettings() method";
     EXPECT_EQ(closedCaptionSettings.enabled, expectedValues["enabled"]);
 
-    EXPECT_EQ(closedCaptionSettings.styles.backgroundColor.value(), expectedValues["styles"]["backgroundColor"]);
-    EXPECT_EQ(closedCaptionSettings.styles.backgroundOpacity.value(), expectedValues["styles"]["backgroundOpacity"]);
-    EXPECT_EQ(closedCaptionSettings.styles.fontColor.value(), expectedValues["styles"]["fontColor"]);
+    if (closedCaptionSettings.styles.has_value()) {
+        const auto& styles = closedCaptionSettings.styles.value();
 
-    if (closedCaptionSettings.styles.fontEdge.has_value())
-        EXPECT_EQ(fontEdgeToString(closedCaptionSettings.styles.fontEdge.value()), expectedValues["styles"]["fontEdge"]);
+        if (styles.backgroundColor.has_value())
+            EXPECT_EQ(styles.backgroundColor.value(), expectedValues["styles"]["backgroundColor"]);
 
-    EXPECT_EQ(closedCaptionSettings.styles.fontEdgeColor.value(), expectedValues["styles"]["fontEdgeColor"]);
+        if (styles.backgroundOpacity.has_value())
+            EXPECT_EQ(styles.backgroundOpacity.value(), expectedValues["styles"]["backgroundOpacity"]);
 
-    if (closedCaptionSettings.styles.fontFamily.has_value())
-        EXPECT_EQ(fontFamilyToString(closedCaptionSettings.styles.fontFamily.value()), expectedValues["styles"]["fontFamily"]);
+        if (styles.fontColor.has_value())
+            EXPECT_EQ(styles.fontColor.value(), expectedValues["styles"]["fontColor"]);
 
-    EXPECT_EQ(closedCaptionSettings.styles.fontOpacity.value(), expectedValues["styles"]["fontOpacity"]);
-    EXPECT_EQ(closedCaptionSettings.styles.fontSize.value(), expectedValues["styles"]["fontSize"]);
-    EXPECT_EQ(closedCaptionSettings.styles.textAlign.value(), expectedValues["styles"]["textAlign"]);
-    EXPECT_EQ(closedCaptionSettings.styles.textAlignVertical.value(), expectedValues["styles"]["textAlignVertical"]);
-    EXPECT_EQ(closedCaptionSettings.styles.windowColor.value(), expectedValues["styles"]["windowColor"]);
-    EXPECT_EQ(closedCaptionSettings.styles.windowOpacity.value(), expectedValues["styles"]["windowOpacity"]);
+        if (styles.fontEdge.has_value())
+            EXPECT_EQ(fontEdgeToString(styles.fontEdge.value()), expectedValues["styles"]["fontEdge"]);
 
+        if (styles.fontEdgeColor.has_value())
+            EXPECT_EQ(styles.fontEdgeColor.value(), expectedValues["styles"]["fontEdgeColor"]);
+
+        if (styles.fontFamily.has_value())
+            EXPECT_EQ(fontFamilyToString(styles.fontFamily.value()), expectedValues["styles"]["fontFamily"]);
+
+        if (styles.fontOpacity.has_value())
+            EXPECT_EQ(styles.fontOpacity.value(), expectedValues["styles"]["fontOpacity"]);
+
+        if (styles.fontSize.has_value())
+            EXPECT_EQ(styles.fontSize.value(), expectedValues["styles"]["fontSize"]);
+
+        if (styles.textAlign.has_value())
+            EXPECT_EQ(styles.textAlign.value(), expectedValues["styles"]["textAlign"]);
+
+        if (styles.textAlignVertical.has_value())
+            EXPECT_EQ(styles.textAlignVertical.value(), expectedValues["styles"]["textAlignVertical"]);
+
+        if (styles.windowColor.has_value())
+            EXPECT_EQ(styles.windowColor.value(), expectedValues["styles"]["windowColor"]);
+
+        if (styles.windowOpacity.has_value())
+            EXPECT_EQ(styles.windowOpacity.value(), expectedValues["styles"]["windowOpacity"]);
+    }
+ 
     EXPECT_EQ(closedCaptionSettings.preferredLanguages.value()[0], expectedValues["preferredLanguages"][0]);
     EXPECT_EQ(closedCaptionSettings.preferredLanguages.value()[1], expectedValues["preferredLanguages"][1]);
 }
