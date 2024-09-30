@@ -18,7 +18,8 @@
       "name": "proposed",
       "channel": "proposed",
       "prerelease": true
-    }
+    },
+    {"name": "patch-release-*", "prerelease": true}
   ],
   "dryRun": false,
   "plugins": [
