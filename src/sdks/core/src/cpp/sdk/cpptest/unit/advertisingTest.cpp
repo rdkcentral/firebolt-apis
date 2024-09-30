@@ -66,19 +66,24 @@ TEST_F(AdvertisingTest, Policy)
 		EXPECT_EQ(skipRestrictionToString(adPolicy.skipRestriction.value()), expectedValues["skipRestriction"]);
 }
 
+// Helper function to convert JSON value to AdvertisingIdResultLmt enum
+std::string lmtToString(Firebolt::Advertising::AdvertisingIdResultLmt lmt) {
+    return std::to_string(static_cast<int>(lmt));
+}
+
 TEST_F(AdvertisingTest, Id)
 {
 	nlohmann::json expectedValues = nlohmann::json::parse(jsonEngine->get_value("Advertising.advertisingId"));
 
 	std::optional<Firebolt::Advertising::AdvertisingIdOptions> options = std::nullopt; // Assuming options are not provided
 
-	Firebolt::Advertising::AdvertisingId actualValues = Firebolt::IFireboltAccessor::Instance().AdvertisingInterface().advertisingId(options, &error);
-
+	Firebolt::Advertising::AdvertisingIdResult actualValues = Firebolt::IFireboltAccessor::Instance().AdvertisingInterface().advertisingId(options, &error);
+	
 	EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve AdvertisingId from Advertising.advertisingId() method";
 
 	EXPECT_EQ(actualValues.ifa, expectedValues["ifa"]);
 	EXPECT_EQ(actualValues.ifa_type, expectedValues["ifa_type"]);
-	EXPECT_EQ(actualValues.lmt, expectedValues["lmt"]);
+    EXPECT_EQ(lmtToString(actualValues.lmt), expectedValues["lmt"]);
 }
 
 TEST_F(AdvertisingTest, DeviceAttributes)
