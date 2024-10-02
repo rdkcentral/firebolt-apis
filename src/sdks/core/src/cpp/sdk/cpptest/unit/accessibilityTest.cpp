@@ -218,3 +218,38 @@ TEST_F(AccessibilityTest, AudioDescriptionSettings)
 
     EXPECT_EQ(audioDescriptionSettings.enabled, expectedValues["enabled"]);
 }
+
+struct ClosedCaptionsChange : public Firebolt::Accessibility::IAccessibility::IOnClosedCaptionsSettingsChangedNotification {
+    void onClosedCaptionsSettingsChanged(const Firebolt::Accessibility::ClosedCaptionsSettings&) override;
+};
+
+// Below function is for when the event trigger via setter is done
+Firebolt::Accessibility::ClosedCaptionsSettings newSettings;
+void ClosedCaptionsChange::onClosedCaptionsSettingsChanged(const Firebolt::Accessibility::ClosedCaptionsSettings& closedCaptionsSettings)
+{
+    std::cout << "ClosedCaptionsSettingsChanged event fired" << std::endl;
+    newSettings = closedCaptionsSettings;
+}
+
+TEST_F(AccessibilityTest, subscribeOnClosedCaptionsSettingsChanged)
+{
+	Firebolt::Error error = Firebolt::Error::None;
+    ClosedCaptionsChange closedCaptionsChange;
+    Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().subscribe(closedCaptionsChange, &error);
+    std::cout << " error: " << static_cast<int>(error) << std::endl;
+	EXPECT_EQ(error, Firebolt::Error::None);
+    /*  We could optionally return a response inside WaitForEventResponse using JSON engine's mockResponse
+        pointing to #/x-schemas/Types/ListenResponse dereferenced to "{listening:true}".
+        Since there is no return value for event subscription, error would be the only validation for now.
+        This is until event response is returned by changing closedCaptions settings.
+    */
+}
+
+TEST_F(AccessibilityTest, unsubscribeOnClosedCaptionsSettingsChanged)
+{
+	Firebolt::Error error = Firebolt::Error::None;
+    ClosedCaptionsChange closedCaptionsChange;
+    Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(closedCaptionsChange, &error);
+    std::cout << " error: " << static_cast<int>(error) << std::endl;
+	EXPECT_EQ(error, Firebolt::Error::None);
+}
