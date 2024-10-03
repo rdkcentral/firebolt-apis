@@ -242,6 +242,7 @@ TEST_F(AccessibilityTest, subscribeOnClosedCaptionsSettingsChanged)
         pointing to #/x-schemas/Types/ListenResponse dereferenced to "{listening:true}".
         Since there is no return value for event subscription, error would be the only validation for now.
         This is until event response is returned by changing closedCaptions settings.
+        This comment is applicable to all event unit tests.
     */
 }
 
@@ -250,6 +251,66 @@ TEST_F(AccessibilityTest, unsubscribeOnClosedCaptionsSettingsChanged)
 	Firebolt::Error error = Firebolt::Error::None;
     ClosedCaptionsChange closedCaptionsChange;
     Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(closedCaptionsChange, &error);
+    std::cout << " error: " << static_cast<int>(error) << std::endl;
+	EXPECT_EQ(error, Firebolt::Error::None);
+}
+
+struct VoiceGuidanceSettings : public Firebolt::Accessibility::IAccessibility::IOnVoiceGuidanceSettingsChangedNotification {
+    void onVoiceGuidanceSettingsChanged(const Firebolt::Accessibility::VoiceGuidanceSettings&) override;
+};
+
+// Below function is for when the event trigger via setter is done
+Firebolt::Accessibility::VoiceGuidanceSettings newVoiceGuidanceSettings;
+void VoiceGuidanceSettings::onVoiceGuidanceSettingsChanged(const Firebolt::Accessibility::VoiceGuidanceSettings& voiceGuidanceSettings)
+{
+    std::cout << "VoiceGuidanceSettingsChanged event fired" << std::endl;
+    newVoiceGuidanceSettings = voiceGuidanceSettings;
+}
+
+TEST_F(AccessibilityTest, subscribeOnVoiceGuidanceSettingsChanged)
+{
+	Firebolt::Error error = Firebolt::Error::None;
+    VoiceGuidanceSettings voiceGuidanceSettings;
+    Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().subscribe(voiceGuidanceSettings, &error);
+    std::cout << " error: " << static_cast<int>(error) << std::endl;
+	EXPECT_EQ(error, Firebolt::Error::None);
+}
+
+TEST_F(AccessibilityTest, unsubscribeOnVoiceGuidanceSettingsChanged)
+{
+	Firebolt::Error error = Firebolt::Error::None;
+    VoiceGuidanceSettings voiceGuidanceSettings;
+    Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(voiceGuidanceSettings, &error);
+    std::cout << " error: " << static_cast<int>(error) << std::endl;
+	EXPECT_EQ(error, Firebolt::Error::None);
+}
+
+struct AudioDescriptionSettings : public Firebolt::Accessibility::IAccessibility::IOnAudioDescriptionSettingsChangedNotification {
+    void onAudioDescriptionSettingsChanged(const Firebolt::Accessibility::AudioDescriptionSettings&) override;
+};
+
+// Below function is for when the event trigger via setter is done
+Firebolt::Accessibility::AudioDescriptionSettings newAudioDescriptionSettings;
+void AudioDescriptionSettings::onAudioDescriptionSettingsChanged(const Firebolt::Accessibility::AudioDescriptionSettings& audioDescriptionSettings)
+{
+    std::cout << "AudioDescriptionSettingsChanged event fired" << std::endl;
+    newAudioDescriptionSettings = audioDescriptionSettings;
+}
+
+TEST_F(AccessibilityTest, subscribeOnAudioDescriptionSettingsChanged)
+{
+	Firebolt::Error error = Firebolt::Error::None;
+    AudioDescriptionSettings audioDescriptionSettings;
+    Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().subscribe(audioDescriptionSettings, &error);
+    std::cout << " error: " << static_cast<int>(error) << std::endl;
+	EXPECT_EQ(error, Firebolt::Error::None);
+}
+
+TEST_F(AccessibilityTest, unsubscribeOnAudioDescriptionSettingsChanged)
+{
+	Firebolt::Error error = Firebolt::Error::None;
+    AudioDescriptionSettings audioDescriptionSettings;
+    Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(audioDescriptionSettings, &error);
     std::cout << " error: " << static_cast<int>(error) << std::endl;
 	EXPECT_EQ(error, Firebolt::Error::None);
 }
