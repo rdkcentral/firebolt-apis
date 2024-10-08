@@ -32,6 +32,13 @@ function runTests(){
   git clone --branch ${PR_BRANCH} https://github.com/rdkcentral/firebolt-apis.git
   echo "cd to firebolt-apis repo and compile firebolt-open-rpc.json"
   cd firebolt-apis
+  if [ "$EVENT_NAME" == "workflow_dispatch" ]; then
+  # If OPENRPC_PR_BRANCH is set and is not 'next'
+    if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$OPENRPC_PR_BRANCH" != "next" ]; then
+      echo "Updating OpenRPC dependency to branch: $OPENRPC_PR_BRANCH"
+      jq ".dependencies[\"@firebolt-js/openrpc\"] = \"file:../firebolt-openrpc#$OPENRPC_PR_BRANCH\"" package.json > package.json.tmp && mv package.json.tmp package.json
+    fi
+  fi
   npm i
   npm run compile
   npm run dist
@@ -77,7 +84,7 @@ function runTests(){
     const fs = require("fs");
     (async () => {
       const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-gpu"] });
-      const page = await browser.newPage();
+      const page = await browser.newPage(); 
 
       // Enable console logging
       page.on("console", (msg) => {

@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-         # set the branch if the workflow is triggered from external
+        # set the branch if the workflow is triggered from external
       - name: Set PR Branch based on the trigger
         id: set-pr-branch
         run: |
@@ -47,4 +47,4 @@ jobs:
 
       - name: Get results from report.json
         run: |
-          ./.github/workflows/util.sh getResults
+          ./.github/workflows/utils.sh getResults
