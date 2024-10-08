@@ -37,7 +37,7 @@ jobs:
           INTENT: ${{ vars.INTENT }}
           OPENRPC_PR_BRANCH: ${{ github.event.inputs.OPENRPC_PR_BRANCH}} # Comes from Repo A if triggered externally
         run: |
-          ./.github/workflows/util.sh runTests
+          ./.github/workflows/utils.sh runTests
 
       - name: Upload report.json as an artifact
         uses: actions/upload-artifact@v4
