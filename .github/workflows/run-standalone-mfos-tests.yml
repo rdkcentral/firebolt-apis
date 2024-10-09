@@ -1,12 +1,13 @@
 name: MFOS standalone sanity report - CORE, MANAGE, DISCOVERY
 
 on:
+  repository_dispatch:
+    types: [trigger-workflow]
   pull_request:
     types:
       - opened
       - synchronize
     branches: [ next ]
-  workflow_dispatch: # Triggered by external API (Repo A)
   push:
     branches:
       - next
@@ -35,7 +36,7 @@ jobs:
           GITHUB_REF: ${{ github.ref }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
           INTENT: ${{ vars.INTENT }}
-          OPENRPC_PR_BRANCH: ${{ github.event.inputs.OPENRPC_PR_BRANCH}} # Comes from Repo A if triggered externally
+          OPENRPC_PR_BRANCH: ${{ github.event.client_payload.OPENRPC_PR_BRANCH}} # Comes from Repo A if triggered externally
         run: |
           ./.github/workflows/utils.sh runTests
 
