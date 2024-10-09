@@ -2,21 +2,43 @@
 set -o pipefail
 
 function runTests(){
-  echo "Clone firebolt-apis repo with pr branch"
+  echo "Determine the branch to checkout"
+  
+  # Convert event name to lowercase
   PR_BRANCH=$(echo "$EVENT_NAME" | tr '[:upper:]' '[:lower:]')
+
   if [ "${PR_BRANCH}" == "pull_request" ]; then
+    # If it's a pull request event, use the PR branch
     PR_BRANCH=$PR_HEAD_REF
   elif [ "${PR_BRANCH}" == "push" ]; then
+    # For push events, extract the branch name
     PR_BRANCH=$GITHUB_REF
     PR_BRANCH="${PR_BRANCH#refs/heads/}"
+  elif [ "$EVENT_NAME" == "workflow_dispatch" ]; then
+    # If triggered by Repo A, check if PR branch exists and matches the one in Repo A
+    if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$OPENRPC_PR_BRANCH" != "next" ]; then
+      PR_BRANCH=$OPENRPC_PR_BRANCH
+      echo "Using branch: $OPENRPC_PR_BRANCH"
+    else
+      PR_BRANCH="next"
+      echo "No matching PR branch found!!, checking out next branch."
+    fi
   else
     echo "Unsupported event: $EVENT_NAME"
     exit 1
   fi
 
+  echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
   git clone --branch ${PR_BRANCH} https://github.com/rdkcentral/firebolt-apis.git
   echo "cd to firebolt-apis repo and compile firebolt-open-rpc.json"
   cd firebolt-apis
+  if [ "$EVENT_NAME" == "workflow_dispatch" ]; then
+  # If OPENRPC_PR_BRANCH is set and is not 'next'
+    if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$OPENRPC_PR_BRANCH" != "next" ]; then
+      echo "Updating OpenRPC dependency to branch: $OPENRPC_PR_BRANCH"
+      jq ".dependencies[\"@firebolt-js/openrpc\"] = \"file:../firebolt-openrpc#$OPENRPC_PR_BRANCH\"" package.json > package.json.tmp && mv package.json.tmp package.json
+    fi
+  fi
   npm i
   npm run compile
   npm run dist
@@ -62,7 +84,7 @@ function runTests(){
     const fs = require("fs");
     (async () => {
       const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-gpu"] });
-      const page = await browser.newPage();
+      const page = await browser.newPage(); 
 
       // Enable console logging
       page.on("console", (msg) => {
