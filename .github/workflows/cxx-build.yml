@@ -5,6 +5,7 @@ on:
     branches:
       - 'main'
       - 'next'
+      - 'feature/cxx-build-workflow'
 
 env:
   HUSKY: 0
