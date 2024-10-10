@@ -1,0 +1,61 @@
+name: CXX build
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+      - 'next'
+      - 'feature/cxx-build-workflow'
+
+env:
+  HUSKY: 0
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    container:
+      image: kevinshahfws/node-c:3.0
+    steps:
+      #  Checkout/install project
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Gcovr
+        run: |
+          apt remove --purge gcovr -y
+          pip install --upgrade gcovr
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Clone and Install Thunder
+        id: install_thunder
+        run: |
+          .github/workflows/utils.sh cloneAndInstallThunder
+
+      - name: Build Artifacts
+        run: |
+          npm run dist
+
+      - name: Build CXX 
+        run: |
+          cd src/sdks/core/
+          ls
+          npm run cpp
+
+      - name: Build SDK
+        run: |
+          tar -zxvf src/sdks/core/build/cpp/src/firebolt-core-native-sdk-1.3.0-next.1.tgz -C ../
+          cd ../firebolt-core-native-sdk-1.3.0-next.1
+          cp -f ../firebolt-apis/external/CMakeLists.txt ./
+          cp -f ../firebolt-apis/external/include/json_engine.h ./include/
+          cp -f ../firebolt-apis/external/src/CMakeLists.txt ./src/
+          cp -f ../firebolt-apis/external/src/Transport.h ./src/
+          ./build.sh -s ${pwd}/../install
+          ls build/test/
+          ctest --test-dir build/
