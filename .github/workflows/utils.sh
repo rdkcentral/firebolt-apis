@@ -1,6 +1,13 @@
 #!/bin/bash
 set -o pipefail
 
+FIREBOLT_VERSION=1.0.0-next.0
+current_apis_dir=$(pwd)
+
+cd ..
+current_dir=$(pwd)
+cd $current_apis_dir
+
 function runTests(){
   echo "Clone firebolt-apis repo with pr branch"
   PR_BRANCH=$(echo "$EVENT_NAME" | tr '[:upper:]' '[:lower:]')
@@ -36,12 +43,7 @@ function runTests(){
   echo "clone fca repo and start it in the background"
   git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
-  echo "Updating Core SDK dependency"
   jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
-  echo "Updating Manage SDK dependency"
-  jq '.dependencies["@firebolt-js/manage-sdk"] = "file:../firebolt-apis/src/sdks/manage"' package.json > package.json.tmp && mv package.json.tmp package.json
-  echo "Updating Discovery SDK dependency"
-  jq '.dependencies["@firebolt-js/discovery-sdk"] = "file:../firebolt-apis/src/sdks/discovery"' package.json > package.json.tmp && mv package.json.tmp package.json
   npm install
   npm start &
   sleep 5s
@@ -152,16 +154,113 @@ function unzipArtifact(){
   echo "Failures=$failures" >> "$GITHUB_ENV"
 }
 
+function cloneAndInstallThunder() {
+  cd ..
+
+  git clone https://github.com/rdkcentral/Thunder.git
+
+  cd Thunder
+
+  git checkout 283b3d54334010403d85a4e69b3835de23e42331
+
+  cd ..
+
+  git clone https://github.com/rdkcentral/ThunderTools.git
+
+  cd ThunderTools
+
+  git checkout 64b72b5ed491436b0e6bc2327d8a7b0e75ee2870
+
+  cd ..
+
+  echo "current_dir is $current_dir"
+
+  mkdir -p $current_dir/data
+
+  if [ ! -d "$(pwd)/Thunder" ] 
+  then
+      echo "Directory Thunder DOES NOT exist." 
+      exit 9999
+  fi
+
+  if [ ! -d "$(pwd)/ThunderTools" ]
+  then
+      echo "Directory ThunderTools DOES NOT exist."
+      exit 9999
+  fi
+
+  if [ ! -d "$current_dir/firebolt-apis" ]
+  then
+      echo "Directory $current_dir/firebolt-apis DOES NOT exist."
+      exit 9999
+  fi
+
+  cd $current_dir
+
+  [ -d "$current_dir/build" ] && rm -rf $current_dir/build
+
+  echo "Building Thunder";
+
+  cmake -G Ninja -S ThunderTools -B build/ThunderTools -DCMAKE_INSTALL_PREFIX="install/usr" && echo "Tools Setup" || exit 9999
+
+  cmake --build build/ThunderTools --target install && echo "Thunder Tools Build succeeded" || exit 9999
+
+  #-G Ninja is the "Build system generator"
+  #-S is the source path
+  #-B is the output directory
+  cmake -G Ninja -S Thunder -B build/Thunder \
+  -DBUILD_SHARED_LIBS=ON \
+  -DBINDING="127.0.0.1" \
+  -DCMAKE_BUILD_TYPE="Debug" \
+  -DCMAKE_INSTALL_PREFIX="install/usr" \
+  -DCMAKE_MODULE_PATH="${PWD}/install/usr/include/WPEFramework/Modules" \
+  -DDATA_PATH="${PWD}/install/usr/share/WPEFramework" \
+  -DPERSISTENT_PATH="${PWD}/install/var/wpeframework" \
+  -DPORT="55555" \
+  -DPROXYSTUB_PATH="${PWD}/install/usr/lib/wpeframework/proxystubs" \
+  -DSYSTEM_PATH="${PWD}/install/usr/lib/wpeframework/plugins" \
+  -DVOLATILE_PATH="tmp" && echo "Thunder configure succeeded" || exit 9999
+
+  cmake --build build/Thunder --target install && echo "Thunder Build succeeded" || exit 9999
+}
+
+
+function generate_cpp_sdk_source_code(){
+  local sdk_name=$1
+
+  echo " ************ Genrate Source Code for ${sdk_name^} CPP SDK ************"
+
+  FIREBOLT_VERSION=1.3.0-next.1
+  cd src/sdks/${sdk_name}
+  npm run cpp
+}
+
+function build_cpp_sdk() {
+  FIREBOLT_VERSION=1.3.0-next.1
+  local sdk_name=$1
+  
+  echo " ************ Build ${sdk_name^} CPP SDK ************"
+
+  cd /__w/firebolt-apis/firebolt-apis/src/sdks/${sdk_name}/build/cpp/src/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}/
+  chmod +x ./build.sh
+
+  ./build.sh -s "/__w/thunder/install/" || exit 9999
+}
+
 # Check argument and call corresponding function
-if [ "$1" == "runTests" ]; then
-    runTests 
-elif [ "$1" == "getResults" ]; then
-    getResults
-elif [ "$1" == "getArtifactData" ]; then
-    getArtifactData
-elif [ "$1" == "unzipArtifact" ]; then
-    unzipArtifact
-else
+case "$1" in 
+  runTests) runTests ;;
+  getResults) getResults ;;
+  getArtifactData) getArtifactData ;;
+  generate_cpp_core_sdk_source_code) generate_cpp_sdk_source_code "core"  ;;
+  generate_cpp_manage_sdk_source_code) generate_cpp_sdk_source_code "manage"  ;;
+  generate_cpp_discovery_sdk_source_code) generate_cpp_sdk_source_code "discovery"  ;;
+  cloneAndInstallThunder) cloneAndInstallThunder ;;
+  build_core_cpp_sdk) build_cpp_sdk "core" ;;
+  build_manage_cpp_sdk) build_cpp_sdk "manage" ;;
+  build_discovery_cpp_sdk) build_cpp_sdk "discovery" ;;
+  *)
     echo "Invalid function specified."
     exit 1
-fi
+    ;;
+esac
