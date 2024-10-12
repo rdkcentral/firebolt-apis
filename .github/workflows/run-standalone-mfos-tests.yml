@@ -19,14 +19,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-        # set the branch if the workflow is triggered from external
+       # Set the branch if the workflow is triggered from external
       - name: Set PR Branch based on the trigger
         id: set-pr-branch
         run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "OPENRPC_PR_BRANCH=''" >> $GITHUB_ENV  # Clear the variable if triggered manually
+          if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
+            echo "OPENRPC_PR_BRANCH='${{ github.event.client_payload.OPENRPC_PR_BRANCH }}'" >> $GITHUB_ENV  # Set from payload
           else
-            echo "OPENRPC_PR_BRANCH='${{ github.event.pull_request.head.ref }}'" >> $GITHUB_ENV  # Set for PR events
+            echo "OPENRPC_PR_BRANCH=''" >> $GITHUB_ENV  # Clear the variable for other events
           fi
 
       # Run tests
@@ -36,7 +36,7 @@ jobs:
           GITHUB_REF: ${{ github.ref }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
           INTENT: ${{ vars.INTENT }}
-          OPENRPC_PR_BRANCH: ${{ github.event.client_payload.OPENRPC_PR_BRANCH}} # Comes from Repo A if triggered externally
+          OPENRPC_PR_BRANCH: ${{ env.OPENRPC_PR_BRANCH }} # Comes from OPENRPC repo if triggered externally
         run: |
           ./.github/workflows/utils.sh runTests
 
