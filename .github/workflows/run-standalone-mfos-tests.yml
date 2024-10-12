@@ -1,4 +1,4 @@
-name: MFOS standalone sanity report - CORE, MANAGE, DISCOVERY
+name: MFOS standalone sanity report - CORE,MANAGE,DISCOVERY
 
 on:
   repository_dispatch:
@@ -8,10 +8,6 @@ on:
       - opened
       - synchronize
     branches: [ next ]
-  push:
-    branches:
-      - next
-
 jobs:
   RunStandaloneTests:
     runs-on: ubuntu-latest
