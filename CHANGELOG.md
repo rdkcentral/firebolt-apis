@@ -1,3 +1,10 @@
+# [1.5.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.1...v1.5.0-next.2) (2024-10-16)
+
+
+### Bug Fixes
+
+* Compile C++ SDK on PRs ([#334](https://github.com/rdkcentral/firebolt-apis/issues/334)) ([d73286b](https://github.com/rdkcentral/firebolt-apis/commit/d73286b97c1e3e6ff6cf5e52daf50ea929f04af3))
+
 # [1.5.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.1-next.1...v1.5.0-next.1) (2024-09-25)
 
 
