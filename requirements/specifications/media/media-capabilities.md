@@ -9,6 +9,7 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 | Anthony Borzota | Comcast        |
 | Jeremy LaCivita | Comcast        |
 | Stuart Harris   | Sky            |
+| Luc Kennedy-Lamb| Sky            |
 | Farhan Mahmood  | Liberty Global |
 | Joe Martin      | Comcast        |
 
