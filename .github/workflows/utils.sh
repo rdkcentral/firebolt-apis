@@ -252,6 +252,7 @@ case "$1" in
   runTests) runTests ;;
   getResults) getResults ;;
   getArtifactData) getArtifactData ;;
+  unzipArtifact) unzipArtifact ;;
   generate_cpp_core_sdk_source_code) generate_cpp_sdk_source_code "core"  ;;
   generate_cpp_manage_sdk_source_code) generate_cpp_sdk_source_code "manage"  ;;
   generate_cpp_discovery_sdk_source_code) generate_cpp_sdk_source_code "discovery"  ;;
