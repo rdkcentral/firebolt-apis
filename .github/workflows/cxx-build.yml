@@ -1,5 +1,7 @@
 name: CXX build
 on:
+  repository_dispatch:
+    types: [trigger-workflow]
   workflow_dispatch:
   pull_request:
     branches:
