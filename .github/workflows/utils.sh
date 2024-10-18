@@ -1,13 +1,6 @@
 #!/bin/bash
 set -o pipefail
 
-
-# Function to check if a branch exists in the remote repository
-function branch_exists() {
-    local branch=$1
-    git ls-remote --heads https://github.com/rdkcentral/firebolt-apis.git "$branch" | grep -q "$branch"
-}
-
 FIREBOLT_VERSION=1.0.0-next.0
 current_apis_dir=$(pwd)
 
