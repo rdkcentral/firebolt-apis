@@ -1,3 +1,10 @@
+# [1.5.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.2...v1.5.0-next.3) (2024-10-17)
+
+
+### Bug Fixes
+
+* Re-added "unzipArtifact" to PR Workflow ([#337](https://github.com/rdkcentral/firebolt-apis/issues/337)) ([842f67c](https://github.com/rdkcentral/firebolt-apis/commit/842f67cb0855d8a5c61610538fd0b8549f7d61cd))
+
 # [1.5.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.1...v1.5.0-next.2) (2024-10-16)
 
 
