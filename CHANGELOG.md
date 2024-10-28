@@ -1,3 +1,24 @@
+# [1.5.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.4...v1.5.0-next.5) (2024-10-28)
+
+
+### Bug Fixes
+
+* Only invoke PR Workflow on PRs (Not external triggers) ([#338](https://github.com/rdkcentral/firebolt-apis/issues/338)) ([9088ee8](https://github.com/rdkcentral/firebolt-apis/commit/9088ee8b15c8020b91b542a41cfb93b3a9339f8b))
+
+# [1.5.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.3...v1.5.0-next.4) (2024-10-18)
+
+
+### Bug Fixes
+
+* Modified git hub flow to support external trigger events ([#335](https://github.com/rdkcentral/firebolt-apis/issues/335)) ([bdf8dd0](https://github.com/rdkcentral/firebolt-apis/commit/bdf8dd0f2e24afb494afa66a75ffacfe263457c3))
+
+# [1.5.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.2...v1.5.0-next.3) (2024-10-17)
+
+
+### Bug Fixes
+
+* Re-added "unzipArtifact" to PR Workflow ([#337](https://github.com/rdkcentral/firebolt-apis/issues/337)) ([842f67c](https://github.com/rdkcentral/firebolt-apis/commit/842f67cb0855d8a5c61610538fd0b8549f7d61cd))
+
 # [1.5.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.1...v1.5.0-next.2) (2024-10-16)
 
 

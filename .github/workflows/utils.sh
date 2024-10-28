@@ -8,22 +8,50 @@ cd ..
 current_dir=$(pwd)
 cd $current_apis_dir
 
+# Function to check if a branch exists in the remote repository
+function branch_exists() {
+    local branch=$1
+    git ls-remote --heads https://github.com/rdkcentral/firebolt-apis.git "$branch" | grep -q "$branch"
+}
+
 function runTests(){
-  echo "Clone firebolt-apis repo with pr branch"
+  echo "Determine the branch to checkout"
+  # Convert event name to lowercase
   PR_BRANCH=$(echo "$EVENT_NAME" | tr '[:upper:]' '[:lower:]')
-  if [ "${PR_BRANCH}" == "pull_request" ]; then
-    PR_BRANCH=$PR_HEAD_REF
-  elif [ "${PR_BRANCH}" == "push" ]; then
-    PR_BRANCH=$GITHUB_REF
-    PR_BRANCH="${PR_BRANCH#refs/heads/}"
+
+  # Check if OPENRPC_PR_BRANCH is not empty and the event is repository_dispatch
+  if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$PR_BRANCH" == "repository_dispatch" ]; then
+      # Check if the branch exists in firebolt-apis
+      if branch_exists "$OPENRPC_PR_BRANCH"; then
+          PR_BRANCH=$OPENRPC_PR_BRANCH
+          echo "Using branch from OPENRPC_PR_BRANCH: $OPENRPC_PR_BRANCH"
+      else
+          echo "Branch '$OPENRPC_PR_BRANCH' does not exist in firebolt-apis. Defaulting to 'next'."
+          PR_BRANCH="next"
+      fi
+  elif [ "$PR_BRANCH" == "pull_request" ]; then
+      # If it's a pull request event, use the PR branch
+      PR_BRANCH=$PR_HEAD_REF
+  elif [ "$PR_BRANCH" == "push" ]; then
+      # For push events, extract the branch name
+      PR_BRANCH=$GITHUB_REF
+      PR_BRANCH="${PR_BRANCH#refs/heads/}"
   else
-    echo "Unsupported event: $EVENT_NAME"
-    exit 1
+      echo "Unsupported event: $EVENT_NAME"
+      exit 1
   fi
 
+  echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
   git clone --branch ${PR_BRANCH} https://github.com/rdkcentral/firebolt-apis.git
   echo "cd to firebolt-apis repo and compile firebolt-open-rpc.json"
   cd firebolt-apis
+  if [ "$EVENT_NAME" == "repository_dispatch" ]; then
+  # If OPENRPC_PR_BRANCH is set and is not 'next'
+    if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$OPENRPC_PR_BRANCH" != "next" ]; then
+      echo "Updating OpenRPC dependency to branch: $OPENRPC_PR_BRANCH"
+      jq ".dependencies[\"@firebolt-js/openrpc\"] = \"file:../firebolt-openrpc#$OPENRPC_PR_BRANCH\"" package.json > package.json.tmp && mv package.json.tmp package.json
+    fi
+  fi
   npm i
   npm run compile
   npm run dist
@@ -64,7 +92,7 @@ function runTests(){
     const fs = require("fs");
     (async () => {
       const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-gpu"] });
-      const page = await browser.newPage();
+      const page = await browser.newPage(); 
 
       // Enable console logging
       page.on("console", (msg) => {
@@ -252,6 +280,7 @@ case "$1" in
   runTests) runTests ;;
   getResults) getResults ;;
   getArtifactData) getArtifactData ;;
+  unzipArtifact) unzipArtifact ;;
   generate_cpp_core_sdk_source_code) generate_cpp_sdk_source_code "core"  ;;
   generate_cpp_manage_sdk_source_code) generate_cpp_sdk_source_code "manage"  ;;
   generate_cpp_discovery_sdk_source_code) generate_cpp_sdk_source_code "discovery"  ;;
