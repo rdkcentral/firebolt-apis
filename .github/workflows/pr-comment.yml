@@ -37,6 +37,7 @@ jobs:
           ./.github/workflows/utils.sh unzipArtifact
 
       - name: Post a Comment
+        if: env.PR_NUMBER != ''
         uses: actions/github-script@v6
         with:
           script: |
