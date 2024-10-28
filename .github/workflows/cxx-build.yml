@@ -123,6 +123,9 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('package-lock.json') }}
 
+      - name: Install dev dependencies
+        run: npm install
+
       - name: Install npm dependencies
         run: npm ci
 
@@ -162,6 +165,9 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('package-lock.json') }}
 
+      - name: Install dev dependencies
+        run: npm install
+
       - name: Install npm dependencies
         run: npm ci
 
@@ -200,6 +206,9 @@ jobs:
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dev dependencies
+        run: npm install
 
       - name: Install npm dependencies
         run: npm ci
