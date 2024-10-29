@@ -3,9 +3,287 @@
 class ClosedCaptionsTest : public ::testing::Test
 {
 protected:
+    JsonEngine *jsonEngine;
     Firebolt::Error error = Firebolt::Error::None;
+
+    void SetUp() override
+    {
+        jsonEngine = new JsonEngine();
+    }
+
+    void TearDown() override
+    {
+        delete jsonEngine;
+    }
 };
 
+TEST_F(ClosedCaptionsTest, backgroundColor)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.backgroundColor");
+    std::string color = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().backgroundColor(&error);
+
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.backgroundColor() method";
+    EXPECT_EQ(REMOVE_QUOTES(expectedValues), color) << "Error: wrong color returned by ClosedCaptionsInterface.backgroundColor()";
+}
+
+TEST_F(ClosedCaptionsTest, setBackgroundColor)
+{
+    std::string expected_background_color = "#00002";
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setBackgroundColor(expected_background_color, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setBackgroundColor() method";
+}
+
+TEST_F(ClosedCaptionsTest, backgroundOpacity)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.backgroundOpacity");
+    float opacity = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().backgroundOpacity(&error);
+
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.backgroundOpacity() method";
+    EXPECT_EQ(stof(expectedValues), opacity) << "Error: wrong backgroundOpacity returned by ClosedCaptionsInterface.backgroundOpacity()";
+}
+
+TEST_F(ClosedCaptionsTest, setBackgroundOpacity)
+{
+    float expected_background_opacity = 70;
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setBackgroundOpacity(expected_background_opacity, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setBackgroundOpacity() method";
+}
+
+TEST_F(ClosedCaptionsTest, setEnabled)
+{
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setEnabled(true, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setEnabled() method";
+}
+
+TEST_F(ClosedCaptionsTest, setFontColor)
+{
+    std::string expected_font_color = "#FFFFFF";
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setFontColor(expected_font_color, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setFontColor() method";
+}
+
+TEST_F(ClosedCaptionsTest, fontColor)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.fontColor");
+    std::string color = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().fontColor(&error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.fontColor() method";
+    EXPECT_EQ(REMOVE_QUOTES(expectedValues), color) << "Error: wrong fontColor returned by ClosedCaptionsInterface.fontColor()";
+}
+
+TEST_F(ClosedCaptionsTest, setFontEdge)
+{
+    Firebolt::Accessibility::FontEdge expected_edge = Firebolt::Accessibility::FontEdge::UNIFORM;
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setFontEdge(expected_edge, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setFontEdge() method";
+}
+
+TEST_F(ClosedCaptionsTest, fontEdge)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.fontEdge");
+    Firebolt::Accessibility::FontEdge edge = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().fontEdge(&error);
+
+    std::string actual_font_edge = "unknown";
+    switch (edge)
+    {
+    case Firebolt::Accessibility::FontEdge::NONE:
+        actual_font_edge = "none";
+        break;
+    case Firebolt::Accessibility::FontEdge::RAISED:
+        actual_font_edge = "raised";
+        break;
+    case Firebolt::Accessibility::FontEdge::DEPRESSED:
+        actual_font_edge = "depressed";
+        break;
+    case Firebolt::Accessibility::FontEdge::UNIFORM:
+        actual_font_edge = "uniform";
+        break;
+    case Firebolt::Accessibility::FontEdge::DROP_SHADOW_LEFT:
+        actual_font_edge = "drop_shadow_left";
+        break;
+    case Firebolt::Accessibility::FontEdge::DROP_SHADOW_RIGHT:
+        actual_font_edge = "drop_shadow_right";
+        break;
+    default:
+        actual_font_edge = "unknown";
+    }
+
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.fontEdge() method";
+    EXPECT_EQ(REMOVE_QUOTES(expectedValues), actual_font_edge) << "Error: wrong fontEdge returned by ClosedCaptionsInterface.fontEdge()";
+}
+
+TEST_F(ClosedCaptionsTest, setFontEdgeColor)
+{
+    std::string expected_color = "#FF5733";
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setFontEdgeColor(expected_color, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setFontEdgeColor() method";
+}
+
+TEST_F(ClosedCaptionsTest, fontEdgeColor)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.fontEdgeColor");
+    std::string color = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().fontEdgeColor(&error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.fontEdgeColor() method";
+    EXPECT_EQ(REMOVE_QUOTES(expectedValues), color) << "Error: wrong fontEdgeColor returned by ClosedCaptionsInterface.fontEdgeColor()";
+}
+
+TEST_F(ClosedCaptionsTest, setFontFamily)
+{
+    Firebolt::Accessibility::FontFamily expected_family = Firebolt::Accessibility::FontFamily::MONOSPACED_SANSERIF;
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setFontFamily(expected_family, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setFontFamily() method";
+}
+
+TEST_F(ClosedCaptionsTest, fontFamily)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.fontFamily");
+    Firebolt::Accessibility::FontFamily family = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().fontFamily(&error);
+    std::string actual_family = "unknown";
+    switch (family)
+    {
+    case Firebolt::Accessibility::FontFamily::MONOSPACED_SERIF:
+        actual_family = "monospaced_serif";
+        break;
+    case Firebolt::Accessibility::FontFamily::PROPORTIONAL_SERIF:
+        actual_family = "proportional_serif";
+        break;
+    case Firebolt::Accessibility::FontFamily::MONOSPACED_SANSERIF:
+        actual_family = "monospaced_sanserif";
+        break;
+    case Firebolt::Accessibility::FontFamily::PROPORTIONAL_SANSERIF:
+        actual_family = "proportional_sanserif";
+        break;
+    case Firebolt::Accessibility::FontFamily::SMALLCAPS:
+        actual_family = "smallcaps";
+        break;
+    case Firebolt::Accessibility::FontFamily::CURSIVE:
+        actual_family = "cursive";
+        break;
+    case Firebolt::Accessibility::FontFamily::CASUAL:
+        actual_family = "casual";
+        break;
+    default:
+        actual_family = "unknown";
+    }
+
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.fontFamily() method";
+    EXPECT_EQ(REMOVE_QUOTES(expectedValues), actual_family) << "Error: wrong fontFamily returned by ClosedCaptionsInterface.fontFamily()";
+}
+
+TEST_F(ClosedCaptionsTest, setFontOpacity)
+{
+    float expected_opacity = 0.75f;
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setFontOpacity(expected_opacity, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setFontOpacity() method";
+}
+
+TEST_F(ClosedCaptionsTest, fontOpacity)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.fontOpacity");
+    float opacity = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().fontOpacity(&error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.fontOpacity() method";
+    EXPECT_EQ(stof(expectedValues), opacity) << "Error: wrong fontOpacity returned by ClosedCaptionsInterface.fontOpacity()";
+}
+
+TEST_F(ClosedCaptionsTest, setFontSize)
+{
+    float expected_size = 12.5f;
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setFontSize(expected_size, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setFontSize() method";
+}
+
+TEST_F(ClosedCaptionsTest, fontSize)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.fontSize");
+    float size = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().fontSize(&error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.fontSize() method";
+    EXPECT_EQ(stof(expectedValues), size) << "Error: wrong fontSize returned by ClosedCaptionsInterface.fontSize()";
+}
+
+TEST_F(ClosedCaptionsTest, setPreferredLanguages)
+{
+    std::vector<std::string> expected_languages = {"spa", "eng"};
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setPreferredLanguages(expected_languages, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setPreferredLanguages() method";
+}
+
+TEST_F(ClosedCaptionsTest, preferredLanguages)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.preferredLanguages");
+    std::vector<std::string> languages = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().preferredLanguages(&error);
+
+    // Convert vector to a string for comparison
+    std::string actual_languages;
+    for (const auto &lang : languages)
+    {
+        actual_languages += "\"" + lang + "\",";
+    }
+    actual_languages = actual_languages.substr(0, actual_languages.size() - 1); // Remove trailing comma
+
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.preferredLanguages() method";
+    EXPECT_EQ(REMOVE_QUOTES(expectedValues), actual_languages) << "Error: wrong preferredLanguages returned by ClosedCaptionsInterface.preferredLanguages()";
+}
+
+TEST_F(ClosedCaptionsTest, setTextAlign)
+{
+    std::string expected_alignment = "center";
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setTextAlign(expected_alignment, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setTextAlign() method";
+}
+
+TEST_F(ClosedCaptionsTest, textAlign)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.textAlign");
+    std::string alignment = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().textAlign(&error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.textAlign() method";
+    EXPECT_EQ(REMOVE_QUOTES(expectedValues), alignment) << "Error: wrong textAlign returned by ClosedCaptionsInterface.textAlign()";
+}
+
+TEST_F(ClosedCaptionsTest, setTextAlignVertical)
+{
+    std::string expected_alignment = "middle";
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setTextAlignVertical(expected_alignment, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setTextAlignVertical() method";
+}
+
+TEST_F(ClosedCaptionsTest, textAlignVertical)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.textAlignVertical");
+    std::string alignment = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().textAlignVertical(&error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.textAlignVertical() method";
+    EXPECT_EQ(REMOVE_QUOTES(expectedValues), alignment) << "Error: wrong textAlignVertical returned by ClosedCaptionsInterface.textAlignVertical()";
+}
+
+TEST_F(ClosedCaptionsTest, setWindowColor)
+{
+    std::string expected_color = "#000000";
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setWindowColor(expected_color, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setWindowColor() method";
+}
+
+TEST_F(ClosedCaptionsTest, windowColor)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.windowColor");
+    std::string color = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().windowColor(&error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.windowColor() method";
+    EXPECT_EQ(REMOVE_QUOTES(expectedValues), color) << "Error: wrong windowColor returned by ClosedCaptionsInterface.windowColor()";
+}
+
+TEST_F(ClosedCaptionsTest, setWindowOpacity)
+{
+    float expected_opacity = 0.85f;
+    Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setWindowOpacity(expected_opacity, &error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.setWindowOpacity() method";
+}
+
+TEST_F(ClosedCaptionsTest, windowOpacity)
+{
+    std::string expectedValues = jsonEngine->get_value("ClosedCaptions.windowOpacity");
+    float opacity = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().windowOpacity(&error);
+    EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling ClosedCaptionsInterface.windowOpacity() method";
+    EXPECT_EQ(stof(expectedValues), opacity) << "Error: wrong windowOpacity returned by ClosedCaptionsInterface.windowOpacity()";
+}
+
+// Events related tests
 struct BackgroundColorChanged : public Firebolt::ClosedCaptions::IClosedCaptions::IOnBackgroundColorChangedNotification
 {
     void onBackgroundColorChanged(const std::string &) override;
