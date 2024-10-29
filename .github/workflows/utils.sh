@@ -262,6 +262,7 @@ function generate_cpp_sdk_source_code(){
 }
 
 function build_cpp_sdk() {
+  
   FIREBOLT_VERSION=$(node -p "require('./package.json').version")
   echo "The version from package.json is $FIREBOLT_VERSION"
   local sdk_name=$1
