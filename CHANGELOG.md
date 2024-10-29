@@ -1,3 +1,10 @@
+# [1.5.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.4...v1.5.0-next.5) (2024-10-28)
+
+
+### Bug Fixes
+
+* Only invoke PR Workflow on PRs (Not external triggers) ([#338](https://github.com/rdkcentral/firebolt-apis/issues/338)) ([9088ee8](https://github.com/rdkcentral/firebolt-apis/commit/9088ee8b15c8020b91b542a41cfb93b3a9339f8b))
+
 # [1.5.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.3...v1.5.0-next.4) (2024-10-18)
 
 
