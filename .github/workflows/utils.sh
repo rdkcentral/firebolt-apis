@@ -1,7 +1,6 @@
 #!/bin/bash
 set -o pipefail
 
-FIREBOLT_VERSION=1.0.0-next.0
 current_apis_dir=$(pwd)
 
 cd ..
@@ -258,13 +257,14 @@ function generate_cpp_sdk_source_code(){
 
   echo " ************ Genrate Source Code for ${sdk_name^} CPP SDK ************"
 
-  FIREBOLT_VERSION=1.3.0-next.1
   cd src/sdks/${sdk_name}
   npm run cpp
 }
 
 function build_cpp_sdk() {
-  FIREBOLT_VERSION=1.3.0-next.1
+  
+  FIREBOLT_VERSION=$(node -p "require('./package.json').version")
+  echo "The version from package.json is $FIREBOLT_VERSION"
   local sdk_name=$1
   
   echo " ************ Build ${sdk_name^} CPP SDK ************"
