@@ -1,3 +1,10 @@
+# [1.5.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.6...v1.5.0-next.7) (2024-11-05)
+
+
+### Bug Fixes
+
+* CI change to only make PR comments when appropriate ([#340](https://github.com/rdkcentral/firebolt-apis/issues/340)) ([1d6a43f](https://github.com/rdkcentral/firebolt-apis/commit/1d6a43f6a79169591a7e7ffe5519eb339155bf96))
+
 # [1.5.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.5...v1.5.0-next.6) (2024-11-05)
 
 
