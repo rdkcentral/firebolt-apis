@@ -1,3 +1,10 @@
+# [1.5.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.5...v1.5.0-next.6) (2024-11-05)
+
+
+### Bug Fixes
+
+* Events C++ Unit Tests ([#336](https://github.com/rdkcentral/firebolt-apis/issues/336)) ([eb10d13](https://github.com/rdkcentral/firebolt-apis/commit/eb10d134f519d16202f5dbff7ac99c2b6db42851))
+
 # [1.5.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.4...v1.5.0-next.5) (2024-10-28)
 
 
