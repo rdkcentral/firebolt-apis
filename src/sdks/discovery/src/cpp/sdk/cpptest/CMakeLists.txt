@@ -52,14 +52,20 @@ target_link_libraries(${TESTAPP}
     PRIVATE
         ${NAMESPACE}Core::${NAMESPACE}Core
         ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
+        nlohmann_json_schema_validator
+        gtest_main
 )
 
 target_include_directories(${TESTAPP}
     PRIVATE
-        $<BUILD_INTERFACE:${FIREBOLT_PATH}/usr/include/${FIREBOLT_NAMESPACE}SDK>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/../>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
 )
+
+if (POLYMORPHICS_REDUCER_METHODS)
+    target_compile_definitions(${TESTAPP}
+        PUBLIC
+            POLYMORPHICS_REDUCER_METHODS=1)
+endif()
 
 set_target_properties(${TESTAPP} PROPERTIES
     CXX_STANDARD 17
