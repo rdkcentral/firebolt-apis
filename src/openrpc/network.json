@@ -1,0 +1,573 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Network",
+        "description": "A module that surfaces details of the device's network connection, including IP configuration and network capabilities.",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "connectionStatus",
+            "summary": "Get the device's current network connection status. The result is based on the current preferred network interface.",
+            "params": [],
+            "tags": [
+                {
+                    "name": "property:readonly"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:network:status"
+                    ]
+                }
+            ],
+            "result": {
+                "name": "connectionStatus",
+                "summary": "The current connection status",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "connected": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "$ref": "#/components/schemas/InterfaceType"
+                        }
+                    },
+                    "required": [
+                        "connected"
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "connected": true,
+                            "type": "wifi"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "interfaces",
+            "summary": "Get details of the enabled network interfaces on the device.",
+            "params": [],
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:network:interfaces"
+                    ]
+                }
+            ],
+            "result": {
+                "name": "interfaces",
+                "summary": "The enabled interfaces on the device",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/InterfaceDetails"
+                    }
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": [
+                            {
+                                "connectionState": "disconnected",
+                                "interface": "wifi0",
+                                "macAddress": "00:00:00:00:00:00",
+                                "preferred": false,
+                                "subtype": "802.11ac",
+                                "type": "wifi",
+                                "wakeOnLanEnabled": true
+                            },
+                            {
+                                "connectionState": "connected",
+                                "interface": "eth0",
+                                "macAddress": "00:00:00:00:00:01",
+                                "preferred": true,
+                                "subtype": "Gibabit Ethernet",
+                                "type": "ethernet",
+                                "wakeOnLanEnabled": true
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onInterfaceChanged",
+            "summary": "Get notified when the properties of an interface has changed",
+            "params": [],
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:network:interfaces"
+                    ]
+                }
+            ],
+            "result": {
+                "name": "interfaceDetails",
+                "summary": "The interface that changed",
+                "schema": {
+                    "$ref": "#/components/schemas/InterfaceDetails"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "connectionState": "connected",
+                            "interface": "wifi0",
+                            "macAddress": "00:00:00:00:00:00",
+                            "preferred": true,
+                            "subtype": "802.11ac",
+                            "type": "wifi",
+                            "wakeOnLanEnabled": true
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "ipProperties",
+            "summary": "Get the TCP/IP properties for the provided interface",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:network:ipproperties"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "interface",
+                    "description": "The network interface name",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "result": {
+                "name": "ipProperties",
+                "summary": "The IP properties for the provided interface",
+                "schema": {
+                    "$ref": "#/components/schemas/IPProperties"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "interface",
+                            "value": "eth0"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "interface": "eth0",
+                            "ipv4Addresses": [
+                                "192.168.1.100/24"
+                            ],
+                            "ipv4DNSAddresses": [
+                                "75.75.75.75"
+                            ],
+                            "ipv6Addresses": [
+                                "2001:db8:abcd:0012::0/64"
+                            ],
+                            "ipv6DNSAddresses": [
+                                "2001:558:feed::1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onIpPropertiesChanged",
+            "summary": "Get notified when the TCP/IP properties for an interface change",
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:network:ipproperties"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "ipProperties",
+                "summary": "The IP properties for the provided interface",
+                "schema": {
+                    "$ref": "#/components/schemas/IPProperties"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "interface": "eth0",
+                            "ipv4Addresses": [
+                                "192.168.1.100/24"
+                            ],
+                            "ipv4DNSAddresses": [
+                                "75.75.75.75"
+                            ],
+                            "ipv6Addresses": [
+                                "2001:db8:abcd:0012::0/64"
+                            ],
+                            "ipv6DNSAddresses": [
+                                "2001:558:feed::1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "wifiStatus",
+            "summary": "Get details on the wireless connection for the provided interface",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:network:wifistatus"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "interface",
+                    "description": "The wireless network interface name",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "result": {
+                "name": "wifiStatus",
+                "summary": "Details on the wireless connection",
+                "schema": {
+                    "$ref": "#/components/schemas/WifiStatusResult"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "interface",
+                            "value": "wifi0"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "connectionState": "connected",
+                            "interface": "wifi0",
+                            "mode": "802.11ac",
+                            "signalStrength": -60,
+                            "ssid": "MyNetwork"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "onWifiSignalStrengthChange",
+            "summary": "Get notified when there's a significant change to the signal strength of the device's wireless connection. For the specified interval, the platform will check for wifi signal strength, and if the difference crosses a specific threshold, the event will fire. Thresholds for firing this event may be operator-specific--please reference the operator's documentation for more information.",
+            "tags": [
+                {
+                    "name": "event"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:network:onwifisignalstrengthchange"
+                    ]
+                }
+            ],
+            "params": [
+                {
+                    "name": "interval",
+                    "description": "The interval to check the wireless signal, in milliseconds",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ],
+            "result": {
+                "name": "wifiSignalStrength",
+                "summary": "The current and previously-checked values of the wireless signal",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "interface": {
+                            "type": "string"
+                        },
+                        "currentValue": {
+                            "$ref": "https://meta.comcast.com/firebolt/schemas/network#/definitions/SignalStrength"
+                        },
+                        "previousValue": {
+                            "$ref": "https://meta.comcast.com/firebolt/schemas/network#/definitions/SignalStrength"
+                        }
+                    },
+                    "required": [
+                        "interface",
+                        "currentValue",
+                        "previousValue"
+                    ]
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "interval",
+                            "value": 10000
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "interface": "wifi0",
+                            "currentValue": -60,
+                            "previousValue": -50
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "components": {
+        "schemas": {
+            "ConnectionState": {
+                "title": "ConnectionState",
+                "description": "Network connection states",
+                "type": "string",
+                "enum": [
+                    "connected",
+                    "disconnected"
+                ]
+            },
+            "EthernetStandard": {
+                "title": "EthernetStandard",
+                "description": "Ethernet connection standards",
+                "type": "string",
+                "enum": [
+                    "Fast Ethernet",
+                    "Gibabit Ethernet",
+                    "10 Gigabit Ethernet"
+                ]
+            },
+            "InterfaceDetails": {
+                "title": "InterfaceDetails",
+                "description": "Details of a network interface",
+                "type": "object",
+                "properties": {
+                    "connectionState": {
+                        "$ref": "#/components/schemas/ConnectionState"
+                    },
+                    "interface": {
+                        "type": "string",
+                        "description": "Network interface name"
+                    },
+                    "macAddress": {
+                        "type": "string",
+                        "description": "Interface MAC address"
+                    },
+                    "preferred": {
+                        "type": "boolean",
+                        "description": "Whether this is the device's preferred/default interface"
+                    },
+                    "subtype": {
+                        "$ref": "#/components/schemas/InterfaceSubtype"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/InterfaceType"
+                    },
+                    "wakeOnLanEnabled": {
+                        "type": "boolean",
+                        "description": "Network interface name"
+                    }
+                },
+                "required": [
+                    "connectionState",
+                    "interface",
+                    "macAddress",
+                    "preferred",
+                    "subtype",
+                    "type",
+                    "wakeOnLanEnabled"
+                ]
+            },
+            "InterfaceType": {
+                "title": "InterfaceType",
+                "description": "Network interface type",
+                "type": "string",
+                "enum": [
+                    "ethernet",
+                    "wifi",
+                    "other",
+                    "unknown"
+                ]
+            },
+            "InterfaceSubtype": {
+                "description": "Network interface subtype",
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/EthernetStandard"
+                    },
+                    {
+                        "$ref": "#/components/schemas/WirelessStandard"
+                    },
+                    {
+                        "type": "string",
+                        "enum": [
+                            "other",
+                            "unknown"
+                        ]
+                    }
+                ]
+            },
+            "IPProperties": {
+                "title": "IPProperties",
+                "description": "Details of a network interface",
+                "type": "object",
+                "properties": {
+                    "interface": {
+                        "type": "string",
+                        "description": "Network interface name"
+                    },
+                    "ipv4Addresses": {
+                        "type": "array",
+                        "description": "IPv4 addresses in CIDR notation",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "ipv4DNSAddresses": {
+                        "type": "array",
+                        "description": "IPv4 DNS addresses",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "ipv6Addresses": {
+                        "type": "array",
+                        "description": "IPv6 addresses in CIDR notation",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "ipv6DNSAddresses": {
+                        "type": "array",
+                        "description": "IPv6 DNS addresses in CIDR notation",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "interface",
+                    "ipv4Addresses",
+                    "ipv4DNSAddresses",
+                    "ipv6Addresses",
+                    "ipv6DNSAddresses"
+                ]
+            },
+            "NetworkStatusDetails": {
+                "title": "NetworkStatusDetails",
+                "description": "Connection status of a network interface",
+                "type": "object",
+                "properties": {
+                    "connectionState": {
+                        "$ref": "#/components/schemas/ConnectionState"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/InterfaceType"
+                    }
+                },
+                "required": [
+                    "connectionState",
+                    "type"
+                ]
+            },
+            "WifiStatusResult": {
+                "title": "InterfaceDetails",
+                "description": "Details of a network interface",
+                "type": "object",
+                "properties": {
+                    "connectionState": {
+                        "$ref": "#/components/schemas/ConnectionState"
+                    },
+                    "interface": {
+                        "type": "string",
+                        "description": "Network interface name"
+                    },
+                    "mode": {
+                        "$ref": "#/components/schemas/WirelessStandard"
+                    },
+                    "signalStrength": {
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/network#/definitions/SignalStrength"
+                    },
+                    "ssid": {
+                        "type": "string",
+                        "description": "The SSID of the connected wireless network",
+                        "maxLength": 32
+                    }
+                },
+                "required": [
+                    "connectionState",
+                    "interface",
+                    "mode",
+                    "signalStrength",
+                    "ssid"
+                ]
+            },
+            "WirelessStandard": {
+                "title": "WirelessStandard",
+                "description": "Wireless connection standards",
+                "type": "string",
+                "enum": [
+                    "802.11ac",
+                    "802.11ax",
+                    "802.11be",
+                    "802.11n",
+                    "legacy",
+                    "other"
+                ]
+            }
+        }
+    }
+}
