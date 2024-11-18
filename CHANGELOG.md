@@ -1,3 +1,10 @@
+# [1.5.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.7...v1.5.0-next.8) (2024-11-18)
+
+
+### Bug Fixes
+
+* Manage sdk unit tests (non-events) ([#341](https://github.com/rdkcentral/firebolt-apis/issues/341)) ([85a0378](https://github.com/rdkcentral/firebolt-apis/commit/85a0378d433d8519bf439f02792f376e4ad71dc5))
+
 # [1.5.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.6...v1.5.0-next.7) (2024-11-05)
 
 
