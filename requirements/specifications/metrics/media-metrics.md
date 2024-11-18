@@ -33,6 +33,8 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
   - [4.10. Rendition Change](#410-rendition-change)
   - [4.11. Ended](#411-ended)
   - [4.12. Error](#412-error)
+- [Discovery Metrics](#discovery-metrics)
+  - [Watched](#watched)
 
 ## 3. Content Metrics
 The term "content" is used to denote *any* type of primary content that a user could be engaged in, e.g. a video game, a live broadcast, or a pre-recorded video presentation.
@@ -291,3 +293,30 @@ The `type` parameter **SHOULD** always be set to `media` for media-related error
 The remainder of this section outlines guidelines that apps should consider when calling `error`.
 
 The `error` API **SHOULD** be called whenever the app decides to cancel media playback due to an unrecoverable error.
+
+## Discovery Metrics
+
+### Watched
+The `Discovery` module **MUST** include a `watched` API for denoting that .
+
+The `watched` API **MUST** have a required `entityId` parameter to specify what entity from the app catalog the progress is from.
+
+The `watched` API **MUST** have an optional `completed` parameter to specify whether or the entity has played back with enough progress that it would not be offered in a "resume" list inside of the app.
+
+The `watched` API **MUST** have a required `progress` parameter denoting how much progress has been made.
+
+The remainder of this section outlines guidelines that apps should consider when calling `watched`.
+
+The `watched` API **SHOULD** be called when playback progress occurs at a rate of roughly once per 60 seconds.
+
+The `watched` API **SHOULD NOT** be called after playback stops, e.g. while paused or waiting.
+
+The `watched` API **SHOULD** be called with an up-to-date `progress` value right before any `mediaPause` call.
+
+The `progress` value **SHOULD** be a number greater than 0 and less than 1 denoting the percent of the content that progress has reached, if the duration of the content is static and known, e.g. VOD content.
+
+The `progress` value **SHOULD** be an integer number of secionds from 1 to 86400 denoting the number of seconds from the "beginning" of the content that progress has reached, if the duration of the content is dynamic or not known, e.g. live content.
+
+The "beginning" of the content **SHOULD** be considered as the start of the broadcast/event/etc., if known, otherwise it **MAY** be the start of the available media, e.g available on a CDN.
+
+The `progress` value **SHOULD** jump up or down based on seeking, etc.
