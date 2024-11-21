@@ -11,7 +11,7 @@
     ],
     "definitions": {
         "FontFamily": {
-            "type": ["string", "null"],
+            "type": "string",
             "enum": [
                 "monospaced_serif",
                 "proportional_serif",
@@ -19,12 +19,11 @@
                 "proportional_sanserif",
                 "smallcaps",
                 "cursive",
-                "casual",
-                null
+                "casual"
             ]
         },
         "FontSize": {
-            "type": ["number", "null"],
+            "type": "number",
             "minimum": 0
         },
         "FontEdge": {
