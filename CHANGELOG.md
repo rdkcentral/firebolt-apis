@@ -1,3 +1,10 @@
+# [1.5.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.8...v1.5.0-next.9) (2024-11-21)
+
+
+### Bug Fixes
+
+* Prettify typescript ([1a951ff](https://github.com/rdkcentral/firebolt-apis/commit/1a951ffadf8edb2dfbdfd28737ddd2d3478b5c3c))
+
 # [1.5.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.7...v1.5.0-next.8) (2024-11-18)
 
 
