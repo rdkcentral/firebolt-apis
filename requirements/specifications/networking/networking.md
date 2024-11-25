@@ -274,7 +274,7 @@ This method **MUST** return the following properties:
 | `currentValue`  | `integer` | Current signal strength / RSSI value (in dBm)  |
 | `previousValue` | `integer` | Previous signal strength / RSSI value (in dBm) |
 
-Access to this method **MUST** require the `use` role of the `xrn:firebolt:capability:network:onwifisignalstrengthchange` capability.
+Access to this method **MUST** require the `use` role of the `xrn:firebolt:capability:network:wifistatus` capability.
 
 ```javascript
 Network.onWifiSignalStrengthChange(10000)

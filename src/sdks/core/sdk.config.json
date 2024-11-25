@@ -116,7 +116,6 @@
             "use": [
                 "xrn:firebolt:capability:network:interfaces",
                 "xrn:firebolt:capability:network:ipproperties",
-                "xrn:firebolt:capability:network:onwifisignalstrengthchange",
                 "xrn:firebolt:capability:network:status",
                 "xrn:firebolt:capability:network:wifistatus"
             ]
