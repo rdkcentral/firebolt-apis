@@ -52,7 +52,7 @@ any memory, CPU, etc. that it was consuming.
 *Hibernating* an app refers to putting the app into a state where it does not use 
 CPU cycles, which allows the platform to optimise memory consumption. 
 
-*Waking* an app refers to copying a Hibernating app back into the memory space of 
+*Restoring* an app refers to copying a Hibernated app back into the memory space of 
 a compatible process so that it resumes where it left off. 
 
 ## 2. Table of Contents
@@ -63,7 +63,7 @@ a compatible process so that it resumes where it left off.
   - [3.2. Running](#32-running)
   - [3.3. Active](#33-active)
   - [3.4. Suspended](#34-suspended)
-  - [3.5. Hibernating](#35-hibernating)
+  - [3.5. Hibernated](#35-hibernated)
 - [4. Getting the current state](#4-getting-the-current-state)
 - [5. Lifecycle State Transitions](#5-lifecycle-state-transitions)
   - [5.1. Initializing an app](#51-initializing-an-app)
@@ -72,7 +72,7 @@ a compatible process so that it resumes where it left off.
   - [5.4. Suspending an app](#54-suspending-an-app)
   - [5.5. Resuming an app](#55-resuming-an-app)
   - [5.6. Putting an app into hibernation](#56-putting-an-app-into-hibernation)
-  - [5.7. Waking an app from hibernation](#57-waking-an-app-from-hibernation)
+  - [5.7. Restoring an app from hibernation](#57-restoring-an-app-from-hibernation)
   - [5.8. Destroying an app](#58-destroying-an-app)
   - [5.9. Terminating an app](#59-terminating-an-app)
 - [6. Create Parameters](#6-create-parameters)
@@ -106,7 +106,7 @@ on this.
 | Running      | ✔   | ✔   | ✔   | ✔   | ✔   | ✔   |     | Full access to resources, except A/V, and registered as a Firebolt app.    |
 | Active       | ✔   | ✔   | ✔   | ✔   | ✔   | ✔   | ✔   | Full access to resources and is a perceptible part of the user experience. |
 | Suspended    | ↓   | ↓   | ✔   | ✔   |     |     |     | Reduced memory footprint and no access to graphics or A/V.                 |
-| Hibernating     |     |     |     |     |     |     |     | No CPU cycles are given to the app. App may stay in RAM or be stored.      |
+| Hibernated   |     |     |     |     |     |     |     | No CPU cycles are given to the app. App may stay in RAM or be stored.      |
 
 |     | Legend                  |
 |-----|-------------------------| 
@@ -226,13 +226,13 @@ Apps in this state **SHOULD** further reduce memory usage (more so than in the
 
 Apps **MUST** only enter this state from:
 
-  - the `HIBERNATING` state, via the `reconstruct()` method
+  - the `HIBERNATED` state, via the `reconstruct()` method
   - the `RUNNING` state, via the `suspend()` method
 
 When an app transitions to this state, the platform **MUST** dispatch the 
 `Lifecycle.onStateChanged` notification with the current state. 
 
-### 3.5. Hibernating
+### 3.5. Hibernated
 
 This state allows an app to be copied from memory to local storage and then 
 terminated to save resources. Subsequently, the app may be copied back into 
@@ -242,7 +242,7 @@ memory, and resume in the same state.
 `xrn:firebolt:capability:lifecycle:hibernation` capability, then the following 
 requirements **MUST NOT** be fulfilled, even partially. A platform **MUST NOT** 
 use the APIs documented here to implement an alternate, non-compliant version 
-of the app hibernating feature. 
+of the app hibernation feature. 
 
 *If* a platform supports the `xrn:firebolt:capability:lifecycle:hibernation` 
 capability, then the following requirements **MUST** be fulfilled. 
@@ -250,10 +250,10 @@ capability, then the following requirements **MUST** be fulfilled.
 Apps **MUST** only enter this state from the `SUSPENDED` state, via the 
 `hibernate()` method. 
 
-If a platform supports copying hibernating apps memory out of RAM then: 
+If a platform supports copying hibernated apps memory out of RAM then: 
 
 > The platform **MAY** save the app's memory space at this point, so that it 
-> may be woken later. 
+> may be restored later. 
 > 
 > Finally, the app and its container **MAY** be removed from memory and have 
 > other resources released as well. 
@@ -275,10 +275,10 @@ The `state` API must have one of the following values:
 - `Running`
 - `Suspended`
 - `Active`
-- `Hibernating`
+- `Hibernated`
 
 Note that the `onStateChanged` notification **MUST** never be dispatched for 
-the `Hibernating` state since it would not be received anyway. 
+the `Hibernated` state since it would not be received anyway. 
 
 ## 5. Lifecycle State Transitions
 
@@ -494,7 +494,7 @@ Apps **MAY** request to be deactivated, via the `Lifecycle.close()` API method.
 
 To deactivate an app, platforms **MUST** use the following process. 
 
-If an app is already in the `RUNNING`, `SUSPENDED`, or `HIBERNATING` state, then 
+If an app is already in the `RUNNING`, `SUSPENDED`, or `HIBERNATED` state, then 
 it is already deactivated and there is no need to do anything else. The platform 
 **MUST NOT** dispatch any *additional* lifecycle notifications when attempting 
 to deactivate such an app and the remainder of this section does not apply. 
@@ -552,10 +552,10 @@ To suspend an app, platforms **MUST** use the following process.
 If an app is in the `ACTIVE` state then it cannot yet be suspended, and 
 **MUST** be deactivated first. 
 
-If an app is in the `HIBERNATING` state then it cannot be suspended and there is 
+If an app is in the `HIBERNATED` state then it cannot be suspended and there is 
 no need to do anything else. The platform **MUST NOT** dispatch any 
 *additional* lifecycle notifications when attempting to suspend an app that is 
-already in the `HIBERNATING` state and the remainder of this section does not 
+already in the `HIBERNATED` state and the remainder of this section does not 
 apply. 
 
 If an app is already in the `SUSPENDED` state, then it is already suspended and 
@@ -653,47 +653,47 @@ Hibernation apps **MUST** provide the
 **MUST** call the app's implementation of `Hibernation.hibernate()`: 
 
 Once the platform receives a success, then the app may be moved 
-to the `HIBERNATING` state. 
+to the `HIBERNATED` state. 
 
 If the app times out or throws an error, then the app **MUST** be 
 terminated. 
 
 During the `hibernate()` transition, apps **SHOULD** note the clock time in order
-to determine the duration of hibernation when the app is woken.
+to determine the duration of hibernation when the app is restored.
 composition and other necessary resources. 
 
-### 5.7. Waking an app from hibernation
-Waking an app from hibernation allows the platform to copy the apps memory stack back
+### 5.7. Restoring an app from hibernation
+Restoring an app from hibernation allows the platform to copy the apps memory stack back
 from storage and relaunch the app in the original state.
 
 Firebolt apps that have permission to use the 
 `xrn:firebolt:capability:lifecycle:hibernation` capability **MUST** implement 
 `Hibernation.reconstruct()`. 
 
-To wake an app from hibernation, platforms **MUST** use the following process. 
+To restore an app from hibernation, platforms **MUST** use the following process. 
 
-If an app is not in the `HIBERNATING` state, then it cannot be woken from hibernation and there 
+If an app is not in the `HIBERNATED` state, then it cannot be restored from hibernation and there 
 is no need to do anything else. The platform **MUST NOT** dispatch any 
-*additional* lifecycle notifications when attempting to resume an app that is 
-not in the `HIBERNATING` state and the remainder of this section does not apply. 
+*additional* lifecycle notifications when attempting to restore an app that is 
+not in the `HIBERNATED` state and the remainder of this section does not apply. 
 
-At this point, the app **MUST** be in the `HIBERNATING` state. 
+At this point, the app **MUST** be in the `HIBERNATED` state. 
 
 Next, the platform **MUST** copy the apps CPU and memory state back from persistant
 storage. How platforms implement this is out of scope for this document.
 
-Hibernation apps **MUST** provide the 
+Hibernated apps **MUST** provide the 
 `xrn:firebolt:capability:lifecycle:hibernation` capability, so the platform 
-**MUST** call the app's implementation of `Hibernation.reconstruct()`: 
+**MUST** call the app's implementation of `Hibernation.restore()`.
 
 Once the platform receives a success, then the app may be moved 
-to the `SUSPENDED` state. 
+to the `RUNNING` state. Note the the app does not enter the `SUSPENDED` state.
 
 If the app times out or throws an error, then the app **MUST** be 
 terminated. 
 
-During the `hibernate()` transition, apps **SHOULD** check how long it had been in
-the `HIBERNATING` state to determine if any processes need to be reset, reauthenticated, etc.
+During the `restore()` transition, apps **SHOULD** check how long it had been in
+the `HIBERNATED` state to determine if any processes need to be reset, reauthenticated, etc.
 
 ### 5.8. Destroying an app
 
@@ -804,7 +804,7 @@ interface Activatable {
 ### 7.3. Hibernation Interface
 
 The `Hibernation` interface is implemented by Apps that are able to handle being 
-put into hibernation and then woken at a later point in time. 
+put into hibernation and then restored at a later point in time. 
 
 These types of apps require additional resource management to reestablish 
 network connections and may also require additional thread safety checks. 
@@ -817,8 +817,8 @@ interface Hibernation {
 ``` 
 | Method    | Description                                                                                                                                           |
 |-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `hibernate()` | Called when the platform is ready to move the app into the `HIBERNATING` state where it will no longer have access to the CPU.                           |
-| `reconstruct()`  | Called when the platform is ready to move the app out of the `HIBERNATING` state and into `SUSPENDED`. Network connections should be reestablished here. |
+| `hibernate()` | Called when the platform is ready to move the app into the `HIBERNATED` state where it will no longer have access to the CPU.                           |
+| `reconstruct()`  | Called when the platform is ready to move the app out of the `HIBERNATED` state and into `RUNNING`. Network connections should be reestablished here. |
 
 ### 7.4. Example App
 
@@ -923,5 +923,5 @@ The LifecyclePolicy fields are:
 | appDeactivateTimeout | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `deactivate()`.                |
 | appSuspendTimeout    | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `suspend()`.                   |
 | appResumeTimeout     | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `resume()`.                    |
-| appSleepTimeout      | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `hibernate()`.                     |
-| appWakeTimeout       | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `reconstruct()`.                      |
+| appHibernateTimeout  | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `hibernate()`.                     |
+| appRestoreTimeout       | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `reconstruct()`.                      |
