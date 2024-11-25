@@ -78,7 +78,7 @@ The Firebolt `Network` module **MUST** have an `EthernetStandard` enumeration:
 
 The Firebolt `Network` module **MUST** have an `WirelessStandard` enumeration:
 
-| Standard   | Description   |
+| Name       | Description   |
 | ---------- | ------------- |
 | `802.11ac` |               |
 | `802.11ax` |               |
@@ -114,6 +114,8 @@ The result **MUST** be based on the device's preferred/default network interface
 
 If the device's preferred interface has both an active network connection and valid IP configuration, the `connected` value **MUST** be `true`, otherwise `false` is returned.
 
+If `connected` is `true`, `type` **MUST** be one of: `ethernet`, `wifi`, or `other`.
+
 If `connected` is `false`, `type` **MUST NOT** be returned.
 
 This method **MUST** have a corresponding `onStatusChanged` event returning the properties listed above to notify listeners when any of the properties have changed and taken effect.
@@ -134,15 +136,17 @@ The `Network` module **MUST** have an `interfaces` method that describes each ne
 
 This method **MUST** return an array of objects with the following properties:
 
-| Property           | Type                       | Description                                                          |
-| ------------------ | -------------------------- | -------------------------------------------------------------------- |
-| `connectionState`  | `Network.ConnectionState`  |                                                                      |
-| `interface`        | `string`                   | Name of the interface (e.g. eth0)                                    |
-| `macAddress`       | `string`                   |                                                                      |
-| `preferred`        | `boolean`                  | Whether the interface is the preferred/default interface for routing |
-| `subtype`          | `Network.InterfaceSubtype` |                                                                      |
-| `type`             | `Network.InterfaceType`    |                                                                      |
-| `wakeOnLanEnabled` | `boolean`                  |                                                                      |
+| Property           | Type                                                 | Description                                                                      |
+| ------------------ | ---------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `capability`       | `Network.EthernetStandard`</br>or `WirelessStandard` | The connection capability of the interface (e.g. `Gibabit Ethernet`, `802.11ac`) |
+| `connectionState`  | `Network.ConnectionState`                            |                                                                                  |
+| `interfaceName`    | `string`                                             |                                                                                  |
+| `macAddress`       | `string`                                             |                                                                                  |
+| `preferred`        | `boolean`                                            | Whether the interface is the preferred/default interface for routing             |
+| `type`             | `Network.InterfaceType`                              | The generalized type of interface (e.g. `ethernet` or `wifi`)                    |
+| `wakeOnLanEnabled` | `boolean`                                            |                                                                                  |
+
+If `connectionState` is `disconnected`, `preferred` **MUST** be `false`.
 
 This method **MUST** have a corresponding `onInterfaceChanged` event returning an object with the properties listed above to notify listeners when an interface's properties have changed and taken effect.
 
@@ -152,21 +156,21 @@ Access to this method **MUST** require the `use` role of the `xrn:firebolt:capab
 Network.interfaces()
 //> [
 //>   {
-//>     connectionState: "disconnected"
-//>     interface: "wifi0"
-//>     macAddress: "00:00:00:00:00:00"
-//>     preferred: false
-//>     subtype: "802.11ac"
-//>     type: "wifi"
+//>     capability: "802.11ac",
+//>     connectionState: "disconnected",
+//>     interfaceName: "wifi0",
+//>     macAddress: "00:00:00:00:00:00",
+//>     preferred: false,
+//>     type: "wifi",
 //>     wakeOnLanEnabled: true
 //>   },
 //>   {
-//>     connectionState: "connected"
-//>     interface: "eth0"
-//>     macAddress: "00:00:00:00:00:00"
-//>     preferred: true
-//>     subtype: "Gibabit Ethernet"
-//>     type: "ethernet"
+//>     capability: "Gibabit Ethernet",
+//>     connectionState: "connected",
+//>     interfaceName: "eth0",
+//>     macAddress: "00:00:00:00:00:00",
+//>     preferred: true,
+//>     type: "ethernet",
 //>     wakeOnLanEnabled: true
 //>   },
 //> ]
@@ -180,7 +184,7 @@ This method **MUST** return the following properties:
 
 | Property           | Type       |
 | ------------------ | ---------- |
-| `interface`        | `string`   |
+| `interfaceName`    | `string`   |
 | `ipv4Addresses`    | `[]string` |
 | `ipv4DNSAddresses` | `[]string` |
 | `ipv6Addresses`    | `[]string` |
@@ -188,7 +192,7 @@ This method **MUST** return the following properties:
 
 The method **MUST** require a `string` parameter denoting the interface name on which the result shall be based.
 
-The `ipv4Addresses` and `ipv6Addresses` values **MUST** be presented in CIDR notation.
+The values returned in `ipv4Addresses` and `ipv6Addresses` **MUST** be presented in CIDR notation.
 
 If an invalid interface name is provided, a `-40404 / Interface not found` JSON-RPC error **MUST** be returned.
 
@@ -199,10 +203,10 @@ Access to this method **MUST** require the `use` role of the `xrn:firebolt:capab
 ```javascript
 Network.ipProperties("eth0")
 //> {
-//>   interface: "eth0"
-//>   ipv4Addresses: ["192.168.1.100/24"]
-//>   ipv4DNSAddresses: ["75.75.75.75"]
-//>   ipv6Addresses: ["2001:db8:abcd:0012::0/64"]
+//>   interfaceName: "eth0",
+//>   ipv4Addresses: ["192.168.1.100/24"],
+//>   ipv4DNSAddresses: ["75.75.75.75"],
+//>   ipv6Addresses: ["2001:db8:abcd:0012::0/64"],
 //>   ipv6DNSAddresses: ["2001:558:feed::1"]
 //> }
 ```
@@ -211,29 +215,38 @@ Network.ipProperties("eth0")
 
 The `Network` module **MUST** have a `wifiStatus` method that returns an object describing an interface's connection status to a wireless network.
 
-| Property          | Type                       | Description                             |
-| ----------------- | -------------------------- | --------------------------------------- |
-| `connectionState` | `Network.ConnectionState`  |                                         |
-| `interface`       | `string`                   |                                         |
-| `mode`            | `Network.WirelessStandard` | Current wireless mode (e.g. `802.11ac`) |
-| `signalStrength`  | `integer`                  | Signal strength / RSSI value (in dBm)   |
-| `ssid`            | `string`                   | Wireless network name                   |
-
 The method **MUST** support a required `string` parameter denoting the interface name of which the result is based.
+
+This method **MUST** return the following properties:
+
+| Property          | Type                      |
+| ----------------- | ------------------------- |
+| `connectionState` | `Network.ConnectionState` |
+| `interfaceName`   | `string`                  |
+
+The following properties are **OPTIONAL**:
+
+| Property         | Type                       | Description                             |
+| ---------------- | -------------------------- | --------------------------------------- |
+| `mode`           | `Network.WirelessStandard` | Current wireless mode (e.g. `802.11ac`) |
+| `signalStrength` | `integer`                  | Signal strength / RSSI value (in dBm)   |
+| `ssid`           | `string`                   | Wireless network name                   |
 
 If no wireless interface matches the provided name, a `-40404 / Wireless interface not found` JSON-RPC error **MUST** be returned.
 
-If the wireless interface is not connected to a network, the `connectionState` **MUST** return `disconnected`, the `mode` must be `unknown`, `signalStrength`  must be `-255` and the `ssid` blank.
+If the wireless interface is not connected to a network, `connectionState` **MUST** be `disconnected`.
+
+If the wireless interface is not connected to a network, `mode`, `signalStrength` and `ssid` **MUST NOT** be returned.
 
 Access to this method **MUST** require the `use` role of the `xrn:firebolt:capability:network:wifistatus` capability.
 
 ```javascript
 Network.wifiStatus("wifi0")
 //> {
-//>  connectionState: "connected"
-//>  interface: "wifi0"
-//>  mode: "802.11ac"
-//>  signalStrength: -50
+//>  connectionState: "connected",
+//>  interfaceName: "wifi0",
+//>  mode: "802.11ac",
+//>  signalStrength: -50,
 //>  ssid: "MyNetwork"
 //> }
 ```
@@ -255,19 +268,19 @@ The thresholds may be operator-dependent, but a general guide may be:
 
 This method **MUST** return the following properties:
 
-| Property        | Type      | Description                           |
-| --------------- | --------- | ------------------------------------- |
-| `interface`     | `string`  | The interface name                    |
-| `currentValue`  | `integer` | Current signal strength / RSSI value  |
-| `previousValue` | `integer` | Previous signal strength / RSSI value |
+| Property        | Type      | Description                                    |
+| --------------- | --------- | ---------------------------------------------- |
+| `interfaceName` | `string`  |                                                |
+| `currentValue`  | `integer` | Current signal strength / RSSI value (in dBm)  |
+| `previousValue` | `integer` | Previous signal strength / RSSI value (in dBm) |
 
 Access to this method **MUST** require the `use` role of the `xrn:firebolt:capability:network:onwifisignalstrengthchange` capability.
 
 ```javascript
 Network.onWifiSignalStrengthChange(10000)
 //> {
-//>  interface: "wifi0"
-//>  currentValue: -60
+//>  interfaceName: "wifi0",
+//>  currentValue: -60,
 //>  previousValue: -50
 //> }
 ```

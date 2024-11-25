@@ -50,6 +50,16 @@
                             "type": "wifi"
                         }
                     }
+                },
+                {
+                    "name": "Example with no network connection",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "connected": false
+                        }
+                    }
                 }
             ]
         },
@@ -83,20 +93,20 @@
                         "name": "Default Result",
                         "value": [
                             {
+                                "capability": "802.11ac",
                                 "connectionState": "disconnected",
-                                "interface": "wifi0",
+                                "interfaceName": "wifi0",
                                 "macAddress": "00:00:00:00:00:00",
                                 "preferred": false,
-                                "subtype": "802.11ac",
                                 "type": "wifi",
                                 "wakeOnLanEnabled": true
                             },
                             {
+                                "capability": "Gibabit Ethernet",
                                 "connectionState": "connected",
-                                "interface": "eth0",
+                                "interfaceName": "eth0",
                                 "macAddress": "00:00:00:00:00:01",
                                 "preferred": true,
-                                "subtype": "Gibabit Ethernet",
                                 "type": "ethernet",
                                 "wakeOnLanEnabled": true
                             }
@@ -134,11 +144,11 @@
                     "result": {
                         "name": "Default Result",
                         "value": {
+                            "capability": "802.11ac",
                             "connectionState": "connected",
-                            "interface": "wifi0",
+                            "interfaceName": "wifi0",
                             "macAddress": "00:00:00:00:00:00",
                             "preferred": true,
-                            "subtype": "802.11ac",
                             "type": "wifi",
                             "wakeOnLanEnabled": true
                         }
@@ -159,7 +169,7 @@
             ],
             "params": [
                 {
-                    "name": "interface",
+                    "name": "interfaceName",
                     "description": "The network interface name",
                     "required": true,
                     "schema": {
@@ -179,14 +189,14 @@
                     "name": "Default Example",
                     "params": [
                         {
-                            "name": "interface",
+                            "name": "interfaceName",
                             "value": "eth0"
                         }
                     ],
                     "result": {
                         "name": "Default Result",
                         "value": {
-                            "interface": "eth0",
+                            "interfaceName": "eth0",
                             "ipv4Addresses": [
                                 "192.168.1.100/24"
                             ],
@@ -233,7 +243,7 @@
                     "result": {
                         "name": "Default Result",
                         "value": {
-                            "interface": "eth0",
+                            "interfaceName": "eth0",
                             "ipv4Addresses": [
                                 "192.168.1.100/24"
                             ],
@@ -264,7 +274,7 @@
             ],
             "params": [
                 {
-                    "name": "interface",
+                    "name": "interfaceName",
                     "description": "The wireless network interface name",
                     "required": true,
                     "schema": {
@@ -284,7 +294,7 @@
                     "name": "Default Example",
                     "params": [
                         {
-                            "name": "interface",
+                            "name": "interfaceName",
                             "value": "wifi0"
                         }
                     ],
@@ -292,10 +302,26 @@
                         "name": "Default Result",
                         "value": {
                             "connectionState": "connected",
-                            "interface": "wifi0",
+                            "interfaceName": "wifi0",
                             "mode": "802.11ac",
                             "signalStrength": -60,
                             "ssid": "MyNetwork"
+                        }
+                    }
+                },
+                {
+                    "name": "Example with no network connection",
+                    "params": [
+                        {
+                            "name": "interfaceName",
+                            "value": "wifi0"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "connectionState": "disconnected",
+                            "interfaceName": "wifi0"
                         }
                     }
                 }
@@ -331,7 +357,7 @@
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "interface": {
+                        "interfaceName": {
                             "type": "string"
                         },
                         "currentValue": {
@@ -342,7 +368,7 @@
                         }
                     },
                     "required": [
-                        "interface",
+                        "interfaceName",
                         "currentValue",
                         "previousValue"
                     ]
@@ -360,7 +386,7 @@
                     "result": {
                         "name": "Default Result",
                         "value": {
-                            "interface": "wifi0",
+                            "interfaceName": "wifi0",
                             "currentValue": -60,
                             "previousValue": -50
                         }
@@ -395,10 +421,27 @@
                 "description": "Details of a network interface",
                 "type": "object",
                 "properties": {
+                    "capability": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/EthernetStandard"
+                            },
+                            {
+                                "$ref": "#/components/schemas/WirelessStandard"
+                            },
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "other",
+                                    "unknown"
+                                ]
+                            }
+                        ]
+                    },
                     "connectionState": {
                         "$ref": "#/components/schemas/ConnectionState"
                     },
-                    "interface": {
+                    "interfaceName": {
                         "type": "string",
                         "description": "Network interface name"
                     },
@@ -410,9 +453,6 @@
                         "type": "boolean",
                         "description": "Whether this is the device's preferred/default interface"
                     },
-                    "subtype": {
-                        "$ref": "#/components/schemas/InterfaceSubtype"
-                    },
                     "type": {
                         "$ref": "#/components/schemas/InterfaceType"
                     },
@@ -422,11 +462,11 @@
                     }
                 },
                 "required": [
+                    "capability",
                     "connectionState",
-                    "interface",
+                    "interfaceName",
                     "macAddress",
                     "preferred",
-                    "subtype",
                     "type",
                     "wakeOnLanEnabled"
                 ]
@@ -442,30 +482,12 @@
                     "unknown"
                 ]
             },
-            "InterfaceSubtype": {
-                "description": "Network interface subtype",
-                "anyOf": [
-                    {
-                        "$ref": "#/components/schemas/EthernetStandard"
-                    },
-                    {
-                        "$ref": "#/components/schemas/WirelessStandard"
-                    },
-                    {
-                        "type": "string",
-                        "enum": [
-                            "other",
-                            "unknown"
-                        ]
-                    }
-                ]
-            },
             "IPProperties": {
                 "title": "IPProperties",
-                "description": "Details of a network interface",
+                "description": "TCP/IP properties of a network interface",
                 "type": "object",
                 "properties": {
-                    "interface": {
+                    "interfaceName": {
                         "type": "string",
                         "description": "Network interface name"
                     },
@@ -499,7 +521,7 @@
                     }
                 },
                 "required": [
-                    "interface",
+                    "interfaceName",
                     "ipv4Addresses",
                     "ipv4DNSAddresses",
                     "ipv6Addresses",
@@ -524,14 +546,14 @@
                 ]
             },
             "WifiStatusResult": {
-                "title": "InterfaceDetails",
-                "description": "Details of a network interface",
+                "title": "WifiStatusResult",
+                "description": "Status of a wireless connection",
                 "type": "object",
                 "properties": {
                     "connectionState": {
                         "$ref": "#/components/schemas/ConnectionState"
                     },
-                    "interface": {
+                    "interfaceName": {
                         "type": "string",
                         "description": "Network interface name"
                     },
@@ -549,10 +571,7 @@
                 },
                 "required": [
                     "connectionState",
-                    "interface",
-                    "mode",
-                    "signalStrength",
-                    "ssid"
+                    "interfaceName"
                 ]
             },
             "WirelessStandard": {
