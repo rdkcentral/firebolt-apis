@@ -15,7 +15,7 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 
 To provide the best experience to users, content partners want to understand details about a device's network connection, such as the device's connection state, connection type, and that connection's performance capabilities.  Content partners also want to be notified of key changes to the device's connection, such as connect/disconnect events or IP changes.  This data can be used to gauge how those changes may impact the user's experience and react appropriately.
 
-App partners also have different requirements of what network details are made available to them.  For instance, most app partners simply want to know the device's current connection state, type, and be notified of changes to that connection.  Other app partners may have more sophisticated needs, requiring access to details on the the configurations of all available network interfaces, including interface MACs, IPs, and wireless connection details.
+App partners also have different requirements of what network details are made available to them.  For instance, most app partners simply want to know the device's current connection state, type, and be notified of changes to that connection.  Other app partners may have more sophisticated needs, requiring access to details on the the configurations of all available network interfaces, including interface MAC addresses, IPs, and interface capabilities.
 
 This information can be used to gracefully handle cases when the device has poor or no network connectivity, provide valuable data into how the user's network performance is impacting their experience, and to unlock more advanced networking features on the device (such as Wake-on-LAN functionality).
 
@@ -98,12 +98,12 @@ To facilitate this, the `Network` module will surface methods that provide vario
 
 The `Network` module **MUST** have a `connectionStatus` method that returns an object describing the device's current network connection status.
 
-This method **MUST** support returning the following properties:
+This method **MUST** support the following properties:
 
-| Property    | Type                    | Required |
-| ----------- | ----------------------- | -------- |
-| `connected` | `boolean`               | Yes      |
-| `type`      | `Network.InterfaceType` | No       |
+| Property    | Type                    | Required in Response |
+| ----------- | ----------------------- | -------------------- |
+| `connected` | `boolean`               | Yes                  |
+| `type`      | `Network.InterfaceType` | No                   |
 
 The result **MUST** be based on the device's preferred/default network interface.
 
@@ -114,6 +114,12 @@ If `connected` is `true`, `type` **MUST** be one of: `ethernet`, `wifi`, or `oth
 If `connected` is `false`, `type` **MUST NOT** be returned.
 
 This method **MUST** have a corresponding `onStatusChanged` event returning the properties listed above to notify listeners when any of the properties have changed and taken effect.
+
+The platform **MUST** trigger the event when the device's preferred network interface changes.
+
+The platform **MUST** trigger the event when the device's preferred network interface changes.
+
+The platform **MUST** trigger the event on connection changes to device's preferred network interface (e.g. connect, disconnect, auth failure, wifi out of range, etc).
 
 Access to these methods **MUST** require the `use` role of the `xrn:firebolt:capability:network:connectionstatus` capability.
 
@@ -212,15 +218,15 @@ The `Network` module **MUST** have a `wifiStatus` method that returns an object 
 
 The method **MUST** support a required `string` parameter denoting the interface name of which the result is based.
 
-This method **MUST** support returning the following properties:
+This method **MUST** support the following properties:
 
-| Property          | Type                       | Description                             | Required |
-| ----------------- | -------------------------- | --------------------------------------- | -------- |
-| `connectionState` | `Network.ConnectionState`  |                                         | Yes      |
-| `interfaceName`   | `string`                   |                                         | Yes      |
-| `mode`            | `Network.WirelessStandard` | Current wireless mode (e.g. `802.11ac`) | No       |
-| `signalStrength`  | `integer`                  | Signal strength / RSSI value (in dBm)   | No       |
-| `ssid`            | `string`                   | Wireless network name                   | No       |
+| Property          | Type                       | Description                             | Required in Response |
+| ----------------- | -------------------------- | --------------------------------------- | -------------------- |
+| `connectionState` | `Network.ConnectionState`  |                                         | Yes                  |
+| `interfaceName`   | `string`                   |                                         | Yes                  |
+| `mode`            | `Network.WirelessStandard` | Current wireless mode (e.g. `802.11ac`) | No                   |
+| `signalStrength`  | `integer`                  | Signal strength / RSSI value (in dBm)   | No                   |
+| `ssid`            | `string`                   | Wireless network name                   | No                   |
 
 If no wireless interface matches the provided name, a `-40404 / Wireless interface not found` JSON-RPC error **MUST** be returned.
 
@@ -247,7 +253,7 @@ The `Network` module **MUST** have an `onWifiSignalStrengthChange` event to noti
 
 The method **MUST** support a required `integer` parameter denoting a time interval, in milliseconds, after which the current RSSI is compared to the previous to determine if the signal strength crossed a threshold.
 
-The thresholds may be operator-dependent, but a general guide may be:
+The platform **SHOULD** implement the following thresholds:
 
 | RSSI Threshold (in dBm) | Description |
 | ----------------------- | ----------- |
