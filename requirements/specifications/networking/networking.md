@@ -98,17 +98,12 @@ To facilitate this, the `Network` module will surface methods that provide vario
 
 The `Network` module **MUST** have a `connectionStatus` method that returns an object describing the device's current network connection status.
 
-This method **MUST** return the following properties:
+This method **MUST** support returning the following properties:
 
-| Property    | Type      |
-| ----------- | --------- |
-| `connected` | `boolean` |
-
-The following properties are **OPTIONAL**:
-
-| Property | Type                    |
-| -------- | ----------------------- |
-| `type`   | `Network.InterfaceType` |
+| Property    | Type                    | Required |
+| ----------- | ----------------------- | -------- |
+| `connected` | `boolean`               | Yes      |
+| `type`      | `Network.InterfaceType` | No       |
 
 The result **MUST** be based on the device's preferred/default network interface.
 
@@ -217,20 +212,15 @@ The `Network` module **MUST** have a `wifiStatus` method that returns an object 
 
 The method **MUST** support a required `string` parameter denoting the interface name of which the result is based.
 
-This method **MUST** return the following properties:
+This method **MUST** support returning the following properties:
 
-| Property          | Type                      |
-| ----------------- | ------------------------- |
-| `connectionState` | `Network.ConnectionState` |
-| `interfaceName`   | `string`                  |
-
-The following properties are **OPTIONAL**:
-
-| Property         | Type                       | Description                             |
-| ---------------- | -------------------------- | --------------------------------------- |
-| `mode`           | `Network.WirelessStandard` | Current wireless mode (e.g. `802.11ac`) |
-| `signalStrength` | `integer`                  | Signal strength / RSSI value (in dBm)   |
-| `ssid`           | `string`                   | Wireless network name                   |
+| Property          | Type                       | Description                             | Required |
+| ----------------- | -------------------------- | --------------------------------------- | -------- |
+| `connectionState` | `Network.ConnectionState`  |                                         | Yes      |
+| `interfaceName`   | `string`                   |                                         | Yes      |
+| `mode`            | `Network.WirelessStandard` | Current wireless mode (e.g. `802.11ac`) | No       |
+| `signalStrength`  | `integer`                  | Signal strength / RSSI value (in dBm)   | No       |
+| `ssid`            | `string`                   | Wireless network name                   | No       |
 
 If no wireless interface matches the provided name, a `-40404 / Wireless interface not found` JSON-RPC error **MUST** be returned.
 
