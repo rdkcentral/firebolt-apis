@@ -226,7 +226,7 @@ Apps in this state **SHOULD** further reduce memory usage (more so than in the
 
 Apps **MUST** only enter this state from:
 
-  - the `HIBERNATED` state, via the `reconstruct()` method
+  - the `HIBERNATED` state, via the `restore()` method
   - the `RUNNING` state, via the `suspend()` method
 
 When an app transitions to this state, the platform **MUST** dispatch the 
@@ -320,7 +320,7 @@ transitions may be invoked.
 |           | CPU | RAM | Net | GFX | A/V | Description                                                                            |
 |-----------|-----|-----|-----|-----|-----|----------------------------------------------------------------------------------------|
 | `hibernate()` | ↓   | ↓   | ✔   |     |     | Prepare for an extended period with no CPU cycles given to app.                        |
-| `reconstruct()`  | ↓   | ↓   | ✔   |     |     | Cleanup after an extended period with no CPU, e.g. reset timers / network connections. |
+| `restore()`  | ↓   | ↓   | ✔   |     |     | Cleanup after an extended period with no CPU, e.g. reset timers / network connections. |
 
 
 All of these transition APIs are blocking, and each one has a 
@@ -668,7 +668,7 @@ from storage and relaunch the app in the original state.
 
 Firebolt apps that have permission to use the 
 `xrn:firebolt:capability:lifecycle:hibernation` capability **MUST** implement 
-`Hibernation.reconstruct()`. 
+`Hibernation.restore()`. 
 
 To restore an app from hibernation, platforms **MUST** use the following process. 
 
@@ -687,7 +687,7 @@ Hibernated apps **MUST** provide the
 **MUST** call the app's implementation of `Hibernation.restore()`.
 
 Once the platform receives a success, then the app may be moved 
-to the `RUNNING` state. Note the the app does not enter the `SUSPENDED` state.
+to the `SUSPENDED` state.
 
 If the app times out or throws an error, then the app **MUST** be 
 terminated. 
@@ -811,14 +811,14 @@ network connections and may also require additional thread safety checks.
 ```typescript
 interface Hibernation {
   function hibernate(): Promise<void>;
-  function reconstruct(): Promise<void>;
+  function restore(): Promise<void>;
 }
 
 ``` 
 | Method    | Description                                                                                                                                           |
 |-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `hibernate()` | Called when the platform is ready to move the app into the `HIBERNATED` state where it will no longer have access to the CPU.                           |
-| `reconstruct()`  | Called when the platform is ready to move the app out of the `HIBERNATED` state and into `RUNNING`. Network connections should be reestablished here. |
+| `restore()`  | Called when the platform is ready to move the app out of the `HIBERNATED` state and into `RUNNING`. Network connections should be reestablished here. |
 
 ### 7.4. Example App
 
@@ -924,4 +924,4 @@ The LifecyclePolicy fields are:
 | appSuspendTimeout    | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `suspend()`.                   |
 | appResumeTimeout     | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `resume()`.                    |
 | appHibernateTimeout  | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `hibernate()`.                     |
-| appRestoreTimeout       | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `reconstruct()`.                      |
+| appRestoreTimeout       | bigint | Yes      | Number of milliseconds the platform should wait before terminating an app that did finish `restore()`.                      |
