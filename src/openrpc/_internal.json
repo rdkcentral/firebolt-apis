@@ -14,9 +14,7 @@
         },
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:lifecycle:initialize"
-          ]
+          "x-uses": ["xrn:firebolt:capability:lifecycle:initialize"]
         }
       ],
       "summary": "Initialize the SDK / FEE session.",
@@ -26,7 +24,7 @@
           "name": "version",
           "required": true,
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/SemanticVersion"
           },
           "summary": "The semantic version of the SDK."
         }
@@ -35,7 +33,15 @@
         "name": "session",
         "summary": "Info about the SDK/FEE session",
         "schema": {
-          "$ref": "#/components/schemas/InitializeResult"
+          "type": "object",
+          "required": ["version"],
+          "properties": {
+            "version": {
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/SemanticVersion",
+              "description": "The semantic version of the FEE."
+            }
+          },
+          "additionalProperties": false
         }
       },
       "examples": [
@@ -59,28 +65,15 @@
                 "major": 1,
                 "minor": 0,
                 "patch": 0,
-                "readable": "Firebolt FEE 1.0.0"                
+                "readable": "Firebolt FEE 1.0.0"
               }
             }
           }
-        }            
-      ]    
+        }
+      ]
     }
   ],
   "components": {
-    "schemas": {
-      "InitializeResult": {
-        "title": "InitializeResult",
-        "type": "object",
-        "required": ["version"],
-        "properties": {
-          "version": {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
-            "description": "The semantic version of the FEE."
-          }
-        },
-        "additionalProperties": false
-      }
-    }
+    "schemas": {}
   }
 }
