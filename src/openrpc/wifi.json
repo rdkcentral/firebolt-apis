@@ -105,7 +105,7 @@
           },
           "timeout": {
             "schema": {
-              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/Timeout"
+              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/Timeout"
             }
           }
         }
@@ -119,16 +119,14 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:protocol:wifi"
-          ]
+          "x-uses": ["xrn:firebolt:capability:protocol:wifi"]
         }
       ],
       "params": [
         {
           "name": "timeout",
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/Timeout"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/Timeout"
           }
         }
       ],
@@ -182,9 +180,7 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:protocol:wifi"
-          ]
+          "x-uses": ["xrn:firebolt:capability:protocol:wifi"]
         }
       ],
       "params": [
@@ -277,9 +273,7 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:protocol:wifi"
-          ]
+          "x-uses": ["xrn:firebolt:capability:protocol:wifi"]
         }
       ],
       "params": [],
@@ -306,9 +300,7 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:protocol:wifi"
-          ]
+          "x-uses": ["xrn:firebolt:capability:protocol:wifi"]
         }
       ],
       "params": [

@@ -16,7 +16,7 @@
     "validate:each": "npx firebolt-openrpc validate --input src/openrpc --schemas src/schemas --transformations",
     "validate:compiled": "npx firebolt-openrpc validate --input dist/firebolt-open-rpc.json --pass-throughs && npm run validate --workspaces",
     "validate": "npm run validate:each && npm run validate:compiled ",
-    "compile": "npx firebolt-openrpc openrpc --input src --template src/template/openrpc/template.json --output ./dist/firebolt-open-rpc.json --schemas src/schemas",
+    "compile": "npx firebolt-openrpc openrpc --input src --template src/template/openrpc/template.json --platformApi ./dist/firebolt-open-rpc.json --appApi ./dist/firebolt-app-open-rpc.json --schemas src/schemas",
     "slice": "npm run slice --workspaces",
     "sdks": "npm run sdk --workspaces",
     "docs": "npm run docs --workspaces",
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "@firebolt-js/openrpc": "3.1.1",
+    "@firebolt-js/openrpc": "../firebolt-openrpc",
     "@firebolt-js/schemas": "2.0.0",
     "@saithodev/semantic-release-backmerge": "^3.2.0",
     "@semantic-release/changelog": "^6.0.1",

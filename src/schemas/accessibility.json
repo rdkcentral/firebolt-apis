@@ -1,174 +1,167 @@
 {
-    "$id": "https://meta.comcast.com/firebolt/accessibility",
-    "title": "Accessibility",
-    "anyOf": [
-        {
-            "$ref": "#/definitions/ClosedCaptionsStyles"
-        },
-        {
-            "$ref": "#/definitions/ClosedCaptionsSettings"
-        }
-    ],
-    "definitions": {
-        "FontFamily": {
-            "type": ["string", "null"],
-            "enum": [
-                "monospaced_serif",
-                "proportional_serif",
-                "monospaced_sanserif",
-                "proportional_sanserif",
-                "smallcaps",
-                "cursive",
-                "casual",
-                null
-            ]
-        },
-        "FontSize": {
-            "type": ["number", "null"],
-            "minimum": 0
-        },
-        "FontEdge": {
-            "type": ["string", "null"],
-            "enum": [
-                "none",
-                "raised",
-                "depressed",
-                "uniform",
-                "drop_shadow_left",
-                "drop_shadow_right",
-                null
-            ]
-        },
-        "Color": {
-            "type": ["string", "null"]
-        },
-        "Opacity": {
-            "type": ["number", "null"],
-            "minimum": 0,
-            "maximum": 100
-        },
-        "HorizontalAlignment": {
-            "type": ["string", "null"]
-        },
-        "VerticalAlignment": {
-            "type": ["string", "null"]
-        },
-        "ClosedCaptionsStyles": {
-            "title": "ClosedCaptionsStyles",
-            "type": "object",
-            "description": "The default styles to use when displaying closed-captions",
-            "properties": {
-                "fontFamily": {
-                    "$ref": "#/definitions/FontFamily"
-                },
-                "fontSize": {
-                    "$ref": "#/definitions/FontSize"
-                },
-                "fontColor": {
-                    "$ref": "#/definitions/Color"
-                },
-                "fontEdge": {
-                    "$ref": "#/definitions/FontEdge"
-                },
-                "fontEdgeColor": {
-                    "$ref": "#/definitions/Color"
-                },
-                "fontOpacity": {
-                    "$ref": "#/definitions/Opacity"
-                },
-                "backgroundColor": {
-                    "$ref": "#/definitions/Color"
-                },
-                "backgroundOpacity": {
-                    "$ref": "#/definitions/Opacity"
-                },
-                "textAlign": {
-                    "$ref": "#/definitions/HorizontalAlignment"
-                },
-                "textAlignVertical": {
-                    "$ref": "#/definitions/VerticalAlignment"
-                },
-                "windowColor": {
-                    "$ref": "#/definitions/Color"
-                },
-                "windowOpacity": {
-                    "$ref": "#/definitions/Opacity"
-                }
-            }
-        },
-        "ClosedCaptionsSettings": {
-            "title": "ClosedCaptionsSettings",
-            "type": "object",
-            "required": [
-                "enabled"
-            ],
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Whether or not closed-captions should be enabled by default"
-                },
-                "styles": {
-                    "$ref": "#/definitions/ClosedCaptionsStyles"
-                },
-                "preferredLanguages": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639_2Language"
-                    }
-                }
-            },
-            "examples": [
-                {
-                    "enabled": true,
-                    "styles": {
-                        "fontFamily": "monospaced_serif",
-                        "fontSize": 1,
-                        "fontColor": "#ffffff",
-                        "fontEdge": "none",
-                        "fontEdgeColor": "#7F7F7F",
-                        "fontOpacity": 100,
-                        "backgroundColor": "#000000",
-                        "backgroundOpacity": 100,
-                        "textAlign": "center",
-                        "textAlignVertical": "middle",
-                        "windowColor": "white",
-                        "windowOpacity": 50
-                    },
-                    "preferredLanguages": [
-                        "eng",
-                        "spa"
-                      ]        
-                }
-            ]
-        },
-        "VoiceSpeed": {
-            "title": "VoiceSpeed",
-            "type": "number",
-            "minimum": 0.5,
-            "maximum": 2
-        },
-        "VoiceGuidanceSettings": {
-            "title": "VoiceGuidanceSettings",
-            "type": "object",
-            "required": [
-                "enabled"
-            ],
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "Whether or not voice guidance should be enabled by default"
-                },
-                "speed": {
-                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VoiceSpeed",
-                    "description": "The speed at which voice guidance speech will be read back to the user"
-                }
-            },
-            "examples": [
-                {
-                    "enabled": true,
-                    "speed": 2
-                }
-            ]
-        }
+  "title": "Accessibility",
+  "$id": "https://meta.rdkcentral.com/firebolt/schemas/accessibility",
+  "anyOf": [
+    {
+      "$ref": "#/definitions/ClosedCaptionsStyles"
+    },
+    {
+      "$ref": "#/definitions/ClosedCaptionsSettings"
     }
+  ],
+  "definitions": {
+    "FontFamily": {
+      "type": ["string", "null"],
+      "enum": [
+        "monospaced_serif",
+        "proportional_serif",
+        "monospaced_sanserif",
+        "proportional_sanserif",
+        "smallcaps",
+        "cursive",
+        "casual",
+        null
+      ]
+    },
+    "FontSize": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "FontEdge": {
+      "type": ["string", "null"],
+      "enum": [
+        "none",
+        "raised",
+        "depressed",
+        "uniform",
+        "drop_shadow_left",
+        "drop_shadow_right",
+        null
+      ]
+    },
+    "Color": {
+      "type": ["string", "null"]
+    },
+    "Opacity": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "HorizontalAlignment": {
+      "type": ["string", "null"]
+    },
+    "VerticalAlignment": {
+      "type": ["string", "null"]
+    },
+    "ClosedCaptionsStyles": {
+      "title": "ClosedCaptionsStyles",
+      "type": "object",
+      "description": "The default styles to use when displaying closed-captions",
+      "properties": {
+        "fontFamily": {
+          "$ref": "#/definitions/FontFamily"
+        },
+        "fontSize": {
+          "$ref": "#/definitions/FontSize"
+        },
+        "fontColor": {
+          "$ref": "#/definitions/Color"
+        },
+        "fontEdge": {
+          "$ref": "#/definitions/FontEdge"
+        },
+        "fontEdgeColor": {
+          "$ref": "#/definitions/Color"
+        },
+        "fontOpacity": {
+          "$ref": "#/definitions/Opacity"
+        },
+        "backgroundColor": {
+          "$ref": "#/definitions/Color"
+        },
+        "backgroundOpacity": {
+          "$ref": "#/definitions/Opacity"
+        },
+        "textAlign": {
+          "$ref": "#/definitions/HorizontalAlignment"
+        },
+        "textAlignVertical": {
+          "$ref": "#/definitions/VerticalAlignment"
+        },
+        "windowColor": {
+          "$ref": "#/definitions/Color"
+        },
+        "windowOpacity": {
+          "$ref": "#/definitions/Opacity"
+        }
+      }
+    },
+    "ClosedCaptionsSettings": {
+      "title": "ClosedCaptionsSettings",
+      "type": "object",
+      "required": ["enabled", "styles"],
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether or not closed-captions should be enabled by default"
+        },
+        "styles": {
+          "$ref": "#/definitions/ClosedCaptionsStyles"
+        },
+        "preferredLanguages": {
+          "type": "array",
+          "items": {
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/ISO639_2Language"
+          }
+        }
+      },
+      "examples": [
+        {
+          "enabled": true,
+          "styles": {
+            "fontFamily": "monospaced_serif",
+            "fontSize": 1,
+            "fontColor": "#ffffff",
+            "fontEdge": "none",
+            "fontEdgeColor": "#7F7F7F",
+            "fontOpacity": 100,
+            "backgroundColor": "#000000",
+            "backgroundOpacity": 100,
+            "textAlign": "center",
+            "textAlignVertical": "middle",
+            "windowColor": "white",
+            "windowOpacity": 50
+          },
+          "preferredLanguages": ["eng", "spa"]
+        }
+      ]
+    },
+    "VoiceSpeed": {
+      "title": "VoiceSpeed",
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 2
+    },
+    "VoiceGuidanceSettings": {
+      "title": "VoiceGuidanceSettings",
+      "type": "object",
+      "required": ["enabled", "speed"],
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether or not voice guidance should be enabled by default"
+        },
+        "speed": {
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/VoiceSpeed",
+          "description": "The speed at which voice guidance speech will be read back to the user"
+        }
+      },
+      "examples": [
+        {
+          "enabled": true,
+          "speed": 2
+        }
+      ]
+    }
+  }
 }
