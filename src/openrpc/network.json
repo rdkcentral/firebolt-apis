@@ -98,17 +98,15 @@
                                 "interfaceName": "wifi0",
                                 "macAddress": "00:00:00:00:00:00",
                                 "preferred": false,
-                                "type": "wifi",
-                                "wakeOnLanEnabled": true
+                                "type": "wifi"
                             },
                             {
-                                "capability": "Gibabit Ethernet",
+                                "capability": "GE",
                                 "connectionState": "connected",
                                 "interfaceName": "eth0",
                                 "macAddress": "00:00:00:00:00:01",
                                 "preferred": true,
-                                "type": "ethernet",
-                                "wakeOnLanEnabled": true
+                                "type": "ethernet"
                             }
                         ]
                     }
@@ -149,8 +147,7 @@
                             "interfaceName": "wifi0",
                             "macAddress": "00:00:00:00:00:00",
                             "preferred": true,
-                            "type": "wifi",
-                            "wakeOnLanEnabled": true
+                            "type": "wifi"
                         }
                     }
                 }
@@ -326,73 +323,6 @@
                     }
                 }
             ]
-        },
-        {
-            "name": "onWifiSignalStrengthChange",
-            "summary": "Get notified when there's a significant change to the signal strength of the device's wireless connection. For the specified interval, the platform will check for wifi signal strength, and if the difference crosses a specific threshold, the event will fire. Thresholds for firing this event may be operator-specific--please reference the operator's documentation for more information.",
-            "tags": [
-                {
-                    "name": "event"
-                },
-                {
-                    "name": "capabilities",
-                    "x-uses": [
-                        "xrn:firebolt:capability:network:wifistatus"
-                    ]
-                }
-            ],
-            "params": [
-                {
-                    "name": "interval",
-                    "description": "The interval to check the wireless signal, in milliseconds",
-                    "required": true,
-                    "schema": {
-                        "type": "integer"
-                    }
-                }
-            ],
-            "result": {
-                "name": "wifiSignalStrength",
-                "summary": "The current and previously-checked values of the wireless signal",
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "interfaceName": {
-                            "type": "string"
-                        },
-                        "currentValue": {
-                            "$ref": "https://meta.comcast.com/firebolt/schemas/network#/definitions/SignalStrength"
-                        },
-                        "previousValue": {
-                            "$ref": "https://meta.comcast.com/firebolt/schemas/network#/definitions/SignalStrength"
-                        }
-                    },
-                    "required": [
-                        "interfaceName",
-                        "currentValue",
-                        "previousValue"
-                    ]
-                }
-            },
-            "examples": [
-                {
-                    "name": "Default Example",
-                    "params": [
-                        {
-                            "name": "interval",
-                            "value": 10000
-                        }
-                    ],
-                    "result": {
-                        "name": "Default Result",
-                        "value": {
-                            "interfaceName": "wifi0",
-                            "currentValue": -60,
-                            "previousValue": -50
-                        }
-                    }
-                }
-            ]
         }
     ],
     "components": {
@@ -411,9 +341,9 @@
                 "description": "Ethernet connection standards",
                 "type": "string",
                 "enum": [
-                    "Fast Ethernet",
-                    "Gibabit Ethernet",
-                    "10 Gigabit Ethernet"
+                    "FE",
+                    "GE",
+                    "10GE"
                 ]
             },
             "InterfaceDetails": {
@@ -455,10 +385,6 @@
                     },
                     "type": {
                         "$ref": "#/components/schemas/InterfaceType"
-                    },
-                    "wakeOnLanEnabled": {
-                        "type": "boolean",
-                        "description": "Network interface name"
                     }
                 },
                 "required": [
@@ -467,8 +393,7 @@
                     "interfaceName",
                     "macAddress",
                     "preferred",
-                    "type",
-                    "wakeOnLanEnabled"
+                    "type"
                 ]
             },
             "InterfaceType": {
@@ -514,7 +439,7 @@
                     },
                     "ipv6DNSAddresses": {
                         "type": "array",
-                        "description": "IPv6 DNS addresses in CIDR notation",
+                        "description": "IPv6 DNS addresses notation",
                         "items": {
                             "type": "string"
                         }

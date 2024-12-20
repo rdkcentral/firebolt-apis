@@ -45,7 +45,6 @@ As an app, I want to...
   - [4.2. Interfaces](#42-interfaces)
   - [4.3. IP Properties](#43-ip-properties)
   - [4.4. Wifi Status](#44-wifi-status)
-  - [4.5. Wifi Signal Strength Change Event](#45-wifi-signal-strength-change-event)
 
 ## 3. Constants, Types, and Schemas
 
@@ -70,9 +69,11 @@ The Firebolt `Network` module **MUST** have an `InterfaceType` enumeration:
 
 The Firebolt `Network` module **MUST** have an `EthernetStandard` enumeration:
 
-- `Fast Ethernet`
-- `Gibabit Ethernet`
-- `10 Gigabit Ethernet`
+| Name   | Description          |
+| ------ | -------------------- |
+| `FE`   | Fast Ethernet        |
+| `GE`   | Gigbabit Ethernet    |
+| `10GE` | 10 Gigbabit Ethernet |
 
 ### 3.4. Wireless Standards
 
@@ -117,8 +118,6 @@ This method **MUST** have a corresponding `onStatusChanged` event returning the 
 
 The platform **MUST** trigger the event when the device's preferred network interface changes.
 
-The platform **MUST** trigger the event when the device's preferred network interface changes.
-
 The platform **MUST** trigger the event on connection changes to device's preferred network interface (e.g. connect, disconnect, auth failure, wifi out of range, etc).
 
 Access to these methods **MUST** require the `use` role of the `xrn:firebolt:capability:network:connectionstatus` capability.
@@ -137,15 +136,14 @@ The `Network` module **MUST** have an `interfaces` method that describes each ne
 
 This method **MUST** return an array of objects with the following properties:
 
-| Property           | Type                                                 | Description                                                                      |
-| ------------------ | ---------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `capability`       | `Network.EthernetStandard`</br>or `WirelessStandard` | The connection capability of the interface (e.g. `Gibabit Ethernet`, `802.11ac`) |
-| `connectionState`  | `Network.ConnectionState`                            |                                                                                  |
-| `interfaceName`    | `string`                                             |                                                                                  |
-| `macAddress`       | `string`                                             |                                                                                  |
-| `preferred`        | `boolean`                                            | Whether the interface is the preferred/default interface for routing             |
-| `type`             | `Network.InterfaceType`                              | The generalized type of interface (e.g. `ethernet` or `wifi`)                    |
-| `wakeOnLanEnabled` | `boolean`                                            |                                                                                  |
+| Property          | Type                                                 | Description                                                          |
+| ----------------- | ---------------------------------------------------- | -------------------------------------------------------------------- |
+| `capability`      | `Network.EthernetStandard`</br>or `WirelessStandard` | The connection capability of the interface (e.g. `GE`, `802.11ac`)   |
+| `connectionState` | `Network.ConnectionState`                            |                                                                      |
+| `interfaceName`   | `string`                                             |                                                                      |
+| `macAddress`      | `string`                                             |                                                                      |
+| `preferred`       | `boolean`                                            | Whether the interface is the preferred/default interface for routing |
+| `type`            | `Network.InterfaceType`                              | The generalized type of interface (e.g. `ethernet` or `wifi`)        |
 
 If `connectionState` is `disconnected`, `preferred` **MUST** be `false`.
 
@@ -162,17 +160,15 @@ Network.interfaces()
 //>     interfaceName: "wifi0",
 //>     macAddress: "00:00:00:00:00:00",
 //>     preferred: false,
-//>     type: "wifi",
-//>     wakeOnLanEnabled: true
+//>     type: "wifi"
 //>   },
 //>   {
-//>     capability: "Gibabit Ethernet",
+//>     capability: "GE",
 //>     connectionState: "connected",
 //>     interfaceName: "eth0",
 //>     macAddress: "00:00:00:00:00:00",
 //>     preferred: true,
-//>     type: "ethernet",
-//>     wakeOnLanEnabled: true
+//>     type: "ethernet"
 //>   },
 //> ]
 ```
@@ -180,6 +176,8 @@ Network.interfaces()
 ### 4.3. IP Properties
 
 The `Network` module **MUST** have an `ipProperties` method that returns an object describing the TCP/IP properties of an interface.
+
+The method **MUST** require a `string` parameter denoting the interface name on which the result shall be based.
 
 This method **MUST** return the following properties:
 
@@ -191,13 +189,11 @@ This method **MUST** return the following properties:
 | `ipv6Addresses`    | `[]string` |
 | `ipv6DNSAddresses` | `[]string` |
 
-The method **MUST** require a `string` parameter denoting the interface name on which the result shall be based.
-
 The values returned in `ipv4Addresses` and `ipv6Addresses` **MUST** be presented in CIDR notation.
 
 If an invalid interface name is provided, a `-40404 / Interface not found` JSON-RPC error **MUST** be returned.
 
-This method **MUST** have a corresponding `onIpPropertiesChanged` event returning the properties listed above to notify listeners of changes to an interface's IP properties.
+This method **MUST** have a corresponding `onIpPropertiesChanged` event returning the properties listed above to notify listeners that an interface's IP properties have changed and taken effect.
 
 Access to this method **MUST** require the `use` role of the `xrn:firebolt:capability:network:ipproperties` capability.
 
@@ -244,39 +240,5 @@ Network.wifiStatus("wifi0")
 //>  mode: "802.11ac",
 //>  signalStrength: -50,
 //>  ssid: "MyNetwork"
-//> }
-```
-
-### 4.5. Wifi Signal Strength Change Event
-
-The `Network` module **MUST** have an `onWifiSignalStrengthChange` event to notify listeners of a significant change in the device's wireless connection signal strength.
-
-The method **MUST** support a required `integer` parameter denoting a time interval, in milliseconds, after which the current RSSI is compared to the previous to determine if the signal strength crossed a threshold.
-
-The platform **SHOULD** implement the following thresholds:
-
-| RSSI Threshold (in dBm) | Description |
-| ----------------------- | ----------- |
-| -50 and higher          | Excellent   |
-| -50 to -60              | Good        |
-| -60 to -67              | Fair        |
-| Below -67               | Weak        |
-
-This method **MUST** return the following properties:
-
-| Property        | Type      | Description                                    |
-| --------------- | --------- | ---------------------------------------------- |
-| `interfaceName` | `string`  |                                                |
-| `currentValue`  | `integer` | Current signal strength / RSSI value (in dBm)  |
-| `previousValue` | `integer` | Previous signal strength / RSSI value (in dBm) |
-
-Access to this method **MUST** require the `use` role of the `xrn:firebolt:capability:network:wifistatus` capability.
-
-```javascript
-Network.onWifiSignalStrengthChange(10000)
-//> {
-//>  interfaceName: "wifi0",
-//>  currentValue: -60,
-//>  previousValue: -50
 //> }
 ```
