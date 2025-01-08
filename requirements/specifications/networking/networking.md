@@ -69,11 +69,11 @@ The Firebolt `Network` module **MUST** have an `InterfaceType` enumeration:
 
 The Firebolt `Network` module **MUST** have an `EthernetStandard` enumeration:
 
-| Name   | Description          |
-| ------ | -------------------- |
-| `FE`   | Fast Ethernet        |
-| `GE`   | Gigbabit Ethernet    |
-| `10GE` | 10 Gigbabit Ethernet |
+| Name                   |
+| ---------------------- |
+| `Fast Ethernet`        |
+| `Gigbabit Ethernet`    |
+| `10 Gigbabit Ethernet` |
 
 ### 3.4. Wireless Standards
 
@@ -99,7 +99,7 @@ To facilitate this, the `Network` module will surface methods that provide vario
 
 The `Network` module **MUST** have a `connectionStatus` method that returns an object describing the device's current network connection status.
 
-This method **MUST** support the following properties:
+This method's response **MUST** support the following properties:
 
 | Property    | Type                    | Required in Response |
 | ----------- | ----------------------- | -------------------- |
@@ -108,7 +108,7 @@ This method **MUST** support the following properties:
 
 The result **MUST** be based on the device's preferred/default network interface.
 
-If the device's preferred interface has both an active network connection and valid IP configuration, the `connected` value **MUST** be `true`, otherwise `false` is returned.
+If the device's preferred interface has both link-layer connectivity and valid IP configuration, the `connected` value **MUST** be `true`, otherwise `false` is returned.
 
 If `connected` is `true`, `type` **MUST** be one of: `ethernet`, `wifi`, or `other`.
 
@@ -134,7 +134,7 @@ Network.connectionStatus()
 
 The `Network` module **MUST** have an `interfaces` method that describes each network interface on the device.
 
-This method **MUST** return an array of objects with the following properties:
+This method's response **MUST** return an array of objects with the following properties for each enabled interface:
 
 | Property          | Type                                                 | Description                                                          |
 | ----------------- | ---------------------------------------------------- | -------------------------------------------------------------------- |
@@ -163,7 +163,7 @@ Network.interfaces()
 //>     type: "wifi"
 //>   },
 //>   {
-//>     capability: "GE",
+//>     capability: "Gigabit Ethernet",
 //>     connectionState: "connected",
 //>     interfaceName: "eth0",
 //>     macAddress: "00:00:00:00:00:00",
@@ -179,7 +179,7 @@ The `Network` module **MUST** have an `ipProperties` method that returns an obje
 
 The method **MUST** require a `string` parameter denoting the interface name on which the result shall be based.
 
-This method **MUST** return the following properties:
+This method's response **MUST** return the following properties:
 
 | Property           | Type       |
 | ------------------ | ---------- |
@@ -214,7 +214,7 @@ The `Network` module **MUST** have a `wifiStatus` method that returns an object 
 
 The method **MUST** support a required `string` parameter denoting the interface name of which the result is based.
 
-This method **MUST** support the following properties:
+This method's response **MUST** support the following properties:
 
 | Property          | Type                       | Description                             | Required in Response |
 | ----------------- | -------------------------- | --------------------------------------- | -------------------- |
@@ -226,9 +226,7 @@ This method **MUST** support the following properties:
 
 If no wireless interface matches the provided name, a `-40404 / Wireless interface not found` JSON-RPC error **MUST** be returned.
 
-If the wireless interface is not connected to a network, `connectionState` **MUST** be `disconnected`.
-
-If the wireless interface is not connected to a network, `mode`, `signalStrength` and `ssid` **MUST NOT** be returned.
+If the wireless interface is not connected to a network, `connectionState` **MUST** be `disconnected`. Additionally, `mode`, `signalStrength` and `ssid` **MUST NOT** be returned.
 
 Access to this method **MUST** require the `use` role of the `xrn:firebolt:capability:network:wifistatus` capability.
 

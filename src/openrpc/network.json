@@ -101,7 +101,7 @@
                                 "type": "wifi"
                             },
                             {
-                                "capability": "GE",
+                                "capability": "Gigabit Ethernet",
                                 "connectionState": "connected",
                                 "interfaceName": "eth0",
                                 "macAddress": "00:00:00:00:00:01",
@@ -341,9 +341,9 @@
                 "description": "Ethernet connection standards",
                 "type": "string",
                 "enum": [
-                    "FE",
-                    "GE",
-                    "10GE"
+                    "Fast Ethernet",
+                    "Gigabit Ethernet",
+                    "10 Gigabit Ethernet"
                 ]
             },
             "InterfaceDetails": {
