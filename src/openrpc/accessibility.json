@@ -116,9 +116,12 @@
     },
     {
       "name": "highContrastMode",
-      "summary": "Get whether high-contrast UI mode is enabled on the device",
+      "summary": "The user's preference for a high-contrast UI",
       "params": [],
       "tags": [
+        {
+          "name": "property:readonly"
+        },
         {
           "name": "capabilities",
           "x-uses": [
