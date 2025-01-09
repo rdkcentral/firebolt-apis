@@ -102,6 +102,35 @@ if(ENABLE_UNIT_TESTS)
             $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
     )
 
+    set_target_properties(${UNIT_TESTS_APP} PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED YES
+    )
+
     include(GoogleTest)
     gtest_discover_tests(${UNIT_TESTS_APP})
+endif()
+
+if(ENABLE_COVERAGE)
+    include(${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake)
+    
+    set(COVERAGE_MAIN "coverage")
+    set(COVERAGE_EXCLUDES
+        "${CMAKE_SOURCE_DIR}/build/*"
+        "${CMAKE_SOURCE_DIR}/cmake/*"
+        "${CMAKE_SOURCE_DIR}/include/*"
+        "${CMAKE_SOURCE_DIR}/test/*"
+        "/usr/include/*")
+
+    set(COVERAGE_EXTRA_FLAGS)
+    set(COVERAGE_DEPENDENCIES ${UNIT_TESTS_APP})
+    
+    setup_target_for_coverage_gcovr_html(
+        NAME ${COVERAGE_MAIN}
+        BASE_DIRECTORY ${CMAKE_SOURCE_DIR}
+        EXECUTABLE ctest
+        EXECUTABLE_ARGS "--test-dir ../build/ --output-on-failure"
+        DEPENDENCIES ${COVERAGE_DEPENDENCIES}
+    )
+
 endif()

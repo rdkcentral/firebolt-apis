@@ -182,6 +182,8 @@ function unzipArtifact(){
 }
 
 function cloneAndInstallThunder() {
+  printenv
+
   cd ..
 
   git clone https://github.com/rdkcentral/Thunder.git
@@ -269,10 +271,25 @@ function build_cpp_sdk() {
   
   echo " ************ Build ${sdk_name^} CPP SDK ************"
 
-  cd /__w/firebolt-apis/firebolt-apis/src/sdks/${sdk_name}/build/cpp/src/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}/
+  tar -xvf /__w/firebolt-apis/firebolt-apis/src/sdks/${sdk_name}/build/cpp/src/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}.tgz -C /__w/firebolt-apis/firebolt-apis/
+  cd /__w/firebolt-apis/firebolt-apis/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}
   chmod +x ./build.sh
 
   ./build.sh -s "/__w/thunder/install/" || exit 9999
+}
+
+
+function generate_coverage_report(){
+  FIREBOLT_VERSION=$(node -p "require('./package.json').version")
+  echo "The version from package.json is $FIREBOLT_VERSION"
+  local sdk_name=$1
+
+  echo " ************ Generate coverage report for ${sdk_name^} CPP SDK ************"
+
+  cd /__w/firebolt-apis/firebolt-apis/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}
+  cmake --build build --target coverage
+
+  mv /__w/firebolt-apis/firebolt-apis/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}/build/test/coverage /__w/firebolt-apis/firebolt-apis/
 }
 
 # Check argument and call corresponding function
@@ -288,6 +305,9 @@ case "$1" in
   build_core_cpp_sdk) build_cpp_sdk "core" ;;
   build_manage_cpp_sdk) build_cpp_sdk "manage" ;;
   build_discovery_cpp_sdk) build_cpp_sdk "discovery" ;;
+  generate_core_sdk_coverage_report) generate_coverage_report "core" ;;
+  generate_manage_sdk_coverage_report) generate_coverage_report "manage" ;;
+  generate_discovery_sdk_coverage_report) generate_coverage_report "discovery" ;;
   *)
     echo "Invalid function specified."
     exit 1
