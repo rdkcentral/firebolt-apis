@@ -11,6 +11,10 @@ on:
       - opened
       - synchronize
 
+defaults:
+  run:
+    shell: bash
+
 env:
   HUSKY: 0
 jobs:
@@ -18,16 +22,20 @@ jobs:
     name: Build Thunder Libraries
     runs-on: ubuntu-latest
     container:
-      image: kevinshahfws/node-c:3.0
+      image: node:23.3.0
     steps:
-      - name: Checkout
+      - name: Checkout firebolt-apis
         uses: actions/checkout@v2
 
       - name: Clone and Install Thunder
-        id: install_thunder
         run: |
+          apt update
+          apt install -y cmake ninja-build python3-pip python3.11-venv
+          python3 -m venv firebolt-env
+          source firebolt-env/bin/activate
+          pip install jsonref
           .github/workflows/utils.sh cloneAndInstallThunder
-      
+
       - name: Upload the library artifact
         uses: actions/upload-artifact@v3
         with:
@@ -36,9 +44,12 @@ jobs:
 
   openrpc:
     name: Build Openrpc Artifacts
+    needs: thunder
     runs-on: ubuntu-latest
     container:
-      image: kevinshahfws/node-c:3.0
+      image: node:23.3.0
+    permissions:
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -62,7 +73,7 @@ jobs:
           key: deps-node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Set file permissions
         run: |
@@ -84,19 +95,19 @@ jobs:
         with:
           name: manage
           path: src/sdks/manage
-
+  
       - name: Upload Discovery SDK
         uses: actions/upload-artifact@v3
         with:
           name: discovery
-          path: src/sdks/discovery        
+          path: src/sdks/discovery
 
   core_sdk:
     name: Build Core SDK
     needs: [thunder, openrpc]
     runs-on: ubuntu-latest
     container:
-      image: kevinshahfws/node-c:3.0
+      image: node:23.3.0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -106,7 +117,6 @@ jobs:
         with:
           name: core
           path: /__w/firebolt-apis/firebolt-apis/src/sdks/core
-
 
       - name: Download Thunder 
         uses: actions/download-artifact@v3
@@ -121,27 +131,58 @@ jobs:
           key: deps-node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install npm dependencies
-        run: npm ci
+        run: |
+          apt update
+          apt install -y cmake
+          npm install
 
       - name: Generate core SDK source code
         run: |
           .github/workflows/utils.sh generate_cpp_core_sdk_source_code
 
-      - name: Build CXX Core SDK 
+      - name: Build CXX Core SDK
         run: |
+          apt install -y python3-pip python3.11-venv
+          python3 -m venv firebolt-env
+          source firebolt-env/bin/activate
+          pip install gcovr
+
           .github/workflows/utils.sh build_core_cpp_sdk
+
+      - name: Test and Generate coverage report
+        run: .github/workflows/utils.sh generate_core_sdk_coverage_report
+
+      - name: Display coverage report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage/coverage.cobertura.xml
+          badge: true
+          fail_below_min: false
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '80 40'
+      
+      - name: Add coverage PR comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          recreate: true
+          path: code-coverage-results.md
+
 
   manage_sdk:
     name: Build Manage SDK
     needs: [thunder, openrpc]
     runs-on: ubuntu-latest
     container:
-      image: kevinshahfws/node-c:3.0
+      image: node:23.3.0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Download Manage SDK 
+      - name: Download Manage SDK
         uses: actions/download-artifact@v3
         with:
           name: manage
@@ -160,22 +201,52 @@ jobs:
           key: deps-node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install npm dependencies
-        run: npm ci
+        run: |
+          apt update
+          apt install -y cmake
+          npm install
 
       - name: Generate manage SDK source code
         run: |
           .github/workflows/utils.sh generate_cpp_manage_sdk_source_code
 
-      - name: Build CXX manage SDK 
+      - name: Build CXX Manage SDK
         run: |
+          apt install -y python3-pip python3.11-venv
+          python3 -m venv firebolt-env
+          source firebolt-env/bin/activate
+          pip install gcovr
+
           .github/workflows/utils.sh build_manage_cpp_sdk
 
-  dicovery_sdk:
+      - name: Test and Generate coverage report
+        run: .github/workflows/utils.sh generate_manage_sdk_coverage_report
+
+      - name: Display coverage report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage/coverage.cobertura.xml
+          badge: true
+          fail_below_min: false
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '80 40'
+      
+      - name: Add coverage PR comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          recreate: true
+          path: code-coverage-results.md
+
+  discovery_sdk:
     name: Build Discovery SDK
     needs: [thunder, openrpc]
     runs-on: ubuntu-latest
     container:
-      image: kevinshahfws/node-c:3.0
+      image: node:23.3.0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -199,12 +270,43 @@ jobs:
           key: deps-node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install npm dependencies
-        run: npm ci
+        run: |
+          apt update
+          apt install -y cmake
+          npm install
 
       - name: Generate discovery SDK source code
         run: |
           .github/workflows/utils.sh generate_cpp_discovery_sdk_source_code
 
-      - name: Build CXX Discovery SDK 
+      - name: Build CXX Discovery SDK
         run: |
+          apt install -y python3-pip python3.11-venv
+          python3 -m venv firebolt-env
+          source firebolt-env/bin/activate
+          pip install gcovr
+
           .github/workflows/utils.sh build_discovery_cpp_sdk
+
+      - name: Test and Generate coverage report
+        run: .github/workflows/utils.sh generate_discovery_sdk_coverage_report
+
+      - name: Display coverage report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage/coverage.cobertura.xml
+          badge: true
+          fail_below_min: false
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '80 40'
+      
+      - name: Add coverage PR comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          recreate: true
+          path: code-coverage-results.md
+
