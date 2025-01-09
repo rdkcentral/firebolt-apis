@@ -8,7 +8,7 @@
             "use": [
                 "xrn:firebolt:capability:accessibility:audiodescriptions",
                 "xrn:firebolt:capability:accessibility:closedcaptions",
-                "xrn:firebolt:capability:accessibility:highcontrastmode",
+                "xrn:firebolt:capability:accessibility:highcontrastui",
                 "xrn:firebolt:capability:accessibility:voiceguidance"
             ]
         },
