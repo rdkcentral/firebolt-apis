@@ -215,6 +215,7 @@
             "name": "Default Result",
             "value": {
               "enabled": true,
+              "navigationHints": true,
               "speed": 2
             }
           }
