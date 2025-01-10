@@ -93,19 +93,19 @@
                         "name": "Default Result",
                         "value": [
                             {
-                                "capability": "802.11ac",
                                 "connectionState": "disconnected",
                                 "interfaceName": "wifi0",
                                 "macAddress": "00:00:00:00:00:00",
                                 "preferred": false,
+                                "standard": "802.11ac",
                                 "type": "wifi"
                             },
                             {
-                                "capability": "Gigabit Ethernet",
                                 "connectionState": "connected",
                                 "interfaceName": "eth0",
                                 "macAddress": "00:00:00:00:00:01",
                                 "preferred": true,
+                                "standard": "Gigabit Ethernet",
                                 "type": "ethernet"
                             }
                         ]
@@ -142,11 +142,11 @@
                     "result": {
                         "name": "Default Result",
                         "value": {
-                            "capability": "802.11ac",
                             "connectionState": "connected",
                             "interfaceName": "wifi0",
                             "macAddress": "00:00:00:00:00:00",
                             "preferred": true,
+                            "standard": "802.11ac",
                             "type": "wifi"
                         }
                     }
@@ -300,7 +300,7 @@
                         "value": {
                             "connectionState": "connected",
                             "interfaceName": "wifi0",
-                            "mode": "802.11ac",
+                            "protocol": "802.11ac",
                             "signalStrength": -60,
                             "ssid": "MyNetwork"
                         }
@@ -351,7 +351,22 @@
                 "description": "Details of a network interface",
                 "type": "object",
                 "properties": {
-                    "capability": {
+                    "connectionState": {
+                        "$ref": "#/components/schemas/ConnectionState"
+                    },
+                    "interfaceName": {
+                        "type": "string",
+                        "description": "Network interface name"
+                    },
+                    "macAddress": {
+                        "type": "string",
+                        "description": "Interface MAC address"
+                    },
+                    "preferred": {
+                        "type": "boolean",
+                        "description": "Whether this is the device's preferred/default interface"
+                    },
+                    "standard": {
                         "anyOf": [
                             {
                                 "$ref": "#/components/schemas/EthernetStandard"
@@ -368,31 +383,16 @@
                             }
                         ]
                     },
-                    "connectionState": {
-                        "$ref": "#/components/schemas/ConnectionState"
-                    },
-                    "interfaceName": {
-                        "type": "string",
-                        "description": "Network interface name"
-                    },
-                    "macAddress": {
-                        "type": "string",
-                        "description": "Interface MAC address"
-                    },
-                    "preferred": {
-                        "type": "boolean",
-                        "description": "Whether this is the device's preferred/default interface"
-                    },
                     "type": {
                         "$ref": "#/components/schemas/InterfaceType"
                     }
                 },
                 "required": [
-                    "capability",
                     "connectionState",
                     "interfaceName",
                     "macAddress",
                     "preferred",
+                    "standard",
                     "type"
                 ]
             },
@@ -482,7 +482,7 @@
                         "type": "string",
                         "description": "Network interface name"
                     },
-                    "mode": {
+                    "protocol": {
                         "$ref": "#/components/schemas/WirelessStandard"
                     },
                     "signalStrength": {
@@ -501,15 +501,15 @@
             },
             "WirelessStandard": {
                 "title": "WirelessStandard",
-                "description": "Wireless connection standards",
+                "description": "Wireless standards",
                 "type": "string",
                 "enum": [
                     "802.11ac",
                     "802.11ax",
                     "802.11be",
+                    "802.11bn",
                     "802.11n",
-                    "legacy",
-                    "other"
+                    "legacy"
                 ]
             }
         }

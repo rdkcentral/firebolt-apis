@@ -79,13 +79,15 @@ The Firebolt `Network` module **MUST** have an `EthernetStandard` enumeration:
 
 The Firebolt `Network` module **MUST** have an `WirelessStandard` enumeration:
 
-| Name       | Description   |
-| ---------- | ------------- |
-| `802.11ac` |               |
-| `802.11ax` |               |
-| `802.11be` |               |
-| `802.11n`  |               |
-| `legacy`   | `802.11a/b/g` |
+| Name       | Description |
+| ---------- | ----------- |
+| `802.11ac` | WIFI 5      |
+| `802.11ax` | WIFI 6/6E   |
+| `802.11be` | WIFI 7      |
+| `802.11bn` | WIFI 8      |
+| `802.11n`  | WIFI 4      |
+| `legacy`   | 802.11a/b/g |
+| `other`    |             |
 
 ## 4. Network APIs
 
@@ -136,14 +138,14 @@ The `Network` module **MUST** have an `interfaces` method that describes each ne
 
 This method's response **MUST** return an array of objects with the following properties for each enabled interface:
 
-| Property          | Type                                                 | Description                                                          |
-| ----------------- | ---------------------------------------------------- | -------------------------------------------------------------------- |
-| `capability`      | `Network.EthernetStandard`</br>or `WirelessStandard` | The connection capability of the interface (e.g. `GE`, `802.11ac`)   |
-| `connectionState` | `Network.ConnectionState`                            |                                                                      |
-| `interfaceName`   | `string`                                             |                                                                      |
-| `macAddress`      | `string`                                             |                                                                      |
-| `preferred`       | `boolean`                                            | Whether the interface is the preferred/default interface for routing |
-| `type`            | `Network.InterfaceType`                              | The generalized type of interface (e.g. `ethernet` or `wifi`)        |
+| Property          | Type                                                 | Description                                                                                        |
+| ----------------- | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `connectionState` | `Network.ConnectionState`                            |                                                                                                    |
+| `interfaceName`   | `string`                                             |                                                                                                    |
+| `macAddress`      | `string`                                             |                                                                                                    |
+| `preferred`       | `boolean`                                            | Whether the interface is the preferred/default interface for routing                               |
+| `standard`        | `Network.EthernetStandard`</br>or `WirelessStandard` | The physical connection standard supported by the interface (e.g. `Gigbabit Ethernet`, `802.11ac`) |
+| `type`            | `Network.InterfaceType`                              | The generalized type of interface (e.g. `ethernet` or `wifi`)                                      |
 
 If `connectionState` is `disconnected`, `preferred` **MUST** be `false`.
 
@@ -155,19 +157,19 @@ Access to this method **MUST** require the `use` role of the `xrn:firebolt:capab
 Network.interfaces()
 //> [
 //>   {
-//>     capability: "802.11ac",
 //>     connectionState: "disconnected",
 //>     interfaceName: "wifi0",
 //>     macAddress: "00:00:00:00:00:00",
 //>     preferred: false,
+//>     standard: "802.11ac",
 //>     type: "wifi"
 //>   },
 //>   {
-//>     capability: "Gigabit Ethernet",
 //>     connectionState: "connected",
 //>     interfaceName: "eth0",
 //>     macAddress: "00:00:00:00:00:00",
 //>     preferred: true,
+//>     standard: "Gigabit Ethernet",
 //>     type: "ethernet"
 //>   },
 //> ]
@@ -216,13 +218,13 @@ The method **MUST** support a required `string` parameter denoting the interface
 
 This method's response **MUST** support the following properties:
 
-| Property          | Type                       | Description                             | Required in Response |
-| ----------------- | -------------------------- | --------------------------------------- | -------------------- |
-| `connectionState` | `Network.ConnectionState`  |                                         | Yes                  |
-| `interfaceName`   | `string`                   |                                         | Yes                  |
-| `mode`            | `Network.WirelessStandard` | Current wireless mode (e.g. `802.11ac`) | No                   |
-| `signalStrength`  | `integer`                  | Signal strength / RSSI value (in dBm)   | No                   |
-| `ssid`            | `string`                   | Wireless network name                   | No                   |
+| Property          | Type                       | Description                                 | Required in Response |
+| ----------------- | -------------------------- | ------------------------------------------- | -------------------- |
+| `connectionState` | `Network.ConnectionState`  |                                             | Yes                  |
+| `interfaceName`   | `string`                   |                                             | Yes                  |
+| `protocol`        | `Network.WirelessStandard` | Current wireless protocol (e.g. `802.11ac`) | No                   |
+| `signalStrength`  | `integer`                  | Signal strength / RSSI value (in dBm)       | No                   |
+| `ssid`            | `string`                   | Wireless network name                       | No                   |
 
 If no wireless interface matches the provided name, a `-40404 / Wireless interface not found` JSON-RPC error **MUST** be returned.
 
@@ -235,7 +237,7 @@ Network.wifiStatus("wifi0")
 //> {
 //>  connectionState: "connected",
 //>  interfaceName: "wifi0",
-//>  mode: "802.11ac",
+//>  protocol: "802.11ac",
 //>  signalStrength: -50,
 //>  ssid: "MyNetwork"
 //> }
