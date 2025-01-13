@@ -561,7 +561,7 @@
         },
         {
           "name": "progress",
-          "summary": "How much of the content has been watched (percentage as 0-1 for VOD, number of seconds for live)",
+          "summary": "How much of the content has been watched (percentage as (0-0.999) for VOD, number of seconds for live)",
           "schema": {
             "type": "number",
             "minimum": 0
@@ -642,7 +642,7 @@
           "name": "identifiers",
           "summary": "A set of content identifiers for this call to action",
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/Entity"
+            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ContentIdentifiers"
           },
           "required": true
         },
@@ -1181,7 +1181,7 @@
           "params": [
             {
               "name": "appId",
-              "value": "xrn:firebolt:application-type:settings "
+              "value": "xrn:firebolt:application-type:settings"
             },
             {
               "name": "intent",

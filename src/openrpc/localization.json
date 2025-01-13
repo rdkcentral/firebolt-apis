@@ -298,7 +298,7 @@
           ]
         }
       ],
-      "summary": "Get any platform-specific localization information, in an Map<string, string>",
+      "summary": "Get any platform-specific localization information",
       "params": [],
       "result": {
         "name": "info",
@@ -306,7 +306,7 @@
         "schema": {
           "type": "object",
           "additionalProperties": {
-            "type": "string",
+            "type": ["number", "string", "boolean"],
             "maxLength": 1024
           },
           "maxProperties": 32
@@ -346,9 +346,9 @@
         },
         {
           "name": "value",
-          "summary": "Value to be set for additionalInfo",
+          "summary": "Value to be set for additionalInfo. Value can be a number, string or boolean",
           "schema": {
-            "type": "string"
+            "type": ["number", "string", "boolean"]
           },
           "required": true
         }
