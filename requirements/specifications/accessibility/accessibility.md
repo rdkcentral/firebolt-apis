@@ -46,20 +46,20 @@ As an app, I want to...
 
 The Firebolt `Accessibility` module **MUST** have a `ClosedCaptionsStyles` object of the following schema:
 
-| Name                | Type             | Notes                                                                                                                                      |
-| ------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `backgroundColor`   | `string`, `null` | Standard browser color name (e.g. `black`) or hexadecimal value (e.g. `#000000`)                                                           |
-| `backgroundOpacity` | `string`, `null` | Minimum value: `0`, max: `100`                                                                                                             |
-| `fontColor`         | `string`, `null` | Standard browser color name (e.g. `white`) or hexadecimal value (e.g. `#FFFFFF`)                                                           |
-| `fontEdge`          | `string`, `null` | Allowed values: `depressed`, `drop_shadow_left`, `drop_shadow_right`, `none`, `raised`, `uniform`                                          |
-| `fontEdgeColor`     | `string`, `null` | Standard browser color name (e.g. `grey`) or hexadecimal value (e.g. `#808080`)                                                            |
-| `fontFamily`        | `string`, `null` | Allowed values: `casual`, `cursive`, `monospaced_sanserif`, `monospaced_serif`, `proportional_sanserif`, `proportional_serif`, `smallcaps` |
-| `fontOpacity`       | `string`, `null` | Minimum value: `0`, max: `100`                                                                                                             |
-| `fontSize`          | `number`, `null` | Minimum value: `0`                                                                                                                         |
-| `textAlign`         | `string`, `null` | Allowed values: `left`, `center`, `right`                                                                                                  |
-| `textAlignVertical` | `string`, `null` | Allowed values: `top`, `middle`, `bottom`                                                                                                  |
-| `windowColor`       | `string`, `null` | Standard browser color name (e.g. `white`) or hexadecimal value (e.g. `#FFFFFF`)                                                           |
-| `windowOpacity`     | `string`, `null` | Minimum value: `0`, max: `100`                                                                                                             |
+| Name                | Type             | Required in Response | Notes                                                                                                                                      |
+| ------------------- | ---------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `backgroundColor`   | `string`, `null` | No                   | Standard browser color name (e.g. `black`) or hexadecimal value (e.g. `#000000`)                                                           |
+| `backgroundOpacity` | `string`, `null` | No                   | Minimum value: `0`, max: `100`                                                                                                             |
+| `fontColor`         | `string`, `null` | No                   | Standard browser color name (e.g. `white`) or hexadecimal value (e.g. `#FFFFFF`)                                                           |
+| `fontEdge`          | `string`, `null` | No                   | Allowed values: `depressed`, `drop_shadow_left`, `drop_shadow_right`, `none`, `raised`, `uniform`                                          |
+| `fontEdgeColor`     | `string`, `null` | No                   | Standard browser color name (e.g. `grey`) or hexadecimal value (e.g. `#808080`)                                                            |
+| `fontFamily`        | `string`, `null` | No                   | Allowed values: `casual`, `cursive`, `monospaced_sanserif`, `monospaced_serif`, `proportional_sanserif`, `proportional_serif`, `smallcaps` |
+| `fontOpacity`       | `string`, `null` | No                   | Minimum value: `0`, max: `100`                                                                                                             |
+| `fontSize`          | `number`, `null` | No                   | Minimum value: `0`                                                                                                                         |
+| `textAlign`         | `string`, `null` | No                   | Allowed values: `left`, `center`, `right`                                                                                                  |
+| `textAlignVertical` | `string`, `null` | No                   | Allowed values: `top`, `middle`, `bottom`                                                                                                  |
+| `windowColor`       | `string`, `null` | No                   | Standard browser color name (e.g. `white`) or hexadecimal value (e.g. `#FFFFFF`)                                                           |
+| `windowOpacity`     | `string`, `null` | No                   | Minimum value: `0`, max: `100`                                                                                                             |
 
 ## 4. Accessibility
 
@@ -71,11 +71,11 @@ To facilitate this, the `Accessibility` module will provide convenience methods 
 
 The `Accessibility` module **MUST** include an `audioDescriptionSettings` method that returns an object describing the user's audio description preferences.
 
-This method's response shall support the following properties:
+This method's response **MUST** support the following properties:
 
-| Property  | Type      | Required | Description                                                    |
-| --------- | --------- | -------- | -------------------------------------------------------------- |
-| `enabled` | `boolean` | Yes      | Whether or not audio descriptions should be enabled by default |
+| Property  | Type      | Description                                                    |
+| --------- | --------- | -------------------------------------------------------------- |
+| `enabled` | `boolean` | Whether or not audio descriptions should be enabled by default |
 
 This method **MUST** have a corresponding `onAudioDescriptionSettingsChanged` event to notify listeners after a change to any properties have been made and that change has taken effect.
 
@@ -92,13 +92,13 @@ Accessibility.audioDescriptionSettings()
 
 The `Accessibility` module **MUST** include an `closedCaptionsSettings` method that returns an object describing the user's closed captions preferences.
 
-This method's response shall support the following properties:
+This method's response **MUST** support the following properties:
 
-| Property             | Type                   | Required | Description                                                      |
-| -------------------- | ---------------------- | -------- | ---------------------------------------------------------------- |
-| `enabled`            | `boolean`              | Yes      | Whether or not audio descriptions should be enabled by default   |
-| `preferredLanguages` | `[]string`             | No       | A list of preferred ISO 639-2 language codes for closed captions |
-| `styles`             | `ClosedCaptionsStyles` | No       | The default style to use when displaying closed-captions         |
+| Property             | Type                   | Required in Response | Description                                                       |
+| -------------------- | ---------------------- | -------------------- | ----------------------------------------------------------------- |
+| `enabled`            | `boolean`              | Yes                  | Whether or not audio descriptions should be enabled by default    |
+| `preferredLanguages` | `[]string`             | No                   | A list of preferred ISO 639-2 language codes for closed captions. |
+| `styles`             | `ClosedCaptionsStyles` | No                   | The default style to use when displaying closed-captions          |
 
 This method **MUST** have a corresponding `onClosedCaptionsSettingsChanged` event to notify listeners after a change to any properties have been made and that change has taken effect.
 
@@ -146,13 +146,13 @@ Accessibility.highContrastUI()
 
 The `Accessibility` module **MUST** include a `voiceGuidanceSettings` method that returns an object describing the user's voice guidance preferences.
 
-This method's response shall support the following properties:
+This method's response **MUST** support the following properties:
 
-| Property          | Type      | Required | Description                                                                                          |
-| ----------------- | --------- | -------- | ---------------------------------------------------------------------------------------------------- |
-| `enabled`         | `boolean` | Yes      | Whether or not voice guidance is enabled by default                                                  |
-| `navigationHints` | `boolean` | No       | Whether or not voice guidance should include additional navigation hints                             |
-| `speed`           | `number`  | No       | The speed at which voice guidance speech will be read back to the user<br />Allowed range: 0.1 -> 10 |
+| Property          | Type      | Required in Response | Description                                                                                          |
+| ----------------- | --------- | -------------------- | ---------------------------------------------------------------------------------------------------- |
+| `enabled`         | `boolean` | Yes                  | Whether or not voice guidance is enabled by default                                                  |
+| `navigationHints` | `boolean` | No                   | Whether or not voice guidance should include additional navigation hints                             |
+| `speed`           | `number`  | No                   | The speed at which voice guidance speech will be read back to the user<br />Allowed range: 0.1 -> 10 |
 
 This method **MUST** have a corresponding `onVoiceGuidanceSettingsChanged` event to notify listeners after a change to any properties have been made and that change has taken effect.
 
