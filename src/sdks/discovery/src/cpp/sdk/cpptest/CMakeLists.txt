@@ -39,8 +39,6 @@ endif ()
 
 find_package(WPEFramework CONFIG REQUIRED)
 find_package(${NAMESPACE}Core CONFIG REQUIRED)
-find_package(Firebolt CONFIG REQUIRED)
-find_package(${FIREBOLT_NAMESPACE}SDK CONFIG REQUIRED)
 
 set(TESTAPP TestFireboltDiscovery)
 
