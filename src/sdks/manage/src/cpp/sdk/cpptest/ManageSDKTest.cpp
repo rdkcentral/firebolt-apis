@@ -1066,7 +1066,7 @@ void ManageSDKTest::AddLocalizationAdditionalInfo()
 {
     Firebolt::Error error = Firebolt::Error::None;
     std::string key = "testKey";
-    std::string value = "testValue";
+    float value = 1.0f;
 
     Firebolt::IFireboltAccessor::Instance().LocalizationInterface().addAdditionalInfo(key, value, &error);
     if (error == Firebolt::Error::None) {
