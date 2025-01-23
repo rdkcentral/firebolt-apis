@@ -19,6 +19,7 @@
 #pragma once
 
 #include <iostream>
+#include <nlohmann/json.hpp>
 #include "firebolt.h"
 
 class DiscoverySDKTest {
@@ -41,9 +42,19 @@ public:
 
     static bool WaitOnConnectionReady();
 
+#ifdef GATEWAY_BIDIRECTIONAL
+    static void event_trigger(nlohmann::json event);
+    static void provider_trigger(nlohmann::json provider);
+#endif
+
 private:
     static void ConnectionChanged(const bool, const Firebolt::Error);
     static bool _connected;
     static OnUserInterestNotification _userInterestNotification;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+public:
+    static const nlohmann::json userInterestEvent;
+#endif
 
 };
