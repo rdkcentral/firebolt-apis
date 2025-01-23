@@ -13,11 +13,11 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 
 ## 1. Overview
 
-To provide the best experience to users, content partners want to understand details about a device's network connection, such as the device's connection state, connection type, and that connection's performance capabilities.  Content partners also want to be notified of key changes to the device's connection, such as connect/disconnect events or IP changes.  This data can be used to gauge how those changes may impact the user's experience and react appropriately.
+To provide the best experience to users, content partners want to understand details about a device's network connection, such as the device's connection state, connection type, and that connection's performance capabilities.  Content partners also want to be notified of key changes to the device's connection, such as connect/disconnect events or IP changes which may be impactful to the user's experience.  This data can be used to gauge how those changes impact the user's experience while allowing the app to react appropriately.
 
-App partners also have different requirements of what network details are made available to them.  For instance, most app partners simply want to know the device's current connection state, type, and be notified of changes to that connection.  Other app partners may have more sophisticated needs, requiring access to details on the the configurations of all available network interfaces, including interface MAC addresses, IPs, and interface capabilities.
+App partners also have different requirements of what network details are made available to them. While most app partners simply want to know the device's current connection state and to be notified of changes to that connection, other partners have more sophisticated needs, requiring access to the configuration details of all available network interfaces on the device, including interface MAC addresses, IPs, and interface capabilities.
 
-This information can be used to gracefully handle cases when the device has poor or no network connectivity, provide valuable data into how the user's network performance is impacting their experience, and to unlock more advanced networking features on the device (such as Wake-on-LAN functionality).
+This information can be used to gracefully handle cases when the device has poor or no network connectivity, provide valuable data into how the user's network performance is impacting their experience, or to support more advanced networking features on the device (such as Wake-on-LAN functionality).
 
 These APIs will be surfaced in the Firebolt `Network` module.
 
@@ -28,7 +28,7 @@ As an app, I want to...
 - Get the device's network connection state and connection type
 - Get details on each of the device's interfaces, such as name, MAC address, and IP configuration
 - Get details on the wireless connection, such as SSID and signal strength
-- Be notified of key changes to the device's network connection, such as connection state, TCP/IP configuration, or wireless signal
+- Be notified of key changes to the device's network connection, such as connection state or TCP/IP configuration
 
 ## 2. Table of Contents
 
@@ -38,7 +38,7 @@ As an app, I want to...
 - [3. Constants, Types, and Schemas](#3-constants-types-and-schemas)
   - [3.1. Connection States](#31-connection-states)
   - [3.2. Interface Types](#32-interface-types)
-  - [3.3 Ethernet Standards](#33-ethernet-standards)
+  - [3.3. Ethernet Standards](#33-ethernet-standards)
   - [3.4. Wireless Standards](#34-wireless-standards)
 - [4. Network APIs](#4-network-apis)
   - [4.1. Connection Status](#41-connection-status)
@@ -65,7 +65,7 @@ The Firebolt `Network` module **MUST** have an `InterfaceType` enumeration:
 - `other`
 - `unknown`
 
-### 3.3 Ethernet Standards
+### 3.3. Ethernet Standards
 
 The Firebolt `Network` module **MUST** have an `EthernetStandard` enumeration:
 
