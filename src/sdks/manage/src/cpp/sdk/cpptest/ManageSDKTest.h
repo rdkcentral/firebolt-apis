@@ -19,6 +19,7 @@
 #pragma once
 
 #include <iostream>
+#include <nlohmann/json.hpp>
 #include "firebolt.h"
 
 class ManageSDKTest {
@@ -68,6 +69,7 @@ class ManageSDKTest {
         void password( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session ) override;
         void email( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session ) override;
         void SendMessage(bool response);
+        bool _keyInput;
 
     private:
         void startKeyboardSession(const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session);
@@ -75,7 +77,7 @@ class ManageSDKTest {
     private:
         std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> _session;
         Firebolt::Keyboard::KeyboardParameters _parameters;
-        bool _keyInput;
+        // bool _keyInput;
     };
     class AcknowledgeChallengeProvider : public Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeProvider {
     public:
@@ -199,6 +201,10 @@ public:
 
     static bool WaitOnConnectionReady();
 
+    static void event_trigger(nlohmann::json event);
+    static void provider_trigger(nlohmann::json provider);
+    static bool WaitForKeyboardRequest();
+
 private:
     static void ConnectionChanged(const bool, const Firebolt::Error);
     static bool _connected;
@@ -216,5 +222,21 @@ private:
     static OnAutoLowLatencyModeCapableChangedNotification _autoLowLatencyModeCapableChangedNotification;
 
     static Firebolt::Wifi::AccessPointList _apList;
+
+public:
+    static const nlohmann::json audioDescriptionsEnabledChanged;
+    static const nlohmann::json deviceNameChanged;
+    static const nlohmann::json backgroundOpacityChanged;
+    static const nlohmann::json fontFamilyChanged;
+    static const nlohmann::json preferredAudioLanguagesChanged;
+    static const nlohmann::json allowACRCollectionChanged;
+    static const nlohmann::json signInEvent;
+    static const nlohmann::json signOutEvent;
+    static const nlohmann::json autoLowLatencyModeCapableChanged;
+    static const nlohmann::json requestStandard;
+    static const nlohmann::json requestEmail;
+    static const nlohmann::json requestPassword;
+    static const nlohmann::json ackRequestChallenge;
+    static const nlohmann::json pinRequestChallenge;
 };
 
