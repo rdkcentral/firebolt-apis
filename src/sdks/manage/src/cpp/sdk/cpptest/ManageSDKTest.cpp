@@ -19,6 +19,7 @@
 #include <unistd.h>
 #include <cstring>
 #include <string>
+#include <cassert>
 #include "ManageSDKTest.h"
 
 using namespace std;
@@ -37,10 +38,165 @@ ManageSDKTest::AcknowledgeChallengeProvider ManageSDKTest::_acknowledgeChallenge
 ManageSDKTest::PinChallengeProvider ManageSDKTest::_pinChallengeProvider;
 Firebolt::Wifi::AccessPointList ManageSDKTest::_apList;
 
+
+const nlohmann::json ManageSDKTest::audioDescriptionsEnabledChanged = {
+    {"method", "audiodescriptions.onEnabledChanged"},
+    {"payload", true }
+};
+
+const nlohmann::json ManageSDKTest::deviceNameChanged = {
+    {"method", "device.onDeviceNameChanged"},
+    {"payload", {
+        {"name", "Default Result"},
+        {"value", "Living Room"}
+     }}
+};
+
+const nlohmann::json ManageSDKTest::backgroundOpacityChanged = {
+    {"method", "closedcaptions.onBackgroundOpacityChanged"},
+    {"payload", 99}
+};
+
+const nlohmann::json ManageSDKTest::fontFamilyChanged = {
+    {"method", "closedcaptions.onFontFamilyChanged"},
+    {"payload", "monospaced_sanserif"}
+};
+
+const nlohmann::json ManageSDKTest::preferredAudioLanguagesChanged = {
+    {"method", "localization.onPreferredAudioLanguagesChanged"},
+    {"payload", {
+        {"name", "languages"},
+        {"value", {"spa", "eng"}}
+     }}
+};
+
+const nlohmann::json ManageSDKTest::allowACRCollectionChanged = {
+    {"method", "privacy.onAllowACRCollectionChanged"},
+    {"payload", true}
+};
+
+const nlohmann::json ManageSDKTest::signInEvent = {
+    {"method", "discovery.onSignIn"},
+    {"payload", {
+        {"name", "event"},
+        {"appId", "firecert"}
+     }}
+};
+
+const nlohmann::json ManageSDKTest::signOutEvent = {
+    {"method", "discovery.onSignOut"},
+    {"payload", {
+        {"name", "event"},
+        {"appId", "firecert"}
+     }}
+};
+
+const nlohmann::json ManageSDKTest::requestStandard = {
+    {"method", "keyboard.RequestStandard"},
+    {"payload", { 
+        {"parameters", { 
+            { "message", "who has a cat?" } 
+        }}
+    }}
+};
+
+const nlohmann::json ManageSDKTest::requestEmail = {
+    {"method", "keyboard.RequestEmail"},
+    {"payload", { 
+        {"parameters", { 
+            { "message", "who has a cat?" } 
+        }}
+    }}
+};
+
+const nlohmann::json ManageSDKTest::requestPassword = {
+    {"method", "keyboard.RequestPassword"},
+    {"payload", { 
+        {"parameters", { 
+            { "message", "who has a cat?" } 
+        }}
+    }}
+};
+
+const nlohmann::json ManageSDKTest::ackRequestChallenge = {
+    {"method", "acknowledgeChallenge.onRequestChallenge"},
+    {"payload", { 
+        {"parameters", { 
+            {"capability", "xrn:firebolt:capability:localization::postal-code"},
+			{"requestor",{
+                {"id", "ReferenceApp"},
+				{"name", "Firebolt Reference App"}
+			}}
+        }}
+    }}
+};
+
+const nlohmann::json ManageSDKTest::pinRequestChallenge = {
+    {"method", "pinChallenge.onRequestChallenge"},
+    {"payload", { 
+        {"parameters", { 
+            {"capability", "xrn:firebolt:capability:commerce::purchase"},
+			{"requestor", {
+				{"id", "ReferenceApp"},
+				{"name", "Firebolt Reference App"}
+			}},
+			{"pinSpace", "purchase"}
+        }}
+    }}
+};
+
+const nlohmann::json ManageSDKTest::autoLowLatencyModeCapableChanged = {
+    {"method", "HDMIInput.onAutoLowLatencyModeCapableChanged"},
+    {"payload", {
+        {"name", "data"},
+        {"port", "HDMI1"},
+        {"enabled", true}
+     }}
+};
+
+#ifdef GATEWAY_BIDIRECTIONAL
+void ManageSDKTest::event_trigger(nlohmann::json event)
+{
+    std::cout << "Event triggered: " << event["method"].dump() << std::endl;
+    std::string trigger_cmd = "curl --location --request POST http://localhost:3333/api/v1/bidirectionalEventPayload --header 'Content-Type: application/json' --data-raw '{ \"method\": " + event["method"].dump() + ", \"params\": " + event["payload"].dump() + "}'";
+    system(trigger_cmd.c_str());
+    std::cout << "[ADITYA] trigger_cmd: " << trigger_cmd << std::endl;
+    std::cout << std::endl;
+}
+
+void ManageSDKTest::provider_trigger(nlohmann::json provider)
+{
+    std::cout << "Provider triggered: " << provider["method"].dump() << std::endl;
+    std::string trigger_cmd = "curl --location --request POST http://localhost:3333/api/v1/bidirectionalPayload --header 'Content-Type: application/json' --data-raw '{ \"method\": " + provider["method"].dump() + ", \"params\": " + provider["payload"].dump() + "}'";
+    system(trigger_cmd.c_str());
+    std::cout << "trigger_cmd: " << trigger_cmd << std::endl;
+    std::cout << std::endl;
+}
+
+#else
+void ManageSDKTest::event_trigger(nlohmann::json event)
+{
+    std::cout << "Event triggered: " << event["method"].dump() << std::endl;
+    std::string trigger_cmd = "curl --location --request POST http://localhost:3333/api/v1/event --header 'Content-Type: application/json' --data-raw '{ \"method\": " + event["method"].dump() + ", \"result\": " + event["payload"].dump() + "}'";
+    system(trigger_cmd.c_str());
+    std::cout << std::endl;
+}
+
+void ManageSDKTest::provider_trigger(nlohmann::json provider)
+{
+    std::cout << "Provider triggered: " << provider["method"].dump() << std::endl;
+    std::string trigger_cmd = "curl --location --request POST http://localhost:3333/api/v1/event --header 'Content-Type: application/json' --data-raw '{ \"method\": " + provider["method"].dump() + ", \"params\": " + provider["payload"].dump() + "}'";
+    system(trigger_cmd.c_str());
+    std::cout << std::endl;
+}
+#endif
+
 void ManageSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
-    cout << "Change in connection: connected: " << connected << " error: " << static_cast<int>(error) << endl;
-    _connected = connected;
+    if (!_connected) {
+        cout << "Change in connection: connected: " << connected << " error: " << static_cast<int>(error) << endl;
+        _connected = connected;
+    }
 }
 
 void ManageSDKTest::CreateFireboltInstance(const std::string& url)
@@ -79,6 +235,7 @@ bool ManageSDKTest::WaitOnConnectionReady()
         usleep(sleepSlot);
         waiting -= sleepSlot;
     }
+    usleep(5000);
     return _connected;
 }
 
@@ -193,6 +350,10 @@ void ManageSDKTest::SetAudioDescriptionsEnabled()
 void ManageSDKTest::OnAudioDescriptionsEnabledChangedNotification::onEnabledChanged(const bool enabled)
 {
     cout << "AudioDescriptions Enabled changed, new value --> " << (enabled ? "true" : "false") << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert(enabled == audioDescriptionsEnabledChanged["payload"]);
+#endif
 }
 
 void ManageSDKTest::SubscribeAudioDescriptionsEnabledChanged()
@@ -249,6 +410,12 @@ void ManageSDKTest::SetDeviceName()
 void ManageSDKTest::OnDeviceNameChangedNotification::onDeviceNameChanged(const std::string& name)
 {
     cout << "Name changed, new name --> " << name << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    nlohmann::json result = nlohmann::json::parse(name);
+    assert(result["name"] == deviceNameChanged["payload"]["name"]);
+    assert(result["value"] == deviceNameChanged["payload"]["value"]);
+#endif
 }
 
 void ManageSDKTest::SubscribeDeviceNameChanged()
@@ -306,6 +473,10 @@ void ManageSDKTest::SetClosedCaptionsBackgroundOpacity()
 void ManageSDKTest::OnBackgroundOpacityChangedNotification::onBackgroundOpacityChanged(const float opacity)
 {
     cout << "BackgroundOpacity changed, new value --> " << opacity << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert(opacity == backgroundOpacityChanged["payload"]);
+#endif
 }
 
 void ManageSDKTest::SubscribeClosedCaptionsBackgroundOpacityChanged()
@@ -369,9 +540,47 @@ void ManageSDKTest::SetClosedCaptionsFontFamily()
     }
 }
 
+#ifdef GATEWAY_BIDIRECTIONAL
+std::string fontFamilyToString(Firebolt::Accessibility::FontFamily fontFamily)
+{
+    std::string str = "";
+    switch (fontFamily)
+    {
+    case Firebolt::Accessibility::FontFamily::MONOSPACED_SERIF:
+        str = "monospaced_serif";
+        break;
+    case Firebolt::Accessibility::FontFamily::PROPORTIONAL_SERIF:
+        str = "proportional_serif";
+        break;
+    case Firebolt::Accessibility::FontFamily::MONOSPACED_SANSERIF:
+        str = "monospaced_sanserif";
+        break;
+    case Firebolt::Accessibility::FontFamily::PROPORTIONAL_SANSERIF:
+        str = "proportional_sanserif";
+        break;
+    case Firebolt::Accessibility::FontFamily::SMALLCAPS:
+        str = "smallcaps";
+        break;
+    case Firebolt::Accessibility::FontFamily::CURSIVE:
+        str = "cursive";
+        break;
+    case Firebolt::Accessibility::FontFamily::CASUAL:
+        str = "casual";
+        break;
+    default:
+        str = "unknown";
+    }
+    return str;
+}
+#endif
+
 void ManageSDKTest::OnFontFamilyChangedNotification::onFontFamilyChanged(const Firebolt::Accessibility::FontFamily& family)
 {
-    cout << "FontFamily changed, new code --> " << ConvertFromEnum<Firebolt::Accessibility::FontFamily>(fontFamilyMap, family) << endl;
+    cout << "FontFamily changed, new code --> " << fontFamilyToString(family) << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert(fontFamilyToString(family) == fontFamilyChanged["payload"]);
+#endif
 }
 
 void ManageSDKTest::SubscribeClosedCaptionsFontFamilyChanged()
@@ -432,8 +641,13 @@ void ManageSDKTest::SetLocalizationPreferredAudioLanguages()
 void ManageSDKTest::OnPreferredAudioLanguagesChangedNotification::onPreferredAudioLanguagesChanged(const std::vector<std::string>& languages)
 {
     cout << "PreferredAudioLanguages Changed, new languages --> " << endl;
-    for (auto language : languages) {
-        cout << " -> " << language << endl;
+    for(size_t i = 0; i < languages.size(); i++)
+    {
+        cout << " -> " << languages[i] << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+        assert(languages[i] == preferredAudioLanguagesChanged["payload"][i]);
+#endif
     }
 }
 
@@ -491,6 +705,10 @@ void ManageSDKTest::SetPrivacyAllowACRCollection()
 void ManageSDKTest::OnAllowACRCollectionChangedNotification::onAllowACRCollectionChanged(const bool allowACRCollection)
 {
     cout << "AllowACRCollection Changed, new value of allowACRCollection : " << (allowACRCollection ? "true" : "false") << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert(allowACRCollection == allowACRCollectionChanged["payload"]);
+#endif
 }
 
 void ManageSDKTest::SubscribePrivacyAllowACRCollectionChanged()
@@ -545,6 +763,11 @@ void ManageSDKTest::GetPrivacySettings()
 void ManageSDKTest::OnSignInNotification::onSignIn(const Firebolt::Discovery::Event& event)
 {
     cout << "Discovery SignIn Event for appId --> " << event.appId << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert( event.appId == signInEvent["payload"]["appId"]);	
+#endif
+
 }
 
 void ManageSDKTest::SubscribeDiscoverySignInNotification()
@@ -574,6 +797,10 @@ void ManageSDKTest::UnsubscribeDiscoverySignInNotification()
 void ManageSDKTest::OnSignOutNotification::onSignOut(const Firebolt::Discovery::Event& event)
 {
     cout << "Discovery SignOut Event for appId --> " << event.appId << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert( event.appId == signOutEvent["payload"]["appId"]);	
+#endif
 }
 
 void ManageSDKTest::SubscribeDiscoverySignOutNotification()
@@ -600,6 +827,15 @@ void ManageSDKTest::UnsubscribeDiscoverySignOutNotification()
     }
 }
 
+bool ManageSDKTest::WaitForKeyboardRequest()
+{
+    while (!_keyboardProvider._keyInput) {
+        usleep(250 * 1000);
+        std::cout << "waiting for keyboard input...\n";
+    }
+    return _keyboardProvider._keyInput;
+}
+
 ManageSDKTest::KeyboardProvider::KeyboardProvider()
     : _session(nullptr)
     , _parameters()
@@ -612,25 +848,25 @@ void ManageSDKTest::KeyboardProvider::SendMessage(bool response)
     if (_keyInput) {
         cout << " Invoking _session->focus " << endl;
         _session->focus();
-        getchar();
+        // getchar();
 
-        string key;
-        cout << _parameters.message << " : ";
-        getline(cin, key);
+        // string key;
+        // cout << _parameters.message << " : ";
+        // getline(cin, key);
         if (response) {
-            std::string keyboardResult = key;
+            std::string keyboardResult = "I have the cat?";
             cout << " Invoking _session->result " << endl;
             _session->result(keyboardResult);
         } else {
             Firebolt::Keyboard::KeyboardError keyboardError;
             keyboardError.code = 123;
-            keyboardError.message = key;
+            keyboardError.message = "I have the cat?";
             keyboardError.data = "nothing to send";
             cout << " Invoking _session->error " << endl;
             _session->error(keyboardError);
         }
         _keyInput = false;
-        cin.putback('\n');
+        // cin.putback('\n');
     } else {
         cout << " there is no active keyboard input session " << endl;
     }
@@ -1016,7 +1252,13 @@ void ManageSDKTest::WifiDisconnect()
 
 void ManageSDKTest::OnAutoLowLatencyModeCapableChangedNotification::onAutoLowLatencyModeCapableChanged( const Firebolt::HDMIInput::AutoLowLatencyModeCapableChangedInfo& info)
 {
-    cout << "Low latency capable changed"  << endl;
+    cout << "Low latency capable changed" << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert( info.port == autoLowLatencyModeCapableChanged["payload"]["port"]);	
+    assert( info.enabled == autoLowLatencyModeCapableChanged["payload"]["enabled"]);	
+#endif
+
 }
 
 void ManageSDKTest::GlobalSubscribeHdmiAutoLowLatencyModeCapableChanged()
