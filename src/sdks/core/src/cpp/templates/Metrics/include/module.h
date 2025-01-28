@@ -1,7 +1,8 @@
 #pragma once
 
 #include "error.h"
-/* ${IMPORTS} */
+#include "common/types.h"
+/* ${IMPORTS:h} */
 
 ${if.declarations}namespace Firebolt {
 namespace ${info.Title} {
