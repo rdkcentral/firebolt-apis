@@ -21,6 +21,7 @@
 #include <string>
 #include <iostream>
 #include <stdexcept>
+#include <unistd.h>
 #include "ManageSDKTest.h"
 
 using namespace std;
@@ -54,29 +55,34 @@ void RunAllTests() {
         runTest(ManageSDKTest::GetAudioDescriptionsEnabled, "GetAudioDescriptionsEnabled");
         runTest(ManageSDKTest::SetAudioDescriptionsEnabled, "SetAudioDescriptionsEnabled");
         runTest(ManageSDKTest::SubscribeAudioDescriptionsEnabledChanged, "SubscribeAudioDescriptionsEnabledChanged");
+        ManageSDKTest::event_trigger(ManageSDKTest::audioDescriptionsEnabledChanged);
         runTest(ManageSDKTest::UnsubscribeAudioDescriptionsEnabledChanged, "UnsubscribeAudioDescriptionsEnabledChanged");
 
         // Device methods
         runTest(ManageSDKTest::GetDeviceName, "GetDeviceName");
         runTest(ManageSDKTest::SetDeviceName, "SetDeviceName");
         runTest(ManageSDKTest::SubscribeDeviceNameChanged, "SubscribeDeviceNameChanged");
+        ManageSDKTest::event_trigger(ManageSDKTest::deviceNameChanged);
         runTest(ManageSDKTest::UnsubscribeDeviceNameChanged, "UnsubscribeDeviceNameChanged");
 
         // ClosedCaptions methods
         runTest(ManageSDKTest::GetClosedCaptionsBackgroundOpacity, "GetClosedCaptionsBackgroundOpacity");
         runTest(ManageSDKTest::SetClosedCaptionsBackgroundOpacity, "SetClosedCaptionsBackgroundOpacity");
         runTest(ManageSDKTest::SubscribeClosedCaptionsBackgroundOpacityChanged, "SubscribeClosedCaptionsBackgroundOpacityChanged");
+        ManageSDKTest::event_trigger(ManageSDKTest::backgroundOpacityChanged);
         runTest(ManageSDKTest::UnsubscribeClosedCaptionsBackgroundOpacityChanged, "UnsubscribeClosedCaptionsBackgroundOpacityChanged");
 
         runTest(ManageSDKTest::GetClosedCaptionsFontFamily, "GetClosedCaptionsFontFamily");
         runTest(ManageSDKTest::SetClosedCaptionsFontFamily, "SetClosedCaptionsFontFamily");
         runTest(ManageSDKTest::SubscribeClosedCaptionsFontFamilyChanged, "SubscribeClosedCaptionsFontFamilyChanged");
+        ManageSDKTest::event_trigger(ManageSDKTest::fontFamilyChanged);
         runTest(ManageSDKTest::UnsubscribeClosedCaptionsFontFamilyChanged, "UnsubscribeClosedCaptionsFontFamilyChanged");
 
         // Localization methods
         runTest(ManageSDKTest::GetLocalizationPreferredAudioLanguages, "GetLocalizationPreferredAudioLanguages");
         runTest(ManageSDKTest::SetLocalizationPreferredAudioLanguages, "SetLocalizationPreferredAudioLanguages");
         runTest(ManageSDKTest::SubscribeLocalizationPreferredAudioLanguagesChanged, "SubscribeLocalizationPreferredAudioLanguagesChanged");
+        ManageSDKTest::event_trigger(ManageSDKTest::preferredAudioLanguagesChanged);
         runTest(ManageSDKTest::UnsubscribeLocalizationPreferredAudioLanguagesChanged, "UnsubscribeLocalizationPreferredAudioLanguagesChanged");
 
         runTest(ManageSDKTest::GetLocalizationAdditionalInfo, "GetLocalizationAdditionalInfo");
@@ -87,14 +93,17 @@ void RunAllTests() {
         runTest(ManageSDKTest::GetPrivacyAllowACRCollection, "GetPrivacyAllowACRCollection");
         runTest(ManageSDKTest::SetPrivacyAllowACRCollection, "SetPrivacyAllowACRCollection");
         runTest(ManageSDKTest::SubscribePrivacyAllowACRCollectionChanged, "SubscribePrivacyAllowACRCollectionChanged");
+        ManageSDKTest::event_trigger(ManageSDKTest::allowACRCollectionChanged);
         runTest(ManageSDKTest::UnsubscribePrivacyAllowACRCollectionChanged, "UnsubscribePrivacyAllowACRCollectionChanged");
 
         runTest(ManageSDKTest::GetPrivacySettings, "GetPrivacySettings");
 
         // Discovery methods
         runTest(ManageSDKTest::SubscribeDiscoverySignInNotification, "SubscribeDiscoverySignInNotification");
+        ManageSDKTest::event_trigger(ManageSDKTest::signInEvent);
         runTest(ManageSDKTest::UnsubscribeDiscoverySignInNotification, "UnsubscribeDiscoverySignInNotification");
         runTest(ManageSDKTest::SubscribeDiscoverySignOutNotification, "SubscribeDiscoverySignOutNotification");
+        ManageSDKTest::event_trigger(ManageSDKTest::signOutEvent);
         runTest(ManageSDKTest::UnsubscribeDiscoverySignOutNotification, "UnsubscribeDiscoverySignOutNotification");
 
         // UserGrants methods
@@ -103,25 +112,30 @@ void RunAllTests() {
         runTest(ManageSDKTest::DenyUserGrantsPermission, "DenyUserGrantsPermission");
         runTest(ManageSDKTest::ClearUserGrantsPermission, "ClearUserGrantsPermission");
 
-        // Wifi methods
-        // runTest(ManageSDKTest::WifiScan, "WifiScan");
-        // runTest(ManageSDKTest::WifiConnect, "WifiConnect");
-        // runTest(ManageSDKTest::WifiDisconnect, "WifiDisconnect");
-
         // Provider registration
         runTest(ManageSDKTest::RegisterKeyboardProvider, "RegisterKeyboardProvider");
+        ManageSDKTest::provider_trigger(ManageSDKTest::requestStandard);
         runTest(ManageSDKTest::SendResponseMessageToKeyboardProvider, "SendResponseMessageToKeyboardProvider");
-        runTest(ManageSDKTest::SendErrorMessageToKeyboardProvider, "SendErrorMessageToKeyboardProvider");
 
-        runTest(ManageSDKTest::RegisterAcknowledgeChallengeProvider, "RegisterAcknowledgeChallengeProvider");
-        runTest(ManageSDKTest::SendResponseMessageToAcknowledgeChallengeProvider, "SendResponseMessageToAcknowledgeChallengeProvider");
-        runTest(ManageSDKTest::SendErrorMessageToAcknowledgeChallengeProvider, "SendErrorMessageToAcknowledgeChallengeProvider");
+        runTest(ManageSDKTest::RegisterKeyboardProvider, "RegisterKeyboardProvider");
+        ManageSDKTest::provider_trigger(ManageSDKTest::requestEmail);
+        runTest(ManageSDKTest::SendResponseMessageToKeyboardProvider, "SendResponseMessageToKeyboardProvider");
 
-        runTest(ManageSDKTest::RegisterPinChallengeProvider, "RegisterPinChallengeProvider");
-        runTest(ManageSDKTest::SendResponseMessageToPinChallengeProvider, "SendResponseMessageToPinChallengeProvider");
-        runTest(ManageSDKTest::SendErrorMessageToPinChallengeProvider, "SendErrorMessageToPinChallengeProvider");
+        runTest(ManageSDKTest::RegisterKeyboardProvider, "RegisterKeyboardProvider");
+        ManageSDKTest::provider_trigger(ManageSDKTest::requestPassword);
+        runTest(ManageSDKTest::SendResponseMessageToKeyboardProvider, "SendResponseMessageToKeyboardProvider");
+
+        // runTest(ManageSDKTest::RegisterAcknowledgeChallengeProvider, "RegisterAcknowledgeChallengeProvider");
+        // ManageSDKTest::provider_trigger(ManageSDKTest::ackRequestChallenge);
+        // runTest(ManageSDKTest::SendResponseMessageToAcknowledgeChallengeProvider, "SendResponseMessageToAcknowledgeChallengeProvider");
+        
+        // runTest(ManageSDKTest::RegisterPinChallengeProvider, "RegisterPinChallengeProvider");
+        // ManageSDKTest::provider_trigger(ManageSDKTest::pinRequestChallenge);
+        // runTest(ManageSDKTest::SendResponseMessageToPinChallengeProvider, "SendResponseMessageToPinChallengeProvider");
+
 
         runTest(ManageSDKTest::GlobalSubscribeHdmiAutoLowLatencyModeCapableChanged, "GlobalSubscribeHdmiAutoLowLatencyModeCapableChanged");
+        ManageSDKTest::event_trigger(ManageSDKTest::autoLowLatencyModeCapableChanged);
         runTest(ManageSDKTest::GlobalUnsubscribeHdmiAutoLowLatencyModeCapableChanged, "GlobalUnsubscribeHdmiAutoLowLatencyModeCapableChanged");
 
         runTest(ManageSDKTest::GetAutoLowLatencyModeCapable, "GetAutoLowLatencyModeCapable");
