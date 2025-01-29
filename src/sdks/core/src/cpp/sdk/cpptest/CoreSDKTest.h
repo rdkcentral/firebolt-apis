@@ -19,6 +19,7 @@
 #pragma once
 
 #include <iostream>
+#include <nlohmann/json.hpp>
 #include "firebolt.h"
 
 class CoreSDKTest {
@@ -178,14 +179,21 @@ public:
     static void DiscoveryWatched();
     static void DiscoveryWatchedReduced();
 #endif
-    static void SubscribeDiscoveryOnNavigateToLaunchNotification();
-    static void UnsubscribeDiscoveryOnNavigateToLaunchNotification();
+    static void SubscribeDiscoveryOnNavigateToLaunchHomeIntentNotification();
+    static void SubscribeDiscoveryOnNavigateToLaunchEntityIntentNotification();
+    static void SubscribeDiscoveryOnNavigateToLaunchTuneIntentNotification();
+    static void UnsubscribeDiscoveryOnNavigateToLaunchHomeIntentNotification();
+    static void UnsubscribeDiscoveryOnNavigateToLaunchEntityIntentNotification();
+    static void UnsubscribeDiscoveryOnNavigateToLaunchTuneIntentNotification();
     static void DiscoveryWatchNext();
     static void DiscoveryUserInterest();
 
     static void ParametersInitialization();
 
     static bool WaitOnConnectionReady();
+    
+    static void event_trigger(nlohmann::json event);
+    static void provider_trigger(nlohmann::json provider);
 
 private:
     static void ConnectionChanged(const bool, const Firebolt::Error);
@@ -206,4 +214,19 @@ private:
     static KeyboardEmailAsyncResponse _keyboardEmailAsyncResponse;
     static KeyboardPasswordAsyncResponse _keyboardPasswordAsyncResponse;
     static KeyboardStandardAsyncResponse _keyboardStandardAsyncResponse;
+
+public:
+    static const nlohmann::json adPolicy;
+    static const nlohmann::json deviceName;
+    static const nlohmann::json audioChanged;
+    static const nlohmann::json deviceScreenResolutionChanged;
+    static const nlohmann::json preferredAudioLanguagesChanged;
+    static const nlohmann::json closedCaptionsSettingsChanged;
+    static const nlohmann::json backgroundNotification;
+    static const nlohmann::json foregroundNotification;
+    static const nlohmann::json friendlyNameChanged;
+    static const nlohmann::json navigateTo;
+    static const nlohmann::json keyboardStandard;
+    static const nlohmann::json keyboardEmail;
+    static const nlohmann::json keyboardPassword;
 };
