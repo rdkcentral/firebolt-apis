@@ -19,7 +19,7 @@
 
 #include "error.h"
 #include <string>
-/* ${IMPORTS} */
+/* ${IMPORTS:h} */
 
 ${if.declarations}namespace Firebolt {
 namespace ${info.Title} {

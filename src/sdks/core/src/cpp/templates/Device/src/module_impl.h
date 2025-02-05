@@ -23,7 +23,7 @@
 #include <string>
 
 
-/* ${IMPORTS} */
+/* ${IMPORTS:impl} */
 #include "${info.title.lowercase}.h"
 
 ${if.implementations}
