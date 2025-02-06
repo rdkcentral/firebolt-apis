@@ -21,6 +21,7 @@
 #include <string>
 #include <iostream>
 #include <stdexcept>
+#include <unistd.h>
 #include "CoreSDKTest.h"
 
 using namespace std;
@@ -42,6 +43,7 @@ void RunAllTests() {
 
     // Ensure the connection is ready before running tests
     if (CoreSDKTest::WaitOnConnectionReady()) {
+
         // Account ID
         runTest(CoreSDKTest::GetAccountId, "GetAccountId");
 
@@ -52,6 +54,7 @@ void RunAllTests() {
         runTest(CoreSDKTest::BuildAdvertisingConfiguration, "BuildAdvertisingConfiguration");
         runTest(CoreSDKTest::GetAdvertisingDeviceAttributes, "GetAdvertisingDeviceAttributes");
         runTest(CoreSDKTest::SubscribeAdvertisingPolicyChanged, "SubscribeAdvertisingPolicyChanged");
+        CoreSDKTest::event_trigger(CoreSDKTest::adPolicy);
         runTest(CoreSDKTest::UnsubscribeAdvertisingPolicyChanged, "UnsubscribeAdvertisingPolicyChanged");
 
         // Device properties
@@ -60,12 +63,15 @@ void RunAllTests() {
         runTest(CoreSDKTest::GetDeviceName, "GetDeviceName");
         runTest(CoreSDKTest::GetDeviceName, "GetDeviceVersion");
         runTest(CoreSDKTest::SubscribeDeviceNameChanged, "SubscribeDeviceNameChanged");
+        CoreSDKTest::event_trigger(CoreSDKTest::deviceName);
         runTest(CoreSDKTest::UnsubscribeDeviceNameChanged, "UnsubscribeDeviceNameChanged");
         runTest(CoreSDKTest::GetDeviceAudio, "GetDeviceAudio");
         runTest(CoreSDKTest::SubscribeDeviceAudioChanged, "SubscribeDeviceAudioChanged");
+        CoreSDKTest::event_trigger(CoreSDKTest::audioChanged);
         runTest(CoreSDKTest::UnsubscribeDeviceAudioChanged, "UnsubscribeDeviceAudioChanged");
         runTest(CoreSDKTest::GetDeviceScreenResolution, "GetDeviceScreenResolution");
         runTest(CoreSDKTest::SubscribeDeviceScreenResolutionChanged, "SubscribeDeviceScreenResolutionChanged");
+        CoreSDKTest::event_trigger(CoreSDKTest::deviceScreenResolutionChanged);
         runTest(CoreSDKTest::UnsubscribeDeviceScreenResolutionChanged, "UnsubscribeDeviceScreenResolutionChanged");
 
         // Localization methods
@@ -73,20 +79,27 @@ void RunAllTests() {
         runTest(CoreSDKTest::GetLocalizationLatlon, "GetLocalizationLatlon");
         runTest(CoreSDKTest::GetLocalizationPreferredAudioLanguages, "GetLocalizationPreferredAudioLanguages");
         runTest(CoreSDKTest::SubscribeLocalizationPreferredAudioLanguagesChanged, "SubscribeLocalizationPreferredAudioLanguagesChanged");
+        CoreSDKTest::event_trigger(CoreSDKTest::preferredAudioLanguagesChanged);
         runTest(CoreSDKTest::UnsubscribeLocalizationPreferredAudioLanguagesChanged, "UnsubscribeLocalizationPreferredAudioLanguagesChanged");
 
         // Accessibility - Closed Captions Settings
         runTest(CoreSDKTest::GetAccessibilityClosedCaptionsSettings, "GetAccessibilityClosedCaptionsSettings");
         runTest(CoreSDKTest::SubscribeAccessibilityClosedCaptionsSettingsChanged, "SubscribeAccessibilityClosedCaptionsSettingsChanged");
+        CoreSDKTest::event_trigger(CoreSDKTest::closedCaptionsSettingsChanged);
         runTest(CoreSDKTest::UnsubscribeAccessibilityClosedCaptionsSettingsChanged, "UnsubscribeAccessibilityClosedCaptionsSettingsChanged");
 
         // Keyboard methods
-        // runTest(CoreSDKTest::InvokeKeyboardEmail, "InvokeKeyboardEmail");
-        // runTest(CoreSDKTest::AbortKeyboardEmail, "AbortKeyboardEmail");
-        // runTest(CoreSDKTest::InvokeKeyboardPassword, "InvokeKeyboardPassword");
-        // runTest(CoreSDKTest::AbortKeyboardPassword, "AbortKeyboardPassword");
-        // runTest(CoreSDKTest::InvokeKeyboardStandard, "InvokeKeyboardStandard");
-        // runTest(CoreSDKTest::AbortKeyboardStandard, "AbortKeyboardStandard");
+        runTest(CoreSDKTest::InvokeKeyboardEmail, "InvokeKeyboardEmail");
+        CoreSDKTest::provider_trigger(CoreSDKTest::keyboardEmail);
+        runTest(CoreSDKTest::AbortKeyboardEmail, "AbortKeyboardEmail");
+
+        runTest(CoreSDKTest::InvokeKeyboardPassword, "InvokeKeyboardPassword");
+        CoreSDKTest::provider_trigger(CoreSDKTest::keyboardPassword);
+        runTest(CoreSDKTest::AbortKeyboardPassword, "AbortKeyboardPassword");
+
+        runTest(CoreSDKTest::InvokeKeyboardStandard, "InvokeKeyboardStandard");
+        CoreSDKTest::provider_trigger(CoreSDKTest::keyboardStandard);
+        runTest(CoreSDKTest::AbortKeyboardStandard, "AbortKeyboardStandard");
 
         // Profile methods
         runTest(CoreSDKTest::VerifyProfileApproveContentRating, "VerifyProfileApproveContentRating");
@@ -112,8 +125,10 @@ void RunAllTests() {
         runTest(CoreSDKTest::LifecycleFinished, "LifecycleFinished");
         runTest(CoreSDKTest::LifecycleState, "LifecycleState");
         runTest(CoreSDKTest::SubscribeLifecycleBackgroundNotification, "SubscribeLifecycleBackgroundNotification");
+        CoreSDKTest::event_trigger(CoreSDKTest::backgroundNotification);
         runTest(CoreSDKTest::UnsubscribeLifecycleBackgroundNotification, "UnsubscribeLifecycleBackgroundNotification");
         runTest(CoreSDKTest::SubscribeLifecycleForegroundNotification, "SubscribeLifecycleForegroundNotification");
+        CoreSDKTest::event_trigger(CoreSDKTest::foregroundNotification);
         runTest(CoreSDKTest::UnsubscribeLifecycleForegroundNotification, "UnsubscribeLifecycleForegroundNotification");
 
         // Metrics methods
@@ -129,6 +144,7 @@ void RunAllTests() {
         runTest(CoreSDKTest::GetSecondScreenDevice, "GetSecondScreenDevice");
         runTest(CoreSDKTest::GetSecondScreenFriendlyName, "GetSecondScreenFriendlyName");
         runTest(CoreSDKTest::SubscribeSecondScreenFriendlyNameChanged, "SubscribeSecondScreenFriendlyNameChanged");
+        CoreSDKTest::event_trigger(CoreSDKTest::friendlyNameChanged);
         runTest(CoreSDKTest::UnsubscribeSecondScreenFriendlyNameChanged, "UnsubscribeSecondScreenFriendlyNameChanged");
         runTest(CoreSDKTest::GetSecondScreenProtocols, "GetSecondScreenProtocols");
 
@@ -147,8 +163,17 @@ void RunAllTests() {
         runTest(CoreSDKTest::DiscoveryWatched, "DiscoveryWatched");
         runTest(CoreSDKTest::DiscoveryWatchedReduced, "DiscoveryWatchedReduced");
 #endif
-        runTest(CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchNotification, "SubscribeDiscoveryOnNavigateToLaunchNotification");
-        runTest(CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchNotification, "UnsubscribeDiscoveryOnNavigateToLaunchNotification");
+        runTest(CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchHomeIntentNotification, "SubscribeDiscoveryOnNavigateToLaunchHomeIntentNotification");
+        CoreSDKTest::event_trigger(CoreSDKTest::navigateTo);
+        runTest(CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchHomeIntentNotification, "UnsubscribeDiscoveryOnNavigateToLaunchHomeIntentNotification");
+
+        runTest(CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchEntityIntentNotification, "SubscribeDiscoveryOnNavigateToLaunchEntityIntentNotification");
+        CoreSDKTest::event_trigger(CoreSDKTest::navigateTo);
+        runTest(CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchEntityIntentNotification, "UnsubscribeDiscoveryOnNavigateToLaunchEntityIntentNotification");
+
+        runTest(CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchTuneIntentNotification, "SubscribeDiscoveryOnNavigateToLaunchTuneIntentNotification");
+        CoreSDKTest::event_trigger(CoreSDKTest::navigateTo);
+        runTest(CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchTuneIntentNotification, "UnsubscribeDiscoveryOnNavigateToLaunchTuneIntentNotification");
 
         // Parameters Initialization
         runTest(CoreSDKTest::ParametersInitialization, "ParametersInitialization");
@@ -166,10 +191,10 @@ void RunAllTests() {
             cout << "============================" << endl;
             exit(1);
         }
-    } else {
-        cout << "Core Test not able to connect with server..." << endl;
-        exit(1);
-    }
+   } else {
+       cout << "Core Test not able to connect with server..." << endl;
+       exit(1);
+   }
 }
 
 int main(int argc, char* argv[]) {
