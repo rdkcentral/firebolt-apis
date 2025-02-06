@@ -13,7 +13,7 @@ See [Firebolt Requirements Governance](../../governance.md) for more info.
 
 ## 1. Overview
 
-As the number of assistive technologies grow and become more feature-rich, Firebolt platforms and the services upon which they are built are expected to provide reasonable accommodations to users with visual or audible impairments.  These accomodations exist to allow these users to more easily understand and interact with content via these assistive technologies.
+As the number of assistive technologies grow and become more feature-rich, Firebolt platforms and the services upon which they are built are expected to provide reasonable accommodations to users with visual or audible impairments.  These accomodations exist to allow users to more easily understand and interact with content via these assistive technologies.
 
 Accessibility is and will continue to be a core foundational principal of the Firebolt project, and as such, Firebolt shall expose any functionality required to configure and drive these assitive technologies, allowing Firebolt clients to build rich experiences that are curated to each user's specific needs.
 
@@ -39,6 +39,10 @@ As an app, I want to...
   - [4.2. Closed Captions Settings](#42-closed-captions-settings)
   - [4.3. High Contrast UI](#43-high-contrast-ui)
   - [4.4. Voice Guidance Settings](#44-voice-guidance-settings)
+- [5. Voice Guidance Settings](#5-voice-guidance-settings)
+  - [4.1. Enabled](#41-enabled)
+  - [4.2. Navigation Hints](#42-navigation-hints)
+  - [4.2. Speech Rate](#42-speech-rate)
 
 ## 3. Constants, Types, and Schemas
 
@@ -148,11 +152,11 @@ The `Accessibility` module **MUST** include a `voiceGuidanceSettings` method tha
 
 This method's response **MUST** support the following properties:
 
-| Property          | Type      | Required in Response | Description                                                                                          |
-| ----------------- | --------- | -------------------- | ---------------------------------------------------------------------------------------------------- |
-| `enabled`         | `boolean` | Yes                  | Whether or not voice guidance is enabled by default                                                  |
-| `navigationHints` | `boolean` | No                   | Whether or not voice guidance should include additional navigation hints                             |
-| `speed`           | `number`  | No                   | The speed at which voice guidance speech will be read back to the user<br />Allowed range: 0.1 -> 10 |
+| Property          | Type      | Required in Response | Description                                                                                         |
+| ----------------- | --------- | -------------------- | --------------------------------------------------------------------------------------------------- |
+| `enabled`         | `boolean` | Yes                  | Whether or not voice guidance is enabled by default                                                 |
+| `navigationHints` | `boolean` | No                   | Whether or not voice guidance should include additional navigation hints                            |
+| `rate`            | `number`  | Yes                  | The rate at which voice guidance speech will be read back to the user<br />Allowed range: 0.1 -> 10 |
 
 This method **MUST** have a corresponding `onVoiceGuidanceSettingsChanged` event to notify listeners after a change to any properties have been made and that change has taken effect.
 
@@ -163,6 +167,51 @@ Accessibility.voiceGuidanceSettings()
 //> {
 //>   "enabled": true,
 //>   "navigationHints": false,
-//>   "speed": 1.5
+//>   "rate": 1.5
 //> }
+```
+
+## 5. Voice Guidance Settings
+
+Apps want to be able to modify and persist the user's voice guidance preferences.
+
+To facilitate this, the `VoiceGuidance` module will provide management access to the user's voice guidance preferences.
+
+### 4.1. Enabled
+
+The `VoiceGuidance` module **MUST** include an `enabled` method that accepts a boolean value denoting whether the user has enabled voice guidance.
+
+This method **MUST** have a corresponding `onEnabledChanged` event to notify listeners after a change to the property has been made and that change has taken effect.
+
+Access to these methods **MUST** require the `xrn:firebolt:capability:accessibility:voiceguidance` capability.
+
+```javascript
+VoiceGuidance.enabled(true)
+//> true
+```
+
+### 4.2. Navigation Hints
+
+The `VoiceGuidance` module **MUST** include a `navigationHints` method that accepts a boolean denoting whether the user prefers additional voice guidance navigation hints to be synthesized.
+
+This method **MUST** have a corresponding `onNavigationHintsChanged` event to notify listeners after a change to the property has been made and that change has taken effect.
+
+Access to these methods **MUST** require the `xrn:firebolt:capability:accessibility:voiceguidance` capability.
+
+```javascript
+VoiceGuidance.navigationHints(false)
+//> false
+```
+
+### 4.2. Speech Rate
+
+The `VoiceGuidance` module **MUST** include a `rate` method that accepts a numeric value denoting the user's desired speech rate.
+
+This method **MUST** have a corresponding `onRateChanged` event to notify listeners after a change to the property has been made and that change has taken effect.
+
+Access to these methods **MUST** require the `xrn:firebolt:capability:accessibility:voiceguidance` capability.
+
+```javascript
+VoiceGuidance.rate(0.5)
+//> 0.5
 ```
