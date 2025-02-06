@@ -216,7 +216,8 @@
             "value": {
               "enabled": true,
               "navigationHints": true,
-              "speed": 2
+              "rate": 1.0,
+              "speed": 1.0
             }
           }
         }
