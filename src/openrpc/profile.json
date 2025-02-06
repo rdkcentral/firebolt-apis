@@ -33,8 +33,8 @@
             "name": "allow",
             "value": false
           }
-        }            
-      ]    
+        }
+      ]
     },
     {
       "name": "approvePurchase",
@@ -63,8 +63,8 @@
             "name": "allow",
             "value": false
           }
-        }            
-      ]    
+        }
+      ]
     },
     {
       "name": "flags",
@@ -97,6 +97,114 @@
           }
         }
       ]
+    },
+    {
+      "name": "viewingRestrictions",
+      "summary": "The profile's preferred viewing restrictions.",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:profile:viewingrestrictions"
+          ]
+        }
+      ],
+      "result": {
+        "name": "viewingRestrictions",
+        "summary": "The current viewing restrictions",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "restrictions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ViewingRestriction"
+              }
+            }
+          },
+          "required": [
+            "enabled",
+            "restrictions"
+          ]
+        }
+      },
+      "errors": [],
+      "examples": [
+        {
+          "name": "Content with an MPAA R-rating and US TV TV-14-V is restricted",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "enabled": true,
+              "restrictions": [
+                {
+                  "scheme": "MPAA",
+                  "ratings": [
+                    {
+                      "rating": "R"
+                    }
+                  ]
+                },
+                {
+                  "scheme": "US TV",
+                  "ratings": [
+                    {
+                      "rating": "TV-14",
+                      "subratings": [
+                        "V"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "components": {
+    "schemas": {
+      "ContentRating": {
+        "description": "The rating and subrating for content.",
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "string"
+          },
+          "subratings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ViewingRestriction": {
+        "description": "The content viewing restriction.",
+        "type": "object",
+        "properties": {
+          "scheme": {
+            "description": "The scheme for the restriction (such as MPAA for US movies). This value may be platform or operator dependant.",
+            "type": "string"
+          },
+          "ratings": {
+            "description": "A list of content ratings to be restricted.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContentRating"
+            }
+          }
+        }
+      }
+    }
+  }
 }
