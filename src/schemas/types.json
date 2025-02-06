@@ -45,6 +45,7 @@
       }
     },
     "FlatMap": {
+      "title": "FlatMap",
       "type": "object",
       "additionalProperties": {
         "oneOf": [

@@ -101,5 +101,5 @@ ${if.enums}
 
 namespace WPEFramework {
 
-/* ${ENUMS} */
+/* ${ENUM_IMPLEMENTATATIONS} */
 }${end.if.enums}
