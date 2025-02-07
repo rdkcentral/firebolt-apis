@@ -13,6 +13,7 @@
 		"cpp:install": "chmod +x ./build/cpp/src/scripts/install.sh && sdkVersion=$(npm run -s getVersion) && ./build/cpp/src/scripts/install.sh -i ./build/cpp/src -s ./build/cpp/src/ -m discovery -v $sdkVersion",
 		"compile": "cd ../../.. && npm run compile",
 		"slice": "npx firebolt-openrpc slice -i ../../../dist/firebolt-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-discovery-open-rpc.json",
+		"slice:app": "npx firebolt-openrpc slice -i ../../../dist/firebolt-app-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-discovery-app-open-rpc.json",
 		"docs": "npx firebolt-openrpc docs --input ./dist/firebolt-discovery-open-rpc.json --output build/docs/markdown --as-path",
 		"wiki": "npx firebolt-openrpc docs --input ./dist/firebolt-discovery-open-rpc.json --output build/docs/markdown",
 		"dist:notest": "npm run clean && npm run slice && npm run validate && npm run sdk && npm run docs && npm run prettier && npm run dist:copy && echo 'Firebolt Discovery SDK /dist/ is ready.\n'",
