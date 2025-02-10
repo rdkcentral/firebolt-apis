@@ -22,7 +22,7 @@
 #include "jsondata_lifecycle.h"
 #include "${info.title.lowercase}.h"
 
-/* ${IMPORTS} */
+/* ${IMPORTS:impl} */
 
 ${if.implementations}
 namespace Firebolt {
