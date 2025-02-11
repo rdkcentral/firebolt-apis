@@ -83,12 +83,24 @@ std::string stringifyGrantInfo(const std::vector<GrantInfo> &grants)
             {
                 result += "\"title\":\"" + grant.app.value().title.value() + "\"";
             }
+            else
+            {
+                ADD_FAILURE() << "Expected grant.app.title to have a value";
+            }
             result += "},";
+        }
+        else
+        {
+            ADD_FAILURE() << "Expected grant.app to have a value";
         }
         result += "\"capability\":\"" + std::string(grant.capability) + "\",";
         if (grant.expires.has_value())
         {
             result += "\"expires\":\"" + grant.expires.value() + "\",";
+        }
+        else
+        {
+            ADD_FAILURE() << "Expected grant.expires to have a value";
         }
         result += "\"lifespan\":\"" + grantInfoLifespanToString(grant.lifespan) + "\",";
         result += "\"role\":\"" + roleToString(grant.role) + "\",";
