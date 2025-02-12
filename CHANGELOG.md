@@ -1,3 +1,10 @@
+# [1.5.0-next.11](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.10...v1.5.0-next.11) (2025-02-12)
+
+
+### Bug Fixes
+
+* Discovery SDK compilation ([#364](https://github.com/rdkcentral/firebolt-apis/issues/364)) ([6bbfa1a](https://github.com/rdkcentral/firebolt-apis/commit/6bbfa1a18e7a618eeba4b13d22190e56d2268a1e))
+
 # [1.5.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.9...v1.5.0-next.10) (2025-02-12)
 
 
