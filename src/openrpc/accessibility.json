@@ -179,7 +179,8 @@
             "name": "Default Result",
             "value": {
               "enabled": true,
-              "speed": 2
+              "navigationHints": true,
+              "rate": 1.0
             }
           }
         }
@@ -216,8 +217,7 @@
             "value": {
               "enabled": true,
               "navigationHints": true,
-              "rate": 1.0,
-              "speed": 1.0
+              "rate": 1.0
             }
           }
         }
