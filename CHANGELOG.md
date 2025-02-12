@@ -1,3 +1,10 @@
+# [1.5.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.9...v1.5.0-next.10) (2025-02-12)
+
+
+### Bug Fixes
+
+* Building of Manage SDK (workaround) ([#356](https://github.com/rdkcentral/firebolt-apis/issues/356)) ([38f7f27](https://github.com/rdkcentral/firebolt-apis/commit/38f7f27499bcf97bc2ee852cf99f11284e230536))
+
 # [1.5.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.8...v1.5.0-next.9) (2024-11-21)
 
 
