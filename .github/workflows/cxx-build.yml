@@ -85,19 +85,19 @@ jobs:
           npm run dist
 
       - name: Upload Core SDK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: core
           path: src/sdks/core
 
       - name: Upload Manage SDK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: manage
           path: src/sdks/manage
   
       - name: Upload Discovery SDK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: discovery
           path: src/sdks/discovery
