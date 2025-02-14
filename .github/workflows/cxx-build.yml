@@ -37,7 +37,7 @@ jobs:
           .github/workflows/utils.sh cloneAndInstallThunder
 
       - name: Upload the library artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: thunder
           path: /__w/firebolt-apis/install/
