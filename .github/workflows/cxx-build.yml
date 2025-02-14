@@ -113,13 +113,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download Core SDK
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: core
           path: /__w/firebolt-apis/firebolt-apis/src/sdks/core
 
       - name: Download Thunder 
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with: 
           name: thunder
           path: /__w/thunder/install/
@@ -183,13 +183,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download Manage SDK
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: manage
           path: /__w/firebolt-apis/firebolt-apis/src/sdks/manage
 
       - name: Download Thunder 
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with: 
           name: thunder
           path: /__w/thunder/install/
@@ -252,13 +252,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download Discovery SDK
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: discovery
           path: /__w/firebolt-apis/firebolt-apis/src/sdks/discovery
 
       - name: Download Thunder 
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with: 
           name: thunder
           path: /__w/thunder/install/
