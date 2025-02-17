@@ -222,5 +222,5 @@ ${if.enums}
 
 namespace WPEFramework {
 
-/* ${ENUMS} */
+/* ${ENUM_IMPLEMENTATIONS} */
 }${end.if.enums}
