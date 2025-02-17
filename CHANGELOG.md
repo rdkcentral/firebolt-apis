@@ -1,3 +1,10 @@
+# [1.5.0-next.12](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.11...v1.5.0-next.12) (2025-02-17)
+
+
+### Bug Fixes
+
+* ci coverage report compilation ([#361](https://github.com/rdkcentral/firebolt-apis/issues/361)) ([ad9b44f](https://github.com/rdkcentral/firebolt-apis/commit/ad9b44fa0957484cd286be46e773d0ff25d847b7))
+
 # [1.5.0-next.11](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.10...v1.5.0-next.11) (2025-02-12)
 
 
