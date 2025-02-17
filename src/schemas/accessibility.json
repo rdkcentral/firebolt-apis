@@ -99,7 +99,7 @@
     "ClosedCaptionsSettings": {
       "title": "ClosedCaptionsSettings",
       "type": "object",
-      "required": ["enabled", "styles"],
+      "required": ["enabled"],
       "properties": {
         "enabled": {
           "type": "boolean",
