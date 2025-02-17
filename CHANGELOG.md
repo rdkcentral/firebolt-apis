@@ -1,3 +1,10 @@
+# [1.5.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.12...v1.5.0-next.13) (2025-02-17)
+
+
+### Features
+
+* EAA 2025 - high contrast UI and voice guidance changes ([#343](https://github.com/rdkcentral/firebolt-apis/issues/343)) ([bd86a57](https://github.com/rdkcentral/firebolt-apis/commit/bd86a5727c6dfbc8f0ddd61ab529def498866138))
+
 # [1.5.0-next.12](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.11...v1.5.0-next.12) (2025-02-17)
 
 
