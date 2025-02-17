@@ -2,7 +2,7 @@
     "openrpc": "1.2.4",
     "info": {
         "title": "VoiceGuidance",
-        "description": "A module for managing voice-guidance Settings.",
+        "description": "A module for managing voice guidance settings.",
         "version": "0.0.0"
     },
     "methods": [
@@ -20,8 +20,7 @@
                 }
             ],
             "summary": "Whether or not voice-guidance is enabled.",
-            "params": [
-            ],
+            "params": [],
             "result": {
                 "name": "enabled",
                 "schema": {
@@ -30,8 +29,12 @@
             },
             "examples": [
                 {
-                    "name": "Default example #1",
+                    "name": "Enable voice guidance",
                     "params": [
+                        {
+                            "name": "enabled",
+                            "value": true
+                        }
                     ],
                     "result": {
                         "name": "enabled",
@@ -39,8 +42,12 @@
                     }
                 },
                 {
-                    "name": "Default example #2",
+                    "name": "Disable voice guidance",
                     "params": [
+                        {
+                            "name": "enabled",
+                            "value": false
+                        }
                     ],
                     "result": {
                         "name": "enabled",
@@ -50,7 +57,7 @@
             ]
         },
         {
-            "name": "speed",
+            "name": "navigationHints",
             "tags": [
                 {
                     "name": "property"
@@ -62,39 +69,150 @@
                     ]
                 }
             ],
-            "summary": "The speed at which voice guidance speech will be read back to the user.",
-            "params": [
-            ],
+            "summary": "The user's preference for whether additional navigation hints should be synthesized.",
+            "params": [],
             "result": {
-                "name": "speed",
+                "name": "navigationHints",
                 "schema": {
-                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VoiceSpeed"
+                    "type": "boolean"
                 }
             },
             "examples": [
                 {
-                    "name": "Voice guidance speed to 1",
+                    "name": "Enable navigation hints",
                     "params": [
+                        {
+                            "name": "navigationHints",
+                            "value": true
+                        }
                     ],
                     "result": {
-                        "name": "speed",
-                        "value": 1
+                        "name": "navigationHints",
+                        "value": true
                     }
                 },
                 {
-                    "name": "Voice guidance speed to 2",
+                    "name": "Disable navigation hints",
                     "params": [
+                        {
+                            "name": "navigationHints",
+                            "value": false
+                        }
+                    ],
+                    "result": {
+                        "name": "navigationHints",
+                        "value": false
+                    }
+                }
+            ]
+        },
+        {
+            "name": "rate",
+            "tags": [
+                {
+                    "name": "property"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:accessibility:voiceguidance"
+                    ]
+                }
+            ],
+            "summary": "The rate at which voice guidance speech will be read back to the user.",
+            "params": [],
+            "result": {
+                "name": "rate",
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/SpeechRate"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Set the voice guidance to the normal speech rate",
+                    "params": [
+                        {
+                            "name": "rate",
+                            "value": 1.0
+                        }
+                    ],
+                    "result": {
+                        "name": "rate",
+                        "value": 1.0
+                    }
+                },
+                {
+                    "name": "Double the voice guidance speech rate",
+                    "params": [
+                        {
+                            "name": "rate",
+                            "value": 2.0
+                        }
+                    ],
+                    "result": {
+                        "name": "rate",
+                        "value": 2.0
+                    }
+                }
+            ]
+        },
+        {
+            "name": "speed",
+            "tags": [
+                {
+                    "name": "property"
+                },
+                {
+                    "name": "deprecated",
+                    "x-alternative": "VoiceGuidance.rate()",
+                    "x-since": "1.5.0"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:accessibility:voiceguidance"
+                    ]
+                }
+            ],
+            "summary": "The speed at which voice guidance speech will be read back to the user.",
+            "params": [],
+            "result": {
+                "name": "speed",
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/SpeechRate"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Set the voice guidance to the normal speech rate",
+                    "params": [
+                        {
+                            "name": "speed",
+                            "value": 1.0
+                        }
                     ],
                     "result": {
                         "name": "speed",
-                        "value": 2
+                        "value": 1.0
+                    }
+                },
+                {
+                    "name": "Double the voice guidance speech rate",
+                    "params": [
+                        {
+                            "name": "speed",
+                            "value": 2.0
+                        }
+                    ],
+                    "result": {
+                        "name": "speed",
+                        "value": 2.0
                     }
                 }
             ]
         }
-   ],
+    ],
     "components": {
-        "schemas": {
-        }
+        "schemas": {}
     }
 }
