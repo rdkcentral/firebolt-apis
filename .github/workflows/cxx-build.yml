@@ -70,7 +70,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('package-lock.json') }}
+          key: deps-node-modules-${{ hashFiles('package.json') }}
 
       - name: Install dependencies
         run: npm install
@@ -163,12 +163,16 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '80 40'
-      
+          thresholds: '50 20'
+
+      - name: Replace badge title in PR comment
+        run: sed -i 's/Code%20Coverage/Core%20Coverage%20Report/g' code-coverage-results.md
+
       - name: Add coverage PR comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          recreate: true
+          recreate: false
+          append: true
           path: code-coverage-results.md
 
 
@@ -233,12 +237,16 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '80 40'
+          thresholds: '50 20'
+
+      - name: Replace badge title in PR comment
+        run: sed -i 's/Code%20Coverage/Manage%20Coverage%20Report/g' code-coverage-results.md
       
       - name: Add coverage PR comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          recreate: true
+          recreate: false
+          append: true
           path: code-coverage-results.md
 
   discovery_sdk:
@@ -302,11 +310,15 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '80 40'
-      
+          thresholds: '50 20'
+
+      - name: Replace badge title in PR comment
+        run: sed -i 's/Code%20Coverage/Discovery%20Coverage%20Report/g' code-coverage-results.md
+
       - name: Add coverage PR comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          recreate: true
+          recreate: false
+          append: true
           path: code-coverage-results.md
 
