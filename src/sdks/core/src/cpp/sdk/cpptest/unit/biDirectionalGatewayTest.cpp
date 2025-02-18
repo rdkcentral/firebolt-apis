@@ -1,50 +1,53 @@
+/*
+ * Copyright 2023 Comcast Cable Communications Management, LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#ifdef GATEWAY_BIDIRECTIONAL
+
+#include "unit.h"
 #include <gtest/gtest.h>
 #include "Gateway/Gateway.h"
-#include "Gateway/bidi/gateway_impl.h"
 
 class BiDirectionalGatewayTest : public ::testing::Test
 {
 protected:
     Firebolt::Error status = Firebolt::Error::None;
-    FireboltSDK::GatewayImpl *_gatewayImpl = FireboltSDK::Gateway::Instance().get_gateway_impl();
 };
 
-TEST_F(BiDirectionalGatewayTest, Receive)
+static void onPolicyChangedInnerCallback( void* notification, const void* userData, void* jsonResponse )
 {
-    JsonObject jsonParameters;
-    WPEFramework::Core::JSON::VariantContainer jsonResult;
-    status = _gatewayImpl->Receive("authentication.device", jsonParameters, jsonResult);
-    EXPECT_EQ(status, Firebolt::Error::None) << "Error! status: " << static_cast<int32_t>(status);
+    std::cout << "onPolicyChanged event fired";
 }
 
 TEST_F(BiDirectionalGatewayTest, Request)
 {
     JsonObject jsonParameters;
     WPEFramework::Core::JSON::VariantContainer jsonResult;
-    status = _gatewayImpl->Request("authentication.device", jsonParameters, jsonResult);
+    status = FireboltSDK::Gateway::Instance().Request("authentication.device", jsonParameters, jsonResult);
     EXPECT_EQ(status, Firebolt::Error::None) << "Error! status: " << static_cast<int32_t>(status);
-}
-
-/* Test Subscribe */
-struct SkipRestrictionChanged : public Firebolt::Advertising::IAdvertising::IOnSkipRestrictionChangedNotification
-{
-    void onSkipRestrictionChanged(const Firebolt::Advertising::SkipRestriction &) override;
-};
-
-Firebolt::Advertising::SkipRestriction newSkipRestriction;
-void SkipRestrictionChanged::onSkipRestrictionChanged(const Firebolt::Advertising::SkipRestriction &skipRestriction)
-{
-    std::cout << "onSkipRestrictionChanged event fired";
 }
 
 TEST_F(BiDirectionalGatewayTest, Subscribe)
 {
-    SkipRestrictionChanged skipRestrictionChanged;
-    std::string eventName = _T("advertising.onSkipRestrictionChanged");
+    std::string eventName = _T("advertising.onPolicyChanged");
     JsonObject parameters;
     json response;
 
-    status = _gatewayImpl->Subscribe(eventName, parameters, CALLBACK, reinterpret_cast<void*>(skipRestrictionChanged), nullptr);
+    status = FireboltSDK::Gateway::Instance().Subscribe<WPEFramework::Core::JSON::VariantContainer>(eventName, parameters, onPolicyChangedInnerCallback, nullptr, nullptr);
     EXPECT_EQ(status, Firebolt::Error::None) << "Error! status: " << static_cast<int32_t>(status);
 }
 /* Test Subscribe End */
@@ -53,6 +56,8 @@ TEST_F(BiDirectionalGatewayTest, UnSubscribe)
 {
     std::string eventName = _T("advertising.onSkipRestrictionChanged");
 
-    status = _gatewayImpl->Unsubscribe(eventName);
+    status = FireboltSDK::Gateway::Instance().Unsubscribe(eventName);
     EXPECT_EQ(status, Firebolt::Error::None) << "Error! status: " << static_cast<int32_t>(status);
 }
+
+#endif

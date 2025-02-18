@@ -1,3 +1,21 @@
+/*
+ * Copyright 2023 Comcast Cable Communications Management, LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #include "unit.h"
 
 class DeviceTest : public ::testing::Test
@@ -218,11 +236,12 @@ TEST_F(DeviceTest, ScreenResolution)
 
     // Getting the actual value from the DeviceInterface
     Firebolt::Error error = Firebolt::Error::None;
-    std::string screenResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution(&error);
+    using Resolution = std::pair<int32_t, int32_t>;
+    Resolution screenResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution(&error);
 
     // Perform the assertions
     EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve screenResolution from Device.screenResolution() method";
-    EXPECT_EQ(screenResolution, expectedJson.get<std::string>());
+    EXPECT_EQ(std::to_string(screenResolution.first) + "x" + std::to_string(screenResolution.second), expectedJson.get<std::string>());
 }
 
 TEST_F(DeviceTest, VideoResolution)
@@ -249,11 +268,12 @@ TEST_F(DeviceTest, VideoResolution)
 
     // Getting the actual value from the DeviceInterface
     Firebolt::Error error = Firebolt::Error::None;
-    std::string videoResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().videoResolution(&error);
+    using Resolution = std::pair<int32_t, int32_t>;
+    Resolution videoResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().videoResolution(&error);
 
     // Perform the assertions
     EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve videoResolution from Device.videoResolution() method";
-    EXPECT_EQ(videoResolution, expectedJson.get<std::string>());
+    EXPECT_EQ(std::to_string(videoResolution.first) + "x" + std::to_string(videoResolution.second), expectedJson.get<std::string>());
 }
 
 TEST_F(DeviceTest, Name)

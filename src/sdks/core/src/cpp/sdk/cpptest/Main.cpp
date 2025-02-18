@@ -88,6 +88,7 @@ void RunAllTests() {
         CoreSDKTest::event_trigger(CoreSDKTest::closedCaptionsSettingsChanged);
         runTest(CoreSDKTest::UnsubscribeAccessibilityClosedCaptionsSettingsChanged, "UnsubscribeAccessibilityClosedCaptionsSettingsChanged");
 
+#if defined(UNIT_TESTS_APP) && defined(GATEWAY_BIDIRECTIONAL)
         // Keyboard methods
         runTest(CoreSDKTest::InvokeKeyboardEmail, "InvokeKeyboardEmail");
         CoreSDKTest::provider_trigger(CoreSDKTest::keyboardEmail);
@@ -100,6 +101,7 @@ void RunAllTests() {
         runTest(CoreSDKTest::InvokeKeyboardStandard, "InvokeKeyboardStandard");
         CoreSDKTest::provider_trigger(CoreSDKTest::keyboardStandard);
         runTest(CoreSDKTest::AbortKeyboardStandard, "AbortKeyboardStandard");
+#endif
 
         // Profile methods
         runTest(CoreSDKTest::VerifyProfileApproveContentRating, "VerifyProfileApproveContentRating");
@@ -212,6 +214,11 @@ int main(int argc, char* argv[]) {
     }
 
     printf("Firebolt Core SDK Test\n");
+#ifdef GATEWAY_BIDIRECTIONAL
+    printf("- Bi-Directional\n");
+#else
+    printf("- Uni-Directional\n");
+#endif
 
     CoreSDKTest::CreateFireboltInstance(url);
     RunAllTests();

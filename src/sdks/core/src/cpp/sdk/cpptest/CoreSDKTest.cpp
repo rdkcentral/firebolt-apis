@@ -23,8 +23,9 @@
 #include "CoreSDKTest.h"
 #include <cassert>
 
-
 using namespace std;
+using Resolution = std::pair<int32_t, int32_t>;
+
 bool CoreSDKTest::_connected;
 CoreSDKTest::OnPolicyChangedNotification CoreSDKTest::_policyChangedNotification;
 CoreSDKTest::OnDeviceNameChangedNotification CoreSDKTest::_deviceNameChangedNotification;
@@ -164,6 +165,7 @@ const nlohmann::json CoreSDKTest::keyboardPassword = {
     }}
 };
 
+#ifndef UNIT_TEST_APP
 #ifdef GATEWAY_BIDIRECTIONAL
 void CoreSDKTest::event_trigger(nlohmann::json event)
 {
@@ -196,6 +198,16 @@ void CoreSDKTest::provider_trigger(nlohmann::json provider)
     std::string trigger_cmd = "curl --location --request POST http://localhost:3333/api/v1/event --header 'Content-Type: application/json' --data-raw '{ \"method\": " + provider["method"].dump() + ", \"params\": " + provider["payload"].dump() + "}'";
     system(trigger_cmd.c_str());
     std::cout << std::endl;
+}
+#endif
+#else
+void CoreSDKTest::event_trigger(nlohmann::json event)
+{
+    std::cerr << "event_trigger not implemented when UNIT_TESTS enabled, as it requires running instance of mock-firebolt" << std::endl;
+}
+void CoreSDKTest::provider_trigger(nlohmann::json provider)
+{
+    std::cerr << "provider_trigger not implemented when UNIT_TESTS enabled, as it requires running instance of mock-firebolt" << std::endl;
 }
 #endif
 
@@ -534,16 +546,15 @@ void CoreSDKTest::UnsubscribeDeviceAudioChanged()
     }
 }
 
-void PrintDeviceScreenResolution(const std::string screenResolution)
+void PrintDeviceScreenResolution(const Resolution screenResolution)
 {
-    cout << "Get Device ScreenResolution :-> " << endl;
-    cout << screenResolution << endl;
+    cout << "Get Device ScreenResolution :-> " << screenResolution.first << "x" << screenResolution.second << endl;
 }
 
 void CoreSDKTest::GetDeviceScreenResolution()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    const std::string screenResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution(&error);
+    const Resolution screenResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution(&error);
     if (error == Firebolt::Error::None) {
         PrintDeviceScreenResolution(screenResolution);
     } else {
@@ -552,7 +563,7 @@ void CoreSDKTest::GetDeviceScreenResolution()
     }
 }
 
-void CoreSDKTest::OnScreenResolutionChangedNotification::onScreenResolutionChanged(const std::string& screenResolution)
+void CoreSDKTest::OnScreenResolutionChangedNotification::onScreenResolutionChanged(const Resolution& screenResolution)
 {
     cout << "onScreenResolutionChanged event " << endl;
     PrintDeviceScreenResolution(screenResolution);
@@ -1194,7 +1205,7 @@ void CoreSDKTest::GetAuthenticationToken()
     Firebolt::Authentication::TokenType type = Firebolt::Authentication::TokenType::DEVICE;
     std::optional<Firebolt::Authentication::Options> options;
 
-    const Firebolt::Authentication::AuthenticationTokenResult token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().token(type, options, &error);
+    const Firebolt::Authentication::Token token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().token(type, options, &error);
 
     if (error == Firebolt::Error::None) {
         cout << "Get Authentication of token : " << endl;
@@ -1653,31 +1664,6 @@ void CoreSDKTest::DiscoveryWatchNext()
     }
 }
 
-void CoreSDKTest::DiscoveryUserInterest()
-{
-    Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::Discovery::InterestType type = Firebolt::Discovery::InterestType::INTEREST;
-    Firebolt::Discovery::InterestReason reason = Firebolt::Discovery::InterestReason::PLAYLIST;
-
-    // Set up the entity details
-    Firebolt::Entity::EntityDetails entity;
-
-    // Identifiers
-    entity.identifiers = "{\"entityId\": \"123\"}";
-
-    // Optional Info Metadata
-    entity.info = Firebolt::Entity::Metadata();
-    entity.info->title = "A Cool Show";
-    entity.info->synopsis = "A cool show synopsis";
-
-    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().userInterest(type, reason, entity, &error);
-
-    if (error == Firebolt::Error::None) {
-        cout << "Discovery User Interest is success" << endl;
-    } else {
-        cout << "Discovery User Interest status = " << static_cast<int>(error) << endl;
-    }
-}
 
 void CoreSDKTest::DiscoveryPolicy()
 {
@@ -1838,16 +1824,7 @@ void CoreSDKTest::DiscoveryLaunch()
     Firebolt::Error error = Firebolt::Error::None;
     std::string appId = "123";
     {
-        std::optional<Firebolt::Intents::TuneIntent> intent = std::make_optional<Firebolt::Intents::TuneIntent>();
-        intent.value().action = "tune";
-        intent.value().data.entity.entityType = "channel";
-        intent.value().data.entity.channelType = Firebolt::Entity::ChannelEntityChannelType::STREAMING;
-        intent.value().data.entity.entityId = "an-ott-channel";
-        std::string entityId;
-        std::optional<std::string> appContentData;
-        intent.value().data.options = std::make_optional<Firebolt::Intents::TuneIntentDataOptions>();
-        intent.value().data.options.value().restartCurrentProgram = true;
-        intent.value().context.source = "voice";
+        std::optional<std::string> intent = std::make_optional<std::string>();
         cout << "Calling Discovery Launch TuneIntent method " << endl;
         bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
         
@@ -1860,11 +1837,7 @@ void CoreSDKTest::DiscoveryLaunch()
     }
 
     {
-        std::optional<Firebolt::Intents::SearchIntent> intent = std::make_optional<Firebolt::Intents::SearchIntent>();
-        intent.value().action = "search";
-        intent.value().context.source = "voice";
-        intent.value().data = std::make_optional<Firebolt::Intents::SearchIntentData>();
-        intent.value().data->query = "searching for a movie";
+        std::optional<std::string> intent = std::make_optional<std::string>();
         cout << "Calling Discovery Launch SearchIntent method " << endl;
         bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
         if (error == Firebolt::Error::None) {
@@ -1876,9 +1849,7 @@ void CoreSDKTest::DiscoveryLaunch()
     }
 
     {
-        std::optional<Firebolt::Intents::HomeIntent> intent = std::make_optional<Firebolt::Intents::HomeIntent>();
-        intent.value().action = "home";
-        intent.value().context.source = "voice";
+        std::optional<std::string> intent = std::make_optional<std::string>();
         cout << "Calling Discovery Launch HomeIntent method " << endl;
         bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
         if (error == Firebolt::Error::None) {
@@ -2001,17 +1972,17 @@ void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchTuneIntentNotification()
     }
 }
 
-void CoreSDKTest::OnNavigateToHomeIntentNotification::onNavigateTo(const Firebolt::Intents::HomeIntent& intent)
+void CoreSDKTest::OnNavigateToHomeIntentNotification::onNavigateTo(const std::string& intent)
 {
-    cout << "OnNavigateToHomeIntentNotification::onNavigateTo for action : " << intent.action << endl; 
+    cout << "OnNavigateToHomeIntentNotification::onNavigateTo for action : " << intent << endl; 
 }
 
-void CoreSDKTest::OnNavigateToEntityIntentNotification::onNavigateTo(const Firebolt::Intents::EntityIntent& intent)
+void CoreSDKTest::OnNavigateToEntityIntentNotification::onNavigateTo(const std::string& intent)
 {
-    cout << "OnNavigateToEntityIntentNotification::onNavigateTo for action : " << intent.action << endl;
+    cout << "OnNavigateToEntityIntentNotification::onNavigateTo for action : " << intent << endl;
 }
 
-void CoreSDKTest::OnNavigateToTuneIntentNotification::onNavigateTo(const Firebolt::Intents::TuneIntent& intent)
+void CoreSDKTest::OnNavigateToTuneIntentNotification::onNavigateTo(const std::string& intent)
 {
-    cout << "OnNavigateToTuneIntentNotification::onNavigateTo for action : " << intent.action << endl;
+    cout << "OnNavigateToTuneIntentNotification::onNavigateTo for action : " << intent << endl;
 }
