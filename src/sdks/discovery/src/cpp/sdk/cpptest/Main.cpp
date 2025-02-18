@@ -47,7 +47,9 @@ void RunAllTests() {
         sleep(2);
         
         runTest(DiscoverySDKTest::SubscribeUserInterest, "SubscribeUserInterest");
+#ifdef GATEWAY_BIDIRECTIONAL
         DiscoverySDKTest::event_trigger(DiscoverySDKTest::userInterestEvent);
+#endif
         runTest(DiscoverySDKTest::UnsubscribeUserInterest, "UnsubscribeUserInterest");
         runTest(DiscoverySDKTest::RequestUserInterest, "RequestUserInterest");
 
