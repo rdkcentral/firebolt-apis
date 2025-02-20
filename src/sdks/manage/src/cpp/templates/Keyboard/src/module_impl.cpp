@@ -28,7 +28,7 @@ namespace ${info.Title} {
 
     static std::string KeyboardEmailSessionInnerCallback( void* provider, const void* userData, void* jsonResponse ) // response are params that were sent when provider was requested
     {
-        WPEFramework::Core::ProxyType<JsonData_Keyboard>& proxyResponse = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardEmailProviderRequest>*>(jsonResponse));
+        WPEFramework::Core::ProxyType<JsonData_KeyboardEmailProviderRequest>& proxyResponse = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardEmailProviderRequest>*>(jsonResponse));
           
         ASSERT(proxyResponse.IsValid() == true);
 
@@ -51,7 +51,7 @@ namespace ${info.Title} {
 
     static std::string KeyboardPasswordSessionInnerCallback( void* provider, const void* userData, void* jsonResponse ) // response are params that were sent when provider was requested
     {
-        WPEFramework::Core::ProxyType<JsonData_Keyboard>& proxyResponse = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>*>(jsonResponse));
+        WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>& proxyResponse = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>*>(jsonResponse));
           
         ASSERT(proxyResponse.IsValid() == true);
 
@@ -73,7 +73,7 @@ namespace ${info.Title} {
 
     static std::string KeyboardStandardSessionInnerCallback( void* provider, const void* userData, void* jsonResponse ) // response are params that were sent when provider was requested
     {
-        WPEFramework::Core::ProxyType<JsonData_Keyboard>& proxyResponse = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>*>(jsonResponse));
+        WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>& proxyResponse = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>*>(jsonResponse));
           
         ASSERT(proxyResponse.IsValid() == true);
 
