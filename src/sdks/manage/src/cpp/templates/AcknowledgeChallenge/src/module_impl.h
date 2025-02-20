@@ -168,4 +168,4 @@ public:
 };
 
 } // namespace AcknowledgeChallenge
-} // namespace Firebolt
+}${end.if.implementations}
