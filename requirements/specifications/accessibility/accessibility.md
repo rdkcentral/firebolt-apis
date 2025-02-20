@@ -179,39 +179,45 @@ To facilitate this, the `VoiceGuidance` module will provide management access to
 
 ### 4.1. Enabled
 
-The `VoiceGuidance` module **MUST** include an `enabled` method that accepts a boolean value denoting whether the user has enabled voice guidance.
+The `VoiceGuidance` module **MUST** include an `enabled` method that returns a boolean value denoting whether or not the user has enabled voice guidance.
+
+This method **MUST** have a corresponding `setEnabled` method that accepts a boolean value denoting the new intended value for this property.
 
 This method **MUST** have a corresponding `onEnabledChanged` event to notify listeners after a change to the property has been made and that change has taken effect.
 
 Access to these methods **MUST** require the `xrn:firebolt:capability:accessibility:voiceguidance` capability.
 
 ```javascript
-VoiceGuidance.enabled(true)
+VoiceGuidance.setEnabled(true)
 //> true
 ```
 
 ### 4.2. Navigation Hints
 
-The `VoiceGuidance` module **MUST** include a `navigationHints` method that accepts a boolean denoting whether the user prefers additional voice guidance navigation hints to be synthesized.
+The `VoiceGuidance` module **MUST** include a `navigationHints` method that returns a boolean value denoting whether or not the user prefers additional voice guidance navigation hints to be synthesized.
+
+This method **MUST** have a corresponding `setNavigationHints` method that accepts a boolean value denoting the new intended value for this property.
 
 This method **MUST** have a corresponding `onNavigationHintsChanged` event to notify listeners after a change to the property has been made and that change has taken effect.
 
 Access to these methods **MUST** require the `xrn:firebolt:capability:accessibility:voiceguidance` capability.
 
 ```javascript
-VoiceGuidance.navigationHints(false)
+VoiceGuidance.setNavigationHints(false)
 //> false
 ```
 
 ### 4.2. Speech Rate
 
-The `VoiceGuidance` module **MUST** include a `rate` method that accepts a numeric value denoting the user's desired speech rate.
+The `VoiceGuidance` module **MUST** include a `rate` method that returns a numeric value denoting the user's desired speech rate.
+
+This method **MUST** have a corresponding `setRate` method that accepts a numeric value denoting the new intended value for this property.
 
 This method **MUST** have a corresponding `onRateChanged` event to notify listeners after a change to the property has been made and that change has taken effect.
 
 Access to these methods **MUST** require the `xrn:firebolt:capability:accessibility:voiceguidance` capability.
 
 ```javascript
-VoiceGuidance.rate(0.5)
+VoiceGuidance.setRate(0.5)
 //> 0.5
 ```
