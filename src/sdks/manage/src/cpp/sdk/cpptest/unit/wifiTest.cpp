@@ -87,10 +87,18 @@ TEST_F(WifiTest, connect)
     {
         EXPECT_EQ(wifiSecurityModeToString(connectedWifi.securityMode.value()), expectedValues["security"]) << "Security mode mismatch";
     }
+    else
+    {
+        ADD_FAILURE() << "Expected connectedWifi.securityMode to have a value";
+    }
     EXPECT_EQ(connectedWifi.signalStrength, expectedValues["signalStrength"]) << "signalStrength mismatch";
     if (connectedWifi.frequency.has_value())
     {
         EXPECT_EQ(connectedWifi.frequency, expectedValues["frequency"].get<float>()) << "frequency mismatch";
+    }
+    else
+    {
+        ADD_FAILURE() << "Expected connectedWifi.frequency to have a value";
     }
 }
 
@@ -122,23 +130,39 @@ TEST_F(WifiTest, scan)
 
                 apl_string += "\"frequency\":" + s.substr(0, pos + 2) + ",";
             }
+            {
+                ADD_FAILURE() << "Expected ap.frequency to have a value";
+            }
             if (ap.securityMode.has_value())
             {
                 apl_string += "\"security\":\"" + wifiSecurityModeToString(ap.securityMode.value()) + "\",";
+            }
+            {
+                ADD_FAILURE() << "Expected ap.securityMode to have a value";
             }
             if (ap.signalStrength.has_value())
             {
                 apl_string += "\"signalStrength\":" + std::to_string(ap.signalStrength.value()) + ",";
             }
+            {
+                ADD_FAILURE() << "Expected ap.signalStrength to have a value";
+            }
             if (ap.ssid.has_value())
             {
                 apl_string += "\"ssid\":\"" + ap.ssid.value() + "\",";
+            }
+            {
+                ADD_FAILURE() << "Expected ap.ssid to have a value";
             }
 
             apl_string.pop_back(); // Remove the last comma
             apl_string += "},";
         }
         apl_string.pop_back(); // Remove the last comma
+    }
+    else
+    {
+        ADD_FAILURE() << "Expected apl.list to have a value";
     }
     apl_string += "]}";
 
@@ -159,9 +183,17 @@ TEST_F(WifiTest, wps)
     {
         EXPECT_EQ(wifiSecurityModeToString(connectedWifi.securityMode.value()), expectedValues["security"]) << "Security mode mismatch";
     }
+    else
+    {
+        ADD_FAILURE() << "Expected connectedWifi.securityMode to have a value";
+    }
     EXPECT_EQ(connectedWifi.signalStrength, expectedValues["signalStrength"]) << "signalStrength mismatch";
     if (connectedWifi.frequency.has_value())
     {
         EXPECT_EQ(connectedWifi.frequency, expectedValues["frequency"].get<float>()) << "frequency mismatch";
+    }
+    else
+    {
+        ADD_FAILURE() << "Expected connectedWifi.frequency to have a value";
     }
 }
