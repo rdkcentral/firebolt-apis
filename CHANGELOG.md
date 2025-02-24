@@ -1,3 +1,31 @@
+# [1.5.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.12...v1.5.0-next.13) (2025-02-17)
+
+
+### Features
+
+* EAA 2025 - high contrast UI and voice guidance changes ([#343](https://github.com/rdkcentral/firebolt-apis/issues/343)) ([bd86a57](https://github.com/rdkcentral/firebolt-apis/commit/bd86a5727c6dfbc8f0ddd61ab529def498866138))
+
+# [1.5.0-next.12](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.11...v1.5.0-next.12) (2025-02-17)
+
+
+### Bug Fixes
+
+* ci coverage report compilation ([#361](https://github.com/rdkcentral/firebolt-apis/issues/361)) ([ad9b44f](https://github.com/rdkcentral/firebolt-apis/commit/ad9b44fa0957484cd286be46e773d0ff25d847b7))
+
+# [1.5.0-next.11](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.10...v1.5.0-next.11) (2025-02-12)
+
+
+### Bug Fixes
+
+* Discovery SDK compilation ([#364](https://github.com/rdkcentral/firebolt-apis/issues/364)) ([6bbfa1a](https://github.com/rdkcentral/firebolt-apis/commit/6bbfa1a18e7a618eeba4b13d22190e56d2268a1e))
+
+# [1.5.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.9...v1.5.0-next.10) (2025-02-12)
+
+
+### Bug Fixes
+
+* Building of Manage SDK (workaround) ([#356](https://github.com/rdkcentral/firebolt-apis/issues/356)) ([38f7f27](https://github.com/rdkcentral/firebolt-apis/commit/38f7f27499bcf97bc2ee852cf99f11284e230536))
+
 # [1.5.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.8...v1.5.0-next.9) (2024-11-21)
 
 

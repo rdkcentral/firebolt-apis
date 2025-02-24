@@ -287,7 +287,7 @@ function generate_coverage_report(){
   echo " ************ Generate coverage report for ${sdk_name^} CPP SDK ************"
 
   cd /__w/firebolt-apis/firebolt-apis/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}
-  cmake --build build --target coverage
+  cmake --build build --target coverage || exit 9999
 
   mv /__w/firebolt-apis/firebolt-apis/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}/build/test/coverage /__w/firebolt-apis/firebolt-apis/
 }

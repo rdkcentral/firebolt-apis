@@ -116,7 +116,7 @@ jobs:
           cd /tmp
           git clone https://rdkcentral:$GITHUB_TOKEN@github.com/rdkcentral/firebolt.git ./firebolt-docs
       - name: Release docs to GitHub.io
-        if: steps.check_build.outputs.result == 'true' && (github.ref_name == 'main' || github.ref_name == 'next' || github.ref_name == 'next-major' || github.event_name == 'pull_request')
+        if: steps.check_build.outputs.result == 'true' && (github.ref_name == 'main' || github.ref_name == 'next' || github.ref_name == 'next-major' || github.event_name == 'pull_request' || github.ref_name == 'feature/high-contrast-ui')
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
         run: |
