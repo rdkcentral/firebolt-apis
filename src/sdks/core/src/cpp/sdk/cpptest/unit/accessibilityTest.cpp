@@ -92,40 +92,68 @@ TEST_F(AccessibilityTest, ClosedCaptions)
 
         if (styles.backgroundColor.has_value())
             EXPECT_EQ(styles.backgroundColor.value(), expectedValues["styles"]["backgroundColor"]);
+        else
+            ADD_FAILURE() << "Expected styles.backgroundColor to have a value";
 
         if (styles.backgroundOpacity.has_value())
             EXPECT_EQ(styles.backgroundOpacity.value(), expectedValues["styles"]["backgroundOpacity"]);
+        else
+            ADD_FAILURE() << "Expected styles.backgroundOpacity to have a value";
 
         if (styles.fontColor.has_value())
             EXPECT_EQ(styles.fontColor.value(), expectedValues["styles"]["fontColor"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontColor to have a value";
 
         if (styles.fontEdge.has_value())
             EXPECT_EQ(fontEdgeToString(styles.fontEdge.value()), expectedValues["styles"]["fontEdge"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontEdge to have a value";
 
         if (styles.fontEdgeColor.has_value())
             EXPECT_EQ(styles.fontEdgeColor.value(), expectedValues["styles"]["fontEdgeColor"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontEdgeColor to have a value";
 
         if (styles.fontFamily.has_value())
             EXPECT_EQ(fontFamilyToString(styles.fontFamily.value()), expectedValues["styles"]["fontFamily"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontEdgeColor to have a value";
 
         if (styles.fontOpacity.has_value())
             EXPECT_EQ(styles.fontOpacity.value(), expectedValues["styles"]["fontOpacity"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontOpacity to have a value";
 
         if (styles.fontSize.has_value())
             EXPECT_EQ(styles.fontSize.value(), expectedValues["styles"]["fontSize"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontSize to have a value";
 
         if (styles.textAlign.has_value())
             EXPECT_EQ(styles.textAlign.value(), expectedValues["styles"]["textAlign"]);
+        else
+            ADD_FAILURE() << "Expected styles.textAlign to have a value";
 
         if (styles.textAlignVertical.has_value())
             EXPECT_EQ(styles.textAlignVertical.value(), expectedValues["styles"]["textAlignVertical"]);
+        else
+            ADD_FAILURE() << "Expected styles.textAlignVertical to have a value";
 
         if (styles.windowColor.has_value())
             EXPECT_EQ(styles.windowColor.value(), expectedValues["styles"]["windowColor"]);
+        else
+            ADD_FAILURE() << "Expected styles.windowColor to have a value";
 
         if (styles.windowOpacity.has_value())
             EXPECT_EQ(styles.windowOpacity.value(), expectedValues["styles"]["windowOpacity"]);
+        else
+            ADD_FAILURE() << "Expected styles.windowOpacity to have a value";
     }
+    else 
+{
+    ADD_FAILURE() << "Expected closedCaptions.styles to have a value";
+}
 
     EXPECT_EQ(closedCaptions.preferredLanguages.value()[0], expectedValues["preferredLanguages"][0]);
     EXPECT_EQ(closedCaptions.preferredLanguages.value()[1], expectedValues["preferredLanguages"][1]);
@@ -145,39 +173,67 @@ TEST_F(AccessibilityTest, ClosedCaptionsSettings)
 
         if (styles.backgroundColor.has_value())
             EXPECT_EQ(styles.backgroundColor.value(), expectedValues["styles"]["backgroundColor"]);
+        else
+            ADD_FAILURE() << "Expected styles.backgroundColor to have a value";
 
         if (styles.backgroundOpacity.has_value())
             EXPECT_EQ(styles.backgroundOpacity.value(), expectedValues["styles"]["backgroundOpacity"]);
+        else
+            ADD_FAILURE() << "Expected styles.backgroundOpacity to have a value";
 
         if (styles.fontColor.has_value())
             EXPECT_EQ(styles.fontColor.value(), expectedValues["styles"]["fontColor"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontColor to have a value";
 
         if (styles.fontEdge.has_value())
             EXPECT_EQ(fontEdgeToString(styles.fontEdge.value()), expectedValues["styles"]["fontEdge"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontEdge to have a value";
 
         if (styles.fontEdgeColor.has_value())
             EXPECT_EQ(styles.fontEdgeColor.value(), expectedValues["styles"]["fontEdgeColor"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontEdgeColor to have a value";
 
         if (styles.fontFamily.has_value())
             EXPECT_EQ(fontFamilyToString(styles.fontFamily.value()), expectedValues["styles"]["fontFamily"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontFamily to have a value";
 
         if (styles.fontOpacity.has_value())
             EXPECT_EQ(styles.fontOpacity.value(), expectedValues["styles"]["fontOpacity"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontOpacity to have a value";
 
         if (styles.fontSize.has_value())
             EXPECT_EQ(styles.fontSize.value(), expectedValues["styles"]["fontSize"]);
+        else
+            ADD_FAILURE() << "Expected styles.fontSize to have a value";
 
         if (styles.textAlign.has_value())
             EXPECT_EQ(styles.textAlign.value(), expectedValues["styles"]["textAlign"]);
+        else
+            ADD_FAILURE() << "Expected styles.textAlign to have a value";
 
         if (styles.textAlignVertical.has_value())
             EXPECT_EQ(styles.textAlignVertical.value(), expectedValues["styles"]["textAlignVertical"]);
+        else
+            ADD_FAILURE() << "Expected styles.textAlignVertical to have a value";
 
         if (styles.windowColor.has_value())
             EXPECT_EQ(styles.windowColor.value(), expectedValues["styles"]["windowColor"]);
+        else
+            ADD_FAILURE() << "Expected styles.windowColor to have a value";
 
         if (styles.windowOpacity.has_value())
             EXPECT_EQ(styles.windowOpacity.value(), expectedValues["styles"]["windowOpacity"]);
+        else
+            ADD_FAILURE() << "Expected styles.windowOpacity to have a value";
+    }
+    else 
+    {
+        ADD_FAILURE() << "Expected closedCaptionSettings.styles to have a value";
     }
  
     EXPECT_EQ(closedCaptionSettings.preferredLanguages.value()[0], expectedValues["preferredLanguages"][0]);

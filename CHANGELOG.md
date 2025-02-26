@@ -1,3 +1,10 @@
+# [1.5.0-next.14](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.13...v1.5.0-next.14) (2025-02-24)
+
+
+### Bug Fixes
+
+* handle optional object members gracefully in unit tests ([#369](https://github.com/rdkcentral/firebolt-apis/issues/369)) ([f592cde](https://github.com/rdkcentral/firebolt-apis/commit/f592cde562ad3aa5bffbd8a7263a3ab41f664fa2))
+
 # [1.5.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.12...v1.5.0-next.13) (2025-02-17)
 
 
