@@ -1,3 +1,10 @@
+# [1.5.0-next.15](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.14...v1.5.0-next.15) (2025-02-26)
+
+
+### Bug Fixes
+
+* Remove unneccessary params from voice guidance examples ([d5ab7bf](https://github.com/rdkcentral/firebolt-apis/commit/d5ab7bfd07f155a55a03dd181cb71f801f83fd1e))
+
 # [1.5.0-next.14](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.13...v1.5.0-next.14) (2025-02-24)
 
 
