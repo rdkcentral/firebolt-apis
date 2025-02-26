@@ -151,6 +151,12 @@ jobs:
 
       - name: Test and Generate coverage report
         run: .github/workflows/utils.sh generate_core_sdk_coverage_report
+      
+      - name: Upload Core coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: core-coverage
+          path: ./coverage
 
       - name: Display coverage report
         uses: irongut/CodeCoverageSummary@v1.3.0
@@ -225,6 +231,12 @@ jobs:
 
       - name: Test and Generate coverage report
         run: .github/workflows/utils.sh generate_manage_sdk_coverage_report
+      
+      - name: Upload Manage coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: manage-coverage
+          path: ./coverage
 
       - name: Display coverage report
         uses: irongut/CodeCoverageSummary@v1.3.0
@@ -286,6 +298,12 @@ jobs:
       - name: Generate discovery SDK source code
         run: |
           .github/workflows/utils.sh generate_cpp_discovery_sdk_source_code
+      
+      - name: Upload Discovery coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: discovery-coverage
+          path: ./coverage
 
       - name: Build CXX Discovery SDK
         run: |
