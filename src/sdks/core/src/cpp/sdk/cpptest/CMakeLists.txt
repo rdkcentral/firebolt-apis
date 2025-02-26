@@ -93,7 +93,8 @@ if(ENABLE_UNIT_TESTS)
         add_compile_definitions(UNIT_TEST_SUITE)
     endif()
 
-    file(GLOB UNIT_TESTS "unit/*")
+    file(GLOB UNIT_TESTS "unit/*.cpp")
+    file(GLOB MOCK_TESTS "mock/*.cpp")
 
     add_compile_definitions(UNIT_TEST_APP)
 
@@ -101,6 +102,7 @@ if(ENABLE_UNIT_TESTS)
         CoreSDKTest.cpp
         Unit.cpp
         ${UNIT_TESTS}
+        ${MOCK_TESTS}
     )
 
     link_directories(${SYSROOT_PATH}/usr/lib/)
