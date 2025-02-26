@@ -89,7 +89,8 @@ if(ENABLE_UNIT_TESTS)
 
     message("Setup ${UNIT_TESTS_APP}")
 
-    file(GLOB UNIT_TESTS "unit/*")
+    file(GLOB UNIT_TESTS "unit/*.cpp")
+    file(GLOB MOCK_TESTS "mock/*.cpp")
 
     add_compile_definitions(UNIT_TEST_APP)
 
@@ -97,6 +98,7 @@ if(ENABLE_UNIT_TESTS)
         CoreSDKTest.cpp
         Unit.cpp
         ${UNIT_TESTS}
+        ${MOCK_TESTS}
     )
     
     link_directories(${CMAKE_SOURCE_DIR}/../../Thunder/install/usr/lib/)
@@ -106,6 +108,7 @@ if(ENABLE_UNIT_TESTS)
             ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
             nlohmann_json_schema_validator
             gtest_main
+            gmock_main
     )
 
     target_include_directories(${UNIT_TESTS_APP}
