@@ -1,3 +1,10 @@
+# [1.5.0-next.16](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.15...v1.5.0-next.16) (2025-02-27)
+
+
+### Bug Fixes
+
+* Update setter method names in accessibility doc ([be36dbe](https://github.com/rdkcentral/firebolt-apis/commit/be36dbe101372bc4021085be410c1cce27bbf748))
+
 # [1.5.0-next.15](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.14...v1.5.0-next.15) (2025-02-26)
 
 
