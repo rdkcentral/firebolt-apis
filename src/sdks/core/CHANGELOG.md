@@ -1,3 +1,10 @@
+# [1.4.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0...v1.4.1) (2024-01-10)
+
+### Bug Fixes
+
+* Update OpenRPC tooling to 3.1.3 to revert listener fix ([#327](https://github.com/rdkcentral/firebolt-apis/issues/327)) ([6c64a11](https://github.com/rdkcentral/firebolt-apis/commit/6c64a118431846b7003e4967d5bf2105f3f3ee71))
+
+
 # [1.4.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0...v1.4.0) (2024-23-09)
 
 ### Minor Fixes

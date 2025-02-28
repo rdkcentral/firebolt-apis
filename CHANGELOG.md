@@ -117,6 +117,13 @@
 
 * Add Manage,Discovery to end-to-end Functional Testing ([#318](https://github.com/rdkcentral/firebolt-apis/issues/318)) ([41fdf27](https://github.com/rdkcentral/firebolt-apis/commit/41fdf2777183d85a5cdeb86874ec94ce3a6a3fe4))
 
+## [1.4.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0...v1.4.1) (2024-10-01)
+
+
+### Bug Fixes
+
+* update openrpc to 3.1.2 ([#327](https://github.com/rdkcentral/firebolt-apis/issues/327)) ([6c64a11](https://github.com/rdkcentral/firebolt-apis/commit/6c64a118431846b7003e4967d5bf2105f3f3ee71))
+
 # [1.4.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0...v1.4.0) (2024-09-23)
 
 
