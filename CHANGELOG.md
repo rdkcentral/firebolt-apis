@@ -1,3 +1,10 @@
+# [1.5.0-next.17](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.16...v1.5.0-next.17) (2025-02-28)
+
+
+### Bug Fixes
+
+* update openrpc to 3.1.2 ([#327](https://github.com/rdkcentral/firebolt-apis/issues/327)) ([6c64a11](https://github.com/rdkcentral/firebolt-apis/commit/6c64a118431846b7003e4967d5bf2105f3f3ee71))
+
 # [1.5.0-next.16](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.15...v1.5.0-next.16) (2025-02-27)
 
 
