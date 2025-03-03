@@ -1,3 +1,136 @@
+# [1.5.0-next.18](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.17...v1.5.0-next.18) (2025-03-03)
+
+
+### Bug Fixes
+
+* Updated CPP voiceGuidanceSettings test ([#374](https://github.com/rdkcentral/firebolt-apis/issues/374)) ([49708c5](https://github.com/rdkcentral/firebolt-apis/commit/49708c584610a9932e8b2fbbeee6882689b66a13))
+
+# [1.5.0-next.17](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.16...v1.5.0-next.17) (2025-02-28)
+
+
+### Bug Fixes
+
+* update openrpc to 3.1.2 ([#327](https://github.com/rdkcentral/firebolt-apis/issues/327)) ([6c64a11](https://github.com/rdkcentral/firebolt-apis/commit/6c64a118431846b7003e4967d5bf2105f3f3ee71))
+
+# [1.5.0-next.16](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.15...v1.5.0-next.16) (2025-02-27)
+
+
+### Bug Fixes
+
+* Update setter method names in accessibility doc ([be36dbe](https://github.com/rdkcentral/firebolt-apis/commit/be36dbe101372bc4021085be410c1cce27bbf748))
+
+# [1.5.0-next.15](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.14...v1.5.0-next.15) (2025-02-26)
+
+
+### Bug Fixes
+
+* Remove unneccessary params from voice guidance examples ([d5ab7bf](https://github.com/rdkcentral/firebolt-apis/commit/d5ab7bfd07f155a55a03dd181cb71f801f83fd1e))
+
+# [1.5.0-next.14](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.13...v1.5.0-next.14) (2025-02-24)
+
+
+### Bug Fixes
+
+* handle optional object members gracefully in unit tests ([#369](https://github.com/rdkcentral/firebolt-apis/issues/369)) ([f592cde](https://github.com/rdkcentral/firebolt-apis/commit/f592cde562ad3aa5bffbd8a7263a3ab41f664fa2))
+
+# [1.5.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.12...v1.5.0-next.13) (2025-02-17)
+
+
+### Features
+
+* EAA 2025 - high contrast UI and voice guidance changes ([#343](https://github.com/rdkcentral/firebolt-apis/issues/343)) ([bd86a57](https://github.com/rdkcentral/firebolt-apis/commit/bd86a5727c6dfbc8f0ddd61ab529def498866138))
+
+# [1.5.0-next.12](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.11...v1.5.0-next.12) (2025-02-17)
+
+
+### Bug Fixes
+
+* ci coverage report compilation ([#361](https://github.com/rdkcentral/firebolt-apis/issues/361)) ([ad9b44f](https://github.com/rdkcentral/firebolt-apis/commit/ad9b44fa0957484cd286be46e773d0ff25d847b7))
+
+# [1.5.0-next.11](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.10...v1.5.0-next.11) (2025-02-12)
+
+
+### Bug Fixes
+
+* Discovery SDK compilation ([#364](https://github.com/rdkcentral/firebolt-apis/issues/364)) ([6bbfa1a](https://github.com/rdkcentral/firebolt-apis/commit/6bbfa1a18e7a618eeba4b13d22190e56d2268a1e))
+
+# [1.5.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.9...v1.5.0-next.10) (2025-02-12)
+
+
+### Bug Fixes
+
+* Building of Manage SDK (workaround) ([#356](https://github.com/rdkcentral/firebolt-apis/issues/356)) ([38f7f27](https://github.com/rdkcentral/firebolt-apis/commit/38f7f27499bcf97bc2ee852cf99f11284e230536))
+
+# [1.5.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.8...v1.5.0-next.9) (2024-11-21)
+
+
+### Bug Fixes
+
+* Prettify typescript ([1a951ff](https://github.com/rdkcentral/firebolt-apis/commit/1a951ffadf8edb2dfbdfd28737ddd2d3478b5c3c))
+
+# [1.5.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.7...v1.5.0-next.8) (2024-11-18)
+
+
+### Bug Fixes
+
+* Manage sdk unit tests (non-events) ([#341](https://github.com/rdkcentral/firebolt-apis/issues/341)) ([85a0378](https://github.com/rdkcentral/firebolt-apis/commit/85a0378d433d8519bf439f02792f376e4ad71dc5))
+
+# [1.5.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.6...v1.5.0-next.7) (2024-11-05)
+
+
+### Bug Fixes
+
+* CI change to only make PR comments when appropriate ([#340](https://github.com/rdkcentral/firebolt-apis/issues/340)) ([1d6a43f](https://github.com/rdkcentral/firebolt-apis/commit/1d6a43f6a79169591a7e7ffe5519eb339155bf96))
+
+# [1.5.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.5...v1.5.0-next.6) (2024-11-05)
+
+
+### Bug Fixes
+
+* Events C++ Unit Tests ([#336](https://github.com/rdkcentral/firebolt-apis/issues/336)) ([eb10d13](https://github.com/rdkcentral/firebolt-apis/commit/eb10d134f519d16202f5dbff7ac99c2b6db42851))
+
+# [1.5.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.4...v1.5.0-next.5) (2024-10-28)
+
+
+### Bug Fixes
+
+* Only invoke PR Workflow on PRs (Not external triggers) ([#338](https://github.com/rdkcentral/firebolt-apis/issues/338)) ([9088ee8](https://github.com/rdkcentral/firebolt-apis/commit/9088ee8b15c8020b91b542a41cfb93b3a9339f8b))
+
+# [1.5.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.3...v1.5.0-next.4) (2024-10-18)
+
+
+### Bug Fixes
+
+* Modified git hub flow to support external trigger events ([#335](https://github.com/rdkcentral/firebolt-apis/issues/335)) ([bdf8dd0](https://github.com/rdkcentral/firebolt-apis/commit/bdf8dd0f2e24afb494afa66a75ffacfe263457c3))
+
+# [1.5.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.2...v1.5.0-next.3) (2024-10-17)
+
+
+### Bug Fixes
+
+* Re-added "unzipArtifact" to PR Workflow ([#337](https://github.com/rdkcentral/firebolt-apis/issues/337)) ([842f67c](https://github.com/rdkcentral/firebolt-apis/commit/842f67cb0855d8a5c61610538fd0b8549f7d61cd))
+
+# [1.5.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.1...v1.5.0-next.2) (2024-10-16)
+
+
+### Bug Fixes
+
+* Compile C++ SDK on PRs ([#334](https://github.com/rdkcentral/firebolt-apis/issues/334)) ([d73286b](https://github.com/rdkcentral/firebolt-apis/commit/d73286b97c1e3e6ff6cf5e52daf50ea929f04af3))
+
+# [1.5.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.1-next.1...v1.5.0-next.1) (2024-09-25)
+
+
+### Features
+
+* Add native discovery test app ([#324](https://github.com/rdkcentral/firebolt-apis/issues/324)) ([93bc083](https://github.com/rdkcentral/firebolt-apis/commit/93bc083f76fc03c95c6f7c595259e3c78e7436f7))
+
+## [1.4.1-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0...v1.4.1-next.1) (2024-09-25)
+
+
+### Bug Fixes
+
+* Add Manage,Discovery to end-to-end Functional Testing ([#318](https://github.com/rdkcentral/firebolt-apis/issues/318)) ([41fdf27](https://github.com/rdkcentral/firebolt-apis/commit/41fdf2777183d85a5cdeb86874ec94ce3a6a3fe4))
+
 ## [1.4.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0...v1.4.1) (2024-10-01)
 
 
