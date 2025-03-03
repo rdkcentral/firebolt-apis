@@ -262,6 +262,9 @@ TEST_F(AccessibilityTest, VoiceGuidanceSettings)
 
     EXPECT_EQ(voiceGuidanceSettings.enabled, expectedValues["enabled"]);
     EXPECT_EQ(voiceGuidanceSettings.speed, expectedValues["speed"]);
+    EXPECT_EQ(voiceGuidanceSettings.rate, expectedValues["rate"]);
+    EXPECT_EQ(voiceGuidanceSettings.navigationHints, expectedValues["navigationHints"]);
+
 }
 
 TEST_F(AccessibilityTest, AudioDescriptionSettings)
