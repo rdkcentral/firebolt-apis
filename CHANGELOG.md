@@ -1,3 +1,31 @@
+# [1.5.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.1...v1.5.0) (2025-03-03)
+
+
+### Bug Fixes
+
+* Add Manage,Discovery to end-to-end Functional Testing ([#318](https://github.com/rdkcentral/firebolt-apis/issues/318)) ([41fdf27](https://github.com/rdkcentral/firebolt-apis/commit/41fdf2777183d85a5cdeb86874ec94ce3a6a3fe4))
+* Building of Manage SDK (workaround) ([#356](https://github.com/rdkcentral/firebolt-apis/issues/356)) ([38f7f27](https://github.com/rdkcentral/firebolt-apis/commit/38f7f27499bcf97bc2ee852cf99f11284e230536))
+* CI change to only make PR comments when appropriate ([#340](https://github.com/rdkcentral/firebolt-apis/issues/340)) ([1d6a43f](https://github.com/rdkcentral/firebolt-apis/commit/1d6a43f6a79169591a7e7ffe5519eb339155bf96))
+* ci coverage report compilation ([#361](https://github.com/rdkcentral/firebolt-apis/issues/361)) ([ad9b44f](https://github.com/rdkcentral/firebolt-apis/commit/ad9b44fa0957484cd286be46e773d0ff25d847b7))
+* Compile C++ SDK on PRs ([#334](https://github.com/rdkcentral/firebolt-apis/issues/334)) ([d73286b](https://github.com/rdkcentral/firebolt-apis/commit/d73286b97c1e3e6ff6cf5e52daf50ea929f04af3))
+* Discovery SDK compilation ([#364](https://github.com/rdkcentral/firebolt-apis/issues/364)) ([6bbfa1a](https://github.com/rdkcentral/firebolt-apis/commit/6bbfa1a18e7a618eeba4b13d22190e56d2268a1e))
+* Events C++ Unit Tests ([#336](https://github.com/rdkcentral/firebolt-apis/issues/336)) ([eb10d13](https://github.com/rdkcentral/firebolt-apis/commit/eb10d134f519d16202f5dbff7ac99c2b6db42851))
+* handle optional object members gracefully in unit tests ([#369](https://github.com/rdkcentral/firebolt-apis/issues/369)) ([f592cde](https://github.com/rdkcentral/firebolt-apis/commit/f592cde562ad3aa5bffbd8a7263a3ab41f664fa2))
+* Manage sdk unit tests (non-events) ([#341](https://github.com/rdkcentral/firebolt-apis/issues/341)) ([85a0378](https://github.com/rdkcentral/firebolt-apis/commit/85a0378d433d8519bf439f02792f376e4ad71dc5))
+* Modified git hub flow to support external trigger events ([#335](https://github.com/rdkcentral/firebolt-apis/issues/335)) ([bdf8dd0](https://github.com/rdkcentral/firebolt-apis/commit/bdf8dd0f2e24afb494afa66a75ffacfe263457c3))
+* Only invoke PR Workflow on PRs (Not external triggers) ([#338](https://github.com/rdkcentral/firebolt-apis/issues/338)) ([9088ee8](https://github.com/rdkcentral/firebolt-apis/commit/9088ee8b15c8020b91b542a41cfb93b3a9339f8b))
+* Prettify typescript ([1a951ff](https://github.com/rdkcentral/firebolt-apis/commit/1a951ffadf8edb2dfbdfd28737ddd2d3478b5c3c))
+* Re-added "unzipArtifact" to PR Workflow ([#337](https://github.com/rdkcentral/firebolt-apis/issues/337)) ([842f67c](https://github.com/rdkcentral/firebolt-apis/commit/842f67cb0855d8a5c61610538fd0b8549f7d61cd))
+* Remove unneccessary params from voice guidance examples ([d5ab7bf](https://github.com/rdkcentral/firebolt-apis/commit/d5ab7bfd07f155a55a03dd181cb71f801f83fd1e))
+* Update setter method names in accessibility doc ([be36dbe](https://github.com/rdkcentral/firebolt-apis/commit/be36dbe101372bc4021085be410c1cce27bbf748))
+* Updated CPP voiceGuidanceSettings test ([#374](https://github.com/rdkcentral/firebolt-apis/issues/374)) ([49708c5](https://github.com/rdkcentral/firebolt-apis/commit/49708c584610a9932e8b2fbbeee6882689b66a13))
+
+
+### Features
+
+* Add native discovery test app ([#324](https://github.com/rdkcentral/firebolt-apis/issues/324)) ([93bc083](https://github.com/rdkcentral/firebolt-apis/commit/93bc083f76fc03c95c6f7c595259e3c78e7436f7))
+* EAA 2025 - high contrast UI and voice guidance changes ([#343](https://github.com/rdkcentral/firebolt-apis/issues/343)) ([bd86a57](https://github.com/rdkcentral/firebolt-apis/commit/bd86a5727c6dfbc8f0ddd61ab529def498866138))
+
 # [1.5.0-next.18](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.17...v1.5.0-next.18) (2025-03-03)
 
 
