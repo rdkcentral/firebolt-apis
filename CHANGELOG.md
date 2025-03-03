@@ -1,3 +1,10 @@
+# [1.5.0-next.18](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.17...v1.5.0-next.18) (2025-03-03)
+
+
+### Bug Fixes
+
+* Updated CPP voiceGuidanceSettings test ([#374](https://github.com/rdkcentral/firebolt-apis/issues/374)) ([49708c5](https://github.com/rdkcentral/firebolt-apis/commit/49708c584610a9932e8b2fbbeee6882689b66a13))
+
 # [1.5.0-next.17](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.16...v1.5.0-next.17) (2025-02-28)
 
 
