@@ -96,27 +96,21 @@ public:
     ~JsonData_AcknowledgeChallengeProviderRequest() override = default;
 
     JsonData_AcknowledgeChallengeProviderRequest() {
-        Add(_T("correlationId"), &CorrelationId);
         Add(_T("parameters"), &Parameters);
     }
 
     JsonData_AcknowledgeChallengeProviderRequest(const JsonData_AcknowledgeChallengeProviderRequest& other) {
-        Add(_T("correlationId"), &CorrelationId);
-        CorrelationId = other.CorrelationId;
         Add(_T("parameters"), &Parameters);
         Parameters = other.Parameters;
     }
 
     JsonData_AcknowledgeChallengeProviderRequest& operator=(const JsonData_AcknowledgeChallengeProviderRequest& other) {
-        Add(_T("correlationId"), &CorrelationId);
-        CorrelationId = other.CorrelationId;
         Add(_T("parameters"), &Parameters);
         Parameters = other.Parameters;
         return (*this);
     }
 
 public:
-    FireboltSDK::JSON::String CorrelationId;
     Firebolt::AcknowledgeChallenge::JsonData_AcknowledgeChallengeParameters Parameters;
 };
 

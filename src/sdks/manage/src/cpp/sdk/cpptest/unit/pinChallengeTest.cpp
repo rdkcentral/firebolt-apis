@@ -7,16 +7,7 @@ struct PinChallengeProvider : public IPinChallengeProvider
 public:
     PinChallengeProvider();
     ~PinChallengeProvider() override = default;
-    void challenge(const PinChallenge &parameters, std::unique_ptr<IPinChallengeSession> session) override;
-    void SendMessage(bool response);
-
-private:
-    void startPinChallengeSession(const PinChallenge &parameters, std::unique_ptr<IPinChallengeSession> session);
-
-private:
-    std::unique_ptr<IPinChallengeSession> _session;
-    PinChallenge _parameters;
-    bool _challengeInput;
+    virtual PinChallengeResult challenge( const PinChallengeParameters& parameters) override;
 };
 
 class PinChallengeTest : public ::testing::Test
@@ -38,25 +29,14 @@ protected:
 };
 
 PinChallengeProvider::PinChallengeProvider()
-    : _session(nullptr), _parameters(), _challengeInput(false)
 {
 }
 
-void PinChallengeProvider::SendMessage(bool response)
-{
-}
-
-void PinChallengeProvider::challenge(const PinChallenge &parameters, std::unique_ptr<IPinChallengeSession> session)
+PinChallengeResult PinChallengeProvider::challenge(const PinChallengeParameters &parameters)
 {
     std::cout << "PinChallengeProvider challenge is invoked" << std::endl;
-    startPinChallengeSession(parameters, std::move(session));
-}
-
-void PinChallengeProvider::startPinChallengeSession(const PinChallenge &parameters, std::unique_ptr<IPinChallengeSession> session)
-{
-    _session = std::move(session);
-    _parameters = parameters;
-    _challengeInput = true;
+    Firebolt::PinChallenge::PinChallengeResult r{true, ResultReason::NO_PIN_REQUIRED};
+    return r;
 }
 
 TEST_F(PinChallengeTest, registerPinChallengeProvider)

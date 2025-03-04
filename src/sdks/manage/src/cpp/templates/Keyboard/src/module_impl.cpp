@@ -26,72 +26,69 @@ namespace ${info.Title} {
     // Will add PROVIDER_CLASSES templates in another PR
     // Static for now
 
-    static std::string KeyboardEmailSessionInnerCallback( void* provider, const void* userData, void* jsonResponse ) // response are params that were sent when provider was requested
+    static std::string KeyboardEmailSessionInnerCallback( void* provider, void* jsonRequest )
     {
-        WPEFramework::Core::ProxyType<JsonData_KeyboardEmailProviderRequest>& proxyResponse = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardEmailProviderRequest>*>(jsonResponse));
-          
-        ASSERT(proxyResponse.IsValid() == true);
+        WPEFramework::Core::ProxyType<JsonData_KeyboardEmailProviderRequest>& proxyRequest = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardEmailProviderRequest>*>(jsonRequest));
 
-        if (!proxyResponse.IsValid()) {
-          return R"({"error": "invalid data"})";
+        ASSERT(proxyRequest.IsValid() == true);
+
+        if (!proxyRequest.IsValid()) {
+          return R"({"error": { "code": )" + std::to_string(static_cast<int32_t>(Firebolt::Error::InvalidParams)) + R"(, "message": "Invalid Parameters"}, "result": ""})";
         }
-        KeyboardEmailProviderRequest sessionRequest;
+        KeyboardEmailParameters parameters;
 
-        unsigned id = *(unsigned *)userData;
-        sessionRequest.correlationId = std::to_string(id);
-        sessionRequest.parameters.type = (*proxyResponse).Parameters.Type;
-        sessionRequest.parameters.message = (*proxyResponse).Parameters.Message;
+        parameters.type = (*proxyRequest).Parameters.Type;
+        parameters.message = (*proxyRequest).Parameters.Message;
 
-        proxyResponse.Release();
+        proxyRequest.Release();
 
-        IKeyboardProvider& KeyboardProvider = *(reinterpret_cast<IKeyboardProvider*>(provider));
-        return KeyboardProvider.email(sessionRequest.parameters);
+        IKeyboardProvider& keyboardProvider = *(reinterpret_cast<IKeyboardProvider*>(provider));
+        KeyboardResult result = keyboardProvider.email(parameters);
+        return "{\"result\":\"" + result.message + "\"}";
     }
 
 
-    static std::string KeyboardPasswordSessionInnerCallback( void* provider, const void* userData, void* jsonResponse ) // response are params that were sent when provider was requested
+    static std::string KeyboardPasswordSessionInnerCallback( void* provider, void* jsonRequest )
     {
-        WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>& proxyResponse = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>*>(jsonResponse));
-          
-        ASSERT(proxyResponse.IsValid() == true);
+        WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>& proxyRequest = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>*>(jsonRequest));
 
-        if (!proxyResponse.IsValid()) {
-          return R"({"error": "invalid data"})";
+        ASSERT(proxyRequest.IsValid() == true);
+
+        if (!proxyRequest.IsValid()) {
+            return R"({"error": { "code": )" + std::to_string(static_cast<int32_t>(Firebolt::Error::InvalidParams)) + R"(, "message": "Invalid Parameters"}, "result": ""})";
         }
-        KeyboardProviderRequest sessionRequest;
+        KeyboardParameters parameters;
 
-        unsigned id = *(unsigned *)userData;
-        sessionRequest.correlationId = std::to_string(id);
-        sessionRequest.parameters.message = (*proxyResponse).Parameters.Message;
+        parameters.message = (*proxyRequest).Parameters.Message;
 
-        proxyResponse.Release();
+        proxyRequest.Release();
 
-        IKeyboardProvider& KeyboardProvider = *(reinterpret_cast<IKeyboardProvider*>(provider));
-        return KeyboardProvider.password(sessionRequest.parameters);
+        IKeyboardProvider& keyboardProvider = *(reinterpret_cast<IKeyboardProvider*>(provider));
+        KeyboardResult result = keyboardProvider.password(parameters);
+        return "{\"result\":\"" + result.message + "\"}";
     }
 
 
-    static std::string KeyboardStandardSessionInnerCallback( void* provider, const void* userData, void* jsonResponse ) // response are params that were sent when provider was requested
+    static std::string KeyboardStandardSessionInnerCallback( void* provider, void* jsonRequest )
     {
-        WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>& proxyResponse = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>*>(jsonResponse));
-          
-        ASSERT(proxyResponse.IsValid() == true);
+        WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>& proxyRequest = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_KeyboardProviderRequest>*>(jsonRequest));
 
-        if (!proxyResponse.IsValid()) {
-          return R"({"error": "invalid data"})";
+        ASSERT(proxyRequest.IsValid() == true);
+
+        if (!proxyRequest.IsValid()) {
+            return R"({"error": { "code": )" + std::to_string(static_cast<int32_t>(Firebolt::Error::InvalidParams)) + R"(, "message": "Invalid Parameters"}, "result": ""})";
         }
-        KeyboardProviderRequest sessionRequest;
+        KeyboardParameters parameters;
 
-        unsigned id = *(unsigned *)userData;
-        sessionRequest.correlationId = std::to_string(id);
-        sessionRequest.parameters.message = (*proxyResponse).Parameters.Message;
+        parameters.message = (*proxyRequest).Parameters.Message;
 
-        proxyResponse.Release();
+        proxyRequest.Release();
 
-        IKeyboardProvider& KeyboardProvider = *(reinterpret_cast<IKeyboardProvider*>(provider));
-        return KeyboardProvider.standard(sessionRequest.parameters);
+        IKeyboardProvider& keyboardProvider = *(reinterpret_cast<IKeyboardProvider*>(provider));
+        KeyboardResult result = keyboardProvider.standard(parameters);
+        return "{\"result\":\"" + result.message + "\"}";
     }
-        
+
     // Custom provider method
     void KeyboardImpl::provide( IKeyboardProvider& provider )
     {

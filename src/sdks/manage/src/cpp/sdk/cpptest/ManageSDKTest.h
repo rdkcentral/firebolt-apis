@@ -38,7 +38,7 @@ class ManageSDKTest {
     };
 
     class OnBackgroundOpacityChangedNotification : public Firebolt::ClosedCaptions::IClosedCaptions::IOnBackgroundOpacityChangedNotification {
-        void onBackgroundOpacityChanged( const float ) override;
+        void onBackgroundOpacityChanged( const float& ) override;
     };
 
     class OnPreferredAudioLanguagesChangedNotification : public Firebolt::Localization::ILocalization::IOnPreferredAudioLanguagesChangedNotification {
@@ -65,49 +65,21 @@ class ManageSDKTest {
     public:
         KeyboardProvider();
         ~KeyboardProvider() override = default;
-        void standard( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session ) override;
-        void password( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session ) override;
-        void email( const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session ) override;
-        void SendMessage(bool response);
-        bool _keyInput;
-
-    private:
-        void startKeyboardSession(const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session);
-
-    private:
-        std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> _session;
-        Firebolt::Keyboard::KeyboardParameters _parameters;
-        // bool _keyInput;
+        Firebolt::Keyboard::KeyboardResult standard( const Firebolt::Keyboard::KeyboardParameters& parameters ) override;
+        Firebolt::Keyboard::KeyboardResult password( const Firebolt::Keyboard::KeyboardParameters& parameters ) override;
+        Firebolt::Keyboard::KeyboardResult email( const Firebolt::Keyboard::KeyboardEmailParameters& parameters ) override;
     };
     class AcknowledgeChallengeProvider : public Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeProvider {
     public:
         AcknowledgeChallengeProvider();
         ~AcknowledgeChallengeProvider() override = default;
-        void challenge( const Firebolt::AcknowledgeChallenge::Challenge& parameters, std::unique_ptr<Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeSession> session ) override;
-        void SendMessage(bool response);
-
-    private:
-        void startAcknowledgeChallengeSession(const Firebolt::AcknowledgeChallenge::Challenge& parameters, std::unique_ptr<Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeSession> session);
-
-    private:
-        std::unique_ptr<Firebolt::AcknowledgeChallenge::IAcknowledgeChallengeSession> _session;
-        Firebolt::AcknowledgeChallenge::Challenge _parameters;
-        bool _challengeInput;
+        Firebolt::AcknowledgeChallenge::GrantResult challenge( const Firebolt::AcknowledgeChallenge::AcknowledgeChallengeParameters& parameters ) override;
     };
     class PinChallengeProvider : public Firebolt::PinChallenge::IPinChallengeProvider {
     public:
         PinChallengeProvider();
         ~PinChallengeProvider() override = default;
-        void challenge( const Firebolt::PinChallenge::PinChallenge& parameters, std::unique_ptr<Firebolt::PinChallenge::IPinChallengeSession> session ) override;
-        void SendMessage(bool response);
-
-    private:
-        void startPinChallengeSession(const Firebolt::PinChallenge::PinChallenge& parameters, std::unique_ptr<Firebolt::PinChallenge::IPinChallengeSession> session);
-
-    private:
-        std::unique_ptr<Firebolt::PinChallenge::IPinChallengeSession> _session;
-        Firebolt::PinChallenge::PinChallenge _parameters;
-        bool _challengeInput;
+        Firebolt::PinChallenge::PinChallengeResult challenge( const Firebolt::PinChallenge::PinChallengeParameters& parameters) override;
     };
 
     class OnAutoLowLatencyModeCapableChangedNotification : public Firebolt::HDMIInput::IHDMIInput::IOnAutoLowLatencyModeCapableChangedNotification {
@@ -203,7 +175,6 @@ public:
 
     static void event_trigger(nlohmann::json event);
     static void provider_trigger(nlohmann::json provider);
-    static bool WaitForKeyboardRequest();
 
 private:
     static void ConnectionChanged(const bool, const Firebolt::Error);

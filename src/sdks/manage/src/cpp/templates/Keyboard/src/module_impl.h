@@ -98,29 +98,23 @@
       JsonData_KeyboardProviderRequest()
           : WPEFramework::Core::JSON::Container()
       {
-          Add(_T("correlationId"), &CorrelationId);
           Add(_T("parameters"), &Parameters);
       }
 
       JsonData_KeyboardProviderRequest(const JsonData_KeyboardProviderRequest& other)
       {
-          Add(_T("correlationId"), &CorrelationId);
-          CorrelationId = other.CorrelationId;
           Add(_T("parameters"), &Parameters);
           Parameters = other.Parameters;
       }
 
       JsonData_KeyboardProviderRequest& operator=(const JsonData_KeyboardProviderRequest& other)
       {
-          Add(_T("correlationId"), &CorrelationId);
-          CorrelationId = other.CorrelationId;
           Add(_T("parameters"), &Parameters);
           Parameters = other.Parameters;
           return (*this);
       }
 
   public:
-      FireboltSDK::JSON::String CorrelationId;
       Firebolt::Keyboard::JsonData_KeyboardParameters Parameters;
   };
 
@@ -129,27 +123,21 @@
         ~JsonData_KeyboardEmailProviderRequest() override = default;
     
         JsonData_KeyboardEmailProviderRequest() {
-            Add(_T("correlationId"), &CorrelationId);
             Add(_T("parameters"), &Parameters);
         }
     
         JsonData_KeyboardEmailProviderRequest(const JsonData_KeyboardEmailProviderRequest& other) {
-            Add(_T("correlationId"), &CorrelationId);
-            CorrelationId = other.CorrelationId;
             Add(_T("parameters"), &Parameters);
             Parameters = other.Parameters;
         }
     
         JsonData_KeyboardEmailProviderRequest& operator=(const JsonData_KeyboardEmailProviderRequest& other) {
-            Add(_T("correlationId"), &CorrelationId);
-            CorrelationId = other.CorrelationId;
             Add(_T("parameters"), &Parameters);
             Parameters = other.Parameters;
             return (*this);
         }
     
     public:
-        FireboltSDK::JSON::String CorrelationId;
         Firebolt::Keyboard::JsonData_KeyboardEmailParameters Parameters;
     };
 

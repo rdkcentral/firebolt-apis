@@ -115,23 +115,18 @@ void RunAllTests() {
         // Provider registration
         runTest(ManageSDKTest::RegisterKeyboardProvider, "RegisterKeyboardProvider");
         ManageSDKTest::provider_trigger(ManageSDKTest::requestStandard);
-        runTest(ManageSDKTest::SendResponseMessageToKeyboardProvider, "SendResponseMessageToKeyboardProvider");
 
         runTest(ManageSDKTest::RegisterKeyboardProvider, "RegisterKeyboardProvider");
         ManageSDKTest::provider_trigger(ManageSDKTest::requestEmail);
-        runTest(ManageSDKTest::SendResponseMessageToKeyboardProvider, "SendResponseMessageToKeyboardProvider");
 
         runTest(ManageSDKTest::RegisterKeyboardProvider, "RegisterKeyboardProvider");
         ManageSDKTest::provider_trigger(ManageSDKTest::requestPassword);
-        runTest(ManageSDKTest::SendResponseMessageToKeyboardProvider, "SendResponseMessageToKeyboardProvider");
 
-        // runTest(ManageSDKTest::RegisterAcknowledgeChallengeProvider, "RegisterAcknowledgeChallengeProvider");
-        // ManageSDKTest::provider_trigger(ManageSDKTest::ackRequestChallenge);
-        // runTest(ManageSDKTest::SendResponseMessageToAcknowledgeChallengeProvider, "SendResponseMessageToAcknowledgeChallengeProvider");
+        runTest(ManageSDKTest::RegisterAcknowledgeChallengeProvider, "RegisterAcknowledgeChallengeProvider");
+        ManageSDKTest::provider_trigger(ManageSDKTest::ackRequestChallenge);
         
-        // runTest(ManageSDKTest::RegisterPinChallengeProvider, "RegisterPinChallengeProvider");
-        // ManageSDKTest::provider_trigger(ManageSDKTest::pinRequestChallenge);
-        // runTest(ManageSDKTest::SendResponseMessageToPinChallengeProvider, "SendResponseMessageToPinChallengeProvider");
+        runTest(ManageSDKTest::RegisterPinChallengeProvider, "RegisterPinChallengeProvider");
+        ManageSDKTest::provider_trigger(ManageSDKTest::pinRequestChallenge);
 
 
         runTest(ManageSDKTest::GlobalSubscribeHdmiAutoLowLatencyModeCapableChanged, "GlobalSubscribeHdmiAutoLowLatencyModeCapableChanged");

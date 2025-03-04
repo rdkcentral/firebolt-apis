@@ -43,7 +43,6 @@ struct PinChallengeParameters {
 };
 
 struct PinChallengeProviderRequest {
-    std::string correlationId;
     PinChallengeParameters parameters;
 };
 

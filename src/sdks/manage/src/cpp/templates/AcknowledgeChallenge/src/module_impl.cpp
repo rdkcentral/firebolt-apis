@@ -25,27 +25,25 @@
  
     // Will add PROVIDER_CLASSES templates in another PR
     // Static for now
-    static std::string AcknowledgeChallengeSessionInnerCallback(void* provider, const void* userData, void* jsonResponse) {
-      WPEFramework::Core::ProxyType<JsonData_AcknowledgeChallengeProviderRequest>& proxyResponse = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_AcknowledgeChallengeProviderRequest>*>(jsonResponse));
+    static std::string AcknowledgeChallengeSessionInnerCallback(void* provider, void* jsonRequest) {
+      WPEFramework::Core::ProxyType<JsonData_AcknowledgeChallengeProviderRequest>& proxyRequest = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_AcknowledgeChallengeProviderRequest>*>(jsonRequest));
 
-      ASSERT(proxyResponse.IsValid() == true);
+      ASSERT(proxyRequest.IsValid() == true);
 
-      if (!proxyResponse.IsValid()) {
-          return R"({"error": "invalid data"})";
+      if (!proxyRequest.IsValid()) {
+          return R"({"error": { "code": )" + std::to_string(static_cast<int32_t>(Firebolt::Error::InvalidParams)) + R"(, "message": "Invalid Parameters"}, "result": ""})";
       }
-      AcknowledgeChallengeProviderRequest sessionRequest;
+      AcknowledgeChallengeParameters parameters;
 
-      unsigned id = *(unsigned *)userData;
-      sessionRequest.correlationId = std::to_string(id);
-      sessionRequest.parameters.capability = (*proxyResponse).Parameters.Capability;
-      sessionRequest.parameters.requestor.id = (*proxyResponse).Parameters.Requestor.Id;
-      sessionRequest.parameters.requestor.name = (*proxyResponse).Parameters.Requestor.Name;
+      parameters.capability = (*proxyRequest).Parameters.Capability;
+      parameters.requestor.id = (*proxyRequest).Parameters.Requestor.Id;
+      parameters.requestor.name = (*proxyRequest).Parameters.Requestor.Name;
 
-      proxyResponse.Release();
+      proxyRequest.Release();
 
       IAcknowledgeChallengeProvider& acknowledgeChallengeProvider = *(reinterpret_cast<IAcknowledgeChallengeProvider*>(provider));
-      GrantResult result = acknowledgeChallengeProvider.challenge(sessionRequest.parameters);
-      return result.granted ? R"({"granted": true})" : R"({"granted": false})";
+      GrantResult result = acknowledgeChallengeProvider.challenge(parameters);
+      return R"({ "result": {"granted": ")" + std::string(result.granted ? "true" : "false") + R"("}})";
     }
 
     void AcknowledgeChallengeImpl::provide(IAcknowledgeChallengeProvider& provider) {

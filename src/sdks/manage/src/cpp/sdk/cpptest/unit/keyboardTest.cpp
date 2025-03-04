@@ -7,18 +7,9 @@ struct KeyboardProvider : public IKeyboardProvider
 public:
     KeyboardProvider();
     ~KeyboardProvider() override = default;
-    void standard(const KeyboardParameters &parameters, std::unique_ptr<IKeyboardSession> session) override;
-    void password(const KeyboardParameters &parameters, std::unique_ptr<IKeyboardSession> session) override;
-    void email(const KeyboardParameters &parameters, std::unique_ptr<IKeyboardSession> session) override;
-    void SendMessage(bool response);
-
-private:
-    void startKeyboardSession(const KeyboardParameters &parameters, std::unique_ptr<IKeyboardSession> session);
-
-private:
-    std::unique_ptr<IKeyboardSession> _session;
-    KeyboardParameters _parameters;
-    bool _keyInput;
+    Firebolt::Keyboard::KeyboardResult standard( const Firebolt::Keyboard::KeyboardParameters& parameters ) override;
+    Firebolt::Keyboard::KeyboardResult password( const Firebolt::Keyboard::KeyboardParameters& parameters ) override;
+    Firebolt::Keyboard::KeyboardResult email(const KeyboardEmailParameters& parameters) override;
 };
 
 class KeyboardTest : public ::testing::Test
@@ -40,37 +31,25 @@ protected:
 };
 
 KeyboardProvider::KeyboardProvider()
-    : _session(nullptr), _parameters(), _keyInput(false)
 {
 }
 
-void KeyboardProvider::standard(const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session)
+Firebolt::Keyboard::KeyboardResult KeyboardProvider::standard(const KeyboardParameters& parameters)
 {
     std::cout << "KeyboardProvider Standard is invoked" << std::endl;
-    startKeyboardSession(parameters, std::move(session));
+    return Firebolt::Keyboard::KeyboardResult{};
 }
 
-void KeyboardProvider::password(const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session)
+Firebolt::Keyboard::KeyboardResult KeyboardProvider::password(const KeyboardParameters& parameters)
 {
     std::cout << "KeyboardProvider Password is invoked" << std::endl;
-    startKeyboardSession(parameters, std::move(session));
+    return Firebolt::Keyboard::KeyboardResult{};
 }
 
-void KeyboardProvider::email(const Firebolt::Keyboard::KeyboardParameters& parameters, std::unique_ptr<Firebolt::Keyboard::IKeyboardSession> session)
+Firebolt::Keyboard::KeyboardResult KeyboardProvider::email(const KeyboardEmailParameters& parameters)
 {
     std::cout << "KeyboardProvider Email is invoked" << std::endl;
-    startKeyboardSession(parameters, std::move(session));
-}
-
-void KeyboardProvider::SendMessage(bool response)
-{
-}
-
-void KeyboardProvider::startKeyboardSession(const KeyboardParameters &parameters, std::unique_ptr<IKeyboardSession> session)
-{
-    _session = std::move(session);
-    _parameters = parameters;
-    _keyInput = true;
+    return Firebolt::Keyboard::KeyboardResult{};
 }
 
 TEST_F(KeyboardTest, registerKeyboardProvider)

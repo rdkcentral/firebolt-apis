@@ -25,24 +25,25 @@ namespace ${info.Title} {
 
 ${if.enums}/* ${ENUMS} */${end.if.enums}
 
-  
+struct KeyboardResult {
+    std::string message;
+};
+
 struct KeyboardParameters {
-  std::string message;
+    std::string message;
 };
 
 struct KeyboardEmailParameters {
-  std::string message;
-  EmailUsage type;
+    std::string message;
+    EmailUsage type;
 };
 
 struct KeyboardProviderRequest {
-    std::string correlationId;
     KeyboardParameters parameters;
 };
 
 struct KeyboardEmailProviderRequest {
-  std::string correlationId;
-  KeyboardEmailParameters parameters;
+    KeyboardEmailParameters parameters;
 };
 
 struct KeyboardError {
@@ -54,9 +55,9 @@ struct KeyboardError {
 struct IKeyboardProvider {
     virtual ~IKeyboardProvider() = default;
 
-    virtual std::string standard( const KeyboardParameters& parameters) = 0;
-    virtual std::string password( const KeyboardParameters& parameters) = 0;
-    virtual std::string email( const KeyboardEmailParameters& parameters) = 0;
+    virtual KeyboardResult standard( const KeyboardParameters& parameters) = 0;
+    virtual KeyboardResult password( const KeyboardParameters& parameters) = 0;
+    virtual KeyboardResult email( const KeyboardEmailParameters& parameters) = 0;
 
 };
 

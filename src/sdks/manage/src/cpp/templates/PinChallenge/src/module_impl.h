@@ -102,27 +102,21 @@ class JsonData_ChallengeRequestor: public WPEFramework::Core::JSON::Container {
       ~JsonData_PinChallengeProviderRequest() override = default;
   
       JsonData_PinChallengeProviderRequest() {
-          Add(_T("correlationId"), &CorrelationId);
           Add(_T("parameters"), &Parameters);
       }
   
       JsonData_PinChallengeProviderRequest(const JsonData_PinChallengeProviderRequest& other) {
-          Add(_T("correlationId"), &CorrelationId);
-          CorrelationId = other.CorrelationId;
           Add(_T("parameters"), &Parameters);
           Parameters = other.Parameters;
       }
   
       JsonData_PinChallengeProviderRequest& operator=(const JsonData_PinChallengeProviderRequest& other) {
-          Add(_T("correlationId"), &CorrelationId);
-          CorrelationId = other.CorrelationId;
           Add(_T("parameters"), &Parameters);
           Parameters = other.Parameters;
           return (*this);
       }
   
   public:
-      FireboltSDK::JSON::String CorrelationId;
       Firebolt::PinChallenge::JsonData_PinChallengeParameters Parameters;
   };
   

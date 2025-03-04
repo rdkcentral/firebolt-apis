@@ -41,7 +41,6 @@ struct AcknowledgeChallengeParameters {
 };
 
 struct AcknowledgeChallengeProviderRequest {
-    std::string correlationId;
     AcknowledgeChallengeParameters parameters;
 };
 

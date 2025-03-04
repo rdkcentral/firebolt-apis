@@ -46,6 +46,10 @@ message("Setup ${TESTAPP}")
 
 add_executable(${TESTAPP} ManageSDKTest.cpp Main.cpp)
 
+if (ENABLE_INTERACTIVE_APP)
+    add_compile_definitions(INTERACTIVE_APP)
+endif ()
+
 target_link_libraries(${TESTAPP}
     PRIVATE
         ${NAMESPACE}Core::${NAMESPACE}Core
@@ -75,10 +79,13 @@ add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${TESTAPP} ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
 )
 
-if(ENABLE_UNIT_TESTS)
+if(ENABLE_UNIT_TESTS OR ENABLE_INTERACTIVE_APP)
     set(UNIT_TESTS_APP FireboltManageUnitTests)
 
     message("Setup ${UNIT_TESTS_APP}")
+    if (ENABLE_UNIT_TESTS)
+        add_compile_definitions(UNIT_TEST_SUITE)
+    endif()
 
     file(GLOB UNIT_TESTS "unit/*")
 

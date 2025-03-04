@@ -310,10 +310,10 @@ TEST_F(ClosedCaptionsTest, unsubscribeOnBackgroundColorChanged)
 
 struct BackgroundOpacityChanged : public Firebolt::ClosedCaptions::IClosedCaptions::IOnBackgroundOpacityChangedNotification
 {
-    void onBackgroundOpacityChanged(const float) override;
+    void onBackgroundOpacityChanged(const float &) override;
 };
 
-void BackgroundOpacityChanged::onBackgroundOpacityChanged(const float)
+void BackgroundOpacityChanged::onBackgroundOpacityChanged(const float &value)
 {
     std::cout << "onBackgroundOpacityChanged event fired";
 }
@@ -454,10 +454,10 @@ TEST_F(ClosedCaptionsTest, unsubscribeOnFontFamilyChanged)
 
 struct FontOpacitySettings : public Firebolt::ClosedCaptions::IClosedCaptions::IOnFontOpacityChangedNotification
 {
-    void onFontOpacityChanged(const float) override;
+    void onFontOpacityChanged(const float&) override;
 };
 
-void FontOpacitySettings::onFontOpacityChanged(const float opacity)
+void FontOpacitySettings::onFontOpacityChanged(const float &opacity)
 {
     std::cout << "onFontOpacityChanged event fired with opacity: " << opacity;
 }
@@ -478,10 +478,10 @@ TEST_F(ClosedCaptionsTest, unsubscribeOnFontOpacityChanged)
 
 struct FontSizeSettings : public Firebolt::ClosedCaptions::IClosedCaptions::IOnFontSizeChangedNotification
 {
-    void onFontSizeChanged(const float) override;
+    void onFontSizeChanged(const float&) override;
 };
 
-void FontSizeSettings::onFontSizeChanged(const float size)
+void FontSizeSettings::onFontSizeChanged(const float &size)
 {
     std::cout << "onFontSizeChanged event fired with size: " << size;
 }
@@ -603,10 +603,10 @@ TEST_F(ClosedCaptionsTest, unsubscribeOnWindowColorChanged)
 
 struct WindowOpacitySettings : public Firebolt::ClosedCaptions::IClosedCaptions::IOnWindowOpacityChangedNotification
 {
-    void onWindowOpacityChanged(const float) override;
+    void onWindowOpacityChanged(const float &) override;
 };
 
-void WindowOpacitySettings::onWindowOpacityChanged(const float opacity)
+void WindowOpacitySettings::onWindowOpacityChanged(const float &opacity)
 {
     std::cout << "onWindowOpacityChanged event fired with opacity: " << opacity;
 }

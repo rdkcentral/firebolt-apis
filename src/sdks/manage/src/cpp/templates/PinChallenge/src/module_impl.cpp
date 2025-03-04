@@ -25,28 +25,26 @@
  
     // Will add PROVIDER_CLASSES templates in another PR
     // Static for now
-    static std::string PinChallengeSessionInnerCallback(void* provider, const void* userData, void* jsonResponse) {
-      WPEFramework::Core::ProxyType<JsonData_PinChallengeProviderRequest>& proxyResponse = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_PinChallengeProviderRequest>*>(jsonResponse));
+    static std::string PinChallengeSessionInnerCallback(void* provider, void* jsonRequest) {
+      WPEFramework::Core::ProxyType<JsonData_PinChallengeProviderRequest>& proxyRequest = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_PinChallengeProviderRequest>*>(jsonRequest));
   
-      ASSERT(proxyResponse.IsValid() == true);
+      ASSERT(proxyRequest.IsValid() == true);
   
-      if (!proxyResponse.IsValid()) {
-          return R"({"error": "invalid data"})";
+      if (!proxyRequest.IsValid()) {
+          return R"({"error": { "code": )" + std::to_string(static_cast<int32_t>(Firebolt::Error::InvalidParams)) + R"(, "message": "Invalid Parameters"}, "result": ""})";
       }
-      PinChallengeProviderRequest sessionRequest;
+      PinChallengeParameters parameters;
   
-      unsigned id = *(unsigned *)userData;
-      sessionRequest.correlationId = std::to_string(id);
-      sessionRequest.parameters.requestor.id = (*proxyResponse).Parameters.Requestor.Id;
-      sessionRequest.parameters.requestor.name = (*proxyResponse).Parameters.Requestor.Name;
-      sessionRequest.parameters.pinSpace = (*proxyResponse).Parameters.PinSpace;
-      sessionRequest.parameters.capability = (*proxyResponse).Parameters.Capability;
+      parameters.requestor.id = (*proxyRequest).Parameters.Requestor.Id;
+      parameters.requestor.name = (*proxyRequest).Parameters.Requestor.Name;
+      parameters.pinSpace = (*proxyRequest).Parameters.PinSpace;
+      parameters.capability = (*proxyRequest).Parameters.Capability;
   
-      proxyResponse.Release();
+      proxyRequest.Release();
   
       IPinChallengeProvider& pinChallengeProvider = *(reinterpret_cast<IPinChallengeProvider*>(provider));
-      PinChallengeResult result = pinChallengeProvider.challenge(sessionRequest.parameters);
-      return result.granted ? R"({"granted": true, "reason": ")" + std::to_string(static_cast<int>(result.reason)) + R"("})" : R"({"granted": false, "reason": ")" + std::to_string(static_cast<int>(result.reason)) + R"("})";
+      PinChallengeResult result = pinChallengeProvider.challenge(parameters);
+      return R"({ "result": {"granted": ")" + std::string(result.granted ? "true" : "false") + R"(", "reason": ")" + std::to_string(static_cast<int>(result.reason)) + R"("}})";
   }
   
   void PinChallengeImpl::provide(IPinChallengeProvider& provider) {

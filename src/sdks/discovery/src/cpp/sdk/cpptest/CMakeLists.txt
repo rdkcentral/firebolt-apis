@@ -46,6 +46,10 @@ message("Setup ${TESTAPP}")
 
 add_executable(${TESTAPP} DiscoverySDKTest.cpp Main.cpp)
 
+if (ENABLE_INTERACTIVE_APP)
+    add_compile_definitions(INTERACTIVE_APP)
+endif ()
+
 target_link_libraries(${TESTAPP}
     PRIVATE
         ${NAMESPACE}Core::${NAMESPACE}Core
