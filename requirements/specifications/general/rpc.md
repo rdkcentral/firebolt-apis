@@ -34,6 +34,8 @@ The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL 
     - [3.4.2. Client Provider Example](#342-client-provider-example)
 - [4. Transport](#4-transport)
   - [4.1. API Version](#41-api-version)
+- [5. Firebolt SDK](#5-firebolt-sdk)
+  - [5.1. Additive changes](#51-additive-changes)
 
 ## 3. Protocol
 Firebolt implmentations **MUST** support RPC using the [JSON-RPC 2.0](https://www.jsonrpc.org/specification) protocol.
@@ -484,3 +486,14 @@ The Firebolt API Version *and* protocol **MUST** be passsed as part of the Sec-W
 Sec-WebSocket-Protocol: firebolt.v2.0.0, jsonrpc
 ```
     
+## 5. Firebolt SDK
+
+### 5.1. Additive changes
+If the Firebolt API makes an additive change, e.g.:
+
+- a new parameter on a method or notification
+- a new attribute on an object
+
+Then apps that are targeting the minor version *before* that change **MUST NOT** start receiving the new additional value, so that they don't suddenly have different behavior or break.
+
+This **MAY** be solved at the SDK-level via RPC parsing, or at the API gateway level, via version targeting, or both.
