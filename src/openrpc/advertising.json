@@ -71,6 +71,93 @@
       ]
     },
     {
+      "name": "consentString",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:advertising:policy"
+          ]
+        }
+      ],
+      "summary": "Returns the Global Privacy String as defined by the IAB Tech Lab Global Privacy Specification. This is a representation of the global privacy string as interpreted by the platform where the app is running. It does not consider the privacy settings that are specific to the app.",
+      "params": [
+        {
+          "name": "AdTypeOptions",
+          "summary": "Enumurated values for the type of advertisement for which the consent string is being used",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/AdTypeOptions"
+          }
+        }
+      ],
+      "result": {
+        "name": "consentString",
+        "summary": "IAB Tech Lab Global Privacy string ",
+        "schema": {
+          "$ref": "#/components/schemas/ConsentStringResult"
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the advertising ID",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "ifa": "01234567-89AB-CDEF-GH01-23456789ABCD",
+              "ifa_type": "sspid",
+              "lmt": "0"
+            }
+          }
+        },
+        {
+          "name": "Getting the advertising ID with scope browse",
+          "params": [
+            {
+              "name": "options",
+              "value": {
+                "scope": {
+                  "type": "browse",
+                  "id": "paidPlacement"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "ifa": "01234567-89AB-CDEF-GH01-23456789ABCD",
+              "ifa_type": "sspid",
+              "lmt": "0"
+            }
+          }
+        },
+        {
+          "name": "Getting the advertising ID with scope content",
+          "params": [
+            {
+              "name": "options",
+              "value": {
+                "scope": {
+                  "type": "content",
+                  "id": "metadata:linear:station:123"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "ifa": "01234567-89AB-CDEF-GH01-23456789ABCD",
+              "ifa_type": "idfa",
+              "lmt": "0"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "policy",
       "summary": "Get the advertising privacy and playback policy",
       "params": [],
@@ -415,6 +502,48 @@
           "ifa",
           "ifa_type",
           "lmt"
+        ]
+      },
+      "AdTypeOptions": {
+        "title": "AdTypeOptions",
+        "type": "object",
+        "properties": {
+          "adType": {
+            "type": "string",
+            "enum": [
+              "content",
+              "browse",
+              "app"
+            ],
+            "description": "Represents where the advertisement appears in the experience for which the consent string is being used"
+          }
+        },
+        "required": [
+          "adType"
+        ]
+      },
+      "ConsentStringResult": {
+        "title": "ConsentStringResult",
+        "type": "object",
+        "properties": {
+          "decoded": {
+            "type": "object",
+            "description": "Object that contains the name of the string and the decoded value",
+            "additionalProperties": true
+          },
+          "gppSectionId": {
+            "type": "string",
+            "description": "IAB Global Privacy section ID"
+          },
+          "gppValue"{
+            "type": "string",
+            "description": "IAB Global Privacy encoded string"
+          }
+        },
+        "required":[
+          "decoded",
+          "gppSectionId",
+          "gppValue"
         ]
       }
     }
