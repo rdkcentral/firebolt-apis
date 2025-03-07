@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "fs:setup": "npm run clean && mkdir -p dist",
-    "validate:each": "npx firebolt-openrpc validate --input src/openrpc --schemas src/schemas --transformations",
+    "validate:each": "npx firebolt-openrpc validate --input src/openrpc --platformApi ./dist/firebolt-open-rpc.json --appApi ./dist/firebolt-app-open-rpc.json --schemas src/schemas --transformations",
     "validate:compiled": "npx firebolt-openrpc validate --input dist/firebolt-open-rpc.json --pass-throughs && npm run validate --workspaces",
     "validate": "npm run validate:each && npm run validate:compiled ",
     "compile": "npx firebolt-openrpc openrpc --input src --template src/template/openrpc/template.json --platformApi ./dist/firebolt-open-rpc.json --appApi ./dist/firebolt-app-open-rpc.json --schemas src/schemas",
