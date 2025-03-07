@@ -145,7 +145,6 @@ void ShowDiscoveryMenu()
          "\tW : Watched\n"
          "\tR : WatchedReduced\n"
 #endif
-         "\tB : Subscribe/Unsubscribe DiscoveryOnNavigateToLaunch\n"
          "\tQ : Quit\n");
 }
 
@@ -545,9 +544,6 @@ void HandleDiscoveryMethod()
                 break;
             }
 #endif
-            case 'B': {
-                HandleEventListener(Discovery, OnNavigateToLaunchNotification)
-            }
             default:
                 break;
             }

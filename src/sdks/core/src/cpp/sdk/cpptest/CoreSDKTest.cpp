@@ -431,10 +431,11 @@ void CoreSDKTest::OnDeviceNameChangedNotification::onDeviceNameChanged(const std
 {
     cout << "Name changed, new name --> " << name << endl;
 
+#ifndef INTERACTIVE_APP
 #ifdef GATEWAY_BIDIRECTIONAL
     assert(name == deviceName["payload"]);
 #endif
-
+#endif
 }
 
 void CoreSDKTest::SubscribeDeviceNameChanged()

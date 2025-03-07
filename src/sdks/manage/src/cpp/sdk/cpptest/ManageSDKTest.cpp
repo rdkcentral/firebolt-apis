@@ -90,55 +90,45 @@ const nlohmann::json ManageSDKTest::signOutEvent = {
 
 const nlohmann::json ManageSDKTest::requestStandard = {
     {"method", "keyboard.onRequestStandard"},
-    {"payload", { 
-        {"parameters", { 
-            { "message", "who has a cat?" } 
-        }}
+    {"payload", {
+          { "message", "who has a cat?" }
     }}
 };
 
 const nlohmann::json ManageSDKTest::requestEmail = {
     {"method", "keyboard.onRequestEmail"},
     {"payload", { 
-        {"parameters", { 
-            { "message", "who has a cat?" } 
-        }}
+          { "message", "who has a cat?" }
     }}
 };
 
 const nlohmann::json ManageSDKTest::requestPassword = {
     {"method", "keyboard.onRequestPassword"},
-    {"payload", { 
-        {"parameters", { 
-            { "message", "who has a cat?" } 
-        }}
+    {"payload", {
+          { "message", "who has a cat?" }
     }}
 };
 
 const nlohmann::json ManageSDKTest::ackRequestChallenge = {
     {"method", "acknowledgeChallenge.onRequestChallenge"},
-    {"payload", { 
-        {"parameters", { 
-            {{"capability", "xrn:firebolt:capability:localization::postal-code"}},
-            {"requestor",{
-                {"id", "ReferenceApp"},
-                {"name", "Firebolt Reference App"}
-            }}
-        }}
+    {"payload", {
+          {{"capability", "xrn:firebolt:capability:localization::postal-code"}},
+          {"requestor",{
+              {"id", "ReferenceApp"},
+              {"name", "Firebolt Reference App"}
+          }}
     }}
 };
 
 const nlohmann::json ManageSDKTest::pinRequestChallenge = {
     {"method", "pinChallenge.onRequestChallenge"},
-    {"payload", { 
-        {"parameters", { 
-            {"requestor", {
-                {"id", "ReferenceApp"},
-                {"name", "Firebolt Reference App"}
-            }},
-            {{ "pinSpace", "purchase"}},
-            {{ "capability", "xrn:firebolt:capability:commerce::purchase"}},
-        }}
+    {"payload", {
+          {"requestor", {
+              {"id", "ReferenceApp"},
+              {"name", "Firebolt Reference App"}
+          }},
+          {{ "pinSpace", "purchase"}},
+          {{ "capability", "xrn:firebolt:capability:commerce::purchase"}},
     }}
 };
 
