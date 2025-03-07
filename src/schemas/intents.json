@@ -367,6 +367,37 @@
                 }
             ]
         },
+        "PreLoadIntent": {
+            "description": "A Firebolt compliant representation of a user intention to pre-load an app.",
+            "title": "PreLoadIntent",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Intent"
+                },
+                {
+                    "$ref": "#/definitions/IntentProperties"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "const": "preload"
+                        }
+                    },
+                    "not": {
+                        "required": [ "data" ]
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "action": "preload",
+                    "context": {
+                        "source": "voice"
+                    }
+                }
+            ]
+        },
         "HomeIntent": {
             "description": "A Firebolt compliant representation of a user intention to navigate an app to it's home screen, and bring that app to the foreground if needed.",
             "title": "HomeIntent",
