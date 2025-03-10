@@ -54,6 +54,15 @@
 						]
 					}
 				}
-			}		      
+			},
+      "DestroyReason": {
+        "title": "DestroyReason",
+        "description": "The application destroy reason",
+        "type": "string",      
+        "enum": [
+            "userExit",
+            "error"
+        ]
+      }      
     }
   }
