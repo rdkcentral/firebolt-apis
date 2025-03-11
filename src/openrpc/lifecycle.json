@@ -437,11 +437,11 @@
 				],
 				"properties": {
 					"state": {
-						"$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/LifecycleState",
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
 						"description": "The current lifecycle state"
 					},
 					"previous": {
-						"$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/LifecycleState",
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
 						"description": "The previous lifecycle state"
 					},
 					"source": {
@@ -464,7 +464,7 @@
 				],
 				"properties": {
 					"previous": {
-						"$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/LifecycleState",
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
 						"description": "The previous lifecycle state"
 					},
 					"source": {
@@ -476,7 +476,7 @@
 						"description": "The source of the lifecycle change."
 					},
 					"reason": {
-						"$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/DestroyReason",
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/DestroyReason",
 						"description": "The reason the app is being destroyed"
 					}
 				}

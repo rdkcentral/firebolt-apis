@@ -223,6 +223,9 @@
                 },
                 {
                     "$ref": "#/definitions/PlayQueryIntent"
+                },
+                {
+                    "$ref": "#/definitions/PreLoadIntent"
                 }
             ]
         },
