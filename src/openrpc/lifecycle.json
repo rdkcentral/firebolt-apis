@@ -236,49 +236,14 @@
 					}
 				},
 				{
-					"name": "Move to foreground via remote branded buton",
+					"name": "Move to active via remote branded button",
 					"params": [],
 					"result": {
 						"name": "value",
 						"value": {
-							"state": "foreground",
-							"previous": "inactive",
+							"state": "active",
+							"previous": "paused",
 							"source": "remote"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "onBackground",
-			"tags": [
-				{
-					"name": "event"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the background event",
-			"params": [],
-			"result": {
-				"name": "value",
-				"schema": {
-					"$ref": "#/components/schemas/LifecycleEvent"
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "background",
-							"previous": "foreground"
 						}
 					}
 				}
@@ -473,11 +438,11 @@
 				"properties": {
 					"state": {
 						"$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/LifecycleState",
-						"description": "The current lifcycle state"
+						"description": "The current lifecycle state"
 					},
 					"previous": {
 						"$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/LifecycleState",
-						"description": "The previous lifcycle state"
+						"description": "The previous lifecycle state"
 					},
 					"source": {
 						"type": "string",
@@ -500,7 +465,7 @@
 				"properties": {
 					"previous": {
 						"$ref": "https://meta.comcast.com/firebolt/lifecycle#/definitions/LifecycleState",
-						"description": "The previous lifcycle state"
+						"description": "The previous lifecycle state"
 					},
 					"source": {
 						"type": "string",

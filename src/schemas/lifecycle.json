@@ -16,11 +16,10 @@
         "type": "string",
         "enum": [
             "initializing",
-            "inactive",
-            "foreground",
-            "background",
-            "unloading",
-            "suspended"
+            "paused",
+            "active",
+            "suspended",
+            "hibernated"
         ]
       },
       "CloseReason": {
