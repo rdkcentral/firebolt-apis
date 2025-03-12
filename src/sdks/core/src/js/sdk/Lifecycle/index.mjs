@@ -47,13 +47,13 @@ function state() {
   return store.current
 }
 
-function finished() {
-  if (store.current === 'unloading') {
-    return Transport.send('lifecycle', 'finished')
-  } else {
-    throw 'Cannot call finished() except when in the unloading transition'
-  }
-}
+// function finished() {
+//   if (store.current === 'unloading') {
+//     return Transport.send('lifecycle', 'finished')
+//   } else {
+//     throw 'Cannot call finished() except when in the unloading transition'
+//   }
+// }
 
 // public API
 export default {
@@ -64,7 +64,7 @@ export default {
 
   ready,
   state,
-  finished,
+  // finished,
 
   /* ${METHOD_LIST} */
 

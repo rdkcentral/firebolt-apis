@@ -94,11 +94,12 @@
       ]
     },
     {
-			"name": "onStart",
+			"name": "start",
 			"tags": [
 				{
-					"name": "event",
-          "x-notifier": "Lifecycle.start"
+					"name": "notifier",
+					"x-notifier": "Lifecycle.start",
+					"x-event": "Lifecycle.onStart"
 				},
 				{
 					"name": "capabilities",
@@ -143,11 +144,12 @@
 			]
 		},
 		{
-			"name": "onStartSuspended",
+			"name": "startSuspend",
 			"tags": [
 				{
-					"name": "event",
-          "x-notifier": "Lifecycle.startSuspended"
+					"name": "notifier",
+					"x-notifier": "Lifecycle.startSuspend",
+					"x-event": "Lifecycle.onStartSuspend"
 				},
 				{
 					"name": "capabilities",
@@ -192,11 +194,12 @@
 			]
 		},
 		{
-			"name": "onPause",
+			"name": "pause",
 			"tags": [
 				{
-					"name": "event",
-          "x-notifier": "Lifecycle.pause"
+					"name": "notifier",
+					"x-notifier": "Lifecycle.pause",
+					"x-event": "Lifecycle.onPause"
 				},
 				{
 					"name": "capabilities",
@@ -241,11 +244,12 @@
 			]
 		},
 		{
-			"name": "onActivate",
+			"name": "activate",
 			"tags": [
 				{
-					"name": "event",
-          "x-notifier": "Lifecycle.activate"
+					"name": "notifier",
+					"x-notifier": "Lifecycle.activate",
+					"x-event": "Lifecycle.onActivate"
 				},
 				{
 					"name": "capabilities",
@@ -307,11 +311,12 @@
 			]
 		},
 		{
-			"name": "onSuspend",
+			"name": "suspend",
 			"tags": [
 				{
-					"name": "event",
-          "x-notifier": "Lifecycle.suspend"
+					"name": "notifier",
+					"x-notifier": "Lifecycle.suspend",
+					"x-event": "Lifecycle.onSuspend"
 				},
 				{
 					"name": "capabilities",
@@ -356,11 +361,12 @@
 			]
 		},
 		{
-			"name": "onResume",
+			"name": "resume",
 			"tags": [
 				{
-					"name": "event",
-          "x-notifier": "Lifecycle.resume"
+					"name": "notifier",
+					"x-notifier": "Lifecycle.resume",
+					"x-event": "Lifecycle.onResume"
 				},
 				{
 					"name": "capabilities",
@@ -405,11 +411,12 @@
 			]
 		},
 		{
-			"name": "onHibernate",
+			"name": "hibernate",
 			"tags": [
 				{
-					"name": "event",
-          "x-notifier": "Lifecycle.hibernate"
+					"name": "notifier",
+					"x-notifier": "Lifecycle.hibernate",
+					"x-event": "Lifecycle.onHibernate"
 				},
 				{
 					"name": "capabilities",
@@ -454,11 +461,12 @@
 			]
 		},
 		{
-			"name": "onRestore",
+			"name": "restore",
 			"tags": [
 				{
-					"name": "event",
-          "x-notifier": "Lifecycle.restore"
+					"name": "notifier",
+					"x-notifier": "Lifecycle.restore",
+					"x-event": "Lifecycle.onRestore"
 				},
 				{
 					"name": "capabilities",
@@ -503,11 +511,12 @@
 			]
 		},
 		{
-			"name": "onDestroy",
+			"name": "destroy",
 			"tags": [
 				{
-					"name": "event",
-          "x-notifier": "Lifecycle.destroy"
+					"name": "notifier",
+					"x-notifier": "Lifecycle.destroy",
+					"x-event": "Lifecycle.onDestroy"
 				},
 				{
 					"name": "capabilities",
