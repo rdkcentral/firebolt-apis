@@ -1,616 +1,626 @@
 {
-  "openrpc": "1.2.4",
-  "info": {
-    "title": "Lifecycle",
-    "description": "Methods and events for responding to lifecycle changes in your app",
-    "version": "0.0.0"
-  },
-  "methods": [
-    {
-      "name": "ready",
-      "tags": [
-        {
-          "name": "calls-metrics"
-        },
-        {
-          "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:lifecycle:ready"]
-        },
-        {
-          "name": "exclude-from-sdk"
-        }
-      ],
-      "summary": "Notify the platform that the app is ready",
-      "params": [],
-      "result": {
-        "name": "result",
-        "schema": {
-          "const": null
-        }
-      },
-      "examples": [
-        {
-          "name": "Let the platform know that your app is ready",
-          "params": [],
-          "result": {
-            "name": "Default Result",
-            "value": null
-          }
-        }
-      ]
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Lifecycle",
+        "description": "Methods and events for responding to lifecycle changes in your app",
+        "version": "0.0.0"
     },
-    {
-      "name": "close",
-      "tags": [
+    "methods": [
         {
-          "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:lifecycle:state"]
-        }
-      ],
-      "summary": "Request that the platform move your app out of focus",
-      "params": [
-        {
-          "name": "reason",
-          "summary": "The reason the app is requesting to be closed",
-          "required": true,
-          "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/CloseReason"
-          }
-        }
-      ],
-      "result": {
-        "name": "success",
-        "schema": {
-          "const": null
-        }
-      },
-      "examples": [
-        {
-          "name": "Close the app when the user presses back on the app home screen",
-          "params": [
-            {
-              "name": "reason",
-              "value": "remoteButton"
-            }
-          ],
-          "result": {
-            "name": "Default Result",
-            "value": null
-          }
+            "name": "ready",
+            "tags": [
+                {
+                    "name": "calls-metrics"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle:ready"
+                    ]
+                },
+                {
+                    "name": "exclude-from-sdk"
+                }
+            ],
+            "summary": "Notify the platform that the app is ready",
+            "params": [],
+            "result": {
+                "name": "result",
+                "schema": {
+                    "const": null
+                }
+            },
+            "examples": [
+                {
+                    "name": "Let the platform know that your app is ready",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": null
+                    }
+                }
+            ]
         },
         {
-          "name": "Close the app when the user selects an exit menu item",
-          "params": [
-            {
-              "name": "reason",
-              "value": "userExit"
-            }
-          ],
-          "result": {
-            "name": "Default Result",
-            "value": null
-          }
-        }
-      ]
-    },
-    {
-			"name": "start",
-			"tags": [
-				{
-					"name": "notifier",
-					"x-notifier": "Lifecycle.start",
-					"x-event": "Lifecycle.onStart"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the start event",
-			"params": [
+            "name": "close",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle:state"
+                    ]
+                }
+            ],
+            "summary": "Request that the platform move your app out of focus",
+            "params": [
+                {
+                    "name": "reason",
+                    "summary": "The reason the app is requesting to be closed",
+                    "required": true,
+                    "schema": {
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/CloseReason"
+                    }
+                }
+            ],
+            "result": {
+                "name": "success",
+                "schema": {
+                    "const": null
+                }
+            },
+            "examples": [
+                {
+                    "name": "Close the app when the user presses back on the app home screen",
+                    "params": [
+                        {
+                            "name": "reason",
+                            "value": "remoteButton"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": null
+                    }
+                },
+                {
+                    "name": "Close the app when the user selects an exit menu item",
+                    "params": [
+                        {
+                            "name": "reason",
+                            "value": "userExit"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": null
+                    }
+                }
+            ]
+        },
         {
-          "name": "listen",
-          "required": true,
-          "schema": {
-              "type": "boolean"
-          }
-        }
-      ],
-			"result": {
-				"name": "value",
-				"schema": {
-					"$ref": "#/components/schemas/LifecycleEvent"
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "paused",
-							"previous": "initializing"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "startSuspend",
-			"tags": [
-				{
-					"name": "notifier",
-					"x-notifier": "Lifecycle.startSuspend",
-					"x-event": "Lifecycle.onStartSuspend"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the suspended start event",
-			"params": [
+            "name": "start",
+            "tags": [
+                {
+                    "name": "notifier",
+                    "x-notifier": "Lifecycle.start",
+                    "x-event": "Lifecycle.onStart"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle:state"
+                    ]
+                }
+            ],
+            "summary": "Listen to the start event",
+            "params": [
+                {
+                    "name": "listen",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "schema": {
+                    "$ref": "#/components/schemas/LifecycleEvent"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "listen",
+                            "value": true
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "state": "paused",
+                            "previous": "initializing"
+                        }
+                    }
+                }
+            ]
+        },
         {
-          "name": "listen",
-          "required": true,
-          "schema": {
-              "type": "boolean"
-          }
-        }
-      ],
-			"result": {
-				"name": "value",
-				"schema": {
-					"$ref": "#/components/schemas/LifecycleEvent"
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "suspended",
-							"previous": "initializing"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "pause",
-			"tags": [
-				{
-					"name": "notifier",
-					"x-notifier": "Lifecycle.pause",
-					"x-event": "Lifecycle.onPause"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the pause event",
-			"params": [
+            "name": "startSuspend",
+            "tags": [
+                {
+                    "name": "notifier",
+                    "x-notifier": "Lifecycle.startSuspend",
+                    "x-event": "Lifecycle.onStartSuspend"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle:state"
+                    ]
+                }
+            ],
+            "summary": "Listen to the suspended start event",
+            "params": [
+                {
+                    "name": "listen",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "schema": {
+                    "$ref": "#/components/schemas/LifecycleEvent"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "listen",
+                            "value": true
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "state": "suspended",
+                            "previous": "initializing"
+                        }
+                    }
+                }
+            ]
+        },
         {
-          "name": "listen",
-          "required": true,
-          "schema": {
-              "type": "boolean"
-          }
-        }
-      ],
-			"result": {
-				"name": "value",
-				"schema": {
-					"$ref": "#/components/schemas/LifecycleEvent"
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "paused",
-							"previous": "active"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "activate",
-			"tags": [
-				{
-					"name": "notifier",
-					"x-notifier": "Lifecycle.activate",
-					"x-event": "Lifecycle.onActivate"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the activate event",
-			"params": [
+            "name": "pause",
+            "tags": [
+                {
+                    "name": "notifier",
+                    "x-notifier": "Lifecycle.pause",
+                    "x-event": "Lifecycle.onPause"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle:state"
+                    ]
+                }
+            ],
+            "summary": "Listen to the pause event",
+            "params": [
+                {
+                    "name": "listen",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "schema": {
+                    "$ref": "#/components/schemas/LifecycleEvent"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "listen",
+                            "value": true
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "state": "paused",
+                            "previous": "active"
+                        }
+                    }
+                }
+            ]
+        },
         {
-          "name": "listen",
-          "required": true,
-          "schema": {
-              "type": "boolean"
-          }
-        }
-      ],
-			"result": {
-				"name": "value",
-				"schema": {
-					"$ref": "#/components/schemas/LifecycleEvent"
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "active",
-							"previous": "paused"
-						}
-					}
-				},
-				{
-					"name": "Move to active via remote branded button",
-					"params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
-					"result": {
-						"name": "value",
-						"value": {
-							"state": "active",
-							"previous": "paused",
-							"source": "remote"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "suspend",
-			"tags": [
-				{
-					"name": "notifier",
-					"x-notifier": "Lifecycle.suspend",
-					"x-event": "Lifecycle.onSuspend"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the suspended event",
-			"params": [
+            "name": "activate",
+            "tags": [
+                {
+                    "name": "notifier",
+                    "x-notifier": "Lifecycle.activate",
+                    "x-event": "Lifecycle.onActivate"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle:state"
+                    ]
+                }
+            ],
+            "summary": "Listen to the activate event",
+            "params": [
+                {
+                    "name": "listen",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "schema": {
+                    "$ref": "#/components/schemas/LifecycleEvent"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "listen",
+                            "value": true
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "state": "active",
+                            "previous": "paused"
+                        }
+                    }
+                },
+                {
+                    "name": "Move to active via remote branded button",
+                    "params": [
+                        {
+                            "name": "listen",
+                            "value": true
+                        }
+                    ],
+                    "result": {
+                        "name": "value",
+                        "value": {
+                            "state": "active",
+                            "previous": "paused",
+                            "source": "remote"
+                        }
+                    }
+                }
+            ]
+        },
         {
-          "name": "listen",
-          "required": true,
-          "schema": {
-              "type": "boolean"
-          }
-        }
-      ],
-			"result": {
-				"name": "value",
-				"schema": {
-					"$ref": "#/components/schemas/LifecycleEvent"
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "suspended",
-							"previous": "paused"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "resume",
-			"tags": [
-				{
-					"name": "notifier",
-					"x-notifier": "Lifecycle.resume",
-					"x-event": "Lifecycle.onResume"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the suspended event",
-			"params": [
+            "name": "suspend",
+            "tags": [
+                {
+                    "name": "notifier",
+                    "x-notifier": "Lifecycle.suspend",
+                    "x-event": "Lifecycle.onSuspend"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle:state"
+                    ]
+                }
+            ],
+            "summary": "Listen to the suspended event",
+            "params": [
+                {
+                    "name": "listen",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "schema": {
+                    "$ref": "#/components/schemas/LifecycleEvent"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "listen",
+                            "value": true
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "state": "suspended",
+                            "previous": "paused"
+                        }
+                    }
+                }
+            ]
+        },
         {
-          "name": "listen",
-          "required": true,
-          "schema": {
-              "type": "boolean"
-          }
-        }
-      ],
-			"result": {
-				"name": "value",
-				"schema": {
-					"$ref": "#/components/schemas/LifecycleEvent"
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "paused",
-							"previous": "suspended"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "hibernate",
-			"tags": [
-				{
-					"name": "notifier",
-					"x-notifier": "Lifecycle.hibernate",
-					"x-event": "Lifecycle.onHibernate"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the hibernating event",
-			"params": [
+            "name": "resume",
+            "tags": [
+                {
+                    "name": "notifier",
+                    "x-notifier": "Lifecycle.resume",
+                    "x-event": "Lifecycle.onResume"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle:state"
+                    ]
+                }
+            ],
+            "summary": "Listen to the suspended event",
+            "params": [
+                {
+                    "name": "listen",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "schema": {
+                    "$ref": "#/components/schemas/LifecycleEvent"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "listen",
+                            "value": true
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "state": "paused",
+                            "previous": "suspended"
+                        }
+                    }
+                }
+            ]
+        },
         {
-          "name": "listen",
-          "required": true,
-          "schema": {
-              "type": "boolean"
-          }
-        }
-      ],
-			"result": {
-				"name": "value",
-				"schema": {
-					"$ref": "#/components/schemas/LifecycleEvent"
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "hibernated",
-							"previous": "suspended"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "restore",
-			"tags": [
-				{
-					"name": "notifier",
-					"x-notifier": "Lifecycle.restore",
-					"x-event": "Lifecycle.onRestore"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the restoration event",
-			"params": [
+            "name": "hibernate",
+            "tags": [
+                {
+                    "name": "notifier",
+                    "x-notifier": "Lifecycle.hibernate",
+                    "x-event": "Lifecycle.onHibernate"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle:state"
+                    ]
+                }
+            ],
+            "summary": "Listen to the hibernating event",
+            "params": [
+                {
+                    "name": "listen",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "schema": {
+                    "$ref": "#/components/schemas/LifecycleEvent"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "listen",
+                            "value": true
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "state": "hibernated",
+                            "previous": "suspended"
+                        }
+                    }
+                }
+            ]
+        },
         {
-          "name": "listen",
-          "required": true,
-          "schema": {
-              "type": "boolean"
-          }
-        }
-      ],
-			"result": {
-				"name": "value",
-				"schema": {
-					"$ref": "#/components/schemas/LifecycleEvent"
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-            {
-              "name": "listen",
-              "value": true
-            }
-          ],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "suspended",
-							"previous": "hibernated"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "destroy",
-			"tags": [
-				{
-					"name": "notifier",
-					"x-notifier": "Lifecycle.destroy",
-					"x-event": "Lifecycle.onDestroy"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the destroy event \n\nHowever, this event is unreliable and app may not get this notification in the event of platform needs to kill the app quickly",
-			"params": [
+            "name": "restore",
+            "tags": [
+                {
+                    "name": "notifier",
+                    "x-notifier": "Lifecycle.restore",
+                    "x-event": "Lifecycle.onRestore"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle:state"
+                    ]
+                }
+            ],
+            "summary": "Listen to the restoration event",
+            "params": [
+                {
+                    "name": "listen",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "schema": {
+                    "$ref": "#/components/schemas/LifecycleEvent"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "listen",
+                            "value": true
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "state": "suspended",
+                            "previous": "hibernated"
+                        }
+                    }
+                }
+            ]
+        },
         {
-          "name": "listen",
-          "required": true,
-          "schema": {
-              "type": "boolean"
-          }
+            "name": "destroy",
+            "tags": [
+                {
+                    "name": "notifier",
+                    "x-notifier": "Lifecycle.destroy",
+                    "x-event": "Lifecycle.onDestroy"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle:state"
+                    ]
+                }
+            ],
+            "summary": "Listen to the destroy event \n\nHowever, this event is unreliable and app may not get this notification in the event of platform needs to kill the app quickly",
+            "params": [
+                {
+                    "name": "listen",
+                    "required": true,
+                    "schema": {
+                        "type": "boolean"
+                    }
+                }
+            ],
+            "result": {
+                "name": "value",
+                "schema": {
+                    "$ref": "#/components/schemas/DestroyEvent"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "listen",
+                            "value": true
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "reason": "userExit",
+                            "previous": "paused"
+                        }
+                    }
+                }
+            ]
         }
-      ],
-			"result": {
-				"name": "value",
-				"schema": {
-					"$ref": "#/components/schemas/DestroyEvent"
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-            {
-              "name": "listen",
-              "value": true
+    ],
+    "components": {
+        "schemas": {
+            "LifecycleEvent": {
+                "title": "LifecycleEvent",
+                "description": "A an object describing the previous and current states",
+                "type": "object",
+                "required": [
+                    "state",
+                    "previous"
+                ],
+                "properties": {
+                    "state": {
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
+                        "description": "The current lifcycle state"
+                    },
+                    "previous": {
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
+                        "description": "The previous lifcycle state"
+                    },
+                    "source": {
+                        "type": "string",
+                        "enum": [
+                            "voice",
+                            "remote"
+                        ],
+                        "description": "The source of the lifecycle change."
+                    }
+                }
+            },
+            "DestroyEvent": {
+                "title": "DestroyEvent",
+                "description": "An object describing state of destroy with reason, and previous state",
+                "type": "object",
+                "required": [
+                    "reason",
+                    "previous"
+                ],
+                "properties": {
+                    "previous": {
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
+                        "description": "The previous lifecycle state"
+                    },
+                    "source": {
+                        "type": "string",
+                        "enum": [
+                            "voice",
+                            "remote"
+                        ],
+                        "description": "The source of the lifecycle change."
+                    },
+                    "reason": {
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/DestroyReason",
+                        "description": "The reason the app is being destroyed"
+                    }
+                }
             }
-          ],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"reason": "userExit",
-							"previous": "paused"
-						}
-					}
-				}
-			]
-		}
-  ],
-  "components": {
-    "schemas": {
-      "LifecycleEvent": {
-        "title": "LifecycleEvent",
-        "description": "A an object describing the previous and current states",
-        "type": "object",
-        "required": ["state", "previous"],
-        "properties": {
-          "state": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
-            "description": "The current lifcycle state"
-          },
-          "previous": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
-            "description": "The previous lifcycle state"
-          },
-          "source": {
-            "type": "string",
-            "enum": ["voice", "remote"],
-            "description": "The source of the lifecycle change."
-          }
         }
-      },
-			"DestroyEvent": {
-				"title": "DestroyEvent",
-				"description": "An object describing state of destroy with reason, and previous state",
-				"type": "object",
-				"required": [
-					"reason",
-					"previous"
-				],
-				"properties": {
-					"previous": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
-						"description": "The previous lifecycle state"
-					},
-					"source": {
-						"type": "string",
-						"enum": [
-							"voice",
-							"remote"
-						],
-						"description": "The source of the lifecycle change."
-					},
-					"reason": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/DestroyReason",
-						"description": "The reason the app is being destroyed"
-					}
-				}
-			}
     }
-  }
 }
