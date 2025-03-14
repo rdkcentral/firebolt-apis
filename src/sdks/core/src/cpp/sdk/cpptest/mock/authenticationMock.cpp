@@ -4,35 +4,21 @@
 #include <optional>
 #include "Gateway/Gateway.h"
 #include "authentication_impl.h" 
-
-// Mock class for FireboltSDK::Gateway
-class MockGateway : public FireboltSDK::GatewayImpl {
-public:
-    MOCK_METHOD(Firebolt::Error, Request, 
-                (const std::string& method, const JsonObject& parameters,
-                FireboltSDK::JSON::String& result), 
-                (override));
-    MOCK_METHOD(Firebolt::Error, Request, 
-                (const std::string& method, const JsonObject& parameters,
-                Firebolt::Authentication::JsonData_Token& result), 
-                (override));
-};
-
+#include "mockGateway.h"
 
 class AuthenticationMockTest : public ::testing::Test
 {
 protected:
-    MockGateway *mockGateway;
-    void SetUp() override
-    {
-        std::unique_ptr<MockGateway> mock = std::make_unique<MockGateway>(); 
-        mockGateway = mock.get(); 
-        FireboltSDK::Gateway::Instance().UpdateGateway(std::move(mock)); 
+    std::unique_ptr<GatewayMockTest> gm;
+
+    void SetUp() override {
+        gm = std::make_unique<GatewayMockTest>();
+        gm->SetUp();
     }
 
-    void TearDown() override
-    {
-        delete mockGateway;
+    void TearDown() override {
+        gm->TearDown();
+        gm.reset();  // Cleanup
     }
 };
 
@@ -40,12 +26,12 @@ TEST_F(AuthenticationMockTest, Device_Success) {
     Firebolt::Error error = Firebolt::Error::None;
     FireboltSDK::JSON::String mockResponse = "valid_device_token";
 
-    EXPECT_CALL(*mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
 
-    std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().device(&error);
+    std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().device(&gm->error);
 
-    EXPECT_EQ(error, Firebolt::Error::None);
+    EXPECT_EQ(gm->error, Firebolt::Error::None);
     EXPECT_EQ(token, "valid_device_token");
 }
 
@@ -55,7 +41,7 @@ TEST_F(AuthenticationMockTest, Device_MultipleCalls) {
     FireboltSDK::JSON::String mockResponse1 = "device_token_1";
     FireboltSDK::JSON::String mockResponse2 = "device_token_2";
 
-    EXPECT_CALL(*mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse1), Return(Firebolt::Error::None)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse2), Return(Firebolt::Error::None)));
 
@@ -73,7 +59,7 @@ TEST_F(AuthenticationMockTest, Device_FailsWithNotConnected) {
     Firebolt::Error error = Firebolt::Error::None;
     FireboltSDK::JSON::String mockResponse; // Empty response
 
-    EXPECT_CALL(*mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(Return(Firebolt::Error::NotConnected));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().device(&error);
@@ -86,7 +72,7 @@ TEST_F(AuthenticationMockTest, Device_FailsWithGeneralError) {
     Firebolt::Error error = Firebolt::Error::None;
     FireboltSDK::JSON::String mockResponse;
 
-    EXPECT_CALL(*mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(Return(Firebolt::Error::General));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().device(&error);
@@ -99,7 +85,7 @@ TEST_F(AuthenticationMockTest, Device_EmptyTokenReturned) {
     Firebolt::Error error = Firebolt::Error::None;
     FireboltSDK::JSON::String mockResponse = "";  // Empty token
 
-    EXPECT_CALL(*mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().device(&error);
@@ -112,7 +98,7 @@ TEST_F(AuthenticationMockTest, Device_MalformedTokenReturned) {
     Firebolt::Error error = Firebolt::Error::None;
     FireboltSDK::JSON::String mockResponse = "####";  // Invalid/malformed token
 
-    EXPECT_CALL(*mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.device", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().device(&error);
@@ -125,7 +111,7 @@ TEST_F(AuthenticationMockTest, Root_Success) {
     Firebolt::Error error = Firebolt::Error::None;
     FireboltSDK::JSON::String mockResponse = "valid_root_token";
 
-    EXPECT_CALL(*mockGateway, Request("authentication.root", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.root", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().root(&error);
@@ -140,7 +126,7 @@ TEST_F(AuthenticationMockTest, Root_MultipleCalls) {
     FireboltSDK::JSON::String mockResponse1 = "root_token_1";
     FireboltSDK::JSON::String mockResponse2 = "root_token_2";
 
-    EXPECT_CALL(*mockGateway, Request("authentication.root", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.root", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse1), Return(Firebolt::Error::None)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse2), Return(Firebolt::Error::None)));
 
@@ -157,7 +143,7 @@ TEST_F(AuthenticationMockTest, Root_MultipleCalls) {
 TEST_F(AuthenticationMockTest, Root_FailsWithNotConnected) {
     Firebolt::Error error = Firebolt::Error::None;
 
-    EXPECT_CALL(*mockGateway, Request("authentication.root", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.root", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(Return(Firebolt::Error::NotConnected));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().root(&error);
@@ -170,7 +156,7 @@ TEST_F(AuthenticationMockTest, Root_EmptyTokenReturned) {
     Firebolt::Error error = Firebolt::Error::None;
     FireboltSDK::JSON::String mockResponse = "";  // Empty response
 
-    EXPECT_CALL(*mockGateway, Request("authentication.root", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.root", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().root(&error);
@@ -182,7 +168,7 @@ TEST_F(AuthenticationMockTest, Root_EmptyTokenReturned) {
 TEST_F(AuthenticationMockTest, Root_FailsWithGeneralError) {
     Firebolt::Error error = Firebolt::Error::None;
 
-    EXPECT_CALL(*mockGateway, Request("authentication.root", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.root", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(Return(Firebolt::Error::General));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().root(&error);
@@ -195,7 +181,7 @@ TEST_F(AuthenticationMockTest, Session_Success) {
     Firebolt::Error error = Firebolt::Error::None;
     FireboltSDK::JSON::String mockResponse = "valid_session_token";
 
-    EXPECT_CALL(*mockGateway, Request("authentication.session", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.session", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().session(&error);
@@ -210,7 +196,7 @@ TEST_F(AuthenticationMockTest, Session_MultipleCalls) {
     FireboltSDK::JSON::String mockResponse1 = "session_token_1";
     FireboltSDK::JSON::String mockResponse2 = "session_token_2";
 
-    EXPECT_CALL(*mockGateway, Request("authentication.session", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.session", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse1), Return(Firebolt::Error::None)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse2), Return(Firebolt::Error::None)));
 
@@ -227,7 +213,7 @@ TEST_F(AuthenticationMockTest, Session_MultipleCalls) {
 TEST_F(AuthenticationMockTest, Session_FailsWithNotConnected) {
     Firebolt::Error error = Firebolt::Error::None;
 
-    EXPECT_CALL(*mockGateway, Request("authentication.session", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.session", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(Return(Firebolt::Error::NotConnected));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().session(&error);
@@ -240,7 +226,7 @@ TEST_F(AuthenticationMockTest, Session_EmptyTokenReturned) {
     Firebolt::Error error = Firebolt::Error::None;
     FireboltSDK::JSON::String mockResponse = "";  // Empty response
 
-    EXPECT_CALL(*mockGateway, Request("authentication.session", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.session", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().session(&error);
@@ -252,7 +238,7 @@ TEST_F(AuthenticationMockTest, Session_EmptyTokenReturned) {
 TEST_F(AuthenticationMockTest, Session_FailsWithGeneralError) {
     Firebolt::Error error = Firebolt::Error::None;
 
-    EXPECT_CALL(*mockGateway, Request("authentication.session", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
+    EXPECT_CALL(*gm->mockGateway, Request("authentication.session", _, testing::Matcher<FireboltSDK::JSON::String &>(_)))
         .WillOnce(Return(Firebolt::Error::General));
 
     std::string token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().session(&error);
@@ -267,7 +253,7 @@ TEST_F(AuthenticationMockTest, Token_Success) {
     Firebolt::Authentication::JsonData_Token mockResponse;
     mockResponse.Value = "valid_auth_token";
 
-    EXPECT_CALL(*mockGateway,
+    EXPECT_CALL(*gm->mockGateway,
                 Request("authentication.token", _,
                         testing::Matcher<Firebolt::Authentication::JsonData_Token &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
@@ -285,7 +271,7 @@ TEST_F(AuthenticationMockTest, Token_WithOptions) {
     Firebolt::Authentication::JsonData_Token mockResponse;
     mockResponse.Value = "valid_platform_token";
 
-    EXPECT_CALL(*mockGateway,
+    EXPECT_CALL(*gm->mockGateway,
                 Request("authentication.token", _,
                         testing::Matcher<Firebolt::Authentication::JsonData_Token &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
@@ -304,7 +290,7 @@ TEST_F(AuthenticationMockTest, Token_WithExpirationAndType) {
     mockResponse.Expires = "1680998400";  // Unix timestamp for expiration
     mockResponse.Type = "distributor";
 
-    EXPECT_CALL(*mockGateway,
+    EXPECT_CALL(*gm->mockGateway,
                 Request("authentication.token", _,
                         testing::Matcher<Firebolt::Authentication::JsonData_Token &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
@@ -321,7 +307,7 @@ TEST_F(AuthenticationMockTest, Token_FailsWithNotConnected) {
     Firebolt::Error error = Firebolt::Error::None;
     Firebolt::Authentication::TokenType tokenType = Firebolt::Authentication::TokenType::DEVICE;
 
-    EXPECT_CALL(*mockGateway,
+    EXPECT_CALL(*gm->mockGateway,
                 Request("authentication.token", _,
                         testing::Matcher<Firebolt::Authentication::JsonData_Token &>(_)))
         .WillOnce(Return(Firebolt::Error::NotConnected));
@@ -338,7 +324,7 @@ TEST_F(AuthenticationMockTest, Token_EmptyTokenReturned) {
     Firebolt::Authentication::JsonData_Token mockResponse;
     mockResponse.Value = "";  // Empty token
 
-    EXPECT_CALL(*mockGateway,
+    EXPECT_CALL(*gm->mockGateway,
                 Request("authentication.token", _,
                         testing::Matcher<Firebolt::Authentication::JsonData_Token &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
@@ -353,7 +339,7 @@ TEST_F(AuthenticationMockTest, Token_FailsWithGeneralError) {
     Firebolt::Error error = Firebolt::Error::None;
     Firebolt::Authentication::TokenType tokenType = Firebolt::Authentication::TokenType::DISTRIBUTOR;
 
-    EXPECT_CALL(*mockGateway,
+    EXPECT_CALL(*gm->mockGateway,
                 Request("authentication.token", _,
                         testing::Matcher<Firebolt::Authentication::JsonData_Token &>(_)))
         .WillOnce(Return(Firebolt::Error::General));
@@ -370,7 +356,7 @@ TEST_F(AuthenticationMockTest, Token_MalformedTokenReturned) {
     Firebolt::Authentication::JsonData_Token mockResponse;
     mockResponse.Value = "####";  // Malformed token
 
-    EXPECT_CALL(*mockGateway,
+    EXPECT_CALL(*gm->mockGateway,
                 Request("authentication.token", _,
                         testing::Matcher<Firebolt::Authentication::JsonData_Token &>(_)))
         .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
