@@ -122,7 +122,7 @@ const capabilities = () => {
         capabilities[c].level = v.level
     })
 
-    let manifest = '\n## Capailities\n| Capability | Level | Uses | Provides | Manages |\n|-|-|-|-|-|\n'
+    var manifest = '\n## Capailities\n| Capability | Level | Uses | Provides | Manages |\n|-|-|-|-|-|\n'
     
     const linkify = (method) => `[${method}](./${corerpc.methods.find(m => m.name === method) ? 'core' : 'manage'}/${method.split('.').shift()}/#${method.match(/\.on[A-Z]/) ? method.split('.').pop().charAt(2).toLowerCase() + method.split('.').pop().substring(3).toLowerCase() : method.split('.').pop().toLowerCase()})`
     Object.keys(capabilities).sort().forEach(c => {
@@ -132,7 +132,6 @@ const capabilities = () => {
 
         manifest += `| \`${c}\` | **${capabilities[c].level.toUpperCase()}** | ${use} | ${pro} | ${man} |\n`
     })
-
 
     manifest += '\n## Methods\nCapability prefix `xrn:firebolt:capability` let off for readability.\n| Method | Level | Uses | Provides | Manages |\n|-|-|-|-|-|\n'
 
@@ -150,7 +149,7 @@ const capabilities = () => {
         manifest += `| ${linkify(method.name)} | **${level.toUpperCase()}** | ${uses} | ${pros} | ${mans} |\n`
 
     })
-
+    
     return manifest
 }
 
