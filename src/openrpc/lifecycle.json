@@ -102,7 +102,6 @@
             "tags": [
                 {
                     "name": "notifier",
-                    "x-notifier": "Lifecycle.start",
                     "x-event": "Lifecycle.onStart"
                 },
                 {
@@ -113,30 +112,11 @@
                 }
             ],
             "summary": "Listen to the start event",
-            "params": [
-                {
-                    "name": "listen",
-                    "required": true,
-                    "schema": {
-                        "type": "boolean"
-                    }
-                }
-            ],
-            "result": {
-                "name": "value",
-                "schema": {
-                    "$ref": "#/components/schemas/LifecycleEvent"
-                }
-            },
+            "params": [],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [
-                        {
-                            "name": "listen",
-                            "value": true
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "Default Result",
                         "value": {
@@ -152,7 +132,6 @@
             "tags": [
                 {
                     "name": "notifier",
-                    "x-notifier": "Lifecycle.startSuspend",
                     "x-event": "Lifecycle.onStartSuspend"
                 },
                 {
@@ -163,30 +142,11 @@
                 }
             ],
             "summary": "Listen to the suspended start event",
-            "params": [
-                {
-                    "name": "listen",
-                    "required": true,
-                    "schema": {
-                        "type": "boolean"
-                    }
-                }
-            ],
-            "result": {
-                "name": "value",
-                "schema": {
-                    "$ref": "#/components/schemas/LifecycleEvent"
-                }
-            },
+            "params": [],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [
-                        {
-                            "name": "listen",
-                            "value": true
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "Default Result",
                         "value": {
@@ -202,7 +162,6 @@
             "tags": [
                 {
                     "name": "notifier",
-                    "x-notifier": "Lifecycle.pause",
                     "x-event": "Lifecycle.onPause"
                 },
                 {
@@ -213,30 +172,11 @@
                 }
             ],
             "summary": "Listen to the pause event",
-            "params": [
-                {
-                    "name": "listen",
-                    "required": true,
-                    "schema": {
-                        "type": "boolean"
-                    }
-                }
-            ],
-            "result": {
-                "name": "value",
-                "schema": {
-                    "$ref": "#/components/schemas/LifecycleEvent"
-                }
-            },
+            "params": [],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [
-                        {
-                            "name": "listen",
-                            "value": true
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "Default Result",
                         "value": {
@@ -252,7 +192,6 @@
             "tags": [
                 {
                     "name": "notifier",
-                    "x-notifier": "Lifecycle.activate",
                     "x-event": "Lifecycle.onActivate"
                 },
                 {
@@ -263,30 +202,11 @@
                 }
             ],
             "summary": "Listen to the activate event",
-            "params": [
-                {
-                    "name": "listen",
-                    "required": true,
-                    "schema": {
-                        "type": "boolean"
-                    }
-                }
-            ],
-            "result": {
-                "name": "value",
-                "schema": {
-                    "$ref": "#/components/schemas/LifecycleEvent"
-                }
-            },
+            "params": [],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [
-                        {
-                            "name": "listen",
-                            "value": true
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "Default Result",
                         "value": {
@@ -297,12 +217,7 @@
                 },
                 {
                     "name": "Move to active via remote branded button",
-                    "params": [
-                        {
-                            "name": "listen",
-                            "value": true
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "value",
                         "value": {
@@ -319,7 +234,6 @@
             "tags": [
                 {
                     "name": "notifier",
-                    "x-notifier": "Lifecycle.suspend",
                     "x-event": "Lifecycle.onSuspend"
                 },
                 {
@@ -330,30 +244,11 @@
                 }
             ],
             "summary": "Listen to the suspended event",
-            "params": [
-                {
-                    "name": "listen",
-                    "required": true,
-                    "schema": {
-                        "type": "boolean"
-                    }
-                }
-            ],
-            "result": {
-                "name": "value",
-                "schema": {
-                    "$ref": "#/components/schemas/LifecycleEvent"
-                }
-            },
+            "params": [],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [
-                        {
-                            "name": "listen",
-                            "value": true
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "Default Result",
                         "value": {
@@ -369,7 +264,6 @@
             "tags": [
                 {
                     "name": "notifier",
-                    "x-notifier": "Lifecycle.resume",
                     "x-event": "Lifecycle.onResume"
                 },
                 {
@@ -380,30 +274,11 @@
                 }
             ],
             "summary": "Listen to the suspended event",
-            "params": [
-                {
-                    "name": "listen",
-                    "required": true,
-                    "schema": {
-                        "type": "boolean"
-                    }
-                }
-            ],
-            "result": {
-                "name": "value",
-                "schema": {
-                    "$ref": "#/components/schemas/LifecycleEvent"
-                }
-            },
+            "params": [],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [
-                        {
-                            "name": "listen",
-                            "value": true
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "Default Result",
                         "value": {
@@ -419,7 +294,6 @@
             "tags": [
                 {
                     "name": "notifier",
-                    "x-notifier": "Lifecycle.hibernate",
                     "x-event": "Lifecycle.onHibernate"
                 },
                 {
@@ -430,30 +304,11 @@
                 }
             ],
             "summary": "Listen to the hibernating event",
-            "params": [
-                {
-                    "name": "listen",
-                    "required": true,
-                    "schema": {
-                        "type": "boolean"
-                    }
-                }
-            ],
-            "result": {
-                "name": "value",
-                "schema": {
-                    "$ref": "#/components/schemas/LifecycleEvent"
-                }
-            },
+            "params": [],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [
-                        {
-                            "name": "listen",
-                            "value": true
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "Default Result",
                         "value": {
@@ -469,7 +324,6 @@
             "tags": [
                 {
                     "name": "notifier",
-                    "x-notifier": "Lifecycle.restore",
                     "x-event": "Lifecycle.onRestore"
                 },
                 {
@@ -480,30 +334,11 @@
                 }
             ],
             "summary": "Listen to the restoration event",
-            "params": [
-                {
-                    "name": "listen",
-                    "required": true,
-                    "schema": {
-                        "type": "boolean"
-                    }
-                }
-            ],
-            "result": {
-                "name": "value",
-                "schema": {
-                    "$ref": "#/components/schemas/LifecycleEvent"
-                }
-            },
+            "params": [],
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [
-                        {
-                            "name": "listen",
-                            "value": true
-                        }
-                    ],
+                    "params": [],
                     "result": {
                         "name": "Default Result",
                         "value": {
@@ -518,8 +353,6 @@
             "name": "destroy",
             "tags": [
                 {
-                    "name": "notifier",
-                    "x-notifier": "Lifecycle.destroy",
                     "x-event": "Lifecycle.onDestroy"
                 },
                 {
@@ -529,98 +362,31 @@
                     ]
                 }
             ],
-            "summary": "Listen to the destroy event \n\nHowever, this event is unreliable and app may not get this notification in the event of platform needs to kill the app quickly",
+            "summary": "Destroy event \n\nHowever, this event is unreliable and app may not get this notification in the event of platform needs to kill the app quickly",
             "params": [
                 {
-                    "name": "listen",
+                    "name": "reason",
                     "required": true,
                     "schema": {
-                        "type": "boolean"
+                        "type": "string"
                     }
                 }
             ],
-            "result": {
-                "name": "value",
-                "schema": {
-                    "$ref": "#/components/schemas/DestroyEvent"
-                }
-            },
             "examples": [
                 {
                     "name": "Default Example",
                     "params": [
                         {
-                            "name": "listen",
-                            "value": true
+                            "name": "destroyReason",
+                            "value": "userExit"
                         }
                     ],
                     "result": {
                         "name": "Default Result",
-                        "value": {
-                            "reason": "userExit",
-                            "previous": "paused"
-                        }
+                        "value": null
                     }
                 }
             ]
         }
-    ],
-    "components": {
-        "schemas": {
-            "LifecycleEvent": {
-                "title": "LifecycleEvent",
-                "description": "A an object describing the previous and current states",
-                "type": "object",
-                "required": [
-                    "state",
-                    "previous"
-                ],
-                "properties": {
-                    "state": {
-                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
-                        "description": "The current lifcycle state"
-                    },
-                    "previous": {
-                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
-                        "description": "The previous lifcycle state"
-                    },
-                    "source": {
-                        "type": "string",
-                        "enum": [
-                            "voice",
-                            "remote"
-                        ],
-                        "description": "The source of the lifecycle change."
-                    }
-                }
-            },
-            "DestroyEvent": {
-                "title": "DestroyEvent",
-                "description": "An object describing state of destroy with reason, and previous state",
-                "type": "object",
-                "required": [
-                    "reason",
-                    "previous"
-                ],
-                "properties": {
-                    "previous": {
-                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/LifecycleState",
-                        "description": "The previous lifecycle state"
-                    },
-                    "source": {
-                        "type": "string",
-                        "enum": [
-                            "voice",
-                            "remote"
-                        ],
-                        "description": "The source of the lifecycle change."
-                    },
-                    "reason": {
-                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle#/definitions/DestroyReason",
-                        "description": "The reason the app is being destroyed"
-                    }
-                }
-            }
-        }
-    }
+    ]
 }
