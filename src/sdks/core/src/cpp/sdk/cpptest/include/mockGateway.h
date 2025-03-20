@@ -28,7 +28,6 @@ public:
                  WPEFramework::Core::JSON::Boolean &response),
                 (override));
 
-
     MOCK_METHOD(Firebolt::Error, Request,
                 (const std::string &method,
                  const JsonObject &parameters,

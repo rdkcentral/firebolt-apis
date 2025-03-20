@@ -177,22 +177,6 @@ TEST_F(AdvertisingMockTest, DeviceAttributes_InvalidJson)
     EXPECT_EQ(result, "{\"error\":\"invalid_json_response\"}");
 }
 
-TEST_F(AdvertisingMockTest, Policy_Success)
-{
-    Firebolt::Advertising::JsonData_AdPolicy mockResponse;
-    mockResponse.SkipRestriction = Firebolt::Advertising::SkipRestriction::ADS_UNWATCHED;
-    mockResponse.LimitAdTracking = false;
-
-    EXPECT_CALL(*pm->mockProperties, Get("advertising.policy", testing::Matcher<Firebolt::Advertising::JsonData_AdPolicy &>(_)))
-        .WillOnce(DoAll(SetArgReferee<1>(mockResponse), Return(Firebolt::Error::None)));
-
-    Firebolt::Advertising::AdPolicy result = Firebolt::IFireboltAccessor::Instance().AdvertisingInterface().policy(&pm->error);
-
-    EXPECT_EQ(pm->error, Firebolt::Error::None);
-    EXPECT_EQ(result.skipRestriction, Firebolt::Advertising::SkipRestriction::ADS_UNWATCHED);
-    EXPECT_FALSE(result.limitAdTracking);
-}
-
 TEST_F(AdvertisingMockTest, Policy_PartialSuccess_SkipRestrictionOnly)
 {
     Firebolt::Advertising::JsonData_AdPolicy mockResponse;

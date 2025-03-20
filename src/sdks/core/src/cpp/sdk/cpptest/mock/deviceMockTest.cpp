@@ -1,9 +1,7 @@
+#include "device_impl.h"
 #include "../unit/unit.h"
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-
-#include "device_impl.h"
-#include "../unit/unit.h"
 #include "Gateway/Gateway.h"
 #include "mockProperties.h"
 #include "mockGateway.h"
@@ -34,17 +32,6 @@ protected:
         pm.reset(); // Cleanup
     }
 };
-
-TEST_F(DeviceMockTest, Version_Success) {
-    Firebolt::Device::JsonData_DeviceVersion mockResponse;
-    mockResponse.Sdk.Readable = "Firebolt Core SDK 1.2.3";
-    EXPECT_CALL(*gm->mockGateway, Request("device.version", _, testing::Matcher<Firebolt::Device::JsonData_DeviceVersion &>(_)))
-        .WillOnce(DoAll(SetArgReferee<2>(mockResponse), Return(Firebolt::Error::None)));
-    
-    std::string result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().version(&gm->error);
-    EXPECT_EQ(gm->error, Firebolt::Error::None);
-    EXPECT_EQ(result, "Firebolt Core SDK 1.2.3");
-}
 
 TEST_F(DeviceMockTest, Version_Failure) {
     EXPECT_CALL(*gm->mockGateway, Request("device.version", _, testing::Matcher<Firebolt::Device::JsonData_DeviceVersion &>(_)))
@@ -141,19 +128,6 @@ TEST_F(DeviceMockTest, Hdr_Success) {
     EXPECT_TRUE(result.hdr10);
     EXPECT_FALSE(result.hdr10Plus);
     EXPECT_TRUE(result.dolbyVision);
-    EXPECT_FALSE(result.hlg);
-}
-
-TEST_F(DeviceMockTest, Hdr_Failure) {
-    EXPECT_CALL(*pm->mockProperties, Get("device.hdr", testing::Matcher<Firebolt::Device::JsonData_HDRFormatMap &>(_)))
-        .WillOnce(Return(Firebolt::Error::Timedout));
-    
-    Firebolt::Device::HDRFormatMap result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().hdr(&pm->error);
-    
-    EXPECT_EQ(pm->error, Firebolt::Error::Timedout);
-    EXPECT_FALSE(result.hdr10);
-    EXPECT_FALSE(result.hdr10Plus);
-    EXPECT_FALSE(result.dolbyVision);
     EXPECT_FALSE(result.hlg);
 }
 

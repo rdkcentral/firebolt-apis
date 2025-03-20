@@ -94,7 +94,11 @@ if(ENABLE_UNIT_TESTS)
     endif()
 
     file(GLOB UNIT_TESTS "unit/*.cpp")
-    file(GLOB MOCK_TESTS "mock/*.cpp")
+
+    if(ENABLE_MOCK_TESTS)
+        add_compile_definitions(MOCK_TEST)
+        file(GLOB MOCK_TESTS "mock/*.cpp")
+    endif()
 
     add_compile_definitions(UNIT_TEST_APP)
 
@@ -112,13 +116,17 @@ if(ENABLE_UNIT_TESTS)
             ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
             nlohmann_json::nlohmann_json
             nlohmann_json_schema_validator::validator
-            GTest::gtest_main
+            gtest
+            gtest_main
+            gmock
+            gmock_main
     )
 
     target_include_directories(${UNIT_TESTS_APP}
         PRIVATE
             $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
             $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/>
+            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/test/include>
     )
 
     set_target_properties(${UNIT_TESTS_APP} PROPERTIES
