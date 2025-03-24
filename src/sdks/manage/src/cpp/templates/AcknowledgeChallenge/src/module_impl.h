@@ -161,5 +161,5 @@ public:
     void provide(IAcknowledgeChallengeProvider& provider) override;
 };
 
-} // namespace AcknowledgeChallenge
+}//namespace ${info.Title}
 }${end.if.implementations}

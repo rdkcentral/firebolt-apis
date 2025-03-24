@@ -16,225 +16,225 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
- #pragma once
+#pragma once
 
- #include "FireboltSDK.h"
- #include "IModule.h"
- 
- 
- /* ${IMPORTS:impl} */
- #include "${info.title.lowercase}.h"
- 
- ${if.implementations}
- namespace Firebolt {
- namespace ${info.Title} {
- ${if.enums}
- 
- /* ${ENUMS:json-types} */${end.if.enums}
+#include "FireboltSDK.h"
+#include "IModule.h"
 
- // Types
- class JsonData_KeyboardParameters: public WPEFramework::Core::JSON::Container {
+
+/* ${IMPORTS:impl} */
+#include "${info.title.lowercase}.h"
+
+${if.implementations}
+namespace Firebolt {
+namespace ${info.Title} {
+${if.enums}
+
+/* ${ENUMS:json-types} */${end.if.enums}
+
+// Types
+class JsonData_KeyboardParameters: public WPEFramework::Core::JSON::Container {
+public:
+    ~JsonData_KeyboardParameters() override = default;
+
+public:
+    JsonData_KeyboardParameters()
+        : WPEFramework::Core::JSON::Container()
+    {
+        Add(_T("message"), &Message);
+    }
+
+    JsonData_KeyboardParameters(const JsonData_KeyboardParameters& other)
+    {
+        Add(_T("message"), &Message);
+        Message = other.Message;
+    }
+
+    JsonData_KeyboardParameters& operator=(const JsonData_KeyboardParameters& other)
+    {
+        Add(_T("message"), &Message);
+        Message = other.Message;
+        return (*this);
+    }
+
+public:
+    FireboltSDK::JSON::String Message;
+};
+
+class JsonData_KeyboardEmailParameters: public WPEFramework::Core::JSON::Container {
   public:
-      ~JsonData_KeyboardParameters() override = default;
+      ~JsonData_KeyboardEmailParameters() override = default;
 
-  public:
-      JsonData_KeyboardParameters()
-          : WPEFramework::Core::JSON::Container()
-      {
+      JsonData_KeyboardEmailParameters() {
           Add(_T("message"), &Message);
+          Add(_T("type"), &Type);
       }
 
-      JsonData_KeyboardParameters(const JsonData_KeyboardParameters& other)
-      {
+      JsonData_KeyboardEmailParameters(const JsonData_KeyboardEmailParameters& other) {
           Add(_T("message"), &Message);
           Message = other.Message;
+          Add(_T("type"), &Type);
+          Type = other.Type;
       }
 
-      JsonData_KeyboardParameters& operator=(const JsonData_KeyboardParameters& other)
-      {
+      JsonData_KeyboardEmailParameters& operator=(const JsonData_KeyboardEmailParameters& other) {
           Add(_T("message"), &Message);
           Message = other.Message;
+          Add(_T("type"), &Type);
+          Type = other.Type;
           return (*this);
       }
 
   public:
       FireboltSDK::JSON::String Message;
+      JsonData_EmailUsage Type;
   };
 
-  class JsonData_KeyboardEmailParameters: public WPEFramework::Core::JSON::Container {
-    public:
-        ~JsonData_KeyboardEmailParameters() override = default;
-    
-        JsonData_KeyboardEmailParameters() {
-            Add(_T("message"), &Message);
-            Add(_T("type"), &Type);
-        }
-    
-        JsonData_KeyboardEmailParameters(const JsonData_KeyboardEmailParameters& other) {
-            Add(_T("message"), &Message);
-            Message = other.Message;
-            Add(_T("type"), &Type);
-            Type = other.Type;
-        }
-    
-        JsonData_KeyboardEmailParameters& operator=(const JsonData_KeyboardEmailParameters& other) {
-            Add(_T("message"), &Message);
-            Message = other.Message;
-            Add(_T("type"), &Type);
-            Type = other.Type;
-            return (*this);
-        }
-    
-    public:
-        FireboltSDK::JSON::String Message;
-        JsonData_EmailUsage Type;
-    };
+class JsonData_KeyboardProviderRequest: public WPEFramework::Core::JSON::Container {
+public:
+    ~JsonData_KeyboardProviderRequest() override = default;
 
-  class JsonData_KeyboardProviderRequest: public WPEFramework::Core::JSON::Container {
-  public:
-      ~JsonData_KeyboardProviderRequest() override = default;
+public:
+    JsonData_KeyboardProviderRequest()
+        : WPEFramework::Core::JSON::Container()
+    {
+        Add(_T("parameters"), &Parameters);
+    }
 
+    JsonData_KeyboardProviderRequest(const JsonData_KeyboardProviderRequest& other)
+    {
+        Add(_T("parameters"), &Parameters);
+        Parameters = other.Parameters;
+    }
+
+    JsonData_KeyboardProviderRequest& operator=(const JsonData_KeyboardProviderRequest& other)
+    {
+        Add(_T("parameters"), &Parameters);
+        Parameters = other.Parameters;
+        return (*this);
+    }
+
+public:
+    Firebolt::Keyboard::JsonData_KeyboardParameters Parameters;
+};
+
+class JsonData_KeyboardEmailProviderRequest: public WPEFramework::Core::JSON::Container {
   public:
-      JsonData_KeyboardProviderRequest()
-          : WPEFramework::Core::JSON::Container()
-      {
+      ~JsonData_KeyboardEmailProviderRequest() override = default;
+
+      JsonData_KeyboardEmailProviderRequest() {
           Add(_T("parameters"), &Parameters);
       }
 
-      JsonData_KeyboardProviderRequest(const JsonData_KeyboardProviderRequest& other)
-      {
+      JsonData_KeyboardEmailProviderRequest(const JsonData_KeyboardEmailProviderRequest& other) {
           Add(_T("parameters"), &Parameters);
           Parameters = other.Parameters;
       }
 
-      JsonData_KeyboardProviderRequest& operator=(const JsonData_KeyboardProviderRequest& other)
-      {
+      JsonData_KeyboardEmailProviderRequest& operator=(const JsonData_KeyboardEmailProviderRequest& other) {
           Add(_T("parameters"), &Parameters);
           Parameters = other.Parameters;
           return (*this);
       }
 
   public:
-      Firebolt::Keyboard::JsonData_KeyboardParameters Parameters;
+      Firebolt::Keyboard::JsonData_KeyboardEmailParameters Parameters;
   };
 
-  class JsonData_KeyboardEmailProviderRequest: public WPEFramework::Core::JSON::Container {
-    public:
-        ~JsonData_KeyboardEmailProviderRequest() override = default;
-    
-        JsonData_KeyboardEmailProviderRequest() {
-            Add(_T("parameters"), &Parameters);
-        }
-    
-        JsonData_KeyboardEmailProviderRequest(const JsonData_KeyboardEmailProviderRequest& other) {
-            Add(_T("parameters"), &Parameters);
-            Parameters = other.Parameters;
-        }
-    
-        JsonData_KeyboardEmailProviderRequest& operator=(const JsonData_KeyboardEmailProviderRequest& other) {
-            Add(_T("parameters"), &Parameters);
-            Parameters = other.Parameters;
-            return (*this);
-        }
-    
-    public:
-        Firebolt::Keyboard::JsonData_KeyboardEmailParameters Parameters;
-    };
+class JsonData_KeyboardError: public WPEFramework::Core::JSON::Container {
+public:
+    ~JsonData_KeyboardError() override = default;
 
-  class JsonData_KeyboardError: public WPEFramework::Core::JSON::Container {
-  public:
-      ~JsonData_KeyboardError() override = default;
+public:
+    JsonData_KeyboardError()
+        : WPEFramework::Core::JSON::Container()
+    {
+        Add(_T("code"), &Code);
+        Add(_T("message"), &Message);
+        Add(_T("data"), &Data);
+    }
 
-  public:
-      JsonData_KeyboardError()
-          : WPEFramework::Core::JSON::Container()
-      {
-          Add(_T("code"), &Code);
-          Add(_T("message"), &Message);
-          Add(_T("data"), &Data);
-      }
+    JsonData_KeyboardError(const JsonData_KeyboardError& other)
+    {
+        Add(_T("code"), &Code);
+        Code = other.Code;
+        Add(_T("message"), &Message);
+        Message = other.Message;
+        Add(_T("data"), &Data);
+        Data = other.Data;
+    }
 
-      JsonData_KeyboardError(const JsonData_KeyboardError& other)
-      {
-          Add(_T("code"), &Code);
-          Code = other.Code;
-          Add(_T("message"), &Message);
-          Message = other.Message;
-          Add(_T("data"), &Data);
-          Data = other.Data;
-      }
+    JsonData_KeyboardError& operator=(const JsonData_KeyboardError& other)
+    {
+        Add(_T("code"), &Code);
+        Code = other.Code;
+        Add(_T("message"), &Message);
+        Message = other.Message;
+        Add(_T("data"), &Data);
+        Data = other.Data;
+        return (*this);
+    }
 
-      JsonData_KeyboardError& operator=(const JsonData_KeyboardError& other)
-      {
-          Add(_T("code"), &Code);
-          Code = other.Code;
-          Add(_T("message"), &Message);
-          Message = other.Message;
-          Add(_T("data"), &Data);
-          Data = other.Data;
-          return (*this);
-      }
+public:
+    WPEFramework::Core::JSON::DecSInt32 Code;
+    FireboltSDK::JSON::String Message;
+    FireboltSDK::JSON::String Data;
+};
 
-  public:
-      WPEFramework::Core::JSON::DecSInt32 Code;
-      FireboltSDK::JSON::String Message;
-      FireboltSDK::JSON::String Data;
-  };
+class JsonData_Error: public WPEFramework::Core::JSON::Container {
+public:
+    ~JsonData_Error() override = default;
 
-  class JsonData_Error: public WPEFramework::Core::JSON::Container {
-  public:
-      ~JsonData_Error() override = default;
+public:
+    JsonData_Error()
+        : WPEFramework::Core::JSON::Container()
+    {
+        Add(_T("code"), &Code);
+        Add(_T("message"), &Message);
+        Add(_T("data"), &Data);
+    }
 
-  public:
-      JsonData_Error()
-          : WPEFramework::Core::JSON::Container()
-      {
-          Add(_T("code"), &Code);
-          Add(_T("message"), &Message);
-          Add(_T("data"), &Data);
-      }
+    JsonData_Error(const JsonData_Error& other)
+    {
+        Add(_T("code"), &Code);
+        Code = other.Code;
+        Add(_T("message"), &Message);
+        Message = other.Message;
+        Add(_T("data"), &Data);
+        Data = other.Data;
+    }
 
-      JsonData_Error(const JsonData_Error& other)
-      {
-          Add(_T("code"), &Code);
-          Code = other.Code;
-          Add(_T("message"), &Message);
-          Message = other.Message;
-          Add(_T("data"), &Data);
-          Data = other.Data;
-      }
+    JsonData_Error& operator=(const JsonData_Error& other)
+    {
+        Add(_T("code"), &Code);
+        Code = other.Code;
+        Add(_T("message"), &Message);
+        Message = other.Message;
+        Add(_T("data"), &Data);
+        Data = other.Data;
+        return (*this);
+    }
 
-      JsonData_Error& operator=(const JsonData_Error& other)
-      {
-          Add(_T("code"), &Code);
-          Code = other.Code;
-          Add(_T("message"), &Message);
-          Message = other.Message;
-          Add(_T("data"), &Data);
-          Data = other.Data;
-          return (*this);
-      }
+public:
+    WPEFramework::Core::JSON::DecSInt32 Code;
+    FireboltSDK::JSON::String Message;
+    FireboltSDK::JSON::String Data;
+};
 
-  public:
-      WPEFramework::Core::JSON::DecSInt32 Code;
-      FireboltSDK::JSON::String Message;
-      FireboltSDK::JSON::String Data;
-  };
+class KeyboardImpl : public IKeyboard, public IModule {
 
-  class KeyboardImpl : public IKeyboard, public IModule {
+public:
+    KeyboardImpl() = default;
+    KeyboardImpl(const KeyboardImpl&) = delete;
+    KeyboardImpl& operator=(const KeyboardImpl&) = delete;
 
-  public:
-      KeyboardImpl() = default;
-      KeyboardImpl(const KeyboardImpl&) = delete;
-      KeyboardImpl& operator=(const KeyboardImpl&) = delete;
+    ~KeyboardImpl() override = default;
 
-      ~KeyboardImpl() override = default;
+    // Methods & Events
+    void provide( IKeyboardProvider& provider ) override;
 
-      // Methods & Events
-      void provide( IKeyboardProvider& provider ) override;
+};
 
-  };
-     
- 
- }//namespace ${info.Title}
- }${end.if.implementations}
+}//namespace ${info.Title}
+}${end.if.implementations}
+
