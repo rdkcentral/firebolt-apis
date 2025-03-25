@@ -18,7 +18,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:accessibility:closedcaptions"]
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:closedcaptions"
+          ]
         }
       ],
       "result": {
@@ -50,7 +52,10 @@
                 "windowColor": "white",
                 "windowOpacity": 50
               },
-              "preferredLanguages": ["eng", "spa"]
+              "preferredLanguages": [
+                "eng",
+                "spa"
+              ]
             }
           }
         }
@@ -66,7 +71,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:accessibility:closedcaptions"]
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:closedcaptions"
+          ]
         }
       ],
       "result": {
@@ -98,7 +105,10 @@
                 "windowColor": "white",
                 "windowOpacity": 50
               },
-              "preferredLanguages": ["eng", "spa"]
+              "preferredLanguages": [
+                "eng",
+                "spa"
+              ]
             }
           }
         }
@@ -116,7 +126,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:accessibility:voiceguidance"]
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:voiceguidance"
+          ]
         }
       ],
       "result": {
@@ -150,7 +162,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:accessibility:voiceguidance"]
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:voiceguidance"
+          ]
         }
       ],
       "result": {
@@ -184,7 +198,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:accessibility:audiodescriptions"]
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:audiodescriptions"
+          ]
         }
       ],
       "result": {
