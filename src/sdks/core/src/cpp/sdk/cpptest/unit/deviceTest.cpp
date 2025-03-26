@@ -179,38 +179,54 @@ TEST_F(DeviceTest, Hdr)
 
 TEST_F(DeviceTest, Audio)
 { 
-    // Hardcoded expected values
-    Firebolt::Device::AudioProfiles expectedValues;
-    expectedValues.stereo = true;
-    expectedValues.dolbyDigital5_1 = true;
-    expectedValues.dolbyDigital5_1_plus = true;
-    expectedValues.dolbyAtmos = true;
+    nlohmann::json expectedValues = nlohmann::json::parse(jsonEngine->get_value("Device.audio"));
 
     // Getting the actual value from the DeviceInterface
     const Firebolt::Device::AudioProfiles audio = Firebolt::IFireboltAccessor::Instance().DeviceInterface().audio(&error);
 
     EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve audio from Device.audio() method";
-    EXPECT_EQ(audio.stereo, expectedValues.stereo);
-    EXPECT_EQ(audio.dolbyDigital5_1, expectedValues.dolbyDigital5_1);
-    EXPECT_EQ(audio.dolbyDigital5_1_plus, expectedValues.dolbyDigital5_1_plus);
-    EXPECT_EQ(audio.dolbyAtmos, expectedValues.dolbyAtmos);
+    EXPECT_EQ(audio.stereo, expectedValues["stereo"]);
+    EXPECT_EQ(audio.dolbyDigital5_1, expectedValues["dolbyDigital5.1"]);
+    EXPECT_EQ(audio.dolbyDigital5_1_plus, expectedValues["dolbyDigital5.1+"]);
+    EXPECT_EQ(audio.dolbyAtmos, expectedValues["dolbyAtmos"]);
+}
+
+
+std::string networkTypeToString(Firebolt::Device::NetworkType type) {
+    switch (type) {
+        case Firebolt::Device::NetworkType::WIFI:
+            return "wifi";
+        case Firebolt::Device::NetworkType::ETHERNET:
+            return "ethernet";
+        case Firebolt::Device::NetworkType::HYBRID:
+            return "hybrid";
+        default:
+            return "";
+    }
+}
+
+std::string networkStateToString(Firebolt::Device::NetworkState state) {
+    switch (state) {
+        case Firebolt::Device::NetworkState::CONNECTED:
+            return "connected";
+        case Firebolt::Device::NetworkState::DISCONNECTED:
+            return "disconnected";
+        default:
+            return "";
+    }
 }
 
 TEST_F(DeviceTest, Network)
 {
-
-    // Hardcoded expected values
-    Firebolt::Device::NetworkInfoResult expectedValues;
-    expectedValues.state = Firebolt::Device::NetworkState::CONNECTED;
-    expectedValues.type = Firebolt::Device::NetworkType::WIFI;
+    nlohmann::json expectedValues = nlohmann::json::parse(jsonEngine->get_value("Device.network"));
 
     // Getting the actual value from the DeviceInterface
     Firebolt::Device::NetworkInfoResult network = Firebolt::IFireboltAccessor::Instance().DeviceInterface().network(&error);
 
     // Perform the assertions
     EXPECT_EQ(error, Firebolt::Error::None) << "Failed to retrieve network from Device.network() method";
-    EXPECT_EQ(network.state, expectedValues.state);
-    EXPECT_EQ(network.type, expectedValues.type);
+    EXPECT_EQ(networkStateToString(network.state), expectedValues["state"]);
+    EXPECT_EQ(networkTypeToString(network.type), expectedValues["type"]);
 }
 
 TEST_F(DeviceTest, ScreenResolution)
