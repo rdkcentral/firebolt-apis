@@ -20,7 +20,7 @@ To support this, Firebolt shall provide content partners with access to the user
 As an app, I want to...
 
 - Get whether the user has enabled viewing restrictions
-- Get a list of content ratings (and subratings, if applicable) the user has chosen to restrict from viewing
+- Get a list of content ratings (and sub-ratings, if applicable) the user has chosen to restrict from viewing
 - Get whether the user should be able to view unrated content
 - Be notified when the user's viewing restriction preferences have changed
 
@@ -30,23 +30,14 @@ As an app, I want to...
   - [1.1. User Stories](#11-user-stories)
 - [2. Table of Contents](#2-table-of-contents)
 - [3. Constants, Types, and Schemas](#3-constants-types-and-schemas)
-  - [3.1. Content Rating](#31-content-rating)
-  - [3.2. Viewing Restriction](#32-viewing-restriction)
+  - [3.1. Viewing Restriction](#31-viewing-restriction)
+  - [3.2. Content Rating](#32-content-rating)
 - [4. Restrictions](#4-restrictions)
   - [4.1. Viewing Restrictions](#41-viewing-restrictions)
 
 ## 3. Constants, Types, and Schemas
 
-### 3.1. Content Rating
-
-The Firebolt `Profile` module **MUST** have a `ContentRating` object of the following schema:
-
-| Property     | Type       | Required | Description                                                                                                                                          |
-| ------------ | ---------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `rating`     | `string`   | Yes      | A content rating (e.g. PG-13 for an MPAA rated movie). This may be operator or region dependant.                                                     |
-| `subratings` | `[]string` | Yes      | A list of subratings/content descriptors (e.g. ['V'] for violent content for a US TV based rating scheme). This may be operator or region dependant. |
-
-### 3.2. Viewing Restriction
+### 3.1. Viewing Restriction
 
 The Firebolt `Profile` module **MUST** have a `ViewingRestriction` object of the following schema:
 
@@ -54,6 +45,15 @@ The Firebolt `Profile` module **MUST** have a `ViewingRestriction` object of the
 | --------- | ---------- | -------- | ------------------------------------------------------------------------------------ |
 | `scheme`  | `string`   | Yes      | A rating scheme (e.g. MPAA for US movies). This may be operator or region dependant. |
 | `ratings` | `[]Rating` | Yes      | A list of ratings the user wishes to restrict.                                       |
+
+### 3.2. Content Rating
+
+The Firebolt `Profile` module **MUST** have a `ContentRating` object of the following schema:
+
+| Property     | Type       | Required | Description                                                                                                                                           |
+| ------------ | ---------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rating`     | `string`   | Yes      | A content rating (e.g. PG-13 for an MPAA rated movie). This may be operator or region dependant.                                                      |
+| `subRatings` | `[]string` | Yes      | A list of sub-ratings/content descriptors (e.g. ['V'] for violent content for a US TV based rating scheme). This may be operator or region dependant. |
 
 ## 4. Restrictions
 
@@ -92,7 +92,7 @@ Profile.viewingRestrictions()
 //>         {
 //>             scheme: 'US_TV',
 //>             ratings: [
-//>                 {rating: 'TV-14', subratings: ['V']},
+//>                 {rating: 'TV-14', subRatings: ['V']},
 //>                 {rating: 'TV-MA'},
 //>             ]
 //>         }

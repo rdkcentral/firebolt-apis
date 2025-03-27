@@ -1,210 +1,212 @@
 {
-  "openrpc": "1.2.4",
-  "info": {
-    "title": "Profile",
-    "description": "Methods for getting information about the current user/account profile",
-    "version": "0.0.0"
-  },
-  "methods": [
-    {
-      "name": "approveContentRating",
-      "tags": [
-        {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:approve:content"
-          ]
-        }
-      ],
-      "summary": "Verifies that the current profile should have access to mature/adult content.",
-      "params": [],
-      "result": {
-        "name": "allow",
-        "summary": "Whether or not to allow access",
-        "schema": {
-          "type": "boolean"
-        }
-      },
-      "examples": [
-        {
-          "name": "Default Example",
-          "params": [],
-          "result": {
-            "name": "allow",
-            "value": false
-          }
-        }
-      ]
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Profile",
+        "description": "Methods for getting information about the current user/account profile",
+        "version": "0.0.0"
     },
-    {
-      "name": "approvePurchase",
-      "tags": [
+    "methods": [
         {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:approve:purchase"
-          ]
-        }
-      ],
-      "summary": "Verifies that the current profile should have access to making purchases.",
-      "params": [],
-      "result": {
-        "name": "allow",
-        "summary": "Whether or not to allow access",
-        "schema": {
-          "type": "boolean"
-        }
-      },
-      "examples": [
-        {
-          "name": "Default Example",
-          "params": [],
-          "result": {
-            "name": "allow",
-            "value": false
-          }
-        }
-      ]
-    },
-    {
-      "name": "flags",
-      "tags": [
-        {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:profile:flags"
-          ]
-        }
-      ],
-      "summary": "Get a map of profile flags for the current session.",
-      "params": [],
-      "result": {
-        "name": "flags",
-        "summary": "The profile flags.",
-        "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
-        }
-      },
-      "examples": [
-        {
-          "name": "Default Example",
-          "params": [],
-          "result": {
-            "name": "flags",
-            "value": {
-              "userExperience": "1000"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "viewingRestrictions",
-      "summary": "The profile's preferred viewing restrictions.",
-      "params": [],
-      "tags": [
-        {
-          "name": "property:readonly"
+            "name": "approveContentRating",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:approve:content"
+                    ]
+                }
+            ],
+            "summary": "Verifies that the current profile should have access to mature/adult content.",
+            "params": [],
+            "result": {
+                "name": "allow",
+                "summary": "Whether or not to allow access",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
+                    }
+                }
+            ]
         },
         {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:profile:viewingrestrictions"
-          ]
-        }
-      ],
-      "result": {
-        "name": "viewingRestrictions",
-        "summary": "The current viewing restrictions",
-        "schema": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
-            "restrictions": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ViewingRestriction"
-              }
-            }
-          },
-          "required": [
-            "enabled",
-            "restrictions"
-          ]
-        }
-      },
-      "errors": [],
-      "examples": [
-        {
-          "name": "Content with an MPAA R-rating and US TV TV-14-V is restricted",
-          "params": [],
-          "result": {
-            "name": "Default Result",
-            "value": {
-              "enabled": true,
-              "restrictions": [
+            "name": "approvePurchase",
+            "tags": [
                 {
-                  "scheme": "MPAA",
-                  "ratings": [
-                    {
-                      "rating": "R"
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:approve:purchase"
+                    ]
+                }
+            ],
+            "summary": "Verifies that the current profile should have access to making purchases.",
+            "params": [],
+            "result": {
+                "name": "allow",
+                "summary": "Whether or not to allow access",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "allow",
+                        "value": false
                     }
-                  ]
+                }
+            ]
+        },
+        {
+            "name": "flags",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:profile:flags"
+                    ]
+                }
+            ],
+            "summary": "Get a map of profile flags for the current session.",
+            "params": [],
+            "result": {
+                "name": "flags",
+                "summary": "The profile flags.",
+                "schema": {
+                    "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "flags",
+                        "value": {
+                            "userExperience": "1000"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "viewingRestrictions",
+            "summary": "The profile's preferred viewing restrictions.",
+            "params": [],
+            "tags": [
+                {
+                    "name": "property:readonly"
                 },
                 {
-                  "scheme": "US TV",
-                  "ratings": [
-                    {
-                      "rating": "TV-14",
-                      "subratings": [
-                        "V"
-                      ]
-                    }
-                  ]
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:profile:viewingrestrictions"
+                    ]
                 }
-              ]
-            }
-          }
+            ],
+            "result": {
+                "name": "viewingRestrictions",
+                "summary": "The current viewing restrictions",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "restrictions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/ViewingRestriction"
+                            }
+                        }
+                    },
+                    "required": [
+                        "enabled",
+                        "restrictions"
+                    ]
+                }
+            },
+            "errors": [],
+            "examples": [
+                {
+                    "name": "Content with an MPAA R-rating and US TV TV-14-V is restricted",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": {
+                            "enabled": true,
+                            "restrictions": [
+                                {
+                                    "scheme": "MPAA",
+                                    "ratings": [
+                                        {
+                                            "rating": "R"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "scheme": "US_TV",
+                                    "ratings": [
+                                        {
+                                            "rating": "TV-14",
+                                            "subRatings": [
+                                                "V"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
         }
-      ]
+    ],
+    "components": {
+        "schemas": {
+            "ContentRating": {
+                "description": "The rating and subrating for content.",
+                "type": "object",
+                "properties": {
+                    "rating": {
+                        "description": "The rating to be restricted. Refer to operator documentation for supported values.",
+                        "type": "string"
+                    },
+                    "subRatings": {
+                        "description": "A list of sub-ratings to be restricted. Refer to operator documentation for supported values.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ViewingRestriction": {
+                "description": "The content viewing restriction.",
+                "type": "object",
+                "properties": {
+                    "scheme": {
+                        "description": "The scheme for the restriction (e.g. MPAA for US movies). Scheme values may be region or operator dependant; refer to operator documentation for the scheme values supported on your targeted platform.",
+                        "type": "string"
+                    },
+                    "ratings": {
+                        "description": "A list of content ratings to be restricted.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ContentRating"
+                        }
+                    }
+                }
+            }
+        }
     }
-  ],
-  "components": {
-    "schemas": {
-      "ContentRating": {
-        "description": "The rating and subrating for content.",
-        "type": "object",
-        "properties": {
-          "rating": {
-            "type": "string"
-          },
-          "subratings": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "ViewingRestriction": {
-        "description": "The content viewing restriction.",
-        "type": "object",
-        "properties": {
-          "scheme": {
-            "description": "The scheme for the restriction (such as MPAA for US movies). This value may be platform or operator dependant.",
-            "type": "string"
-          },
-          "ratings": {
-            "description": "A list of content ratings to be restricted.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ContentRating"
-            }
-          }
-        }
-      }
-    }
-  }
 }
