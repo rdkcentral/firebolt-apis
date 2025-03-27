@@ -10,9 +10,6 @@
             "name": "ready",
             "tags": [
                 {
-                    "name": "calls-metrics"
-                },
-                {
                     "name": "capabilities",
                     "x-uses": [
                         "xrn:firebolt:capability:lifecycle:ready"
@@ -353,6 +350,7 @@
             "name": "destroy",
             "tags": [
                 {
+                    "name": "notifier",
                     "x-event": "Lifecycle.onDestroy"
                 },
                 {
