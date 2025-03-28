@@ -7,6 +7,9 @@
     },
     {
       "$ref": "#/definitions/CloseReason"
+    },
+    {
+      "$ref": "#/definitions/DestroyReason"
     }
   ],
   "definitions": {
@@ -16,11 +19,10 @@
       "type": "string",
       "enum": [
         "initializing",
-        "inactive",
-        "foreground",
-        "background",
-        "unloading",
-        "suspended"
+        "paused",
+        "active",
+        "suspended",
+        "hibernated"
       ]
     },
     "CloseReason": {
@@ -28,6 +30,15 @@
       "description": "The application close reason",
       "type": "string",
       "enum": ["remoteButton", "userExit", "done", "error"]
-    }
+    },
+    "DestroyReason": {
+        "title": "DestroyReason",
+        "description": "The application destroy reason",
+        "type": "string",      
+        "enum": [
+            "userExit",
+            "error"
+        ]
+      }
   }
 }

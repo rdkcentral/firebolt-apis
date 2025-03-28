@@ -1254,6 +1254,40 @@
 			]
 		},
 		{
+			"name": "getNavigationIntent",
+			"tags": [
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:discovery:navigate-to"
+					]
+				}
+			],
+			"summary": "get the latest navigation intent",
+			"params": [],
+			"result": {
+				"name": "intent",
+				"schema": {
+					"$ref": "https://meta.rdkcentral.com/firebolt/schemas/intents#/definitions/NavigationIntent"
+				}
+			},
+			"examples": [
+				{
+					"name": "Get the latest navigation intent",
+					"params": [],
+					"result": {
+						"name": "intent",
+							"value": {
+								"action": "home",
+								"context": {
+									"source": "voice"
+							}
+						}
+					}
+				}
+			]
+		},
+		{
 			"name": "navigateTo",
 			"tags": [
 				{
