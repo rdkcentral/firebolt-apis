@@ -44,20 +44,21 @@ set(TESTAPP TestFireboltCore)
 
 message("Setup ${TESTAPP}")
 
-if (NOT ENABLE_INTERACTIVE_APP)
-    add_executable(${TESTAPP} CoreSDKTest.cpp Main.cpp)
-    add_compile_definitions(TESTS_ENABLED)
-else ()
+if (ENABLE_INTERACTIVE_APP)
     add_executable(${TESTAPP} CoreSDKTest.cpp InteractiveApp.cpp)
     add_compile_definitions(INTERACTIVE_APP)
+else ()
+    add_executable(${TESTAPP} CoreSDKTest.cpp Main.cpp)
+    add_compile_definitions(TESTS_ENABLED)
 endif ()
 
 target_link_libraries(${TESTAPP}
     PRIVATE
         ${NAMESPACE}Core::${NAMESPACE}Core
         ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
-        nlohmann_json_schema_validator
-        gtest_main
+        nlohmann_json::nlohmann_json
+        nlohmann_json_schema_validator::validator
+        GTest::gtest_main
 )
 
 target_include_directories(${TESTAPP}
@@ -88,6 +89,9 @@ if(ENABLE_UNIT_TESTS)
     set(UNIT_TESTS_APP FireboltCoreUnitTests)
 
     message("Setup ${UNIT_TESTS_APP}")
+    if (ENABLE_UNIT_TESTS)
+        add_compile_definitions(UNIT_TEST_SUITE)
+    endif()
 
     file(GLOB UNIT_TESTS "unit/*")
 
@@ -98,14 +102,15 @@ if(ENABLE_UNIT_TESTS)
         Unit.cpp
         ${UNIT_TESTS}
     )
-    
-    link_directories(${CMAKE_SOURCE_DIR}/../../Thunder/install/usr/lib/)
+
+    link_directories(${SYSROOT_PATH}/usr/lib/)
     target_link_libraries(${UNIT_TESTS_APP}
         PRIVATE
             ${NAMESPACE}Core::${NAMESPACE}Core
             ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
-            nlohmann_json_schema_validator
-            gtest_main
+            nlohmann_json::nlohmann_json
+            nlohmann_json_schema_validator::validator
+            GTest::gtest_main
     )
 
     target_include_directories(${UNIT_TESTS_APP}
@@ -121,7 +126,7 @@ if(ENABLE_UNIT_TESTS)
 
     include(GoogleTest)
     gtest_discover_tests(${UNIT_TESTS_APP})
-endif()
+endif ()
 
 if(ENABLE_COVERAGE)
     include(${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake)
