@@ -17,10 +17,9 @@
 		"docs:nodocs": "echo 'docs: disabled'",
 		"docs": "npx firebolt-openrpc docs --platformApi ./dist/firebolt-manage-open-rpc.json --appApi ./dist/firebolt-manage-app-open-rpc.json --output build/docs/markdown --as-path",
 		"wiki": "npx firebolt-openrpc docs --platformApi ./dist/firebolt-manage-open-rpc.json --appApi ./dist/firebolt-manage-app-open-rpc.json --output build/docs/markdown",
-		"dist:notest": "npm run clean && npm run slice && npm run slice:app && npm run validate && npm run sdk && npm run docs && npm run prettier:nots && npm run dist:copy && echo 'Firebolt Core SDK /dist/ is ready.\n'",
-		"dist:copy": "npm run dist:copy:sdk && npm run dist:copy:nodocs",
+		"dist:notest": "npm run clean && npm run slice && npm run slice:app && npm run validate && npm run sdk && npm run docs && npm run prettier && npm run dist:copy && echo 'Firebolt Core SDK /dist/ is ready.\n'",
+		"dist:copy": "npm run dist:copy:sdk && npm run dist:copy:docs",
 		"dist:copy:sdk": "mkdirp ./dist && cp -R build/javascript/src dist/lib && cp ./dist/firebolt-manage-open-rpc.json ../../../dist/firebolt-manage-open-rpc.json",
-		"dist:copy:nodocs": "echo 'dist:copy:docs: disabled'",
 		"dist:copy:docs": "mkdirp ./dist && cp -R build/docs/markdown dist/docs",
 		"dist": "npm run dist:notest && npm run test:notest",
 		"clean": "rm -rf ./build && rm -rf ./dist",
@@ -29,9 +28,7 @@
 		"test:notest": "echo 'test: disabled'",
 		"prepack": "node ../../js/version.mjs validate && npm run broilerplate",
 		"broilerplate": "rm ./CONTRIBUTING.md && cp ../../../CONTRIBUTING.md ./CONTRIBUTING.md && rm ./LICENSE && cp ../../../LICENSE ./LICENSE && rm ./NOTICE && cp ../../../NOTICE ./NOTICE",
-		"prettier:nodocs_nots": "echo 'prettier: disabled for .ts and .md' && prettier build/**/*.mjs --write --parser babel",
 		"prettier": "prettier build/**/*.mjs --write --parser babel && prettier build/**/*.ts --write --parser typescript && prettier build/**/*.md --write --parser markdown",
-		"prettier:nots": "echo 'prettier: disabled for .ts' && prettier build/**/*.mjs --write --parser babel && prettier build/**/*.md --write --parser markdown",
 		"getVersion": "node -p \"require('./package.json').version\""
 	},
 	"repository": {
