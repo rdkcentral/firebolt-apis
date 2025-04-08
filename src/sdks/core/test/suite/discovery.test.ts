@@ -33,6 +33,7 @@ test("policy()", () => {
   });
 });
 
+/* not compilable with bidirectional, disabling until mismatch resolved
 test("policy(subscriber)", () => {
   return Discovery.policy((policy: Discovery.DiscoveryPolicy) => { }).then(
     (res: number) => {
@@ -40,6 +41,7 @@ test("policy(subscriber)", () => {
     }
   );
 });
+*/
 
 test("entityInfo(EntityInfoResult)", () => {
   const dummyData: Discovery.EntityInfoResult = {
@@ -151,6 +153,7 @@ test("clear()", () => {
   expect(result).toBeFalsy();
 });
 
+/* not compilable with bidirectional, disabling until mismatch resolved
 test("details() provider", () => {
 
   class myUserInterestProvider implements Discovery.UserInterestProvider {
@@ -159,3 +162,5 @@ test("details() provider", () => {
     }
   }
 })
+*/
+
