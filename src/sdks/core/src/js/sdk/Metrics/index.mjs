@@ -21,15 +21,15 @@
 /* ${INITIALIZATION} */
 
 function ready() {
-  return Transport.send('metrics', 'ready', {})
+  return Gateway.request('metrics', 'ready', {})
 }
 
 function signIn() {
-  return Transport.send('metrics', 'signIn', {})
+  return Gateway.request('metrics', 'signIn', {})
 }
 
 function signOut() {
-  return Transport.send('metrics', 'signOut', {})
+  return Gateway.request('metrics', 'signOut', {})
 }
 
 
