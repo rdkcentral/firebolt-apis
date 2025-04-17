@@ -124,7 +124,7 @@ const capabilities = () => {
         capabilities[c] && (capabilities[c].level = v.level)
     })
 
-    var manifest = '\n## Methods\nCapability prefix `xrn:firebolt:capability` trimmed for readability.\n| Method | Level | Capability |\n|-|-|-|\n'
+    var manifest = '\n## Methods\n\nCapability prefix `xrn:firebolt:capability` trimmed for readability.\n\n| Method | Level | Capability |\n|-|-|-|\n'
 
     const stripOn = x => x.match(/^[a-zA-Z]+\.on[A-Z]/) ? x.split('.')[0] + '.' + x.split('.')[1].substring(2).toLowerCase() + x.split('.')[1].substring(3) : x
 
@@ -149,7 +149,7 @@ const capabilities = () => {
 
     })
     
-    manifest += '\n## Capailities\n| Capability | Level | Uses | Provides |\n|-|-|-|-|\n'
+    manifest += '\n\n## Capailities\n\n| Capability | Level | Uses | Provides |\n|-|-|-|-|\n'
     
     Object.keys(capabilities).sort().forEach(c => {
         const use = capabilities[c].uses.length ? `<details><summary>${capabilities[c].uses.length}</summary>${capabilities[c].uses.map(linkify).join('<br/>')}</details>` : ''
