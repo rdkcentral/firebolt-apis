@@ -28,7 +28,17 @@ const openrpc = await readJson(path.join(path.dirname(parsedArgs.input), 'firebo
 const capabilities = () => {
     const getOrCreateCapMethodList = (capabilities, c) => capabilities[c] = capabilities[c] || { uses: [], manages: [], provides: [] }
     const capabilities = {}
-    openrpc.methods.forEach(method => {
+    openrpc.methods.sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      }).forEach(method => {
         const caps = method.tags.find(t => t.name === "capabilities");
         (caps['x-uses'] || []).forEach(c => {
           getOrCreateCapMethodList(capabilities, c)

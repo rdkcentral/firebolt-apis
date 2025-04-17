@@ -28,7 +28,10 @@
 			"level": "could"
 		},
 		"xrn:firebolt:capability:advertising:identifier": {
-			"level": "should"
+			"level": "must"
+		},
+		"xrn:firebolt:capability:advertising:policy": {
+			"level": "could"
 		},
 		"xrn:firebolt:capability:approve:content": {
 			"level": "should"
@@ -37,21 +40,21 @@
 			"level": "could"
 		},
 		"xrn:firebolt:capability:capabilities:info": {
-			"level": "must",
+			"level": "could",
 			"use": {
 				"public": true,
 				"negotiable": false
 			}
 		},
 		"xrn:firebolt:capability:capabilities:request": {
-			"level": "must",
+			"level": "could",
 			"use": {
 				"public": true,
 				"negotiable": false
 			}
 		},
 		"xrn:firebolt:capability:device:distributor": {
-			"level": "must"
+			"level": "could"
 		},
 		"xrn:firebolt:capability:device:id": {
 			"level": "could"
@@ -66,16 +69,16 @@
 			"level": "must"
 		},
 		"xrn:firebolt:capability:device:name": {
-			"level": "should"
+			"level": "could"
 		},
 		"xrn:firebolt:capability:device:sku": {
 			"level": "could"
 		},
 		"xrn:firebolt:capability:device:uid": {
-			"level": "could"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:discovery:content-access": {
-			"level": "must"
+			"level": "could"
 		},
 		"xrn:firebolt:capability:discovery:entity-info": {
 			"level": "could"
@@ -87,7 +90,7 @@
 			"level": "must"
 		},
 		"xrn:firebolt:capability:discovery:policy": {
-			"level": "must"
+			"level": "should"
 		},
 		"xrn:firebolt:capability:discovery:purchased-content": {
 			"level": "could"
@@ -138,7 +141,7 @@
 			"level": "could"
 		},
 		"xrn:firebolt:capability:localization:country-code": {
-			"level": "should"
+			"level": "must"
 		},
 		"xrn:firebolt:capability:localization:language": {
 			"level": "must"
@@ -169,6 +172,9 @@
 		},
 		"xrn:firebolt:capability:network:status": {
 			"level": "must"
+		},
+		"xrn:firebolt:capability:parameters:initialization": {
+			"level": "could"
 		},
 		"xrn:firebolt:capability:privacy:advertising": {
 			"level": "must"

@@ -93,15 +93,17 @@ packageJson.workspaces.forEach(async workspace => {
 })
 
 const specification = await readJson(path.join('dist', 'firebolt-specification.json'))
-const openrpc = await readJson(path.join('dist', 'firebolt-open-rpc.json'))
 const corerpc = await readJson(path.join('dist', 'firebolt-core-open-rpc.json'))
+const openrpc = await readJson(path.join('dist', 'firebolt-open-rpc.json'))
 const managerpc = await readJson(path.join('dist', 'firebolt-manage-open-rpc.json'))
 const discoveryrpc = await readJson(path.join('dist', 'firebolt-discovery-open-rpc.json'))
+
+const linkify = (method) => `[${method}](./${corerpc.methods.find(m => m.name === method) ? 'core' : 'manage'}/${method.split('.').shift()}/#${method.match(/\.on[A-Z]/) ? method.split('.').pop().charAt(2).toLowerCase() + method.split('.').pop().substring(3).toLowerCase() : method.split('.').pop().toLowerCase()})`
 
 const capabilities = () => {
     const getOrCreateCapMethodList = (capabilities, c) => capabilities[c] = capabilities[c] || { uses: [], manages: [], provides: [] }
     const capabilities = {}
-    openrpc.methods.forEach(method => {
+    corerpc.methods.forEach(method => {
         const caps = method.tags.find(t => t.name === "capabilities");
         (caps['x-uses'] || []).forEach(c => {
           getOrCreateCapMethodList(capabilities, c)
@@ -119,37 +121,44 @@ const capabilities = () => {
     })
 
     Object.entries(specification.capabilities).forEach( ([c, v]) => {
-        capabilities[c].level = v.level
+        capabilities[c] && (capabilities[c].level = v.level)
     })
 
-    var manifest = '\n## Capailities\n| Capability | Level | Uses | Provides | Manages |\n|-|-|-|-|-|\n'
-    
-    const linkify = (method) => `[${method}](./${corerpc.methods.find(m => m.name === method) ? 'core' : 'manage'}/${method.split('.').shift()}/#${method.match(/\.on[A-Z]/) ? method.split('.').pop().charAt(2).toLowerCase() + method.split('.').pop().substring(3).toLowerCase() : method.split('.').pop().toLowerCase()})`
-    Object.keys(capabilities).sort().forEach(c => {
-        const use = capabilities[c].uses.length ? `<details><summary>${capabilities[c].uses.length}</summary>${capabilities[c].uses.map(linkify).join('<br/>')}</details>` : ''
-        const man = capabilities[c].manages.length ? `<details><summary>${capabilities[c].manages.length}</summary>${capabilities[c].manages.map(linkify).join('<br/>')}</details>` : ''
-        const pro = capabilities[c].provides.length ? `<details><summary>${capabilities[c].provides.length}</summary>${capabilities[c].provides.map(linkify).join('<br/>')}</details>` : ''
+    var manifest = '\n## Methods\nCapability prefix `xrn:firebolt:capability` trimmed for readability.\n| Method | Level | Capability |\n|-|-|-|\n'
 
-        manifest += `| \`${c}\` | **${capabilities[c].level.toUpperCase()}** | ${use} | ${pro} | ${man} |\n`
-    })
+    const stripOn = x => x.match(/^[a-zA-Z]+\.on[A-Z]/) ? x.split('.')[0] + '.' + x.split('.')[1].substring(2).toLowerCase() + x.split('.')[1].substring(3) : x
 
-    manifest += '\n## Methods\nCapability prefix `xrn:firebolt:capability` let off for readability.\n| Method | Level | Uses | Provides | Manages |\n|-|-|-|-|-|\n'
-
-    openrpc.methods.forEach(method => {
+    corerpc.methods.sort( ({ name: a }, { name: b }) => {
+        a = stripOn(a);
+        b = stripOn(b);
+        return a < b ? -1 : a > b ? 1 : 0
+    }).forEach(method => {
         let uses = Object.entries(capabilities).filter( ([c, v]) => v.uses.includes(method.name)).map(([c, v]) => c)
         let mans = Object.entries(capabilities).filter( ([c, v]) => v.manages.includes(method.name)).map(([c, v]) => c)
         let pros = Object.entries(capabilities).filter( ([c, v]) => v.provides.includes(method.name)).map(([c, v]) => c)
         let level = Array.from(new Set(uses.concat(mans).concat(pros).map(c => capabilities[c].level))).join(', ')
-
+        let deprecated = !!method.tags.find(t => t.name === 'deprecated')
         uses = uses.map(c => c.split(':').slice(3, 5).join(':')).map(c => `\`${c}\``).join(', ')
         pros = pros.map(c => c.split(':').slice(3, 5).join(':')).map(c => `\`${c}\``).join(', ')
         mans = mans.map(c => c.split(':').slice(3, 5).join(':')).map(c => `\`${c}\``).join(', ')
         level = level.includes('must') ? 'must' : level.includes('should') ? 'should' : 'could'
 
-        manifest += `| ${linkify(method.name)} | **${level.toUpperCase()}** | ${uses} | ${pros} | ${mans} |\n`
+        console.log(`${method.name}: ${deprecated}`)
+
+        manifest += `| ${deprecated ? '~~' : ''}${linkify(method.name)}${deprecated ? '~~' : ''} | **${level.toUpperCase()}** | ${uses || pros} ${ pros ? ' (provides)' : ''} |\n`
 
     })
     
+    manifest += '\n## Capailities\n| Capability | Level | Uses | Provides |\n|-|-|-|-|\n'
+    
+    Object.keys(capabilities).sort().forEach(c => {
+        const use = capabilities[c].uses.length ? `<details><summary>${capabilities[c].uses.length}</summary>${capabilities[c].uses.map(linkify).join('<br/>')}</details>` : ''
+        const man = capabilities[c].manages.length ? `<details><summary>${capabilities[c].manages.length}</summary>${capabilities[c].manages.map(linkify).join('<br/>')}</details>` : ''
+        const pro = capabilities[c].provides.length ? `<details><summary>${capabilities[c].provides.length}</summary>${capabilities[c].provides.map(linkify).join('<br/>')}</details>` : ''
+
+        manifest += `| \`${c}\` | **${capabilities[c].level.toUpperCase()}** | ${use} | ${pro} |\n`
+    })
+
     return manifest
 }
 
