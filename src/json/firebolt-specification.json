@@ -81,7 +81,7 @@
 			"level": "could"
 		},
 		"xrn:firebolt:capability:discovery:interest": {
-			"level": "must"
+			"level": "could"
 		},
 		"xrn:firebolt:capability:discovery:navigate-to": {
 			"level": "must"
@@ -93,13 +93,13 @@
 			"level": "could"
 		},
 		"xrn:firebolt:capability:discovery:sign-in-status": {
-			"level": "must"
+			"level": "should"
 		},
 		"xrn:firebolt:capability:discovery:watch-next": {
 			"level": "could"
 		},
 		"xrn:firebolt:capability:discovery:watched": {
-			"level": "must"
+			"level": "should"
 		},
 		"xrn:firebolt:capability:grants:state": {
 			"level": "must"
@@ -111,7 +111,7 @@
 			"level": "should"
 		},
 		"xrn:firebolt:capability:lifecycle:initialize": {
-			"level": "must",
+			"level": "could",
 			"use": {
 				"public": true,
 				"negotiable": false
@@ -138,7 +138,7 @@
 			"level": "could"
 		},
 		"xrn:firebolt:capability:localization:country-code": {
-			"level": "must"
+			"level": "should"
 		},
 		"xrn:firebolt:capability:localization:language": {
 			"level": "must"
@@ -168,6 +168,9 @@
 			"level": "must"
 		},
 		"xrn:firebolt:capability:network:status": {
+			"level": "must"
+		},
+		"xrn:firebolt:capability:privacy:advertising": {
 			"level": "must"
 		},
 		"xrn:firebolt:capability:privacy:settings": {

@@ -23,7 +23,7 @@ const signOff = () => console.log('\nThis has been a presentation of \x1b[38;5;2
 console.dir(parsedArgs)
 
 const specification = await readJson(path.join(parsedArgs.input))
-const openrpc = specification.apis["1"]
+const openrpc = await readJson(path.join(path.dirname(parsedArgs.input), 'firebolt-core-open-rpc.json')) //specification.apis["1"]
 
 const capabilities = () => {
     const getOrCreateCapMethodList = (capabilities, c) => capabilities[c] = capabilities[c] || { uses: [], manages: [], provides: [] }
@@ -46,12 +46,11 @@ const capabilities = () => {
     })
 
     Object.entries(specification.capabilities).forEach( ([c, v]) => {
+        capabilities[c] = capabilities[c] || { uses: [], manages: [], provides: []}
         capabilities[c].level = v.level
     })
 
-    let manifest = ''
-
-    manifest += '\n## Methods\n| | Module | Method | Firebolt Global |\n|-|--|--|--|\n'
+    let manifest = ',Module,Method,Required\n'
     let n = 1
     let module = ''
 
@@ -83,7 +82,7 @@ const capabilities = () => {
                 level = 'deprecated'
             }
 
-            manifest += `| ${n++} | ${m} | ${method.name.split('.')[1]} | ${level === 'must' ? 'Yes' : 'No'} |\n`
+            manifest += `${n++},${m},${method.name.split('.')[1]},${level === 'must' ? 'Yes' : 'No'}\n`
         }
 
     })
@@ -91,61 +90,8 @@ const capabilities = () => {
     return manifest
 }
 
-// This is the main README, and goes in a few places...
-console.log(`Will copy ${path.join('.', 'README.md')} to ${path.join(parsedArgs.output)}`)
-const index = frontmatter(await readText(path.join('README.md')), null, null) + capabilities()
+const index = capabilities()
+
 writeText(path.join(parsedArgs.output), index)
-
-function channel(version) {
-    const parts = version.split("-")
-
-    if (parts.length > 1) {
-        parts.shift()
-        const chnl = parts.join("-").split(".").shift()
-        return chnl
-    }
-    else {
-        return 'latest'
-    }
-}
-
-function frontmatter(data, version, sdk, category, type) {
-    let matter = ''
-    if (data.startsWith('---')) {
-        matter = data = data.substring(4)
-        matter = data.substring(0, data.indexOf('---'))
-        data = data.substring(data.indexOf('---')+4)
-    }
-
-    matter = '---\n' + matter + '\n'
-
-    if (version && matter.indexOf('Version:') === -1) {
-        matter += `version: ${version}\n`
-    }
-
-    if (matter.indexOf('layout:') === -1) {
-        matter += `layout: default\n`
-    }
-
-    if (matter.toLowerCase().indexOf('title:') === -1) {
-        matter += `title: ${data.match(/\# (.*?)\n/)[1]}\n`
-    }
-
-    if (sdk && matter.indexOf('sdk:') === -1) {
-        matter += `sdk: ${sdk}\n`
-    }
-
-    if (category && matter.indexOf('category:') === -1) {
-        matter += `category: ${category}\n`
-    }
-
-    if (type && matter.indexOf('type:') === -1) {
-        matter += `type: ${type}\n`
-    }
-
-    matter += '---\n'
-
-    return matter + data.replace(/\<details(.*?)\>/g, '<details markdown="1" $1>')
-}
 
 signOff()
