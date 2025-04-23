@@ -19,10 +19,10 @@
 import { test, expect } from "@jest/globals";
 import { AcknowledgeChallenge } from "../../build/javascript/src/firebolt-manage";
 
-class ACKPovider implements AcknowledgeChallenge.ChallengeProvider {
+class ACKPovider implements AcknowledgeChallenge.AcknowledgeChallenge {
   challenge(
-    parameters: object,
-    session: AcknowledgeChallenge.FocusableProviderSession
+    capability: string,
+    requestor: AcknowledgeChallenge.ChallengeRequestor
   ): Promise<AcknowledgeChallenge.GrantResult> {
     return Promise.resolve(null);
   }
@@ -30,7 +30,6 @@ class ACKPovider implements AcknowledgeChallenge.ChallengeProvider {
 
 test("AcknowledgeChallenge.provide() declarations", () => {
   AcknowledgeChallenge.provide(
-    "xrn:firebolt:capability:usergrant:acknowledgechallenge",
     new ACKPovider()
   );
   expect(1).toBe(1);
@@ -39,8 +38,7 @@ test("AcknowledgeChallenge.provide() declarations", () => {
 test("AcknowledgeChallenge.provide() with blank object", () => {
   expect(() => {
     AcknowledgeChallenge.provide(
-      "xrn:firebolt:capability:usergrant:acknowledgechallenge",
-      {}
+      null
     );
   }).toThrow();
 });

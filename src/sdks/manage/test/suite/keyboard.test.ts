@@ -71,71 +71,65 @@ beforeAll(async () => {
   Settings.setLogLevel('DEBUG')
   window['__firebolt'].setTransportLayer(new MockProviderBroker())
   provider = new DelegatingKBProvider(new KBProvider())
-  await Keyboard.provide("xrn:firebolt:capability:input:keyboard", provider);
+  await Keyboard.provide(provider);
 })
 
-class DelegatingKBProvider implements Keyboard.KeyboardInputProvider {
-  delegate: Keyboard.KeyboardInputProvider;
-  constructor(delegate: Keyboard.KeyboardInputProvider) {
+class DelegatingKBProvider implements Keyboard.Keyboard {
+  delegate: Keyboard.Keyboard;
+  constructor(delegate: Keyboard.Keyboard) {
     this.delegate = delegate;
   }
   standard(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    message: string
   ): Promise<string> {
-    return this.delegate.standard(parameters, session)
+    return this.delegate.standard(message)
   }
   password(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    message?: string
   ): Promise<string> {
-    return this.delegate.password(parameters, session)
+    return this.delegate.password(message)
   }
   email(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    type: Keyboard.EmailUsage,
+    message?: string
   ): Promise<string> {
-    return this.delegate.email(parameters, session)
+    return this.delegate.email(type, message)
   }
 }
 
-class KBProvider implements Keyboard.KeyboardInputProvider {
+class KBProvider implements Keyboard.Keyboard {
   standard(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    message: string
   ): Promise<string> {
     return Promise.resolve('foo');
   }
   password(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    message?: string
   ): Promise<string> {
     return Promise.resolve(null);
   }
   email(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    type: Keyboard.EmailUsage,
+    message?: string
   ): Promise<string> {
     return Promise.resolve(null);
   }
 }
 
-class KBProviderWithError implements Keyboard.KeyboardInputProvider {
+class KBProviderWithError implements Keyboard.Keyboard {
   async standard(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    message: string
   ): Promise<string> {
     throw new Error('failed')
   }
   async password(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    message?: string
   ): Promise<string> {
     throw new Error('failed')
   }
   async email(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    type: Keyboard.EmailUsage,
+    message?: string
   ): Promise<string> {
     throw new Error('failed')
   }
@@ -159,7 +153,7 @@ test("Keyboard.provide() declarations", async () => {
 
 test("Keyboard.provide() with blank object", () => {
   expect(() => {
-    Keyboard.provide("xrn:firebolt:capability:input:keyboard", {});
+    null
   }).toThrow();
 });
 
