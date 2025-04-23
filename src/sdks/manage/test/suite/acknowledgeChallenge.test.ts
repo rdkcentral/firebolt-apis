@@ -19,7 +19,6 @@
 import { test, expect } from "@jest/globals";
 import { AcknowledgeChallenge } from "../../build/javascript/src/firebolt-manage";
 
-/* not compilable with bidirectional, disabling until mismatch resolved
 class ACKPovider implements AcknowledgeChallenge.ChallengeProvider {
   challenge(
     parameters: object,
@@ -36,12 +35,12 @@ test("AcknowledgeChallenge.provide() declarations", () => {
   );
   expect(1).toBe(1);
 });
-*/
 
 test("AcknowledgeChallenge.provide() with blank object", () => {
   expect(() => {
     AcknowledgeChallenge.provide(
-      null
+      "xrn:firebolt:capability:usergrant:acknowledgechallenge",
+      {}
     );
   }).toThrow();
 });

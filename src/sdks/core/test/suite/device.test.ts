@@ -121,7 +121,6 @@ test("Device.hdcp()", () => {
   });
 });
 
-/* not compilable with bidirectional, disabling until mismatch resolved
 test("Device.hdcp(subscriber)", () => {
   return Device.hdcp((supportedHdrProfiles: Device.HDCPVersionMap) => {}).then(
     (res: number) => {
@@ -129,7 +128,6 @@ test("Device.hdcp(subscriber)", () => {
     }
   );
 });
-*/
 
 test("Device.audio()", () => {
   return Device.audio().then((res: Device.AudioProfiles) => {
@@ -142,7 +140,6 @@ test("Device.audio()", () => {
   });
 });
 
-/* not compilable with bidirectional, disabling until mismatch resolved
 test("Device.audio(subscriber)", () => {
   return Device.audio(
     (supportedAudioProfiles: Device.AudioProfiles) => {}
@@ -150,7 +147,6 @@ test("Device.audio(subscriber)", () => {
     expect(res > 0).toBe(true);
   });
 });
-*/
 
 test("Device.screenResolution()", () => {
   return Device.screenResolution().then((res: [number, number]) => {
@@ -158,7 +154,6 @@ test("Device.screenResolution()", () => {
   });
 });
 
-/* not compilable with bidirectional, disabling until mismatch resolved
 test("Device.screenResolution(subscriber)", () => {
   return Device.screenResolution(
     (screenResolution: [number, number]) => {}
@@ -166,7 +161,6 @@ test("Device.screenResolution(subscriber)", () => {
     expect(res > 0).toBe(true);
   });
 });
-*/
 
 test("Device.videoResolution()", () => {
   return Device.videoResolution().then((res: [number, number]) => {
@@ -174,7 +168,6 @@ test("Device.videoResolution()", () => {
   });
 });
 
-/* not compilable with bidirectional, disabling until mismatch resolved
 test("Device.videoResolution(subscriber)", () => {
   return Device.videoResolution((videoResolution: [number, number]) => {}).then(
     (res: number) => {
@@ -182,7 +175,6 @@ test("Device.videoResolution(subscriber)", () => {
     }
   );
 });
-*/
 
 test("Device.name()", () => {
   return Device.name().then((res: string) => {
@@ -190,13 +182,11 @@ test("Device.name()", () => {
   });
 });
 
-/* not compilable with bidirectional, disabling until mismatch resolved
 test("Device.name(subscriber)", () => {
   return Device.name((value: string) => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
-*/
 
 test("Device.network()", () => {
   return Device.network().then((res: object) => {
@@ -204,13 +194,11 @@ test("Device.network()", () => {
   });
 });
 
-/* not compilable with bidirectional, disabling until mismatch resolved
 test("Device.network(subscriber)", () => {
   return Device.network((networkInfo: object) => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
-*/
 
 test("listen() audioChanged event.", () => {
   return Device.listen("audioChanged", () => {}).then((res: number) => {

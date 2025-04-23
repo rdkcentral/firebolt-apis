@@ -20,8 +20,8 @@ import { test, expect } from "@jest/globals";
 import { Device } from "../../build/javascript/src/firebolt-manage";
 
 test("Device.name()", () => {
-  return Device.name().then((res: string) => {
-    expect(res!=="").toBe(true);
+  return Device.name(() => {}).then((res: number) => {
+    expect(res > 0).toBe(true);
   });
 });
 
