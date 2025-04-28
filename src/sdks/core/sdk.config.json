@@ -115,7 +115,7 @@
         {
             "module": "Parameters",
             "use": [
-                "xrn:firebolt:capability:lifecycle:state"
+                "xrn:firebolt:capability:parameters:initialization"
             ]
         },
         {
