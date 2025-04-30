@@ -61,9 +61,13 @@ TEST_F(AdvertisingTest, Policy)
 
 	if (adPolicy.limitAdTracking.has_value())
 		EXPECT_EQ(adPolicy.limitAdTracking, expectedValues["limitAdTracking"]);
+	else
+		ADD_FAILURE() << "Expected adPolicy.limitAdTracking to have a value";
 
 	if (adPolicy.skipRestriction.has_value())
 		EXPECT_EQ(skipRestrictionToString(adPolicy.skipRestriction.value()), expectedValues["skipRestriction"]);
+	else
+		ADD_FAILURE() << "Expected adPolicy.skipRestriction to have a value";
 }
 
 TEST_F(AdvertisingTest, Id)

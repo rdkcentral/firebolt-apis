@@ -1,89 +1,178 @@
 {
-  "openrpc": "1.2.4",
-  "info": {
-    "title": "VoiceGuidance",
-    "description": "A module for managing voice-guidance Settings.",
-    "version": "0.0.0"
-  },
-  "methods": [
-    {
-      "name": "enabled",
-      "tags": [
-        {
-          "name": "property"
-        },
-        {
-          "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:accessibility:voiceguidance"]
-        }
-      ],
-      "summary": "Whether or not voice-guidance is enabled.",
-      "params": [],
-      "result": {
-        "name": "enabled",
-        "schema": {
-          "type": "boolean"
-        }
-      },
-      "examples": [
-        {
-          "name": "Default example #1",
-          "params": [],
-          "result": {
-            "name": "enabled",
-            "value": true
-          }
-        },
-        {
-          "name": "Default example #2",
-          "params": [],
-          "result": {
-            "name": "enabled",
-            "value": false
-          }
-        }
-      ]
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "VoiceGuidance",
+        "description": "A module for managing voice guidance settings.",
+        "version": "0.0.0"
     },
-    {
-      "name": "speed",
-      "tags": [
+    "methods": [
         {
-          "name": "property"
+            "name": "enabled",
+            "tags": [
+                {
+                    "name": "property"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:accessibility:voiceguidance"
+                    ]
+                }
+            ],
+            "summary": "Whether or not voice-guidance is enabled.",
+            "params": [],
+            "result": {
+                "name": "enabled",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Voice guidance enabled",
+                    "params": [],
+                    "result": {
+                        "name": "enabled",
+                        "value": true
+                    }
+                },
+                {
+                    "name": "Voice guidance disabled",
+                    "params": [],
+                    "result": {
+                        "name": "enabled",
+                        "value": false
+                    }
+                }
+            ]
         },
         {
-          "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:accessibility:voiceguidance"]
-        }
-      ],
-      "summary": "The speed at which voice guidance speech will be read back to the user.",
-      "params": [],
-      "result": {
-        "name": "speed",
-        "schema": {
-          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/VoiceSpeed"
-        }
-      },
-      "examples": [
-        {
-          "name": "Voice guidance speed to 1",
-          "params": [],
-          "result": {
-            "name": "speed",
-            "value": 1
-          }
+            "name": "navigationHints",
+            "tags": [
+                {
+                    "name": "property"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:accessibility:voiceguidance"
+                    ]
+                }
+            ],
+            "summary": "The user's preference for whether additional navigation hints should be synthesized.",
+            "params": [],
+            "result": {
+                "name": "navigationHints",
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Navigation hints enabled",
+                    "params": [],
+                    "result": {
+                        "name": "navigationHints",
+                        "value": true
+                    }
+                },
+                {
+                    "name": "Navigation hints disabled",
+                    "params": [],
+                    "result": {
+                        "name": "navigationHints",
+                        "value": false
+                    }
+                }
+            ]
         },
         {
-          "name": "Voice guidance speed to 2",
-          "params": [],
-          "result": {
+            "name": "rate",
+            "tags": [
+                {
+                    "name": "property"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:accessibility:voiceguidance"
+                    ]
+                }
+            ],
+            "summary": "The rate at which voice guidance speech will be read back to the user.",
+            "params": [],
+            "result": {
+                "name": "rate",
+                "schema": {
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/SpeechRate"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Normal voice guidance speech rate",
+                    "params": [],
+                    "result": {
+                        "name": "rate",
+                        "value": 1.0
+                    }
+                },
+                {
+                    "name": "Doubled voice guidance speech rate",
+                    "params": [],
+                    "result": {
+                        "name": "rate",
+                        "value": 2.0
+                    }
+                }
+            ]
+        },
+        {
             "name": "speed",
-            "value": 2
-          }
+            "tags": [
+                {
+                    "name": "property"
+                },
+                {
+                    "name": "deprecated",
+                    "x-alternative": "VoiceGuidance.rate()",
+                    "x-since": "1.5.0"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:accessibility:voiceguidance"
+                    ]
+                }
+            ],
+            "summary": "The speed at which voice guidance speech will be read back to the user.",
+            "params": [],
+            "result": {
+                "name": "speed",
+                "schema": {
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/SpeechRate"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Normal voice guidance speech rate",
+                    "params": [],
+                    "result": {
+                        "name": "speed",
+                        "value": 1.0
+                    }
+                },
+                {
+                    "name": "Doubled voice guidance speech rate",
+                    "params": [],
+                    "result": {
+                        "name": "speed",
+                        "value": 2.0
+                    }
+                }
+            ]
         }
-      ]
+    ],
+    "components": {
+        "schemas": {}
     }
-  ],
-  "components": {
-    "schemas": {}
-  }
 }

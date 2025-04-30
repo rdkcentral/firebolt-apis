@@ -53,16 +53,6 @@
       {
         "assets": "./*.tgz"
       }
-    ],
-    [
-      "@saithodev/semantic-release-backmerge",
-      {
-        "backmergeStrategy": "merge",
-        "mergeMode": "theirs",
-        "backmergeBranches": [
-          { "from": "main", "to": "next" }
-        ]
-      }
     ]    
   ]
 } 

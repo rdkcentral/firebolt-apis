@@ -1,3 +1,66 @@
+# [1.5.0-next.18](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.17...v1.5.0-next.18) (2025-03-03)
+
+
+### Bug Fixes
+
+* Updated CPP voiceGuidanceSettings test ([#374](https://github.com/rdkcentral/firebolt-apis/issues/374)) ([49708c5](https://github.com/rdkcentral/firebolt-apis/commit/49708c584610a9932e8b2fbbeee6882689b66a13))
+
+# [1.5.0-next.17](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.16...v1.5.0-next.17) (2025-02-28)
+
+
+### Bug Fixes
+
+* update openrpc to 3.1.2 ([#327](https://github.com/rdkcentral/firebolt-apis/issues/327)) ([6c64a11](https://github.com/rdkcentral/firebolt-apis/commit/6c64a118431846b7003e4967d5bf2105f3f3ee71))
+
+# [1.5.0-next.16](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.15...v1.5.0-next.16) (2025-02-27)
+
+
+### Bug Fixes
+
+* Update setter method names in accessibility doc ([be36dbe](https://github.com/rdkcentral/firebolt-apis/commit/be36dbe101372bc4021085be410c1cce27bbf748))
+
+# [1.5.0-next.15](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.14...v1.5.0-next.15) (2025-02-26)
+
+
+### Bug Fixes
+
+* Remove unneccessary params from voice guidance examples ([d5ab7bf](https://github.com/rdkcentral/firebolt-apis/commit/d5ab7bfd07f155a55a03dd181cb71f801f83fd1e))
+
+# [1.5.0-next.14](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.13...v1.5.0-next.14) (2025-02-24)
+
+
+### Bug Fixes
+
+* handle optional object members gracefully in unit tests ([#369](https://github.com/rdkcentral/firebolt-apis/issues/369)) ([f592cde](https://github.com/rdkcentral/firebolt-apis/commit/f592cde562ad3aa5bffbd8a7263a3ab41f664fa2))
+
+# [1.5.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.12...v1.5.0-next.13) (2025-02-17)
+
+
+### Features
+
+* EAA 2025 - high contrast UI and voice guidance changes ([#343](https://github.com/rdkcentral/firebolt-apis/issues/343)) ([bd86a57](https://github.com/rdkcentral/firebolt-apis/commit/bd86a5727c6dfbc8f0ddd61ab529def498866138))
+
+# [1.5.0-next.12](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.11...v1.5.0-next.12) (2025-02-17)
+
+
+### Bug Fixes
+
+* ci coverage report compilation ([#361](https://github.com/rdkcentral/firebolt-apis/issues/361)) ([ad9b44f](https://github.com/rdkcentral/firebolt-apis/commit/ad9b44fa0957484cd286be46e773d0ff25d847b7))
+
+# [1.5.0-next.11](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.10...v1.5.0-next.11) (2025-02-12)
+
+
+### Bug Fixes
+
+* Discovery SDK compilation ([#364](https://github.com/rdkcentral/firebolt-apis/issues/364)) ([6bbfa1a](https://github.com/rdkcentral/firebolt-apis/commit/6bbfa1a18e7a618eeba4b13d22190e56d2268a1e))
+
+# [1.5.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.9...v1.5.0-next.10) (2025-02-12)
+
+
+### Bug Fixes
+
+* Building of Manage SDK (workaround) ([#356](https://github.com/rdkcentral/firebolt-apis/issues/356)) ([38f7f27](https://github.com/rdkcentral/firebolt-apis/commit/38f7f27499bcf97bc2ee852cf99f11284e230536))
+
 # [1.5.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.8...v1.5.0-next.9) (2024-11-21)
 
 
@@ -67,6 +130,13 @@
 ### Bug Fixes
 
 * Add Manage,Discovery to end-to-end Functional Testing ([#318](https://github.com/rdkcentral/firebolt-apis/issues/318)) ([41fdf27](https://github.com/rdkcentral/firebolt-apis/commit/41fdf2777183d85a5cdeb86874ec94ce3a6a3fe4))
+
+## [1.4.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.0...v1.4.1) (2024-10-01)
+
+
+### Bug Fixes
+
+* update openrpc to 3.1.2 ([#327](https://github.com/rdkcentral/firebolt-apis/issues/327)) ([6c64a11](https://github.com/rdkcentral/firebolt-apis/commit/6c64a118431846b7003e4967d5bf2105f3f3ee71))
 
 # [1.4.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.3.0...v1.4.0) (2024-09-23)
 

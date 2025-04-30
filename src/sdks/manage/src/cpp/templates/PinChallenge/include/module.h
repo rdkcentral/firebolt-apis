@@ -68,4 +68,4 @@ struct IPinChallenge {
 } //namespace ${info.Title}
 }
 ${end.if.declarations}
- 
+

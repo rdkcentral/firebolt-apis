@@ -16,59 +16,57 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
- #include "${info.title.lowercase}_impl.h"
- #include "Gateway/Gateway.h"
- 
- ${if.implementations}
- namespace Firebolt {
- namespace ${info.Title} {
- 
+#include "${info.title.lowercase}_impl.h"
+#include "Gateway/Gateway.h"
+
+${if.implementations}
+namespace Firebolt {
+namespace ${info.Title} {
+
     // Will add PROVIDER_CLASSES templates in another PR
     // Static for now
     static std::string AcknowledgeChallengeSessionInnerCallback(void* provider, void* jsonRequest) {
-      WPEFramework::Core::ProxyType<JsonData_AcknowledgeChallengeProviderRequest>& proxyRequest = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_AcknowledgeChallengeProviderRequest>*>(jsonRequest));
+        WPEFramework::Core::ProxyType<JsonData_AcknowledgeChallengeProviderRequest>& proxyRequest = *(reinterpret_cast<WPEFramework::Core::ProxyType<JsonData_AcknowledgeChallengeProviderRequest>*>(jsonRequest));
 
-      ASSERT(proxyRequest.IsValid() == true);
+        ASSERT(proxyRequest.IsValid() == true);
 
-      if (!proxyRequest.IsValid()) {
-          return R"({"error": { "code": )" + std::to_string(static_cast<int32_t>(Firebolt::Error::InvalidParams)) + R"(, "message": "Invalid Parameters"}, "result": ""})";
-      }
-      AcknowledgeChallengeParameters parameters;
+        if (!proxyRequest.IsValid()) {
+            return R"({"error": { "code": )" + std::to_string(static_cast<int32_t>(Firebolt::Error::InvalidParams)) + R"(, "message": "Invalid Parameters"}, "result": ""})";
+        }
+        AcknowledgeChallengeParameters parameters;
 
-      parameters.capability = (*proxyRequest).Parameters.Capability;
-      parameters.requestor.id = (*proxyRequest).Parameters.Requestor.Id;
-      parameters.requestor.name = (*proxyRequest).Parameters.Requestor.Name;
+        parameters.capability = (*proxyRequest).Parameters.Capability;
+        parameters.requestor.id = (*proxyRequest).Parameters.Requestor.Id;
+        parameters.requestor.name = (*proxyRequest).Parameters.Requestor.Name;
 
-      proxyRequest.Release();
+        proxyRequest.Release();
 
-      IAcknowledgeChallengeProvider& acknowledgeChallengeProvider = *(reinterpret_cast<IAcknowledgeChallengeProvider*>(provider));
-      GrantResult result = acknowledgeChallengeProvider.challenge(parameters);
-      return R"({ "result": {"granted": ")" + std::string(result.granted ? "true" : "false") + R"("}})";
+        IAcknowledgeChallengeProvider& acknowledgeChallengeProvider = *(reinterpret_cast<IAcknowledgeChallengeProvider*>(provider));
+        GrantResult result = acknowledgeChallengeProvider.challenge(parameters);
+        return R"({ "result": {"granted": ")" + std::string(result.granted ? "true" : "false") + R"("}})";
     }
 
     void AcknowledgeChallengeImpl::provide(IAcknowledgeChallengeProvider& provider) {
-      string eventName;
-      Firebolt::Error status = Firebolt::Error::None;
-      JsonObject jsonParameters;
+        string eventName;
+        Firebolt::Error status = Firebolt::Error::None;
+        JsonObject jsonParameters;
 
-      eventName = _T("acknowledgeChallenge.onRequestChallenge");
-      status = FireboltSDK::Gateway::Instance().RegisterProviderInterface<JsonData_AcknowledgeChallengeProviderRequest>(eventName, jsonParameters, AcknowledgeChallengeSessionInnerCallback, reinterpret_cast<void*>(&provider));
-      if (status != Firebolt::Error::None) {
-          FIREBOLT_LOG_ERROR(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Error in %s subscribe = %d", eventName.c_str(), status);
-      }
+        eventName = _T("acknowledgeChallenge.onRequestChallenge");
+        status = FireboltSDK::Gateway::Instance().RegisterProviderInterface<JsonData_AcknowledgeChallengeProviderRequest>(eventName, jsonParameters, AcknowledgeChallengeSessionInnerCallback, reinterpret_cast<void*>(&provider));
+        if (status != Firebolt::Error::None) {
+            FIREBOLT_LOG_ERROR(FireboltSDK::Logger::Category::OpenRPC, FireboltSDK::Logger::Module<FireboltSDK::Accessor>(), "Error in %s subscribe = %d", eventName.c_str(), status);
+        }
     }
- 
- 
-     // Events
-     /* ${EVENTS} */
- 
- }//namespace ${info.Title}
- }${end.if.implementations}
- ${if.enums}
- 
- namespace WPEFramework {
- 
- /* ${ENUM_IMPLEMENTATIONS} */
- }${end.if.enums}
- 
- 
+
+    // Events
+    /* ${EVENTS} */
+
+}//namespace ${info.Title}
+}${end.if.implementations}
+${if.enums}
+
+namespace WPEFramework {
+
+/* ${ENUM_IMPLEMENTATIONS} */
+}${end.if.enums}
+

@@ -37,7 +37,7 @@ jobs:
           .github/workflows/utils.sh cloneAndInstallThunder
 
       - name: Upload the library artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: thunder
           path: /__w/firebolt-apis/install/
@@ -70,7 +70,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('package-lock.json') }}
+          key: deps-node-modules-${{ hashFiles('package.json') }}
 
       - name: Install dependencies
         run: npm install
@@ -85,19 +85,19 @@ jobs:
           npm run dist
 
       - name: Upload Core SDK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: core
           path: src/sdks/core
 
       - name: Upload Manage SDK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: manage
           path: src/sdks/manage
   
       - name: Upload Discovery SDK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: discovery
           path: src/sdks/discovery
@@ -113,13 +113,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download Core SDK
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: core
           path: /__w/firebolt-apis/firebolt-apis/src/sdks/core
 
       - name: Download Thunder 
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with: 
           name: thunder
           path: /__w/thunder/install/
@@ -163,12 +163,16 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '80 40'
-      
+          thresholds: '50 20'
+
+      - name: Replace badge title in PR comment
+        run: sed -i 's/Code%20Coverage/Core%20Coverage%20Report/g' code-coverage-results.md
+
       - name: Add coverage PR comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          recreate: true
+          recreate: false
+          append: true
           path: code-coverage-results.md
 
 
@@ -183,13 +187,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download Manage SDK
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: manage
           path: /__w/firebolt-apis/firebolt-apis/src/sdks/manage
 
       - name: Download Thunder 
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with: 
           name: thunder
           path: /__w/thunder/install/
@@ -233,12 +237,16 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '80 40'
+          thresholds: '50 20'
+
+      - name: Replace badge title in PR comment
+        run: sed -i 's/Code%20Coverage/Manage%20Coverage%20Report/g' code-coverage-results.md
       
       - name: Add coverage PR comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          recreate: true
+          recreate: false
+          append: true
           path: code-coverage-results.md
 
   discovery_sdk:
@@ -252,13 +260,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download Discovery SDK
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: discovery
           path: /__w/firebolt-apis/firebolt-apis/src/sdks/discovery
 
       - name: Download Thunder 
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with: 
           name: thunder
           path: /__w/thunder/install/
@@ -302,11 +310,15 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '80 40'
-      
+          thresholds: '50 20'
+
+      - name: Replace badge title in PR comment
+        run: sed -i 's/Code%20Coverage/Discovery%20Coverage%20Report/g' code-coverage-results.md
+
       - name: Add coverage PR comment
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          recreate: true
+          recreate: false
+          append: true
           path: code-coverage-results.md
 

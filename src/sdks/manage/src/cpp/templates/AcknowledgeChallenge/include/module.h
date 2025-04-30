@@ -26,18 +26,18 @@ namespace ${info.Title} {
 ${if.enums}/* ${ENUMS} */${end.if.enums}
 
 struct ChallengeRequestor {
-  std::string id;
-  std::string name;
+    std::string id;
+    std::string name;
 };
 
 struct GrantResult {
-  bool granted;
+    bool granted;
 };
 
   
 struct AcknowledgeChallengeParameters {
-  std::string capability;
-  ChallengeRequestor requestor;
+    std::string capability;
+    ChallengeRequestor requestor;
 };
 
 struct AcknowledgeChallengeProviderRequest {
