@@ -73,7 +73,7 @@ Result<std::string> DeviceImpl::platform() const
     return get<FireboltSDK::JSON::String, std::string>(_T("device.platform"));
 }
 
-Result<std::string> DeviceImpl::screenResolution() const
+Result<Resolution> DeviceImpl::screenResolution() const
 {
     return get<FireboltSDK::JSON::String, std::string>(_T("device.screenResolution"));
 }
@@ -93,9 +93,9 @@ Result<std::string> DeviceImpl::uid() const
     return get<FireboltSDK::JSON::String, std::string>(_T("device.uid"));
 }
 
-Result<std::string> DeviceImpl::videoResolution() const
+Result<Resolution> DeviceImpl::videoResolution() const
 {
-    return get<FireboltSDK::JSON::String, std::string>(_T("device.videoResolution"));
+    return get<FireboltSDK::JSON::String, Resolution>(_T("device.videoResolution"));
 }
 
 // Events
@@ -129,12 +129,12 @@ Result<SubscriptionId> DeviceImpl::subscribeOnNetworkChanged(std::function<void(
     return subscribe<JsonData::NetworkInfoResult>(_T("device.onNetworkChanged"), std::move(notification));
 }
 
-Result<SubscriptionId> DeviceImpl::subscribeOnScreenResolutionChanged(std::function<void(const std::string&)>&& notification)
+Result<SubscriptionId> DeviceImpl::subscribeOnScreenResolutionChanged(std::function<void(const Resolution&)>&& notification)
 {
     return subscribe<FireboltSDK::JSON::String>(_T("device.onScreenResolutionChanged"), std::move(notification));
 }
 
-Result<SubscriptionId> DeviceImpl::subscribeOnVideoResolutionChanged(std::function<void(const std::string&)>&& notification)
+Result<SubscriptionId> DeviceImpl::subscribeOnVideoResolutionChanged(std::function<void(const Resolution&)>&& notification)
 {
     return subscribe<FireboltSDK::JSON::String>(_T("device.onVideoResolutionChanged"), std::move(notification));
 }
@@ -149,9 +149,4 @@ void DeviceImpl::unsubscribeAll()
     SubscriptionHelper::unsubscribeAll();
 }
 
-Result<std::string> DeviceImpl::version() const
-{
-    Parameters params;
-    return invoke<JsonData::DeviceVersion, std::string>("device.version", params);
-}
 } // namespace Firebolt::Device

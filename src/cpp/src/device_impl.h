@@ -49,11 +49,11 @@ public:
     Result<std::string> name() const override;
     Result<NetworkInfoResult> network() const override;
     Result<std::string> platform() const override;
-    Result<std::string> screenResolution() const override;
+    Result<Resolution> screenResolution() const override;
     Result<std::string> sku() const override;
     Result<std::string> type() const override;
     Result<std::string> uid() const override;
-    Result<std::string> videoResolution() const override;
+    Result<Resolution videoResolution() const override;
 
     // Events
     Result<SubscriptionId> subscribeOnAudioChanged(std::function<void(const AudioProfiles&)>&& notification) override;
@@ -63,13 +63,11 @@ public:
     Result<SubscriptionId> subscribeOnNameChanged(std::function<void(const std::string&)>&& notification) override;
     Result<SubscriptionId> subscribeOnNetworkChanged(std::function<void(const NetworkInfoResult&)>&& notification) override;
     Result<SubscriptionId>
-    subscribeOnScreenResolutionChanged(std::function<void(const std::string&)>&& notification) override;
+    subscribeOnScreenResolutionChanged(std::function<void(const Resolution&)>&& notification) override;
     Result<SubscriptionId>
-    subscribeOnVideoResolutionChanged(std::function<void(const std::string&)>&& notification) override;
+    subscribeOnVideoResolutionChanged(std::function<void(const Resolution&)>&& notification) override;
 
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;
-
-    Result<std::string> version() const override;
 };
 } // namespace Firebolt::Device
