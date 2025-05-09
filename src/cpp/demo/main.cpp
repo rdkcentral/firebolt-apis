@@ -29,12 +29,8 @@ try
     FireboltDemoService service;
 
     service.setupDeviceSubscriptions();
-    service.setupTextToSpeechSubscriptions();
-
-    service.checkTextToSpeechStatus();
 
     auto deviceInfo = service.getAndPrintDeviceValues();
-    service.speakValues(deviceInfo);
 
     service.unsubscribeAll();
 
