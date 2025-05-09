@@ -74,8 +74,6 @@ struct HDCPVersionMap
     bool hdcp2_2;
 };
 
-using Resolution = std::pair<int32_t, int32_t>;
-
 class IDevice
 {
 public:
@@ -177,7 +175,7 @@ public:
      *
      * @retval The screenResolution property or error
      */
-    virtual Result<Resolution> screenResolution() const = 0;
+    virtual Result<std::string> screenResolution() const = 0;
 
     /**
      * @brief Get the device sku
@@ -215,7 +213,7 @@ public:
      *
      * @retval The videoResolution property or error
      */
-    virtual Result<Resolution> videoResolution() const = 0;
+    virtual Result<std::string> videoResolution() const = 0;
 
     // Events
     /**
@@ -281,7 +279,7 @@ public:
      * @retval The subscriptionId or error
      */
     virtual Result<SubscriptionId>
-    subscribeOnScreenResolutionChanged(std::function<void(const Resolution&)>&& notification) = 0;
+    subscribeOnScreenResolutionChanged(std::function<void(const std::string&)>&& notification) = 0;
 
     /**
      * @brief Subscribe on the change of Video Resolution property
@@ -291,7 +289,7 @@ public:
      * @retval The subscriptionId or error
      */
     virtual Result<SubscriptionId>
-    subscribeOnVideoResolutionChanged(std::function<void(const Resolution&)>&& notification) = 0;
+    subscribeOnVideoResolutionChanged(std::function<void(const std::string&)>&& notification) = 0;
 
     /**
      * @brief Remove subscriber from subscribers list. This method is generic for
@@ -307,5 +305,7 @@ public:
      * @brief Remove all active subscriptions from subscribers list.
      */
     virtual void unsubscribeAll() = 0;
+
+    virtual Result<std::string> version() const = 0;
 };
 } // namespace Firebolt::Device
