@@ -138,7 +138,7 @@
             "errors": [],
             "examples": [
                 {
-                    "name": "Content with an MPAA R-rating and US TV TV-14-V is restricted",
+                    "name": "Viewing restrictions that disallow content with an MPAA R or US TV-14-V rating",
                     "params": [],
                     "result": {
                         "name": "Default Result",
