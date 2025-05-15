@@ -18,7 +18,6 @@
  */
 
 #include "localization_impl.h"
-#include "jsondata_types.h"
 
 namespace Firebolt::Localization
 {

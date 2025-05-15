@@ -258,7 +258,13 @@ FireboltDemoService::DeviceInfo FireboltDemoService::getAndPrintDeviceValues()
     }
     if (auto version = Firebolt::IFireboltAccessor::Instance().DeviceInterface().version())
     {
-        std::cout << "Device version is: " << *version << std::endl;
+        std::cout << "SDL version is: " << version->sdk.major << "." << version->sdk.minor << "." << version->sdk.patch
+                  << " " << version->sdk.readable << std::endl;
+        std::cout << "API version is: " << version->api.major << "." << version->api.minor << "." << version->api.patch
+                  << " " << version->api.readable << std::endl;
+        std::cout << "Firmware version is: " << version->firmware.major << "." << version->firmware.minor << "."
+                  << version->firmware.patch << " " << version->firmware.readable << std::endl;
+        std::cout << "Debug version info is: " << version->debug << std::endl;
     }
     else
     {
@@ -266,7 +272,8 @@ FireboltDemoService::DeviceInfo FireboltDemoService::getAndPrintDeviceValues()
     }
     if (auto screenResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution())
     {
-        std::cout << "Device screen resolution is: " << *screenResolution << std::endl;
+        std::cout << "Device screen resolution is: " << screenResolution.value()[0] << ", "
+                  << screenResolution.value()[1] << std::endl;
     }
     else
     {
@@ -274,7 +281,8 @@ FireboltDemoService::DeviceInfo FireboltDemoService::getAndPrintDeviceValues()
     }
     if (auto videoResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().videoResolution())
     {
-        std::cout << "Device video resolution is: " << *videoResolution << std::endl;
+        std::cout << "Device video resolution is: " << videoResolution.value()[0] << ", " << videoResolution.value()[1]
+                  << std::endl;
     }
     else
     {

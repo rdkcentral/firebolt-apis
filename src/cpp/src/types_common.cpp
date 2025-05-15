@@ -17,4 +17,3 @@
  */
 
 #include "FireboltSDK.h"
-#include "jsondata_types.h"

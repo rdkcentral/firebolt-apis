@@ -24,7 +24,6 @@
 #include "closedcaptions.h"
 #include "helpers.h"
 #include "jsondata_accessibility.h"
-#include "jsondata_types.h"
 
 namespace Firebolt::ClosedCaptions
 {

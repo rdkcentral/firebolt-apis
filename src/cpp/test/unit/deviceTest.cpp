@@ -221,7 +221,6 @@ TEST_F(DeviceTest, Network)
 
 TEST_F(DeviceTest, ScreenResolution)
 {
-
     // Parse expected JSON values
     nlohmann::json expectedJson;
     std::string jsonString{};
@@ -248,12 +247,12 @@ TEST_F(DeviceTest, ScreenResolution)
     // Perform the assertions
     ASSERT_TRUE(result) << "Failed to retrieve screenResolution from "
                            "Device.screenResolution() method";
-    EXPECT_EQ(*result, jsonString);
+    std::string resultStr = "[" + std::to_string(result.value()[0]) + "," + std::to_string(result.value()[1]) + "]";
+    EXPECT_EQ(resultStr, jsonString);
 }
 
 TEST_F(DeviceTest, VideoResolution)
 {
-
     // Parse expected JSON values
     nlohmann::json expectedJson;
     std::string jsonString{};
@@ -280,7 +279,8 @@ TEST_F(DeviceTest, VideoResolution)
     // Perform the assertions
     ASSERT_TRUE(result) << "Failed to retrieve videoResolution from Device.videoResolution() "
                            "method";
-    EXPECT_EQ(*result, jsonString);
+    std::string resultStr = "[" + std::to_string(result.value()[0]) + "," + std::to_string(result.value()[1]) + "]";
+    EXPECT_EQ(resultStr, jsonString);
 }
 
 TEST_F(DeviceTest, Name)

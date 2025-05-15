@@ -73,9 +73,9 @@ Result<std::string> DeviceImpl::platform() const
     return get<FireboltSDK::JSON::String, std::string>(_T("device.platform"));
 }
 
-Result<std::string> DeviceImpl::screenResolution() const
+Result<Resolution> DeviceImpl::screenResolution() const
 {
-    return get<FireboltSDK::JSON::String, std::string>(_T("device.screenResolution"));
+    return get<WPEFramework::Core::JSON::DecSInt32, Resolution>(_T("device.screenResolution"));
 }
 
 Result<std::string> DeviceImpl::sku() const
@@ -93,9 +93,9 @@ Result<std::string> DeviceImpl::uid() const
     return get<FireboltSDK::JSON::String, std::string>(_T("device.uid"));
 }
 
-Result<std::string> DeviceImpl::videoResolution() const
+Result<Resolution> DeviceImpl::videoResolution() const
 {
-    return get<FireboltSDK::JSON::String, std::string>(_T("device.videoResolution"));
+    return get<WPEFramework::Core::JSON::DecSInt32, Resolution>(_T("device.videoResolution"));
 }
 
 // Events
@@ -149,9 +149,9 @@ void DeviceImpl::unsubscribeAll()
     SubscriptionHelper::unsubscribeAll();
 }
 
-Result<std::string> DeviceImpl::version() const
+Result<DeviceVersion> DeviceImpl::version() const
 {
     Parameters params;
-    return invoke<JsonData::DeviceVersion, std::string>("device.version", params);
+    return invoke<JsonData::DeviceVersion, DeviceVersion>("device.version", params);
 }
 } // namespace Firebolt::Device

@@ -21,12 +21,26 @@
 
 #include "FireboltSDK.h"
 #include "device.h"
-#include "jsondata_types.h"
 
 namespace Firebolt::Device::JsonData
 {
 using NetworkState = WPEFramework::Core::JSON::EnumType<::Firebolt::Device::NetworkState>;
 using NetworkType = WPEFramework::Core::JSON::EnumType<::Firebolt::Device::NetworkType>;
+
+class SemanticVersion : public WPEFramework::Core::JSON::Container
+{
+public:
+    ~SemanticVersion() override = default;
+    SemanticVersion();
+    SemanticVersion(const SemanticVersion& other);
+    SemanticVersion& operator=(const SemanticVersion& other);
+    ::Firebolt::Device::SemanticVersion Value();
+
+    WPEFramework::Core::JSON::DecSInt32 major;
+    WPEFramework::Core::JSON::DecSInt32 minor;
+    WPEFramework::Core::JSON::DecSInt32 patch;
+    FireboltSDK::JSON::String readable;
+};
 
 class DeviceVersion : public WPEFramework::Core::JSON::Container
 {
@@ -35,13 +49,13 @@ public:
     DeviceVersion();
     DeviceVersion(const DeviceVersion& other);
     DeviceVersion& operator=(const DeviceVersion& other);
-    std::string Value();
+    ::Firebolt::Device::DeviceVersion Value();
 
 private:
-    Firebolt::Types::JsonData::SemanticVersion sdk_;
-    Firebolt::Types::JsonData::SemanticVersion api_;
-    Firebolt::Types::JsonData::SemanticVersion firmware_;
-    Firebolt::Types::JsonData::SemanticVersion os_;
+    SemanticVersion sdk_;
+    SemanticVersion api_;
+    SemanticVersion firmware_;
+    SemanticVersion os_;
     FireboltSDK::JSON::String debug_;
 };
 

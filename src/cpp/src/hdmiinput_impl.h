@@ -23,7 +23,6 @@
 #include "IModule.h"
 #include "hdmiinput.h"
 #include "helpers.h"
-#include "jsondata_types.h"
 
 namespace Firebolt::HDMIInput
 {

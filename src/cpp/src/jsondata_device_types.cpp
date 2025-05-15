@@ -21,6 +21,36 @@
 
 namespace Firebolt::Device::JsonData
 {
+SemanticVersion::SemanticVersion() : WPEFramework::Core::JSON::Container()
+{
+    Add(_T("major"), &major);
+    Add(_T("minor"), &minor);
+    Add(_T("patch"), &patch);
+    Add(_T("readable"), &readable);
+}
+
+SemanticVersion::SemanticVersion(const SemanticVersion& other) : SemanticVersion()
+{
+    major = other.major;
+    minor = other.minor;
+    patch = other.patch;
+    readable = other.readable;
+}
+
+SemanticVersion& SemanticVersion::operator=(const SemanticVersion& other)
+{
+    major = other.major;
+    minor = other.minor;
+    patch = other.patch;
+    readable = other.readable;
+    return *this;
+}
+
+::Firebolt::Device::SemanticVersion SemanticVersion::Value()
+{
+    return ::Firebolt::Device::SemanticVersion{major, minor, patch, readable};
+}
+
 DeviceVersion::DeviceVersion() : WPEFramework::Core::JSON::Container()
 {
     Add(_T("sdk"), &sdk_);
@@ -49,7 +79,7 @@ DeviceVersion& DeviceVersion::operator=(const DeviceVersion& other)
     return *this;
 }
 
-std::string DeviceVersion::Value()
+::Firebolt::Device::DeviceVersion DeviceVersion::Value()
 {
     std::string version{};
     if (!IsSet())
@@ -64,8 +94,7 @@ std::string DeviceVersion::Value()
     sdk_.minor = static_cast<int32_t>(5);
     sdk_.patch = static_cast<int32_t>(0);
     sdk_.readable = "Firebolt Core SDK 1.5.0-next.18";
-    ToString(version);
-    return version;
+    return ::Firebolt::Device::DeviceVersion{sdk_.Value(), api_.Value(), firmware_.Value(), os_.Value(), debug_};
 }
 
 AudioProfiles::AudioProfiles() : WPEFramework::Core::JSON::Container()

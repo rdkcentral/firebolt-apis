@@ -24,6 +24,7 @@
 #include <functional>
 #include <optional>
 #include <string>
+#include <vector>
 
 namespace Firebolt::Device
 {
@@ -73,6 +74,25 @@ struct HDCPVersionMap
     bool hdcp1_4;
     bool hdcp2_2;
 };
+
+struct SemanticVersion
+{
+    int32_t major;
+    int32_t minor;
+    int32_t patch;
+    std::string readable;
+};
+
+struct DeviceVersion
+{
+    SemanticVersion sdk;
+    SemanticVersion api;
+    SemanticVersion firmware;
+    SemanticVersion os;
+    std::string debug;
+};
+
+using Resolution = std::vector<int32_t>;
 
 class IDevice
 {
@@ -175,7 +195,7 @@ public:
      *
      * @retval The screenResolution property or error
      */
-    virtual Result<std::string> screenResolution() const = 0;
+    virtual Result<Resolution> screenResolution() const = 0;
 
     /**
      * @brief Get the device sku
@@ -213,7 +233,7 @@ public:
      *
      * @retval The videoResolution property or error
      */
-    virtual Result<std::string> videoResolution() const = 0;
+    virtual Result<Resolution> videoResolution() const = 0;
 
     // Events
     /**
@@ -306,6 +326,11 @@ public:
      */
     virtual void unsubscribeAll() = 0;
 
-    virtual Result<std::string> version() const = 0;
+    /**
+     * @brief Get the SDK, OS and other version info
+     *
+     * @retval the versions
+     */
+    virtual Result<DeviceVersion> version() const = 0;
 };
 } // namespace Firebolt::Device

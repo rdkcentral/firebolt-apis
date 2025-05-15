@@ -22,7 +22,6 @@
 #include "FireboltSDK.h"
 #include "IModule.h"
 #include "helpers.h"
-#include "jsondata_types.h"
 #include "localization.h"
 
 namespace Firebolt::Localization

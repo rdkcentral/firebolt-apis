@@ -263,7 +263,8 @@ void CoreSDKTest::GetDeviceVersion()
 
     if (version)
     {
-        cout << "Get Device Version = " << version->c_str() << endl;
+        cout << "Get Device Version (SDK) = " << version->sdk.major << "." << version->sdk.minor << "."
+             << version->sdk.patch << " " << version->sdk.readable << endl;
     }
     else
     {
@@ -399,10 +400,10 @@ void CoreSDKTest::UnsubscribeDeviceAudioChanged()
     }
 }
 
-void PrintDeviceScreenResolution(const std::string screenResolution)
+void PrintDeviceScreenResolution(const Firebolt::Device::Resolution& screenResolution)
 {
     cout << "Get Device ScreenResolution :-> " << endl;
-    cout << screenResolution << endl;
+    cout << "[" << screenResolution[0] << ", " << screenResolution[1] << "]" << endl;
 }
 
 void CoreSDKTest::GetDeviceScreenResolution()
