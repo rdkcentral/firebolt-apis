@@ -113,14 +113,7 @@
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": {
-                            "state": "paused",
-                            "previous": "initializing"
-                        }
-                    }
+                    "params": []
                 }
             ]
         },
@@ -143,14 +136,7 @@
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": {
-                            "state": "suspended",
-                            "previous": "initializing"
-                        }
-                    }
+                    "params": []
                 }
             ]
         },
@@ -173,14 +159,7 @@
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": {
-                            "state": "paused",
-                            "previous": "active"
-                        }
-                    }
+                    "params": []
                 }
             ]
         },
@@ -203,14 +182,7 @@
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": {
-                            "state": "active",
-                            "previous": "paused"
-                        }
-                    }
+                    "params": []
                 },
                 {
                     "name": "Move to active via remote branded button",
@@ -245,14 +217,7 @@
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": {
-                            "state": "suspended",
-                            "previous": "paused"
-                        }
-                    }
+                    "params": []
                 }
             ]
         },
@@ -275,14 +240,7 @@
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": {
-                            "state": "paused",
-                            "previous": "suspended"
-                        }
-                    }
+                    "params": []
                 }
             ]
         },
@@ -305,14 +263,7 @@
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": {
-                            "state": "hibernated",
-                            "previous": "suspended"
-                        }
-                    }
+                    "params": []
                 }
             ]
         },
@@ -335,14 +286,7 @@
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": {
-                            "state": "suspended",
-                            "previous": "hibernated"
-                        }
-                    }
+                    "params": []
                 }
             ]
         },
@@ -378,11 +322,7 @@
                             "name": "destroyReason",
                             "value": "userExit"
                         }
-                    ],
-                    "result": {
-                        "name": "Default Result",
-                        "value": null
-                    }
+                    ]
                 }
             ]
         }

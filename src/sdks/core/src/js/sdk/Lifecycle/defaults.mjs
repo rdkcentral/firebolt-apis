@@ -31,29 +31,29 @@ const win = typeof window !== 'undefined' ? window : {}
 const automation = win.__firebolt ? !!win.__firebolt.automation : false
 
 export default {
-  ready: function() {
-    paused.previous = 'initializing'
-    setTimeout(() => emit(inactive), automation ? 1 : 500)
-    active.previous = 'paused'
-    setTimeout(() => emit(foreground), automation ? 2 : 1000)
-  },
+  // ready: function() {
+  //   paused.previous = 'initializing'
+  //   setTimeout(() => emit(inactive), automation ? 1 : 500)
+  //   active.previous = 'paused'
+  //   setTimeout(() => emit(foreground), automation ? 2 : 1000)
+  // },
 
-  close: function(params) {
-    let reason = params.reason
-    if (reason === 'remoteButton') {
-      paused.previous = 'active'
-      setTimeout(() => emit(paused), automation ? 1 : 500)
-    }
-    else if (['userExit', 'error'].includes(reason)) {
-      paused.previous = 'active'
-      suspended.previous = 'paused'
-      setTimeout(() => emit(paused), automation ? 1 : 500)
-      setTimeout(() => emit(unloading), automation ? 2 : 1000)
-    }
-    else {
-      throw "Invalid close reason"
-    }
-  },
+  // close: function(params) {
+  //   let reason = params.reason
+  //   if (reason === 'remoteButton') {
+  //     paused.previous = 'active'
+  //     setTimeout(() => emit(paused), automation ? 1 : 500)
+  //   }
+  //   else if (['userExit', 'error'].includes(reason)) {
+  //     paused.previous = 'active'
+  //     suspended.previous = 'paused'
+  //     setTimeout(() => emit(paused), automation ? 1 : 500)
+  //     setTimeout(() => emit(unloading), automation ? 2 : 1000)
+  //   }
+  //   else {
+  //     throw "Invalid close reason"
+  //   }
+  // },
 
   // finished: function() {
   //   if (win.location)

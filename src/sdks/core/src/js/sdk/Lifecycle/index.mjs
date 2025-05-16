@@ -43,9 +43,9 @@ async function ready() {
 
 /* ${METHODS} */
 
-function state() {
-  return store.current
-}
+// function state() {
+//   return store.current
+// }
 
 // function finished() {
 //   if (store.current === 'unloading') {
@@ -63,7 +63,7 @@ export default {
   /* ${ENUMS} */
 
   ready,
-  state,
+  // state,
   // finished,
 
   /* ${METHOD_LIST} */

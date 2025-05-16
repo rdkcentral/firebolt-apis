@@ -346,7 +346,7 @@
       ]
     },
     "PreLoadIntent": {
-      "description": "A Firebolt compliant representation of a user intention to pre-load an app.",
+      "description": "A Firebolt compliant representation to pre-load an app.",
       "title": "PreLoadIntent",
       "allOf": [
           {
