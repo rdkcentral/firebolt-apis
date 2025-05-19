@@ -1,3 +1,10 @@
+# [1.5.0-next.20](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.19...v1.5.0-next.20) (2025-05-19)
+
+
+### Bug Fixes
+
+* Update docs for capabilities granted and permitted ([#385](https://github.com/rdkcentral/firebolt-apis/issues/385)) ([854d9de](https://github.com/rdkcentral/firebolt-apis/commit/854d9de72da545ab56874e62f79b57482c703788))
+
 # [1.5.0-next.19](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.18...v1.5.0-next.19) (2025-05-16)
 
 
