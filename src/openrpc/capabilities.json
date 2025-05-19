@@ -120,7 +120,7 @@
         },
         {
             "name": "permitted",
-            "summary": "Returns whether the current App has permission to the passed capability and role.",
+            "summary": "Returns whether or not the platform operator has granted the app with the provided capability and role.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -147,14 +147,14 @@
             ],
             "result": {
                 "name": "permitted",
-                "summary": "Whether or not app is permitted for the given capability and the role",
+                "summary": "Whether or not the app is permitted to the provided capability and role",
                 "schema": {
                     "type": "boolean"
                 }
             },
             "examples": [
                 {
-                    "name": "Keyboard",
+                    "name": "Platform operator allows the app to use the keyboard",
                     "params": [
                         {
                             "name": "capability",
@@ -167,7 +167,7 @@
                     }
                 },
                 {
-                    "name": "Keyboard incorrect manage role capability",
+                    "name": "Platform operator does not allow the app to manage the keyboard",
                     "params": [
                         {
                             "name": "capability",
@@ -186,7 +186,7 @@
                     }
                 },
                 {
-                    "name": "Wifi scan not permitted capability",
+                    "name": "Platform operator does not allow the app to perform wifi scans",
                     "params": [
                         {
                             "name": "capability",
@@ -202,7 +202,7 @@
         },
         {
             "name": "granted",
-            "summary": "Returns whether the current App has a user grant for passed capability and role.",
+            "summary": "Returns whether or not the user has granted the app with the provided capability and role.\nThis will return 'null' if the user has not yet specified whether or not they grant the app with the provided permission, in which case the app can request permission by calling Capabilities.request().",
             "tags": [
                 {
                     "name": "capabilities",
@@ -229,7 +229,7 @@
             ],
             "result": {
                 "name": "granted",
-                "summary": "Whether or not app is granted to use the given capability and the role",
+                "summary": "Whether or not the app is granted the provided capability and role",
                 "schema": {
                     "oneOf": [
                         {
@@ -243,7 +243,7 @@
             },
             "examples": [
                 {
-                    "name": "Default capabilities without grants.",
+                    "name": "The user has granted the app with permission to use the keyboard.",
                     "params": [
                         {
                             "name": "capability",
@@ -256,7 +256,7 @@
                     }
                 },
                 {
-                    "name": "Get Postal code without grants.",
+                    "name": "The user has denied the app access to their postal code.",
                     "params": [
                         {
                             "name": "capability",
@@ -269,7 +269,7 @@
                     }
                 },
                 {
-                    "name": "Get Postal code with grants.",
+                    "name": "The user has not yet specified whether they grant the app access to their postal code.",
                     "params": [
                         {
                             "name": "capability",
@@ -285,7 +285,7 @@
         },
         {
             "name": "info",
-            "summary": "Returns an array of CapabilityInfo objects for the passed in capabilities.",
+            "summary": "Returns an array of CapabilityInfo objects for the provided capabilities.",
             "tags": [
                 {
                     "name": "capabilities",
