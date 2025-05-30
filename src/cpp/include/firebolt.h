@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "Portability.h"
 #include "closedcaptions.h"
 #include "device.h"
 #include "error.h"
@@ -31,7 +32,7 @@
 
 namespace Firebolt
 {
-class IFireboltAccessor
+class FIREBOLTSDK_EXPORT IFireboltAccessor
 {
 public:
     virtual ~IFireboltAccessor() = default;

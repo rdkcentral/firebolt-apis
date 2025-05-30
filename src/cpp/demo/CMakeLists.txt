@@ -18,22 +18,19 @@ cmake_minimum_required(VERSION 3.10.0)
 
 project(FireboltCoreSDKDemo)
 
-find_package(WPEFramework CONFIG REQUIRED)
-find_package(WPEFrameworkCore CONFIG REQUIRED)
-
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX "${SYSROOT_PATH}/usr" CACHE INTERNAL "" FORCE)
     set(CMAKE_PREFIX_PATH ${SYSROOT_PATH}/usr/lib/cmake CACHE INTERNAL "" FORCE)
 endif()
 
 list(APPEND CMAKE_MODULE_PATH
-	"${SYSROOT_PATH}/usr/lib/cmake"
-	"${SYSROOT_PATH}/tools/cmake")
+    "${SYSROOT_PATH}/usr/lib/cmake"
+    "${SYSROOT_PATH}/tools/cmake")
+
 message("FIREBOLT_PATH inside cmake " ${FIREBOLT_PATH})
 if (FIREBOLT_PATH)
     set(CMAKE_FIREBOLT_PATH
-        "${FIREBOLT_PATH}/usr/lib/cmake/Firebolt"
-	"${FIREBOLT_PATH}/usr/lib/cmake/FireboltSDK")
+        "${FIREBOLT_PATH}/usr/lib/cmake/FireboltSDK")
     list(APPEND CMAKE_PREFIX_PATH ${CMAKE_FIREBOLT_PATH})
     list(APPEND CMAKE_MODULE_PATH ${CMAKE_FIREBOLT_PATH})
 else ()
@@ -43,8 +40,7 @@ endif ()
 if (STUB_FIREBOLT)
 endif()
 
-find_package(WPEFramework CONFIG REQUIRED)
-find_package(WPEFrameworkCore CONFIG REQUIRED)
+find_package(FireboltSDK CONFIG REQUIRED)
 
 message("Setup FireboltDemo")
 
@@ -54,8 +50,7 @@ add_executable(FireboltDemo
 
 target_link_libraries(FireboltDemo
     PRIVATE
-        WPEFrameworkCore::WPEFrameworkCore
-        FireboltSDK
+        FireboltSDK::FireboltSDK
 )
 
 target_include_directories(FireboltDemo
