@@ -198,6 +198,9 @@
         },
         {
           "$ref": "#/definitions/PlayQueryIntent"
+        },
+        {
+          "$ref": "#/definitions/PreLoadIntent"
         }
       ]
     },
@@ -340,6 +343,37 @@
             "source": "voice"
           }
         }
+      ]
+    },
+    "PreLoadIntent": {
+      "description": "A Firebolt compliant representation to pre-load an app.",
+      "title": "PreLoadIntent",
+      "allOf": [
+          {
+              "$ref": "#/definitions/Intent"
+          },
+          {
+              "$ref": "#/definitions/IntentProperties"
+          },
+          {
+              "type": "object",
+              "properties": {
+                  "action": {
+                      "const": "preload"
+                  }
+              },
+              "not": {
+                  "required": [ "data" ]
+              }
+          }
+      ],
+      "examples": [
+          {
+              "action": "preload",
+              "context": {
+                  "source": "other"
+              }
+          }
       ]
     },
     "HomeIntent": {

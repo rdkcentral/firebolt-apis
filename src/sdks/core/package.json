@@ -6,9 +6,9 @@
 	"types": "./dist/lib/firebolt.d.ts",
 	"type": "module",
 	"scripts": {
-		"validate": "npx firebolt-openrpc validate --platformApi ./dist/firebolt-core-open-rpc.json --appApi ./dist/firebolt-core-app-open-rpc.json",
+		"validate": "npx firebolt-openrpc validate --input ./dist/firebolt-core-open-rpc.json",
 		"sdk": "npx firebolt-openrpc sdk --platformApi ./dist/firebolt-core-open-rpc.json --appApi ./dist/firebolt-core-app-open-rpc.json --template ./src/js --output ./build/javascript/src --static-module Platform",
-		"cpp": "npm run cpp:compile && npm run cpp:install",
+		"cpp": "npm run cpp:compile && cp ./dist/firebolt-core-open-rpc.json ./build/cpp/src && npm run cpp:install",
 		"cpp:compile": "npx firebolt-openrpc sdk --platformApi ./dist/firebolt-core-open-rpc.json --appApi ./dist/firebolt-core-app-open-rpc.json --template ./src/cpp --output ./build/cpp/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/cpp",
 		"cpp:install": "chmod +x ./build/cpp/src/scripts/install.sh && sdkVersion=$(npm run -s getVersion) && ./build/cpp/src/scripts/install.sh -i ./build/cpp/src -s ./build/cpp/src/ -m core -v $sdkVersion",
 		"compile": "cd ../../.. && npm run compile",
