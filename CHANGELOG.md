@@ -1,3 +1,10 @@
+# [1.5.0-next.19](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.18...v1.5.0-next.19) (2025-05-16)
+
+
+### Features
+
+* Add Profile.viewingRestrictions method and documentation ([#363](https://github.com/rdkcentral/firebolt-apis/issues/363)) ([2f11672](https://github.com/rdkcentral/firebolt-apis/commit/2f116720b48420813719144404736f36f61ae48d))
+
 # [1.5.0-next.18](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.17...v1.5.0-next.18) (2025-03-03)
 
 
