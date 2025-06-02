@@ -21,15 +21,15 @@
 /* ${INITIALIZATION} */
 
 function ready() {
-  return Gateway.request('metrics', 'ready', {})
+  return Gateway.request('metrics.ready', {})
 }
 
 function signIn() {
-  return Gateway.request('metrics', 'signIn', {})
+  return Gateway.request('metrics.signIn', {})
 }
 
 function signOut() {
-  return Gateway.request('metrics', 'signOut', {})
+  return Gateway.request('metrics.signOut', {})
 }
 
 

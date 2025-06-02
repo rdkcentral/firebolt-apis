@@ -34,7 +34,7 @@ async function ready() {
   await prioritize('Lifecycle', (event, value) => {
     store._current = event
   })
-  readyRes =await Gateway.request('lifecycle', 'ready', {})
+  readyRes = await Gateway.request('lifecycle.ready', {})
   setTimeout(_ => {
     logReady()
   })
@@ -49,7 +49,7 @@ function state() {
 
 function finished() {
   if (store.current === 'unloading') {
-    return Gateway.request('lifecycle', 'finished')
+    return Gateway.request('lifecycle.finished', {})
   } else {
     throw 'Cannot call finished() except when in the unloading transition'
   }
