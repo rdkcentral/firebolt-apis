@@ -23,9 +23,7 @@ While Firebolt predated these published guidelines, some existing APIs may not a
 - Method names MAY include uppercased words for well-known abbreviations or acronyms (e.g. `HDMI`, `UI`, etc.)
 - Method names MUST NOT use abbreviations or acronyms unless they are common or otherwise widely understood (e.g. `id`, `uid`)
 - Method names MUST follow the noun pluralization of the return value (e.g. an API named `channels` should return a collection of channels)
-- Method names should not include verbs in getter methods (e.g. `deviceType` instead of `getDeviceType`)
-- Method names should not include verbs in setter methods (e.g. `value(x)` instead of `setValue(x)`)
-- Method names should not include verbs in setter methods (e.g. `value(x)` instead of `setValue(x)`)
+- Method names should not include verbs in getter and setter methods (e.g. `value` instead of `getValue` or `setValue`)
 - Method names should maintain a consistent naming convention with methods of a similar functional area (e.g. `videoMode`, `setVideoMode`)
 - Method examples MUST include at least one example of a request and response
 - Method examples should cover common use cases as well as edge cases
