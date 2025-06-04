@@ -19,6 +19,8 @@
 /* ${IMPORTS} */
 
 /* ${INITIALIZATION} */
+import  Transport from '../Transport/index.mjs';
+
 
 function ready() {
   return Transport.send('metrics', 'ready', {})

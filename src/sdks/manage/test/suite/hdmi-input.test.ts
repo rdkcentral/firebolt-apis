@@ -58,7 +58,7 @@ test("HDMIInput.autoLowLatencyModeCapable('HDMI1)", () => {
 })
 
 test("HDMIInput.autoLowLatencyModeCapable() subscriber", () => {
-    return HDMIInput.autoLowLatencyModeCapable((info: HDMIInput.AutoLowLatencyModeCapableChangedInfo) => {
+    return HDMIInput.autoLowLatencyModeCapable((enabled: boolean) => {
     }).then((id: number) => {
         expect(typeof id).toBe('number')
     })

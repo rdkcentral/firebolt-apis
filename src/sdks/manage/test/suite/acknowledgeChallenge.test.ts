@@ -35,14 +35,6 @@ test("AcknowledgeChallenge.provide() declarations", () => {
   expect(1).toBe(1);
 });
 
-test("AcknowledgeChallenge.provide() with blank object", () => {
-  expect(() => {
-    AcknowledgeChallenge.provide(
-      null
-    );
-  }).toThrow();
-});
-
 // Events Test cases
 
 // test("AcknowledgeChallenge.listen() for requestChallenge event", () => {

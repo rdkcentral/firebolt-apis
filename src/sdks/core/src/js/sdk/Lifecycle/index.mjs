@@ -19,6 +19,7 @@
 /* ${IMPORTS} */
 import { ready as logReady } from '../Metrics/index.mjs'
 import { prioritize } from '../Events/index.mjs'
+import  Transport from '../Transport/index.mjs';
 
 /* ${INITIALIZATION} */
 
