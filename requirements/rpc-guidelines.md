@@ -2,7 +2,7 @@
 
 This document describes the guidelines and design principles for Firebolt APIs, with the primary objective of guiding Firebolt developers in following the design principles and conventions enforced by the Firebolt Advisory Board during API reviews.
 
-While Firebolt predated these published guidelines, some existing APIs may not fully adhere to the rules and principles set forth in this document. In such cases, consistency with existing APIs in the same functional area should be prioritized over strict adherence to these rules.
+While Firebolt predated these published guidelines, some existing APIs may not fully adhere to the rules and principles set forth in this document. In such cases, changes made in the same functional area should prioritize consistency with existing APIs over strict adherence to these rules.
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](http://www.ietf.org/rfc/rfc2119.txt).
 
