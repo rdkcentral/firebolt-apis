@@ -1,6 +1,6 @@
 # Firebolt RPC Guidelines
 
-This document describes the guidelines and design principles for Firebolt APIs, with the primary objective of guiding Firebolt developers in following the design principles and conventions enforced by the Firebolt Advisory Board during API reviews
+This document describes the guidelines and design principles for Firebolt APIs, with the primary objective of guiding Firebolt developers in following the design principles and conventions enforced by the Firebolt Advisory Board during API reviews.
 
 While Firebolt predated these published guidelines, some existing APIs may not fully adhere to the rules and principles set forth in this document. In such cases, consistency with existing APIs in the same functional area should be prioritized over strict adherence to these rules.
 
