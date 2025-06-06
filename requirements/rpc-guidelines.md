@@ -38,7 +38,8 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 - Method names **MUST** follow the noun pluralization of the return value (e.g. an API named `channels` should return a collection of channels)
 - Method names **MUST NOT** include verbs in getter methods (e.g. `value` instead of `getValue`)
 - Method names **SHOULD** maintain a consistent naming convention with methods of a similar functional area (e.g. `videoMode`, `setVideoMode`)
-- Method names that notify a listener on modified properties **MUST** follow the format `on<PropertyName>Changed` (e.g. `onLanguageChanged`, `onDeviceNameChanged`)
+- Method names for *event notifiers* **SHOULD** follow the format `<propertyName>Changed` (e.g. `languageChanged`, `deviceNameChanged`)
+- Method names for *event listeners* for modified properties **SHOULD** follow the format `on<PropertyName>Changed` (e.g. `onLanguageChanged`, `onDeviceNameChanged`)
 - Method descriptions **SHOULD** clearly and accurately describe the method's purpose, usage, and response value
 - Methods **SHOULD** include at least two example requests and responses
 - Methods **SHOULD** include examples that cover common use cases as well as edge cases
