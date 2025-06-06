@@ -36,12 +36,6 @@ test("PinChallenge.provide() declarations", () => {
   expect(1).toBe(1);
 });
 
-test("PinChallenge.provide() with blank object", () => {
-  expect(() => {
-    null
-  }).toThrow();
-});
-
 // Events Test cases
 
 // test("PinChallenge.listen() for requestChallenge event", () => {

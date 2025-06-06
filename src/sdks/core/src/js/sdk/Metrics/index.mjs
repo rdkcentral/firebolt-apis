@@ -19,19 +19,18 @@
 /* ${IMPORTS} */
 
 /* ${INITIALIZATION} */
-import  Transport from '../Transport/index.mjs';
 
 
 function ready() {
-  return Transport.send('metrics', 'ready', {})
+  return Gateway.request('Metrics.ready', {})
 }
 
 function signIn() {
-  return Transport.send('metrics', 'signIn', {})
+  return Gateway.request('Metrics.signIn', {})
 }
 
 function signOut() {
-  return Transport.send('metrics', 'signOut', {})
+  return Gateway.request('Metrics.signOut', {})
 }
 
 
