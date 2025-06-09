@@ -6,6 +6,38 @@ import { Lifecycle, Device, Discovery } from "../../build/javascript/src/firebol
 
 let listenerId: number
 
+/*
+class DiscoveryProvider implements Discovery.Discovery {
+  async purchasedContent(
+    parameters: Discovery.PurchasedContentParameters
+  ): Promise<Discovery.PurchasedContentResult> {
+
+    return Promise.resolve({
+      expires: '',
+      totalCount: 5,
+      entries: []
+    });
+  }
+  async entityInfo(
+    parameters: Discovery.EntityInfoParameters
+  ): Promise<Discovery.EntityInfoResult> {
+
+    return Promise.resolve({
+      entity: {
+        entityType: 'program',
+        identifiers: {
+          entityId: '123'
+        },
+        programType: Discovery.ProgramType.MOVIE,
+        title: 'A title'
+      },
+      expires: ''
+    });
+  }
+ 
+}
+*/
+
 test('Able to get TypeScript listenerId', () => {
     return Lifecycle.listen('inactive', () => { }).then((id: number) => {
         listenerId = id
@@ -43,8 +75,6 @@ test('purchaseContent', () => {
 
 })
 
-/*
-
 const result: Discovery.EntityInfoResult = {
     entity: {
         "entityType": "program",
@@ -66,15 +96,16 @@ test('entityInfo', () => {
         if (method === 'entityInfo') {
 
             totalCount = json.params.result.totalCount
-            MockTransport.receiveMessage(JSON.stringify({ jsonrpc: "2.0", result: { "value": true }, id: json.id }))
+            MockTransport.receiveMessage(JSON.stringify({ jsonrpc: "2.0", result:  true , id: json.id }))
         }
     })
-    return Discovery.entityInfo(result).then(() => {
-        let result: Discovery.EntityInfoResult = sent.find(message => message.method === 'entityInfo').params.result
-        expect(result.entity.identifiers.entityId).toBe("123")
+    return Discovery.entityInfo(result).then((r) => {
+      
+        expect(r).toBe(true)
+        
     })
 })
-
+/*
 test('entityInfo pull', () => {
     let resolver
     const p = new Promise((resolve, reject) => {
