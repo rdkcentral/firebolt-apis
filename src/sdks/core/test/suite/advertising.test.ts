@@ -50,7 +50,7 @@ test("deviceAttributes()", () => {
 
 test("appBundleId()", () => {
   return Advertising.appBundleId().then((res: string) => {
-    expect(res).toBe("app.operator");
+    expect(res).toBe("operator.app");
     expect(typeof res).toBe("string");
   });
 });

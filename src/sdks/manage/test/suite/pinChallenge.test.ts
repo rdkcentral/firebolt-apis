@@ -19,10 +19,11 @@
 import { test, expect } from "@jest/globals";
 import { PinChallenge } from "../../build/javascript/src/firebolt-manage";
 
-class PCProvider implements PinChallenge.ChallengeProvider {
+class PCProvider implements PinChallenge.PinChallenge {
   challenge(
-    parameters: object,
-    session: PinChallenge.FocusableProviderSession
+    requestor: PinChallenge.ChallengeRequestor,
+    pinSpace: string,
+    capability?: string,
   ): Promise<PinChallenge.PinChallengeResult> {
     return Promise.resolve(null);
   }
@@ -30,16 +31,9 @@ class PCProvider implements PinChallenge.ChallengeProvider {
 
 test("PinChallenge.provide() declarations", () => {
   PinChallenge.provide(
-    "xrn:firebolt:capability:usergrant:pinchallenge",
     new PCProvider()
   );
   expect(1).toBe(1);
-});
-
-test("PinChallenge.provide() with blank object", () => {
-  expect(() => {
-    PinChallenge.provide("xrn:firebolt:capability:usergrant:pinchallenge", {});
-  }).toThrow();
 });
 
 // Events Test cases

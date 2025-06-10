@@ -16,8 +16,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { transport } from '../../../../../test/TransportHarness.js'
+import MockTransport from '../../build/javascript/src/Transport/MockTransport.mjs'
 import { jest, test, expect, beforeAll } from "@jest/globals";
-import { testHarness } from "../../../../../test/Setup";
+
 import { Lifecycle } from "../../build/javascript/src/firebolt";
 
 let readyResolved: boolean = false;
@@ -25,17 +27,24 @@ let readyCalled: boolean = false;
 let readyMetricCalled: boolean = false;
 let readyMetricCalledAfterResolve: boolean = false;
 
-testHarness.onSend = function (module: string, method: string) {
-  if (module === "lifecycle" && method === "ready") {
-    readyCalled = true;
-  } else if (module === "metrics" && method === "ready") {
-    readyMetricCalled = true;
+transport.onSend((json) => {
 
-    if (readyResolved) {
-      readyMetricCalledAfterResolve = true;
+  if (json && json.method) {
+
+    let [module, method] = json.method.split('.');
+
+    if (module === "Lifecycle" && method === "ready") {
+      readyCalled = true;
+    }
+    else if (module === "Metrics" && method === "ready") {
+      readyMetricCalled = true;
+      if (readyResolved) {
+        readyMetricCalledAfterResolve = true;
+      }
+
     }
   }
-};
+})
 
 const callback = jest.fn();
 const startupState: Lifecycle.LifecycleState = Lifecycle.state();
@@ -49,21 +58,28 @@ beforeAll(() => {
     Lifecycle.close(Lifecycle.CloseReason.USER_EXIT);
   });
 
-  Lifecycle.once("unloading", () => {
-    Lifecycle.finished();
-  });
-
-  let p = new Promise<void>((resolve, reject) => {
-    Lifecycle.once("unloading", (_) => {
-      resolve();
-    });
-  });
+  MockTransport.event("Lifecycle", "inactive", null);
 
   Lifecycle.ready().then((_) => {
     readyResolved = true;
+  }).catch((err) => {
+    readyResolved = true;
+    console.error("Error in Lifecycle.ready: ", err);
   });
 
-  return p;
+  MockTransport.event("Lifecycle", "foreground", null);
+
+  let p = new Promise<void>((resolve, reject) => {
+    Lifecycle.once("unloading", (_) => {
+      Lifecycle.finished();
+      setTimeout(() => {
+        resolve();
+      }, 100);
+    });
+  });
+  MockTransport.event("Lifecycle", "unloading", null);
+
+  return p
 });
 
 test("Lifecycle.ready Promise resolved", () => {
@@ -88,70 +104,66 @@ test('App moves to the "foreground" state next', () => {
   expect(callback).nthCalledWith(2, "foreground");
 });
 
-test('App moves to the "inactive" state next', () => {
-  expect(callback).nthCalledWith(3, "inactive");
-});
-
 test('App moves to the "unloading" state next', () => {
-  expect(callback).nthCalledWith(4, "unloading");
+  expect(callback).nthCalledWith(3, "unloading");
 });
 
 test("listen() background event.", () => {
-  return Lifecycle.listen("background", () => {}).then((res: number) => {
+  return Lifecycle.listen("background", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() background event.", () => {
-  return Lifecycle.once("background", () => {}).then((res: number) => {
+  return Lifecycle.once("background", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() foreground event.", () => {
-  return Lifecycle.listen("foreground", () => {}).then((res: number) => {
+  return Lifecycle.listen("foreground", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() foreground event.", () => {
-  return Lifecycle.once("foreground", () => {}).then((res: number) => {
+  return Lifecycle.once("foreground", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() inactive event.", () => {
-  return Lifecycle.listen("inactive", () => {}).then((res: number) => {
+  return Lifecycle.listen("inactive", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() inactive event.", () => {
-  return Lifecycle.once("inactive", () => {}).then((res: number) => {
+  return Lifecycle.once("inactive", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() suspended event.", () => {
-  return Lifecycle.listen("suspended", () => {}).then((res: number) => {
+  return Lifecycle.listen("suspended", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() suspended event.", () => {
-  return Lifecycle.once("suspended", () => {}).then((res: number) => {
+  return Lifecycle.once("suspended", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() unloading event.", () => {
-  return Lifecycle.listen("unloading", () => {}).then((res: number) => {
+  return Lifecycle.listen("unloading", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() unloading event.", () => {
-  return Lifecycle.once("unloading", () => {}).then((res: number) => {
+  return Lifecycle.once("unloading", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });

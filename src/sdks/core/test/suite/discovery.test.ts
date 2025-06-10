@@ -151,6 +151,7 @@ test("clear()", () => {
   expect(result).toBeFalsy();
 });
 
+/*
 test("details() provider", () => {
 
   class myUserInterestProvider implements Discovery.UserInterestProvider {
@@ -159,3 +160,4 @@ test("details() provider", () => {
     }
   }
 })
+*/

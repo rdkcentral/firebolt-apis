@@ -1,4 +1,3 @@
-import Setup from "../../../../../test/Setup"
 
 import { test, expect  } from "@jest/globals"
 import { Settings } from "../../build/javascript/src/firebolt";
