@@ -123,7 +123,8 @@
             "use": [
                 "xrn:firebolt:capability:approve:content",
                 "xrn:firebolt:capability:approve:purchase",
-                "xrn:firebolt:capability:profile:flags"
+                "xrn:firebolt:capability:profile:flags",
+                "xrn:firebolt:capability:profile:viewingrestrictions"
             ]
         },
         {
