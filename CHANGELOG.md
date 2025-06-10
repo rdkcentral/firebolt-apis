@@ -1,3 +1,17 @@
+# [1.5.0-next.21](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.20...v1.5.0-next.21) (2025-05-28)
+
+
+### Features
+
+* Trigger Build ([#388](https://github.com/rdkcentral/firebolt-apis/issues/388)) ([e1e4e60](https://github.com/rdkcentral/firebolt-apis/commit/e1e4e60e092fa6c4a9fe6c50185a7d63382cf3f0))
+
+# [1.5.0-next.20](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.19...v1.5.0-next.20) (2025-05-19)
+
+
+### Bug Fixes
+
+* Update docs for capabilities granted and permitted ([#385](https://github.com/rdkcentral/firebolt-apis/issues/385)) ([854d9de](https://github.com/rdkcentral/firebolt-apis/commit/854d9de72da545ab56874e62f79b57482c703788))
+
 # [1.5.0-next.19](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.18...v1.5.0-next.19) (2025-05-16)
 
 
