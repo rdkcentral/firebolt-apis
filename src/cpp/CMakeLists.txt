@@ -26,6 +26,7 @@ set(FIREBOLT_TRANSPORT_WAITTIME 1000 CACHE STRING "Maximum time to wait for Tran
 set(FIREBOLT_LOGLEVEL "Info" CACHE STRING  "Log level to be enabled")
 option(FIREBOLT_ENABLE_STATIC_LIB "Create Firebolt library as Static library" OFF)
 option(ENABLE_TESTS "Build openrpc native test" OFF)
+option(ENABLE_DEMO_APP "Build demo app" OFF)
 
 if (FIREBOLT_ENABLE_STATIC_LIB)
     set(FIREBOLT_LIBRARY_TYPE STATIC)
@@ -46,6 +47,10 @@ list(APPEND CMAKE_MODULE_PATH
 set(FIREBOLT_NAMESPACE ${PROJECT_NAME} CACHE STRING "Namespace of the project")
 
 add_subdirectory(src)
+
+if (ENABLE_DEMO_APP)
+  add_subdirectory(demo)
+endif()
 
 if (ENABLE_TESTS)
    add_subdirectory(test)
