@@ -40,7 +40,10 @@ endif ()
 if (STUB_FIREBOLT)
 endif()
 
-find_package(FireboltSDK CONFIG REQUIRED)
+# Do not look for FireboltSDK if been called from the main cmake
+if (NOT ENABLE_DEMO_APP)
+  find_package(FireboltSDK CONFIG REQUIRED)
+endif ()
 
 message("Setup ${PROJECT_NAME}")
 
@@ -48,7 +51,7 @@ add_executable(${PROJECT_NAME}
     FireboltDemoService.cpp
     main.cpp)
 
-  target_link_libraries(${PROJECT_NAME}
+target_link_libraries(${PROJECT_NAME}
     PRIVATE
         FireboltSDK::FireboltSDK
 )
