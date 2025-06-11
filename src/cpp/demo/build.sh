@@ -12,5 +12,5 @@ cmake -B $bdir -DSYSROOT_PATH=$SYSROOT_PATH
 cmake --build $bdir
 
 export LD_LIBRARY_PATH=$SYSROOT_PATH/usr/lib:$LD_LIBRARY_PATH
-$bdir/FireboltDemo
+$bdir/FireboltCoreSDKDemo
 

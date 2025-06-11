@@ -42,28 +42,28 @@ endif()
 
 find_package(FireboltSDK CONFIG REQUIRED)
 
-message("Setup FireboltDemo")
+message("Setup ${PROJECT_NAME}")
 
-add_executable(FireboltDemo
+add_executable(${PROJECT_NAME}
     FireboltDemoService.cpp
     main.cpp)
 
-target_link_libraries(FireboltDemo
+  target_link_libraries(${PROJECT_NAME}
     PRIVATE
         FireboltSDK::FireboltSDK
 )
 
-target_include_directories(FireboltDemo
+target_include_directories(${PROJECT_NAME}
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
 )
 
-set_target_properties(FireboltDemo PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
 )
 
 install(
-        TARGETS FireboltDemo
-        DESTINATION bin
+    TARGETS ${PROJECT_NAME}
+    DESTINATION bin
 )
