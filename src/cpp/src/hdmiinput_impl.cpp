@@ -20,6 +20,8 @@
 #include "hdmiinput_impl.h"
 #include "jsondata_hdmiinput_types.h"
 
+using namespace Firebolt::Helpers;
+
 namespace Firebolt::HDMIInput
 {
 Result<bool> HDMIInputImpl::autoLowLatencyModeCapable(const std::string& port) const

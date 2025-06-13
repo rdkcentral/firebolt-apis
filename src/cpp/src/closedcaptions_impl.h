@@ -26,7 +26,7 @@
 
 namespace Firebolt::ClosedCaptions
 {
-class ClosedCaptionsImpl : public IClosedCaptions, public SubscriptionHelper
+class ClosedCaptionsImpl : public IClosedCaptions, public Firebolt::Helpers::SubscriptionHelper
 {
 public:
     ClosedCaptionsImpl() = default;

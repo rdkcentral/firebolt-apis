@@ -25,7 +25,7 @@
 
 namespace Firebolt::Metrics
 {
-class MetricsImpl : public IMetrics, public SubscriptionHelper
+class MetricsImpl : public IMetrics, public Firebolt::Helpers::SubscriptionHelper
 {
 public:
     MetricsImpl() = default;

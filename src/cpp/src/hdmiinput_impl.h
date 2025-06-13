@@ -25,7 +25,7 @@
 
 namespace Firebolt::HDMIInput
 {
-class HDMIInputImpl : public IHDMIInput, public SubscriptionHelper
+class HDMIInputImpl : public IHDMIInput, public Firebolt::Helpers::SubscriptionHelper
 {
 
 public:

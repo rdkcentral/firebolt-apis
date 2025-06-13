@@ -25,7 +25,7 @@
 
 namespace Firebolt::Localization
 {
-class LocalizationImpl : public ILocalization, public SubscriptionHelper
+class LocalizationImpl : public ILocalization, public Firebolt::Helpers::SubscriptionHelper
 {
 
 public:

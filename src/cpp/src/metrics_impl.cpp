@@ -19,6 +19,8 @@
 
 #include "metrics_impl.h"
 
+using namespace Firebolt::Helpers;
+
 namespace Firebolt::Metrics
 {
 Result<bool> MetricsImpl::ready()

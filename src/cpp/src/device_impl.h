@@ -27,7 +27,7 @@
 
 namespace Firebolt::Device
 {
-class DeviceImpl : public IDevice, public SubscriptionHelper
+class DeviceImpl : public IDevice, public Firebolt::Helpers::SubscriptionHelper
 {
 public:
     DeviceImpl() = default;

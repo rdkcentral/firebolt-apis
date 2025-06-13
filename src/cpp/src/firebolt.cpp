@@ -49,7 +49,7 @@ public:
 
     Firebolt::Error Initialize(const std::string& configLine) override
     {
-        accessor_ = &(FireboltSDK::Accessor::Instance(configLine));
+        accessor_ = &(FireboltSDK::Transport::Accessor::Instance(configLine));
         return Error::None;
     }
 
@@ -88,7 +88,7 @@ private:
     }
 
 private:
-    FireboltSDK::Accessor* accessor_;
+    FireboltSDK::Transport::Accessor* accessor_;
     ClosedCaptions::ClosedCaptionsImpl closedCaptions_;
     Device::DeviceImpl device_;
     HDMIInput::HDMIInputImpl hdmiInput_;

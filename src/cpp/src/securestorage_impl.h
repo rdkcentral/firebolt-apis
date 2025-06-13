@@ -25,7 +25,7 @@
 
 namespace Firebolt::SecureStorage
 {
-class SecureStorageImpl : public ISecureStorage, public SubscriptionHelper
+class SecureStorageImpl : public ISecureStorage, public Firebolt::Helpers::SubscriptionHelper
 {
 public:
     SecureStorageImpl() = default;

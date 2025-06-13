@@ -19,6 +19,8 @@
 
 #include "localization_impl.h"
 
+using namespace Firebolt::Helpers;
+
 namespace Firebolt::Localization
 {
 Result<std::string> LocalizationImpl::countryCode() const

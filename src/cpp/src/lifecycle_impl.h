@@ -28,7 +28,7 @@
 
 namespace Firebolt::Lifecycle
 {
-class LifecycleImpl : public ILifecycle, public SubscriptionHelper
+class LifecycleImpl : public ILifecycle, public Firebolt::Helpers::SubscriptionHelper
 {
 public:
     LifecycleImpl() = default;
