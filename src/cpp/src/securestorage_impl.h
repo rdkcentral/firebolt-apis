@@ -20,13 +20,12 @@
 #pragma once
 
 #include "FireboltSDK.h"
-#include "IModule.h"
 #include "helpers.h"
 #include "securestorage.h"
 
 namespace Firebolt::SecureStorage
 {
-class SecureStorageImpl : public ISecureStorage, public IModule, public SubscriptionHelper
+class SecureStorageImpl : public ISecureStorage, public SubscriptionHelper
 {
 public:
     SecureStorageImpl() = default;

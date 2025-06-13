@@ -18,7 +18,6 @@
  */
 
 #include "FireboltSDK.h"
-#include "IModule.h"
 #include "closedcaptions_impl.h"
 #include "device_impl.h"
 #include "hdmiinput_impl.h"

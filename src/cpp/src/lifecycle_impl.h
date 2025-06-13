@@ -20,7 +20,6 @@
 #pragma once
 
 #include "FireboltSDK.h"
-#include "IModule.h"
 #include "helpers.h"
 #include "lifecycle.h"
 #include <mutex>
@@ -29,7 +28,7 @@
 
 namespace Firebolt::Lifecycle
 {
-class LifecycleImpl : public ILifecycle, public IModule, public SubscriptionHelper
+class LifecycleImpl : public ILifecycle, public SubscriptionHelper
 {
 public:
     LifecycleImpl() = default;

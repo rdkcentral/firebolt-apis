@@ -20,13 +20,12 @@
 #pragma once
 
 #include "FireboltSDK.h"
-#include "IModule.h"
 #include "hdmiinput.h"
 #include "helpers.h"
 
 namespace Firebolt::HDMIInput
 {
-class HDMIInputImpl : public IHDMIInput, public IModule, public SubscriptionHelper
+class HDMIInputImpl : public IHDMIInput, public SubscriptionHelper
 {
 
 public:
