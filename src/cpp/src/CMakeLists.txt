@@ -19,7 +19,8 @@ cmake_minimum_required(VERSION 3.3)
 set(TARGET ${PROJECT_NAME})
 message("Setup ${TARGET} v${PROJECT_VERSION}")
 
-file(GLOB SOURCES *.cpp)
+file(GLOB SOURCES *.cpp json_types/*.cpp)
+
 add_library(${TARGET} ${FIREBOLT_LIBRARY_TYPE}
     ${SOURCES}
 )
@@ -42,6 +43,7 @@ target_link_libraries(${TARGET}
 target_include_directories(${TARGET}
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/json_types>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
