@@ -299,15 +299,10 @@ case "$1" in
   getArtifactData) getArtifactData ;;
   unzipArtifact) unzipArtifact ;;
   generate_cpp_core_sdk_source_code) generate_cpp_sdk_source_code "core"  ;;
-  generate_cpp_manage_sdk_source_code) generate_cpp_sdk_source_code "manage"  ;;
-  generate_cpp_discovery_sdk_source_code) generate_cpp_sdk_source_code "discovery"  ;;
   cloneAndInstallThunder) cloneAndInstallThunder ;;
   build_core_cpp_sdk) build_cpp_sdk "core" ;;
-  build_manage_cpp_sdk) build_cpp_sdk "manage" ;;
   build_discovery_cpp_sdk) build_cpp_sdk "discovery" ;;
   generate_core_sdk_coverage_report) generate_coverage_report "core" ;;
-  generate_manage_sdk_coverage_report) generate_coverage_report "manage" ;;
-  generate_discovery_sdk_coverage_report) generate_coverage_report "discovery" ;;
   *)
     echo "Invalid function specified."
     exit 1

@@ -3,12 +3,6 @@ dist/*
 src/sdks/core/build/*
 src/sdks/core/dist/*
 src/sdks/core/test/transpiled-suite/*
-src/sdks/discovery/build/*
-src/sdks/discovery/dist/*
-src/sdks/discovery/test/transpiled-suite/*
-src/sdks/manage/build/*
-src/sdks/manage/dist/*
-src/sdks/manage/test/transpiled-suite/*
 node_modules/*
 test/transpiled-suite/*
 .DS_Store

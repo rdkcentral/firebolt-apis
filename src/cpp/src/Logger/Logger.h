@@ -45,8 +45,6 @@ public:
     {
         OpenRPC,
         Core,
-        Manage,
-        Discovery,
         PlayerProvider,
         PlayerManager,
     };
