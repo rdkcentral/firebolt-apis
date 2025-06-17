@@ -27,13 +27,13 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 list(APPEND CMAKE_MODULE_PATH
-	"${SYSROOT_PATH}/usr/lib/cmake"
-	"${SYSROOT_PATH}/tools/cmake")
+    "${SYSROOT_PATH}/usr/lib/cmake"
+    "${SYSROOT_PATH}/tools/cmake")
 message("FIREBOLT_PATH inside cmake " ${FIREBOLT_PATH})
 if (FIREBOLT_PATH)
     set(CMAKE_FIREBOLT_PATH
         "${FIREBOLT_PATH}/usr/lib/cmake/Firebolt"
-	"${FIREBOLT_PATH}/usr/lib/cmake/FireboltSDK")
+        "${FIREBOLT_PATH}/usr/lib/cmake/FireboltSDK")
     list(APPEND CMAKE_PREFIX_PATH ${CMAKE_FIREBOLT_PATH})
     list(APPEND CMAKE_MODULE_PATH ${CMAKE_FIREBOLT_PATH})
 else ()
@@ -41,7 +41,17 @@ else ()
 endif ()
 
 find_package(WPEFramework CONFIG REQUIRED)
-find_package(${NAMESPACE}Core CONFIG REQUIRED)
+find_package(WPEFrameworkCore CONFIG REQUIRED)
+
+# nlohmann_json:
+#   v3.11.3, https://github.com/nlohmann/json, 9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03
+# nlohmann_json_schema_validator:
+#   v2.3.0, https://github.com/pboettch/json-schema-validator.git, 349cba9f7e3cb423bbc1811bdd9f6770f520b468
+find_package(nlohmann_json_schema_validator CONFIG REQUIRED)
+
+# googletest:
+#   v1.15.2, https://github.com/google/googletest, b514bdc898e2951020cbdca1304b75f5950d1f59
+find_package(GTest CONFIG REQUIRED)
 
 set(TESTAPP TestFireboltCore)
 
@@ -51,10 +61,10 @@ add_executable(${TESTAPP} CoreSDKTest.cpp Main.cpp)
 
 target_link_libraries(${TESTAPP}
     PRIVATE
-        ${NAMESPACE}Core::${NAMESPACE}Core
-        ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
-        nlohmann_json_schema_validator
-        gtest_main
+        WPEFrameworkCore::WPEFrameworkCore
+        FireboltSDK::FireboltSDK
+        nlohmann_json_schema_validator::validator
+        GTest::gtest
 )
 
 target_include_directories(${TESTAPP}
@@ -77,8 +87,8 @@ add_custom_command(
     TARGET ${TESTAPP}
     POST_BUILD
     COMMENT "=================== Installing TestApp ======================"
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${TESTAPP} ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/FireboltSDK/usr/bin
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${TESTAPP} ${CMAKE_BINARY_DIR}/FireboltSDK/usr/bin
 )
 
 if(ENABLE_UNIT_TESTS)
@@ -93,14 +103,14 @@ if(ENABLE_UNIT_TESTS)
         Unit.cpp
         ${UNIT_TESTS}
     )
-    
-    link_directories(${CMAKE_SOURCE_DIR}/../../Thunder/install/usr/lib/)
+
+    link_directories(${SYSROOT_PATH}/usr/lib/)
     target_link_libraries(${UNIT_TESTS_APP}
         PRIVATE
-            ${NAMESPACE}Core::${NAMESPACE}Core
-            ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
-            nlohmann_json_schema_validator
-            gtest_main
+            WPEFrameworkCore::WPEFrameworkCore
+            FireboltSDK::FireboltSDK
+            nlohmann_json_schema_validator::validator
+            GTest::gtest
     )
 
     target_include_directories(${UNIT_TESTS_APP}
@@ -119,7 +129,7 @@ endif()
 
 if(ENABLE_COVERAGE)
     include(${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake)
-    
+
     set(COVERAGE_MAIN "coverage")
     set(COVERAGE_EXCLUDES
         "${CMAKE_SOURCE_DIR}/build/*"
@@ -130,7 +140,7 @@ if(ENABLE_COVERAGE)
 
     set(COVERAGE_EXTRA_FLAGS)
     set(COVERAGE_DEPENDENCIES ${UNIT_TESTS_APP})
-    
+
     setup_target_for_coverage_gcovr_html(
         NAME ${COVERAGE_MAIN}
         BASE_DIRECTORY ${CMAKE_SOURCE_DIR}
