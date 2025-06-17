@@ -1,7 +1,5 @@
 {
     "include": [
-        "src/sdks/core/test/suite/*",
-        "src/sdks/manage/test/suite/*",
-        "src/sdks/discovery/test/suite/*"
+        "src/sdks/core/test/suite/*"
     ]
 }
