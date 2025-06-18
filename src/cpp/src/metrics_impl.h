@@ -20,13 +20,12 @@
 #pragma once
 
 #include "FireboltSDK.h"
-#include "IModule.h"
 #include "helpers.h"
 #include "metrics.h"
 
 namespace Firebolt::Metrics
 {
-class MetricsImpl : public IMetrics, public IModule, public SubscriptionHelper
+class MetricsImpl : public IMetrics, public Firebolt::Helpers::SubscriptionHelper
 {
 public:
     MetricsImpl() = default;

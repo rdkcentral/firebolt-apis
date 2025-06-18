@@ -20,14 +20,13 @@
 #pragma once
 
 #include "FireboltSDK.h"
-#include "IModule.h"
 #include "closedcaptions.h"
 #include "helpers.h"
 #include "jsondata_accessibility.h"
 
 namespace Firebolt::ClosedCaptions
 {
-class ClosedCaptionsImpl : public IClosedCaptions, public IModule, public SubscriptionHelper
+class ClosedCaptionsImpl : public IClosedCaptions, public Firebolt::Helpers::SubscriptionHelper
 {
 public:
     ClosedCaptionsImpl() = default;

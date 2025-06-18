@@ -20,6 +20,8 @@
 #include "device_impl.h"
 #include "jsondata_device_types.h"
 
+using namespace Firebolt::Helpers;
+
 namespace Firebolt::Device
 {
 // Methods

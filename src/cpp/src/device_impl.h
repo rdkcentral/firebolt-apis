@@ -20,7 +20,6 @@
 #pragma once
 
 #include "FireboltSDK.h"
-#include "IModule.h"
 #include <string>
 
 #include "device.h"
@@ -28,7 +27,7 @@
 
 namespace Firebolt::Device
 {
-class DeviceImpl : public IDevice, public IModule, public SubscriptionHelper
+class DeviceImpl : public IDevice, public Firebolt::Helpers::SubscriptionHelper
 {
 public:
     DeviceImpl() = default;

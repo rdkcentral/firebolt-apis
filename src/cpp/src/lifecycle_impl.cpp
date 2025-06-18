@@ -21,6 +21,8 @@
 #include "firebolt.h"
 #include "jsondata_lifecycle_types.h"
 
+using namespace Firebolt::Helpers;
+
 namespace
 {
 void readyDispatcher(const void* result)
@@ -48,7 +50,7 @@ Result<void> LifecycleImpl::ready()
     {
         WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch> job =
             WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch>(
-                WPEFramework::Core::ProxyType<FireboltSDK::Worker>::Create(readyDispatcher, nullptr));
+                WPEFramework::Core::ProxyType<FireboltSDK::Transport::Worker>::Create(readyDispatcher, nullptr));
         WPEFramework::Core::IWorkerPool::Instance().Submit(job);
     }
     return status;
