@@ -46,6 +46,7 @@
         {
             "module": "Device",
             "use": [
+                "xrn:firebolt:capability:device:distributionid",
                 "xrn:firebolt:capability:device:distributor",
                 "xrn:firebolt:capability:device:id",
                 "xrn:firebolt:capability:device:info",

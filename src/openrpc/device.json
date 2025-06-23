@@ -73,6 +73,39 @@
       ]
     },
     {
+      "name": "distributionId",
+      "summary": "Get the distribution ID for the device.  This may be a subset of the distributor.  For example, a distributor may have multiple distribution IDs for different regions or customer groups.",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:immutable"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:device:distributionid"
+          ]
+        }
+      ],
+      "result": {
+        "name": "distributionId",
+        "summary": "The distribution ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "name": "Get the distribution ID",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "cableco-australia"
+          }
+        }
+      ]
+    },
+    {
       "name": "platform",
       "summary": "Get a platform identifier for the device. This API should be used to correlate metrics on the device only and cannot be guaranteed to have consistent responses across platforms.",
       "params": [],
