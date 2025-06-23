@@ -52,6 +52,7 @@
                 "xrn:firebolt:capability:device:make",
                 "xrn:firebolt:capability:device:model",
                 "xrn:firebolt:capability:device:name",
+                "xrn:firebolt:capability:device:operator",
                 "xrn:firebolt:capability:device:sku",
                 "xrn:firebolt:capability:device:uid",
                 "xrn:firebolt:capability:network:status"

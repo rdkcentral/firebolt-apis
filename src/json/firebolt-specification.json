@@ -60,6 +60,9 @@
     "xrn:firebolt:capability:advertising:identifier": {
       "level": "could"
     },
+    "xrn:firebolt:capability:device:operator": {
+      "level": "could"
+    },
     "xrn:firebolt:capability:discovery:sign-in-status": {
       "level": "could"
     },
