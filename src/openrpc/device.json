@@ -74,7 +74,7 @@
     },
     {
       "name": "distributionId",
-      "summary": "Get the distribution ID for the device.  This may be a subset of the distributor.  For example, a distributor may have multiple distribution IDs for different regions or customer groups.",
+      "summary": "Get the distribution ID assigned to the device which denotes a specific grouping of devices managed by a distributor.  Each distributor may have multiple distribution IDs each being tied to a specific region or customer segment.  Consult distributor documentation for more information on possible values.",
       "params": [],
       "tags": [
         {
@@ -96,11 +96,19 @@
       },
       "examples": [
         {
-          "name": "Get the distribution ID",
+          "name": "Get the distribution ID for a group of devices managed by distributor 'Kangaroo Cable'",
           "params": [],
           "result": {
             "name": "Default Result",
-            "value": "cableco-australia"
+            "value": "kangaroo-east"
+          }
+        },
+        {
+          "name": "Get the distribution ID for another group of devices managed by distributor 'Kangaroo Cable'",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "kangaroo-west"
           }
         }
       ]
