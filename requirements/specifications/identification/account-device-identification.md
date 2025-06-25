@@ -41,9 +41,9 @@ The `Device` module will provide methods allowing apps to query for various iden
 
 The `Device` module **MUST** have an `distributionId` method that returns a string value denoting a group of devices as managed by a distributor.
 
-Access to this method **MUST** require the `use` role of the `xrn:firebolt:capability:device:distributorid` capability.
+Access to this method **MUST** require the `use` role of the `xrn:firebolt:capability:device:distributionid` capability.
 
 ```javascript
-Device.distributorId()
-//> "cableco-australia"
+Device.distributionId()
+//> "kangaroo-cable-west"
 ```
