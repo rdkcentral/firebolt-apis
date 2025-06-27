@@ -1050,23 +1050,23 @@
         }
       },
       "examples": [
-{
-  "name": "Launch the 'Foo' app to it's home screen.",
-  "params": [
-    {
-      "name": "appId",
-      "value": "foo"
-    },
-    {
-      "name": "intent",
-      "value": {
-        "action": "home",
-        "context": {
-          "source": "voice"
-        }
-      }
-    }
-  ],
+        {
+          "name": "Launch the 'Foo' app to it's home screen.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "foo"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "home",
+                "context": {
+                  "source": "voice"
+                }
+              }
+            }
+          ],
           "result": {
             "name": "success",
             "value": true
