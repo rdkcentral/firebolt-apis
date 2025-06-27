@@ -1,0 +1,16 @@
+{
+    "$id": "https://meta.comcast.com/firebolt/policies",
+    "title": "Policies",
+    "definitions": {
+        "AgePolicy": {
+            "title": "AgePolicy",
+            "description": "The policy that describes various age groups to which content is directed.",
+            "type": "string",
+            "enum": [
+              "app:adult",
+              "app:child",
+              "app:teen"
+            ]
+        }
+    }
+}

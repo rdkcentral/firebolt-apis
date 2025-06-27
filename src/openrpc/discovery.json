@@ -8,7 +8,7 @@
   "methods": [
     {
       "name": "policy",
-      "summary": "get the discovery policy",
+      "summary": "Get the discovery policy",
       "params": [],
       "tags": [
         {
@@ -581,6 +581,21 @@
             "type": "string",
             "format": "date-time"
           }
+        },
+        {
+          "name": "options",
+          "summary": "Additional options for the watched content",
+          "schema": {
+            "type": "object",
+            "properties":  {
+              "agePolicy": {
+                "summary": "The age policy that describes the watched content.  For example, content that is directed towards children should have the appropriate child policy supplied to ensure any appropriate child data protections are enforced.  See distributor documentation for further details.",
+                "schema": {
+                  "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+                }
+              }
+            }
+          }
         }
       ],
       "result": {
@@ -592,7 +607,7 @@
       },
       "examples": [
         {
-          "name": "Notifying the platform of watched content",
+          "name": "Notify the platform of watched content",
           "params": [
             {
               "name": "entityId",
@@ -609,6 +624,37 @@
             {
               "name": "watchedOn",
               "value": "2021-04-23T18:25:43.511Z"
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Notify the platform that child-directed content was watched",
+          "params": [
+            {
+              "name": "entityId",
+              "value": "partner.com/entity/123"
+            },
+            {
+              "name": "progress",
+              "value": 0.95
+            },
+            {
+              "name": "completed",
+              "value": true
+            },
+            {
+              "name": "watchedOn",
+              "value": "2021-04-23T18:25:43.511Z"
+            },
+            {
+              "name": "options",
+              "value": {
+                "agePolicy": "app:child"
+              }
             }
           ],
           "result": {
@@ -1004,8 +1050,30 @@
         }
       },
       "examples": [
+{
+  "name": "Launch the 'Foo' app to it's home screen.",
+  "params": [
+    {
+      "name": "appId",
+      "value": "foo"
+    },
+    {
+      "name": "intent",
+      "value": {
+        "action": "home",
+        "context": {
+          "source": "voice"
+        }
+      }
+    }
+  ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
         {
-          "name": "Launch the 'Foo' app to it's home screen.",
+          "name": "Launch the 'Foo' app to it's home screen where the launch intent came from a child-directed browse menu.",
           "params": [
             {
               "name": "appId",
@@ -1016,7 +1084,7 @@
               "value": {
                 "action": "home",
                 "context": {
-                  "source": "voice"
+                  "source": "browse"
                 }
               }
             }
