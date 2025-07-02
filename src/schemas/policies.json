@@ -4,9 +4,11 @@
     "definitions": {
         "AgePolicy": {
             "title": "AgePolicy",
-            "description": "The policy that describes various age groups to which content is directed.",
-            "oneOf": [
-                { "type":"string" },
+            "description": "The policy that describes various age groups to which content is directed. See distributor documentation for further details.",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
                 {
                     "type": "string",
                     "enum": [
