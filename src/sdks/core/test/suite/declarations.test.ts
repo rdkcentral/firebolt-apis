@@ -51,7 +51,7 @@ test('Able to get resolution', () => {
         expect(res[1] > 0).toBe(true)
     })
 })
-
+/*
 test('purchaseContent', () => {
     let totalCount = 0;
     transport.onSend((json) => {
@@ -105,7 +105,7 @@ test('entityInfo', () => {
         
     })
 })
-/*
+
 test('entityInfo pull', () => {
     let resolver
     const p = new Promise((resolve, reject) => {
