@@ -61,8 +61,15 @@
 			"description": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow. Includes information about the program entity and its relevant associated entities, such as extras, previews, and, in the case of TV series, seasons and episodes.\n\nSee the `EntityInfo` and `WayToWatch` data structures below for more information.\n\nThe app only needs to implement Pull support for `entityInfo` at this time.",
 			"params": [
 				{
-					"name": "correlationId",
-					"required": true,
+				"name": "entityId",
+				"required": true,
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+				"name": "assedId",
+				"required": true,
 					"schema": {
 						"type": "string"
 					}
@@ -79,10 +86,15 @@
 				{
 					"name": "Entity info for a movie.",
 					"params": [
+
 						{
-							"name": "correlationId",
-							"value": "hulu"
-						}
+							"name": "entityId",
+							"value": "id-123"
+						},
+						{
+							"name": "assedId",
+							"value": "asseId-123"
+						}												
 					],
 					"result": {
 						"name": "result",
@@ -145,9 +157,13 @@
 					"name": "Entity info for a movie with a trailer.",
 					"params": [
 						{
-							"name": "correlationId",
-							"value": "val2"
-						}
+							"name": "entityId",
+							"value": "id-1234"
+						},
+						{
+							"name": "assedId",
+							"value": "asseId-1234"
+						}						
 					],
 					"result": {
 						"name": "result",
@@ -254,13 +270,17 @@
 			"description": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow. Includes information about the program entity and its relevant associated entities, such as extras, previews, and, in the case of TV series, seasons and episodes.\n\nSee the `EntityInfo` and `WayToWatch` data structures below for more information.\n\nThe app only needs to implement Pull support for `entityInfo` at this time.",
 			"params": [
 				{
-					"name": "correlationId",
-					"required": true,
+				"name": "entityId",
+				"required": true,
 					"schema": {
-						"type": [
-							"string",
-							"null"
-						]
+						"type": "string"
+					}
+				},
+				{
+				"name": "assedId",
+				"required": true,
+					"schema": {
+						"type": "string"
 					}
 				}
 			],
@@ -276,9 +296,13 @@
 					"name": "Entity info for a movie.",
 					"params": [
 						{
-							"name": "correlationId",
-							"value": null
-						}
+							"name": "entityId",
+							"value": "id-12345"
+						},
+						{
+							"name": "assedId",
+							"value": "asseId-12345"
+						}	
 					],
 					"result": {
 						"name": "result",
@@ -341,9 +365,13 @@
 					"name": "Entity info for a movie with a trailer.",
 					"params": [
 						{
-							"name": "correlationId",
-							"value": null
-						}
+							"name": "entityId",
+							"value": "id-123456"
+						},
+						{
+							"name": "assedId",
+							"value": "asseId-123456"
+						}	
 					],
 					"result": {
 						"name": "result",
@@ -437,10 +465,13 @@
 					"name": "Entity info for a TV Series with seasons and episodes.",
 					"params": [
 						{
-							"name": "correlationId",
-							"value": null
-						}
-
+							"name": "entityId",
+							"value": "id-1234567"
+						},
+						{
+							"name": "assedId",
+							"value": "asseId-1234567"
+						}	
 					],
 					"result":{
 						"name": "result",
@@ -606,16 +637,19 @@
 			"summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
 			"params": [
 				{
-					"name": "correlationId",
-					"required": true,
+				"name": "offeringType",
+				"required": true,
 					"schema": {
-						"type": [
-							"string",
-							"null"
-						]
+						"type": "string"
+					}
+				},
+				{
+				"name": "programType",
+				"required": true,
+					"schema": {
+						"type": "string"
 					}
 				}
-				
 			],
 			"result": {
 				"name": "result",
@@ -630,9 +664,13 @@
 					"name": "Inform the platform of the user's purchased content",
 					"params": [
 						{
-							"name": "correlationId",
-							"value": "Id123"
-						}
+							"name": "offeringType",
+							"value": "buy"
+						},
+						{
+							"name": "programType",
+							"value": "movie"
+						}	
 					],
 					"result": {
 						"name": "result",
@@ -712,13 +750,19 @@
 			"summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
 			"params": [
 				{
-					"name": "correlationId",
-					"required": true,
+				"name": "offeringType",
+				"required": true,
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+				"name": "programType",
+				"required": true,
 					"schema": {
 						"type": "string"
 					}
 				}
-				
 			],
 			"result": {
 				"name": "result",
@@ -733,9 +777,13 @@
 					"name": "Inform the platform of the user's purchased content",
 					"params": [
 						{
-							"name": "correlationId",
-							"value": "Id123"
-						}
+							"name": "offeringType",
+							"value": "buy"
+						},
+						{
+							"name": "programType",
+							"value": "movie"
+						}	
 					],
 					"result": {
 						"name": "result",
@@ -797,12 +845,16 @@
 						}
 					}
 				},
-{					"name": "Inform the platform of the user's purchased content",
+				{"name": "Inform the platform of the user's purchased content",
 					"params": [
+						{	
+							"name": "offeringType",
+							"value": "buy"
+						},
 						{
-							"name": "correlationId",
-							"value": "Id456"
-						}
+							"name": "programType",
+							"value": "movie"
+						}	
 					],
 					"result": {
 						"name": "result",
