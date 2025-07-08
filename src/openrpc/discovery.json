@@ -640,14 +640,14 @@
 				"name": "offeringType",
 				"required": true,
 					"schema": {
-						"type": "string"
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/OfferingType"
 					}
 				},
 				{
 				"name": "programType",
 				"required": true,
 					"schema": {
-						"type": "string"
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ProgramType"
 					}
 				}
 			],
@@ -753,14 +753,14 @@
 				"name": "offeringType",
 				"required": true,
 					"schema": {
-						"type": "string"
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/OfferingType"
 					}
 				},
 				{
 				"name": "programType",
 				"required": true,
 					"schema": {
-						"type": "string"
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ProgramType"
 					}
 				}
 			],
@@ -1935,90 +1935,168 @@
 				}
 			]
 		},
-    {
-      "name": "userInterest",
-      "tags": [
-        {
-          "name": "capabilities",
-          "x-provides": "xrn:firebolt:capability:discovery:interest",
-          "x-push": true
-        }
-      ],
-      "summary": "Provide information about the entity currently displayed or selected on the screen.",
-      "description": "Provide information about the entity currently displayed or selected on the screen.",
-      "params": [
-        {
-          "name": "type",
-          "required": true,
-          "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestType"
-          }
-        },
-        {
-          "name": "reason",
-          "required": true,
-          "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestReason"
-          }
-        },
-        {
-          "name": "entity",
-          "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
-          }
-        }        
-      ],
-      "result": {
-        "name": "result",
-        "schema": {
-          "type": "null"
-        }
-      },
-      "examples": [
-        {
-          "name": "Default Example",
-          "params": [
-            {
-              "name": "type",
-              "value": "interest"
-            },
-            {
-              "name": "reason",
-              "value": "playlist"
-            },
-            {
-              "name": "entity",
-              "value": {
-                "identifiers": {
-                  "entityId": "345",
-                  "entityType": "program",
-                  "programType": "movie"
-                },
-                "info": {
-                  "title": "Cool Runnings",
-                  "synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
-                  "releaseDate": "1993-01-01T00:00:00.000Z",
-                  "contentRatings": [
-                    {
-                      "scheme": "US-Movie",
-                      "rating": "PG"
-                    },
-                    {
-                      "scheme": "CA-Movie",
-                      "rating": "G"
-                    }
-                  ]
-                }
-              }
-            }            
-          ],
-          "result": {
-            "name": "result",
-            "value": null
-          }
-        }
-      ]
-    }
+		{
+			"name": "userInterest",
+			"tags": [
+				{
+					"name": "capabilities",
+					"x-uses": ["xrn:firebolt:capability:discovery:interest"],
+					"x-provided-by": "Discovery.userInterest"
+				}
+			],
+			"summary": "Send an entity that the user has expressed interest in to the platform.",
+			"params": [
+				{
+					"name": "type",
+					"required": true,
+					"schema": {
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestType"
+					}
+				},
+				{
+					"name": "reason",
+					"required": true,
+					"schema": {
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestReason"
+					}
+				},
+				{
+					"name": "entity",
+					"required": true,
+					"schema": {
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
+					}
+				}
+			],
+			"result": {
+				"name": "result",
+				"schema": {
+					"type": "null"
+				}
+			},
+			"examples": [
+				{
+					"name": "Default Example",
+					"params": [
+						{
+							"name": "type",
+							"value": "interest"
+						},
+						{
+							"name": "reason",
+							"value": "playlist"
+						},
+						{
+							"name": "entity",
+							"value": {
+								"identifiers": {
+									"entityId": "345",
+									"entityType": "program",
+									"programType": "movie"
+								},
+								"info": {
+									"title": "Cool Runnings",
+									"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+									"releaseDate": "1993-01-01T00:00:00.000Z",
+									"contentRatings": [
+										{
+											"scheme": "US-Movie",
+											"rating": "PG"
+										},
+										{
+											"scheme": "CA-Movie",
+											"rating": "G"
+										}
+									]
+								}
+							}
+						}
+					],
+					"result": {
+						"name": "result",
+						"value": null
+					}
+				}
+			]
+		},
+		{
+			"name": "requestUserInterest",
+			"tags": [
+				{
+					"name": "capabilities",
+					"x-provides": "xrn:firebolt:capability:discovery:interest"
+					
+				}
+			],
+			"summary": "Provide information about the entity currently displayed or selected on the screen.",
+			"description": "Provide information about the entity currently displayed or selected on the screen.",
+			"params": [
+				{
+					"name": "type",
+					"required": true,
+					"schema": {
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestType"
+					}
+				},
+				{
+					"name": "reason",
+					"required": true,
+					"schema": {
+						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestReason"
+					}
+				}
+			],
+			"result": {
+				"name": "interest",
+				"schema": {
+					"$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestResult"
+				},
+				"summary": "The EntityDetails data."
+			},
+			"examples": [
+				{
+					"name": "Default Example",
+					"params": [
+						{
+							"name": "type",
+							"value": "interest"
+						},
+						{
+							"name": "reason",
+							"value": "playlist"
+						}
+					],
+					"result": {
+						"name": "interest",
+						"value": {
+							"appId": "cool-app",
+							"entity": {
+								"identifiers": {
+									"entityId": "345",
+									"entityType": "program",
+									"programType": "movie"
+								},
+								"info": {
+									"title": "Cool Runnings",
+									"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+									"releaseDate": "1993-01-01T00:00:00.000Z",
+									"contentRatings": [
+										{
+											"scheme": "US-Movie",
+											"rating": "PG"
+										},
+										{
+											"scheme": "CA-Movie",
+											"rating": "G"
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]
+		}
 	],
 	"components": {
 		"schemas": {

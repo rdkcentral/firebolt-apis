@@ -59,7 +59,7 @@ test('purchaseContent', () => {
             MockTransport.receiveMessage(JSON.stringify({ jsonrpc: "2.0", result: { "expires": "1234", "totalCount": 5, "entries": null }, id: json.id }));
         }
     });
-    let result = Discovery.purchasedContent("buy", "movie").then((result) => {
+    let result = Discovery.purchasedContent( Discovery.OfferingType.BUY, Discovery.ProgramType.MOVIE).then((result) => {
         expect(result.totalCount).toBe(5);
     });
 });
