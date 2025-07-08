@@ -20,6 +20,8 @@
 #include "securestorage_impl.h"
 #include "jsondata_securestorage_types.h"
 
+using namespace Firebolt::Helpers;
+
 namespace Firebolt::SecureStorage
 {
 Result<void> SecureStorageImpl::clear(const StorageScope& scope)

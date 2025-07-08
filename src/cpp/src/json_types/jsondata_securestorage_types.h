@@ -19,38 +19,25 @@
 
 #pragma once
 
-#include <string>
+#include "FireboltSDK.h"
+#include "securestorage.h"
 
-namespace FireboltSDK::JSON
+namespace Firebolt::SecureStorage::JsonData
 {
-class String : public WPEFramework::Core::JSON::String
+using StorageScope = WPEFramework::Core::JSON::EnumType<::Firebolt::SecureStorage::StorageScope>;
+
+class StorageOptions : public WPEFramework::Core::JSON::Container
 {
-    using Base = WPEFramework::Core::JSON::String;
-
 public:
-    String() : Base(), value_() {}
-    String(const char value[]) : Base(value), value_(value) {}
-    String& operator=(const char rhs[])
-    {
-        Base::operator=(rhs);
-        value_ = rhs;
-        return (*this);
-    }
-    String& operator=(const string rhs)
-    {
-        Base::operator=(rhs);
-        value_ = rhs;
-        return (*this);
-    }
-
-public:
-    const std::string& Value() const
-    {
-        value_ = Base::Value();
-        return value_;
-    }
+    ~StorageOptions() override = default;
+    StorageOptions();
+    StorageOptions(const StorageOptions& other);
+    explicit StorageOptions(const ::Firebolt::SecureStorage::StorageOptions& storageOptions);
+    StorageOptions& operator=(const StorageOptions& other);
+    ::Firebolt::SecureStorage::StorageOptions Value();
+    WPEFramework::Core::JSON::Variant Data() const;
 
 private:
-    mutable std::string value_;
+    WPEFramework::Core::JSON::Float ttl_;
 };
-} // namespace FireboltSDK::JSON
+} // namespace Firebolt::SecureStorage::JsonData

@@ -16,64 +16,62 @@
 
 cmake_minimum_required(VERSION 3.3)
 
-project(FireboltSDK)
-project_version(1.0.0)
 set(TARGET ${PROJECT_NAME})
 message("Setup ${TARGET} v${PROJECT_VERSION}")
 
-file(GLOB SOURCES *.cpp)
+file(GLOB SOURCES *.cpp json_types/*.cpp)
+
 add_library(${TARGET} ${FIREBOLT_LIBRARY_TYPE}
     ${SOURCES}
-    Logger/Logger.cpp
-    Transport/Transport.cpp
-    Accessor/Accessor.cpp
-    Event/Event.cpp
-    Async/Async.cpp
 )
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-find_package(${NAMESPACE}WebSocket CONFIG REQUIRED)
-find_package(${NAMESPACE}WebSocket CONFIG REQUIRED)
-find_package(${NAMESPACE}Core CONFIG REQUIRED)
+find_package(FireboltTransport CONFIG REQUIRED)
+find_package(WPEFramework CONFIG REQUIRED)
+find_package(WPEFrameworkWebSocket CONFIG REQUIRED)
+find_package(WPEFrameworkCore CONFIG REQUIRED)
 
 target_link_libraries(${TARGET}
+    PRIVATE
+        WPEFrameworkWebSocket::WPEFrameworkWebSocket
+        WPEFrameworkCore::WPEFrameworkCore
     PUBLIC
-        ${NAMESPACE}WebSocket::${NAMESPACE}WebSocket
-        ${NAMESPACE}Core::${NAMESPACE}Core
-        ${NAMESPACE}WebSocket::${NAMESPACE}WebSocket
+        FireboltTransport::FireboltTransport
 )
 
 target_include_directories(${TARGET}
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/json_types>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        # where external projects will look for the library's public headers
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${FIREBOLT_NAMESPACE}>
 )
 
 set_target_properties(${TARGET} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
-    FRAMEWORK FALSE
-    LINK_WHAT_YOU_USE TRUE
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
 )
 
-install(
-    TARGETS ${TARGET} EXPORT ${TARGET}Targets
+install(TARGETS ${TARGET}
+    EXPORT ${TARGET}Targets
     ARCHIVE DESTINATION lib COMPONENT libs  # static lib
     LIBRARY DESTINATION lib COMPONENT libs  # shared lib
 )
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/
-    DESTINATION include/${FIREBOLT_NAMESPACE}SDK
+    DESTINATION include/${FIREBOLT_NAMESPACE}
     FILES_MATCHING PATTERN "*.h")
 
 install(
-    FILES ${CMAKE_BINARY_DIR}/FireboltConfig.cmake
+    FILES ${CMAKE_BINARY_DIR}/src/${TARGET}Config.cmake
     DESTINATION lib/cmake/${FIREBOLT_NAMESPACE})
 
-InstallHeaders(TARGET ${TARGET} HEADERS . NAMESPACE ${FIREBOLT_NAMESPACE} DESTINATION ${FIREBOLT_NAMESPACE}SDK)
 InstallCMakeConfig(TARGETS ${TARGET})
-InstallPackageConfig(TARGETS ${TARGET} DESCRIPTION "Firebolt SDK Library")
+InstallPackageConfig(TARGETS ${TARGET} DESCRIPTION "Firebolt Native SDK Library")

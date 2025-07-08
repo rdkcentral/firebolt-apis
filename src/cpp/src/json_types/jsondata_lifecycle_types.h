@@ -20,7 +20,6 @@
 #pragma once
 
 #include "FireboltSDK.h"
-#include "IModule.h"
 #include "lifecycle.h"
 
 namespace Firebolt::Lifecycle::JsonData

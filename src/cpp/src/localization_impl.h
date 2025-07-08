@@ -20,13 +20,12 @@
 #pragma once
 
 #include "FireboltSDK.h"
-#include "IModule.h"
 #include "helpers.h"
 #include "localization.h"
 
 namespace Firebolt::Localization
 {
-class LocalizationImpl : public ILocalization, public IModule, public SubscriptionHelper
+class LocalizationImpl : public ILocalization, public Firebolt::Helpers::SubscriptionHelper
 {
 
 public:

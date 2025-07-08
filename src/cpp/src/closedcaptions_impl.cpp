@@ -19,6 +19,8 @@
 
 #include "closedcaptions_impl.h"
 
+using namespace Firebolt::Helpers;
+
 namespace Firebolt::ClosedCaptions
 {
 // Methods

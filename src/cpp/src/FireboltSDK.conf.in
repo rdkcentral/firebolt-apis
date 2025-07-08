@@ -1,3 +1,0 @@
-url = "@FIREBOLT_SERVER_URL@"
-waittime = "@FIREBOLT_TRANSPORT_WAITTIME@"
-loglevel = "@FIREBOLT_LOGLEVEL@"
