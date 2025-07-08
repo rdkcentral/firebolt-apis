@@ -53,7 +53,7 @@ test("entityInfo(EntityInfoResult)", () => {
       programType: Discovery.ProgramType.MOVIE,
     },
   };
-  return Discovery.entityInfo(dummyData).then((res: boolean) => {
+  return Discovery.entityInfo("id-123","asseId-123").then((res: Discovery.EntityInfoResult) => {
     expect(res).toBeTruthy();
   });
 });
@@ -117,7 +117,7 @@ test("purchasedContent()", () => {
       },
     ],
   };
-  return Discovery.purchasedContent(dummyData).then((res: boolean) => {
+  return Discovery.purchasedContent("buy","movie").then((res:  Discovery.PurchasedContentResult) => {
     expect(res).toBeTruthy();
   });
 });

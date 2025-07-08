@@ -47,8 +47,217 @@
 			"name": "entityInfo",
 			"tags": [
 				{
-					"name": "polymorphic-pull"
+					"name": "property"
 				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:discovery:entity-info"
+					],
+					"x-provided-by":"Discovery.entityInfo"
+				}
+			],
+			"summary": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow.",
+			"description": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow. Includes information about the program entity and its relevant associated entities, such as extras, previews, and, in the case of TV series, seasons and episodes.\n\nSee the `EntityInfo` and `WayToWatch` data structures below for more information.\n\nThe app only needs to implement Pull support for `entityInfo` at this time.",
+			"params": [
+				{
+				"name": "entityId",
+				"required": true,
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+				"name": "assedId",
+				"required": true,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"result": {
+				"name": "result",
+				"summary": "The entityInfo data",
+				"schema": {
+					"$ref": "#/components/schemas/EntityInfoResult"
+				}
+			},
+			"examples": [
+				{
+					"name": "Entity info for a movie.",
+					"params": [
+
+						{
+							"name": "entityId",
+							"value": "id-123"
+						},
+						{
+							"name": "assedId",
+							"value": "asseId-123"
+						}												
+					],
+					"result": {
+						"name": "result",
+						"value": {
+							"expires": "2025-01-01T00:00:00.000Z",
+							"entity": {
+								"identifiers": {
+									"entityId": "345"
+								},
+								"entityType": "program",
+								"programType": "movie",
+								"title": "Cool Runnings",
+								"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+								"releaseDate": "1993-01-01T00:00:00.000Z",
+								"contentRatings": [
+									{
+										"scheme": "US-Movie",
+										"rating": "PG"
+									},
+									{
+										"scheme": "CA-Movie",
+										"rating": "G"
+									}
+								],
+								"waysToWatch": [
+									{
+										"identifiers": {
+											"assetId": "123"
+										},
+										"expires": "2025-01-01T00:00:00.000Z",
+										"entitled": true,
+										"entitledExpires": "2025-01-01T00:00:00.000Z",
+										"offeringType": "buy",
+										"price": 2.99,
+										"videoQuality": [
+											"UHD"
+										],
+										"audioProfile": [
+											"dolbyAtmos"
+										],
+										"audioLanguages": [
+											"en"
+										],
+										"closedCaptions": [
+											"en"
+										],
+										"subtitles": [
+											"es"
+										],
+										"audioDescriptions": [
+											"en"
+										]
+									}
+								]
+							}
+						}
+					}
+				},
+				{
+					"name": "Entity info for a movie with a trailer.",
+					"params": [
+						{
+							"name": "entityId",
+							"value": "id-1234"
+						},
+						{
+							"name": "assedId",
+							"value": "asseId-1234"
+						}						
+					],
+					"result": {
+						"name": "result",
+						"value": {
+							"expires": "2025-01-01T00:00:00.000Z",
+							"entity": {
+								"identifiers": {
+									"entityId": "345"
+								},
+								"entityType": "program",
+								"programType": "movie",
+								"title": "Cool Runnings",
+								"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+								"releaseDate": "1993-01-01T00:00:00.000Z",
+								"contentRatings": [
+									{
+										"scheme": "US-Movie",
+										"rating": "PG"
+									},
+									{
+										"scheme": "CA-Movie",
+										"rating": "G"
+									}
+								],
+								"waysToWatch": [
+									{
+										"identifiers": {
+											"assetId": "123"
+										},
+										"expires": "2025-01-01T00:00:00.000Z",
+										"entitled": true,
+										"entitledExpires": "2025-01-01T00:00:00.000Z",
+										"offeringType": "buy",
+										"price": 2.99,
+										"videoQuality": [
+											"UHD"
+										],
+										"audioProfile": [
+											"dolbyAtmos"
+										],
+										"audioLanguages": [
+											"en"
+										],
+										"closedCaptions": [
+											"en"
+										],
+										"subtitles": [
+											"es"
+										],
+										"audioDescriptions": [
+											"en"
+										]
+									}
+								]
+							},
+							"related": [
+								{
+									"identifiers": {
+										"entityId": "345"
+									},
+									"entityType": "program",
+									"programType": "preview",
+									"title": "Cool Runnings Trailer",
+									"waysToWatch": [
+										{
+											"identifiers": {
+												"assetId": "123111",
+												"entityId": "345"
+											},
+											"entitled": true,
+											"videoQuality": [
+												"HD"
+											],
+											"audioProfile": [
+												"dolbyAtmos"
+											],
+											"audioLanguages": [
+												"en"
+											],
+											"closedCaptions": [
+												"en"
+											]
+										}
+									]
+								}
+							]
+						}
+					}
+				}				
+			]
+		},		
+		{
+			"name": "entityInfo",
+			"tags": [
 				{
 					"name": "capabilities",
 					"x-provides": "xrn:firebolt:capability:discovery:entity-info"
@@ -61,44 +270,415 @@
 			"description": "Provide information about a program entity and its available watchable assets, such as entitlement status and price, via either a push or pull call flow. Includes information about the program entity and its relevant associated entities, such as extras, previews, and, in the case of TV series, seasons and episodes.\n\nSee the `EntityInfo` and `WayToWatch` data structures below for more information.\n\nThe app only needs to implement Pull support for `entityInfo` at this time.",
 			"params": [
 				{
-					"name": "correlationId",
-					"required": true,
+				"name": "entityId",
+				"required": true,
 					"schema": {
-						"type": [
-							"string",
-							"null"
-						]
+						"type": "string"
 					}
 				},
 				{
-					"name": "result",
-					"required": true,
+				"name": "assedId",
+				"required": true,
 					"schema": {
-						"$ref": "#/components/schemas/EntityInfoResult"
-					},
-					"summary": "The entityInfo data."
+						"type": "string"
+					}
 				}
 			],
 			"result": {
-				"name": "success",
-				"summary": "True if the push operation is successful",
+				"name": "result",
+				"summary": "The entityInfo data",
 				"schema": {
-					"type": "boolean"
+					"$ref": "#/components/schemas/EntityInfoResult"
 				}
 			},
 			"examples": [
 				{
-					"name": "Send entity info for a movie to the platform.",
+					"name": "Entity info for a movie.",
 					"params": [
 						{
-							"name": "correlationId",
-							"value": null
+							"name": "entityId",
+							"value": "id-12345"
 						},
 						{
-							"name": "result",
-							"value": {
-								"expires": "2025-01-01T00:00:00.000Z",
-								"entity": {
+							"name": "assedId",
+							"value": "asseId-12345"
+						}	
+					],
+					"result": {
+						"name": "result",
+						"value": {
+							"expires": "2025-01-01T00:00:00.000Z",
+							"entity": {
+								"identifiers": {
+									"entityId": "345"
+								},
+								"entityType": "program",
+								"programType": "movie",
+								"title": "Cool Runnings",
+								"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+								"releaseDate": "1993-01-01T00:00:00.000Z",
+								"contentRatings": [
+									{
+										"scheme": "US-Movie",
+										"rating": "PG"
+									},
+									{
+										"scheme": "CA-Movie",
+										"rating": "G"
+									}
+								],
+								"waysToWatch": [
+									{
+										"identifiers": {
+											"assetId": "123"
+										},
+										"expires": "2025-01-01T00:00:00.000Z",
+										"entitled": true,
+										"entitledExpires": "2025-01-01T00:00:00.000Z",
+										"offeringType": "buy",
+										"price": 2.99,
+										"videoQuality": [
+											"UHD"
+										],
+										"audioProfile": [
+											"dolbyAtmos"
+										],
+										"audioLanguages": [
+											"en"
+										],
+										"closedCaptions": [
+											"en"
+										],
+										"subtitles": [
+											"es"
+										],
+										"audioDescriptions": [
+											"en"
+										]
+									}
+								]
+							}
+						}
+					}
+				},
+				{
+					"name": "Entity info for a movie with a trailer.",
+					"params": [
+						{
+							"name": "entityId",
+							"value": "id-123456"
+						},
+						{
+							"name": "assedId",
+							"value": "asseId-123456"
+						}	
+					],
+					"result": {
+						"name": "result",
+						"value": {
+							"expires": "2025-01-01T00:00:00.000Z",
+							"entity": {
+								"identifiers": {
+									"entityId": "345"
+								},
+								"entityType": "program",
+								"programType": "movie",
+								"title": "Cool Runnings",
+								"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+								"releaseDate": "1993-01-01T00:00:00.000Z",
+								"contentRatings": [
+									{
+										"scheme": "US-Movie",
+										"rating": "PG"
+									},
+									{
+										"scheme": "CA-Movie",
+										"rating": "G"
+									}
+								],
+								"waysToWatch": [
+									{
+										"identifiers": {
+											"assetId": "123"
+										},
+										"expires": "2025-01-01T00:00:00.000Z",
+										"entitled": true,
+										"entitledExpires": "2025-01-01T00:00:00.000Z",
+										"offeringType": "buy",
+										"price": 2.99,
+										"videoQuality": [
+											"UHD"
+										],
+										"audioProfile": [
+											"dolbyAtmos"
+										],
+										"audioLanguages": [
+											"en"
+										],
+										"closedCaptions": [
+											"en"
+										],
+										"subtitles": [
+											"es"
+										],
+										"audioDescriptions": [
+											"en"
+										]
+									}
+								]
+							},
+							"related": [
+								{
+									"identifiers": {
+										"entityId": "345"
+									},
+									"entityType": "program",
+									"programType": "preview",
+									"title": "Cool Runnings Trailer",
+									"waysToWatch": [
+										{
+											"identifiers": {
+												"assetId": "123111",
+												"entityId": "345"
+											},
+											"entitled": true,
+											"videoQuality": [
+												"HD"
+											],
+											"audioProfile": [
+												"dolbyAtmos"
+											],
+											"audioLanguages": [
+												"en"
+											],
+											"closedCaptions": [
+												"en"
+											]
+										}
+									]
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Entity info for a TV Series with seasons and episodes.",
+					"params": [
+						{
+							"name": "entityId",
+							"value": "id-1234567"
+						},
+						{
+							"name": "assedId",
+							"value": "asseId-1234567"
+						}	
+					],
+					"result":{
+						"name": "result",
+						"value": {
+							"expires": "2025-01-01T00:00:00.000Z",
+							"entity": {
+								"identifiers": {
+									"entityId": "98765"
+								},
+								"entityType": "program",
+								"programType": "series",
+								"title": "Perfect Strangers",
+								"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+								"releaseDate": "1986-01-01T00:00:00.000Z",
+								"contentRatings": [
+									{
+										"scheme": "US-TV",
+										"rating": "TV-PG"
+									}
+								]
+							},
+							"related": [
+								{
+									"identifiers": {
+										"entityId": "111",
+										"seriesId": "98765"
+									},
+									"entityType": "program",
+									"programType": "season",
+									"seasonNumber": 1,
+									"title": "Perfect Strangers Season 3",
+									"contentRatings": [
+										{
+											"scheme": "US-TV",
+											"rating": "TV-PG"
+										}
+									],
+									"waysToWatch": [
+										{
+											"identifiers": {
+												"assetId": "556",
+												"entityId": "111",
+												"seriesId": "98765"
+											},
+											"entitled": true,
+											"offeringType": "free",
+											"videoQuality": [
+												"SD"
+											],
+											"audioProfile": [
+												"stereo"
+											],
+											"audioLanguages": [
+												"en"
+											],
+											"closedCaptions": [
+												"en"
+											]
+										}
+									]
+								},
+								{
+									"identifiers": {
+										"entityId": "111",
+										"seriesId": "98765"
+									},
+									"entityType": "program",
+									"programType": "episode",
+									"seasonNumber": 1,
+									"episodeNumber": 1,
+									"title": "Knock Knock, Who's There?",
+									"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+									"releaseDate": "1986-03-25T00:00:00.000Z",
+									"contentRatings": [
+										{
+											"scheme": "US-TV",
+											"rating": "TV-PG"
+										}
+									],
+									"waysToWatch": [
+										{
+											"identifiers": {
+												"assetId": "556",
+												"entityId": "111",
+												"seriesId": "98765"
+											},
+											"entitled": true,
+											"offeringType": "free",
+											"videoQuality": [
+												"SD"
+											],
+											"audioProfile": [
+												"stereo"
+											],
+											"audioLanguages": [
+												"en"
+											],
+											"closedCaptions": [
+												"en"
+											]
+										}
+									]
+								},
+								{
+									"identifiers": {
+										"entityId": "112",
+										"seriesId": "98765"
+									},
+									"entityType": "program",
+									"programType": "episode",
+									"seasonNumber": 1,
+									"episodeNumber": 2,
+									"title": "Picture This",
+									"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+									"releaseDate": "1986-04-01T00:00:00.000Z",
+									"contentRatings": [
+										{
+											"scheme": "US-TV",
+											"rating": "TV-PG"
+										}
+									],
+									"waysToWatch": [
+										{
+											"identifiers": {
+												"assetId": "557",
+												"entityId": "112",
+												"seriesId": "98765"
+											},
+											"entitled": true,
+											"offeringType": "free",
+											"videoQuality": [
+												"SD"
+											],
+											"audioProfile": [
+												"stereo"
+											],
+											"audioLanguages": [
+												"en"
+											],
+											"closedCaptions": [
+												"en"
+											]
+										}
+									]
+								}
+							]
+						}
+					}
+				}
+			]
+		},	
+		{
+			"name": "purchasedContent",
+			"tags": [
+				{
+					"name": "capabilities",
+					"x-provides": "xrn:firebolt:capability:discovery:purchased-content"
+				},
+				{
+					"name": "deprecated"
+				}
+			],
+			"summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
+			"params": [
+				{
+				"name": "offeringType",
+				"required": true,
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+				"name": "programType",
+				"required": true,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"result": {
+				"name": "result",
+				"required": true,
+				"schema": {
+					"$ref": "#/components/schemas/PurchasedContentResult"
+				},
+				"summary": "The data for the purchasedContent"
+			},
+			"examples": [
+				{
+					"name": "Inform the platform of the user's purchased content",
+					"params": [
+						{
+							"name": "offeringType",
+							"value": "buy"
+						},
+						{
+							"name": "programType",
+							"value": "movie"
+						}	
+					],
+					"result": {
+						"name": "result",
+						"value": {
+							"totalCount": 10,
+							"expires": "2025-01-01T00:00:00.000Z",
+							"entries": [
+								{
 									"identifiers": {
 										"entityId": "345"
 									},
@@ -148,26 +728,70 @@
 										}
 									]
 								}
-							}
+							]
 						}
-					],
-					"result": {
-						"name": "success",
-						"value": true
+					}
+				}
+			],
+			"description": "Return content purchased by the user, such as rentals and electronic sell through purchases.\n\nThe app should return the user's 100 most recent purchases in `entries`. The total count of purchases must be provided in `count`. If `count` is greater than the total number of `entries`, the UI may provide a link into the app to see the complete purchase list.\n\nThe `EntityInfo` object returned is not required to have `waysToWatch` populated, but it is recommended that it do so in case the UI wants to surface additional information on the purchases screen.\n\nThe app should implement both Push and Pull methods for `purchasedContent`.\n\nThe app should actively push `purchasedContent` when:\n\n*  The app becomes Active.\n*  When the state of the purchasedContent set has changed.\n*  The app goes into Inactive or Background state, if there is a chance a change event has been missed."
+		},
+		{
+			"name": "purchasedContent",
+			"tags": [
+				{
+					"name": "capabilities",
+					"x-uses": ["xrn:firebolt:capability:discovery:purchased-content"],
+					"x-provided-by": "Discovery.purchasedContent"
+				},
+				{
+					"name": "property"
+				}
+			],
+			"summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
+			"params": [
+				{
+				"name": "offeringType",
+				"required": true,
+					"schema": {
+						"type": "string"
 					}
 				},
 				{
-					"name": "Send entity info for a movie with a trailer to the platform.",
+				"name": "programType",
+				"required": true,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"result": {
+				"name": "result",
+				"required": true,
+				"schema": {
+					"$ref": "#/components/schemas/PurchasedContentResult"
+				},
+				"summary": "The data for the purchasedContent"
+			},
+			"examples": [
+				{
+					"name": "Inform the platform of the user's purchased content",
 					"params": [
 						{
-							"name": "correlationId",
-							"value": null
+							"name": "offeringType",
+							"value": "buy"
 						},
 						{
-							"name": "result",
-							"value": {
-								"expires": "2025-01-01T00:00:00.000Z",
-								"entity": {
+							"name": "programType",
+							"value": "movie"
+						}	
+					],
+					"result": {
+						"name": "result",
+						"value": {
+							"totalCount": 10,
+							"expires": "2025-01-01T00:00:00.000Z",
+							"entries": [
+								{
 									"identifiers": {
 										"entityId": "345"
 									},
@@ -216,326 +840,85 @@
 											]
 										}
 									]
-								},
-								"related": [
-									{
-										"identifiers": {
-											"entityId": "345"
-										},
-										"entityType": "program",
-										"programType": "preview",
-										"title": "Cool Runnings Trailer",
-										"waysToWatch": [
-											{
-												"identifiers": {
-													"assetId": "123111",
-													"entityId": "345"
-												},
-												"entitled": true,
-												"videoQuality": [
-													"HD"
-												],
-												"audioProfile": [
-													"dolbyAtmos"
-												],
-												"audioLanguages": [
-													"en"
-												],
-												"closedCaptions": [
-													"en"
-												]
-											}
-										]
-									}
-								]
-							}
+								}
+							]
 						}
-					],
-					"result": {
-						"name": "success",
-						"value": true
 					}
 				},
-				{
-					"name": "Send entity info for a TV Series with seasons and episodes to the platform.",
+				{"name": "Inform the platform of the user's purchased content",
 					"params": [
-						{
-							"name": "correlationId",
-							"value": null
+						{	
+							"name": "offeringType",
+							"value": "buy"
 						},
 						{
-							"name": "result",
-							"value": {
-								"expires": "2025-01-01T00:00:00.000Z",
-								"entity": {
-									"identifiers": {
-										"entityId": "98765"
-									},
-									"entityType": "program",
-									"programType": "series",
-									"title": "Perfect Strangers",
-									"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
-									"releaseDate": "1986-01-01T00:00:00.000Z",
-									"contentRatings": [
-										{
-											"scheme": "US-TV",
-											"rating": "TV-PG"
-										}
-									]
-								},
-								"related": [
-									{
-										"identifiers": {
-											"entityId": "111",
-											"seriesId": "98765"
-										},
-										"entityType": "program",
-										"programType": "season",
-										"seasonNumber": 1,
-										"title": "Perfect Strangers Season 3",
-										"contentRatings": [
-											{
-												"scheme": "US-TV",
-												"rating": "TV-PG"
-											}
-										],
-										"waysToWatch": [
-											{
-												"identifiers": {
-													"assetId": "556",
-													"entityId": "111",
-													"seriesId": "98765"
-												},
-												"entitled": true,
-												"offeringType": "free",
-												"videoQuality": [
-													"SD"
-												],
-												"audioProfile": [
-													"stereo"
-												],
-												"audioLanguages": [
-													"en"
-												],
-												"closedCaptions": [
-													"en"
-												]
-											}
-										]
-									},
-									{
-										"identifiers": {
-											"entityId": "111",
-											"seriesId": "98765"
-										},
-										"entityType": "program",
-										"programType": "episode",
-										"seasonNumber": 1,
-										"episodeNumber": 1,
-										"title": "Knock Knock, Who's There?",
-										"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
-										"releaseDate": "1986-03-25T00:00:00.000Z",
-										"contentRatings": [
-											{
-												"scheme": "US-TV",
-												"rating": "TV-PG"
-											}
-										],
-										"waysToWatch": [
-											{
-												"identifiers": {
-													"assetId": "556",
-													"entityId": "111",
-													"seriesId": "98765"
-												},
-												"entitled": true,
-												"offeringType": "free",
-												"videoQuality": [
-													"SD"
-												],
-												"audioProfile": [
-													"stereo"
-												],
-												"audioLanguages": [
-													"en"
-												],
-												"closedCaptions": [
-													"en"
-												]
-											}
-										]
-									},
-									{
-										"identifiers": {
-											"entityId": "112",
-											"seriesId": "98765"
-										},
-										"entityType": "program",
-										"programType": "episode",
-										"seasonNumber": 1,
-										"episodeNumber": 2,
-										"title": "Picture This",
-										"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
-										"releaseDate": "1986-04-01T00:00:00.000Z",
-										"contentRatings": [
-											{
-												"scheme": "US-TV",
-												"rating": "TV-PG"
-											}
-										],
-										"waysToWatch": [
-											{
-												"identifiers": {
-													"assetId": "557",
-													"entityId": "112",
-													"seriesId": "98765"
-												},
-												"entitled": true,
-												"offeringType": "free",
-												"videoQuality": [
-													"SD"
-												],
-												"audioProfile": [
-													"stereo"
-												],
-												"audioLanguages": [
-													"en"
-												],
-												"closedCaptions": [
-													"en"
-												]
-											}
-										]
-									}
-								]
-							}
-						}
+							"name": "programType",
+							"value": "movie"
+						}	
 					],
 					"result": {
 						"name": "result",
-						"value": true
-					}
-				}
-			]
-		},
-		{
-			"name": "purchasedContent",
-			"tags": [
-				{
-					"name": "polymorphic-pull"
-				},
-				{
-					"name": "capabilities",
-					"x-provides": "xrn:firebolt:capability:discovery:purchased-content"
-				},
-				{
-					"name": "deprecated"
-				}
-			],
-			"summary": "Provide a list of purchased content for the authenticated account, such as rentals and electronic sell through purchases.",
-			"params": [
-				{
-					"name": "correlationId",
-					"required": true,
-					"schema": {
-						"type": [
-							"string",
-							"null"
-						]
-					}
-				},
-				{
-					"name": "result",
-					"required": true,
-					"schema": {
-						"$ref": "#/components/schemas/PurchasedContentResult"
-					},
-					"summary": "The data for the purchasedContent"
-				}
-			],
-			"result": {
-				"name": "success",
-				"summary": "True if the push operation is successful",
-				"schema": {
-					"type": "boolean"
-				}
-			},
-			"examples": [
-				{
-					"name": "Inform the platform of the user's purchased content",
-					"params": [
-						{
-							"name": "correlationId",
-							"value": null
-						},
-						{
-							"name": "result",
-							"value": {
-								"totalCount": 10,
-								"expires": "2025-01-01T00:00:00.000Z",
-								"entries": [
-									{
-										"identifiers": {
-											"entityId": "345"
+						"value": {
+							"totalCount": 10,
+							"expires": "2025-03-03T00:00:00.000Z",
+							"entries": [
+								{
+									"identifiers": {
+										"entityId": "789"
+									},
+									"entityType": "program",
+									"programType": "movie",
+									"title": "Cool Runnings",
+									"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
+									"releaseDate": "1995-01-01T00:00:00.000Z",
+									"contentRatings": [
+										{
+											"scheme": "US-Movie",
+											"rating": "PG"
 										},
-										"entityType": "program",
-										"programType": "movie",
-										"title": "Cool Runnings",
-										"synopsis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc.",
-										"releaseDate": "1993-01-01T00:00:00.000Z",
-										"contentRatings": [
-											{
-												"scheme": "US-Movie",
-												"rating": "PG"
+										{
+											"scheme": "CA-Movie",
+											"rating": "G"
+										}
+									],
+									"waysToWatch": [
+										{
+											"identifiers": {
+												"assetId": "12345"
 											},
-											{
-												"scheme": "CA-Movie",
-												"rating": "G"
-											}
-										],
-										"waysToWatch": [
-											{
-												"identifiers": {
-													"assetId": "123"
-												},
-												"expires": "2025-01-01T00:00:00.000Z",
-												"entitled": true,
-												"entitledExpires": "2025-01-01T00:00:00.000Z",
-												"offeringType": "buy",
-												"price": 2.99,
-												"videoQuality": [
-													"UHD"
-												],
-												"audioProfile": [
-													"dolbyAtmos"
-												],
-												"audioLanguages": [
-													"en"
-												],
-												"closedCaptions": [
-													"en"
-												],
-												"subtitles": [
-													"es"
-												],
-												"audioDescriptions": [
-													"en"
-												]
-											}
-										]
-									}
-								]
-							}
+											"expires": "2025-01-01T00:00:00.000Z",
+											"entitled": true,
+											"entitledExpires": "2025-01-01T00:00:00.000Z",
+											"offeringType": "buy",
+											"price": 2.99,
+											"videoQuality": [
+												"UHD"
+											],
+											"audioProfile": [
+												"dolbyAtmos"
+											],
+											"audioLanguages": [
+												"en"
+											],
+											"closedCaptions": [
+												"en"
+											],
+											"subtitles": [
+												"es"
+											],
+											"audioDescriptions": [
+												"en"
+											]
+										}
+									]
+								}
+							]
 						}
-					],
-					"result": {
-						"name": "success",
-						"value": true
 					}
-				}
+				}				
 			],
 			"description": "Return content purchased by the user, such as rentals and electronic sell through purchases.\n\nThe app should return the user's 100 most recent purchases in `entries`. The total count of purchases must be provided in `count`. If `count` is greater than the total number of `entries`, the UI may provide a link into the app to see the complete purchase list.\n\nThe `EntityInfo` object returned is not required to have `waysToWatch` populated, but it is recommended that it do so in case the UI wants to surface additional information on the purchases screen.\n\nThe app should implement both Push and Pull methods for `purchasedContent`.\n\nThe app should actively push `purchasedContent` when:\n\n*  The app becomes Active.\n*  When the state of the purchasedContent set has changed.\n*  The app goes into Inactive or Background state, if there is a chance a change event has been missed."
-		},
+		},		
 		{
 			"name": "watched",
 			"summary": "Notify the platform that content was partially or completely watched",

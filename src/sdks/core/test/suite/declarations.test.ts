@@ -51,31 +51,20 @@ test('Able to get resolution', () => {
         expect(res[1] > 0).toBe(true)
     })
 })
-
 test('purchaseContent', () => {
-    let totalCount = 0;
     transport.onSend((json) => {
-        let [module, method] = json.method.split('.')
-        expect(module).toBe('Discovery')
-
+        let [module, method] = json.method.split('.');
+        expect(module).toBe('Discovery');
         if (method === 'purchasedContent') {
-            totalCount = json.params.result.totalCount
-            MockTransport.receiveMessage(JSON.stringify({ jsonrpc: "2.0", result: { "value": true }, id: json.id }))
+            MockTransport.receiveMessage(JSON.stringify({ jsonrpc: "2.0", result: { "expires": "1234", "totalCount": 5, "entries": null }, id: json.id }));
         }
-    })
-    let result = Discovery.purchasedContent({
-        expires: '',
-        totalCount: 5,
-        entries: [
-        ]
-    }).then(() => {
-        expect(totalCount).toBe(5)
     });
+    let result = Discovery.purchasedContent("buy", "movie").then((result) => {
+        expect(result.totalCount).toBe(5);
+    });
+});
 
-
-})
-
-const result: Discovery.EntityInfoResult = {
+const apiCallResult: Discovery.EntityInfoResult = {
     entity: {
         "entityType": "program",
         "identifiers": {
@@ -88,21 +77,17 @@ const result: Discovery.EntityInfoResult = {
 }
 
 test('entityInfo', () => {
-     let totalCount = 0;
     transport.onSend((json) => {
         let [module, method] = json.method.split('.')
         expect(module).toBe('Discovery')
 
         if (method === 'entityInfo') {
 
-            totalCount = json.params.result.totalCount
-            MockTransport.receiveMessage(JSON.stringify({ jsonrpc: "2.0", result:  true , id: json.id }))
+            MockTransport.receiveMessage(JSON.stringify({ jsonrpc: "2.0", result:  apiCallResult , id: json.id }))
         }
     })
-    return Discovery.entityInfo(result).then((r) => {
-      
-        expect(r).toBe(true)
-        
+    return Discovery.entityInfo("id-123", "asseId-123").then((r) => {
+        expect(r.entity.entityType).toBe("program")
     })
 })
 /*
