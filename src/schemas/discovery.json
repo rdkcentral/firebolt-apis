@@ -3,7 +3,8 @@
   "$id": "https://meta.rdkcentral.com/firebolt/schemas/discovery",
   "anyOf": [
       {"$ref": "#/definitions/InterestType"},
-      {"$ref": "#/definitions/InterestReason"}
+      {"$ref": "#/definitions/InterestReason"},
+      {"$ref": "#/definitions/InterestResult"}
   ],
   "definitions": {
     "InterestType": {
@@ -15,6 +16,22 @@
       "title": "InterestReason",
       "type": "string",
       "enum": ["playlist", "reaction", "recording"]
+    },
+    "InterestResult": {
+      "title": "InterestResult",
+      "type": "object",
+      "properties": {
+        "appId": {
+          "type": "string"
+        },
+        "entity": {
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
+        }
+      },
+      "required": [
+        "appId",
+        "entity"
+      ]
     }
   }
 }

@@ -117,7 +117,7 @@ test("purchasedContent()", () => {
       },
     ],
   };
-  return Discovery.purchasedContent("buy","movie").then((res:  Discovery.PurchasedContentResult) => {
+  return Discovery.purchasedContent(Discovery.OfferingType.BUY, Discovery.ProgramType.MOVIE).then((res:  Discovery.PurchasedContentResult) => {
     expect(res).toBeTruthy();
   });
 });
