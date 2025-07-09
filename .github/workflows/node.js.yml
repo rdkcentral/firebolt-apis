@@ -40,6 +40,6 @@ jobs:
     - run: npm run slice
     - run: npm run validate:compiled
     - run: npm run specification 
-    - run: npm run sdks 
-    - run: npm run docs 
+    - run: npm run sdks
     - run: npm run test
+    - run: npm run docs
