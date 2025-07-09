@@ -39,5 +39,6 @@ jobs:
     - run: npm run compile
     - run: npm run slice
     - run: npm run validate:compiled
-    - run: npm run sdks
+    - run: npm run specification 
+    - run: npm run dist:notest --workspaces
     - run: npm run test
