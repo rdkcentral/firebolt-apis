@@ -15,171 +15,192 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-
+import { transport } from '../../../../../test/TransportHarness.js'
+import MockTransport from '../../build/javascript/src/Transport/MockTransport.mjs'
 import { test, expect, beforeAll } from "@jest/globals";
 import { Keyboard, Settings } from "../../build/javascript/src/firebolt-manage";
 
-const state = {
-  cb: null,
-  eventId: null,
-  pending: []
-}
 
-class MockProviderBroker {
+const standardKeyboardResponse = 'stadard keyboard response';
+const passwordKeyboardResponse = 'password keyboard response';
+const emailKeyboardResponse = 'email keyboard response';
 
-  constructor() {
-  }
+const standardKeyboardMessage = "Enter your text";
+const passwordKeyboardMessage = "Enter your password";
+const emailKeyboardMessage = "Enter your email";
 
-  send(msg) {
-    let parsed = JSON.parse(msg)
-    if (parsed.method === 'keyboard.onRequestStandard') {
-      state.eventId = parsed.id
-    }
-    if ((parsed.method === 'keyboard.standardResponse') || (parsed.method === 'keyboard.standardError')) {
-      let pending = state.pending.find(p => p.correlationId === parsed.params.correlationId)
-      state.pending = state.pending.filter(p => p.correlationId === parsed.params.correlationId)
-      if (pending) {
-        pending.callback(parsed)
-      }
-    }
-  }
+var standardKeyboardResponceReceived = false;
+var passwordKeyboardResponceReceived = false;
+var emailKeyboardResponceReceived = false;
 
-  receive(callback) {
-    state.cb = callback
-  }
-
-  async triggerProvider(msg, providerCallback) {
-    let fullMsg = {
-      jsonrpc: '2.0',
-      id: state.eventId,
-      result: {
-        correlationId: '' + Math.round((Math.random() * 1000000)),
-        parameters: msg
-      }
-    }
-    state.pending.push({
-      correlationId: fullMsg.result.correlationId,
-      callback: providerCallback
-    })
-    state.cb(JSON.stringify(fullMsg))
-  }
-}
-const broker = new MockProviderBroker()
-let provider = null
-
-beforeAll(async () => {
-  Settings.setLogLevel('DEBUG')
-  window['__firebolt'].setTransportLayer(new MockProviderBroker())
-  provider = new DelegatingKBProvider(new KBProvider())
-  await Keyboard.provide("xrn:firebolt:capability:input:keyboard", provider);
-})
-
-class DelegatingKBProvider implements Keyboard.KeyboardInputProvider {
-  delegate: Keyboard.KeyboardInputProvider;
-  constructor(delegate: Keyboard.KeyboardInputProvider) {
-    this.delegate = delegate;
-  }
-  standard(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<string> {
-    return this.delegate.standard(parameters, session)
-  }
-  password(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<string> {
-    return this.delegate.password(parameters, session)
-  }
-  email(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<string> {
-    return this.delegate.email(parameters, session)
-  }
-}
-
-class KBProvider implements Keyboard.KeyboardInputProvider {
-  standard(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<string> {
-    return Promise.resolve('foo');
-  }
-  password(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<string> {
-    return Promise.resolve(null);
-  }
-  email(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
-  ): Promise<string> {
-    return Promise.resolve(null);
-  }
-}
-
-class KBProviderWithError implements Keyboard.KeyboardInputProvider {
+class KBProvider {
   async standard(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    message: string
+  ): Promise<string> {
+    expect(message).toBe(standardKeyboardMessage);
+    return Promise.resolve(standardKeyboardResponse);
+  }
+  async password(
+    message?: string
+  ): Promise<string> {
+    expect(message).toBe(passwordKeyboardMessage);
+    return Promise.resolve(passwordKeyboardResponse);
+  }
+  async email(
+    type: Keyboard.EmailUsage,
+    message?: string
+  ): Promise<string> {
+    expect(type).toBe('signIn');
+    expect(message).toBe(emailKeyboardMessage);
+    return Promise.resolve(emailKeyboardResponse);
+  }
+}
+
+class KBProviderWithError implements Keyboard.Keyboard {
+  async standard(
+    message: string
   ): Promise<string> {
     throw new Error('failed')
   }
   async password(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    message?: string
   ): Promise<string> {
     throw new Error('failed')
   }
   async email(
-    parameters: Keyboard.KeyboardParameters,
-    session: Keyboard.FocusableProviderSession
+    type: Keyboard.EmailUsage,
+    message?: string
   ): Promise<string> {
     throw new Error('failed')
   }
 }
 
-test("Keyboard.provide() declarations", async () => {
-  let callback = null;
-  let promise: Promise<any> = new Promise((resolve, reject) => {
-    callback = resolve
-  })
-  provider.delegate = new KBProvider()
-  await broker.triggerProvider({
-    message: 'Enter name',
-    type: 'standard'
-  }, callback)
-  let result = await promise
-  console.log(result)
-  expect(result.method).toStrictEqual('keyboard.standardResponse')
-  expect(result.params.result).toStrictEqual('foo')
-});
+async function testResponseReceived(allResponsesReceived) {
 
-test("Keyboard.provide() with blank object", () => {
-  expect(() => {
-    Keyboard.provide("xrn:firebolt:capability:input:keyboard", {});
-  }).toThrow();
+  MockTransport.receiveMessage(
+    JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'Keyboard.standard',
+      params: { message: standardKeyboardMessage },
+      id: 1,
+    })
+  );
+  MockTransport.receiveMessage(
+    JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'Keyboard.password',
+      params: { message: passwordKeyboardMessage },
+      id: 2,
+    })
+  );
+  MockTransport.receiveMessage(
+    JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'Keyboard.email',
+      params: { type: 'signIn', message: emailKeyboardMessage },
+      id: 3,
+    })
+  );
+
+  // Asynchronously wait for all responses to be received
+  await allResponsesReceived;
+
+  expect(standardKeyboardResponceReceived).toBe(true);
+  expect(passwordKeyboardResponceReceived).toBe(true);
+  expect(emailKeyboardResponceReceived).toBe(true);
+
+};
+
+test('Keyboard.provide() declarations', async () => {
+
+  standardKeyboardResponceReceived = false;
+  passwordKeyboardResponceReceived = false;
+  emailKeyboardResponceReceived = false;
+
+  Keyboard.provide(new KBProvider());
+
+  // Variables to manage the promise resolution
+  let resolveAllResponsesReceived;
+  let allResponsesReceived = new Promise((resolve) => {
+    resolveAllResponsesReceived = resolve;
+  });
+
+  transport.onSend((json) => {
+    if (json.method) {
+      let [module, method] = json.method.split('.');
+      expect(module).toBe('Keyboard');
+    }
+    //catch the response
+    if (json.method == null) {
+      if (json.result == standardKeyboardResponse) {
+        standardKeyboardResponceReceived = true;
+      }
+      if (json.result == passwordKeyboardResponse) {
+        passwordKeyboardResponceReceived = true;
+      }
+      if (json.result == emailKeyboardResponse) {
+        emailKeyboardResponceReceived = true;
+      }
+
+      // Resolve the promise if all expected responses have been received
+      if (
+        standardKeyboardResponceReceived &&
+        passwordKeyboardResponceReceived &&
+        emailKeyboardResponceReceived
+      ) {
+        resolveAllResponsesReceived();
+      }
+    }
+  });
+
+  await testResponseReceived(allResponsesReceived);
 });
 
 test("Keyboard.provide() with error response", async () => {
-  let callback = null;
-  let promise: Promise<any> = new Promise((resolve, reject) => {
-    callback = resolve
-  })
-  provider.delegate = new KBProviderWithError()
-  await broker.triggerProvider({
-    message: 'Enter name',
-    type: 'standard'
-  }, callback)
-  let result = await promise
-  console.log(result)
-  expect(result.method).toStrictEqual('keyboard.standardError')
-  expect(result.params.error.message).toStrictEqual('failed')
-  expect(result.params.error.code).toStrictEqual(1000)
-});
 
+  standardKeyboardResponceReceived = false;
+  passwordKeyboardResponceReceived = false;
+  emailKeyboardResponceReceived = false;
+
+  Keyboard.provide(new KBProviderWithError());
+  // Variables to manage the promise resolution
+  let resolveAllResponsesReceived;
+
+  let allResponsesReceived = new Promise((resolve) => {
+    resolveAllResponsesReceived = resolve;
+  });
+  transport.onSend((json) => {
+    if (json.method) {
+      let [module, method] = json.method.split('.');
+      expect(module).toBe('Keyboard');
+    }
+    //catch the response
+    if (json.method == null) {
+      // confirm that the error is received
+      if (json.error) {
+        if (json.id === 1) {
+          standardKeyboardResponceReceived = true;
+        }
+        if (json.id === 2) {
+          passwordKeyboardResponceReceived = true;
+        }
+        if (json.id === 3) {
+          emailKeyboardResponceReceived = true;
+        }
+      }
+      // Resolve the promise if all expected responses have been received
+      if (
+        standardKeyboardResponceReceived &&
+        passwordKeyboardResponceReceived &&
+        emailKeyboardResponceReceived
+      ) {
+        resolveAllResponsesReceived();
+      }
+    }
+  });
+
+  await testResponseReceived(allResponsesReceived);
+});
 // Events Test cases
 
 // test("Keyboard.listen() for requestEmail event", () => {

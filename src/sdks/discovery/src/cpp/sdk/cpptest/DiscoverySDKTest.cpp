@@ -19,16 +19,98 @@
 #include <unistd.h>
 #include <cstring>
 #include <string>
+#include <cassert>
 #include "DiscoverySDKTest.h"
 
 using namespace std;
 bool DiscoverySDKTest::_connected;
 DiscoverySDKTest::OnUserInterestNotification DiscoverySDKTest::_userInterestNotification;
 
+#ifdef GATEWAY_BIDIRECTIONAL
+
+const nlohmann::json DiscoverySDKTest::userInterestEvent = {
+    {"method", "content.onUserInterest"},
+    {"payload", {
+        {"name", "interest"},
+        {"appId", "cool-app"},
+        {"type", "interest"},
+        {"reason", "playlist"},
+        {"entity", {
+            {"identifiers", {
+                {"entityId", "345"},
+                {"entityType", "program"},
+                {"programType", "movie"}
+            }},
+            {"info", {
+                {"title", "Cool Runnings"},
+                {"synopsis", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc."},
+                {"releaseDate", "1993-01-01T00:00:00.000Z"},
+                {"contentRatings", {
+                    {
+                        {"scheme", "US-Movie"},
+                        {"rating", "PG"}
+                    },
+                    {
+                        {"scheme", "CA-Movie"},
+                        {"rating", "G"}
+                    }
+                }}
+            }}
+        }}   
+     }}
+};
+
+
+void DiscoverySDKTest::event_trigger(nlohmann::json event)
+{
+    std::cout << "Event triggered: " << event["method"].dump() << std::endl;
+    std::string trigger_cmd = "curl --location --request POST http://localhost:3333/api/v1/bidirectionalEventPayload --header 'Content-Type: application/json' --data-raw '{ \"method\": " + event["method"].dump() + ", \"params\": " + event["payload"].dump() + "}'";
+    system(trigger_cmd.c_str());
+    std::cout << std::endl;
+    std::cout << "[ADITYA] trigger_cmd: " << trigger_cmd << std::endl;
+}
+
+void DiscoverySDKTest::provider_trigger(nlohmann::json provider)
+{
+    std::cout << "Provider triggered: " << provider["method"].dump() << std::endl;
+    std::string trigger_cmd = "curl --location --request POST http://localhost:3333/api/v1/bidirectionalPayload --header 'Content-Type: application/json' --data-raw '{ \"method\": " + provider["method"].dump() + ", \"params\": " + provider["payload"].dump() + "}'";
+    system(trigger_cmd.c_str());
+    std::cout << std::endl;
+}
+
+std::string InterestTypeToString(Firebolt::Discovery::InterestType interestType) {
+    switch (interestType) {
+        case Firebolt::Discovery::InterestType::INTEREST:
+            return "interest";
+        case Firebolt::Discovery::InterestType::DISINTEREST:
+            return "disinterest";
+        default:
+            return "unknown";
+    }
+}
+
+std::string InterestReasonToString(Firebolt::Discovery::InterestReason interestReason) {
+    switch (interestReason) {
+        case Firebolt::Discovery::InterestReason::PLAYLIST:
+            return "playlist";
+        case Firebolt::Discovery::InterestReason::REACTION:
+            return "reaction";
+        case Firebolt::Discovery::InterestReason::RECORDING:
+            return "recording";
+        default:
+            return "unknown";
+    }
+}
+
+
+#endif
+
 void DiscoverySDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
-    cout << "Change in connection: connected: " << connected << " error: " << static_cast<int>(error) << endl;
-    _connected = connected;
+    if (!_connected) {
+        cout << "Change in connection: connected: " << connected << " error: " << static_cast<int>(error) << endl;
+        _connected = connected;
+    }
 }
 
 void DiscoverySDKTest::CreateFireboltInstance(const std::string& url)
@@ -67,6 +149,7 @@ bool DiscoverySDKTest::WaitOnConnectionReady()
         usleep(sleepSlot);
         waiting -= sleepSlot;
     }
+    usleep(5000);
     return _connected;
 }
 
@@ -90,9 +173,51 @@ inline const T ConvertToEnum(EnumMap<T> enumMap, const string& str)
      return value;
 }
 
-void DiscoverySDKTest::OnUserInterestNotification::onUserInterest( const Firebolt::Content::InterestEvent& interest)
+std::string ContentRatingSchemeToString(Firebolt::Entertainment::ContentRatingScheme scheme)
 {
-    cout << "User Interest changed notification"  << endl;
+    switch (scheme)
+    {
+    case Firebolt::Entertainment::ContentRatingScheme::CA_MOVIE:
+        return "CA-Movie";
+    case Firebolt::Entertainment::ContentRatingScheme::CA_TV:
+        return "CA-TV";
+    case Firebolt::Entertainment::ContentRatingScheme::CA_MOVIE_FR:
+        return "CA-Movie_Fr";
+    case Firebolt::Entertainment::ContentRatingScheme::CA_TV_FR:
+        return "CA-TV_Fr";
+    case Firebolt::Entertainment::ContentRatingScheme::US_MOVIE:
+        return "US-Movie";
+    case Firebolt::Entertainment::ContentRatingScheme::US_TV:
+        return "US-TV";
+    default:
+        return "UNKNOWN";
+    }
+}
+
+void DiscoverySDKTest::OnUserInterestNotification::onUserInterest(const Firebolt::Content::InterestEvent &interest)
+{
+    cout << "onUserInterest() notification \n";
+
+#ifdef GATEWAY_BIDIRECTIONAL
+	assert(interest.appId == userInterestEvent["payload"]["appId"]);
+    assert(InterestTypeToString(interest.type) == userInterestEvent["payload"]["type"]);
+    assert(InterestReasonToString(interest.reason) == userInterestEvent["payload"]["reason"]);
+    assert(interest.entity.info->title.value() == userInterestEvent["payload"]["entity"]["info"]["title"]);
+    assert(interest.entity.info->synopsis.value() == userInterestEvent["payload"]["entity"]["info"]["synopsis"]);
+    assert(interest.entity.info->releaseDate.value() == userInterestEvent["payload"]["entity"]["info"]["releaseDate"]);
+    size_t i = 0;
+    for (const auto &rating : interest.entity.info->contentRatings.value())
+    {
+        assert(ContentRatingSchemeToString(rating.scheme) == userInterestEvent["payload"]["entity"]["info"]["contentRatings"][i]["scheme"]);
+        i++;
+    }
+    size_t j = 0;
+    for (const auto &ratings : interest.entity.info->contentRatings.value())
+    {
+        assert(ratings.rating == userInterestEvent["payload"]["entity"]["info"]["contentRatings"][j]["rating"]);
+        j++;
+    }
+#endif
 }
 
 void DiscoverySDKTest::SubscribeUserInterest()

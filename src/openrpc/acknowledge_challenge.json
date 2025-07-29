@@ -7,16 +7,27 @@
   },
   "methods": [
     {
-      "name": "onRequestChallenge",
+      "name": "challenge",
       "summary": "Registers as a provider for when the user should be challenged in order to confirm access to a capability",
-      "params": [],
-      "tags": [
+      "params": [
         {
-          "name": "event",
-          "x-response": {
-            "$ref": "#/components/schemas/GrantResult"
+          "name": "capability",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "description": "The capability that is being requested by the user to approve"
           }
         },
+        {
+          "name": "requestor",
+          "required": true,
+          "schema": {
+            "description": "The identity of which app is requesting access to this capability",
+            "$ref": "#/components/schemas/ChallengeRequestor"
+          }
+        }
+      ],
+      "tags": [
         {
           "name": "capabilities",
           "x-provides": "xrn:firebolt:capability:usergrant:acknowledgechallenge",
@@ -24,27 +35,31 @@
         }
       ],
       "result": {
-        "name": "challenge",
-        "summary": "The request to challenge the user",
+        "name": "result",
         "schema": {
-          "$ref": "#/components/schemas/ChallengeProviderRequest"
+          "$ref": "#/components/schemas/GrantResult"
         }
       },
       "examples": [
         {
           "name": "Default Example",
-          "params": [],
-          "result": {
-            "name": "Default Result",
-            "value": {
-              "correlationId": "abc",
-              "parameters": {
-                "capability": "xrn:firebolt:capability:localization::postal-code",
-                "requestor": {
-                  "id": "ReferenceApp",
-                  "name": "Firebolt Reference App"
-                }
+          "params": [
+            {
+              "name": "capability",
+              "value": "xrn:firebolt:capability:localization::postal-code"
+            },
+            {
+              "name": "requestor",
+              "value": {
+                "id": "ReferenceApp",
+                "name": "Firebolt Reference App"
               }
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": {
+              "granted": true
             }
           }
         }
@@ -56,10 +71,7 @@
       "ChallengeRequestor": {
         "title": "ChallengeRequestor",
         "type": "object",
-        "required": [
-          "id",
-          "name"
-        ],
+        "required": ["id", "name"],
         "properties": {
           "id": {
             "type": "string",
@@ -74,32 +86,18 @@
       "Challenge": {
         "title": "Challenge",
         "type": "object",
-        "required": [
-          "capability",
-          "requestor"
-        ],
-        "properties": {
-          "capability": {
-            "type": "string",
-            "description": "The capability that is being requested by the user to approve"
-          },
-          "requestor": {
-            "description": "The identity of which app is requesting access to this capability",
-            "$ref": "#/components/schemas/ChallengeRequestor"
-          }
-        }
+        "required": ["capability", "requestor"],
+        "properties": {}
       },
       "ChallengeProviderRequest": {
         "title": "ChallengeProviderRequest",
         "allOf": [
           {
-            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ProviderRequest"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/ProviderRequest"
           },
           {
             "type": "object",
-            "required": [
-              "parameters"
-            ],
+            "required": ["parameters"],
             "properties": {
               "parameters": {
                 "description": "The request to challenge the user",
@@ -112,9 +110,7 @@
       "GrantResult": {
         "title": "GrantResult",
         "type": "object",
-        "required": [
-          "granted"
-        ],
+        "required": ["granted"],
         "properties": {
           "granted": {
             "oneOf": [

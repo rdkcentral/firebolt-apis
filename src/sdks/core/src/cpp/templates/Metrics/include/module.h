@@ -1,7 +1,8 @@
 #pragma once
 
 #include "error.h"
-/* ${IMPORTS} */
+#include "common/types.h"
+/* ${IMPORTS:h} */
 
 ${if.declarations}namespace Firebolt {
 namespace ${info.Title} {
@@ -11,6 +12,7 @@ ${if.enums}
 /* ${ENUMS} */${end.if.enums}
 ${if.types}
 // Types
+using MediaPosition = std::string;
 /* ${TYPES} */${end.if.types}
 ${if.providers}/* ${PROVIDERS} */${end.if.providers}${if.xuses}/* ${XUSES} */${end.if.xuses}
 ${if.methods}struct I${info.Title} {

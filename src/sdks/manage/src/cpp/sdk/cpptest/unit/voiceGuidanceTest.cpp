@@ -74,10 +74,10 @@ TEST_F(VoiceGuidanceTest, unsubscribeOnEnabledChanged)
 
 struct SpeedSettings : public Firebolt::VoiceGuidance::IVoiceGuidance::IOnSpeedChangedNotification
 {
-    void onSpeedChanged(const float) override;
+    void onSpeedChanged(const float &) override;
 };
 
-void SpeedSettings::onSpeedChanged(const float speed)
+void SpeedSettings::onSpeedChanged(const float &speed)
 {
     std::cout << "onSpeedChanged event fired with speed: " << speed;
 }

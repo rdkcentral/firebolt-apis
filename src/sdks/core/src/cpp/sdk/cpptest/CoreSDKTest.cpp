@@ -21,9 +21,11 @@
 #include <stdexcept>
 #include <string>
 #include "CoreSDKTest.h"
-
+#include <cassert>
 
 using namespace std;
+using Resolution = std::pair<int32_t, int32_t>;
+
 bool CoreSDKTest::_connected;
 CoreSDKTest::OnPolicyChangedNotification CoreSDKTest::_policyChangedNotification;
 CoreSDKTest::OnDeviceNameChangedNotification CoreSDKTest::_deviceNameChangedNotification;
@@ -44,10 +46,182 @@ CoreSDKTest::KeyboardEmailAsyncResponse CoreSDKTest::_keyboardEmailAsyncResponse
 CoreSDKTest::KeyboardPasswordAsyncResponse CoreSDKTest::_keyboardPasswordAsyncResponse;
 CoreSDKTest::KeyboardStandardAsyncResponse CoreSDKTest::_keyboardStandardAsyncResponse;
 
+
+const nlohmann::json CoreSDKTest::adPolicy = {
+    {"method", "advertising.onPolicyChanged"},
+    {"payload", {
+        {"skipRestriction", "none"},
+        {"limitAdTracking", true}
+    }}
+};
+
+const nlohmann::json CoreSDKTest::deviceName = {
+    {"method", "device.onDeviceNameChanged"},
+    {"payload", "Living Room"}
+};
+
+const nlohmann::json CoreSDKTest::audioChanged = {
+    {"method", "device.onAudioChanged"},
+    {"payload", {
+        {"stereo", true},
+        {"dolbyDigital5.1", true},
+        {"dolbyDigital5.1+", true},
+        {"dolbyAtmos", true}
+    }}
+};
+
+const nlohmann::json CoreSDKTest::deviceScreenResolutionChanged = {
+    {"method", "device.onScreenResolutionChanged"},
+    {"payload", "[1920, 1080]"}
+};
+
+const nlohmann::json CoreSDKTest::preferredAudioLanguagesChanged = {
+    {"method", "localization.onPreferredAudioLanguagesChanged"},
+    {"payload", {"eng", "spa"}}
+};
+
+const nlohmann::json CoreSDKTest::closedCaptionsSettingsChanged = {
+    {"method", "accessibility.onClosedCaptionsSettingsChanged"},
+    {"payload", {
+        {"enabled", true},
+		{"styles", {
+            {"fontFamily", "monospaced_sanserif"},
+			{"fontSize", 1},
+			{"fontColor", "#ffffff"},
+			{"fontEdge", "none"},
+			{"fontEdgeColor", "#7F7F7F"},
+            {"fontOpacity", 100},
+            {"backgroundColor", "#000000"},
+            {"backgroundOpacity", 100},
+            {"textAlign", "center"},
+            {"textAlignVertical", "middle"},
+            {"windowColor", "white"},
+            {"windowOpacity", 50}
+        }},
+        {"preferredLanguages", {"eng", "spa"}}
+    }}
+};
+
+const nlohmann::json CoreSDKTest::backgroundNotification = {
+    {"method", "lifecycle.onBackground"},
+    {"payload", {
+        {"state", "background"},
+		{"previous", "foreground"}
+    }}
+};
+
+const nlohmann::json CoreSDKTest::foregroundNotification = {
+    {"method", "lifecycle.onForeground"},
+    {"payload", {
+        {"state", "foreground"},
+		{"previous", "inactive"},
+        {"source", "remote"}
+    }}
+};
+
+const nlohmann::json CoreSDKTest::friendlyNameChanged = {
+    {"method", "secondscreen.onFriendlyNameChanged"},
+    {"payload", {
+        {"name", "friendlyName"},
+		{"value", "Living Room"}
+    }}
+};
+
+const nlohmann::json CoreSDKTest::navigateTo = {
+    {"method", "discovery.onNavigateTo"},
+    {"payload", {
+        {"action", "search"},
+		{"data", {
+            {"query", "a cool show"}
+        }},
+        {"context",{
+            {"campaign", "unknown"},
+			{"source", "voice"}
+        }}
+    }}
+};
+
+const nlohmann::json CoreSDKTest::keyboardStandard = {
+    {"method", "Keyboard.standard"},
+    {"payload", {
+        {"name", "Default Result"},
+		{"value", "Living Room"}
+    }}
+};
+
+const nlohmann::json CoreSDKTest::keyboardEmail = {
+    {"method", "Keyboard.email"},
+    {"payload", {
+        {"name", "Default Result"},
+		{"value", "user@domain.com"}
+    }}
+};
+
+const nlohmann::json CoreSDKTest::keyboardPassword = {
+    {"method", "Keyboard.password"},
+    {"payload", {
+        {"name", "Default Result"},
+		{"value", "abc123"}
+    }}
+};
+
+#ifndef UNIT_TEST_APP
+#ifdef GATEWAY_BIDIRECTIONAL
+void CoreSDKTest::event_trigger(nlohmann::json event)
+{
+    std::cout << "Event triggered: " << event["method"].dump() << std::endl;
+    std::string trigger_cmd = "curl --location --request POST http://localhost:3333/api/v1/bidirectionalEventPayload --header 'Content-Type: application/json' --data-raw '{ \"method\": " + event["method"].dump() + ", \"params\": " + event["payload"].dump() + "}'";
+    system(trigger_cmd.c_str());
+    std::cout << std::endl;
+}
+
+void CoreSDKTest::provider_trigger(nlohmann::json provider)
+{
+    std::cout << "Provider triggered: " << provider["method"].dump() << std::endl;
+    std::string trigger_cmd = "curl --location --request POST http://localhost:3333/api/v1/bidirectionalPayload --header 'Content-Type: application/json' --data-raw '{ \"method\": " + provider["method"].dump() + ", \"params\": " + provider["payload"].dump() + "}'";
+    system(trigger_cmd.c_str());
+    std::cout << std::endl;
+}
+
+#else
+void CoreSDKTest::event_trigger(nlohmann::json event)
+{
+    std::cout << "Event triggered: " << event["method"].dump() << std::endl;
+    std::string trigger_cmd = "curl --location --request POST http://localhost:3333/api/v1/event --header 'Content-Type: application/json' --data-raw '{ \"method\": " + event["method"].dump() + ", \"result\": " + event["payload"].dump() + "}'";
+    system(trigger_cmd.c_str());
+    std::cout << std::endl;
+}
+
+void CoreSDKTest::provider_trigger(nlohmann::json provider)
+{
+    std::cout << "Provider triggered: " << provider["method"].dump() << std::endl;
+    std::string trigger_cmd = "curl --location --request POST http://localhost:3333/api/v1/event --header 'Content-Type: application/json' --data-raw '{ \"method\": " + provider["method"].dump() + ", \"params\": " + provider["payload"].dump() + "}'";
+    system(trigger_cmd.c_str());
+    std::cout << std::endl;
+}
+#endif
+#else
+void CoreSDKTest::event_trigger(nlohmann::json event)
+{
+    std::cerr << "event_trigger not implemented when UNIT_TESTS enabled, as it requires running instance of mock-firebolt" << std::endl;
+}
+void CoreSDKTest::provider_trigger(nlohmann::json provider)
+{
+    std::cerr << "provider_trigger not implemented when UNIT_TESTS enabled, as it requires running instance of mock-firebolt" << std::endl;
+}
+#endif
+
 void CoreSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
+#ifndef INTERACTIVE_APP
     cout << "Change in connection: connected: " << connected << " error: " << static_cast<int>(error) << endl;
     _connected = connected;
+#else
+    if (!_connected) {
+        cout << "Change in connection: connected: " << connected << " error: " << static_cast<int>(error) << endl;
+        _connected = connected;
+    }
+#endif
 }
 
 void CoreSDKTest::CreateFireboltInstance(const std::string& url)
@@ -86,6 +260,7 @@ bool CoreSDKTest::WaitOnConnectionReady()
         usleep(sleepSlot);
         waiting -= sleepSlot;
     }
+    usleep(5000);
     return _connected;
 }
 
@@ -167,6 +342,11 @@ void CoreSDKTest::OnPolicyChangedNotification::onPolicyChanged(const Firebolt::A
 {
     cout << "New policy --> " << endl;
     PrintAdvertisingPolicy(policy);
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert(ConvertFromEnum<Firebolt::Advertising::SkipRestriction>(skipRestrictionMap, policy.skipRestriction.value()) == adPolicy["payload"]["skipRestriction"]);
+    assert(policy.limitAdTracking.value() == adPolicy["payload"]["limitAdTracking"]);
+#endif
 }
 
 void CoreSDKTest::SubscribeAdvertisingPolicyChanged()
@@ -250,6 +430,12 @@ void CoreSDKTest::GetDeviceVersion()
 void CoreSDKTest::OnDeviceNameChangedNotification::onDeviceNameChanged(const std::string& name)
 {
     cout << "Name changed, new name --> " << name << endl;
+
+#ifndef INTERACTIVE_APP
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert(name == deviceName["payload"]);
+#endif
+#endif
 }
 
 void CoreSDKTest::SubscribeDeviceNameChanged()
@@ -328,6 +514,13 @@ void CoreSDKTest::OnAudioChangedNotification::onAudioChanged(const Firebolt::Dev
 {
     cout << "onAudioChanged event " << endl;
     PrintDeviceAudioProfiles(audioProfiles);
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert(audioProfiles.stereo == audioChanged["payload"]["stereo"]);
+    assert(audioProfiles.dolbyDigital5_1 == audioChanged["payload"]["dolbyDigital5.1"]);
+    assert(audioProfiles.dolbyDigital5_1_plus == audioChanged["payload"]["dolbyDigital5.1+"]);
+    assert(audioProfiles.dolbyAtmos == audioChanged["payload"]["dolbyAtmos"]);
+#endif
 }
 
 void CoreSDKTest::SubscribeDeviceAudioChanged()
@@ -354,16 +547,15 @@ void CoreSDKTest::UnsubscribeDeviceAudioChanged()
     }
 }
 
-void PrintDeviceScreenResolution(const std::string screenResolution)
+void PrintDeviceScreenResolution(const Resolution screenResolution)
 {
-    cout << "Get Device ScreenResolution :-> " << endl;
-    cout << screenResolution << endl;
+    cout << "Get Device ScreenResolution :-> " << screenResolution.first << "x" << screenResolution.second << endl;
 }
 
 void CoreSDKTest::GetDeviceScreenResolution()
 {
     Firebolt::Error error = Firebolt::Error::None;
-    const std::string screenResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution(&error);
+    const Resolution screenResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution(&error);
     if (error == Firebolt::Error::None) {
         PrintDeviceScreenResolution(screenResolution);
     } else {
@@ -372,10 +564,14 @@ void CoreSDKTest::GetDeviceScreenResolution()
     }
 }
 
-void CoreSDKTest::OnScreenResolutionChangedNotification::onScreenResolutionChanged(const std::string& screenResolution)
+void CoreSDKTest::OnScreenResolutionChangedNotification::onScreenResolutionChanged(const Resolution& screenResolution)
 {
     cout << "onScreenResolutionChanged event " << endl;
     PrintDeviceScreenResolution(screenResolution);
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert(screenResolution == deviceScreenResolutionChanged["payload"]);
+#endif
 }
 
 void CoreSDKTest::SubscribeDeviceScreenResolutionChanged()
@@ -481,10 +677,90 @@ void CoreSDKTest::GetAccessibilityClosedCaptionsSettings()
     }
 }
 
+#ifdef GATEWAY_BIDIRECTIONAL
+std::string fontFamilyToString(Firebolt::Accessibility::FontFamily fontFamily)
+{
+    std::string str = "";
+    switch (fontFamily)
+    {
+    case Firebolt::Accessibility::FontFamily::MONOSPACED_SERIF:
+        str = "monospaced_serif";
+        break;
+    case Firebolt::Accessibility::FontFamily::PROPORTIONAL_SERIF:
+        str = "proportional_serif";
+        break;
+    case Firebolt::Accessibility::FontFamily::MONOSPACED_SANSERIF:
+        str = "monospaced_sanserif";
+        break;
+    case Firebolt::Accessibility::FontFamily::PROPORTIONAL_SANSERIF:
+        str = "proportional_sanserif";
+        break;
+    case Firebolt::Accessibility::FontFamily::SMALLCAPS:
+        str = "smallcaps";
+        break;
+    case Firebolt::Accessibility::FontFamily::CURSIVE:
+        str = "cursive";
+        break;
+    case Firebolt::Accessibility::FontFamily::CASUAL:
+        str = "casual";
+        break;
+    default:
+        str = "unknown";
+    }
+    return str;
+}
+
+std::string fontEdgeToString(Firebolt::Accessibility::FontEdge fontEdge)
+{
+    std::string str = "";
+    switch (fontEdge)
+    {
+    case Firebolt::Accessibility::FontEdge::NONE:
+        str = "none";
+        break;
+    case Firebolt::Accessibility::FontEdge::RAISED:
+        str = "raised";
+        break;
+    case Firebolt::Accessibility::FontEdge::DEPRESSED:
+        str = "depressed";
+        break;
+    case Firebolt::Accessibility::FontEdge::UNIFORM:
+        str = "uniform";
+        break;
+    case Firebolt::Accessibility::FontEdge::DROP_SHADOW_LEFT:
+        str = "drop_shadow_left";
+        break;
+    case Firebolt::Accessibility::FontEdge::DROP_SHADOW_RIGHT:
+        str = "drop_shadow_right";
+        break;
+    default:
+        str = "unknown";
+    }
+    return str;
+}
+
+#endif
+
 void CoreSDKTest::OnClosedCaptionsSettingsChangedNotification::onClosedCaptionsSettingsChanged(const Firebolt::Accessibility::ClosedCaptionsSettings& closedCaptionsSettings)
 {
     cout << "ClosedCaptionsSettingsChanged event " << endl;
     PrintClosedCaptionsSettings(closedCaptionsSettings);
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert(closedCaptionsSettings.enabled == closedCaptionsSettingsChanged["payload"]["enabled"]);
+    assert(fontFamilyToString(closedCaptionsSettings.styles.value().fontFamily.value()) == closedCaptionsSettingsChanged["payload"]["styles"]["fontFamily"]);
+    assert(closedCaptionsSettings.styles.value().fontSize.value() == closedCaptionsSettingsChanged["payload"]["styles"]["fontSize"]);
+    assert(closedCaptionsSettings.styles.value().fontColor.value() == closedCaptionsSettingsChanged["payload"]["styles"]["fontColor"]);
+    assert(fontEdgeToString(closedCaptionsSettings.styles.value().fontEdge.value()) == closedCaptionsSettingsChanged["payload"]["styles"]["fontEdge"]);
+    assert(closedCaptionsSettings.styles.value().fontEdgeColor.value() == closedCaptionsSettingsChanged["payload"]["styles"]["fontEdgeColor"]);
+    assert(closedCaptionsSettings.styles.value().fontOpacity.value() == closedCaptionsSettingsChanged["payload"]["styles"]["fontOpacity"]);
+    assert(closedCaptionsSettings.styles.value().backgroundColor.value() == closedCaptionsSettingsChanged["payload"]["styles"]["backgroundColor"]);
+    assert(closedCaptionsSettings.styles.value().backgroundOpacity.value() == closedCaptionsSettingsChanged["payload"]["styles"]["backgroundOpacity"]);
+    assert(closedCaptionsSettings.styles.value().textAlign.value() == closedCaptionsSettingsChanged["payload"]["styles"]["textAlign"]);
+    assert(closedCaptionsSettings.styles.value().textAlignVertical.value() == closedCaptionsSettingsChanged["payload"]["styles"]["textAlignVertical"]);
+    assert(closedCaptionsSettings.styles.value().windowColor.value() == closedCaptionsSettingsChanged["payload"]["styles"]["windowColor"]);
+    assert(closedCaptionsSettings.styles.value().windowOpacity.value() == closedCaptionsSettingsChanged["payload"]["styles"]["windowOpacity"]);
+#endif
 }
 
 void CoreSDKTest::SubscribeAccessibilityClosedCaptionsSettingsChanged()
@@ -560,8 +836,14 @@ void CoreSDKTest::GetLocalizationPreferredAudioLanguages()
 void CoreSDKTest::OnPreferredAudioLanguagesChangedNotification::onPreferredAudioLanguagesChanged(const std::vector<std::string>& languages)
 {
     cout << "PreferredAudioLanguages Changed, new languages --> " << endl;
-    for (auto language : languages) {
-        cout << " -> " << language << endl;
+
+    for(size_t i = 0; i < languages.size(); i++)
+    {
+        cout << " -> " << languages[i] << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+        assert(languages[i] == preferredAudioLanguagesChanged["payload"][i]);
+#endif
     }
 }
 
@@ -596,6 +878,12 @@ void CoreSDKTest::KeyboardStandardAsyncResponse::response(const std::string& res
     } else {
         cout << "Keyboard standard response: " << response << endl;
     }
+
+#ifdef GATEWAY_BIDIRECTIONAL
+        nlohmann::json json_response = nlohmann::json::parse(response);
+        assert(json_response["name"] == keyboardStandard["payload"]["name"]);
+        assert(json_response["value"] == keyboardStandard["payload"]["value"]);
+#endif
 }
 
 void CoreSDKTest::InvokeKeyboardStandard()
@@ -626,6 +914,12 @@ void CoreSDKTest::KeyboardPasswordAsyncResponse::response(const std::string& res
     } else {
         cout << "Keyboard password response: " << response << endl;
     }
+
+#ifdef GATEWAY_BIDIRECTIONAL
+        nlohmann::json json_response = nlohmann::json::parse(response);
+        assert(json_response["name"] == keyboardPassword["payload"]["name"]);
+        assert(json_response["value"] == keyboardPassword["payload"]["value"]);
+#endif
 }
 
 void CoreSDKTest::InvokeKeyboardPassword()
@@ -655,6 +949,12 @@ void CoreSDKTest::KeyboardEmailAsyncResponse::response(const std::string& respon
         cout << "Error with email password response, error = " << static_cast<int>(*error) << endl;
     } else {
         cout << "Keyboard email response: " << response << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+        nlohmann::json json_response = nlohmann::json::parse(response);
+        assert(json_response["name"] == keyboardEmail["payload"]["name"]);
+        assert(json_response["value"] == keyboardEmail["payload"]["value"]);
+#endif
     }
 }
 
@@ -790,6 +1090,11 @@ void CoreSDKTest::OnBackgroundNotification::onBackground( const Firebolt::Lifecy
     if (lifecycleEvent.source.has_value()) {
         cout <<"\tsource: " << ConvertFromEnum<Firebolt::Lifecycle::LifecycleEventSource>(lifecycleEventSourceMap, lifecycleEvent.source.value()) << endl;
     }
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert(ConvertFromEnum<Firebolt::Lifecycle::LifecycleState>(lifecycleStateMap, lifecycleEvent.state) == backgroundNotification["payload"]["state"]);
+    assert(ConvertFromEnum<Firebolt::Lifecycle::LifecycleState>(lifecycleStateMap, lifecycleEvent.previous) == backgroundNotification["payload"]["previous"]);
+#endif
 }
 
 void CoreSDKTest::SubscribeLifecycleBackgroundNotification()
@@ -824,6 +1129,12 @@ void CoreSDKTest::OnForegroundNotification::onForeground(const Firebolt::Lifecyc
     if (lifecycleEvent.source.has_value()) {
         cout <<"\tsource: " << ConvertFromEnum<Firebolt::Lifecycle::LifecycleEventSource>(lifecycleEventSourceMap, lifecycleEvent.source.value()) << endl;
     }
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    assert(ConvertFromEnum<Firebolt::Lifecycle::LifecycleState>(lifecycleStateMap, lifecycleEvent.state) == foregroundNotification["payload"]["state"]);
+    assert(ConvertFromEnum<Firebolt::Lifecycle::LifecycleState>(lifecycleStateMap, lifecycleEvent.previous) == foregroundNotification["payload"]["previous"]);
+    assert(ConvertFromEnum<Firebolt::Lifecycle::LifecycleEventSource>(lifecycleEventSourceMap, lifecycleEvent.source.value()) == foregroundNotification["payload"]["source"]);
+#endif
 }
 
 void CoreSDKTest::SubscribeLifecycleForegroundNotification()
@@ -895,7 +1206,7 @@ void CoreSDKTest::GetAuthenticationToken()
     Firebolt::Authentication::TokenType type = Firebolt::Authentication::TokenType::DEVICE;
     std::optional<Firebolt::Authentication::Options> options;
 
-    const Firebolt::Authentication::AuthenticationTokenResult token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().token(type, options, &error);
+    const Firebolt::Authentication::Token token = Firebolt::IFireboltAccessor::Instance().AuthenticationInterface().token(type, options, &error);
 
     if (error == Firebolt::Error::None) {
         cout << "Get Authentication of token : " << endl;
@@ -1177,6 +1488,12 @@ void CoreSDKTest::GetSecondScreenFriendlyName()
 void CoreSDKTest::OnFriendlyNameChangedNotification::onFriendlyNameChanged(const std::string& friendlyName)
 {
     cout << "OnFriendlyNameChangedNotification friendlyName : " << friendlyName.c_str() << endl;
+
+#ifdef GATEWAY_BIDIRECTIONAL
+    nlohmann::json friendlyNameJson = nlohmann::json::parse(friendlyName);
+    assert(friendlyNameJson["name"] == friendlyNameChanged["payload"]["name"]);
+    assert(friendlyNameJson["value"] == friendlyNameChanged["payload"]["value"]);
+#endif
 }
 
 void CoreSDKTest::SubscribeSecondScreenFriendlyNameChanged()
@@ -1348,31 +1665,6 @@ void CoreSDKTest::DiscoveryWatchNext()
     }
 }
 
-void CoreSDKTest::DiscoveryUserInterest()
-{
-    Firebolt::Error error = Firebolt::Error::None;
-    Firebolt::Discovery::InterestType type = Firebolt::Discovery::InterestType::INTEREST;
-    Firebolt::Discovery::InterestReason reason = Firebolt::Discovery::InterestReason::PLAYLIST;
-
-    // Set up the entity details
-    Firebolt::Entity::EntityDetails entity;
-
-    // Identifiers
-    entity.identifiers = "{\"entityId\": \"123\"}";
-
-    // Optional Info Metadata
-    entity.info = Firebolt::Entity::Metadata();
-    entity.info->title = "A Cool Show";
-    entity.info->synopsis = "A cool show synopsis";
-
-    Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().userInterest(type, reason, entity, &error);
-
-    if (error == Firebolt::Error::None) {
-        cout << "Discovery User Interest is success" << endl;
-    } else {
-        cout << "Discovery User Interest status = " << static_cast<int>(error) << endl;
-    }
-}
 
 void CoreSDKTest::DiscoveryPolicy()
 {
@@ -1533,16 +1825,7 @@ void CoreSDKTest::DiscoveryLaunch()
     Firebolt::Error error = Firebolt::Error::None;
     std::string appId = "123";
     {
-        std::optional<Firebolt::Intents::TuneIntent> intent = std::make_optional<Firebolt::Intents::TuneIntent>();
-        intent.value().action = "tune";
-        intent.value().data.entity.entityType = "channel";
-        intent.value().data.entity.channelType = Firebolt::Entity::ChannelEntityChannelType::STREAMING;
-        intent.value().data.entity.entityId = "an-ott-channel";
-        std::string entityId;
-        std::optional<std::string> appContentData;
-        intent.value().data.options = std::make_optional<Firebolt::Intents::TuneIntentDataOptions>();
-        intent.value().data.options.value().restartCurrentProgram = true;
-        intent.value().context.source = "voice";
+        std::optional<std::string> intent = std::make_optional<std::string>();
         cout << "Calling Discovery Launch TuneIntent method " << endl;
         bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
         
@@ -1555,11 +1838,7 @@ void CoreSDKTest::DiscoveryLaunch()
     }
 
     {
-        std::optional<Firebolt::Intents::SearchIntent> intent = std::make_optional<Firebolt::Intents::SearchIntent>();
-        intent.value().action = "search";
-        intent.value().context.source = "voice";
-        intent.value().data = std::make_optional<Firebolt::Intents::SearchIntentData>();
-        intent.value().data->query = "searching for a movie";
+        std::optional<std::string> intent = std::make_optional<std::string>();
         cout << "Calling Discovery Launch SearchIntent method " << endl;
         bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
         if (error == Firebolt::Error::None) {
@@ -1571,9 +1850,7 @@ void CoreSDKTest::DiscoveryLaunch()
     }
 
     {
-        std::optional<Firebolt::Intents::HomeIntent> intent = std::make_optional<Firebolt::Intents::HomeIntent>();
-        intent.value().action = "home";
-        intent.value().context.source = "voice";
+        std::optional<std::string> intent = std::make_optional<std::string>();
         cout << "Calling Discovery Launch HomeIntent method " << endl;
         bool status = Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().launch(appId, intent, &error);
         if (error == Firebolt::Error::None) {
@@ -1623,7 +1900,7 @@ void CoreSDKTest::DiscoveryWatchedReduced()
 }
 #endif
 
-void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchNotification()
+void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchHomeIntentNotification()
 {
     Firebolt::Error error = Firebolt::Error::None;
     Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().subscribe(_navigateToHomeIntentNotification, &error);
@@ -1633,8 +1910,11 @@ void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchNotification()
         std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
         throw std::runtime_error("SubscribeDiscoveryOnNavigateToLaunchNotification failed. " + errorMessage);
     }
+}
 
-    error = Firebolt::Error::None;
+void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchEntityIntentNotification()
+{
+    Firebolt::Error error = Firebolt::Error::None;
     Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().subscribe(_navigateToEntityIntentNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Discovery OnNavigateToLaunch EntityIntent is success" << endl;
@@ -1642,8 +1922,11 @@ void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchNotification()
         std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
         throw std::runtime_error("SubscribeDiscoveryOnNavigateToLaunchNotification failed. " + errorMessage);
     }
+}
 
-    error = Firebolt::Error::None;
+void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchTuneIntentNotification()
+{
+    Firebolt::Error error = Firebolt::Error::None;
     Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().subscribe(_navigateToTuneIntentNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Subscribe Discovery OnNavigateToLaunch TuneIntent is success" << endl;
@@ -1653,7 +1936,7 @@ void CoreSDKTest::SubscribeDiscoveryOnNavigateToLaunchNotification()
     }
 }
 
-void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchNotification()
+void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchHomeIntentNotification()
 {
     Firebolt::Error error = Firebolt::Error::None;
     Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().unsubscribe(_navigateToHomeIntentNotification, &error);
@@ -1663,8 +1946,12 @@ void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchNotification()
         std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
         throw std::runtime_error("UnsubscribeDiscoveryOnNavigateToLaunchNotification failed. " + errorMessage);
     }
+}
 
-    error = Firebolt::Error::None;
+
+void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchEntityIntentNotification()
+{
+    Firebolt::Error error = Firebolt::Error::None;
     Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().unsubscribe(_navigateToEntityIntentNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Discovery OnNavigateToLaunch EntityIntent is success" << endl;
@@ -1672,8 +1959,11 @@ void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchNotification()
         std::string errorMessage = "Error: " + std::to_string(static_cast<int>(error));
         throw std::runtime_error("UnsubscribeDiscoveryOnNavigateToLaunchNotification failed. " + errorMessage);
     }
+}
 
-    error = Firebolt::Error::None;
+void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchTuneIntentNotification()
+{
+    Firebolt::Error error = Firebolt::Error::None;
     Firebolt::IFireboltAccessor::Instance().DiscoveryInterface().unsubscribe(_navigateToTuneIntentNotification, &error);
     if (error == Firebolt::Error::None) {
         cout << "Unsubscribe Discovery OnNavigateToLaunch TuneIntent is success" << endl;
@@ -1683,17 +1973,17 @@ void CoreSDKTest::UnsubscribeDiscoveryOnNavigateToLaunchNotification()
     }
 }
 
-void CoreSDKTest::OnNavigateToHomeIntentNotification::onNavigateTo(const Firebolt::Intents::HomeIntent& intent)
+void CoreSDKTest::OnNavigateToHomeIntentNotification::onNavigateTo(const std::string& intent)
 {
-    cout << "onNavigateTo for action : " << intent.action << endl;
+    cout << "OnNavigateToHomeIntentNotification::onNavigateTo for action : " << intent << endl; 
 }
 
-void CoreSDKTest::OnNavigateToEntityIntentNotification::onNavigateTo(const Firebolt::Intents::EntityIntent& intent)
+void CoreSDKTest::OnNavigateToEntityIntentNotification::onNavigateTo(const std::string& intent)
 {
-    cout << "onNavigateTo for action : " << intent.action << endl;
+    cout << "OnNavigateToEntityIntentNotification::onNavigateTo for action : " << intent << endl;
 }
 
-void CoreSDKTest::OnNavigateToTuneIntentNotification::onNavigateTo(const Firebolt::Intents::TuneIntent& intent)
+void CoreSDKTest::OnNavigateToTuneIntentNotification::onNavigateTo(const std::string& intent)
 {
-    cout << "onNavigateTo for action : " << intent.action << endl;
+    cout << "OnNavigateToTuneIntentNotification::onNavigateTo for action : " << intent << endl;
 }

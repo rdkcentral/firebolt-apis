@@ -20,7 +20,7 @@ protected:
 TEST_F(LocalizationTest, addAdditionalInfo)
 {
     std::string key = "sampleKey";
-    float value = 1.23f;
+    std::string value = std::to_string(1.23f);
     Firebolt::IFireboltAccessor::Instance().LocalizationInterface().addAdditionalInfo(key, value, &error);
     EXPECT_EQ(error, Firebolt::Error::None) << "Error on calling LocalizationInterface.addAdditionalInfo() method";
 }
@@ -33,7 +33,7 @@ TEST_F(LocalizationTest, additionalInfo)
     std::string actual_info;
     for (const auto &item : info)
     {
-        actual_info += item.first + "=" + std::to_string(item.second) + ",";
+        actual_info += item.first + "=" + item.second + ",";
     }
     actual_info = actual_info.substr(0, actual_info.size() - 1);
 

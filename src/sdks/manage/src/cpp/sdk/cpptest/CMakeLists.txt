@@ -46,21 +46,29 @@ message("Setup ${TESTAPP}")
 
 add_executable(${TESTAPP} ManageSDKTest.cpp Main.cpp)
 
+if (ENABLE_INTERACTIVE_APP)
+    add_compile_definitions(INTERACTIVE_APP)
+endif ()
+
 target_link_libraries(${TESTAPP}
     PRIVATE
         ${NAMESPACE}Core::${NAMESPACE}Core
         ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
-        nlohmann_json_schema_validator
-        gtest_main
+        nlohmann_json::nlohmann_json
+        nlohmann_json_schema_validator::validator
+        GTest::gtest_main
 )
 
 target_include_directories(${TESTAPP}
     PRIVATE
-        $<BUILD_INTERFACE:${FIREBOLT_PATH}/usr/include/${FIREBOLT_NAMESPACE}SDK>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SRC_DIR}/../>
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
 )
+
+if (POLYMORPHICS_REDUCER_METHODS)
+    target_compile_definitions(${TESTAPP}
+        PUBLIC
+            POLYMORPHICS_REDUCER_METHODS=1)
+endif()
 
 set_target_properties(${TESTAPP} PROPERTIES
     CXX_STANDARD 17
@@ -79,27 +87,34 @@ if(ENABLE_UNIT_TESTS)
     set(UNIT_TESTS_APP FireboltManageUnitTests)
 
     message("Setup ${UNIT_TESTS_APP}")
+    if (ENABLE_UNIT_TESTS)
+        add_compile_definitions(UNIT_TEST_SUITE)
+    endif()
 
     file(GLOB UNIT_TESTS "unit/*")
+
+    add_compile_definitions(UNIT_TEST_APP)
 
     add_executable(${UNIT_TESTS_APP} 
         ManageSDKTest.cpp
         Unit.cpp
         ${UNIT_TESTS}
     )
-    
-    link_directories(${CMAKE_SOURCE_DIR}/../../Thunder/install/usr/lib/)
+
+    link_directories(${SYSROOT_PATH}/usr/lib/)
     target_link_libraries(${UNIT_TESTS_APP}
         PRIVATE
             ${NAMESPACE}Core::${NAMESPACE}Core
             ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
-            nlohmann_json_schema_validator
-            gtest_main
+            nlohmann_json::nlohmann_json
+            nlohmann_json_schema_validator::validator
+            GTest::gtest_main
     )
 
     target_include_directories(${UNIT_TESTS_APP}
         PRIVATE
             $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
+            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/>
     )
 
     set_target_properties(${UNIT_TESTS_APP} PROPERTIES
@@ -109,7 +124,7 @@ if(ENABLE_UNIT_TESTS)
 
     include(GoogleTest)
     gtest_discover_tests(${UNIT_TESTS_APP})
-endif()
+endif ()
 
 if(ENABLE_COVERAGE)
     include(${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake)

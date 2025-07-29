@@ -1,5 +1,5 @@
 {
-    "$id": "https://meta.comcast.com/firebolt/accessibility",
+    "$id": "https://meta.rdkcentral.com/firebolt/schemas/accessibility",
     "title": "Accessibility",
     "anyOf": [
         {
@@ -134,7 +134,7 @@
                 "preferredLanguages": {
                     "type": "array",
                     "items": {
-                        "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639_2Language"
+                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/ISO639_2Language"
                     }
                 }
             },
@@ -186,11 +186,11 @@
                     "description": "Whether or not voice guidance should include additional navigation hints"
                 },
                 "rate": {
-                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/SpeechRate",
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/SpeechRate",
                     "description": "The rate at which voice guidance speech will be read back to the user"
                 },
                 "speed": {
-                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/SpeechRate",
+                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/SpeechRate",
                     "description": "**DEPRECATED** Use rate instead. The rate at which voice guidance speech will be read back to the user"
                 }
             },

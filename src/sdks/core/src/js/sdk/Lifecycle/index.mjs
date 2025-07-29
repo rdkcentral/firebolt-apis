@@ -20,6 +20,7 @@
 import { ready as logReady } from '../Metrics/index.mjs'
 import { prioritize } from '../Events/index.mjs'
 
+
 /* ${INITIALIZATION} */
 
 export const store = {
@@ -34,7 +35,7 @@ async function ready() {
   await prioritize('Lifecycle', (event, value) => {
     store._current = event
   })
-  readyRes =await Transport.send('lifecycle', 'ready', {})
+  readyRes = await Gateway.request('Lifecycle.ready', {})
   setTimeout(_ => {
     logReady()
   })
@@ -49,7 +50,7 @@ function state() {
 
 function finished() {
   if (store.current === 'unloading') {
-    return Transport.send('lifecycle', 'finished')
+    return Gateway.request('Lifecycle.finished', {})
   } else {
     throw 'Cannot call finished() except when in the unloading transition'
   }

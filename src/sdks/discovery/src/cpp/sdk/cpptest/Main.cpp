@@ -21,6 +21,7 @@
 #include <string>
 #include <iostream>
 #include <stdexcept>
+#include <unistd.h>
 #include "DiscoverySDKTest.h"
 
 using namespace std;
@@ -42,8 +43,13 @@ void RunAllTests() {
 
     // Ensure the connection is ready before running tests
     if (DiscoverySDKTest::WaitOnConnectionReady()) {
+
+        sleep(2);
         
         runTest(DiscoverySDKTest::SubscribeUserInterest, "SubscribeUserInterest");
+#ifdef GATEWAY_BIDIRECTIONAL
+        DiscoverySDKTest::event_trigger(DiscoverySDKTest::userInterestEvent);
+#endif
         runTest(DiscoverySDKTest::UnsubscribeUserInterest, "UnsubscribeUserInterest");
         runTest(DiscoverySDKTest::RequestUserInterest, "RequestUserInterest");
 

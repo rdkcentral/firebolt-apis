@@ -19,9 +19,14 @@
 #pragma once
 
 #include <iostream>
+#include <nlohmann/json.hpp>
 #include "firebolt.h"
 
+
 class CoreSDKTest {
+
+    using Resolution = std::pair<int32_t, int32_t>;
+
     class OnPolicyChangedNotification : public Firebolt::Advertising::IAdvertising::IOnPolicyChangedNotification {
     public:
         void onPolicyChanged( const Firebolt::Advertising::AdPolicy& ) override;
@@ -36,7 +41,7 @@ class CoreSDKTest {
     };
     class OnScreenResolutionChangedNotification : public Firebolt::Device::IDevice::IOnScreenResolutionChangedNotification {
     public:
-        void onScreenResolutionChanged( const std::string& ) override;
+        void onScreenResolutionChanged( const Resolution& ) override;
     };
     class OnPreferredAudioLanguagesChangedNotification : public Firebolt::Localization::ILocalization::IOnPreferredAudioLanguagesChangedNotification {
     public:
@@ -61,14 +66,14 @@ class CoreSDKTest {
         void onAvailable( const Firebolt::Capabilities::CapabilityInfo& ) override;
     };
 
-    struct OnNavigateToHomeIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToHomeIntentNotification {
-        void onNavigateTo( const Firebolt::Intents::HomeIntent& ) override;
+    struct OnNavigateToHomeIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToNotification {
+        void onNavigateTo( const std::string& ) override;
     };
-    struct OnNavigateToEntityIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToEntityIntentNotification {
-        void onNavigateTo( const Firebolt::Intents::EntityIntent& ) override;
+    struct OnNavigateToEntityIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToNotification {
+        void onNavigateTo( const std::string& ) override;
     };
-    struct OnNavigateToTuneIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToTuneIntentNotification {
-        void onNavigateTo( const Firebolt::Intents::TuneIntent& ) override;
+    struct OnNavigateToTuneIntentNotification : public Firebolt::Discovery::IDiscovery::IOnNavigateToNotification {
+        void onNavigateTo( const std::string& ) override;
     };
     struct KeyboardEmailAsyncResponse : public Firebolt::Keyboard::IKeyboardAsyncResponse {
         void response(const std::string&, Firebolt::Error*) override;
@@ -178,14 +183,20 @@ public:
     static void DiscoveryWatched();
     static void DiscoveryWatchedReduced();
 #endif
-    static void SubscribeDiscoveryOnNavigateToLaunchNotification();
-    static void UnsubscribeDiscoveryOnNavigateToLaunchNotification();
+    static void SubscribeDiscoveryOnNavigateToLaunchHomeIntentNotification();
+    static void SubscribeDiscoveryOnNavigateToLaunchEntityIntentNotification();
+    static void SubscribeDiscoveryOnNavigateToLaunchTuneIntentNotification();
+    static void UnsubscribeDiscoveryOnNavigateToLaunchHomeIntentNotification();
+    static void UnsubscribeDiscoveryOnNavigateToLaunchEntityIntentNotification();
+    static void UnsubscribeDiscoveryOnNavigateToLaunchTuneIntentNotification();
     static void DiscoveryWatchNext();
-    static void DiscoveryUserInterest();
 
     static void ParametersInitialization();
 
     static bool WaitOnConnectionReady();
+    
+    static void event_trigger(nlohmann::json event);
+    static void provider_trigger(nlohmann::json provider);
 
 private:
     static void ConnectionChanged(const bool, const Firebolt::Error);
@@ -206,4 +217,19 @@ private:
     static KeyboardEmailAsyncResponse _keyboardEmailAsyncResponse;
     static KeyboardPasswordAsyncResponse _keyboardPasswordAsyncResponse;
     static KeyboardStandardAsyncResponse _keyboardStandardAsyncResponse;
+
+public:
+    static const nlohmann::json adPolicy;
+    static const nlohmann::json deviceName;
+    static const nlohmann::json audioChanged;
+    static const nlohmann::json deviceScreenResolutionChanged;
+    static const nlohmann::json preferredAudioLanguagesChanged;
+    static const nlohmann::json closedCaptionsSettingsChanged;
+    static const nlohmann::json backgroundNotification;
+    static const nlohmann::json foregroundNotification;
+    static const nlohmann::json friendlyNameChanged;
+    static const nlohmann::json navigateTo;
+    static const nlohmann::json keyboardStandard;
+    static const nlohmann::json keyboardEmail;
+    static const nlohmann::json keyboardPassword;
 };

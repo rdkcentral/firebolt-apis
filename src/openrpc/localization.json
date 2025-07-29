@@ -11,9 +11,7 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:localization:locality"
-          ]
+          "x-uses": ["xrn:firebolt:capability:localization:locality"]
         },
         {
           "name": "property"
@@ -25,7 +23,7 @@
         "name": "locality",
         "summary": "the device city",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Locality"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/Locality"
         }
       },
       "examples": [
@@ -44,8 +42,8 @@
             "name": "Default Result",
             "value": "Rockville"
           }
-        }            
-      ] 
+        }
+      ]
     },
     {
       "name": "postalCode",
@@ -55,9 +53,7 @@
         },
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:localization:postal-code"
-          ]
+          "x-uses": ["xrn:firebolt:capability:localization:postal-code"]
         }
       ],
       "summary": "Get the postal code the device is located in",
@@ -65,7 +61,9 @@
       "result": {
         "name": "postalCode",
         "summary": "the device postal code",
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       },
       "examples": [
         {
@@ -83,7 +81,7 @@
             "name": "Default Result",
             "value": "20850"
           }
-        }        
+        }
       ]
     },
     {
@@ -94,9 +92,7 @@
         },
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:localization:country-code"
-          ]
+          "x-uses": ["xrn:firebolt:capability:localization:country-code"]
         }
       ],
       "summary": "Get the ISO 3166-1 alpha-2 code for the country device is located in",
@@ -105,7 +101,7 @@
         "name": "code",
         "summary": "the device country code",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/CountryCode"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/CountryCode"
         }
       },
       "examples": [
@@ -124,8 +120,8 @@
             "name": "Default Result",
             "value": "UK"
           }
-        }      
-      ]    
+        }
+      ]
     },
     {
       "name": "language",
@@ -142,16 +138,14 @@
         },
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:localization:language"
-          ]
+          "x-uses": ["xrn:firebolt:capability:localization:language"]
         }
       ],
       "result": {
         "name": "lang",
         "summary": "the device language",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Language"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/Language"
         }
       },
       "examples": [
@@ -170,7 +164,7 @@
             "name": "Default Result",
             "value": "es"
           }
-        }            
+        }
       ]
     },
     {
@@ -183,9 +177,7 @@
         },
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:localization:language"
-          ]
+          "x-uses": ["xrn:firebolt:capability:localization:language"]
         }
       ],
       "result": {
@@ -194,7 +186,7 @@
         "schema": {
           "type": "array",
           "items": {
-            "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639_2Language"
+            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/ISO639_2Language"
           }
         }
       },
@@ -206,7 +198,7 @@
             "name": "Default Result",
             "value": ["spa", "eng"]
           }
-        }, 
+        },
         {
           "name": "Default Example #2",
           "params": [],
@@ -214,7 +206,7 @@
             "name": "Default Result",
             "value": ["eng", "spa"]
           }
-        }             
+        }
       ]
     },
     {
@@ -225,9 +217,7 @@
         },
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:localization:locale"
-          ]
+          "x-uses": ["xrn:firebolt:capability:localization:locale"]
         }
       ],
       "summary": "Get the *full* BCP 47 code, including script, region, variant, etc., for the preferred langauage/locale",
@@ -236,7 +226,7 @@
         "name": "locale",
         "summary": "the device locale",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/Locale"
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/Locale"
         }
       },
       "examples": [
@@ -255,17 +245,15 @@
             "name": "Default Result",
             "value": "es-US"
           }
-        }       
-      ]   
+        }
+      ]
     },
     {
       "name": "latlon",
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:localization:location"
-          ]
+          "x-uses": ["xrn:firebolt:capability:localization:location"]
         }
       ],
       "summary": "Get the approximate latitude and longitude coordinates of the device location",
@@ -285,7 +273,7 @@
             "name": "Default Result",
             "value": [39.9549, 75.1699]
           }
-        }            
+        }
       ]
     },
     {
@@ -293,12 +281,10 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:localization:additional-info"
-          ]
+          "x-uses": ["xrn:firebolt:capability:localization:additional-info"]
         }
       ],
-      "summary": "Get any platform-specific localization information",
+      "summary": "Get any platform-specific localization information, in an Map<string, string>",
       "params": [],
       "result": {
         "name": "info",
@@ -306,7 +292,7 @@
         "schema": {
           "type": "object",
           "additionalProperties": {
-            "type": ["number", "string", "boolean"],
+            "type": "string",
             "maxLength": 1024
           },
           "maxProperties": 32
@@ -318,20 +304,17 @@
           "params": [],
           "result": {
             "name": "info",
-            "value": {
-            }
+            "value": {}
           }
-        }            
-      ]   
+        }
+      ]
     },
     {
       "name": "addAdditionalInfo",
       "tags": [
         {
           "name": "capabilities",
-          "x-manages": [
-            "xrn:firebolt:capability:localization:additional-info"
-          ]
+          "x-manages": ["xrn:firebolt:capability:localization:additional-info"]
         }
       ],
       "summary": "Add any platform-specific localization information in key/value pair",
@@ -346,9 +329,9 @@
         },
         {
           "name": "value",
-          "summary": "Value to be set for additionalInfo. Value can be a number, string or boolean",
+          "summary": "Value to be set for additionalInfo",
           "schema": {
-            "type": ["number", "string", "boolean"]
+            "type": "string"
           },
           "required": true
         }
@@ -376,17 +359,15 @@
             "name": "defaultResult",
             "value": null
           }
-        }            
-      ]   
+        }
+      ]
     },
     {
       "name": "removeAdditionalInfo",
       "tags": [
         {
           "name": "capabilities",
-          "x-manages": [
-            "xrn:firebolt:capability:localization:additional-info"
-          ]
+          "x-manages": ["xrn:firebolt:capability:localization:additional-info"]
         }
       ],
       "summary": "Remove any platform-specific localization information from map",
@@ -419,47 +400,45 @@
             "name": "defaultResult",
             "value": null
           }
-        }            
-      ]   
+        }
+      ]
     },
     {
       "name": "timeZone",
       "tags": [
-          {
-              "name": "property"
-          },
-          {
-              "name": "capabilities",
-              "x-uses": [
-                  "xrn:firebolt:capability:localization:time-zone"
-              ]
-          }
+        {
+          "name": "property"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": ["xrn:firebolt:capability:localization:time-zone"]
+        }
       ],
       "summary": "Set the IANA timezone for the device",
       "params": [],
       "result": {
-          "name": "result",
-          "schema": {
-              "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/TimeZone"
-          }
+        "name": "result",
+        "schema": {
+          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/TimeZone"
+        }
       },
       "examples": [
-          {
-              "name": "Default Example",
-              "params": [],
-              "result": {
-                  "name": "Default Result",
-                  "value": "America/New_York"
-              }
-          },
-          {
-              "name": "Additional Example",
-              "params": [],
-              "result": {
-                  "name": "Default Result",
-                  "value": "America/Los_Angeles"
-              }
+        {
+          "name": "Default Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "America/New_York"
           }
+        },
+        {
+          "name": "Additional Example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "America/Los_Angeles"
+          }
+        }
       ]
     }
   ],
@@ -468,13 +447,17 @@
       "LatLon": {
         "type": "array",
         "items": [
-          { "type": "number" },
-          { "type": "number" }
+          {
+            "type": "number"
+          },
+          {
+            "type": "number"
+          }
         ],
         "additionalItems": false,
         "minItems": 2,
         "maxItems": 2
-      }      
+      }
     }
   }
 }

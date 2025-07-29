@@ -17,7 +17,7 @@
 #pragma once
 
 #include "error.h"
-/* ${IMPORTS} */
+/* ${IMPORTS:h} */
 
 ${if.declarations}
 namespace Firebolt {

@@ -1,31 +1,25 @@
 {
-    "$id": "https://meta.comcast.com/firebolt/secondscreen",
-    "title": "SecondScreen",
-    "anyOf": [
-      { "$ref": "#/definitions/SecondScreenEvent" }
-    ],
-    "definitions": {
-        "SecondScreenEvent": {
-            "title": "SecondScreenEvent",
-            "description": "An a message notification from a second screen device",
-            "type": "object",
-            "required": [
-            "type"
-            ],
-            "properties": {
-            "type": {
-                "type": "string",
-                "enum": [
-                "dial"
-                ]
-            },
-            "version": {
-                "type": "string"
-            },
-            "data": {
-                "type": "string"
-            }
-            }
+  "title": "SecondScreen",
+  "$id": "https://meta.rdkcentral.com/firebolt/schemas/secondscreen",
+  "anyOf": [{ "$ref": "#/definitions/SecondScreenEvent" }],
+  "definitions": {
+    "SecondScreenEvent": {
+      "title": "SecondScreenEvent",
+      "description": "An a message notification from a second screen device",
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["dial"]
+        },
+        "version": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
         }
+      }
     }
+  }
 }

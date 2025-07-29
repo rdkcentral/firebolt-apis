@@ -66,7 +66,9 @@
                 "xrn:firebolt:capability:discovery:sign-in-status",
                 "xrn:firebolt:capability:discovery:watch-next",
                 "xrn:firebolt:capability:discovery:watched",
-                "xrn:firebolt:capability:lifecycle:launch"
+                "xrn:firebolt:capability:lifecycle:launch",
+                "xrn:firebolt:capability:discovery:entity-info",
+                "xrn:firebolt:capability:discovery:purchased-content"
             ],
             "provide": [
                 "xrn:firebolt:capability:discovery:entity-info",
