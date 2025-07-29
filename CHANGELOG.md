@@ -1,3 +1,10 @@
+# [1.5.0-next-major.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next-major.1...v1.5.0-next-major.2) (2025-07-29)
+
+
+### Features
+
+* Force major release ([#403](https://github.com/rdkcentral/firebolt-apis/issues/403)) ([ae205ba](https://github.com/rdkcentral/firebolt-apis/commit/ae205ba7f5578a1551932edc27d13ec6847754ee))
+
 # [1.5.0-next-major.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.1...v1.5.0-next-major.1) (2025-07-29)
 
 
