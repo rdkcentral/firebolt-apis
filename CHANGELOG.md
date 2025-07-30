@@ -1,3 +1,10 @@
+# [1.5.0-next-major.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next-major.4...v1.5.0-next-major.5) (2025-07-30)
+
+
+### Features
+
+* Force release to include changes from firebolt-openrpc ([59cb2bb](https://github.com/rdkcentral/firebolt-apis/commit/59cb2bbfe67650b480265257e69ee71b6678f986))
+
 # [1.5.0-next-major.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next-major.3...v1.5.0-next-major.4) (2025-07-30)
 
 
