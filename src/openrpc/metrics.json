@@ -145,10 +145,10 @@
           "required": false
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -223,10 +223,10 @@
           "required": false
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -282,10 +282,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -365,10 +365,10 @@
           "required": false
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -451,10 +451,10 @@
           "required": false
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -513,10 +513,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -563,10 +563,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -613,10 +613,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -663,10 +663,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -713,10 +713,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -771,10 +771,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -833,10 +833,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -895,10 +895,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -957,10 +957,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -1043,10 +1043,10 @@
           "required": false
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -1109,10 +1109,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -1168,10 +1168,10 @@
           "required": true
         },
         {
-          "name": "options",
-          "summary": "Additional options, tags, or labels to apply to this metric call.",
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
           "schema": {
-            "$ref": "#/components/schemas/MetricOptions"
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
@@ -1267,19 +1267,6 @@
             "maximum": 86400
           }
         ]
-      },
-      "MetricOptions": {
-        "title": "MetricOptions",
-        "description": "Additional options, tags, or labels to include with a metrics call.",
-        "type": "object",
-        "required": [
-          "agePolicy"
-        ],
-        "properties": {
-          "agePolicy": {
-            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
-          }
-        }
       },
       "ErrorType": {
         "title": "ErrorType",

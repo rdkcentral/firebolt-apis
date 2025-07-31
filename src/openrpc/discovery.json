@@ -583,18 +583,10 @@
           }
         },
         {
-          "name": "options",
-          "summary": "Additional options for the watched content",
+          "name": "agePolicy",
+          "description": "The age policy associated with the watch event. The age policy describes the age groups to which content may be directed.",
           "schema": {
-            "type": "object",
-            "required": [
-              "agePolicy"
-            ],
-            "properties":  {
-              "agePolicy": {
-                "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
-              }
-            }
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
           }
         }
       ],
