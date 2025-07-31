@@ -189,10 +189,8 @@
               "value": "abc"
             },
             {
-              "name": "options",
-              "value": {
-                "agePolicy": "app:child"
-              }
+              "name": "agePolicy",
+              "value": "app:child"
             }
           ],
           "result": {

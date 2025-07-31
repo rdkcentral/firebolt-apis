@@ -643,10 +643,8 @@
               "value": "2021-04-23T18:25:43.511Z"
             },
             {
-              "name": "options",
-              "value": {
-                "agePolicy": "app:child"
-              }
+              "name": "agePolicy",
+              "value": "app:child"
             }
           ],
           "result": {
