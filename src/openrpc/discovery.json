@@ -587,6 +587,9 @@
           "summary": "Additional options for the watched content",
           "schema": {
             "type": "object",
+            "required": [
+              "agePolicy"
+            ],
             "properties":  {
               "agePolicy": {
                 "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"

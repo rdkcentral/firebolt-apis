@@ -1272,6 +1272,9 @@
         "title": "MetricOptions",
         "description": "Additional options, tags, or labels to include with a metrics call.",
         "type": "object",
+        "required": [
+          "agePolicy"
+        ],
         "properties": {
           "agePolicy": {
             "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
