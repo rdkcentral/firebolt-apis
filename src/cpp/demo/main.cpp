@@ -32,6 +32,9 @@ try
 
     auto deviceInfo = service.getAndPrintDeviceValues();
 
+    std::cout << "Press a key to finish" << std::endl;
+    std::cin.get();
+
     service.unsubscribeAll();
 
     return 0;
