@@ -1,3 +1,10 @@
+# [1.5.0-next.22](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.21...v1.5.0-next.22) (2025-08-01)
+
+
+### Features
+
+* Support for event handling in demo app ([#405](https://github.com/rdkcentral/firebolt-apis/issues/405)) ([958b421](https://github.com/rdkcentral/firebolt-apis/commit/958b421cf12a58e0ae672f742b85c6dd96424e9d))
+
 # [1.5.0-next.21](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.20...v1.5.0-next.21) (2025-05-28)
 
 
