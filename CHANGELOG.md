@@ -1,3 +1,21 @@
+# [1.5.0-next.23](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.22...v1.5.0-next.23) (2025-08-07)
+
+
+### Bug Fixes
+
+* Allow arbitrary age policies to be used ([7f8beba](https://github.com/rdkcentral/firebolt-apis/commit/7f8beba57fbf4a23c7083cb1f36ddf3ec32e24eb))
+* Example code indentation ([ac4fed6](https://github.com/rdkcentral/firebolt-apis/commit/ac4fed64031442eb57990f9b35919e96f92e8ecb))
+* Get builds working ([927c7e9](https://github.com/rdkcentral/firebolt-apis/commit/927c7e9b2ed409bc2247bb828b8302ee4e4e8681))
+* Make agePolicy a required option ([05db1cc](https://github.com/rdkcentral/firebolt-apis/commit/05db1cc58c90dec194616818530f87f549d513f5))
+* Revert from using options param ([e720472](https://github.com/rdkcentral/firebolt-apis/commit/e7204726f56cbfc8e5a5c863e140d2025abe747e))
+* Update startContent example ([e6eb099](https://github.com/rdkcentral/firebolt-apis/commit/e6eb099c8489eaa7a45a23a847ffa61030557528))
+
+
+### Features
+
+* Add age policy options ([800d14e](https://github.com/rdkcentral/firebolt-apis/commit/800d14e87c807a36299e1bd8dd3e7fcf23464d2b))
+* Add age policy param ([266eff6](https://github.com/rdkcentral/firebolt-apis/commit/266eff6868f81010b56600d03ab99c69cfa69ee3))
+
 # [1.5.0-next.22](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.21...v1.5.0-next.22) (2025-08-01)
 
 
