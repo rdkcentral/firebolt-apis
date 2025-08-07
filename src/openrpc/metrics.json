@@ -88,7 +88,7 @@
             "name": "success",
             "value": true
           }
-        }        
+        }
       ]
     },
     {
@@ -121,7 +121,7 @@
             "name": "success",
             "value": true
           }
-        }        
+        }
       ]
     },
     {
@@ -143,6 +143,13 @@
             "type": "string"
           },
           "required": false
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -160,7 +167,7 @@
             "name": "success",
             "value": true
           }
-        },  
+        },
         {
           "name": "Send startContent metric w/ entity",
           "params": [
@@ -173,7 +180,24 @@
             "name": "success",
             "value": true
           }
-        } 
+        },
+        {
+          "name": "Send startContent metric and notify the platform that the content is child-directed",
+          "params": [
+            {
+              "name": "entityId",
+              "value": "abc"
+            },
+            {
+              "name": "agePolicy",
+              "value": "app:child"
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        }
       ]
     },
     {
@@ -195,6 +219,13 @@
             "type": "string"
           },
           "required": false
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -212,7 +243,7 @@
             "name": "success",
             "value": true
           }
-        },  
+        },
         {
           "name": "Send stopContent metric w/ entity",
           "params": [
@@ -225,7 +256,7 @@
             "name": "success",
             "value": true
           }
-        }         
+        }
       ]
     },
     {
@@ -247,6 +278,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -268,7 +306,7 @@
             "name": "success",
             "value": true
           }
-        },  
+        },
         {
           "name": "Send startContent metric w/ entity",
           "params": [
@@ -281,7 +319,7 @@
             "name": "success",
             "value": true
           }
-        }         
+        }
       ]
     },
     {
@@ -323,6 +361,13 @@
             "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
           },
           "required": false
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -348,9 +393,9 @@
             "name": "success",
             "value": true
           }
-        }     
+        }
       ]
-    }, 
+    },
     {
       "name": "error",
       "tags": [
@@ -401,7 +446,14 @@
           "schema": {
             "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
           },
-          "required": false          
+          "required": false
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -435,7 +487,7 @@
             "name": "success",
             "value": true
           }
-        }      
+        }
       ]
     },
     {
@@ -457,6 +509,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -479,7 +538,7 @@
             "value": true
           }
         }
-      ]      
+      ]
     },
     {
       "name": "mediaPlay",
@@ -500,6 +559,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -522,7 +588,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaPlaying",
@@ -543,6 +609,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -565,7 +638,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaPause",
@@ -586,6 +659,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -608,7 +688,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaWaiting",
@@ -629,6 +709,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -651,7 +738,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaProgress",
@@ -680,6 +767,13 @@
             "$ref": "#/components/schemas/MediaPosition"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -706,7 +800,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaSeeking",
@@ -735,6 +829,13 @@
             "$ref": "#/components/schemas/MediaPosition"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -761,7 +862,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaSeeked",
@@ -790,6 +891,13 @@
             "$ref": "#/components/schemas/MediaPosition"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -816,7 +924,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaRateChange",
@@ -845,6 +953,13 @@
             "type": "number"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -871,7 +986,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaRenditionChange",
@@ -924,6 +1039,13 @@
             "type": "string"
           },
           "required": false
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -962,7 +1084,7 @@
             "value": true
           }
         }
-      ]  
+      ]
     },
     {
       "name": "mediaEnded",
@@ -983,6 +1105,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -1035,6 +1164,13 @@
             "$ref": "#/components/schemas/EventObject"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -1062,7 +1198,7 @@
             "name": "result",
             "value": null
           }
-        }     
+        }
       ]
     },
     {
