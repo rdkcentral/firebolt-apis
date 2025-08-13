@@ -1,11 +1,8 @@
 #!/bin/bash
 set -o pipefail
 
-current_apis_dir=$(pwd)
-
-cd ..
-current_dir=$(pwd)
-cd $current_apis_dir
+current_apis_dir=$PWD
+current_dir=${PWD%/*}
 
 # Function to check if a branch exists in the remote repository
 function branch_exists() {
@@ -181,135 +178,178 @@ function unzipArtifact(){
   echo "Failures=$failures" >> "$GITHUB_ENV"
 }
 
-function cloneAndInstallThunder() {
-  printenv
+function cloneAndInstallDeps() {
+  echo " ************ Installing dependencies ************ (should be preinstalled in docker image)"
 
-  cd ..
+  cd $current_dir
+  rm -rf nlohmann-json json-schema-validator googletest
 
-  git clone https://github.com/rdkcentral/Thunder.git
-
-  cd Thunder
-
-  git checkout 283b3d54334010403d85a4e69b3835de23e42331
-
-  cd ..
-
-  git clone https://github.com/rdkcentral/ThunderTools.git
-
-  cd ThunderTools
-
-  git checkout 64b72b5ed491436b0e6bc2327d8a7b0e75ee2870
-
-  cd ..
-
-  echo "current_dir is $current_dir"
-
-  mkdir -p $current_dir/data
-
-  if [ ! -d "$(pwd)/Thunder" ] 
-  then
-      echo "Directory Thunder DOES NOT exist." 
-      exit 9999
+  if [[ ! -e nlohmann-json ]]; then
+    git clone --depth 1 --branch v3.11.3 https://github.com/nlohmann/json nlohmann-json \
+    || { echo "deps: nlohmann-json: cloning failed"; exit 1; }
+  fi
+  if [[ ! -e json-schema-validator ]]; then
+    git clone --depth 1 --branch 2.3.0 https://github.com/pboettch/json-schema-validator.git \
+    || { echo "deps: json-schema-validator: cloning failed"; exit 1; }
+  fi
+  if [[ ! -e googletest ]]; then
+    git clone --depth 1 --branch v1.15.2 https://github.com/google/googletest \
+    || { echo "deps: googletest: cloning failed"; exit 1; }
   fi
 
-  if [ ! -d "$(pwd)/ThunderTools" ]
-  then
-      echo "Directory ThunderTools DOES NOT exist."
-      exit 9999
-  fi
+  echo "deps: building"
 
-  if [ ! -d "$current_dir/firebolt-apis" ]
-  then
-      echo "Directory $current_dir/firebolt-apis DOES NOT exist."
-      exit 9999
-  fi
+  local i=
+  for i in nlohmann-json json-schema-validator googletest; do
+    rm -rf build/$i
+    cmake -S $i -B build/$i \
+      -DCMAKE_INSTALL_PREFIX:PATH=$current_dir/install/usr -DBUILD_SHARED_LIBS=ON \
+    || { echo "deps: $i: cmake init failed"; exit 1; }
+    cmake --build build/$i --target install \
+    || { echo "deps: $i: building failed"; exit 1; }
+  done
+  echo "deps: building succeeded"
+}
+
+function cloneAndInstallTransport() {
+  echo " ************ Cloning Tranport ************"
 
   cd $current_dir
 
-  [ -d "$current_dir/build" ] && rm -rf $current_dir/build
+  rm -rf firebolt-native-transport
+  if [[ ! -e firebolt-native-transport ]]; then
+    git clone --depth 1 --branch main https://github.com/rdkcentral/firebolt-native-transport.git \
+    || { echo "firebolt-native-transport: cloning failed"; exit 1; }
+  fi
 
-  echo "Building Thunder";
+  rm -rf build/firebolt-native-transport
 
-  cmake -G Ninja -S ThunderTools -B build/ThunderTools -DCMAKE_INSTALL_PREFIX="install/usr" && echo "Tools Setup" || exit 9999
+  echo "firebolt-native-transport: building"
 
-  cmake --build build/ThunderTools --target install && echo "Thunder Tools Build succeeded" || exit 9999
+  cmake -S firebolt-native-transport -B build/firebolt-native-transport \
+    -DSYSROOT_PATH=$current_dir/install -DCMAKE_INSTALL_PREFIX="$current_dir/install/usr" \
+    -DENABLE_UNIT_TESTS=ON \
+  || { echo "firebolt-native-transport: cmake init failed"; exit 1; }
+  cmake --build build/firebolt-native-transport --target install \
+  || { echo "firebolt-native-transport: building failed"; exit 1; }
+
+  echo "firebolt-native-transport: building succeeded"
+}
+
+function cloneAndInstallThunder() {
+  echo " ************ Cloning Thunder & ThunderTools ************ (should be preinstalled in docker image)"
+  cd $current_dir
+
+  rm -rf Thunder
+  if [[ ! -e Thunder ]]; then
+    git clone --depth 1 --branch R5.0.0 https://github.com/rdkcentral/Thunder.git \
+    || { echo "thunder: cloning failed"; exit 1; }
+    (
+      cd Thunder \
+      && git fetch --shallow-since=2024-05-20 \
+      && git reset --hard 283b3d54334010403d85a4e69b3835de23e42331
+    ) || { echo "thunder: checking out failed"; exit 1; }
+  fi
+
+  rm -rf ThunderTools
+  if [[ ! -e ThunderTools ]]; then
+    git clone --depth 1 --branch R5.0.0 https://github.com/rdkcentral/ThunderTools.git \
+    || { echo "thunder-tools: cloning failed"; exit 1; }
+    (
+      cd ThunderTools \
+      && git fetch --shallow-since=2024-05-20 \
+      && git reset --hard 64b72b5ed491436b0e6bc2327d8a7b0e75ee2870
+    ) || { echo "thunder-tools: checking out failed"; exit 1; }
+  fi
+
+  rm -rf build/Thunder build/ThunderTools
+
+  echo "thunder-tools: building"
+
+  cmake -G Ninja -S ThunderTools -B build/ThunderTools -DCMAKE_INSTALL_PREFIX="install/usr" && echo "Tools Setup" \
+  || { echo "thunder-tools: cmake init failed"; exit 1; }
+
+  cmake --build build/ThunderTools --target install && echo "Thunder Tools Build succeeded" \
+  || { echo "thunder-tools: building failed"; exit 1; }
+
+  echo "thunder: building"
 
   #-G Ninja is the "Build system generator"
   #-S is the source path
   #-B is the output directory
   cmake -G Ninja -S Thunder -B build/Thunder \
-  -DBUILD_SHARED_LIBS=ON \
-  -DBINDING="127.0.0.1" \
-  -DCMAKE_BUILD_TYPE="Debug" \
-  -DCMAKE_INSTALL_PREFIX="install/usr" \
-  -DCMAKE_MODULE_PATH="${PWD}/install/usr/include/WPEFramework/Modules" \
-  -DDATA_PATH="${PWD}/install/usr/share/WPEFramework" \
-  -DPERSISTENT_PATH="${PWD}/install/var/wpeframework" \
-  -DPORT="55555" \
-  -DPROXYSTUB_PATH="${PWD}/install/usr/lib/wpeframework/proxystubs" \
-  -DSYSTEM_PATH="${PWD}/install/usr/lib/wpeframework/plugins" \
-  -DVOLATILE_PATH="tmp" && echo "Thunder configure succeeded" || exit 9999
+    -DBUILD_SHARED_LIBS=ON \
+    -DBINDING="127.0.0.1" \
+    -DCMAKE_BUILD_TYPE="Debug" \
+    -DCMAKE_INSTALL_PREFIX="install/usr" \
+    -DCMAKE_MODULE_PATH="$PWD/install/usr/include/WPEFramework/Modules" \
+    -DDATA_PATH="$PWD/install/usr/share/WPEFramework" \
+    -DPERSISTENT_PATH="$PWD/install/var/wpeframework" \
+    -DPORT="55555" \
+    -DPROXYSTUB_PATH="$PWD/install/usr/lib/wpeframework/proxystubs" \
+    -DSYSTEM_PATH="$PWD/install/usr/lib/wpeframework/plugins" \
+    -DVOLATILE_PATH="tmp" && echo "Thunder configure succeeded" \
+  || { echo "thunder: cmake init failed"; exit 1; }
 
-  cmake --build build/Thunder --target install && echo "Thunder Build succeeded" || exit 9999
+  cmake --build build/Thunder --target install && echo "Thunder Build succeeded" \
+  || { echo "thunder: building failed"; exit 1; }
 }
 
+function buildRuntimeCoreSDK() {
+  echo " ************ Building Runtime APIs Core SDK ************"
 
-function generate_cpp_sdk_source_code(){
-  local sdk_name=$1
-
-  echo " ************ Genrate Source Code for ${sdk_name^} CPP SDK ************"
-
-  cd src/sdks/${sdk_name}
-  npm run cpp
-}
-
-function build_cpp_sdk() {
-  
+  cd $current_apis_dir
   FIREBOLT_VERSION=$(node -p "require('./package.json').version")
-  echo "The version from package.json is $FIREBOLT_VERSION"
-  local sdk_name=$1
-  
-  echo " ************ Build ${sdk_name^} CPP SDK ************"
 
-  tar -xvf /__w/firebolt-apis/firebolt-apis/src/sdks/${sdk_name}/build/cpp/src/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}.tgz -C /__w/firebolt-apis/firebolt-apis/
-  cd /__w/firebolt-apis/firebolt-apis/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}
-  chmod +x ./build.sh
+  echo "core-sdk: the version from package.json is $FIREBOLT_VERSION"
 
-  ./build.sh -s "/__w/thunder/install/" || exit 9999
-}
+  local tarSDK="firebolt-apis--core-sdk-$FIREBOLT_VERSION.tar.gz"
+  echo "core-sdk: $tarSDK"
 
+  rm -rf ./$tarSDK $current_dir/firebolt-apis
 
-function generate_coverage_report(){
-  FIREBOLT_VERSION=$(node -p "require('./package.json').version")
-  echo "The version from package.json is $FIREBOLT_VERSION"
-  local sdk_name=$1
+  git archive -v --format=tar.gz --prefix=firebolt-apis/ -o $tarSDK HEAD src/cpp \
+  || { echo "core-sdk: cannot make SDK archive"; exit 1; }
 
-  echo " ************ Generate coverage report for ${sdk_name^} CPP SDK ************"
+  echo "core-sdk: sha256sum-sdk  : $(sha256sum $tarSDK)"
 
-  cd /__w/firebolt-apis/firebolt-apis/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}
-  cmake --build build --target coverage || exit 9999
+  cd $current_dir
+  tar -zxf $current_apis_dir/$tarSDK
 
-  mv /__w/firebolt-apis/firebolt-apis/firebolt-${sdk_name}-native-sdk-${FIREBOLT_VERSION}/build/test/coverage /__w/firebolt-apis/firebolt-apis/
+  rm -rf build/firebolt-apis
+
+  echo "core-sdk: building"
+
+  export LD_LIBRARY_PATH="$current_dir/install/usr/lib:$LD_LIBRARY_PATH"
+  cmake -S firebolt-apis/src/cpp -B build/firebolt-apis \
+    -DSYSROOT_PATH=$current_dir/install -DCMAKE_INSTALL_PREFIX="$current_dir/install/usr" \
+    -DENABLE_UNIT_TESTS=ON \
+  || { echo "core-sdk: cmake init failed"; exit 1; }
+  cmake --build build/firebolt-apis \
+  || { echo "core-sdk: building failed"; exit 1; }
+
+  THROW_ERROR_ON_UT_FAIL=${THROW_ERROR_ON_UT_FAIL:-false}
+  cp firebolt-apis/src/cpp/firebolt-core-open-rpc.json ./
+  ln -s firebolt-core-open-rpc.json firebolt-open-rpc.json
+  if ! ./build/firebolt-apis/test/FireboltCoreUnitTests; then
+    echo "core-sdk: UT verification failed"
+    if $THROW_ERROR_ON_UT_FAIL; then
+      exit 1
+    else
+      echo "core-sdk: error not signaled"
+    fi
+  fi
 }
 
 # Check argument and call corresponding function
-case "$1" in 
-  runTests) runTests ;;
-  getResults) getResults ;;
-  getArtifactData) getArtifactData ;;
-  unzipArtifact) unzipArtifact ;;
-  generate_cpp_core_sdk_source_code) generate_cpp_sdk_source_code "core"  ;;
-  generate_cpp_manage_sdk_source_code) generate_cpp_sdk_source_code "manage"  ;;
-  generate_cpp_discovery_sdk_source_code) generate_cpp_sdk_source_code "discovery"  ;;
-  cloneAndInstallThunder) cloneAndInstallThunder ;;
-  build_core_cpp_sdk) build_cpp_sdk "core" ;;
-  build_manage_cpp_sdk) build_cpp_sdk "manage" ;;
-  build_discovery_cpp_sdk) build_cpp_sdk "discovery" ;;
-  generate_core_sdk_coverage_report) generate_coverage_report "core" ;;
-  generate_manage_sdk_coverage_report) generate_coverage_report "manage" ;;
-  generate_discovery_sdk_coverage_report) generate_coverage_report "discovery" ;;
-  *)
-    echo "Invalid function specified."
-    exit 1
-    ;;
+case "$1" in
+runTests) runTests;;
+getResults) getResults;;
+getArtifactData) getArtifactData;;
+unzipArtifact) unzipArtifact;;
+cloneAndInstallDeps) cloneAndInstallDeps;;
+cloneAndInstallThunder) cloneAndInstallThunder;;
+cloneAndInstallTransport) cloneAndInstallTransport;;
+buildRuntimeCoreSDK) buildRuntimeCoreSDK;;
+*) echo "Invalid function specified." exit 1;;
 esac
