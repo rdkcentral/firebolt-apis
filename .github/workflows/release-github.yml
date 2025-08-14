@@ -107,6 +107,11 @@ jobs:
         if: env.build_cpp_source == 'true'
         id: install_thunder
         run: |
+          apt update
+          apt install -y cmake ninja-build python3-pip python3.11-venv
+          python3 -m venv firebolt-env
+          source firebolt-env/bin/activate
+          pip install jsonref
           .github/workflows/utils.sh cloneAndInstallThunder
       - name: Clone and Install Dependencies
         if: env.build_cpp_source == 'true'
