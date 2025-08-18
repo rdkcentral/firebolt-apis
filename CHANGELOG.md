@@ -1,3 +1,71 @@
+# [1.6.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0...v1.6.0-next.1) (2025-08-18)
+
+
+### Bug Fixes
+
+* Allow arbitrary age policies to be used ([7f8beba](https://github.com/rdkcentral/firebolt-apis/commit/7f8beba57fbf4a23c7083cb1f36ddf3ec32e24eb))
+* Example code indentation ([ac4fed6](https://github.com/rdkcentral/firebolt-apis/commit/ac4fed64031442eb57990f9b35919e96f92e8ecb))
+* Get builds working ([927c7e9](https://github.com/rdkcentral/firebolt-apis/commit/927c7e9b2ed409bc2247bb828b8302ee4e4e8681))
+* Make agePolicy a required option ([05db1cc](https://github.com/rdkcentral/firebolt-apis/commit/05db1cc58c90dec194616818530f87f549d513f5))
+* Revert from using options param ([e720472](https://github.com/rdkcentral/firebolt-apis/commit/e7204726f56cbfc8e5a5c863e140d2025abe747e))
+* Update docs for capabilities granted and permitted ([#385](https://github.com/rdkcentral/firebolt-apis/issues/385)) ([854d9de](https://github.com/rdkcentral/firebolt-apis/commit/854d9de72da545ab56874e62f79b57482c703788))
+* Update startContent example ([e6eb099](https://github.com/rdkcentral/firebolt-apis/commit/e6eb099c8489eaa7a45a23a847ffa61030557528))
+
+
+### Features
+
+* Add age policy options ([800d14e](https://github.com/rdkcentral/firebolt-apis/commit/800d14e87c807a36299e1bd8dd3e7fcf23464d2b))
+* Add age policy param ([266eff6](https://github.com/rdkcentral/firebolt-apis/commit/266eff6868f81010b56600d03ab99c69cfa69ee3))
+* Add Profile.viewingRestrictions method and documentation ([#363](https://github.com/rdkcentral/firebolt-apis/issues/363)) ([2f11672](https://github.com/rdkcentral/firebolt-apis/commit/2f116720b48420813719144404736f36f61ae48d))
+* Support for event handling in demo app ([#405](https://github.com/rdkcentral/firebolt-apis/issues/405)) ([958b421](https://github.com/rdkcentral/firebolt-apis/commit/958b421cf12a58e0ae672f742b85c6dd96424e9d))
+* Trigger Build ([#388](https://github.com/rdkcentral/firebolt-apis/issues/388)) ([e1e4e60](https://github.com/rdkcentral/firebolt-apis/commit/e1e4e60e092fa6c4a9fe6c50185a7d63382cf3f0))
+
+# [1.5.0-next.23](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.22...v1.5.0-next.23) (2025-08-07)
+
+
+### Bug Fixes
+
+* Allow arbitrary age policies to be used ([7f8beba](https://github.com/rdkcentral/firebolt-apis/commit/7f8beba57fbf4a23c7083cb1f36ddf3ec32e24eb))
+* Example code indentation ([ac4fed6](https://github.com/rdkcentral/firebolt-apis/commit/ac4fed64031442eb57990f9b35919e96f92e8ecb))
+* Get builds working ([927c7e9](https://github.com/rdkcentral/firebolt-apis/commit/927c7e9b2ed409bc2247bb828b8302ee4e4e8681))
+* Make agePolicy a required option ([05db1cc](https://github.com/rdkcentral/firebolt-apis/commit/05db1cc58c90dec194616818530f87f549d513f5))
+* Revert from using options param ([e720472](https://github.com/rdkcentral/firebolt-apis/commit/e7204726f56cbfc8e5a5c863e140d2025abe747e))
+* Update startContent example ([e6eb099](https://github.com/rdkcentral/firebolt-apis/commit/e6eb099c8489eaa7a45a23a847ffa61030557528))
+
+
+### Features
+
+* Add age policy options ([800d14e](https://github.com/rdkcentral/firebolt-apis/commit/800d14e87c807a36299e1bd8dd3e7fcf23464d2b))
+* Add age policy param ([266eff6](https://github.com/rdkcentral/firebolt-apis/commit/266eff6868f81010b56600d03ab99c69cfa69ee3))
+
+# [1.5.0-next.22](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.21...v1.5.0-next.22) (2025-08-01)
+
+
+### Features
+
+* Support for event handling in demo app ([#405](https://github.com/rdkcentral/firebolt-apis/issues/405)) ([958b421](https://github.com/rdkcentral/firebolt-apis/commit/958b421cf12a58e0ae672f742b85c6dd96424e9d))
+
+# [1.5.0-next.21](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.20...v1.5.0-next.21) (2025-05-28)
+
+
+### Features
+
+* Trigger Build ([#388](https://github.com/rdkcentral/firebolt-apis/issues/388)) ([e1e4e60](https://github.com/rdkcentral/firebolt-apis/commit/e1e4e60e092fa6c4a9fe6c50185a7d63382cf3f0))
+
+# [1.5.0-next.20](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.19...v1.5.0-next.20) (2025-05-19)
+
+
+### Bug Fixes
+
+* Update docs for capabilities granted and permitted ([#385](https://github.com/rdkcentral/firebolt-apis/issues/385)) ([854d9de](https://github.com/rdkcentral/firebolt-apis/commit/854d9de72da545ab56874e62f79b57482c703788))
+
+# [1.5.0-next.19](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0-next.18...v1.5.0-next.19) (2025-05-16)
+
+
+### Features
+
+* Add Profile.viewingRestrictions method and documentation ([#363](https://github.com/rdkcentral/firebolt-apis/issues/363)) ([2f11672](https://github.com/rdkcentral/firebolt-apis/commit/2f116720b48420813719144404736f36f61ae48d))
+
 # [1.5.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.4.1...v1.5.0) (2025-03-03)
 
 
