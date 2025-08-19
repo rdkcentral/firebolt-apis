@@ -57,8 +57,11 @@ function runTests(){
   cd ..
 
   echo "clone mfos repo and start it in the background"
-  git clone https://github.com/rdkcentral/mock-firebolt.git
-  cd mock-firebolt/server
+  git clone --depth 1 --branch main https://github.com/rdkcentral/mock-firebolt.git
+  cd mock-firebolt
+  git fetch --shallow-since=2025-04-01 \
+  git reset --hard 5d32c6adf908f88c63ada603de41ffdea190eea7
+  cd server
   cp ../../firebolt-apis/dist/firebolt-open-rpc.json ../../mock-firebolt/server/src/firebolt-open-rpc.json
   jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
   jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
@@ -68,8 +71,10 @@ function runTests(){
   cd ..//..
 
   echo "clone fca repo and start it in the background"
-  git clone --branch main https://github.com/rdkcentral/firebolt-certification-app.git
+  git clone --depth 1 --branch main https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
+  git fetch --shallow-since=2025-07-01 \
+  git reset --hard 33e5e6dac198f03a0ee27e5464b78efa315bb484
   jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
   npm install
   npm start &
