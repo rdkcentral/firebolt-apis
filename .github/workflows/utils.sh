@@ -4,6 +4,9 @@ set -o pipefail
 current_apis_dir=$PWD
 current_dir=${PWD%/*}
 
+echo "current_apis_dir='$current_apis_dir'" >/dev/stderr
+echo "current_dir='$current_dir'" >/dev/stderr
+
 # Function to check if a branch exists in the remote repository
 function branch_exists() {
     local branch=$1
