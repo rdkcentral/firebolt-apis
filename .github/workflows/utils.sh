@@ -308,6 +308,7 @@ function buildRuntimeCoreSDK() {
 
   rm -rf ./$tarSDK $current_dir/verif
 
+  git config --global --add safe.directory /__w/firebolt-apis/firebolt-apis
   git archive -v --format=tar.gz --prefix=firebolt-apis/ -o $tarSDK HEAD src/cpp \
   || { echo "core-sdk: cannot make SDK archive"; exit 1; }
 
