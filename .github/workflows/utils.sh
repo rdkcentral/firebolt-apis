@@ -306,7 +306,7 @@ function buildRuntimeCoreSDK() {
   local tarSDK="firebolt-apis--core-sdk-$FIREBOLT_VERSION.tar.gz"
   echo "core-sdk: $tarSDK"
 
-  rm -rf ./$tarSDK $current_dir/firebolt-apis
+  rm -rf ./$tarSDK $current_dir/verif
 
   git archive -v --format=tar.gz --prefix=firebolt-apis/ -o $tarSDK HEAD src/cpp \
   || { echo "core-sdk: cannot make SDK archive"; exit 1; }
@@ -314,14 +314,15 @@ function buildRuntimeCoreSDK() {
   echo "core-sdk: sha256sum-sdk  : $(sha256sum $tarSDK)"
 
   cd $current_dir
-  tar -zxf $current_apis_dir/$tarSDK
+  mkdir $current_dir/verif
+  tar -C $current_dir/verif -zxf $current_apis_dir/$tarSDK
 
   rm -rf build/firebolt-apis
 
   echo "core-sdk: building"
 
   export LD_LIBRARY_PATH="$current_dir/install/usr/lib:$LD_LIBRARY_PATH"
-  cmake -S firebolt-apis/src/cpp -B build/firebolt-apis \
+  cmake -S verif/firebolt-apis/src/cpp -B build/firebolt-apis \
     -DSYSROOT_PATH=$current_dir/install -DCMAKE_INSTALL_PREFIX="$current_dir/install/usr" \
     -DENABLE_UNIT_TESTS=ON \
   || { echo "core-sdk: cmake init failed"; exit 1; }
