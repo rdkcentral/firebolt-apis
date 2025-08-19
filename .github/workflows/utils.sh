@@ -59,7 +59,7 @@ function runTests(){
   echo "clone mfos repo and start it in the background"
   git clone --depth 1 --branch main https://github.com/rdkcentral/mock-firebolt.git
   cd mock-firebolt
-  git fetch --shallow-since=2025-04-01 \
+  git fetch --shallow-since=2025-04-01
   git reset --hard 5d32c6adf908f88c63ada603de41ffdea190eea7
   cd server
   cp ../../firebolt-apis/dist/firebolt-open-rpc.json ../../mock-firebolt/server/src/firebolt-open-rpc.json
@@ -73,7 +73,7 @@ function runTests(){
   echo "clone fca repo and start it in the background"
   git clone --depth 1 --branch main https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
-  git fetch --shallow-since=2025-07-01 \
+  git fetch --shallow-since=2025-07-01
   git reset --hard 33e5e6dac198f03a0ee27e5464b78efa315bb484
   jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
   npm install
