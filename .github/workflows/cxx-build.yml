@@ -75,6 +75,7 @@ jobs:
 
       - name: Build Core Native Lib
         run: |
+           git config --global --add safe.directory /__w/firebolt-apis/firebolt-apis
           .github/workflows/utils.sh buildRuntimeCoreSDK
 
       - name: Deploy Core Native Sources to Artifactory (disabled)
