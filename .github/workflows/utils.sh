@@ -219,6 +219,8 @@ function cloneAndInstallDeps() {
   cd $current_dir
   rm -rf nlohmann-json json-schema-validator googletest
 
+  declare -p $GIT_REPOS_VERSIONS >/dev/stderr
+  set -xv
   git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[nlohmann]} https://github.com/nlohmann/json nlohmann-json \
   || { echo "deps: nlohmann-json: cloning failed"; exit 1; }
 
@@ -227,6 +229,7 @@ function cloneAndInstallDeps() {
 
   git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[google-test]} https://github.com/google/googletest \
   || { echo "deps: googletest: cloning failed"; exit 1; }
+  set +xv
 
   echo "deps: building"
 
