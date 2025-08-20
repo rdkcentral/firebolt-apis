@@ -40,6 +40,7 @@ function runTests(){
       exit 1
   fi
 
+  cd $current_dir
   echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
   git clone --branch ${PR_BRANCH} https://github.com/rdkcentral/firebolt-apis.git
   echo "cd to firebolt-apis repo and compile firebolt-open-rpc.json"
@@ -54,8 +55,8 @@ function runTests(){
   npm i
   npm run compile
   npm run dist
-  cd ..
 
+  cd $current_dir
   echo "clone mfos repo and start it in the background"
   git clone --depth 1 --branch main https://github.com/rdkcentral/mock-firebolt.git
   cd mock-firebolt
@@ -68,8 +69,8 @@ function runTests(){
   cp src/.mf.config.SAMPLE.json src/.mf.config.json
   npm install
   npm start &
-  cd ..//..
 
+  cd $current_dir
   echo "clone fca repo and start it in the background"
   git clone --depth 1 --branch main https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
@@ -79,16 +80,16 @@ function runTests(){
   npm install
   npm start &
   sleep 5s
-  cd ..
 
+  cd $current_dir
   echo "curl request with runTest install on initialization"
   response=$(curl -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
 
   echo "run mfos tests in a headless browser"
   npm install puppeteer
   echo "Start xvfb"
-  Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
   export DISPLAY=:99
+  Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
 
   echo "Run headless browser script with puppeteer"
   node -e '
