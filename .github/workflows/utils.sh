@@ -23,6 +23,10 @@ if [[ -z $GIT_REPOS_VERSIONS ]]; then
 fi
 echo "grv='$GIT_REPOS_VERSIONS'" >/dev/stderr
 eval "$GIT_REPOS_VERSIONS"
+echo "grv-k='${!GIT_REPOS_VERSIONS[*]}'" >/dev/stderr
+for i in ${!GIT_REPOS_VERSIONS[*]}; do
+  echo "grv-k[$i]='${GIT_REPOS_VERSIONS[$i]}'"
+done >/dev/stderr
 
 # Function to check if a branch exists in the remote repository
 function branch_exists() {
