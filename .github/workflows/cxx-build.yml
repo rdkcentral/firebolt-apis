@@ -65,7 +65,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dependencies
-          path: /__w/dependencies/install/
+          path: /__w/firebolt-apis/install/
 
       - name: Install npm & apt dependencies
         run: |
