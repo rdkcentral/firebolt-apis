@@ -21,6 +21,7 @@ if [[ -z $GIT_REPOS_VERSIONS ]]; then
     [thunder-tools]="64b72b5ed491436b0e6bc2327d8a7b0e75ee2870"
   )'
 fi
+echo "grv='$GIT_REPOS_VERSIONS'" >/dev/stderr
 eval "$GIT_REPOS_VERSIONS"
 
 # Function to check if a branch exists in the remote repository
@@ -219,7 +220,6 @@ function cloneAndInstallDeps() {
   cd $current_dir
   rm -rf nlohmann-json json-schema-validator googletest
 
-  declare -p $GIT_REPOS_VERSIONS >/dev/stderr
   set -xv
   git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[nlohmann]} https://github.com/nlohmann/json nlohmann-json \
   || { echo "deps: nlohmann-json: cloning failed"; exit 1; }
