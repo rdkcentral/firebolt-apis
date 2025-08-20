@@ -147,12 +147,15 @@ function runTests(){
       }
     });
       // Navigate to the URL
+      console.log("going to http://localhost:8081/?mf=ws://localhost:9998/12345&standalone=true");
       await page.goto("http://localhost:8081/?mf=ws://localhost:9998/12345&standalone=true");
 
      // Sleep for 80 seconds (80,000 milliseconds)
+     console.log("setting up a promise");
      await new Promise(resolve => setTimeout(resolve, 80000));
 
       // Close the browser
+      console.log("closing the browser");
       await browser.close();
     })();
   '
