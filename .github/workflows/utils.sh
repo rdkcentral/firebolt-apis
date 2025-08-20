@@ -7,9 +7,9 @@ current_dir=${PWD%/*}
 echo "current_apis_dir='$current_apis_dir'" >/dev/stderr
 echo "current_dir='$current_dir'" >/dev/stderr
 
-if [[ -z $GIT_REPOS_VERSIONS ]]; then
+if [[ -z $GIT_REPOS_VERSIONS_VAR ]]; then
   echo "git-ver: fallback" >/dev/stderr
-  GIT_REPOS_VERSIONS='declare -A GIT_REPOS_VERSIONS=(
+  GIT_REPOS_VERSIONS_VAR='declare -A GIT_REPOS_VERSIONS=(
     [mock-firebolt]="5d32c6adf908f88c63ada603de41ffdea190eea7"
     [firebolt-certification-app]="30c96d4dfb601897fcb557e5f0a6225402df8964"
     [nlohmann]="v3.11.3"
@@ -76,7 +76,7 @@ function runTests(){
   npm run compile
   npm run dist
 
-  eval $GIT_REPOS_VERSIONS
+  eval "$GIT_REPOS_VERSIONS_VAR"
 
   cd $current_dir
   echo "clone mfos repo and start it in the background"
@@ -215,7 +215,7 @@ function cloneAndInstallDeps() {
   cd $current_dir
   rm -rf nlohmann-json json-schema-validator googletest
 
-  eval $GIT_REPOS_VERSIONS
+  eval "$GIT_REPOS_VERSIONS_VAR"
 
   git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[nlohmann]} https://github.com/nlohmann/json nlohmann-json \
   || { echo "deps: nlohmann-json: cloning failed"; exit 1; }
@@ -245,7 +245,7 @@ function cloneAndInstallTransport() {
 
   cd $current_dir
 
-  eval $GIT_REPOS_VERSIONS
+  eval "$GIT_REPOS_VERSIONS_VAR"
 
   rm -rf firebolt-native-transport
   git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[firebolt-native-transport]} https://github.com/rdkcentral/firebolt-native-transport.git \
@@ -269,7 +269,7 @@ function cloneAndInstallThunder() {
   echo " ************ Cloning Thunder & ThunderTools ************ (should be preinstalled in docker image)"
   cd $current_dir
 
-  eval $GIT_REPOS_VERSIONS
+  eval "$GIT_REPOS_VERSIONS_VAR"
 
   rm -rf Thunder
   git clone --depth 1 --branch R5.0.0 https://github.com/rdkcentral/Thunder.git \

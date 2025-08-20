@@ -30,7 +30,7 @@ jobs:
 
       - name: Clone and Install Thunder
         env:
-          GIT_REPOS_VERSIONS: ${{ vars.GIT_REPOS_VERSIONS }}
+          GIT_REPOS_VERSIONS_VAR: ${{ vars.GIT_REPOS_VERSIONS_VAR }}
         run: |
           apt update
           apt install -y cmake ninja-build python3-pip python3.11-venv
@@ -41,13 +41,13 @@ jobs:
 
       - name: Clone and Install Dependencies
         env:
-          GIT_REPOS_VERSIONS: ${{ vars.GIT_REPOS_VERSIONS }}
+          GIT_REPOS_VERSIONS_VAR: ${{ vars.GIT_REPOS_VERSIONS_VAR }}
         run: |
           .github/workflows/utils.sh cloneAndInstallDeps
 
       - name: Clone and Install Transport
         env:
-          GIT_REPOS_VERSIONS: ${{ vars.GIT_REPOS_VERSIONS }}
+          GIT_REPOS_VERSIONS_VAR: ${{ vars.GIT_REPOS_VERSIONS_VAR }}
         run: |
           .github/workflows/utils.sh cloneAndInstallTransport
 
