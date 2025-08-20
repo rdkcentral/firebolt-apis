@@ -33,6 +33,7 @@ function runTests(){
   # Convert event name to lowercase
   PR_BRANCH=$(echo "$EVENT_NAME" | tr '[:upper:]' '[:lower:]')
 
+  cd $current_apis_dir
   # Check if OPENRPC_PR_BRANCH is not empty and the event is repository_dispatch
   if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$PR_BRANCH" == "repository_dispatch" ]; then
       # Check if the branch exists in firebolt-apis
