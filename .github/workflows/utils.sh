@@ -8,6 +8,7 @@ echo "current_apis_dir='$current_apis_dir'" >/dev/stderr
 echo "current_dir='$current_dir'" >/dev/stderr
 
 if [[ -z $GIT_REPOS_VERSIONS ]]; then
+  echo "git-ver: fallback" >/dev/stderr
   GIT_REPOS_VERSIONS='declare -A GIT_REPOS_VERSIONS=(
     [mock-firebolt]="5d32c6adf908f88c63ada603de41ffdea190eea7"
     [firebolt-certification-app]="30c96d4dfb601897fcb557e5f0a6225402df8964"
