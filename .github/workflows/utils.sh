@@ -7,6 +7,19 @@ current_dir=${PWD%/*}
 echo "current_apis_dir='$current_apis_dir'" >/dev/stderr
 echo "current_dir='$current_dir'" >/dev/stderr
 
+if [[ -z $GIT_REPOS_VERSIONS ]]; then
+  GIT_REPOS_VERSIONS='declare -A GIT_REPOS_VERSIONS=(
+    [mock-firebolt]="5d32c6adf908f88c63ada603de41ffdea190eea7"
+    [firebolt-certification-app]="30c96d4dfb601897fcb557e5f0a6225402df8964"
+    [nlohmann]="v3.11.3"
+    [json-schema-validator]="2.3.0"
+    [google-test]="v1.15.2"
+    [firebolt-native-transport]="main"
+    [thunder]="283b3d54334010403d85a4e69b3835de23e42331"
+    [thunder-tools]="64b72b5ed491436b0e6bc2327d8a7b0e75ee2870"
+  )'
+fi
+
 # Function to check if a branch exists in the remote repository
 function branch_exists() {
     local branch=$1
@@ -62,12 +75,14 @@ function runTests(){
   npm run compile
   npm run dist
 
+  eval $GIT_REPOS_VERSIONS
+
   cd $current_dir
   echo "clone mfos repo and start it in the background"
   git clone --depth 1 --branch main https://github.com/rdkcentral/mock-firebolt.git
   cd mock-firebolt
   git fetch --shallow-since=2025-01-01
-  git reset --hard 5d32c6adf908f88c63ada603de41ffdea190eea7
+  git reset --hard ${GIT_REPOS_VERSIONS[mock-firebolt]}
   cd server
   cp $current_apis_dir/dist/firebolt-open-rpc.json src/firebolt-open-rpc.json
   jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
@@ -81,7 +96,7 @@ function runTests(){
   git clone --depth 1 --branch main https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
   git fetch --shallow-since=2025-01-01
-  git reset --hard 30c96d4dfb601897fcb557e5f0a6225402df8964
+  git reset --hard ${GIT_REPOS_VERSIONS[firebolt-certification-app]}
   jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
   npm install
   npm start &
@@ -199,18 +214,16 @@ function cloneAndInstallDeps() {
   cd $current_dir
   rm -rf nlohmann-json json-schema-validator googletest
 
-  if [[ ! -e nlohmann-json ]]; then
-    git clone --depth 1 --branch v3.11.3 https://github.com/nlohmann/json nlohmann-json \
-    || { echo "deps: nlohmann-json: cloning failed"; exit 1; }
-  fi
-  if [[ ! -e json-schema-validator ]]; then
-    git clone --depth 1 --branch 2.3.0 https://github.com/pboettch/json-schema-validator.git \
-    || { echo "deps: json-schema-validator: cloning failed"; exit 1; }
-  fi
-  if [[ ! -e googletest ]]; then
-    git clone --depth 1 --branch v1.15.2 https://github.com/google/googletest \
-    || { echo "deps: googletest: cloning failed"; exit 1; }
-  fi
+  eval $GIT_REPOS_VERSIONS
+
+  git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[nlohmann]} https://github.com/nlohmann/json nlohmann-json \
+  || { echo "deps: nlohmann-json: cloning failed"; exit 1; }
+
+  git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[json-schema-validator]} https://github.com/pboettch/json-schema-validator.git \
+  || { echo "deps: json-schema-validator: cloning failed"; exit 1; }
+
+  git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[google-test]} https://github.com/google/googletest \
+  || { echo "deps: googletest: cloning failed"; exit 1; }
 
   echo "deps: building"
 
@@ -231,11 +244,11 @@ function cloneAndInstallTransport() {
 
   cd $current_dir
 
+  eval $GIT_REPOS_VERSIONS
+
   rm -rf firebolt-native-transport
-  if [[ ! -e firebolt-native-transport ]]; then
-    git clone --depth 1 --branch main https://github.com/rdkcentral/firebolt-native-transport.git \
-    || { echo "firebolt-native-transport: cloning failed"; exit 1; }
-  fi
+  git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[firebolt-native-transport]} https://github.com/rdkcentral/firebolt-native-transport.git \
+  || { echo "firebolt-native-transport: cloning failed"; exit 1; }
 
   rm -rf build/firebolt-native-transport
 
@@ -255,27 +268,25 @@ function cloneAndInstallThunder() {
   echo " ************ Cloning Thunder & ThunderTools ************ (should be preinstalled in docker image)"
   cd $current_dir
 
+  eval $GIT_REPOS_VERSIONS
+
   rm -rf Thunder
-  if [[ ! -e Thunder ]]; then
-    git clone --depth 1 --branch R5.0.0 https://github.com/rdkcentral/Thunder.git \
-    || { echo "thunder: cloning failed"; exit 1; }
-    (
-      cd Thunder \
-      && git fetch --shallow-since=2024-05-20 \
-      && git reset --hard 283b3d54334010403d85a4e69b3835de23e42331
-    ) || { echo "thunder: checking out failed"; exit 1; }
-  fi
+  git clone --depth 1 --branch R5.0.0 https://github.com/rdkcentral/Thunder.git \
+  || { echo "thunder: cloning failed"; exit 1; }
+  (
+    cd Thunder \
+    && git fetch --shallow-since=2024-05-20 \
+    && git reset --hard ${GIT_REPOS_VERSIONS[thunder]}
+  ) || { echo "thunder: checking out failed"; exit 1; }
 
   rm -rf ThunderTools
-  if [[ ! -e ThunderTools ]]; then
-    git clone --depth 1 --branch R5.0.0 https://github.com/rdkcentral/ThunderTools.git \
-    || { echo "thunder-tools: cloning failed"; exit 1; }
-    (
-      cd ThunderTools \
-      && git fetch --shallow-since=2024-05-20 \
-      && git reset --hard 64b72b5ed491436b0e6bc2327d8a7b0e75ee2870
-    ) || { echo "thunder-tools: checking out failed"; exit 1; }
-  fi
+  git clone --depth 1 --branch R5.0.0 https://github.com/rdkcentral/ThunderTools.git \
+  || { echo "thunder-tools: cloning failed"; exit 1; }
+  (
+    cd ThunderTools \
+    && git fetch --shallow-since=2024-05-20 \
+    && git reset --hard ${GIT_REPOS_VERSIONS[thunder-tools]}
+  ) || { echo "thunder-tools: checking out failed"; exit 1; }
 
   rm -rf build/Thunder build/ThunderTools
 

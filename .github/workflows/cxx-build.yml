@@ -29,6 +29,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Clone and Install Thunder
+        env:
+          GIT_REPOS_VERSIONS: ${{ vars.GIT_REPOS_VERSIONS }}
         run: |
           apt update
           apt install -y cmake ninja-build python3-pip python3.11-venv
@@ -38,10 +40,14 @@ jobs:
           .github/workflows/utils.sh cloneAndInstallThunder
 
       - name: Clone and Install Dependencies
+        env:
+          GIT_REPOS_VERSIONS: ${{ vars.GIT_REPOS_VERSIONS }}
         run: |
           .github/workflows/utils.sh cloneAndInstallDeps
 
       - name: Clone and Install Transport
+        env:
+          GIT_REPOS_VERSIONS: ${{ vars.GIT_REPOS_VERSIONS }}
         run: |
           .github/workflows/utils.sh cloneAndInstallTransport
 
