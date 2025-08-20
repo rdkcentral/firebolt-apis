@@ -41,8 +41,14 @@ function runTests(){
   fi
 
   cd $current_dir
-  echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
-  git clone --branch ${PR_BRANCH} https://github.com/rdkcentral/firebolt-apis.git
+  if [[ ! -e firebolt-apis ]]; then
+    echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
+    git clone --branch $PR_BRANCH https://github.com/rdkcentral/firebolt-apis.git
+  else
+    git reset --hard
+    git clean -dxf
+    git checkout $PR_BRANCH
+  fi
   echo "cd to firebolt-apis repo and compile firebolt-open-rpc.json"
   cd firebolt-apis
   if [ "$EVENT_NAME" == "repository_dispatch" ]; then
@@ -63,7 +69,7 @@ function runTests(){
   git fetch --shallow-since=2025-04-01
   git reset --hard 5d32c6adf908f88c63ada603de41ffdea190eea7
   cd server
-  cp ../../firebolt-apis/dist/firebolt-open-rpc.json ../../mock-firebolt/server/src/firebolt-open-rpc.json
+  cp $current_apis_dir/dist/firebolt-open-rpc.json src/firebolt-open-rpc.json
   jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
   jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
   cp src/.mf.config.SAMPLE.json src/.mf.config.json
