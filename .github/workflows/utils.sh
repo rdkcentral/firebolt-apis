@@ -289,7 +289,7 @@ function cloneAndInstallThunder() {
   cmake -G Ninja -S Thunder -B build/Thunder \
     -DBUILD_SHARED_LIBS=ON \
     -DBINDING="127.0.0.1" \
-    -DCMAKE_BUILD_TYPE="Debug" \
+    -DCMAKE_BUILD_TYPE="Release" \
     -DCMAKE_INSTALL_PREFIX="install/usr" \
     -DCMAKE_MODULE_PATH="$PWD/install/usr/include/WPEFramework/Modules" \
     -DDATA_PATH="$PWD/install/usr/share/WPEFramework" \
