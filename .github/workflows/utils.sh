@@ -4,6 +4,7 @@ set -o pipefail
 current_apis_dir=$PWD
 current_dir=${PWD%/*}
 
+echo "cwd='$PWD'" >/dev/stderr
 echo "current_apis_dir='$current_apis_dir'" >/dev/stderr
 echo "current_dir='$current_dir'" >/dev/stderr
 
