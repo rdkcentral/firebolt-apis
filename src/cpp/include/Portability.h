@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 
+// dummy
+
 #pragma once
 
 #ifdef FIREBOLTSDK_STATIC
