@@ -9,7 +9,6 @@ echo "current_apis_dir='$current_apis_dir'" >/dev/stderr
 echo "current_dir='$current_dir'" >/dev/stderr
 
 if [[ -z $GIT_REPOS_VERSIONS ]]; then
-  echo "git-ver: fallback" >/dev/stderr
   GIT_REPOS_VERSIONS='declare -A GIT_REPOS_VERSIONS=(
     [mock-firebolt]="5d32c6adf908f88c63ada603de41ffdea190eea7"
     [firebolt-certification-app]="30c96d4dfb601897fcb557e5f0a6225402df8964"
@@ -21,12 +20,7 @@ if [[ -z $GIT_REPOS_VERSIONS ]]; then
     [thunder-tools]="64b72b5ed491436b0e6bc2327d8a7b0e75ee2870"
   )'
 fi
-echo "grv='$GIT_REPOS_VERSIONS'" >/dev/stderr
 eval "$GIT_REPOS_VERSIONS"
-echo "grv-k='${!GIT_REPOS_VERSIONS[*]}'" >/dev/stderr
-for i in ${!GIT_REPOS_VERSIONS[*]}; do
-  echo "grv-k[$i]='${GIT_REPOS_VERSIONS[$i]}'"
-done >/dev/stderr
 
 # Function to check if a branch exists in the remote repository
 function branch_exists() {
@@ -224,7 +218,6 @@ function cloneAndInstallDeps() {
   cd $current_dir
   rm -rf nlohmann-json json-schema-validator googletest
 
-  set -xv
   git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[nlohmann]} https://github.com/nlohmann/json nlohmann-json \
   || { echo "deps: nlohmann-json: cloning failed"; exit 1; }
 
@@ -233,7 +226,6 @@ function cloneAndInstallDeps() {
 
   git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[google-test]} https://github.com/google/googletest \
   || { echo "deps: googletest: cloning failed"; exit 1; }
-  set +xv
 
   echo "deps: building"
 
