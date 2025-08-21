@@ -4,7 +4,6 @@ set -o pipefail
 current_apis_dir=$PWD
 current_dir=${PWD%/*}
 
-echo "cwd='$PWD'" >/dev/stderr
 echo "current_apis_dir='$current_apis_dir'" >/dev/stderr
 echo "current_dir='$current_dir'" >/dev/stderr
 
@@ -38,7 +37,6 @@ function runTests(){
   # Convert event name to lowercase
   PR_BRANCH="${EVENT_NAME,,}"
 
-  cd $current_apis_dir
   # Check if OPENRPC_PR_BRANCH is not empty and the event is repository_dispatch
   if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$PR_BRANCH" == "repository_dispatch" ]; then
       # Check if the branch exists in firebolt-apis
@@ -66,9 +64,11 @@ function runTests(){
     echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
     git clone --branch $PR_BRANCH https://github.com/rdkcentral/firebolt-apis.git
   else
+    cd firebolt-apis
     git reset --hard
     git clean -dxf
     git checkout $PR_BRANCH
+    cd $current_dir
   fi
   echo "cd to firebolt-apis repo and compile firebolt-open-rpc.json"
   cd firebolt-apis
