@@ -100,7 +100,7 @@ function runTests(){
   jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
   npm install
   npm start 2>&1 | grep -v "Error:.*Cannot find module.*/plugins/" &
-  sleep 5s
+  sleep 15
 
   cd $current_dir
   echo "curl request with runTest install on initialization"
