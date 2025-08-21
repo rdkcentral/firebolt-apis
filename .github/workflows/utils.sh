@@ -22,8 +22,8 @@ fi
 eval "$GIT_REPOS_VERSIONS"
 echo "Dependencies taken from the following versions" >/dev/stderr
 for i in ${!GIT_REPOS_VERSIONS[*]}; do
-  echo "- $i: ${GIT_REPOS_VERSIONS[$i]}" >/dev/stderr
-done
+  echo "- $i: ${GIT_REPOS_VERSIONS[$i]}"
+done | sort >/dev/stderr
 echo >/dev/stderr
 
 # Function to check if a branch exists in the remote repository
