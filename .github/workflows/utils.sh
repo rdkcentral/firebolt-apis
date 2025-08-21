@@ -100,7 +100,7 @@ function runTests(){
   git reset --hard ${GIT_REPOS_VERSIONS[firebolt-certification-app]}
   jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
   npm install
-  npm start 2> >(grep -v "Error:.*Cannot find module.*/plugins/" >/dev/stderr) &
+  npm start 2>&1 | grep -v "Error:.*Cannot find module.*/plugins/" &
   sleep 5s
 
   cd $current_dir
