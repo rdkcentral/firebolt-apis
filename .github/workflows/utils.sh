@@ -64,11 +64,13 @@ function runTests(){
     echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
     git clone --branch $PR_BRANCH https://github.com/rdkcentral/firebolt-apis.git
   else
+    set -xv
     cd firebolt-apis
     git reset --hard
     git clean -dxf
     git checkout $PR_BRANCH
     cd $current_dir
+    set +xv
   fi
   echo "cd to firebolt-apis repo and compile firebolt-open-rpc.json"
   cd firebolt-apis
