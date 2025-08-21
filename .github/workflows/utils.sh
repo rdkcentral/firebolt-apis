@@ -31,7 +31,7 @@ function branch_exists() {
 function runTests(){
   echo "Determine the branch to checkout"
   # Convert event name to lowercase
-  PR_BRANCH=$(echo "$EVENT_NAME" | tr '[:upper:]' '[:lower:]')
+  PR_BRANCH="${EVENT_NAME,,}"
 
   cd $current_apis_dir
   # Check if OPENRPC_PR_BRANCH is not empty and the event is repository_dispatch

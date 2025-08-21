@@ -80,15 +80,17 @@ jobs:
           npm install
 
       - name: Build Core Native Lib
+        env:
+          THROW_ERROR_ON_UT_FAIL: ${{ vars.THROW_ERROR_ON_UT_FAIL }}
         run: |
           git config --global --add safe.directory /__w/firebolt-apis/firebolt-apis
           .github/workflows/utils.sh buildRuntimeCoreSDK
 
-      - name: Deploy Core Native Sources to Artifactory (disabled)
-        if: 0 == 1
+      - name: Deploy Core Native Sources
+        if: ${{ env.DEPLOY_ARTIFACTS == 'true' }}
         env:
-          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN  }} # <-- Allows semantic-release to publish to npm without 2 factor auth.
+          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN  }}
         run: |
           echo "user=${{ secrets.CPP_ARTIFACT_USER }}"
-          curl -u ${{ secrets.CPP_ARTIFACT_USER }}:${{ secrets.CPP_ARTIFACT_SECRET }} -T firebolt-apis--core-sdk-$RELEASE_VERSION.tgz "https://partners.artifactory.comcast.com/artifactory/fireboltcppsrc/firebolt-native-aamp/" -v
+          curl -v -u ${{ secrets.CPP_ARTIFACT_USER }}:${{ secrets.CPP_ARTIFACT_SECRET }} -T firebolt-apis--core-sdk-$RELEASE_VERSION.tgz "${{ vars.DEPLOY_URL }}"
 
