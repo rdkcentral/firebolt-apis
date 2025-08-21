@@ -85,9 +85,10 @@ function runTests(){
   git reset --hard ${GIT_REPOS_VERSIONS[mock-firebolt]}
   cd server
   cp $current_apis_dir/dist/firebolt-open-rpc.json src/firebolt-open-rpc.json
-  jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
-  jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' src/.mf.config.SAMPLE.json > src/.mf.config.SAMPLE.json.tmp && mv src/.mf.config.SAMPLE.json.tmp src/.mf.config.SAMPLE.json
-  cp src/.mf.config.SAMPLE.json src/.mf.config.json
+  cat src/.mf.config.SAMPLE.json \
+  | jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' \
+  | jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' \
+  > src/.mf.config.json
   npm install
   npm start &
 
@@ -97,7 +98,9 @@ function runTests(){
   cd firebolt-certification-app
   git fetch --shallow-since=2025-01-01
   git reset --hard ${GIT_REPOS_VERSIONS[firebolt-certification-app]}
-  jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' package.json > package.json.tmp && mv package.json.tmp package.json
+  cat package.json \
+  | jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' \
+  > package.json.tmp && mv package.json.tmp package.json
   npm install
   # npm start 2>&1 | grep -v "Error:.*Cannot find module.*/plugins/" &
   npm start &
@@ -110,7 +113,7 @@ function runTests(){
   echo "run mfos tests in a headless browser"
   npm install puppeteer
   echo "Start xvfb"
-  export DISPLAY=:99
+  export DISPLAY=":99"
   Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
 
   echo "Run headless browser script with puppeteer"
