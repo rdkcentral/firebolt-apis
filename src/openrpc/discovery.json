@@ -8,7 +8,7 @@
   "methods": [
     {
       "name": "policy",
-      "summary": "get the discovery policy",
+      "summary": "Get the discovery policy",
       "params": [],
       "tags": [
         {
@@ -581,6 +581,13 @@
             "type": "string",
             "format": "date-time"
           }
+        },
+        {
+          "name": "agePolicy",
+          "description": "The age policy associated with the watch event. The age policy describes the age groups to which content may be directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -592,7 +599,7 @@
       },
       "examples": [
         {
-          "name": "Notifying the platform of watched content",
+          "name": "Notify the platform of watched content",
           "params": [
             {
               "name": "entityId",
@@ -609,6 +616,35 @@
             {
               "name": "watchedOn",
               "value": "2021-04-23T18:25:43.511Z"
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Notify the platform that child-directed content was watched",
+          "params": [
+            {
+              "name": "entityId",
+              "value": "partner.com/entity/123"
+            },
+            {
+              "name": "progress",
+              "value": 0.95
+            },
+            {
+              "name": "completed",
+              "value": true
+            },
+            {
+              "name": "watchedOn",
+              "value": "2021-04-23T18:25:43.511Z"
+            },
+            {
+              "name": "agePolicy",
+              "value": "app:child"
             }
           ],
           "result": {
@@ -1017,6 +1053,28 @@
                 "action": "home",
                 "context": {
                   "source": "voice"
+                }
+              }
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
+        },
+        {
+          "name": "Launch the 'Foo' app to it's home screen where the launch intent came from a child-directed browse menu.",
+          "params": [
+            {
+              "name": "appId",
+              "value": "foo"
+            },
+            {
+              "name": "intent",
+              "value": {
+                "action": "home",
+                "context": {
+                  "source": "browse"
                 }
               }
             }

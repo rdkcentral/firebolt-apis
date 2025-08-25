@@ -178,6 +178,10 @@
                     "properties": {
                         "source": {
                             "type": "string"
+                        },
+                        "agePolicy": {
+                            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy",
+                            "description": "The age policy associated with the intent. The age policy describes the age groups to which content is directed. For example, content launched from a child-directed menu should have the appropriate child policy attached, which may inform an app or service to enable enhanced data protections or features."
                         }
                     }
                 }
@@ -618,7 +622,7 @@
                                 }
                             },
                             "additionalProperties": false
-                        }   
+                        }
                     }
                 }
             ],
@@ -757,7 +761,7 @@
                                         "type": "object",
                                         "maxProperties": 0
                                     }
-                                }                                
+                                }
                             }
                         }
                     }
@@ -1300,7 +1304,7 @@
                     }
                 }
             ]
-        },           
+        },
         "ScrollIntent": {
             "description": "A Firebolt compliant representation of a user intention to interact with their device in a way analogous to pressing remote directional pad buttons.",
             "title": "ScrollIntent",
@@ -1450,7 +1454,7 @@
                                     "value": {
                                         "type": "number",
                                         "minimum": -50,
-                                        "maximum": 50        
+                                        "maximum": 50
                                     }
                                 }
                             },
@@ -1607,7 +1611,7 @@
                     "context": {
                         "source": "voice"
                     }
-                }                
+                }
             ]
         },
         "MicrophoneIntent": {
@@ -1769,7 +1773,7 @@
                     }
                 }
             ]
-        },        
+        },
         "ReplayIntent": {
             "description": "A Firebolt compliant representation of a user intention to replay content.",
             "title": "ReplayIntent",
@@ -1797,7 +1801,7 @@
                     }
                 }
             ]
-        },       
+        },
         "StopIntent": {
             "description": "A Firebolt compliant representation of a user intention to stop content.",
             "title": "StopIntent",
@@ -1825,7 +1829,7 @@
                     }
                 }
             ]
-        },                  
+        },
         "PlaybackSpeedIntent": {
             "description": "A Firebolt compliant representation of a user intention to change the speed of in-progress playback.",
             "title": "PlaybackSpeedIntent",
@@ -1935,7 +1939,7 @@
                     "context": {
                         "source": "voice"
                     }
-                }                
+                }
             ]
         },
         "RewindIntent": {
@@ -1991,9 +1995,9 @@
                     "context": {
                         "source": "voice"
                     }
-                }                
+                }
             ]
-        },        
+        },
         "SeekIntent": {
             "description": "A Firebolt compliant representation of a user intention to seek to a different time for in-progress playback.",
             "title": "SeekIntent",
@@ -2232,14 +2236,14 @@
                                     "required": [ "toggle" ]
                                 },
                                 "if": {
-                                    "required": [ "relative" ]                                    
+                                    "required": [ "relative" ]
                                 },
                                 "then": {
                                     "properties": {
                                         "speed": {
                                             "type": "integer",
                                             "minimum": -10,
-                                            "maximum": 10        
+                                            "maximum": 10
                                         }
                                     }
                                 },
@@ -2248,7 +2252,7 @@
                                         "speed": {
                                             "type": "integer",
                                             "exclusiveMinimum": 0,
-                                            "maximum": 10        
+                                            "maximum": 10
                                         }
                                     }
                                 }
@@ -2288,7 +2292,7 @@
                     "context": {
                         "source": "voice"
                     }
-                },                
+                },
                 {
                     "action": "voice-guidance",
                     "data": {
@@ -2418,7 +2422,7 @@
                     }
                 }
             ]
-        },        
+        },
         "ScreenMagnificationIntent": {
             "description": "A Firebolt compliant representation of a user intention to turn screen magnification on or off.",
             "title": "ScreenMagnificationIntent",
@@ -2483,7 +2487,7 @@
                     "context": {
                         "source": "voice"
                     }
-                },                
+                },
                 {
                     "action": "screen-magnification",
                     "data": {
@@ -2501,7 +2505,7 @@
                     "context": {
                         "source": "voice"
                     }
-                }                
+                }
             ]
         },
         "MessageIntent": {
@@ -2543,7 +2547,7 @@
                 }
             ]
         },
- 
+
         "Identifier": {
             "type": "string"
         },
