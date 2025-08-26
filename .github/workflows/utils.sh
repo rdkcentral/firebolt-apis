@@ -36,7 +36,7 @@ function add_ts() {
   local prefix=$1 start=$((${EPOCHREALTIME/[,.]}/1000)) delta= l=
   cat - | while read -r l; do
     delta=$((${EPOCHREALTIME/[,.]}/1000 - start))
-    printf "%-5s: %d.%03d: %s\n" "$prefix" "$((delta/1000))" "$((delta%1000))" "$l"
+    printf "%-5s: %3d.%03d: %s\n" "$prefix" "$((delta/1000))" "$((delta%1000))" "$l"
   done
 }
 
@@ -146,7 +146,7 @@ function runTests(){
 
       // Enable console logging
       page.on("console", (msg) => {
-        console.log(`${msg.type().substr(0, 3).toUpperCase()}: ${msg.text()}`);
+        console.log(`NODE : ${msg.type().substr(0, 3).toUpperCase()}: ${msg.text()}`);
         if (msg.type().includes("log")) {
           let logMessage = `${msg.text()}`;
           if (logMessage.includes("Response String:")) {
