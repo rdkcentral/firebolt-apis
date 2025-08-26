@@ -76,7 +76,7 @@ function runTests(){
     echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
     git clone --branch $PR_BRANCH https://github.com/rdkcentral/firebolt-apis.git
   fi
-  echo "cd to firebolt-apis repo and compile firebolt-open-rpc.json"
+  echo "Cd to firebolt-apis repo and compile firebolt-open-rpc.json"
   cd firebolt-apis
   if [ "$EVENT_NAME" == "repository_dispatch" ]; then
   # If OPENRPC_PR_BRANCH is set and is not 'next'
@@ -90,7 +90,7 @@ function runTests(){
   npm run dist
 
   cd $current_dir
-  echo "clone mfos repo and start it in the background"
+  echo "Clone mfos repo and start it in the background"
   git clone --depth 1 --branch main https://github.com/rdkcentral/mock-firebolt.git
   cd mock-firebolt
   git fetch --shallow-since=2025-01-01
@@ -105,7 +105,7 @@ function runTests(){
   npm start |& add_ts "MFOS" | tee >(clean_ansi >log-mfos.log) &
 
   cd $current_dir
-  echo "clone fca repo and start it in the background"
+  echo "Clone fca repo and start it in the background"
   git clone --depth 1 --branch main https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
   git fetch --shallow-since=2025-01-01
@@ -119,10 +119,9 @@ function runTests(){
   sleep 15
 
   cd $current_dir
-  echo "curl request with runTest install on initialization"
-  echo "$(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)"
+  echo "Curl request with runTest install on initialization: $(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)"
 
-  echo "run mfos tests in a headless browser"
+  echo "Run mfos tests in a headless browser"
   npm install puppeteer
   echo "Start xvfb"
   export DISPLAY=":99"
@@ -175,8 +174,8 @@ function runTests(){
       await browser.close();
     })();
   '
-  [[ -e report.json ]] || { echo "report not created"; exit 1; }
-  echo "create html and json assets"
+  [[ -e report.json ]] || { echo "Report not created"; exit 1; }
+  echo "Create html and json assets"
   npm i mochawesome-report-generator
   mkdir report
   mv report.json report/
