@@ -103,6 +103,7 @@ function runTests(){
   > src/.mf.config.json
   npm install
   npm start |& add_ts "MFOS" | tee >(clean_ansi >log-mfos.log) &
+  pid_mfos=$!
 
   cd $current_dir
   echo "clone fca repo and start it in the background"
@@ -116,6 +117,7 @@ function runTests(){
   npm install
   # npm start 2>&1 | grep -v "Error:.*Cannot find module.*/plugins/" &
   npm start |& add_ts "FCA" | tee >(clean_ansi >log-fca.log) &
+  pid_fca=$!
   sleep 15
 
   cd $current_dir
@@ -127,6 +129,7 @@ function runTests(){
   echo "Start xvfb"
   export DISPLAY=":99"
   Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
+  pid_xvfb=$!
 
   echo "Run headless browser script with puppeteer"
   node -e '
@@ -175,6 +178,8 @@ function runTests(){
       await browser.close();
     })();
   '
+  kill $pid_xvfb $pid_fca $pid_mfos
+  wait $pid_xvfb $pid_fca $pid_mfos
   if [[ ! -e report.json ]]; then
     echo "report not created"
     exit 1
@@ -186,14 +191,14 @@ function runTests(){
   jq -r '.' report/report.json > tmp.json && mv tmp.json report/report.json
   jq '.report' report/report.json > tmp.json && mv tmp.json report/report.json
   node -e '
-  const marge = require("mochawesome-report-generator/bin/cli-main");
-  marge({
-    _: ["report/report.json"],
-    reportFileName: "report.json",
-    reportTitle: "FireboltCertificationTestReport",
-    reportPageTitle: "FireboltCertificationTestReport",
-    reportDir: "./report",
-  });
+    const marge = require("mochawesome-report-generator/bin/cli-main");
+    marge({
+      _: ["report/report.json"],
+      reportFileName: "report.json",
+      reportTitle: "FireboltCertificationTestReport",
+      reportPageTitle: "FireboltCertificationTestReport",
+      reportDir: "./report",
+    });
   '
 }
 
