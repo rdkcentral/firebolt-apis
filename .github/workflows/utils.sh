@@ -111,6 +111,11 @@ function runTests(){
   cd firebolt-certification-app
   git fetch --shallow-since=2025-01-01
   git reset --hard ${GIT_REPOS_VERSIONS[firebolt-certification-app]}
+  echo "repo info ---"
+  git log -1
+  git log -1 --pretty=%H
+  git status
+  echo "---"
   cat package.json \
   | jq '.dependencies["@firebolt-js/sdk"] = "file:'"$current_apis_dir"'/src/sdks/core"' \
   > package.json.tmp && mv package.json.tmp package.json
@@ -178,6 +183,7 @@ function runTests(){
       await browser.close();
     })();
   '
+  echo "killing in the name, $pid_xvfb, $pid_fca, $pid_mfos"
   kill $pid_xvfb $pid_fca $pid_mfos
   wait $pid_xvfb $pid_fca $pid_mfos
   if [[ ! -e report.json ]]; then
