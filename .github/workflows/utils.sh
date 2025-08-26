@@ -32,6 +32,18 @@ function branch_exists() {
     git ls-remote --heads https://github.com/rdkcentral/firebolt-apis.git "$branch" | grep -q "$branch"
 }
 
+function add_ts() {
+  local s=$((${EPOCHREALTIME/[,.]}/1000)) d= l=
+  cat - | while read -r l; do
+    d=$((${EPOCHREALTIME/[,.]}/1000-s))
+    printf "%d.%03d: %s\n" "$((d/1000))" "$((d%1000))" "$l"
+  done
+}
+
+function clean_ansi() {
+  sed -u -e 's/\x1b\[[0-9;]\+[mMGK]//g' -e 's/\x1b\[[Jm]//g'
+}
+
 function runTests(){
   echo "Determine the branch to checkout"
   # Convert event name to lowercase
@@ -90,25 +102,25 @@ function runTests(){
   | jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' \
   > src/.mf.config.json
   npm install
-  npm start &
+  npm start |& add_ts | tee >(clean_ansi >log-mfos.log) &
 
   cd $current_dir
-  echo "$(date +%s): clone fca repo and start it in the background"
+  echo "clone fca repo and start it in the background"
   git clone --depth 1 --branch main https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
   git fetch --shallow-since=2025-01-01
   git reset --hard ${GIT_REPOS_VERSIONS[firebolt-certification-app]}
   cat package.json \
-  | jq '.dependencies["@firebolt-js/sdk"] = "file:../firebolt-apis/src/sdks/core"' \
+  | jq '.dependencies["@firebolt-js/sdk"] = "file:'"$current_apis_dir"'/src/sdks/core"' \
   > package.json.tmp && mv package.json.tmp package.json
   npm install
   # npm start 2>&1 | grep -v "Error:.*Cannot find module.*/plugins/" &
-  npm start &
+  npm start |& add_ts | tee >(clean_ansi >log-fca.log) &
   sleep 15
 
   cd $current_dir
-  echo "$(date +%s): curl request with runTest install on initialization"
-  response=$(curl -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
+  echo "curl request with runTest install on initialization"
+  echo "$(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)"
 
   echo "run mfos tests in a headless browser"
   npm install puppeteer
@@ -151,16 +163,24 @@ function runTests(){
       }
     });
       // Navigate to the URL
-      await page.goto("http://localhost:8081/?mf=ws://localhost:9998/12345&standalone=true");
+      const url = "http://localhost:8081/?mf=ws://localhost:9998/12345&standalone=true";
+      const timeout = 120;
+      console.log(`Navigating to ${url} and waiting ${timeout}s to finish`);
+      await page.goto(url);
 
-     // Sleep for 80 seconds (80,000 milliseconds)
-     await new Promise(resolve => setTimeout(resolve, 80000));
+      // Sleep for "timeout" seconds
+      await new Promise(resolve => setTimeout(resolve, timeout * 1000));
 
       // Close the browser
+      console.log("Closing the browser");
       await browser.close();
     })();
   '
-  echo "$(date +%s): create html and json assets"
+  if [[ ! -e report.json ]]; then
+    echo "report not created"
+    exit 1
+  fi
+  echo "create html and json assets"
   npm i mochawesome-report-generator
   mkdir report
   mv report.json report/
