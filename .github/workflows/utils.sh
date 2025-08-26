@@ -33,10 +33,10 @@ function branch_exists() {
 }
 
 function add_ts() {
-  local s=$((${EPOCHREALTIME/[,.]}/1000)) d= l=
+  local prefix=$1 start=$((${EPOCHREALTIME/[,.]}/1000)) delta= l=
   cat - | while read -r l; do
-    d=$((${EPOCHREALTIME/[,.]}/1000-s))
-    printf "%d.%03d: %s\n" "$((d/1000))" "$((d%1000))" "$l"
+    delta=$((${EPOCHREALTIME/[,.]}/1000 - start))
+    printf "%-5s: %d.%03d: %s\n" "$prefix" "$((delta/1000))" "$((delta%1000))" "$l"
   done
 }
 
@@ -102,7 +102,7 @@ function runTests(){
   | jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' \
   > src/.mf.config.json
   npm install
-  npm start |& add_ts | tee >(clean_ansi >log-mfos.log) &
+  npm start |& add_ts "MFOS" | tee >(clean_ansi >log-mfos.log) &
 
   cd $current_dir
   echo "clone fca repo and start it in the background"
@@ -115,7 +115,7 @@ function runTests(){
   > package.json.tmp && mv package.json.tmp package.json
   npm install
   # npm start 2>&1 | grep -v "Error:.*Cannot find module.*/plugins/" &
-  npm start |& add_ts | tee >(clean_ansi >log-fca.log) &
+  npm start |& add_ts "FCA" | tee >(clean_ansi >log-fca.log) &
   sleep 15
 
   cd $current_dir
@@ -134,34 +134,33 @@ function runTests(){
     const fs = require("fs");
     (async () => {
       const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-gpu"] });
-      const page = await browser.newPage(); 
+      const page = await browser.newPage();
 
       // Enable console logging
       page.on("console", (msg) => {
-      let logMessage="";
-      if (msg.type().includes("log")) {
-       logMessage = `${msg.text()}`;
-       console.log(logMessage);
-      }
-     if (logMessage.includes("Response String:")) {
-        const jsonStringMatch = logMessage.match(/Response String:(.*)/);
-        if (jsonStringMatch && jsonStringMatch[1]) {
-          try {
-            const jsonString = jsonStringMatch[1].trim();
-            const responseString = JSON.parse(jsonString);
-            console.log("Parsed JSON:", responseString);
-            const filePath="report.json"
-            fs.writeFileSync(filePath, JSON.stringify(responseString), "utf-8");
-            console.log(`Parsed JSON written to ${filePath}`);
-            // Exit the Node.js script
-            process.exit(0);
-
-          } catch (error) {
-            console.error("Error parsing JSON:", error);
+        console.log(`${msg.type().substr(0, 3).toUpperCase()}: ${msg.text()}`);
+        if (msg.type().includes("log")) {
+          let logMessage = `${msg.text()}`;
+          if (logMessage.includes("Response String:")) {
+            const jsonStringMatch = logMessage.match(/Response String:(.*)/);
+            if (jsonStringMatch && jsonStringMatch[1]) {
+              try {
+                const jsonString = jsonStringMatch[1].trim();
+                const responseString = JSON.parse(jsonString);
+                console.log("Parsed JSON:", responseString);
+                const filePath="report.json"
+                fs.writeFileSync(filePath, JSON.stringify(responseString), "utf-8");
+                console.log(`Parsed JSON written to ${filePath}`);
+                // Exit the Node.js script
+                console.log("Exiting");
+                process.exit(0);
+              } catch (error) {
+                console.error("Error parsing JSON:", error);
+              }
+            }
           }
         }
-      }
-    });
+      });
       // Navigate to the URL
       const url = "http://localhost:8081/?mf=ws://localhost:9998/12345&standalone=true";
       const timeout = 120;
@@ -172,7 +171,7 @@ function runTests(){
       await new Promise(resolve => setTimeout(resolve, timeout * 1000));
 
       // Close the browser
-      console.log("Closing the browser");
+      console.log("Closing the browser after timeout");
       await browser.close();
     })();
   '
