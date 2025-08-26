@@ -184,7 +184,7 @@ function runTests(){
     })();
   '
   echo "killing in the name, $pid_xvfb, $pid_fca, $pid_mfos"
-  kill $pid_xvfb $pid_fca $pid_mfos
+  kill -9 $pid_xvfb $pid_fca $pid_mfos
   wait $pid_xvfb $pid_fca $pid_mfos
   if [[ ! -e report.json ]]; then
     echo "report not created"
