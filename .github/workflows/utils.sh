@@ -165,7 +165,7 @@ function runTests(){
       .on("response", response => console.log(`NORE : ${response.status()} ${response.url()}`))
       .on("requestfailed", request => console.log(`NORF : ${request.failure().errorText} ${request.url()}`));
       // Navigate to the URL
-      const url = "http://'"$host"':8081/?mf=ws://localhost:9998/12345&standalone=true";
+      const url = "http://localhost:8081/?mf=ws://localhost:9998/12345&standalone=true";
       const timeout = 120;
       console.log(`Navigating to ${url} and waiting ${timeout}s to finish`);
       await page.goto(url);
