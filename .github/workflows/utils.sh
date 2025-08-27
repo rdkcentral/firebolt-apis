@@ -181,6 +181,7 @@ function runTests(){
   npm i mochawesome-report-generator
   mkdir report
   mv report.json report/
+  echo "rt: pwd:$PWD, reports/: $(ls report/)"
   jq -r '.' report/report.json > tmp.json && mv tmp.json report/report.json
   jq '.report' report/report.json > tmp.json && mv tmp.json report/report.json
   node -e '
@@ -196,10 +197,11 @@ function runTests(){
 }
 
 function getResults(){
-  failures=$(cat report/report.json | jq -r '.stats.failures')
-  echo "If failures more than 0, fail the job"
-  echo "Failures=$failures"
-  if [ "$failures" -eq 0 ]; then
+  echo "gr: pwd:$PWD, reports/: $(ls report/)"
+  local failures=999
+  [[ -e report/report.json ]] && failures=$(cat report/report.json | jq -r '.stats.failures')
+  echo "If failures more than 0, fail the job, failures=$failures"
+  if [[ "$failures" -eq 0 ]]; then
     echo "No failures detected."
   else
     exit 1
