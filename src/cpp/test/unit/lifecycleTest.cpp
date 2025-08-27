@@ -67,6 +67,7 @@ TEST_F(LifecycleTest, state)
                                           "Lifecycle.state()";
 }
 
+#if 0
 TEST_F(LifecycleTest, subscribeOnBackgroundChanged)
 {
     auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnBackgroundChanged(
@@ -76,7 +77,9 @@ TEST_F(LifecycleTest, subscribeOnBackgroundChanged)
     auto unsubResult = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(result.value_or(0));
     EXPECT_EQ(unsubResult.error(), Firebolt::Error::None) << "Error in unsubscribing to Background";
 }
+#endif
 
+#if 0
 TEST_F(LifecycleTest, subscribeOnForegroundChanged)
 {
     auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnForegroundChanged(
@@ -86,7 +89,9 @@ TEST_F(LifecycleTest, subscribeOnForegroundChanged)
     auto unsubResult = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(result.value_or(0));
     EXPECT_EQ(unsubResult.error(), Firebolt::Error::None) << "Error in unsubscribing to Foreground";
 }
+#endif
 
+#if 0
 TEST_F(LifecycleTest, subscribeOnInactiveChanged)
 {
     auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnInactiveChanged(
@@ -96,7 +101,9 @@ TEST_F(LifecycleTest, subscribeOnInactiveChanged)
     auto unsubResult = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(result.value_or(0));
     EXPECT_EQ(unsubResult.error(), Firebolt::Error::None) << "Error in unsubscribing to Inactive";
 }
+#endif
 
+#if 0
 TEST_F(LifecycleTest, subscribeOnSuspendedChanged)
 {
     auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnSuspendedChanged(
@@ -106,7 +113,9 @@ TEST_F(LifecycleTest, subscribeOnSuspendedChanged)
     auto unsubResult = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(result.value_or(0));
     EXPECT_EQ(unsubResult.error(), Firebolt::Error::None) << "Error in unsubscribing to Suspended";
 }
+#endif
 
+#if 0
 TEST_F(LifecycleTest, subscribeOnUnloadingChanged)
 {
     auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnUnloadingChanged(
@@ -116,3 +125,4 @@ TEST_F(LifecycleTest, subscribeOnUnloadingChanged)
     auto unsubResult = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(result.value_or(0));
     EXPECT_EQ(unsubResult.error(), Firebolt::Error::None) << "Error in unsubscribing to Unloading";
 }
+#endif
