@@ -136,32 +136,36 @@ function runTests(){
       const page = await browser.newPage();
 
       // Enable console logging
-      page.on("console", (msg) => {
-        console.log(`NODE : ${msg.type().substr(0, 3).toUpperCase()}: ${msg.text()}`);
-        if (msg.type().includes("log")) {
-          let logMessage = `${msg.text()}`;
-          if (logMessage.includes("Response String:")) {
-            const jsonStringMatch = logMessage.match(/Response String:(.*)/);
-            if (jsonStringMatch && jsonStringMatch[1]) {
-              try {
-                const jsonString = jsonStringMatch[1].trim();
-                const responseString = JSON.parse(jsonString);
-                console.log("Parsed JSON:", responseString);
-                const filePath="report.json"
-                fs.writeFileSync(filePath, JSON.stringify(responseString), "utf-8");
-                console.log(`Parsed JSON written to ${filePath}`);
-                // Exit the Node.js script
-                console.log("Exiting");
-                process.exit(0);
-              } catch (error) {
-                console.error("Error parsing JSON:", error);
+      page
+        .on("console", (msg) => {
+          console.log(`NODE : ${msg.type().substr(0, 3).toUpperCase()}: ${msg.text()}`);
+          if (msg.type().includes("log")) {
+            const logMessage = `${msg.text()}`;
+            if (logMessage.includes("Response String:")) {
+              const jsonStringMatch = logMessage.match(/Response String:(.*)/);
+              if (jsonStringMatch && jsonStringMatch[1]) {
+                try {
+                  const jsonString = jsonStringMatch[1].trim();
+                  const responseString = JSON.parse(jsonString);
+                  console.log("Parsed JSON:", responseString);
+                  const filePath="report.json"
+                  fs.writeFileSync(filePath, JSON.stringify(responseString), "utf-8");
+                  console.log(`Parsed JSON written to ${filePath}`);
+                  // Exit the Node.js script
+                  console.log("Exiting");
+                  process.exit(0);
+                } catch (error) {
+                  console.error("Error parsing JSON:", error);
+                }
               }
             }
           }
-        }
-      });
+        })
+      .on("pageerror", ({ message }) => console.log(`NOPE : ${message}`))
+      .on("response", response => console.log(`NORE : ${response.status()} ${response.url()}`))
+      .on("requestfailed", request => console.log(`NORF : ${request.failure().errorText} ${request.url()}`));
       // Navigate to the URL
-      const url = "http://localhost:8081/?mf=ws://localhost:9998/12345&standalone=true";
+      const url = "http://'"$host"':8081/?mf=ws://localhost:9998/12345&standalone=true";
       const timeout = 120;
       console.log(`Navigating to ${url} and waiting ${timeout}s to finish`);
       await page.goto(url);
