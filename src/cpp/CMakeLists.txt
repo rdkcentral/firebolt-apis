@@ -26,6 +26,7 @@ set(FIREBOLT_TRANSPORT_WAITTIME 1000 CACHE STRING "Maximum time to wait for Tran
 set(FIREBOLT_LOGLEVEL "Info" CACHE STRING  "Log level to be enabled")
 option(FIREBOLT_ENABLE_STATIC_LIB "Create Firebolt library as Static library" OFF)
 option(ENABLE_TESTS "Build openrpc native test" OFF)
+option(ENABLE_UNIT_TESTS "Build openrpc native test" OFF)
 option(ENABLE_DEMO_APP "Build demo app" OFF)
 
 if (FIREBOLT_ENABLE_STATIC_LIB)
@@ -40,11 +41,21 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_PREFIX_PATH ${SYSROOT_PATH}/usr/lib/cmake CACHE INTERNAL "" FORCE)
 endif()
 
+list(APPEND CMAKE_PREFIX_PATH
+        "${SYSROOT_PATH}/usr/share/cmake")
+
 list(APPEND CMAKE_MODULE_PATH
+        "${SYSROOT_PATH}/usr/share/cmake"
         "${SYSROOT_PATH}/usr/lib/cmake"
         "${SYSROOT_PATH}/tools/cmake")
 
+
 set(FIREBOLT_NAMESPACE ${PROJECT_NAME} CACHE STRING "Namespace of the project")
+if (ENABLE_UNIT_TESTS)
+    set(ENABLE_TESTS ON)
+    add_compile_definitions(UNIT_TEST)
+    add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-core-open-rpc.json")
+endif ()
 
 add_subdirectory(src)
 

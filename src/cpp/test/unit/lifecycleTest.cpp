@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+#define MODULE_NAME LifecycleTest
 #include "unit.h"
 #include <thread>
 
