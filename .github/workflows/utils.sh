@@ -181,29 +181,30 @@ function runTests(){
   [[ -e report.json ]] || { echo "Report not created"; exit 1; }
   echo "Create html and json assets"
   npm install mochawesome-report-generator@6.2.0
-  mkdir $current_dir/report
+  local report_dir="$current_apis_dir/report"
+  mkdir $report_dir
   cat report.json \
   | jq -r '.' \
   | jq '.report' \
-  > $current_dir/report/report.json
+  > $report_dir/report.json
   node -e '
     const marge = require("mochawesome-report-generator/bin/cli-main");
     marge({
-      _: ["'"$current_dir"'/report/report.json"],
+      _: ["'"$report_dir"'/report.json"],
       reportFileName: "report.json",
       reportTitle: "FireboltCertificationTestReport",
       reportPageTitle: "FireboltCertificationTestReport",
-      reportDir: "'"$current_dir"'/report",
+      reportDir: "'"$report_dir"'",
     });
   '
   echo "Storing MFOS & FCA logs together with the report"
-  cp $current_dir/log-mfos.log $current_dir/log-fca.log $current_dir/report/
-  gzip $current_dir/report/log-mfos.log $current_dir/report/log-fca.log
+  cp $current_dir/log-mfos.log $current_dir/log-fca.log $report_dir
+  gzip $report_dir/log-mfos.log $report_dir/log-fca.log
 }
 
 function getResults(){
   local failures=999
-  [[ -e $current_dir/report/report.json ]] && failures=$(jq -r '.stats.failures' $current_dir/report/report.json)
+  [[ -e $current_apis_dir/report/report.json ]] && failures=$(jq -r '.stats.failures' $current_apis_dir/report/report.json)
   echo "If failures more than 0, fail the job, failures=$failures"
   if [[ "$failures" -eq 0 ]]; then
     echo "No failures detected."
