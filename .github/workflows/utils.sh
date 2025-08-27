@@ -189,11 +189,11 @@ function runTests(){
   node -e '
     const marge = require("mochawesome-report-generator/bin/cli-main");
     marge({
-      _: ["$current_dir/report/report.json"],
+      _: ["'"$current_dir"'/report/report.json"],
       reportFileName: "report.json",
       reportTitle: "FireboltCertificationTestReport",
       reportPageTitle: "FireboltCertificationTestReport",
-      reportDir: "$current_dir/report",
+      reportDir: "'"$current_dir"'/report",
     });
   '
   echo "Storing MFOS & FCA logs together with the report"
