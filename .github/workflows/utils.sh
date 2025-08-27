@@ -7,22 +7,24 @@ current_dir=${PWD%/*}
 echo "current_apis_dir='$current_apis_dir'" >/dev/stderr
 echo "current_dir='$current_dir'" >/dev/stderr
 
-if [[ -z $GIT_REPOS_VERSIONS ]]; then
-  GIT_REPOS_VERSIONS='declare -A GIT_REPOS_VERSIONS=(
+if [[ -z $TOOL_VERSION ]]; then
+  TOOL_VERSION='declare -A TOOL_VERSION=(
     [mock-firebolt]="5d32c6adf908f88c63ada603de41ffdea190eea7"
-    [firebolt-certification-app]="30c96d4dfb601897fcb557e5f0a6225402df8964"
+    [firebolt-certification-app]="ee2cfd1787b5f6f6ff2e716eeb4fa376c7f6643b"
     [nlohmann]="v3.11.3"
     [json-schema-validator]="2.3.0"
     [google-test]="v1.15.2"
     [firebolt-native-transport]="main"
     [thunder]="283b3d54334010403d85a4e69b3835de23e42331"
     [thunder-tools]="64b72b5ed491436b0e6bc2327d8a7b0e75ee2870"
+    [puppeteer]="24.17.0"
+    [mochawesome-report-generator]="6.2.0"
   )'
 fi
-eval "$GIT_REPOS_VERSIONS"
+eval "$TOOL_VERSION"
 echo "Dependencies taken from the following versions" >/dev/stderr
-for i in ${!GIT_REPOS_VERSIONS[*]}; do
-  echo "- $i: ${GIT_REPOS_VERSIONS[$i]}"
+for i in ${!TOOL_VERSION[*]}; do
+  echo "- $i: ${TOOL_VERSION[$i]}"
 done | sort >/dev/stderr
 echo >/dev/stderr
 
@@ -94,7 +96,7 @@ function runTests(){
   git clone --depth 1 --branch main https://github.com/rdkcentral/mock-firebolt.git
   cd mock-firebolt
   git fetch --shallow-since=2025-01-01
-  git reset --hard ${GIT_REPOS_VERSIONS[mock-firebolt]}
+  git reset --hard ${TOOL_VERSION[mock-firebolt]}
   cd server
   cp $current_apis_dir/dist/firebolt-open-rpc.json src/firebolt-open-rpc.json
   cat src/.mf.config.SAMPLE.json \
@@ -109,7 +111,7 @@ function runTests(){
   git clone --depth 1 --branch main https://github.com/rdkcentral/firebolt-certification-app.git
   cd firebolt-certification-app
   git fetch --shallow-since=2025-01-01
-  git reset --hard ${GIT_REPOS_VERSIONS[firebolt-certification-app]}
+  git reset --hard ${TOOL_VERSION[firebolt-certification-app]}
   cat package.json \
   | jq '.dependencies["@firebolt-js/sdk"] = "file:'"$current_apis_dir"'/src/sdks/core"' \
   > package.json.tmp && mv package.json.tmp package.json
@@ -122,7 +124,7 @@ function runTests(){
   echo "Curl request with runTest install on initialization: $(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)"
 
   echo "Run mfos tests in a headless browser"
-  npm install puppeteer
+  npm install puppeteer@24.17.0
   echo "Start xvfb"
   export DISPLAY=":99"
   Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
@@ -178,7 +180,7 @@ function runTests(){
   '
   [[ -e report.json ]] || { echo "Report not created"; exit 1; }
   echo "Create html and json assets"
-  npm i mochawesome-report-generator
+  npm install mochawesome-report-generator@6.2.0
   mkdir report
   mv report.json report/
   echo "rt: pwd:$PWD, reports/: $(ls report/)"
@@ -237,13 +239,13 @@ function cloneAndInstallDeps() {
   cd $current_dir
   rm -rf nlohmann-json json-schema-validator googletest
 
-  git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[nlohmann]} https://github.com/nlohmann/json nlohmann-json \
+  git clone --depth 1 --branch ${TOOL_VERSION[nlohmann]} https://github.com/nlohmann/json nlohmann-json \
   || { echo "deps: nlohmann-json: cloning failed"; exit 1; }
 
-  git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[json-schema-validator]} https://github.com/pboettch/json-schema-validator.git \
+  git clone --depth 1 --branch ${TOOL_VERSION[json-schema-validator]} https://github.com/pboettch/json-schema-validator.git \
   || { echo "deps: json-schema-validator: cloning failed"; exit 1; }
 
-  git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[google-test]} https://github.com/google/googletest \
+  git clone --depth 1 --branch ${TOOL_VERSION[google-test]} https://github.com/google/googletest \
   || { echo "deps: googletest: cloning failed"; exit 1; }
 
   echo "deps: building"
@@ -266,7 +268,7 @@ function cloneAndInstallTransport() {
   cd $current_dir
 
   rm -rf firebolt-native-transport
-  git clone --depth 1 --branch ${GIT_REPOS_VERSIONS[firebolt-native-transport]} https://github.com/rdkcentral/firebolt-native-transport.git \
+  git clone --depth 1 --branch ${TOOL_VERSION[firebolt-native-transport]} https://github.com/rdkcentral/firebolt-native-transport.git \
   || { echo "firebolt-native-transport: cloning failed"; exit 1; }
 
   rm -rf build/firebolt-native-transport
@@ -293,7 +295,7 @@ function cloneAndInstallThunder() {
   (
     cd Thunder \
     && git fetch --shallow-since=2024-05-20 \
-    && git reset --hard ${GIT_REPOS_VERSIONS[thunder]}
+    && git reset --hard ${TOOL_VERSION[thunder]}
   ) || { echo "thunder: checking out failed"; exit 1; }
 
   rm -rf ThunderTools
@@ -302,7 +304,7 @@ function cloneAndInstallThunder() {
   (
     cd ThunderTools \
     && git fetch --shallow-since=2024-05-20 \
-    && git reset --hard ${GIT_REPOS_VERSIONS[thunder-tools]}
+    && git reset --hard ${TOOL_VERSION[thunder-tools]}
   ) || { echo "thunder-tools: checking out failed"; exit 1; }
 
   rm -rf build/Thunder build/ThunderTools
