@@ -378,12 +378,12 @@ function buildRuntimeCoreSDK() {
   cmake --build build/firebolt-apis \
   || { echo "core-sdk: building failed"; exit 1; }
 
-  THROW_ERROR_ON_UT_FAIL=${THROW_ERROR_ON_UT_FAIL:-false}
+  UT_NATIVE_IGNORE_FAIL=${UT_NATIVE_IGNORE_FAIL:-false}
   cp firebolt-apis/src/cpp/firebolt-core-open-rpc.json ./
   ln -s firebolt-core-open-rpc.json firebolt-open-rpc.json
   if ! ./build/firebolt-apis/test/FireboltCoreUnitTests; then
     echo "core-sdk: UT verification failed"
-    if $THROW_ERROR_ON_UT_FAIL; then
+    if ! $UT_NATIVE_IGNORE_FAIL; then
       exit 1
     else
       echo "core-sdk: error not signaled"

@@ -83,7 +83,7 @@ jobs:
 
       - name: Build Core Native Lib
         env:
-          THROW_ERROR_ON_UT_FAIL: ${{ vars.THROW_ERROR_ON_UT_FAIL }}
+          UT_NATIVE_IGNORE_FAIL: ${{ vars.UT_NATIVE_IGNORE_FAIL }}
         run: |
           git config --global --add safe.directory /__w/firebolt-apis/firebolt-apis
           .github/workflows/utils.sh buildRuntimeCoreSDK
