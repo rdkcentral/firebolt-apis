@@ -104,7 +104,7 @@ function runTests(){
   | jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' \
   > src/.mf.config.json
   npm install
-  npm start |& add_ts "MFOS" | tee >(clean_ansi >log-mfos.log) &
+  npm start |& add_ts "MFOS" | tee >(clean_ansi >$current_dir/log-mfos.log) &
 
   cd $current_dir
   echo "Clone fca repo and start it in the background"
@@ -117,7 +117,7 @@ function runTests(){
   > package.json.tmp && mv package.json.tmp package.json
   npm install
   # npm start 2>&1 | grep -v "Error:.*Cannot find module.*/plugins/" &
-  npm start |& add_ts "FCA" | tee >(clean_ansi >log-fca.log) &
+  npm start |& add_ts "FCA" | tee >(clean_ansi >$current_dir/log-fca.log) &
   sleep 15
 
   cd $current_dir
@@ -196,6 +196,9 @@ function runTests(){
       reportDir: "$current_dir/report",
     });
   '
+  echo "Storing MFOS & FCA logs together with the report"
+  cp $current_dir/log-mfos.log $current_dir/log-fca.log $current_dir/report/
+  gzip $current_dir/report/log-mfos.log $current_dir/report/log-fca.log
 }
 
 function getResults(){
