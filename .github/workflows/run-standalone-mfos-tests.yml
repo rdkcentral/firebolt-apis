@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: report
-          path: ${{ github.workspace }}/report
+          path: ${{ github.workspace }}/../report
 
       - name: Get results from report.json
         run: |
