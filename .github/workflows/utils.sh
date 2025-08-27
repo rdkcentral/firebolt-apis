@@ -132,31 +132,29 @@ function runTests(){
     const puppeteer = require("puppeteer");
     const fs = require("fs");
     (async () => {
-      const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-gpu"] });
+      const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"]});
       const page = await browser.newPage();
 
       // Enable console logging
       page
         .on("console", (msg) => {
-          console.log(`NODE : ${msg.type().substr(0, 3).toUpperCase()}: ${msg.text()}`);
-          if (msg.type().includes("log")) {
-            const logMessage = `${msg.text()}`;
-            if (logMessage.includes("Response String:")) {
-              const jsonStringMatch = logMessage.match(/Response String:(.*)/);
-              if (jsonStringMatch && jsonStringMatch[1]) {
-                try {
-                  const jsonString = jsonStringMatch[1].trim();
-                  const responseString = JSON.parse(jsonString);
-                  console.log("Parsed JSON:", responseString);
-                  const filePath="report.json"
-                  fs.writeFileSync(filePath, JSON.stringify(responseString), "utf-8");
-                  console.log(`Parsed JSON written to ${filePath}`);
-                  // Exit the Node.js script
-                  console.log("Exiting");
-                  process.exit(0);
-                } catch (error) {
-                  console.error("Error parsing JSON:", error);
-                }
+          const logMessage = `${msg.text()}`;
+          console.log(`NODE : ${msg.type().substr(0, 3).toUpperCase()}: ${logMessage}`);
+          if (msg.type().includes("log") && logMessage.includes("Response String:")) {
+            const jsonStringMatch = logMessage.match(/Response String:(.*)/);
+            if (jsonStringMatch && jsonStringMatch[1]) {
+              try {
+                const jsonString = jsonStringMatch[1].trim();
+                const responseString = JSON.parse(jsonString);
+                console.log("Parsed JSON:", responseString);
+                const filePath="report.json"
+                fs.writeFileSync(filePath, JSON.stringify(responseString), "utf-8");
+                console.log(`Parsed JSON written to ${filePath}`);
+                // Exit the Node.js script
+                console.log("Exiting");
+                process.exit(0);
+              } catch (error) {
+                console.error("Error parsing JSON:", error);
               }
             }
           }
@@ -165,7 +163,7 @@ function runTests(){
       .on("response", response => console.log(`NORE : ${response.status()} ${response.url()}`))
       .on("requestfailed", request => console.log(`NORF : ${request.failure().errorText} ${request.url()}`));
       // Navigate to the URL
-      const url = "http://localhost:8081/?mf=ws://localhost:9998/12345&standalone=true";
+      const url = "http://localhost:8081/index.html?mf=ws://localhost:9998/12345&standalone=true";
       const timeout = 120;
       console.log(`Navigating to ${url} and waiting ${timeout}s to finish`);
       await page.goto(url);
