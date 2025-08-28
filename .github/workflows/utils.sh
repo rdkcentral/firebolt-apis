@@ -4,9 +4,6 @@ set -o pipefail
 current_apis_dir=$PWD
 current_dir=${PWD%/*}
 
-echo "current_apis_dir='$current_apis_dir'" >/dev/stderr
-echo "current_dir='$current_dir'" >/dev/stderr
-
 if [[ -z $TOOL_VERSION ]]; then
   TOOL_VERSION='declare -A TOOL_VERSION=(
     [mock-firebolt]="5d32c6adf908f88c63ada603de41ffdea190eea7"
