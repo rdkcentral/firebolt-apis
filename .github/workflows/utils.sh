@@ -376,7 +376,7 @@ function buildRuntimeCoreSDK() {
   || { echo "core-sdk: building failed"; exit 1; }
 
   UT_NATIVE_IGNORE_FAIL=${UT_NATIVE_IGNORE_FAIL:-false}
-  cp firebolt-apis/src/cpp/firebolt-core-open-rpc.json ./
+  cp verif/firebolt-apis/src/cpp/firebolt-core-open-rpc.json ./
   ln -s firebolt-core-open-rpc.json firebolt-open-rpc.json
   if ! ./build/firebolt-apis/test/FireboltCoreUnitTests; then
     echo "core-sdk: UT verification failed"
