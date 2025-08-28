@@ -386,6 +386,8 @@ function buildRuntimeCoreSDK() {
       echo "core-sdk: error not signaled"
     fi
   fi
+  mkdir $current_apis_dir/release
+  cp $current_apis_dir/$tarSDK $current_apis_dir/release/
 }
 
 # Check argument and call corresponding function

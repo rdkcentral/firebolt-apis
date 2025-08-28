@@ -96,3 +96,9 @@ jobs:
           echo "user=${{ secrets.CPP_ARTIFACT_USER }}"
           curl -v -u ${{ secrets.CPP_ARTIFACT_USER }}:${{ secrets.CPP_ARTIFACT_SECRET }} -T firebolt-apis--core-sdk-$RELEASE_VERSION.tgz "${{ vars.DEPLOY_URL }}"
 
+      - name: Upload native packages as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release
+          path: ${{ github.workspace }}/release
+
