@@ -1,3 +1,10 @@
+# [1.7.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.6.0...v1.7.0-next.1) (2025-08-26)
+
+
+### Features
+
+* Remove viewing restrictions spec ([#406](https://github.com/rdkcentral/firebolt-apis/issues/406)) ([077d427](https://github.com/rdkcentral/firebolt-apis/commit/077d427a60e1522efbb508ee43323a1a6145f909))
+
 # [1.6.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.5.0...v1.6.0) (2025-08-21)
 
 

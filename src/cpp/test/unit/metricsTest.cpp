@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+#define MODULE_NAME MetricsTest
 #include "unit.h"
 
 class MetricsTest : public ::testing::Test

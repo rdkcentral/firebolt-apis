@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+#define MODULE_NAME SecureStorageTest
 #include "unit.h"
 
 class SecureStorageTest : public ::testing::Test
