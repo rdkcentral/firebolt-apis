@@ -119,7 +119,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:protocol:wifi"]
+          "x-uses": [
+            "xrn:firebolt:capability:protocol:wifi"
+          ]
         }
       ],
       "params": [
@@ -180,7 +182,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:protocol:wifi"]
+          "x-uses": [
+            "xrn:firebolt:capability:protocol:wifi"
+          ]
         }
       ],
       "params": [
@@ -273,7 +277,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:protocol:wifi"]
+          "x-uses": [
+            "xrn:firebolt:capability:protocol:wifi"
+          ]
         }
       ],
       "params": [],
@@ -300,7 +306,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:protocol:wifi"]
+          "x-uses": [
+            "xrn:firebolt:capability:protocol:wifi"
+          ]
         }
       ],
       "params": [

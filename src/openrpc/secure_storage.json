@@ -12,7 +12,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:storage:secure"]
+          "x-uses": [
+            "xrn:firebolt:capability:storage:secure"
+          ]
         }
       ],
       "params": [
@@ -38,12 +40,8 @@
         "summary": "The retrieved value, if found.",
         "schema": {
           "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
+            {"type": "string"},
+            {"type": "null"}
           ]
         }
       },
@@ -90,7 +88,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:storage:secure"]
+          "x-uses": [
+            "xrn:firebolt:capability:storage:secure"
+          ]
         }
       ],
       "params": [
@@ -151,7 +151,7 @@
             },
             {
               "name": "options",
-              "value": {
+              "value": { 
                 "ttl": 600
               }
             }
@@ -190,7 +190,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:storage:secure"]
+          "x-uses": [
+            "xrn:firebolt:capability:storage:secure"
+          ]
         }
       ],
       "params": [
@@ -233,7 +235,7 @@
           ],
           "result": {
             "name": "defaultResult",
-            "value": null
+             "value": null
           }
         },
         {
@@ -250,7 +252,7 @@
           ],
           "result": {
             "name": "defaultResult",
-            "value": null
+             "value": null
           }
         }
       ]
@@ -261,7 +263,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-manages": ["xrn:firebolt:capability:storage:secure"]
+          "x-manages": [
+            "xrn:firebolt:capability:storage:secure"
+          ]
         }
       ],
       "params": [
@@ -334,7 +338,7 @@
             },
             {
               "name": "options",
-              "value": {
+              "value": { 
                 "ttl": 600
               }
             }
@@ -377,7 +381,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-manages": ["xrn:firebolt:capability:storage:secure"]
+          "x-manages": [
+            "xrn:firebolt:capability:storage:secure"
+          ]
         }
       ],
       "params": [
@@ -432,7 +438,7 @@
           ],
           "result": {
             "name": "defaultResult",
-            "value": null
+             "value": null
           }
         }
       ]
@@ -443,7 +449,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-manages": ["xrn:firebolt:capability:storage:secure"]
+          "x-manages": [
+            "xrn:firebolt:capability:storage:secure"
+          ]
         }
       ],
       "params": [
@@ -486,7 +494,7 @@
           ],
           "result": {
             "name": "defaultResult",
-            "value": null
+             "value": null
           }
         }
       ]
@@ -497,7 +505,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:storage:secure"]
+          "x-uses": [
+            "xrn:firebolt:capability:storage:secure"
+          ]
         }
       ],
       "params": [
@@ -528,7 +538,7 @@
           ],
           "result": {
             "name": "defaultResult",
-            "value": null
+             "value": null
           }
         }
       ]
@@ -539,7 +549,10 @@
       "StorageScope": {
         "title": "StorageScope",
         "type": "string",
-        "enum": ["device", "account"],
+        "enum": [
+          "device",
+          "account"
+        ],
         "description": "The scope of the data"
       },
       "StorageOptions": {
