@@ -1,6 +1,6 @@
 {
   "title": "Lifecycle",
-  "$id": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle",
+  "$id": "https://meta.comcast.com/firebolt/schemas/lifecycle",
   "oneOf": [
     {
       "$ref": "#/definitions/LifecycleState"

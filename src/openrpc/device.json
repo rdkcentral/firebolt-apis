@@ -831,19 +831,19 @@
 				"type": "object",
 				"properties": {
 					"sdk": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/SemanticVersion",
+						"$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/SemanticVersion",
 						"description": "The Firebolt SDK version"
 					},
 					"api": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/SemanticVersion",
+						"$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/SemanticVersion",
 						"description": "The latest Firebolt API version supported by the current device."
 					},
 					"firmware": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/SemanticVersion",
+						"$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/SemanticVersion",
 						"description": "The firmware version as reported by the device"
 					},
 					"os": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/SemanticVersion",
+						"$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/SemanticVersion",
 						"description": "**Deprecated** Use `firmware`, instead."
 					},
 					"debug": {

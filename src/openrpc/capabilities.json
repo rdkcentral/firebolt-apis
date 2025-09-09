@@ -20,7 +20,7 @@
           "name": "capability",
           "required": true,
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Capability"
           }
         }
       ],
@@ -74,7 +74,7 @@
           "name": "capability",
           "required": true,
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Capability"
           }
         }
       ],
@@ -128,7 +128,7 @@
           "name": "capability",
           "required": true,
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Capability"
           }
         },
         {
@@ -208,7 +208,7 @@
           "name": "capability",
           "required": true,
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Capability"
           }
         },
         {
@@ -291,7 +291,7 @@
           "schema": {
             "type": "array",
             "items": {
-              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
+              "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Capability"
             },
             "minItems": 1
           }
@@ -303,7 +303,7 @@
         "schema": {
           "type": "array",
           "items": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
           },
           "minItems": 1
         }
@@ -528,7 +528,7 @@
           "schema": {
             "type": "array",
             "items": {
-              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Permission"
+              "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Permission"
             },
             "minItems": 1
           }
@@ -540,7 +540,7 @@
         "schema": {
           "type": "array",
           "items": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
           },
           "minItems": 1
         }
@@ -602,14 +602,14 @@
           "name": "capability",
           "required": true,
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Capability"
           }
         },
         {
           "name": "value",
           "summary": "Provides the capability info.",
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
           }
         }
       ],
@@ -664,14 +664,14 @@
           "name": "capability",
           "required": true,
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Capability"
           }
         },
         {
           "name": "value",
           "summary": "Provides the capability info.",
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
           }
         }
       ],
@@ -726,21 +726,21 @@
           "name": "role",
           "required": true,
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Role"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Role"
           }
         },
         {
           "name": "capability",
           "required": true,
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Capability"
           }
         },
         {
           "name": "value",
           "summary": "Provides the capability info.",
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
           }
         }
       ],
@@ -798,21 +798,21 @@
           "name": "role",
           "required": true,
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Role"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Role"
           }
         },
         {
           "name": "capability",
           "required": true,
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Capability"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Capability"
           }
         },
         {
           "name": "value",
           "summary": "Provides the capability info.",
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/CapabilityInfo"
           }
         }
       ],
@@ -861,7 +861,7 @@
         "type": "object",
         "properties": {
           "role": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/capabilities#/definitions/Role",
+            "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Role",
             "description": "Which role of the capability to check the state of, default will be 'use'",
             "default": "use"
           }

@@ -1,6 +1,6 @@
 {
   "title": "Advertising",
-  "$id": "https://meta.rdkcentral.com/firebolt/schemas/advertising",
+  "$id": "https://meta.comcast.com/firebolt/schemas/advertising",
   "oneOf": [
     {
       "$ref": "#/definitions/SkipRestriction"

@@ -121,7 +121,7 @@
       "result": {
         "name": "result",
         "schema": {
-          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/advertising#/definitions/SkipRestriction"
+          "$ref": "https://meta.comcast.com/firebolt/schemas/advertising#/definitions/SkipRestriction"
         }
       },
       "examples": [
@@ -332,7 +332,7 @@
         "type": "object",
         "properties": {
           "skipRestriction": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/advertising#/definitions/SkipRestriction"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/advertising#/definitions/SkipRestriction"
           },
           "limitAdTracking": {
             "type": "boolean"

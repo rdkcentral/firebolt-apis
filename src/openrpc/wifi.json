@@ -105,7 +105,7 @@
           },
           "timeout": {
             "schema": {
-              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/Timeout"
+              "$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/Timeout"
             }
           }
         }
@@ -126,7 +126,7 @@
         {
           "name": "timeout",
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/Timeout"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/Timeout"
           }
         }
       ],

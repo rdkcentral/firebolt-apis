@@ -1,6 +1,6 @@
 {
   "title": "Intents",
-  "$id": "https://meta.rdkcentral.com/firebolt/schemas/intents",
+  "$id": "https://meta.comcast.com/firebolt/schemas/intents",
   "oneOf": [
     {
       "$ref": "#/definitions/AppIntentMessage"
@@ -398,7 +398,7 @@
               "const": "entity"
             },
             "data": {
-              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/Entity"
+              "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/Entity"
             }
           }
         }
@@ -465,7 +465,7 @@
               "additionalProperties": false,
               "properties": {
                 "entity": {
-                  "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/ChannelEntity"
+                  "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/ChannelEntity"
                 },
                 "options": {
                   "description": "The options property of the data property MUST have only one of the following fields.",
@@ -532,7 +532,7 @@
               "const": "playback"
             },
             "data": {
-              "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/PlayableEntity"
+              "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/PlayableEntity"
             }
           }
         }
@@ -657,7 +657,7 @@
               "type": "object",
               "properties": {
                 "entity": {
-                  "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/PlayableEntity"
+                  "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/PlayableEntity"
                 },
                 "options": {
                   "type": "object",
@@ -774,13 +774,13 @@
                     "programTypes": {
                       "type": "array",
                       "items": {
-                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ProgramType"
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/entertainment#/definitions/ProgramType"
                       }
                     },
                     "musicTypes": {
                       "type": "array",
                       "items": {
-                        "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/MusicType"
+                        "$ref": "https://meta.comcast.com/firebolt/schemas/entertainment#/definitions/MusicType"
                       }
                     }
                   },
@@ -963,19 +963,19 @@
                 "entity": {
                   "anyOf": [
                     {
-                      "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/MovieEntity"
+                      "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/MovieEntity"
                     },
                     {
-                      "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/TVEpisodeEntity"
+                      "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/TVEpisodeEntity"
                     },
                     {
-                      "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/TVSeriesEntity"
+                      "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/TVSeriesEntity"
                     },
                     {
-                      "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/TVSeasonEntity"
+                      "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/TVSeasonEntity"
                     },
                     {
-                      "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/AdditionalEntity"
+                      "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/AdditionalEntity"
                     }
                   ]
                 },
@@ -990,19 +990,19 @@
                       "entity": {
                         "anyOf": [
                           {
-                            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/MovieEntity"
+                            "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/MovieEntity"
                           },
                           {
-                            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/TVEpisodeEntity"
+                            "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/TVEpisodeEntity"
                           },
                           {
-                            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/TVSeriesEntity"
+                            "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/TVSeriesEntity"
                           },
                           {
-                            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/TVSeasonEntity"
+                            "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/TVSeasonEntity"
                           },
                           {
-                            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/AdditionalEntity"
+                            "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/AdditionalEntity"
                           }
                         ]
                       }
@@ -2217,7 +2217,7 @@
                   "const": true
                 },
                 "language": {
-                  "$ref": "https://meta.rdkcentral.com/firebolt/schemas/localization#/definitions/ISO639_2Language"
+                  "$ref": "https://meta.comcast.com/firebolt/schemas/localization#/definitions/ISO639_2Language"
                 }
               },
               "if": {

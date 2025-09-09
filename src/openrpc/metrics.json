@@ -319,7 +319,7 @@
         {
           "name": "parameters",
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/FlatMap"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/FlatMap"
           },
           "required": false
         },
@@ -403,7 +403,7 @@
           "name": "parameters",
           "summary": "Optional additional parameters to be logged with the error",
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/FlatMap"
+            "$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/FlatMap"
           },
           "required": false
         }
