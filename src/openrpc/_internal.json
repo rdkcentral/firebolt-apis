@@ -24,7 +24,7 @@
           "name": "version",
           "required": true,
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/SemanticVersion"
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion"
           },
           "summary": "The semantic version of the SDK."
         }
@@ -37,7 +37,7 @@
           "required": ["version"],
           "properties": {
             "version": {
-              "$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/SemanticVersion",
+              "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",
               "description": "The semantic version of the FEE."
             }
           },

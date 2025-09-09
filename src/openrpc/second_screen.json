@@ -20,7 +20,7 @@
         "name": "protocols",
         "summary": "the supported protocols",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/BooleanMap"
+          "$ref": "https://meta.comcast.com/firebolt/types#/definitions/BooleanMap"
         }
       },
       "examples": [
@@ -122,7 +122,7 @@
           "name": "launchRequestEvent",
           "summary": "Dispatched when a second screen device on the local network has requested this app to be launched",
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/schemas/secondscreen#/definitions/SecondScreenEvent"
+            "$ref": "https://meta.comcast.com/firebolt/secondscreen#/definitions/SecondScreenEvent"
           }
         }
       ],
@@ -159,7 +159,7 @@
         {
           "name": "closeRequestEvent",
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/schemas/secondscreen#/definitions/SecondScreenEvent"
+            "$ref": "https://meta.comcast.com/firebolt/secondscreen#/definitions/SecondScreenEvent"
           }
         }
       ],

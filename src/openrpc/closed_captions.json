@@ -60,7 +60,7 @@
       "result": {
         "name": "family",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/FontFamily"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/FontFamily"
         }
       },
       "examples": [
@@ -106,7 +106,7 @@
       "result": {
         "name": "size",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/FontSize"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/FontSize"
         }
       },
       "examples": [
@@ -152,7 +152,7 @@
       "result": {
         "name": "color",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/Color"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/Color"
         }
       },
       "examples": [
@@ -198,7 +198,7 @@
       "result": {
         "name": "edge",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/FontEdge"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/FontEdge"
         }
       },
       "examples": [
@@ -244,7 +244,7 @@
       "result": {
         "name": "color",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/Color"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/Color"
         }
       },
       "examples": [
@@ -290,7 +290,7 @@
       "result": {
         "name": "opacity",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/Opacity"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/Opacity"
         }
       },
       "examples": [
@@ -336,7 +336,7 @@
       "result": {
         "name": "color",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/Color"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/Color"
         }
       },
       "examples": [
@@ -382,7 +382,7 @@
       "result": {
         "name": "opacity",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/Opacity"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/Opacity"
         }
       },
       "examples": [
@@ -428,7 +428,7 @@
       "result": {
         "name": "alignment",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/HorizontalAlignment"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/HorizontalAlignment"
         }
       },
       "examples": [
@@ -474,7 +474,7 @@
       "result": {
         "name": "alignment",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/VerticalAlignment"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VerticalAlignment"
         }
       },
       "examples": [
@@ -520,7 +520,7 @@
       "result": {
         "name": "color",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/Color"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/Color"
         }
       },
       "examples": [
@@ -566,7 +566,7 @@
       "result": {
         "name": "opacity",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/accessibility#/definitions/Opacity"
+          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/Opacity"
         }
       },
       "examples": [
@@ -615,7 +615,7 @@
         "schema": {
           "type": "array",
           "items": {
-            "$ref": "https://meta.comcast.com/firebolt/schemas/localization#/definitions/ISO639_2Language"
+            "$ref": "https://meta.comcast.com/firebolt/localization#/definitions/ISO639_2Language"
           }
         }
       },
@@ -645,7 +645,7 @@
         "title": "ClosedCaptionsSettingsProviderRequest",
         "allOf": [
           {
-            "$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/ProviderRequest"
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ProviderRequest"
           },
           {
             "type": "object",

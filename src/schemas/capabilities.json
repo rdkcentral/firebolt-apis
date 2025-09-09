@@ -1,6 +1,6 @@
 {
   "title": "Capabilities",
-  "$id": "https://meta.comcast.com/firebolt/schemas/capabilities",
+  "$id": "https://meta.comcast.com/firebolt/capabilities",
   "oneOf": [
     {
       "$ref": "#/definitions/Capability"
@@ -168,7 +168,7 @@
       "title": "GrantKey",
       "allOf": [
         {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/capabilities#/definitions/Capability"
+          "$ref": "https://meta.comcast.com/firebolt/capabilities#/definitions/Capability"
         },
         {
           "type": "string",

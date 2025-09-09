@@ -1,6 +1,6 @@
 {
   "title": "Localization",
-  "$id": "https://meta.comcast.com/firebolt/schemas/localization",
+  "$id": "https://meta.comcast.com/firebolt/localization",
   "oneOf": [
     {
       "$ref": "#/definitions/Locality"

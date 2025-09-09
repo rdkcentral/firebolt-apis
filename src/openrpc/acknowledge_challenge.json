@@ -93,7 +93,7 @@
         "title": "ChallengeProviderRequest",
         "allOf": [
           {
-            "$ref": "https://meta.comcast.com/firebolt/schemas/types#/definitions/ProviderRequest"
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/ProviderRequest"
           },
           {
             "type": "object",

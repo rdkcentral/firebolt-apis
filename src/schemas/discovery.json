@@ -1,6 +1,6 @@
 {
   "title": "Discovery",
-  "$id": "https://meta.comcast.com/firebolt/schemas/discovery",
+  "$id": "https://meta.comcast.com/firebolt/discovery",
   "anyOf": [
       {"$ref": "#/definitions/InterestType"},
       {"$ref": "#/definitions/InterestReason"},
@@ -25,7 +25,7 @@
           "type": "string"
         },
         "entity": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/entity#/definitions/EntityDetails"
+          "$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
         }
       },
       "required": [

@@ -1,5 +1,5 @@
 {
-  "$id": "https://meta.comcast.com/firebolt/schemas/entity",
+  "$id": "https://meta.comcast.com/firebolt/entity",
   "title": "Entity",
   "oneOf": [
     {
@@ -46,7 +46,7 @@
         "waysToWatch": {
           "type": "array",
           "items": {
-            "$ref": "https://meta.comcast.com/firebolt/schemas/entertainment#/definitions/WayToWatch"
+            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/WayToWatch"
           },
           "description": "An array of ways a user is might watch this entity, regardless of entitlements."
         }
@@ -103,7 +103,7 @@
           "const": "music"
         },
         "musicType": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/entertainment#/definitions/MusicType"
+          "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/MusicType"
         },
         "entityId": {
           "type": "string"
@@ -411,7 +411,7 @@
         "contentRatings": {
           "type": "array",
           "items": {
-            "$ref": "https://meta.comcast.com/firebolt/schemas/entertainment#/definitions/ContentRating"
+            "$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ContentRating"
           },
           "description": "A list of ContentRating objects, describing the entity's ratings in various rating schemes."
         }

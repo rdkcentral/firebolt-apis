@@ -1,6 +1,6 @@
 {
   "title": "Errors",
-  "$id": "https://meta.comcast.com/firebolt/schemas/errors",
+  "$id": "https://meta.comcast.com/firebolt/errors",
   "oneOf": [
     { "$ref": "#/definitions/FireboltError" },
     { "$ref": "#/definitions/UserNotAuthenticatedError" }

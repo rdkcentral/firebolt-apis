@@ -25,21 +25,21 @@
           "name": "type",
           "required": true,
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/schemas/discovery#/definitions/InterestType"
+            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
           }
         },
         {
           "name": "reason",
           "required": true,
           "schema": {
-            "$ref": "https://meta.comcast.com/firebolt/schemas/discovery#/definitions/InterestReason"
+            "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
           }
         }
       ],
       "result": {
         "name": "interest",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/schemas/discovery#/definitions/InterestResult"
+          "$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestResult"
         },
         "summary": "The EntityDetails data."
       },
