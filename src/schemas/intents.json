@@ -157,6 +157,10 @@
           "properties": {
             "source": {
               "type": "string"
+            },
+            "agePolicy": {
+                "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy",
+                "description": "The age policy associated with the intent. The age policy describes the age groups to which content is directed. For example, content launched from a child-directed menu should have the appropriate child policy attached, which may inform an app or service to enable enhanced data protections or features."
             }
           }
         }

@@ -44,6 +44,12 @@
             ]
         },
         {
+            "module": "HDMIInput",
+            "use": [
+                "xrn:firebolt:capability:inputs:hdmi"
+            ]
+        },
+        {
             "module": "Device",
             "use": [
                 "xrn:firebolt:capability:device:distributor",
@@ -130,8 +136,7 @@
             "use": [
                 "xrn:firebolt:capability:approve:content",
                 "xrn:firebolt:capability:approve:purchase",
-                "xrn:firebolt:capability:profile:flags",
-                "xrn:firebolt:capability:profile:viewingrestrictions"
+                "xrn:firebolt:capability:profile:flags"
             ]
         },
         {
