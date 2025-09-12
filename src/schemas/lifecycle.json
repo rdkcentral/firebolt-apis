@@ -1,6 +1,6 @@
 {
+  "$id": "https://meta.comcast.com/firebolt/lifecycle",
   "title": "Lifecycle",
-  "$id": "https://meta.rdkcentral.com/firebolt/schemas/lifecycle",
   "oneOf": [
     {
       "$ref": "#/definitions/LifecycleState"
@@ -15,19 +15,24 @@
       "description": "The application lifecycle state",
       "type": "string",
       "enum": [
-        "initializing",
-        "inactive",
-        "foreground",
-        "background",
-        "unloading",
-        "suspended"
+          "initializing",
+          "inactive",
+          "foreground",
+          "background",
+          "unloading",
+          "suspended"
       ]
     },
     "CloseReason": {
       "title": "CloseReason",
       "description": "The application close reason",
-      "type": "string",
-      "enum": ["remoteButton", "userExit", "done", "error"]
+      "type": "string",      
+      "enum": [
+          "remoteButton",
+          "userExit",
+          "done",
+          "error"
+      ]
     }
   }
 }

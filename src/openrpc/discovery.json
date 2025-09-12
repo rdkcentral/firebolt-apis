@@ -273,14 +273,14 @@
 				"name": "offeringType",
 				"required": true,
 					"schema": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/OfferingType"
+						"$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/OfferingType"
 					}
 				},
 				{
 				"name": "programType",
 				"required": true,
 					"schema": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ProgramType"
+						"$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ProgramType"
 					}
 				}
 			],
@@ -573,7 +573,7 @@
 					"name": "title",
 					"summary": "The title of this call to action",
 					"schema": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/LocalizedString"
+						"$ref": "https://meta.comcast.com/firebolt/types#/definitions/LocalizedString"
 					},
 					"required": true
 				},
@@ -581,7 +581,7 @@
 					"name": "identifiers",
 					"summary": "A set of content identifiers for this call to action",
 					"schema": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ContentIdentifiers"
+						"$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ContentIdentifiers"
 					},
 					"required": true
 				},
@@ -600,7 +600,7 @@
 						"type": "object",
 						"patternProperties": {
 							"^.*$": {
-								"$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/LocalizedString"
+								"$ref": "https://meta.comcast.com/firebolt/types#/definitions/LocalizedString"
 							}
 						}
 					}
@@ -693,7 +693,7 @@
 					"schema": {
 						"type": "array",
 						"items": {
-							"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/Entitlement"
+							"$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/Entitlement"
 						}
 					},
 					"required": true
@@ -931,7 +931,7 @@
 					"required": false,
 					"summary": "An optional `NavigationIntent` with details about what part of the app to show first, and context around how/why it was launched",
 					"schema": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/intents#/definitions/NavigationIntent"
+						"$ref": "https://meta.comcast.com/firebolt/intents#/definitions/NavigationIntent"
 					}
 				}
 			],
@@ -1234,7 +1234,7 @@
 					"name": "value",
 					"summary": "An object describing where in the app the user intends to navigate to",
 					"schema": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/intents#/definitions/NavigationIntent"
+						"$ref": "https://meta.comcast.com/firebolt/intents#/definitions/NavigationIntent"
 					}
 				}
 			],
@@ -1280,7 +1280,7 @@
 					"schema": {
 						"type": "array",
 						"items": {
-							"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/Entitlement"
+							"$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/Entitlement"
 						}
 					},
 					"required": false
@@ -1459,21 +1459,21 @@
 					"name": "type",
 					"required": true,
 					"schema": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestType"
+						"$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
 					}
 				},
 				{
 					"name": "reason",
 					"required": true,
 					"schema": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestReason"
+						"$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
 					}
 				},
 				{
 					"name": "entity",
 					"required": true,
 					"schema": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entity#/definitions/EntityDetails"
+						"$ref": "https://meta.comcast.com/firebolt/entity#/definitions/EntityDetails"
 					}
 				}
 			],
@@ -1676,12 +1676,12 @@
 						"format": "date-time"
 					},
 					"entity": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
+						"$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
 					},
 					"related": {
 						"type": "array",
 						"items": {
-							"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
+							"$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
 						}
 					}
 				},
@@ -1728,10 +1728,10 @@
 						"minimum": -1
 					},
 					"offeringType": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/OfferingType"
+						"$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/OfferingType"
 					},
 					"programType": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/ProgramType"
+						"$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/ProgramType"
 					}
 				},
 				"required": [
@@ -1775,7 +1775,7 @@
 					"entries": {
 						"type": "array",
 						"items": {
-							"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/EntityInfo"
+							"$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/EntityInfo"
 						}
 					}
 				},
@@ -1831,7 +1831,7 @@
 					"entitlements": {
 						"type": "array",
 						"items": {
-							"$ref": "https://meta.rdkcentral.com/firebolt/schemas/entertainment#/definitions/Entitlement"
+							"$ref": "https://meta.comcast.com/firebolt/entertainment#/definitions/Entitlement"
 						},
 						"description": "A list of identifiers that represent what content is consumable for the subscriber. Excluding entitlements will cause no change to the entitlements that are stored for this subscriber. Providing an empty array will clear the subscriber's entitlements"
 					}
@@ -1855,10 +1855,10 @@
 				],
 				"properties": {
 					"type": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestType"
+						"$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestType"
 					},
 					"reason": {
-						"$ref": "https://meta.rdkcentral.com/firebolt/schemas/discovery#/definitions/InterestReason"
+						"$ref": "https://meta.comcast.com/firebolt/discovery#/definitions/InterestReason"
 					}
 				}
 			}

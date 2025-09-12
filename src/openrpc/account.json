@@ -16,7 +16,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:account:id"]
+          "x-uses": [
+            "xrn:firebolt:capability:account:id"
+          ]
         }
       ],
       "result": {
@@ -47,7 +49,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:account:uid"]
+          "x-uses": [
+            "xrn:firebolt:capability:account:uid"
+          ]
         }
       ],
       "result": {
@@ -74,7 +78,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-manages": ["xrn:firebolt:capability:token:account"]
+          "x-manages": [
+            "xrn:firebolt:capability:token:account"
+          ]
         }
       ],
       "params": [

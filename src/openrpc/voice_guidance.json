@@ -104,7 +104,7 @@
             "result": {
                 "name": "rate",
                 "schema": {
-                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/SpeechRate"
+                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/SpeechRate"
                 }
             },
             "examples": [
@@ -149,7 +149,7 @@
             "result": {
                 "name": "speed",
                 "schema": {
-                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/accessibility#/definitions/SpeechRate"
+                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/SpeechRate"
                 }
             },
             "examples": [
