@@ -64,6 +64,8 @@ public:
     static void SetAutoLowLatencyModeCapable();
     static void GetEdidVersion();
     static void SetEdidVersion();
+    static void OpenHdmiPort();
+    static void CloseHdmiPort();
     static void GetHdmiPortInfo();
 
     // Lifecycle

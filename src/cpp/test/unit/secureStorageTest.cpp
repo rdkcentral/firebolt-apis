@@ -17,75 +17,233 @@
  * limitations under the License.
  */
 
-#define MODULE_NAME SecureStorageTest
-#include "unit.h"
+#include "securestorage_impl.h"
+#include "json_engine.h"
+#include "mock_helper.h"
 
 class SecureStorageTest : public ::testing::Test
 {
 protected:
-    JsonEngine* jsonEngine;
+    Firebolt::Result<nlohmann::json> getter(const std::string &methodName, const nlohmann::json &parameters)
+    {
+        nlohmann::json message;
+        message["method"] = methodName;
+        if (!parameters.is_null())
+        {
+            message["params"] = parameters;
+        }
 
-    void SetUp() override { jsonEngine = new JsonEngine(); }
+        Firebolt::Error err = jsonEngine.MockResponse(message);
+        if (err != Firebolt::Error::None)
+        {
+            return Firebolt::Result<nlohmann::json>{err};
+        }
 
-    void TearDown() override { delete jsonEngine; }
+        return Firebolt::Result<nlohmann::json>{message["result"]};
+    }
+
+    void mock(const std::string &methodName)
+    {
+        EXPECT_CALL(mockHelper, getJson(methodName, _))
+            .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
+                            { return getter(methodName, parameters); }));
+    }
+
+
+    void mockSubscribe(const std::string &eventName)
+    {
+        EXPECT_CALL(mockHelper, subscribe(_, eventName, _, _))
+            .WillOnce(Invoke(
+                [&](void* owner, const std::string &eventName, std::any &&notification,
+                    void (*callback)(void *, const nlohmann::json &))
+                {
+                    return Firebolt::Result<Firebolt::SubscriptionId>{1};
+                }));
+        EXPECT_CALL(mockHelper, unsubscribe(1)) 
+            .WillOnce(Invoke(
+                [&](Firebolt::SubscriptionId id)
+                {
+                    return Firebolt::Result<void>{Firebolt::Error::None};
+                }));
+    }
+
+protected:
+    JsonEngine jsonEngine;
+    nlohmann::json lastSetParams;
+    ::testing::NiceMock<MockHelper> mockHelper;
+    Firebolt::SecureStorage::SecureStorageImpl secstorImpl_{mockHelper};
+};
+
+std::map<std::string, Firebolt::SecureStorage::StorageScope> ScopeMap = {
+    {"device", Firebolt::SecureStorage::StorageScope::DEVICE},
+    {"account", Firebolt::SecureStorage::StorageScope::ACCOUNT}
 };
 
 TEST_F(SecureStorageTest, get)
 {
-    std::string expectedValues = jsonEngine->get_value("SecureStorage.get");
-    auto result =
-        Firebolt::IFireboltAccessor::Instance().SecureStorageInterface().get(Firebolt::SecureStorage::StorageScope::DEVICE,
-                                                                             "authRefreshToken");
-    ASSERT_TRUE(result) << "Error on calling SecureStorage.get() method";
-    EXPECT_EQ(REMOVE_QUOTES(expectedValues), *result) << "Error: wrong SecureStorage.get returned by "
-                                                         "SecureStorage.get()";
+    std::string scope = "device";
+    std::string key = "authRefreshToken";
+
+    nlohmann::json expectedParams;
+    expectedParams["key"] = key;
+    expectedParams["scope"] = scope;
+
+    EXPECT_CALL(mockHelper, getJson("SecureStorage.get", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                return getter(methodName, parameters);
+            }));
+
+    auto result = secstorImpl_.get(ScopeMap[scope], key);
+    ASSERT_TRUE(result) << "error on get";
+
+    auto expectedValue = jsonEngine.get_value("SecureStorage.get");;
+    EXPECT_EQ(*result, expectedValue);
 }
 
 TEST_F(SecureStorageTest, clear)
 {
-    auto result = Firebolt::IFireboltAccessor::Instance().SecureStorageInterface().clear(
-        Firebolt::SecureStorage::StorageScope::ACCOUNT);
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error on calling SecureStorage.clear() method";
+    std::string scope = "account";
+
+    nlohmann::json expectedParams;
+    expectedParams["scope"] = scope;
+
+    EXPECT_CALL(mockHelper, invoke("SecureStorage.clear", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                return Firebolt::Result<void>{Firebolt::Error::None};
+            }));
+    auto result = secstorImpl_.clear(ScopeMap[scope]);
+    ASSERT_TRUE(result) << "error on clear";
 }
 
 TEST_F(SecureStorageTest, remove)
 {
-    auto result =
-        Firebolt::IFireboltAccessor::Instance().SecureStorageInterface().remove(Firebolt::SecureStorage::StorageScope::DEVICE,
-                                                                                "authRefreshToken");
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error on calling SecureStorage.remove() method";
+    std::string scope = "device";
+    std::string key = "authRefreshToken";
+
+    nlohmann::json expectedParams;
+    expectedParams["scope"] = scope;
+    expectedParams["key"] = key;
+
+    EXPECT_CALL(mockHelper, invoke("SecureStorage.remove", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                return Firebolt::Result<void>{Firebolt::Error::None};
+            }));
+
+    auto result = secstorImpl_.remove(ScopeMap[scope], key);
+    ASSERT_TRUE(result) << "error on remove";
 }
 
 TEST_F(SecureStorageTest, set)
 {
-    auto result = Firebolt::IFireboltAccessor::Instance()
-                      .SecureStorageInterface()
-                      .set(Firebolt::SecureStorage::StorageScope::DEVICE, "authRefreshToken",
-                           "VGhpcyBub3QgYSByZWFsIHRva2VuLgo", Firebolt::SecureStorage::StorageOptions{600});
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error on calling SecureStorage.set() method";
+    std::string scope = "device";
+    std::string key = "authRefreshToken";
+    std::string value = "VGhpcyBub3QgYSByZWFsIHRva2VuLgo";
+    float ttl = 600.0f;
+
+    nlohmann::json expectedParams;
+    expectedParams["scope"] = scope;
+    expectedParams["key"] = key;
+    expectedParams["value"] = value;
+    expectedParams["options"] = nlohmann::json{{"ttl", ttl}};
+
+
+    EXPECT_CALL(mockHelper, invoke("SecureStorage.set", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                lastSetParams = parameters;
+                return Firebolt::Result<void>{Firebolt::Error::None};
+            }));
+
+    auto result = secstorImpl_.set(ScopeMap[scope], key, value, Firebolt::SecureStorage::StorageOptions{ttl});
+    ASSERT_TRUE(result) << "Error on set";
+
+    {
+        nlohmann::json expectedParams;
+        expectedParams["key"] = key;
+        expectedParams["scope"] = scope;
+
+        EXPECT_CALL(mockHelper, getJson("SecureStorage.get", expectedParams))
+            .WillOnce(Invoke(
+                [&](const std::string &methodName, const nlohmann::json &parameters)
+                {
+                    return Firebolt::Result<nlohmann::json>{lastSetParams["value"]};
+                }));
+        auto result = secstorImpl_.get(ScopeMap[scope], key);
+        ASSERT_TRUE(result) << "Error on calling HDMIInputInterface.autoLowLatencyModeCapable() method";
+        EXPECT_EQ(*result, value);
+    }
 }
 
 TEST_F(SecureStorageTest, setForApp)
 {
-    auto result = Firebolt::IFireboltAccessor::Instance()
-                      .SecureStorageInterface()
-                      .setForApp("foo", Firebolt::SecureStorage::StorageScope::ACCOUNT, "authRefreshToken",
-                                 "VGhpcyBub3QgYSByZWFsIHRva2VuLgo", Firebolt::SecureStorage::StorageOptions{600});
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error on calling SecureStorage.setForApp() method";
+    std::string appId = "foo";
+    std::string scope = "device";
+    std::string key = "authRefreshToken";
+    std::string value = "VGhpcyBub3QgYSByZWFsIHRva2VuLgo";
+    float ttl = 600.0f;
+
+    nlohmann::json expectedParams;
+    expectedParams["appId"] = appId;
+    expectedParams["scope"] = scope;
+    expectedParams["key"] = key;
+    expectedParams["value"] = value;
+    expectedParams["options"] = nlohmann::json{{"ttl", ttl}};
+
+    EXPECT_CALL(mockHelper, invoke("SecureStorage.setForApp", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                lastSetParams = parameters;
+                return Firebolt::Result<void>{Firebolt::Error::None};
+            }));
+
+    auto result = secstorImpl_.setForApp(appId, ScopeMap[scope], key, value, Firebolt::SecureStorage::StorageOptions{ttl});
+    ASSERT_TRUE(result) << "Error on set";
 }
 
 TEST_F(SecureStorageTest, removeForApp)
 {
-    auto result = Firebolt::IFireboltAccessor::Instance()
-                      .SecureStorageInterface()
-                      .removeForApp("foo", Firebolt::SecureStorage::StorageScope::ACCOUNT, "authRefreshToken");
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error on calling SecureStorage.removeForApp() method";
+    std::string appId = "foo";
+    std::string scope = "account";
+    std::string key = "authRefreshToken";
+
+    nlohmann::json expectedParams;
+    expectedParams["appId"] = appId;
+    expectedParams["scope"] = scope;
+    expectedParams["key"] = key;
+
+    EXPECT_CALL(mockHelper, invoke("SecureStorage.removeForApp", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                return Firebolt::Result<void>{Firebolt::Error::None};
+            }));
+    auto result = secstorImpl_.removeForApp(appId, ScopeMap[scope], key);
+    ASSERT_TRUE(result) << "Error on remove";
 }
 
 TEST_F(SecureStorageTest, clearForApp)
 {
-    auto result = Firebolt::IFireboltAccessor::Instance()
-                      .SecureStorageInterface()
-                      .clearForApp("foo", Firebolt::SecureStorage::StorageScope::ACCOUNT);
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error on calling SecureStorage.removeForApp() method";
+    std::string appId = "foo";
+    std::string scope = "account";
+
+    nlohmann::json expectedParams;
+    expectedParams["appId"] = appId;
+    expectedParams["scope"] = scope;
+
+    EXPECT_CALL(mockHelper, invoke("SecureStorage.clearForApp", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                return Firebolt::Result<void>{Firebolt::Error::None};
+            }));
+    auto result = secstorImpl_.clearForApp(appId, ScopeMap[scope]);
+    ASSERT_TRUE(result) << "Error on clear";
 }

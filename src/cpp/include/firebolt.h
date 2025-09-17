@@ -19,16 +19,16 @@
 
 #pragma once
 
-#include "Portability.h"
 #include "closedcaptions.h"
 #include "device.h"
-#include "error.h"
+#include "fireboltsdk_export.h"
 #include "hdmiinput.h"
 #include "lifecycle.h"
 #include "localization.h"
 #include "metrics.h"
 #include "securestorage.h"
 #include <functional>
+#include <types/fb-errors.h>
 
 namespace Firebolt
 {
@@ -62,16 +62,23 @@ public:
      *                     user is expected to pass in the Websocket URL.
      *
      *                     CONFIG Format:
-     *                      {
-     *                         "waitTime": 1000,
-     *                         "logLevel": "Info",
-     *                         "workerPool":{
-     *                           "queueSize": 8,
-     *                           "threadCount": 3
-     *                          },
-     *                         "wsUrl": "ws://127.0.0.1:9998"
-     *                      }
-     *
+     *                     {
+     *                        "waitTime": 3000,
+     *                        "wsUrl": "ws://127.0.0.1:9998",
+     *                        "log": {
+     *                            "level": "Info",
+     *                            "format": {
+     *                                "ts": true,
+     *                                "location": false,
+     *                                "function": true,
+     *                                "thread": true
+     *                            }
+     *                        },
+     *                        "RPCv2": true,
+     *                        "logLevel": "Info"
+     *                     }
+     *                     # waitTime    : time in milliseconds to wait for a response from the endpoint
+     *                     # logInfo     : while still supported, use the "log" object above
      *
      * @return Firebolt::Error
      */

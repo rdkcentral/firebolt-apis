@@ -19,6 +19,9 @@
 
 #pragma once
 
-#include "../CoreSDKTest.h"
+#include "firebolt.h"
 #include "json_engine.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
+#include <thread>
+#include <types/fb-errors.h>
+#include <types/types.h>

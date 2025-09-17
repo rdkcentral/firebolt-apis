@@ -27,6 +27,14 @@ using namespace std;
 bool CoreSDKTest::_connected;
 std::map<CoreSDKTest::Subscriptions, uint64_t> CoreSDKTest::_subscriptionIds{};
 
+template <typename T> inline std::string toError(const Firebolt::Result<T>& result)
+{
+  if (result) {
+      return "";
+  }
+  return "Error: " + std::to_string(static_cast<int>(result.error()));
+}
+
 void CoreSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error error)
 {
     cout << "Change in connection: connected: " << connected << " error: " << static_cast<int>(error) << endl;
@@ -35,15 +43,10 @@ void CoreSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error 
 
 void CoreSDKTest::CreateFireboltInstance(const std::string& url)
 {
-    const std::string config = "{\
-            \"waitTime\": 1000,\
-            \"logLevel\": \"Info\",\
-            \"workerPool\":{\
-            \"queueSize\": 8,\
-            \"threadCount\": 3\
-            },\
-            \"wsUrl\": " + url +
-                               "}";
+    const std::string config = R"({
+      "waitTime": 1000,
+      "logLevel": "Info",
+      "wsUrl": ")" + url + R"("})";
 
     _connected = false;
     Firebolt::IFireboltAccessor::Instance().Initialize(config);
@@ -101,14 +104,13 @@ void CoreSDKTest::GetClosedCaptionsBackgroundOpacity()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetClosedCaptionsBackgroundOpacity failed. " + errorMessage);
+        throw std::runtime_error("GetClosedCaptionsBackgroundOpacity failed. " + toError(result));
     }
 }
 
 void CoreSDKTest::SetClosedCaptionsBackgroundOpacity()
 {
-    float bgOpacity = 1.0;
+    unsigned bgOpacity = 1;
 
     auto result = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setBackgroundOpacity(bgOpacity);
 
@@ -118,8 +120,7 @@ void CoreSDKTest::SetClosedCaptionsBackgroundOpacity()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("SetClosedCaptionsBackgroundOpacity failed. " + errorMessage);
+        throw std::runtime_error("SetClosedCaptionsBackgroundOpacity failed. " + toError(result));
     }
 }
 
@@ -134,8 +135,7 @@ void CoreSDKTest::SubscribeClosedCaptionsBackgroundOpacityChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("SubscribeClosedCaptionsBackgroundOpacityChanged failed. " + errorMessage);
+        throw std::runtime_error("SubscribeClosedCaptionsBackgroundOpacityChanged failed. " + toError(result));
     }
 }
 
@@ -155,8 +155,7 @@ void CoreSDKTest::UnsubscribeClosedCaptionsBackgroundOpacityChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("Unsubscribe closed captions opacity failed. " + errorMessage);
+        throw std::runtime_error("Unsubscribe closed captions opacity failed. " + toError(result));
     }
 }
 
@@ -180,8 +179,7 @@ void CoreSDKTest::GetClosedCaptionsFontFamily()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetClosedCaptionsFontFamily failed. " + errorMessage);
+        throw std::runtime_error("GetClosedCaptionsFontFamily failed. " + toError(result));
     }
 }
 
@@ -196,8 +194,7 @@ void CoreSDKTest::SetClosedCaptionsFontFamily()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("SetClosedCaptionsFontFamily failed. " + errorMessage);
+        throw std::runtime_error("SetClosedCaptionsFontFamily failed. " + toError(result));
     }
 }
 
@@ -216,8 +213,7 @@ void CoreSDKTest::SubscribeClosedCaptionsFontFamilyChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("SubscribeClosedCaptionsFontFamilyChanged failed. " + errorMessage);
+        throw std::runtime_error("SubscribeClosedCaptionsFontFamilyChanged failed. " + toError(result));
     }
 }
 
@@ -237,8 +233,7 @@ void CoreSDKTest::UnsubscribeClosedCaptionsFontFamilyChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("Unsubscribe closed captions font family failed. " + errorMessage);
+        throw std::runtime_error("Unsubscribe closed captions font family failed. " + toError(result));
     }
 }
 
@@ -252,8 +247,7 @@ void CoreSDKTest::GetDeviceName()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetDeviceName failed. " + errorMessage);
+        throw std::runtime_error("GetDeviceName failed. " + toError(result));
     }
 }
 
@@ -283,8 +277,7 @@ void CoreSDKTest::SubscribeDeviceNameChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(id.error()));
-        throw std::runtime_error("SubscribeDeviceNameChanged failed. " + errorMessage);
+        throw std::runtime_error("SubscribeDeviceNameChanged failed. " + toError(id));
     }
 }
 
@@ -304,8 +297,7 @@ void CoreSDKTest::UnsubscribeDeviceNameChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("UnsubscribeDeviceNameChanged failed. " + errorMessage);
+        throw std::runtime_error("UnsubscribeDeviceNameChanged failed. " + toError(result));
     }
 }
 
@@ -319,8 +311,7 @@ void CoreSDKTest::GetDeviceModel()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetDeviceModel failed. " + errorMessage);
+        throw std::runtime_error("GetDeviceModel failed. " + toError(result));
     }
 }
 
@@ -334,8 +325,7 @@ void CoreSDKTest::GetDeviceSku()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetDeviceSku failed. " + errorMessage);
+        throw std::runtime_error("GetDeviceSku failed. " + toError(result));
     }
 }
 
@@ -358,8 +348,7 @@ void CoreSDKTest::GetDeviceAudio()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetDeviceAudio failed. " + errorMessage);
+        throw std::runtime_error("GetDeviceAudio failed. " + toError(result));
     }
 }
 
@@ -374,8 +363,7 @@ void CoreSDKTest::SubscribeDeviceAudioChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(subscriptionId.error()));
-        throw std::runtime_error("SubscribeDeviceAudioChanged failed. " + errorMessage);
+        throw std::runtime_error("SubscribeDeviceAudioChanged failed. " + toError(subscriptionId));
     }
 }
 
@@ -395,8 +383,7 @@ void CoreSDKTest::UnsubscribeDeviceAudioChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("UnsubscribeDeviceAudioChanged failed. " + errorMessage);
+        throw std::runtime_error("UnsubscribeDeviceAudioChanged failed. " + toError(result));
     }
 }
 
@@ -415,8 +402,7 @@ void CoreSDKTest::GetDeviceScreenResolution()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetDeviceScreenResolution failed. " + errorMessage);
+        throw std::runtime_error("GetDeviceScreenResolution failed. " + toError(result));
     }
 }
 
@@ -431,8 +417,7 @@ void CoreSDKTest::SubscribeDeviceScreenResolutionChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(subscriptionId.error()));
-        throw std::runtime_error("SubscribeDeviceScreenResolutionChanged failed. " + errorMessage);
+        throw std::runtime_error("SubscribeDeviceScreenResolutionChanged failed. " + toError(subscriptionId));
     }
 }
 
@@ -452,8 +437,7 @@ void CoreSDKTest::UnsubscribeDeviceScreenResolutionChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("UnsubscribeDeviceScreenResolutionChanged failed. " + errorMessage);
+        throw std::runtime_error("UnsubscribeDeviceScreenResolutionChanged failed. " + toError(result));
     }
 }
 
@@ -469,8 +453,7 @@ void CoreSDKTest::SubscribeHdmiAutoLowLatencyModeCapableChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(subscriptionId.error()));
-        throw std::runtime_error("Subscribe HdmiInputAutoLowLatencyModeCapableChange failed." + errorMessage);
+        throw std::runtime_error("Subscribe HdmiInputAutoLowLatencyModeCapableChange failed." + toError(subscriptionId));
     }
 }
 
@@ -490,8 +473,7 @@ void CoreSDKTest::UnsubscribeHdmiAutoLowLatencyModeCapableChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("Unsubscribe Hdmi Input AutoLowLatencyModeCapable Change failed. " + errorMessage);
+        throw std::runtime_error("Unsubscribe Hdmi Input AutoLowLatencyModeCapable Change failed. " + toError(result));
     }
 }
 
@@ -506,8 +488,7 @@ void CoreSDKTest::GetAutoLowLatencyModeCapable()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetAutoLowLatencyModeCapable failed. " + errorMessage);
+        throw std::runtime_error("GetAutoLowLatencyModeCapable failed. " + toError(result));
     }
 }
 
@@ -523,8 +504,7 @@ void CoreSDKTest::SetAutoLowLatencyModeCapable()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("SetAutoLowLatencyModeCapable failed. " + errorMessage);
+        throw std::runtime_error("SetAutoLowLatencyModeCapable failed. " + toError(result));
     }
 }
 
@@ -539,8 +519,7 @@ void CoreSDKTest::GetEdidVersion()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetEdidVersion failed. " + errorMessage);
+        throw std::runtime_error("GetEdidVersion failed. " + toError(result));
     }
 }
 
@@ -556,8 +535,36 @@ void CoreSDKTest::SetEdidVersion()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("SetEdidVersionfailed. " + errorMessage);
+        throw std::runtime_error("SetEdidVersion failed. " + toError(result));
+    }
+}
+
+void CoreSDKTest::OpenHdmiPort()
+{
+    std::string portId = "HDMI1";
+    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().open(portId);
+
+    if (result)
+    {
+        cout << "OpenHdmiPort is a success." << endl;
+    }
+    else
+    {
+        throw std::runtime_error("OpenHdmiPort failed. " + toError(result));
+    }
+}
+
+void CoreSDKTest::CloseHdmiPort()
+{
+    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().close();
+
+    if (result)
+    {
+        cout << "CloseHdmiPort is a success." << endl;
+    }
+    else
+    {
+        throw std::runtime_error("CloseHdmiPort failed. " + toError(result));
     }
 }
 
@@ -572,8 +579,7 @@ void CoreSDKTest::GetHdmiPortInfo()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetHdmiPortInfo failed. " + errorMessage);
+        throw std::runtime_error("GetHdmiPortInfo failed. " + toError(result));
     }
 }
 
@@ -587,8 +593,7 @@ void CoreSDKTest::LifecycleReady()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("LifecycleReady failed. " + errorMessage);
+        throw std::runtime_error("LifecycleReady failed. " + toError(result));
     }
 }
 
@@ -603,8 +608,7 @@ void CoreSDKTest::LifecycleClose()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("LifecycleClose failed. " + errorMessage);
+        throw std::runtime_error("LifecycleClose failed. " + toError(result));
     }
 }
 
@@ -618,8 +622,7 @@ void CoreSDKTest::LifecycleFinished()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("LifecycleFinished failed. " + errorMessage);
+        throw std::runtime_error("LifecycleFinished failed. " + toError(result));
     }
 }
 
@@ -633,8 +636,7 @@ void CoreSDKTest::LifecycleState()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(state.error()));
-        throw std::runtime_error("LifecycleState failed. " + errorMessage);
+        throw std::runtime_error("LifecycleState failed. " + toError(state));
     }
 }
 
@@ -649,8 +651,7 @@ void CoreSDKTest::SubscribeOnLifecycleBackgroundChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(subscriptionId.error()));
-        throw std::runtime_error("Subscribe LifecycleBackground failed. " + errorMessage);
+        throw std::runtime_error("Subscribe LifecycleBackground failed. " + toError(subscriptionId));
     }
 }
 
@@ -670,8 +671,7 @@ void CoreSDKTest::UnsubscribeOnLifecycleBackgroundChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("Unsubscribe LifecycleBackground failed. " + errorMessage);
+        throw std::runtime_error("Unsubscribe LifecycleBackground failed. " + toError(result));
     }
 }
 
@@ -686,8 +686,7 @@ void CoreSDKTest::SubscribeOnLifecycleForegroundChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(subscriptionId.error()));
-        throw std::runtime_error("Subscribe LifecycleForeground failed. " + errorMessage);
+        throw std::runtime_error("Subscribe LifecycleForeground failed. " + toError(subscriptionId));
     }
 }
 
@@ -707,8 +706,7 @@ void CoreSDKTest::UnsubscribeOnLifecycleForegroundChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("Unsubscribe LifecycleForeground failed. " + errorMessage);
+        throw std::runtime_error("Unsubscribe LifecycleForeground failed. " + toError(result));
     }
 }
 
@@ -723,8 +721,7 @@ void CoreSDKTest::SubscribeOnLifecycleInactiveChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(subscriptionId.error()));
-        throw std::runtime_error("Subscribe LifecycleInactive failed. " + errorMessage);
+        throw std::runtime_error("Subscribe LifecycleInactive failed. " + toError(subscriptionId));
     }
 }
 
@@ -744,8 +741,7 @@ void CoreSDKTest::UnsubscribeOnLifecycleInactiveChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("Unsubscribe LifecycleInactive failed. " + errorMessage);
+        throw std::runtime_error("Unsubscribe LifecycleInactive failed. " + toError(result));
     }
 }
 
@@ -760,8 +756,7 @@ void CoreSDKTest::SubscribeOnLifecycleSuspendedChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(subscriptionId.error()));
-        throw std::runtime_error("Subscribe LifecycleSuspended failed. " + errorMessage);
+        throw std::runtime_error("Subscribe LifecycleSuspended failed. " + toError(subscriptionId));
     }
 }
 
@@ -781,8 +776,7 @@ void CoreSDKTest::UnsubscribeOnLifecycleSuspendedChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("Unsubscribe LifecycleSuspended failed. " + errorMessage);
+        throw std::runtime_error("Unsubscribe LifecycleSuspended failed. " + toError(result));
     }
 }
 
@@ -797,8 +791,7 @@ void CoreSDKTest::SubscribeOnLifecycleUnloadingChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(subscriptionId.error()));
-        throw std::runtime_error("Subscribe LifecycleUnloading failed. " + errorMessage);
+        throw std::runtime_error("Subscribe LifecycleUnloading failed. " + toError(subscriptionId));
     }
 }
 
@@ -818,8 +811,7 @@ void CoreSDKTest::UnsubscribeOnLifecycleUnloadingChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("Unsubscribe LifecycleUnloading failed. " + errorMessage);
+        throw std::runtime_error("Unsubscribe LifecycleUnloading failed. " + toError(result));
     }
 }
 
@@ -833,8 +825,7 @@ void CoreSDKTest::GetLocalizationCountryCode()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetLocalizationCountryCode failed. " + errorMessage);
+        throw std::runtime_error("GetLocalizationCountryCode failed. " + toError(result));
     }
 }
 
@@ -853,8 +844,7 @@ void CoreSDKTest::GetLocalizationPreferredAudioLanguages()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetLocalizationPregetPreferredAudioLanguages failed. " + errorMessage);
+        throw std::runtime_error("GetLocalizationPregetPreferredAudioLanguages failed. " + toError(result));
     }
 }
 
@@ -869,8 +859,7 @@ void CoreSDKTest::SubscribeOnLocalizationCountryCodeChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(subscriptionId.error()));
-        throw std::runtime_error("Subscribe LocalizationCountryCode failed. " + errorMessage);
+        throw std::runtime_error("Subscribe LocalizationCountryCode failed. " + toError(subscriptionId));
     }
 }
 
@@ -890,8 +879,7 @@ void CoreSDKTest::UnsubscribeOnLocalizationCountryCodeChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("Unsubscribe LocalizationCountryCode failed. " + errorMessage);
+        throw std::runtime_error("Unsubscribe LocalizationCountryCode failed. " + toError(result));
     }
 }
 
@@ -907,8 +895,7 @@ void CoreSDKTest::SubscribeOnLocalizationPreferredAudioLanguagesChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(subscriptionId.error()));
-        throw std::runtime_error("Subscribe LocalizationPreferredAudioLanguages failed. " + errorMessage);
+        throw std::runtime_error("Subscribe LocalizationPreferredAudioLanguages failed. " + toError(subscriptionId));
     }
 }
 
@@ -928,8 +915,7 @@ void CoreSDKTest::UnsubscribeOnLocalizationPreferredAudioLanguagesChanged()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("Unsubscribe LocalizationPreferredAudioLanguages failed. " + errorMessage);
+        throw std::runtime_error("Unsubscribe LocalizationPreferredAudioLanguages failed. " + toError(result));
     }
 }
 
@@ -942,8 +928,7 @@ void CoreSDKTest::MetricsReady()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("MetricsReady failed. " + errorMessage);
+        throw std::runtime_error("MetricsReady failed. " + toError(result));
     }
 }
 
@@ -958,8 +943,7 @@ void CoreSDKTest::ClearSecureStorage()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("ClearSecureStorage failed. " + errorMessage);
+        throw std::runtime_error("ClearSecureStorage failed. " + toError(result));
     }
 }
 
@@ -975,8 +959,7 @@ void CoreSDKTest::GetSecureStorage()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("GetSecureStorage failed. " + errorMessage);
+        throw std::runtime_error("GetSecureStorage failed. " + toError(result));
     }
 }
 
@@ -992,8 +975,7 @@ void CoreSDKTest::RemoveSecureStorage()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("RemoveSecureStorage failed. " + errorMessage);
+        throw std::runtime_error("RemoveSecureStorage failed. " + toError(result));
     }
 }
 
@@ -1010,8 +992,7 @@ void CoreSDKTest::SetSecureStorage()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("SetSecureStorage failed. " + errorMessage);
+        throw std::runtime_error("SetSecureStorage failed. " + toError(result));
     }
 }
 
@@ -1028,8 +1009,7 @@ void CoreSDKTest::SetSecureStorageForApp()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("SetSecureStorageForApp failed. " + errorMessage);
+        throw std::runtime_error("SetSecureStorageForApp failed. " + toError(result));
     }
 }
 
@@ -1045,8 +1025,7 @@ void CoreSDKTest::RemoveSecureStorageForApp()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("RemoveSecureStorageForApp failed. " + errorMessage);
+        throw std::runtime_error("RemoveSecureStorageForApp failed. " + toError(result));
     }
 }
 
@@ -1062,7 +1041,6 @@ void CoreSDKTest::ClearSecureStorageForApp()
     }
     else
     {
-        std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("ClearSecureStorageForApp failed. " + errorMessage);
+        throw std::runtime_error("ClearSecureStorageForApp failed. " + toError(result));
     }
 }

@@ -19,25 +19,29 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "securestorage.h"
+#include <types/json_types.h>
 
 namespace Firebolt::SecureStorage::JsonData
 {
-using StorageScope = WPEFramework::Core::JSON::EnumType<::Firebolt::SecureStorage::StorageScope>;
+inline FireboltSDK::JSON::EnumType<::Firebolt::SecureStorage::StorageScope> StorageScopeEnum({
+    { "device", ::Firebolt::SecureStorage::StorageScope::DEVICE },
+    { "account", ::Firebolt::SecureStorage::StorageScope::ACCOUNT },
+});
 
-class StorageOptions : public WPEFramework::Core::JSON::Container
+class StorageOptions : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::SecureStorage::StorageOptions>
 {
 public:
-    ~StorageOptions() override = default;
-    StorageOptions();
-    StorageOptions(const StorageOptions& other);
-    explicit StorageOptions(const ::Firebolt::SecureStorage::StorageOptions& storageOptions);
-    StorageOptions& operator=(const StorageOptions& other);
-    ::Firebolt::SecureStorage::StorageOptions Value();
-    WPEFramework::Core::JSON::Variant Data() const;
-
+    void FromJson(const nlohmann::json& json) override
+    {
+        ttl_ = json.at("ttl").get<float>();
+    }
+    ::Firebolt::SecureStorage::StorageOptions Value() const override
+    {
+        return ::Firebolt::SecureStorage::StorageOptions{ttl_};
+    }
 private:
-    WPEFramework::Core::JSON::Float ttl_;
+    float ttl_;
 };
+
 } // namespace Firebolt::SecureStorage::JsonData

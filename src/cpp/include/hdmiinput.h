@@ -19,9 +19,10 @@
 
 #pragma once
 
-#include "common/types.h"
-#include "error.h"
+#include <functional>
 #include <optional>
+#include <types/fb-errors.h>
+#include <types/types.h>
 #include <vector>
 
 namespace Firebolt::HDMIInput

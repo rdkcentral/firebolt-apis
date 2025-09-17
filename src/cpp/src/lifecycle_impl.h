@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "helpers.h"
 #include "lifecycle.h"
 #include <mutex>
@@ -28,10 +27,10 @@
 
 namespace Firebolt::Lifecycle
 {
-class LifecycleImpl : public ILifecycle, public Firebolt::Helpers::SubscriptionHelper
+class LifecycleImpl : public ILifecycle
 {
 public:
-    LifecycleImpl() = default;
+    LifecycleImpl(Firebolt::Helpers::IHelper &helper);
     LifecycleImpl(const LifecycleImpl&) = delete;
     LifecycleImpl& operator=(const LifecycleImpl&) = delete;
     ~LifecycleImpl() override;
@@ -53,8 +52,10 @@ private:
     void subscribeOnStateChange();
 
 private:
+    Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::SubscriptionManager subscriptionManager_;
     std::mutex mutex_;
-    std::string currentState_{"INITIALIZING"};
+    LifecycleState currentState_{LifecycleState::INITIALIZING};
     std::set<SubscriptionId> subscriptions_;
 };
 } // namespace Firebolt::Lifecycle
