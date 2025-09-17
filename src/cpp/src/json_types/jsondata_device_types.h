@@ -105,18 +105,21 @@ private:
     bool isDolbyAtmos_;
 };
 
-class HDCPVersionMap : public WPEFramework::Core::JSON::Container
+class HDCPVersionMap : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::HDCPVersionMap>
 {
 public:
-    ~HDCPVersionMap() override = default;
-    HDCPVersionMap();
-    HDCPVersionMap(const HDCPVersionMap& other);
-    HDCPVersionMap& operator=(const HDCPVersionMap& other);
-    ::Firebolt::Device::HDCPVersionMap Value();
-
+    void FromJson(const nlohmann::json& json) override
+    {
+        isHdcp1_4_ = json["hdcp1.4"].get<bool>();
+        isHdcp2_2_ = json["hdcp2.2"].get<bool>();
+    }
+    ::Firebolt::Device::HDCPVersionMap Value() const override
+    {
+        return ::Firebolt::Device::HDCPVersionMap{isHdcp1_4_, isHdcp2_2_};
+    }
 private:
-    WPEFramework::Core::JSON::Boolean isHdcp1_4_;
-    WPEFramework::Core::JSON::Boolean isHdcp2_2_;
+    bool isHdcp1_4_;
+    bool isHdcp2_2_;
 };
 
 class HDRFormatMap : public WPEFramework::Core::JSON::Container

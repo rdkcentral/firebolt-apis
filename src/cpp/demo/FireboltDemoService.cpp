@@ -231,6 +231,13 @@ void FireboltDemoService::ownDemo()
     } else {
         std::cout << "audio: failed, error: " << audio.error() << std::endl;
     }
+    if (auto hdcp = Firebolt::IFireboltAccessor::Instance().DeviceInterface().hdcp()) {
+        std::cout << "hdcp: "
+                  << "1.4: " << bool2str(hdcp->hdcp1_4) << ", "
+                  << "2.2: " << bool2str(hdcp->hdcp2_2) << std::endl;
+    } else {
+        std::cout << "hdcp: failed, error: " << hdcp.error() << std::endl;
+    }
 }
 
 FireboltDemoService::DeviceInfo FireboltDemoService::getAndPrintDeviceValues()

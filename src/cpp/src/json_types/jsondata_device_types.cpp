@@ -22,30 +22,6 @@
 namespace Firebolt::Device::JsonData
 {
 
-HDCPVersionMap::HDCPVersionMap() : WPEFramework::Core::JSON::Container()
-{
-    Add(_T("hdcp1.4"), &isHdcp1_4_);
-    Add(_T("hdcp2.2"), &isHdcp2_2_);
-}
-
-HDCPVersionMap::HDCPVersionMap(const HDCPVersionMap& other) : HDCPVersionMap()
-{
-    isHdcp1_4_ = other.isHdcp1_4_;
-    isHdcp2_2_ = other.isHdcp2_2_;
-}
-
-HDCPVersionMap& HDCPVersionMap::operator=(const HDCPVersionMap& other)
-{
-    isHdcp1_4_ = other.isHdcp1_4_;
-    isHdcp2_2_ = other.isHdcp2_2_;
-    return *this;
-}
-
-::Firebolt::Device::HDCPVersionMap HDCPVersionMap::Value()
-{
-    return ::Firebolt::Device::HDCPVersionMap{isHdcp1_4_.Value(), isHdcp2_2_.Value()};
-}
-
 HDRFormatMap::HDRFormatMap() : WPEFramework::Core::JSON::Container()
 {
     Add(_T("hdr10"), &isHdr10_);
