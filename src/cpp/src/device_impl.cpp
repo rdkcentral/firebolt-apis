@@ -47,7 +47,7 @@ Result<HDRFormatMap> DeviceImpl::hdr() const
 
 Result<std::string> DeviceImpl::id() const
 {
-    return get<FireboltSDK::JSON::NJ_String, std::string>("device.id");
+    return get<FireboltSDK::JSON::String, std::string>("device.id");
 }
 
 Result<std::string> DeviceImpl::make() const

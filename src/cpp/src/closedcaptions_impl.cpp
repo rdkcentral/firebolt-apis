@@ -72,7 +72,7 @@ Result<float> ClosedCaptionsImpl::fontSize() const
 
 Result<std::vector<std::string>> ClosedCaptionsImpl::preferredLanguages() const
 {
-    return get<FireboltSDK::JSON::String, std::vector<std::string>>(_T("ClosedCaptions.preferredLanguages"));
+    return get<FireboltSDK::JSON::WPE_String, std::vector<std::string>>(_T("ClosedCaptions.preferredLanguages"));
 }
 
 Result<std::string> ClosedCaptionsImpl::textAlign() const
@@ -230,7 +230,7 @@ Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnFontSizeChanged(std::funct
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnPreferredLanguagesChanged(
     std::function<void(const std::vector<std::string>&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::String>(_T("ClosedCaptions.onPreferredLanguagesChanged"),
+    return SubscriptionHelper::subscribe<FireboltSDK::JSON::WPE_String>(_T("ClosedCaptions.onPreferredLanguagesChanged"),
                                                                     std::move(notification));
 }
 

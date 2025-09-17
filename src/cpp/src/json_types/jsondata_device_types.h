@@ -39,7 +39,7 @@ public:
     WPEFramework::Core::JSON::DecSInt32 major;
     WPEFramework::Core::JSON::DecSInt32 minor;
     WPEFramework::Core::JSON::DecSInt32 patch;
-    FireboltSDK::JSON::String readable;
+    FireboltSDK::JSON::WPE_String readable;
 };
 
 class DeviceVersion : public WPEFramework::Core::JSON::Container
@@ -56,7 +56,7 @@ private:
     SemanticVersion api_;
     SemanticVersion firmware_;
     SemanticVersion os_;
-    FireboltSDK::JSON::String debug_;
+    FireboltSDK::JSON::WPE_String debug_;
 };
 
 class AudioProfiles : public WPEFramework::Core::JSON::Container

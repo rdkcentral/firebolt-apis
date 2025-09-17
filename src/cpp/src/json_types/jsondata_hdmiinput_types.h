@@ -38,7 +38,7 @@ public:
     ::Firebolt::HDMIInput::SignalChangedInfo Value();
 
 private:
-    FireboltSDK::JSON::String port_;
+    FireboltSDK::JSON::WPE_String port_;
     HDMISignalStatus signal_;
 };
 
@@ -52,7 +52,7 @@ public:
     ::Firebolt::HDMIInput::AutoLowLatencyModeSignalChangedInfo Value();
 
 private:
-    FireboltSDK::JSON::String port_;
+    FireboltSDK::JSON::WPE_String port_;
     WPEFramework::Core::JSON::Boolean isAutoLowLatencyModeSignalled_;
 };
 
@@ -66,7 +66,7 @@ public:
     ::Firebolt::HDMIInput::HDMIInputPort Value();
 
 private:
-    FireboltSDK::JSON::String port_;
+    FireboltSDK::JSON::WPE_String port_;
     WPEFramework::Core::JSON::Boolean isConnected_;
     HDMISignalStatus signal_;
     WPEFramework::Core::JSON::Boolean isArcCapable_;
@@ -86,7 +86,7 @@ public:
     Firebolt::HDMIInput::AutoLowLatencyModeCapableChangedInfo Value();
 
 private:
-    FireboltSDK::JSON::String port_;
+    FireboltSDK::JSON::WPE_String port_;
     WPEFramework::Core::JSON::Boolean isEnabled_;
 };
 
@@ -100,7 +100,7 @@ public:
     Firebolt::HDMIInput::ConnectionChangedInfo Value();
 
 private:
-    FireboltSDK::JSON::String port_;
+    FireboltSDK::JSON::WPE_String port_;
     WPEFramework::Core::JSON::Boolean isConnected_;
 };
 } // namespace Firebolt::HDMIInput::JsonData
