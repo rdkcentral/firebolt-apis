@@ -191,15 +191,31 @@ void FireboltDemoService::unsubscribeAll()
 
 void FireboltDemoService::ownDemo()
 {
-    std::cout << "Get and print device values..." << std::endl;
-    DeviceInfo result;
-    if (auto id = Firebolt::IFireboltAccessor::Instance().DeviceInterface().id())
-    {
-        std::cout << "Device Id is: " << *id << std::endl;
+    if (auto id = Firebolt::IFireboltAccessor::Instance().DeviceInterface().id()) {
+        std::cout << "Id: " << *id << std::endl;
+    } else {
+        std::cout << "id: failed, error: " << id.error() << std::endl;
     }
-    else
-    {
-        std::cout << "Get device id failed, error: << " << id.error() << std::endl;
+    if (auto name = Firebolt::IFireboltAccessor::Instance().DeviceInterface().name()) {
+        std::cout << "name: " << *name << std::endl;
+    } else {
+        std::cout << "name: failed, error: " << name.error() << std::endl;
+    }
+    if (auto model = Firebolt::IFireboltAccessor::Instance().DeviceInterface().model()) {
+        std::cout << "model: " << *model << std::endl;
+    } else {
+        std::cout << "model: failed, error: " << model.error() << std::endl;
+    }
+    if (auto version = Firebolt::IFireboltAccessor::Instance().DeviceInterface().version()) {
+        std::cout << "sdl-ver: " << version->sdk.major << "." << version->sdk.minor << "." << version->sdk.patch
+                  << " " << version->sdk.readable << std::endl;
+        std::cout << "api-ver: " << version->api.major << "." << version->api.minor << "." << version->api.patch
+                  << " " << version->api.readable << std::endl;
+        std::cout << "f/w-ver: " << version->firmware.major << "." << version->firmware.minor << "."
+                  << version->firmware.patch << " " << version->firmware.readable << std::endl;
+        std::cout << "dbg-ver: " << version->debug << std::endl;
+    } else {
+        std::cout << "version: failed, error: << " << version.error() << std::endl;
     }
 }
 

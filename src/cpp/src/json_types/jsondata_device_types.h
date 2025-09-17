@@ -27,6 +27,21 @@ namespace Firebolt::Device::JsonData
 using NetworkState = WPEFramework::Core::JSON::EnumType<::Firebolt::Device::NetworkState>;
 using NetworkType = WPEFramework::Core::JSON::EnumType<::Firebolt::Device::NetworkType>;
 
+class NJ_SemanticVersion
+{
+public:
+    ~NJ_SemanticVersion() = default;
+    NJ_SemanticVersion();
+    NJ_SemanticVersion(const NJ_SemanticVersion& other);
+    NJ_SemanticVersion& operator=(const NJ_SemanticVersion& other);
+    ::Firebolt::Device::SemanticVersion Value();
+
+    uint32_t major;
+    uint32_t minor;
+    uint32_t patch;
+    FireboltSDK::JSON::String readable;
+};
+
 class SemanticVersion : public WPEFramework::Core::JSON::Container
 {
 public:
