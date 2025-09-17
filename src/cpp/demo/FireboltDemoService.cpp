@@ -189,6 +189,11 @@ void FireboltDemoService::unsubscribeAll()
 }
 
 
+std::string bool2str(const bool value)
+{
+    return value ? "true" : "false";
+}
+
 void FireboltDemoService::ownDemo()
 {
     if (auto id = Firebolt::IFireboltAccessor::Instance().DeviceInterface().id()) {
@@ -216,6 +221,15 @@ void FireboltDemoService::ownDemo()
         std::cout << "dbg-ver: " << version->debug << std::endl;
     } else {
         std::cout << "version: failed, error: << " << version.error() << std::endl;
+    }
+    if (auto audio = Firebolt::IFireboltAccessor::Instance().DeviceInterface().audio()) {
+        std::cout << "audio profiles: "
+                  << "stereo: " << bool2str(audio->stereo) << ", "
+                  << "dd5.1: " << bool2str(audio->dolbyDigital5_1) << ", "
+                  << "dd5.1+: " << bool2str(audio->dolbyDigital5_1_plus) << ", " 
+                  << "datmos: " << bool2str(audio->dolbyAtmos) << std::endl;
+    } else {
+        std::cout << "audio: failed, error: " << audio.error() << std::endl;
     }
 }
 

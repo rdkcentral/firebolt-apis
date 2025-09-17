@@ -22,37 +22,6 @@
 namespace Firebolt::Device::JsonData
 {
 
-AudioProfiles::AudioProfiles() : WPEFramework::Core::JSON::Container()
-{
-    Add(_T("stereo"), &isStereo_);
-    Add(_T("dolbyDigital5.1"), &isDolbyDigital5_1_);
-    Add(_T("dolbyDigital5.1+"), &isDolbyDigital5_1_plus_);
-    Add(_T("dolbyAtmos"), &isDolbyAtmos_);
-}
-
-AudioProfiles::AudioProfiles(const AudioProfiles& other) : AudioProfiles()
-{
-    isStereo_ = other.isStereo_;
-    isDolbyDigital5_1_ = other.isDolbyDigital5_1_;
-    isDolbyDigital5_1_plus_ = other.isDolbyDigital5_1_plus_;
-    isDolbyAtmos_ = other.isDolbyAtmos_;
-}
-
-AudioProfiles& AudioProfiles::operator=(const AudioProfiles& other)
-{
-    isStereo_ = other.isStereo_;
-    isDolbyDigital5_1_ = other.isDolbyDigital5_1_;
-    isDolbyDigital5_1_plus_ = other.isDolbyDigital5_1_plus_;
-    isDolbyAtmos_ = other.isDolbyAtmos_;
-    return *this;
-}
-
-::Firebolt::Device::AudioProfiles AudioProfiles::Value() const
-{
-    return ::Firebolt::Device::AudioProfiles{isStereo_.Value(), isDolbyDigital5_1_.Value(),
-                                             isDolbyDigital5_1_plus_.Value(), isDolbyAtmos_.Value()};
-}
-
 HDCPVersionMap::HDCPVersionMap() : WPEFramework::Core::JSON::Container()
 {
     Add(_T("hdcp1.4"), &isHdcp1_4_);

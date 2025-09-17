@@ -84,20 +84,25 @@ private:
     std::string debug_;
 };
 
-class AudioProfiles : public WPEFramework::Core::JSON::Container
+class AudioProfiles : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::AudioProfiles>
 {
 public:
-    ~AudioProfiles() override = default;
-    AudioProfiles();
-    AudioProfiles(const AudioProfiles& other);
-    AudioProfiles& operator=(const AudioProfiles& other);
-    ::Firebolt::Device::AudioProfiles Value() const;
-
+    void FromJson(const nlohmann::json& json) override
+    {
+        isStereo_ = json["stereo"].get<bool>();
+        isDolbyDigital5_1_ = json["dolbyDigital5.1"].get<bool>();
+        isDolbyDigital5_1_plus_ = json["dolbyDigital5.1+"].get<bool>();
+        isDolbyAtmos_ = json["dolbyAtmos"].get<bool>();
+    }
+    ::Firebolt::Device::AudioProfiles Value() const override
+    {
+        return ::Firebolt::Device::AudioProfiles{isStereo_, isDolbyDigital5_1_, isDolbyDigital5_1_plus_, isDolbyAtmos_};
+    }
 private:
-    WPEFramework::Core::JSON::Boolean isStereo_;
-    WPEFramework::Core::JSON::Boolean isDolbyDigital5_1_;
-    WPEFramework::Core::JSON::Boolean isDolbyDigital5_1_plus_;
-    WPEFramework::Core::JSON::Boolean isDolbyAtmos_;
+    bool isStereo_;
+    bool isDolbyDigital5_1_;
+    bool isDolbyDigital5_1_plus_;
+    bool isDolbyAtmos_;
 };
 
 class HDCPVersionMap : public WPEFramework::Core::JSON::Container
