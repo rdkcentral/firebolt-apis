@@ -20,6 +20,7 @@
 #include "FireboltDemoService.h"
 #include <exception>
 #include <iostream>
+#include <thread>
 
 int main()
 try
@@ -28,9 +29,7 @@ try
 
     FireboltDemoService service;
 
-    // service.setupDeviceSubscriptions();
-
-    // auto deviceInfo = service.getAndPrintDeviceValues();
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
     std::string input;
     while (1) {

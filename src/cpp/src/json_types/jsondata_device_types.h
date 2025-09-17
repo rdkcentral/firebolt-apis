@@ -27,51 +27,61 @@ namespace Firebolt::Device::JsonData
 using NetworkState = WPEFramework::Core::JSON::EnumType<::Firebolt::Device::NetworkState>;
 using NetworkType = WPEFramework::Core::JSON::EnumType<::Firebolt::Device::NetworkType>;
 
-class NJ_SemanticVersion
+class SemanticVersion : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::SemanticVersion>
 {
 public:
-    ~NJ_SemanticVersion() = default;
-    NJ_SemanticVersion();
-    NJ_SemanticVersion(const NJ_SemanticVersion& other);
-    NJ_SemanticVersion& operator=(const NJ_SemanticVersion& other);
-    ::Firebolt::Device::SemanticVersion Value();
+    void FromJson(const nlohmann::json& json) override
+    {
+        if (json.contains("major"))
+            major = json["major"].get<int32_t>();
+        if (json.contains("minor"))
+            minor = json["minor"].get<int32_t>();
+        if (json.contains("patch"))
+            patch = json["patch"].get<int32_t>();
+        if (json.contains("readable"))
+            readable = json["readable"].get<std::string>();
+    }
 
-    uint32_t major;
-    uint32_t minor;
-    uint32_t patch;
-    FireboltSDK::JSON::String readable;
+    ::Firebolt::Device::SemanticVersion Value() const override
+    {
+        return ::Firebolt::Device::SemanticVersion{major, minor, patch, readable}; 
+    }
+
+private:
+    int32_t major;
+    int32_t minor;
+    int32_t patch;
+    std::string readable;
 };
 
-class SemanticVersion : public WPEFramework::Core::JSON::Container
+class DeviceVersion : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::DeviceVersion>
 {
 public:
-    ~SemanticVersion() override = default;
-    SemanticVersion();
-    SemanticVersion(const SemanticVersion& other);
-    SemanticVersion& operator=(const SemanticVersion& other);
-    ::Firebolt::Device::SemanticVersion Value();
+    void FromJson(const nlohmann::json& json) override
+    {
+        if (json.contains("sdk"))
+            sdk_.FromJson(json["sdk"]);
+        if (json.contains("api"))
+            api_.FromJson(json["api"]);
+        if (json.contains("firmware"))
+            firmware_.FromJson(json["firmware"]);
+        if (json.contains("os"))
+            os_.FromJson(json["os"]);
+        if (json.contains("debug"))
+            debug_ = to_string(json["debug"]);
+    }
 
-    WPEFramework::Core::JSON::DecSInt32 major;
-    WPEFramework::Core::JSON::DecSInt32 minor;
-    WPEFramework::Core::JSON::DecSInt32 patch;
-    FireboltSDK::JSON::WPE_String readable;
-};
-
-class DeviceVersion : public WPEFramework::Core::JSON::Container
-{
-public:
-    ~DeviceVersion() override = default;
-    DeviceVersion();
-    DeviceVersion(const DeviceVersion& other);
-    DeviceVersion& operator=(const DeviceVersion& other);
-    ::Firebolt::Device::DeviceVersion Value();
+    ::Firebolt::Device::DeviceVersion Value() const override
+    {
+        return ::Firebolt::Device::DeviceVersion{sdk_.Value(), api_.Value(), firmware_.Value(), os_.Value(), debug_};
+    }
 
 private:
     SemanticVersion sdk_;
     SemanticVersion api_;
     SemanticVersion firmware_;
     SemanticVersion os_;
-    FireboltSDK::JSON::WPE_String debug_;
+    std::string debug_;
 };
 
 class AudioProfiles : public WPEFramework::Core::JSON::Container

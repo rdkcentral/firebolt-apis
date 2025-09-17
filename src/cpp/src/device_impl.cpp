@@ -153,7 +153,6 @@ void DeviceImpl::unsubscribeAll()
 
 Result<DeviceVersion> DeviceImpl::version() const
 {
-    Parameters params;
-    return invoke<JsonData::DeviceVersion, DeviceVersion>("device.version", params);
+    return get<JsonData::DeviceVersion, DeviceVersion>("device.version");
 }
 } // namespace Firebolt::Device
