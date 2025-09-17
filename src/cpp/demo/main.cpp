@@ -28,14 +28,18 @@ try
 
     FireboltDemoService service;
 
-    service.setupDeviceSubscriptions();
+    // service.setupDeviceSubscriptions();
 
-    auto deviceInfo = service.getAndPrintDeviceValues();
+    // auto deviceInfo = service.getAndPrintDeviceValues();
 
-    std::cout << "Press a key to finish" << std::endl;
-    std::cin.get();
-
-    service.unsubscribeAll();
+    std::string input;
+    while (1) {
+        service.ownDemo();
+        std::cout << "Press a key to rerun or 'q' to quit" << std::endl;
+        getline(std::cin, input);
+        if (input == "q")
+            break;
+    }
 
     return 0;
 }

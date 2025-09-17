@@ -104,14 +104,14 @@ FireboltDemoService::FireboltDemoService()
     }
     std::cout << "Using firebolt URL: " << url << std::endl;
 
-    const std::string config = "{\
-    \"waitTime\": 3000,\
-    \"logLevel\": \"Info\",\
-    \"workerPool\":{\
-    \"queueSize\": 8,\
-    \"threadCount\": 3\
-    },\
-    \"wsUrl\": " + url + "}";
+    const std::string config = R"({
+    "waitTime": 3000,
+    "logLevel": "Info",
+    "workerPool": {
+      "queueSize": 8,
+      "threadCount": 3
+    },
+    "wsUrl": ")" + url + R"("})";
 
     auto error = Firebolt::IFireboltAccessor::Instance().Initialize(config);
     if (Firebolt::Error::None != error)
@@ -185,6 +185,21 @@ void FireboltDemoService::unsubscribeAll()
             std::cout << "Device unsubscribe with id: " << subscriptionId << " failed, error: " << result.error()
                       << std::endl;
         }
+    }
+}
+
+
+void FireboltDemoService::ownDemo()
+{
+    std::cout << "Get and print device values..." << std::endl;
+    DeviceInfo result;
+    if (auto id = Firebolt::IFireboltAccessor::Instance().DeviceInterface().id())
+    {
+        std::cout << "Device Id is: " << *id << std::endl;
+    }
+    else
+    {
+        std::cout << "Get device id failed, error: << " << id.error() << std::endl;
     }
 }
 
