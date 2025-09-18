@@ -58,16 +58,11 @@ class DeviceVersion : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device
 public:
     void FromJson(const nlohmann::json& json) override
     {
-        if (json.contains("sdk"))
-            sdk_.FromJson(json["sdk"]);
-        if (json.contains("api"))
-            api_.FromJson(json["api"]);
-        if (json.contains("firmware"))
-            firmware_.FromJson(json["firmware"]);
-        if (json.contains("os"))
-            os_.FromJson(json["os"]);
-        if (json.contains("debug"))
-            debug_ = to_string(json["debug"]);
+        sdk_.FromJson(json["sdk"]);
+        api_.FromJson(json["api"]);
+        firmware_.FromJson(json["firmware"]);
+        os_.FromJson(json["os"]);
+        debug_ = to_string(json["debug"]);
     }
 
     ::Firebolt::Device::DeviceVersion Value() const override
@@ -121,20 +116,25 @@ private:
     bool isHdcp2_2_;
 };
 
-class HDRFormatMap : public WPEFramework::Core::JSON::Container
+class HDRFormatMap : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::HDRFormatMap>
 {
 public:
-    ~HDRFormatMap() override = default;
-    HDRFormatMap();
-    HDRFormatMap(const HDRFormatMap& other);
-    HDRFormatMap& operator=(const HDRFormatMap& other);
-    ::Firebolt::Device::HDRFormatMap Value();
-
+    void FromJson(const nlohmann::json& json) override
+    {
+        isHdr10_ = json["hdr10"].get<bool>();
+        isHdr10Plus_ = json["hdr10Plus"].get<bool>();
+        isDolbyVision_ = json["dolbyVision"].get<bool>();
+        isHlg_ = json["hlg"].get<bool>();
+    }
+    ::Firebolt::Device::HDRFormatMap Value() const override
+    {
+        return ::Firebolt::Device::HDRFormatMap{isHdr10_, isHdr10Plus_, isDolbyVision_, isHlg_};
+    }
 private:
-    WPEFramework::Core::JSON::Boolean isHdr10_;
-    WPEFramework::Core::JSON::Boolean isHdr10Plus_;
-    WPEFramework::Core::JSON::Boolean isDolbyVision_;
-    WPEFramework::Core::JSON::Boolean isHlg_;
+    bool isHdr10_;
+    bool isHdr10Plus_;
+    bool isDolbyVision_;
+    bool isHlg_;
 };
 
 FireboltSDK::JSON::EnumType<::Firebolt::Device::NetworkState> const NetworkStateEnum({
