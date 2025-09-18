@@ -226,7 +226,7 @@ void FireboltDemoService::ownDemo()
         std::cout << "audio profiles: "
                   << "stereo: " << bool2str(audio->stereo) << ", "
                   << "dd5.1: " << bool2str(audio->dolbyDigital5_1) << ", "
-                  << "dd5.1+: " << bool2str(audio->dolbyDigital5_1_plus) << ", " 
+                  << "dd5.1+: " << bool2str(audio->dolbyDigital5_1_plus) << ", "
                   << "datmos: " << bool2str(audio->dolbyAtmos) << std::endl;
     } else {
         std::cout << "audio: failed, error: " << audio.error() << std::endl;
@@ -237,6 +237,22 @@ void FireboltDemoService::ownDemo()
                   << "2.2: " << bool2str(hdcp->hdcp2_2) << std::endl;
     } else {
         std::cout << "hdcp: failed, error: " << hdcp.error() << std::endl;
+    }
+    if (auto ports = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().ports()) {
+        std::cout << "ports: " << ports->size() << std::endl;
+        for (const auto& i : *ports) {
+          std::cout << "     : "
+                    << i.port << ", "
+                    << i.connected << ", "
+                    << static_cast<int>(i.signal) << ", "
+                    << i.arcCapable << ", "
+                    << i.arcConnected << ", "
+                    << static_cast<int>(i.edidVersion) << ", "
+                    << i.autoLowLatencyModeCapable << ", "
+                    << i.autoLowLatencyModeSignalled << std::endl;
+        }
+    } else {
+        std::cout << "hdmi-ports: failed, error: " << ports.error() << std::endl;
     }
 }
 

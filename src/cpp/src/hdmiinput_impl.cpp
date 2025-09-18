@@ -35,7 +35,7 @@ Result<EDIDVersion> HDMIInputImpl::edidVersion(const std::string& port) const
 {
     Parameters parameters;
     parameters.add(_T("port"), port);
-    return get<JsonData::EDIDVersion, EDIDVersion>(_T("HDMIInput.edidVersion"), parameters);
+    return get<JsonData::EDIDVersionJson, EDIDVersion>(_T("HDMIInput.edidVersion"), parameters);
 }
 
 Result<bool> HDMIInputImpl::lowLatencyMode() const
@@ -54,8 +54,8 @@ Result<void> HDMIInputImpl::setAutoLowLatencyModeCapable(const std::string& port
 Result<void> HDMIInputImpl::setEdidVersion(const std::string& port, const EDIDVersion& value)
 {
     Parameters params;
-    params.add(_T("port"), port);
-    params.add<JsonData::EDIDVersion>(_T("value"), value);
+    // params.add(_T("port"), port);
+    // params.add<JsonData::EDIDVersion>(_T("value"), value);
     return set(_T("HDMIInput.setEdidVersion"), params);
 }
 
@@ -87,7 +87,7 @@ Result<HDMIInputPort> HDMIInputImpl::port(const std::string& portId)
 Result<std::vector<HDMIInputPort>> HDMIInputImpl::ports() const
 {
     Parameters params;
-    return invoke<JsonData::HDMIInputPort, std::vector<HDMIInputPort>>("HDMIInput.ports", params);
+    return invoke<FireboltSDK::JSON::NL_Json_Array<JsonData::HDMIInputPort, HDMIInputPort>, std::vector<HDMIInputPort>>("HDMIInput.ports", params);
 }
 
 // Events
@@ -124,7 +124,7 @@ HDMIInputImpl::subscribeOnConnectionChanged(std::function<void(const ConnectionC
 
 Result<SubscriptionId> HDMIInputImpl::subscribeOnEdidVersionChanged(std::function<void(const EDIDVersion&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::EDIDVersion>(_T("hdmiinput.onEdidVersionChanged"),
+    return SubscriptionHelper::subscribe<JsonData::EDIDVersionJson>(_T("hdmiinput.onEdidVersionChanged"),
                                                                 std::move(notification));
 }
 

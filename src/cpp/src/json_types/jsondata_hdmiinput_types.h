@@ -24,83 +24,130 @@
 
 namespace Firebolt::HDMIInput::JsonData
 {
-using EDIDVersion = WPEFramework::Core::JSON::EnumType<EDIDVersion>;
-using HDMISignalStatus = WPEFramework::Core::JSON::EnumType<HDMISignalStatus>;
+FireboltSDK::JSON::EnumType<::Firebolt::HDMIInput::EDIDVersion> const EDIDVersionEnum({
+    { "1.4", ::Firebolt::HDMIInput::EDIDVersion::V1_4 },
+    { "2.0", ::Firebolt::HDMIInput::EDIDVersion::V2_0 },
+    { "unknown", ::Firebolt::HDMIInput::EDIDVersion::UNKNOWN },
+});
+
+FireboltSDK::JSON::EnumType<::Firebolt::HDMIInput::HDMISignalStatus> const HDMISignalStatusEnum({
+    { "none", ::Firebolt::HDMIInput::HDMISignalStatus::NONE },
+    { "stable", ::Firebolt::HDMIInput::HDMISignalStatus::STABLE },
+    { "unstable", ::Firebolt::HDMIInput::HDMISignalStatus::UNSTABLE },
+    { "unsupported", ::Firebolt::HDMIInput::HDMISignalStatus::UNSUPPORTED },
+    { "unknown", ::Firebolt::HDMIInput::HDMISignalStatus::UNKNOWN },
+});
+
+class EDIDVersionJson : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::HDMIInput::EDIDVersion>
+{
+public:
+    void FromJson(const nlohmann::json& json) override
+    {
+        value_ = EDIDVersionEnum.at(json);
+    }
+    ::Firebolt::HDMIInput::EDIDVersion Value() const override
+    {
+        return value_;
+    }
+private:
+    ::Firebolt::HDMIInput::EDIDVersion value_;
+};
 
 // Types
-class SignalChangedInfo : public WPEFramework::Core::JSON::Container
+class SignalChangedInfo : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::HDMIInput::SignalChangedInfo>
 {
 public:
-    ~SignalChangedInfo() override = default;
-    SignalChangedInfo();
-    SignalChangedInfo(const SignalChangedInfo& other);
-    SignalChangedInfo& operator=(const SignalChangedInfo& other);
-    ::Firebolt::HDMIInput::SignalChangedInfo Value();
-
+    void FromJson(const nlohmann::json& json) override
+    {
+        port = json["port"].get<std::string>();
+        signal = HDMISignalStatusEnum.at(json["signal"]);
+    }
+    ::Firebolt::HDMIInput::SignalChangedInfo Value() const override
+    {
+        return ::Firebolt::HDMIInput::SignalChangedInfo{port, signal};
+    }
 private:
-    FireboltSDK::JSON::WPE_String port_;
-    HDMISignalStatus signal_;
+    std::string port;
+    HDMISignalStatus signal;
 };
 
-class AutoLowLatencyModeSignalChangedInfo : public WPEFramework::Core::JSON::Container
+class AutoLowLatencyModeSignalChangedInfo : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::HDMIInput::AutoLowLatencyModeSignalChangedInfo>
 {
 public:
-    ~AutoLowLatencyModeSignalChangedInfo() override = default;
-    AutoLowLatencyModeSignalChangedInfo();
-    AutoLowLatencyModeSignalChangedInfo(const AutoLowLatencyModeSignalChangedInfo& other);
-    AutoLowLatencyModeSignalChangedInfo& operator=(const AutoLowLatencyModeSignalChangedInfo& other);
-    ::Firebolt::HDMIInput::AutoLowLatencyModeSignalChangedInfo Value();
-
+    void FromJson(const nlohmann::json& json) override
+    {
+        port_ = json["port"].get<std::string>();
+        isAutoLowLatencyModeSignalled_ = json["autoLowLatencyModeSignalled"].get<bool>();
+    }
+    ::Firebolt::HDMIInput::AutoLowLatencyModeSignalChangedInfo Value() const override
+    {
+        return ::Firebolt::HDMIInput::AutoLowLatencyModeSignalChangedInfo{port_, isAutoLowLatencyModeSignalled_};
+    }
 private:
-    FireboltSDK::JSON::WPE_String port_;
-    WPEFramework::Core::JSON::Boolean isAutoLowLatencyModeSignalled_;
+    std::string port_;
+    bool isAutoLowLatencyModeSignalled_;
 };
 
-class HDMIInputPort : public WPEFramework::Core::JSON::Container
+class HDMIInputPort : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::HDMIInput::HDMIInputPort>
 {
 public:
-    ~HDMIInputPort() override = default;
-    HDMIInputPort();
-    HDMIInputPort(const HDMIInputPort& other);
-    HDMIInputPort& operator=(const HDMIInputPort& other);
-    ::Firebolt::HDMIInput::HDMIInputPort Value();
-
+    void FromJson(const nlohmann::json& json) override
+    {
+        port_ = json["port"].get<std::string>();
+        isConnected_ = json["connected"].get<bool>();
+        signal_ = HDMISignalStatusEnum.at(json["signal"]);
+        isArcCapable_ = json["arcCapable"].get<bool>();
+        isArcConnected_ = json["arcConnected"].get<bool>();
+        edidVersion_ = EDIDVersionEnum.at(json["edidVersion"]);
+        isAutoLowLatencyModeCapable_ = json["autoLowLatencyModeCapable"].get<bool>();
+        isAutoLowLatencyModeSignalled_ = json["autoLowLatencyModeSignalled"].get<bool>();
+    }
+    ::Firebolt::HDMIInput::HDMIInputPort Value() const override
+    {
+        return ::Firebolt::HDMIInput::HDMIInputPort{port_, isConnected_, signal_, isArcCapable_, isArcConnected_, edidVersion_, isAutoLowLatencyModeCapable_, isAutoLowLatencyModeSignalled_};
+    }
 private:
-    FireboltSDK::JSON::WPE_String port_;
-    WPEFramework::Core::JSON::Boolean isConnected_;
+    std::string port_;
+    bool isConnected_;
     HDMISignalStatus signal_;
-    WPEFramework::Core::JSON::Boolean isArcCapable_;
-    WPEFramework::Core::JSON::Boolean isArcConnected_;
+    bool isArcCapable_;
+    bool isArcConnected_;
     EDIDVersion edidVersion_;
-    WPEFramework::Core::JSON::Boolean isAutoLowLatencyModeCapable_;
-    WPEFramework::Core::JSON::Boolean isAutoLowLatencyModeSignalled_;
+    bool isAutoLowLatencyModeCapable_;
+    bool isAutoLowLatencyModeSignalled_;
 };
 
-class AutoLowLatencyModeCapableChangedInfo : public WPEFramework::Core::JSON::Container
+class AutoLowLatencyModeCapableChangedInfo : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::HDMIInput::AutoLowLatencyModeCapableChangedInfo>
 {
 public:
-    ~AutoLowLatencyModeCapableChangedInfo() override = default;
-    AutoLowLatencyModeCapableChangedInfo();
-    AutoLowLatencyModeCapableChangedInfo(const AutoLowLatencyModeCapableChangedInfo& other);
-    AutoLowLatencyModeCapableChangedInfo& operator=(const AutoLowLatencyModeCapableChangedInfo& other);
-    Firebolt::HDMIInput::AutoLowLatencyModeCapableChangedInfo Value();
-
+    void FromJson(const nlohmann::json& json) override
+    {
+        port_ = json["port"].get<std::string>();
+        isEnabled_ = json["enabled"].get<bool>();
+    }
+    ::Firebolt::HDMIInput::AutoLowLatencyModeCapableChangedInfo Value() const override
+    {
+        return ::Firebolt::HDMIInput::AutoLowLatencyModeCapableChangedInfo{port_, isEnabled_};
+    }
 private:
-    FireboltSDK::JSON::WPE_String port_;
-    WPEFramework::Core::JSON::Boolean isEnabled_;
+    std::string port_;
+    bool isEnabled_;
 };
 
-class ConnectionChangedInfo : public WPEFramework::Core::JSON::Container
+class ConnectionChangedInfo : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::HDMIInput::ConnectionChangedInfo>
 {
 public:
-    ~ConnectionChangedInfo() override = default;
-    ConnectionChangedInfo();
-    ConnectionChangedInfo(const ConnectionChangedInfo& other);
-    ConnectionChangedInfo& operator=(const ConnectionChangedInfo& other);
-    Firebolt::HDMIInput::ConnectionChangedInfo Value();
-
+    void FromJson(const nlohmann::json& json) override
+    {
+        port_ = json["port"].get<std::string>();
+        isConnected_ = json["connected"].get<bool>();
+    }
+    ::Firebolt::HDMIInput::ConnectionChangedInfo Value() const override
+    {
+        return ::Firebolt::HDMIInput::ConnectionChangedInfo{port_, isConnected_};
+    }
 private:
-    FireboltSDK::JSON::WPE_String port_;
-    WPEFramework::Core::JSON::Boolean isConnected_;
+    std::optional<std::string> port_;
+    std::optional<bool> isConnected_;
 };
 } // namespace Firebolt::HDMIInput::JsonData
