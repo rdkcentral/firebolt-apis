@@ -22,24 +22,23 @@
 #include "FireboltSDK.h"
 #include "device.h"
 
+#include <map>
+#include <string>
+#include <algorithm>
+#include <nlohmann/json.hpp>
+
 namespace Firebolt::Device::JsonData
 {
-using NetworkState = WPEFramework::Core::JSON::EnumType<::Firebolt::Device::NetworkState>;
-using NetworkType = WPEFramework::Core::JSON::EnumType<::Firebolt::Device::NetworkType>;
 
 class SemanticVersion : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::SemanticVersion>
 {
 public:
     void FromJson(const nlohmann::json& json) override
     {
-        if (json.contains("major"))
-            major = json["major"].get<int32_t>();
-        if (json.contains("minor"))
-            minor = json["minor"].get<int32_t>();
-        if (json.contains("patch"))
-            patch = json["patch"].get<int32_t>();
-        if (json.contains("readable"))
-            readable = json["readable"].get<std::string>();
+        major = json["major"].get<int32_t>();
+        minor = json["minor"].get<int32_t>();
+        patch = json["patch"].get<int32_t>();
+        readable = json["readable"].get<std::string>();
     }
 
     ::Firebolt::Device::SemanticVersion Value() const override
@@ -138,15 +137,29 @@ private:
     WPEFramework::Core::JSON::Boolean isHlg_;
 };
 
-class NetworkInfoResult : public WPEFramework::Core::JSON::Container
+FireboltSDK::JSON::EnumType<::Firebolt::Device::NetworkState> const NetworkStateEnum({
+    { "connected",    ::Firebolt::Device::NetworkState::CONNECTED },
+    { "disconnected", ::Firebolt::Device::NetworkState::DISCONNECTED },
+});
+
+FireboltSDK::JSON::EnumType<::Firebolt::Device::NetworkType> const NetworkTypeEnum({
+    { "wifi",     ::Firebolt::Device::NetworkType::WIFI },
+    { "ethernet", ::Firebolt::Device::NetworkType::ETHERNET },
+    { "hybrid",   ::Firebolt::Device::NetworkType::HYBRID },
+});
+
+class NetworkInfoResult : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::NetworkInfoResult>
 {
 public:
-    ~NetworkInfoResult() override = default;
-    NetworkInfoResult();
-    NetworkInfoResult(const NetworkInfoResult& other);
-    NetworkInfoResult& operator=(const NetworkInfoResult& other);
-    ::Firebolt::Device::NetworkInfoResult Value();
-
+    void FromJson(const nlohmann::json& json) override
+    {
+        state_ = NetworkStateEnum.at(json["state"]);
+        type_ = NetworkTypeEnum.at(json["type"]);
+    }
+    ::Firebolt::Device::NetworkInfoResult Value() const override
+    {
+        return ::Firebolt::Device::NetworkInfoResult{state_, type_};
+    }
 private:
     NetworkState state_;
     NetworkType type_;

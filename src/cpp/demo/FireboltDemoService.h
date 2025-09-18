@@ -48,6 +48,7 @@ public:
 
     DeviceInfo getAndPrintDeviceValues();
     void ownDemo();
+    void ownSubscriptionDemo();
 
     void setupDeviceSubscriptions();
     void unsubscribeAll();

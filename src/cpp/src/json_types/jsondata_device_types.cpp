@@ -53,29 +53,6 @@ HDRFormatMap& HDRFormatMap::operator=(const HDRFormatMap& other)
                                             isHlg_.Value()};
 }
 
-NetworkInfoResult::NetworkInfoResult() : WPEFramework::Core::JSON::Container()
-{
-    Add(_T("state"), &state_);
-    Add(_T("type"), &type_);
-}
-
-NetworkInfoResult::NetworkInfoResult(const NetworkInfoResult& other) : NetworkInfoResult()
-{
-    state_ = other.state_;
-    type_ = other.type_;
-}
-
-NetworkInfoResult& NetworkInfoResult::operator=(const NetworkInfoResult& other)
-{
-    state_ = other.state_;
-    type_ = other.type_;
-    return (*this);
-}
-
-::Firebolt::Device::NetworkInfoResult NetworkInfoResult::Value()
-{
-    return ::Firebolt::Device::NetworkInfoResult{state_.Value(), type_.Value()};
-}
 } // namespace Firebolt::Device::JsonData
 
 namespace WPEFramework

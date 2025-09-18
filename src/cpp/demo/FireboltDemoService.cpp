@@ -240,6 +240,26 @@ void FireboltDemoService::ownDemo()
     }
 }
 
+void FireboltDemoService::ownSubscriptionDemo()
+{
+    auto subscriptionId = Firebolt::IFireboltAccessor::Instance().DeviceInterface().subscribeOnNetworkChanged(
+        [](const auto& network) { std::cout << "[Subscription] Network changed: state: " << static_cast<int>(network.state) << ", type: " << static_cast<int>(network.type) << std::endl; });
+    if (!subscriptionId) {
+        std::cout << "Failed to subscribe on NetworkChanged, error: " << subscriptionId.error() << std::endl;
+        return;
+    }
+    std::string input;
+    std::cout << "Press a 'q' to quit" << std::endl;
+    while (1) {
+        getline(std::cin, input);
+        if (false) {
+        } else if (input == "q") {
+            break;
+        }
+    }
+    Firebolt::IFireboltAccessor::Instance().DeviceInterface().unsubscribe(*subscriptionId);
+}
+
 FireboltDemoService::DeviceInfo FireboltDemoService::getAndPrintDeviceValues()
 {
     std::cout << "Get and print device values..." << std::endl;
