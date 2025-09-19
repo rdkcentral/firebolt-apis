@@ -254,6 +254,11 @@ void FireboltDemoService::ownDemo()
     } else {
         std::cout << "hdmi-ports: failed, error: " << ports.error() << std::endl;
     }
+    if(auto edid = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().setEdidVersion("HDMI1", Firebolt::HDMIInput::EDIDVersion::V1_4)) {
+        std::cout << "hdmi-set-edid: OK" << std::endl;
+    } else {
+        std::cout << "hdmi-set-edid: failed, error: " << edid.error() << std::endl;
+    }
 }
 
 void FireboltDemoService::ownSubscriptionDemo()

@@ -20,6 +20,10 @@
 #include "lifecycle_impl.h"
 #include "firebolt.h"
 #include "jsondata_lifecycle_types.h"
+#include <algorithm>
+#include <nlohmann/json.hpp>
+#include <string>
+#include <cctype>
 
 using namespace Firebolt::Helpers;
 
@@ -58,9 +62,9 @@ Result<void> LifecycleImpl::ready()
 
 Result<void> LifecycleImpl::close(const CloseReason& reason)
 {
-    Parameters params;
-    params.add<JsonData::CloseReason>(_T("reason"), reason);
-    return invoke("lifecycle.close", params);
+    nlohmann::json params;
+    params["reason"] = FireboltSDK::JSON::ToString(JsonData::CloseReasonEnum, reason);
+    return invokeNL("lifecycle.close", params);
 }
 
 Result<void> LifecycleImpl::finished()
@@ -72,7 +76,9 @@ Result<void> LifecycleImpl::finished()
 Result<std::string> LifecycleImpl::state()
 {
     std::unique_lock lock{mutex_};
-    return Result<std::string>{currentState_};
+    std::string state = FireboltSDK::JSON::ToString(JsonData::LifecycleStateEnum, currentState_);
+    std::transform(state.begin(), state.end(), state.begin(), ::toupper);
+    return Result<std::string>{state};
 }
 
 Result<SubscriptionId> LifecycleImpl::subscribeOnBackgroundChanged(std::function<void(const LifecycleEvent&)>&& notification)
@@ -113,43 +119,7 @@ void LifecycleImpl::unsubscribeAll()
 void LifecycleImpl::onStateChanged(const LifecycleEvent& event)
 {
     std::unique_lock lock{mutex_};
-    switch (event.state)
-    {
-    case LifecycleState::INITIALIZING:
-    {
-        currentState_ = "INITIALIZING";
-        break;
-    }
-    case LifecycleState::INACTIVE:
-    {
-        currentState_ = "INACTIVE";
-        break;
-    }
-    case LifecycleState::FOREGROUND:
-    {
-        currentState_ = "FOREGROUND";
-        break;
-    }
-    case LifecycleState::BACKGROUND:
-    {
-        currentState_ = "BACKGROUND";
-        break;
-    }
-    case LifecycleState::UNLOADING:
-    {
-        currentState_ = "UNLOADING";
-        break;
-    }
-    case LifecycleState::SUSPENDED:
-    {
-        currentState_ = "SUSPENDED";
-        break;
-    }
-    default:
-    {
-        break;
-    }
-    }
+    currentState_ = event.state;
 }
 
 void LifecycleImpl::subscribeOnStateChange()

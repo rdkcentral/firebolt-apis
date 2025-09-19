@@ -54,7 +54,7 @@ private:
 
 private:
     std::mutex mutex_;
-    std::string currentState_{"INITIALIZING"};
+    LifecycleState currentState_{LifecycleState::INITIALIZING};
     std::set<SubscriptionId> subscriptions_;
 };
 } // namespace Firebolt::Lifecycle
