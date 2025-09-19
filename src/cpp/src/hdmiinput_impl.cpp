@@ -45,18 +45,18 @@ Result<bool> HDMIInputImpl::lowLatencyMode() const
 
 Result<void> HDMIInputImpl::setAutoLowLatencyModeCapable(const std::string& port, const bool value)
 {
-    Parameters params;
-    params.add(_T("port"), port);
-    params.add(_T("value"), value);
-    return set(_T("hdmiinput.setAutoLowLatencyModeCapable"), params);
+    nlohmann::json params;
+    params["port"] = port;
+    params["value"] = value;
+    return setNL("hdmiinput.setAutoLowLatencyModeCapable", params);
 }
 
 Result<void> HDMIInputImpl::setEdidVersion(const std::string& port, const EDIDVersion& value)
 {
-    Parameters params;
-    // params.add(_T("port"), port);
-    // params.add<JsonData::EDIDVersion>(_T("value"), value);
-    return set(_T("HDMIInput.setEdidVersion"), params);
+    nlohmann::json params;
+    params["port"] = port;
+    params["value"] = FireboltSDK::JSON::ToString(JsonData::EDIDVersionEnum, value);
+    return setNL("HDMIInput.setEdidVersion", params);
 }
 
 Result<void> HDMIInputImpl::setLowLatencyMode(const bool value)
