@@ -17,7 +17,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:token:platform"]
+          "x-uses": [
+            "xrn:firebolt:capability:token:platform"
+          ]
         }
       ],
       "params": [
@@ -42,20 +44,7 @@
         "name": "token",
         "summary": "the token value, type, and expiration",
         "schema": {
-          "type": "object",
-          "properties": {
-            "value": {
-              "type": "string"
-            },
-            "expires": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "type": {
-              "type": "string"
-            }
-          },
-          "required": ["value"]
+          "$ref": "#/components/schemas/AuthenticationTokenResult"
         }
       },
       "examples": [
@@ -128,10 +117,13 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:token:device"]
+          "x-uses": [
+            "xrn:firebolt:capability:token:device"
+          ]
         }
       ],
-      "params": [],
+      "params": [
+      ],
       "result": {
         "name": "token",
         "summary": "the token value and expiration",
@@ -142,7 +134,8 @@
       "examples": [
         {
           "name": "Acquire a Firebolt device identity token",
-          "params": [],
+          "params": [
+          ],
           "result": {
             "name": "token",
             "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
@@ -156,10 +149,13 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:token:session"]
+          "x-uses": [
+            "xrn:firebolt:capability:token:session"
+          ]
         }
       ],
-      "params": [],
+      "params": [
+      ],
       "result": {
         "name": "token",
         "summary": "the token value",
@@ -170,7 +166,8 @@
       "examples": [
         {
           "name": "Acquire a distributor session token",
-          "params": [],
+          "params": [
+          ],
           "result": {
             "name": "token",
             "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
@@ -184,10 +181,13 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:token:root"]
+          "x-uses": [
+            "xrn:firebolt:capability:token:root"
+          ]
         }
       ],
-      "params": [],
+      "params": [
+      ],
       "result": {
         "name": "token",
         "summary": "the token value",
@@ -198,7 +198,8 @@
       "examples": [
         {
           "name": "Acquire a Firebolt root device identity token",
-          "params": [],
+          "params": [
+          ],
           "result": {
             "name": "token",
             "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
@@ -212,7 +213,30 @@
       "TokenType": {
         "title": "TokenType",
         "type": "string",
-        "enum": ["platform", "device", "distributor"]
+        "enum": [
+          "platform",
+          "device",
+          "distributor"
+        ]
+      },
+      "AuthenticationTokenResult": {
+        "title": "AuthenticationTokenResult",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ]
       }
     }
   }

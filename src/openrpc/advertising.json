@@ -12,7 +12,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:advertising:configuration"]
+          "x-uses": [
+            "xrn:firebolt:capability:advertising:configuration"
+          ]
         }
       ],
       "params": [
@@ -79,8 +81,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:privacy:advertising",
-            "xrn:firebolt:capability:advertising:configuration"
+            "xrn:firebolt:capability:advertising:policy"
           ]
         }
       ],
@@ -114,14 +115,16 @@
         },
         {
           "name": "capabilities",
-          "x-manages": ["xrn:firebolt:capability:advertising:configuration"]
+          "x-manages": [
+            "xrn:firebolt:capability:advertising:configuration"
+          ]
         }
       ],
       "params": [],
       "result": {
         "name": "result",
         "schema": {
-          "$ref": "https://meta.rdkcentral.com/firebolt/schemas/advertising#/definitions/SkipRestriction"
+          "$ref": "https://meta.comcast.com/firebolt/advertising#/definitions/SkipRestriction"
         }
       },
       "examples": [
@@ -140,7 +143,7 @@
             "name": "result",
             "value": "all"
           }
-        }
+        }        
       ]
     },
     {
@@ -148,10 +151,12 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:advertising:identifier"]
+          "x-uses": [
+            "xrn:firebolt:capability:advertising:identifier"
+          ]
         }
       ],
-      "summary": "Get the advertising ID",
+      "summary": "Get the IAB compliant identifier for advertising (IFA). It is recommended to use the IFA to manage advertising related activities while respecting the user's privacy settings.",
       "params": [
         {
           "name": "options",
@@ -166,19 +171,7 @@
         "name": "advertisingId",
         "summary": "the advertising ID",
         "schema": {
-          "type": "object",
-          "properties": {
-            "ifa": {
-              "type": "string"
-            },
-            "ifa_type": {
-              "type": "string"
-            },
-            "lmt": {
-              "type": "string"
-            }
-          },
-          "required": ["ifa"]
+          "$ref": "#/components/schemas/AdvertisingIdResult"
         }
       },
       "examples": [
@@ -189,7 +182,7 @@
             "name": "Default Result",
             "value": {
               "ifa": "01234567-89AB-CDEF-GH01-23456789ABCD",
-              "ifa_type": "idfa",
+              "ifa_type": "sspid",
               "lmt": "0"
             }
           }
@@ -211,7 +204,7 @@
             "name": "Default Result",
             "value": {
               "ifa": "01234567-89AB-CDEF-GH01-23456789ABCD",
-              "ifa_type": "idfa",
+              "ifa_type": "sspid",
               "lmt": "0"
             }
           }
@@ -245,7 +238,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:advertising:configuration"]
+          "x-uses": [
+            "xrn:firebolt:capability:advertising:configuration"
+          ]
         }
       ],
       "summary": "Get the device advertising device attributes",
@@ -273,7 +268,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:advertising:configuration"]
+          "x-uses": [
+            "xrn:firebolt:capability:advertising:configuration"
+          ]
         }
       ],
       "summary": "Get the App's Bundle ID",
@@ -291,7 +288,7 @@
           "params": [],
           "result": {
             "name": "Default Result",
-            "value": "operator.app"
+            "value": "app.operator"
           }
         }
       ]
@@ -302,7 +299,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-manages": ["xrn:firebolt:capability:advertising:identifier"]
+          "x-manages": [
+            "xrn:firebolt:capability:advertising:identifier"
+          ]
         }
       ],
       "params": [],
@@ -332,7 +331,7 @@
         "type": "object",
         "properties": {
           "skipRestriction": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/advertising#/definitions/SkipRestriction"
+            "$ref": "https://meta.comcast.com/firebolt/advertising#/definitions/SkipRestriction"
           },
           "limitAdTracking": {
             "type": "boolean"
@@ -349,7 +348,10 @@
           },
           "environment": {
             "type": "string",
-            "enum": ["prod", "test"],
+            "enum": [
+              "prod",
+              "test"
+            ],
             "default": "prod",
             "description": "Whether the app is running in a production or test mode."
           },
@@ -366,11 +368,17 @@
           "scope": {
             "type": "object",
             "description": "Provides the options to send scope type and id to select desired advertising id",
-            "required": ["type", "id"],
+            "required": [
+              "type",
+              "id"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["browse", "content"],
+                "enum": [
+                  "browse",
+                  "content"
+                ],
                 "default": "browse",
                 "description": "The scope type, which will determine where to show advertisement"
               },
@@ -381,6 +389,33 @@
             }
           }
         }
+      },
+      "AdvertisingIdResult": {
+        "title": "AdvertisingIdResult",
+        "type": "object",
+        "properties": {
+          "ifa": {
+            "type": "string",
+            "description": "UUID conforming to IAB standard"
+          },
+          "ifa_type": {
+            "type": "string",
+            "description": "source of the IFA as defined by IAB"
+          },
+          "lmt": {
+            "type": "string",
+            "enum": [
+              "0",
+              "1"
+            ],
+            "description": "boolean that if set to 1, user has requested ad tracking and measurement is disabled"
+          }
+        },
+        "required": [
+          "ifa",
+          "ifa_type",
+          "lmt"
+        ]
       }
     }
   }

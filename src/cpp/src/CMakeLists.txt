@@ -40,6 +40,15 @@ target_link_libraries(${TARGET}
         FireboltTransport::FireboltTransport
 )
 
+if (ENABLE_UNIT_TESTS)
+    find_package(nlohmann_json_schema_validator)
+    find_package(GTest)
+    target_link_libraries(${TARGET}
+        PRIVATE
+            nlohmann_json_schema_validator::validator
+            GTest::gtest)
+endif ()
+
 target_include_directories(${TARGET}
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
@@ -74,4 +83,4 @@ install(
     DESTINATION lib/cmake/${FIREBOLT_NAMESPACE})
 
 InstallCMakeConfig(TARGETS ${TARGET})
-InstallPackageConfig(TARGETS ${TARGET} DESCRIPTION "Firebolt Native SDK Library")
+InstallPackageConfig(TARGETS ${TARGET} DESCRIPTION "Firebolt Native Core SDK Library")

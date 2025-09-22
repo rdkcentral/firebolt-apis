@@ -14,7 +14,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:general"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:general"
+          ]
         }
       ],
       "summary": "Inform the platform that your app is minimally usable. This method is called automatically by `Lifecycle.ready()`",
@@ -28,7 +30,8 @@
       "examples": [
         {
           "name": "Send ready metric",
-          "params": [],
+          "params": [
+          ],
           "result": {
             "name": "success",
             "value": true
@@ -44,7 +47,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:general"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:general"
+          ]
         }
       ],
       "summary": "Log a sign in event, called by Discovery.signIn().",
@@ -58,7 +63,8 @@
       "examples": [
         {
           "name": "Send signIn metric",
-          "params": [],
+          "params": [
+          ],
           "result": {
             "name": "success",
             "value": true
@@ -93,7 +99,9 @@
         },
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:general"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:general"
+          ]
         }
       ],
       "summary": "Log a sign out event, called by Discovery.signOut().",
@@ -107,7 +115,8 @@
       "examples": [
         {
           "name": "Send signOut metric",
-          "params": [],
+          "params": [
+          ],
           "result": {
             "name": "success",
             "value": true
@@ -120,7 +129,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:general"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:general"
+          ]
         }
       ],
       "summary": "Inform the platform that your user has started content.",
@@ -132,6 +143,13 @@
             "type": "string"
           },
           "required": false
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -143,7 +161,8 @@
       "examples": [
         {
           "name": "Send startContent metric",
-          "params": [],
+          "params": [
+          ],
           "result": {
             "name": "success",
             "value": true
@@ -161,6 +180,23 @@
             "name": "success",
             "value": true
           }
+        },
+        {
+          "name": "Send startContent metric and notify the platform that the content is child-directed",
+          "params": [
+            {
+              "name": "entityId",
+              "value": "abc"
+            },
+            {
+              "name": "agePolicy",
+              "value": "app:child"
+            }
+          ],
+          "result": {
+            "name": "success",
+            "value": true
+          }
         }
       ]
     },
@@ -169,7 +205,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:general"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:general"
+          ]
         }
       ],
       "summary": "Inform the platform that your user has stopped content.",
@@ -181,6 +219,13 @@
             "type": "string"
           },
           "required": false
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -192,7 +237,8 @@
       "examples": [
         {
           "name": "Send stopContent metric",
-          "params": [],
+          "params": [
+          ],
           "result": {
             "name": "success",
             "value": true
@@ -218,7 +264,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:general"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:general"
+          ]
         }
       ],
       "summary": "Inform the platform that your user has navigated to a page or view.",
@@ -230,6 +278,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -272,7 +327,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:general"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:general"
+          ]
         }
       ],
       "summary": "Inform the platform of something not covered by other Metrics APIs.",
@@ -282,7 +339,10 @@
           "summary": "The category of action being logged. Must be 'user' for user-initated actions or 'app' for all other actions",
           "schema": {
             "type": "string",
-            "enum": ["user", "app"]
+            "enum": [
+              "user",
+              "app"
+            ]
           },
           "required": true
         },
@@ -298,9 +358,16 @@
         {
           "name": "parameters",
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/FlatMap"
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
           },
           "required": false
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -334,7 +401,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:general"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:general"
+          ]
         }
       ],
       "summary": "Inform the platform of an error that has occured in your app.",
@@ -375,9 +444,16 @@
           "name": "parameters",
           "summary": "Optional additional parameters to be logged with the error",
           "schema": {
-            "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/FlatMap"
+            "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
           },
           "required": false
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -419,7 +495,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:media"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:media"
+          ]
         }
       ],
       "summary": "Called when setting the URL of a media asset to play, in order to infer load time.",
@@ -431,6 +509,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -460,7 +545,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:media"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:media"
+          ]
         }
       ],
       "summary": "Called when media playback should start due to autoplay, user-initiated play, or unpausing.",
@@ -472,6 +559,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -501,7 +595,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:media"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:media"
+          ]
         }
       ],
       "summary": "Called when media playback actually starts due to autoplay, user-initiated play, unpausing, or recovering from a buffering interuption.",
@@ -513,6 +609,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -542,7 +645,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:media"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:media"
+          ]
         }
       ],
       "summary": "Called when media playback will pause due to an intentional pause operation.",
@@ -554,6 +659,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -583,7 +695,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:media"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:media"
+          ]
         }
       ],
       "summary": "Called when media playback will halt due to a network, buffer, or other unintentional constraint.",
@@ -595,6 +709,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -624,7 +745,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:media"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:media"
+          ]
         }
       ],
       "summary": "Called every 60 seconds as media playback progresses.",
@@ -644,6 +767,13 @@
             "$ref": "#/components/schemas/MediaPosition"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -677,7 +807,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:media"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:media"
+          ]
         }
       ],
       "summary": "Called when a seek is initiated during media playback.",
@@ -697,6 +829,13 @@
             "$ref": "#/components/schemas/MediaPosition"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -715,7 +854,7 @@
             },
             {
               "name": "target",
-              "value": 0.5
+              "value": 0.50
             }
           ],
           "result": {
@@ -730,7 +869,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:media"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:media"
+          ]
         }
       ],
       "summary": "Called when a seek is completed during media playback.",
@@ -750,6 +891,13 @@
             "$ref": "#/components/schemas/MediaPosition"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -783,7 +931,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:media"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:media"
+          ]
         }
       ],
       "summary": "Called when the playback rate of media is changed.",
@@ -803,6 +953,13 @@
             "type": "number"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -836,7 +993,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:media"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:media"
+          ]
         }
       ],
       "summary": "Called when the playback rendition (e.g. bitrate, dimensions, profile, etc) is changed.",
@@ -880,6 +1039,13 @@
             "type": "string"
           },
           "required": false
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -925,7 +1091,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:media"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:media"
+          ]
         }
       ],
       "summary": "Called when playback has stopped because the end of the media was reached.",
@@ -937,6 +1105,13 @@
             "type": "string"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -966,7 +1141,9 @@
       "tags": [
         {
           "name": "capabilities",
-          "x-uses": ["xrn:firebolt:capability:metrics:distributor"]
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:distributor"
+          ]
         }
       ],
       "summary": "Inform the platform of 1st party distributor metrics.",
@@ -987,6 +1164,13 @@
             "$ref": "#/components/schemas/EventObject"
           },
           "required": true
+        },
+        {
+          "name": "agePolicy",
+          "summary": "The age policy to associate with the metrics event. The age policy describes the age group to which content is directed.",
+          "schema": {
+            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy"
+          }
         }
       ],
       "result": {
@@ -1008,6 +1192,49 @@
               "value": {
                 "foo": "foo"
               }
+            }
+          ],
+          "result": {
+            "name": "result",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "appInfo",
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:metrics:general"
+          ]
+        }
+      ],
+      "summary": "Inform the platform about an app's build info.",
+      "params": [
+        {
+          "name": "build",
+          "summary": "The build / version of this app.",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "type": "null"
+        }
+      },
+      "examples": [
+        {
+          "name": "Send appInfo metric",
+          "params": [
+            {
+              "name": "build",
+              "value": "1.2.2"
             }
           ],
           "result": {
@@ -1042,7 +1269,13 @@
       "ErrorType": {
         "title": "ErrorType",
         "type": "string",
-        "enum": ["network", "media", "restriction", "entitlement", "other"]
+        "enum": [
+          "network",
+          "media",
+          "restriction",
+          "entitlement",
+          "other"
+        ]
       },
       "EventObjectPrimitives": {
         "title": "EventObjectPrimitives",

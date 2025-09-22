@@ -9,6 +9,9 @@
                 "xrn:firebolt:capability:discovery:purchased-content",
                 "xrn:firebolt:capability:discovery:entity-info",
                 "xrn:firebolt:capability:discovery:interest"
+            ],
+            "manage": [
+                "xrn:firebolt:capability:discovery:interest"
             ]
         }
     ]

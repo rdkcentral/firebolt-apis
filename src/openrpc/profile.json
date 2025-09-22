@@ -82,7 +82,7 @@
                 "name": "flags",
                 "summary": "The profile flags.",
                 "schema": {
-                    "$ref": "https://meta.rdkcentral.com/firebolt/schemas/types#/definitions/FlatMap"
+                    "$ref": "https://meta.comcast.com/firebolt/types#/definitions/FlatMap"
                 }
             },
             "examples": [
@@ -97,116 +97,6 @@
                     }
                 }
             ]
-        },
-        {
-            "name": "viewingRestrictions",
-            "summary": "The profile's preferred viewing restrictions.",
-            "params": [],
-            "tags": [
-                {
-                    "name": "property:readonly"
-                },
-                {
-                    "name": "capabilities",
-                    "x-uses": [
-                        "xrn:firebolt:capability:profile:viewingrestrictions"
-                    ]
-                }
-            ],
-            "result": {
-                "name": "viewingRestrictions",
-                "summary": "The current viewing restrictions",
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean"
-                        },
-                        "restrictions": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/components/schemas/ViewingRestriction"
-                            }
-                        }
-                    },
-                    "required": [
-                        "enabled",
-                        "restrictions"
-                    ]
-                }
-            },
-            "errors": [],
-            "examples": [
-                {
-                    "name": "Viewing restrictions that disallow content with an MPAA R or US TV-14-V rating",
-                    "params": [],
-                    "result": {
-                        "name": "Default Result",
-                        "value": {
-                            "enabled": true,
-                            "restrictions": [
-                                {
-                                    "scheme": "MPAA",
-                                    "ratings": [
-                                        {
-                                            "rating": "R"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "scheme": "US_TV",
-                                    "ratings": [
-                                        {
-                                            "rating": "TV-14",
-                                            "subRatings": [
-                                                "V"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    }
-                }
-            ]
         }
-    ],
-    "components": {
-        "schemas": {
-            "ContentRating": {
-                "description": "The rating and subrating for content.",
-                "type": "object",
-                "properties": {
-                    "rating": {
-                        "description": "The rating to be restricted. Refer to operator documentation for supported values.",
-                        "type": "string"
-                    },
-                    "subRatings": {
-                        "description": "A list of sub-ratings to be restricted. Refer to operator documentation for supported values.",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    }
-                }
-            },
-            "ViewingRestriction": {
-                "description": "The content viewing restriction.",
-                "type": "object",
-                "properties": {
-                    "scheme": {
-                        "description": "The scheme for the restriction (e.g. MPAA for US movies). Scheme values may be region or operator dependant; refer to operator documentation for the scheme values supported on your targeted platform.",
-                        "type": "string"
-                    },
-                    "ratings": {
-                        "description": "A list of content ratings to be restricted.",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ContentRating"
-                        }
-                    }
-                }
-            }
-        }
-    }
+    ]
 }

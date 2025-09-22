@@ -44,6 +44,12 @@
             ]
         },
         {
+            "module": "HDMIInput",
+            "use": [
+                "xrn:firebolt:capability:inputs:hdmi"
+            ]
+        },
+        {
             "module": "Device",
             "use": [
                 "xrn:firebolt:capability:device:distributor",
@@ -68,8 +74,13 @@
                 "xrn:firebolt:capability:discovery:watched",
                 "xrn:firebolt:capability:lifecycle:launch",
                 "xrn:firebolt:capability:discovery:entity-info",
-                "xrn:firebolt:capability:discovery:purchased-content"
+                "xrn:firebolt:capability:discovery:purchased-content",
+                "xrn:firebolt:capability:discovery:interest"
             ],
+            "manage": [
+                "xrn:firebolt:capability:discovery:entity-info",
+                "xrn:firebolt:capability:discovery:purchased-content"
+            ],            
             "provide": [
                 "xrn:firebolt:capability:discovery:entity-info",
                 "xrn:firebolt:capability:discovery:purchased-content",
@@ -125,8 +136,7 @@
             "use": [
                 "xrn:firebolt:capability:approve:content",
                 "xrn:firebolt:capability:approve:purchase",
-                "xrn:firebolt:capability:profile:flags",
-                "xrn:firebolt:capability:profile:viewingrestrictions"
+                "xrn:firebolt:capability:profile:flags"
             ]
         },
         {
