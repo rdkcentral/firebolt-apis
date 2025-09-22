@@ -1,3 +1,60 @@
+# [1.8.0-next-major.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.7.0...v1.8.0-next-major.1) (2025-09-22)
+
+
+### Bug Fixes
+
+* Accessability outdated schema ([6b9eb13](https://github.com/rdkcentral/firebolt-apis/commit/6b9eb133adda3ae2060316bd653a8e0eddcc9b22))
+* Add 'static-module' argument to npm's sdk target in Manage and Discovery SDKs ([6885a8c](https://github.com/rdkcentral/firebolt-apis/commit/6885a8c282ef17a058ae15a0364f46f8f4bfa6fc))
+* Add "slice:app" in manage and discovery ([508fb31](https://github.com/rdkcentral/firebolt-apis/commit/508fb310aaf512fadfb7406251099978d7489bbc))
+* Add docs generation task to the dist script ([#378](https://github.com/rdkcentral/firebolt-apis/issues/378)) ([d8b9267](https://github.com/rdkcentral/firebolt-apis/commit/d8b9267d078fd6a97ed7a18365a714384ffb71fb))
+* Add mediaPosition type ([ea9b006](https://github.com/rdkcentral/firebolt-apis/commit/ea9b006d57e9820d2d74fbb80e40b4a3754aeda3))
+* Broken schema after merginng next ([a46a068](https://github.com/rdkcentral/firebolt-apis/commit/a46a068ff2e07c6763bc10bfd9c88b542b41b732))
+* Build Javascript SDK workflow ([ccf2360](https://github.com/rdkcentral/firebolt-apis/commit/ccf23601f10162e9ea8ff7c6be9b0bfc305a4d23))
+* Build Javascript SDK workflow ([3acb268](https://github.com/rdkcentral/firebolt-apis/commit/3acb268330abccb7b434690a56da83f7e9c70c95))
+* Build Javascript SDK workflow ([519dae3](https://github.com/rdkcentral/firebolt-apis/commit/519dae3efe61a981e34222aa1f34d8e4914e10ee))
+* building of Discovery SDK ([c5a5f55](https://github.com/rdkcentral/firebolt-apis/commit/c5a5f555025d58193710de275ac71d641c4ac241))
+* building of Manage SDK (workaround) ([f62ff0c](https://github.com/rdkcentral/firebolt-apis/commit/f62ff0c68d35aca42407eccb2d9cf34d970aad6d))
+* Changes required for 'core' after integrating bi-directional ([18013e2](https://github.com/rdkcentral/firebolt-apis/commit/18013e270c60e11156f44cacb8922c19a73c01e9))
+* Changes required for 'discovery' after integrating bi-directional ([040904b](https://github.com/rdkcentral/firebolt-apis/commit/040904b8de320fb71870a6624c5d211a06901be8))
+* Changes required for 'manage' after integrating bi-directional ([39ca20c](https://github.com/rdkcentral/firebolt-apis/commit/39ca20cb2b40bc68060de9592d3d0bee4fe54890))
+* Compatibility with bidirectional changes of interactive apps in 'core' & 'manage' SDKs ([b2b55be](https://github.com/rdkcentral/firebolt-apis/commit/b2b55becfc90001e315bdded4863e12645d2a7d2))
+* Connection change in interactive app ([7802b82](https://github.com/rdkcentral/firebolt-apis/commit/7802b8214f27600283910651c176fb5357294df2))
+* Disable test until firebolt.d.ts fixed ([bbb2098](https://github.com/rdkcentral/firebolt-apis/commit/bbb2098f7eba168605a3f8895c6635581c0da76f))
+* Discovery userInterest and requestUserInterest APIs ([#400](https://github.com/rdkcentral/firebolt-apis/issues/400)) ([05c2074](https://github.com/rdkcentral/firebolt-apis/commit/05c20741755371637ce58f552ab6ad1d8bb053f4))
+* Fix for correct syntax in firebolt.d.ts, re-enable test ([e9a363f](https://github.com/rdkcentral/firebolt-apis/commit/e9a363ffb071d41fb79d28796b1f1787782a086d))
+* Fixes in validate target ([a48fd33](https://github.com/rdkcentral/firebolt-apis/commit/a48fd3342d7499a9913e7371aaabc5ed137c03d1))
+* Hard coded templates ([5919afa](https://github.com/rdkcentral/firebolt-apis/commit/5919afacdf7ae57d957a40111f7b04373d1f8311))
+* Keyboard impl.cpp bugs ([9ddf59b](https://github.com/rdkcentral/firebolt-apis/commit/9ddf59b5fceae62d10bde07f47eb69ce6533ea7a))
+* Remove platform static module from manage+discovery sdks ([#380](https://github.com/rdkcentral/firebolt-apis/issues/380)) ([a51caaf](https://github.com/rdkcentral/firebolt-apis/commit/a51caaf2137ceb08910cc391c0443d5b398fdb1e))
+* Remove unneeded x-provides tagged method ([cc663a2](https://github.com/rdkcentral/firebolt-apis/commit/cc663a259a614816bc2909138874eb48b833fc1e))
+* Skip docs and prettier until fixed ([7eef795](https://github.com/rdkcentral/firebolt-apis/commit/7eef7955cdeccd17716d8aedb88245001bd76d78))
+* Static implementation for discovery in Core SDK ([af055bb](https://github.com/rdkcentral/firebolt-apis/commit/af055bb52d96e6bcb5134f1959cf406268fdbb39))
+* sync open RPC specification between next and next-bidirectional  ([#415](https://github.com/rdkcentral/firebolt-apis/issues/415)) ([35cd6e0](https://github.com/rdkcentral/firebolt-apis/commit/35cd6e02d5962e004ec63746a2e9103f074d8636))
+* Types not listed in Discovery shared schema documentation ([#379](https://github.com/rdkcentral/firebolt-apis/issues/379)) ([380edb9](https://github.com/rdkcentral/firebolt-apis/commit/380edb9b2296d5a4ce51bd108e7bb75d1cb10e21))
+* Update device.json ([d52eee3](https://github.com/rdkcentral/firebolt-apis/commit/d52eee3516e5a6bd87a5453136a7f06befb029b8))
+* Update metrics template and FlatMap ([2ad7b36](https://github.com/rdkcentral/firebolt-apis/commit/2ad7b3619566a8976d0cb6a548bade42cdc4bd95))
+* Update of target validate:each in bidirectional ([49a16da](https://github.com/rdkcentral/firebolt-apis/commit/49a16dafa1bf06db041d1e132616ec0d78dd709e))
+* Update package-lock.json ([831826c](https://github.com/rdkcentral/firebolt-apis/commit/831826c51ad4690a75ace50551d1c6df50e4c8d1))
+* Use enum_implementations in templates ([10be098](https://github.com/rdkcentral/firebolt-apis/commit/10be098fff48d304ea1c41a732f6dd23fda67037))
+* Wrong relative schema path in profile ([1da88f7](https://github.com/rdkcentral/firebolt-apis/commit/1da88f7fc3bdeb3a38c98b22f0f7354da7ee4eae))
+
+
+### Features
+
+* Add keyboard and ack providers ([aa05b11](https://github.com/rdkcentral/firebolt-apis/commit/aa05b1180d81b73b177fa2a48353e3b1460c1c0e))
+* Add pinchallenge provide ([749c228](https://github.com/rdkcentral/firebolt-apis/commit/749c228c4ac6f1aa24abdbf7d0c3908f4dff9693))
+* bidirectional macrofier ([251cd7c](https://github.com/rdkcentral/firebolt-apis/commit/251cd7c6a562d6165ad65a655fd6022734f6059e))
+* Distinction between uni- and bi-directional lifecycle ([4a29c00](https://github.com/rdkcentral/firebolt-apis/commit/4a29c0099d0d4a34ac56d68770cf6f25ded3f9e5))
+* Force major release ([#403](https://github.com/rdkcentral/firebolt-apis/issues/403)) ([ae205ba](https://github.com/rdkcentral/firebolt-apis/commit/ae205ba7f5578a1551932edc27d13ec6847754ee))
+* Force release to include changes from firebolt-openrpc ([59cb2bb](https://github.com/rdkcentral/firebolt-apis/commit/59cb2bbfe67650b480265257e69ee71b6678f986))
+* Force release to include changes from firebolt-openrpc ([0ddf1f9](https://github.com/rdkcentral/firebolt-apis/commit/0ddf1f9b4f50d175e5dbebf5635c34f5f7374247))
+* Force release to include changes from firebolt-openrpc ([f53cb64](https://github.com/rdkcentral/firebolt-apis/commit/f53cb64aea00ba9d2edf3d99eb58f5097778ff16))
+* gateway abstraction layer for bidirectional communication over ws ([4dc4443](https://github.com/rdkcentral/firebolt-apis/commit/4dc4443e815fea18e3df002d945d63b61300c5ab))
+* Reintroduce interactive testing app ([0843782](https://github.com/rdkcentral/firebolt-apis/commit/0843782444e584b631279a68178dbb7683b0ffa2))
+* Remove redundant copy ([1369bca](https://github.com/rdkcentral/firebolt-apis/commit/1369bcab6720463a5480c9a588663e4f0f0f5f5a))
+* Update cmds ([50b2371](https://github.com/rdkcentral/firebolt-apis/commit/50b237165f0de340d9e6da583d722514f89aaa8b))
+* Update device.json ([0020a62](https://github.com/rdkcentral/firebolt-apis/commit/0020a6291b96f5498a1cdc6d94f939093abba7ef))
+
 # [1.7.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.6.0...v1.7.0) (2025-09-04)
 
 
