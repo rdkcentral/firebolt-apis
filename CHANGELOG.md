@@ -1,3 +1,10 @@
+# [1.8.0-next-major.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next-major.1...v1.8.0-next-major.2) (2025-09-22)
+
+
+### Bug Fixes
+
+* force patch release ([7108837](https://github.com/rdkcentral/firebolt-apis/commit/710883728b4bf78b3a798b53b0753c740e42ef16))
+
 # [1.8.0-next-major.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.7.0...v1.8.0-next-major.1) (2025-09-22)
 
 
