@@ -117,8 +117,7 @@ Result<void> ClosedCaptionsImpl::setFontColor(const std::string& value)
 
 Result<void> ClosedCaptionsImpl::setFontEdge(const Accessibility::FontEdge& value)
 {
-    Firebolt::Accessibility::JsonData::FontEdge jsonValue{value};
-    return set(_T("ClosedCaptions.setFontEdge"), jsonValue.Data());
+    return set(_T("ClosedCaptions.setFontEdge"), ::FireboltSDK::JSON::ToString(::Firebolt::Accessibility::JsonData::FontEdgeEnum, value));
 }
 
 Result<void> ClosedCaptionsImpl::setFontEdgeColor(const std::string& value)
@@ -129,7 +128,7 @@ Result<void> ClosedCaptionsImpl::setFontEdgeColor(const std::string& value)
 Result<void> ClosedCaptionsImpl::setFontFamily(const Accessibility::FontFamily& value)
 {
     Firebolt::Accessibility::JsonData::FontFamily jsonValue{value};
-    return set(_T("ClosedCaptions.setFontFamily"), jsonValue.Data());
+    return set(_T("ClosedCaptions.setFontFamily"), ::FireboltSDK::JSON::ToString(::Firebolt::Accessibility::JsonData::FontFamilyEnum, value));
 }
 
 Result<void> ClosedCaptionsImpl::setFontOpacity(const float value)
