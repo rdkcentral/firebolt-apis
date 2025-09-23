@@ -47,9 +47,9 @@ LifecycleImpl::~LifecycleImpl()
 
 Result<void> LifecycleImpl::ready()
 {
+    nlohmann::json params;
     subscribeOnStateChange();
-    Parameters params;
-    const auto status = invoke("lifecycle.ready", params);
+    const auto status = invokeNL("lifecycle.ready", params);
     if (status)
     {
         WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch> job =
@@ -69,8 +69,8 @@ Result<void> LifecycleImpl::close(const CloseReason& reason)
 
 Result<void> LifecycleImpl::finished()
 {
-    Parameters params;
-    return invoke("lifecycle.finished", params);
+    nlohmann::json params;
+    return invokeNL("lifecycle.finished", params);
 }
 
 Result<std::string> LifecycleImpl::state()

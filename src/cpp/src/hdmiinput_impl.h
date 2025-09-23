@@ -43,8 +43,8 @@ public:
     Result<void> setEdidVersion(const std::string& port, const EDIDVersion& value) override;
     Result<void> setLowLatencyMode(const bool value) override;
     Result<void> close() override;
-    Result<void> open(const std::string& portId) override;
-    Result<HDMIInputPort> port(const std::string& portId) override;
+    Result<void> open(const std::string& port) override;
+    Result<HDMIInputPort> port(const std::string& port) override;
     Result<std::vector<HDMIInputPort>> ports() const override;
 
     // Events

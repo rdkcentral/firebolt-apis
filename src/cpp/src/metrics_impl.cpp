@@ -25,7 +25,7 @@ namespace Firebolt::Metrics
 {
 Result<bool> MetricsImpl::ready()
 {
-    Parameters params;
-    return invoke<WPEFramework::Core::JSON::Boolean, bool>("metrics.ready", params);
+    nlohmann::json params;
+    return invokeNL<::FireboltSDK::JSON::Boolean, bool>("metrics.ready", params);
 }
 } // namespace Firebolt::Metrics

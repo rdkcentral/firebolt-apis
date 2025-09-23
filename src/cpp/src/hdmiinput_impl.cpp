@@ -26,21 +26,21 @@ namespace Firebolt::HDMIInput
 {
 Result<bool> HDMIInputImpl::autoLowLatencyModeCapable(const std::string& port) const
 {
-    Parameters parameters;
-    parameters.add(_T("port"), port);
-    return get<WPEFramework::Core::JSON::Boolean, bool>(_T("hdmiinput.autoLowLatencyModeCapable"), parameters);
+    nlohmann::json params;
+    params["port"] = port;
+    return get<FireboltSDK::JSON::Boolean, bool>(_T("hdmiinput.autoLowLatencyModeCapable"), params);
 }
 
 Result<EDIDVersion> HDMIInputImpl::edidVersion(const std::string& port) const
 {
-    Parameters parameters;
-    parameters.add(_T("port"), port);
-    return get<JsonData::EDIDVersionJson, EDIDVersion>(_T("HDMIInput.edidVersion"), parameters);
+    nlohmann::json params;
+    params["port"] = port;
+    return get<JsonData::EDIDVersionJson, EDIDVersion>(_T("HDMIInput.edidVersion"), params);
 }
 
 Result<bool> HDMIInputImpl::lowLatencyMode() const
 {
-    return get<WPEFramework::Core::JSON::Boolean, bool>(_T("hdmiinput.lowLatencyMode"));
+    return get<FireboltSDK::JSON::Boolean, bool>(_T("hdmiinput.lowLatencyMode"));
 }
 
 Result<void> HDMIInputImpl::setAutoLowLatencyModeCapable(const std::string& port, const bool value)
@@ -61,33 +61,32 @@ Result<void> HDMIInputImpl::setEdidVersion(const std::string& port, const EDIDVe
 
 Result<void> HDMIInputImpl::setLowLatencyMode(const bool value)
 {
-    return set(_T("hdmiinput.setLowLatencyMode"), value);
+    return setNL(_T("hdmiinput.setLowLatencyMode"), value);
 }
 
 Result<void> HDMIInputImpl::close()
 {
-    Parameters params;
-    return invoke("HDMIInput.close", params);
+    nlohmann::json params;
+    return invokeNL("HDMIInput.close", params);
 }
 
-Result<void> HDMIInputImpl::open(const std::string& portId)
+Result<void> HDMIInputImpl::open(const std::string& port)
 {
-    Parameters params;
-    params.add(_T("portId"), portId);
-    return invoke("HDMIInput.open", params);
+    nlohmann::json params;
+    params["port"] = port;
+    return invokeNL("HDMIInput.open", params);
 }
 
-Result<HDMIInputPort> HDMIInputImpl::port(const std::string& portId)
+Result<HDMIInputPort> HDMIInputImpl::port(const std::string& port)
 {
-    Parameters params;
-    params.add(_T("portId"), portId);
-    return invoke<JsonData::HDMIInputPort, HDMIInputPort>("HDMIInput.port", params);
+    nlohmann::json params;
+    params["port"] = port;
+    return invokeNL<JsonData::HDMIInputPort, HDMIInputPort>("HDMIInput.port", params);
 }
 
 Result<std::vector<HDMIInputPort>> HDMIInputImpl::ports() const
 {
-    Parameters params;
-    return invoke<FireboltSDK::JSON::NL_Json_Array<JsonData::HDMIInputPort, HDMIInputPort>, std::vector<HDMIInputPort>>("HDMIInput.ports", params);
+    return invokeNL<FireboltSDK::JSON::NL_Json_Array<JsonData::HDMIInputPort, HDMIInputPort>, std::vector<HDMIInputPort>>("HDMIInput.ports");
 }
 
 // Events
@@ -130,7 +129,7 @@ Result<SubscriptionId> HDMIInputImpl::subscribeOnEdidVersionChanged(std::functio
 
 Result<SubscriptionId> HDMIInputImpl::subscribeOnLowLatencyModeChanged(std::function<void(bool)>&& notification)
 {
-    return SubscriptionHelper::subscribe<WPEFramework::Core::JSON::Boolean>(_T("hdmiinput.onLowLatencyModeChanged"),
+    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Boolean>(_T("hdmiinput.onLowLatencyModeChanged"),
                                                                             std::move(notification));
 }
 
