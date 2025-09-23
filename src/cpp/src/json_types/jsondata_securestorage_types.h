@@ -24,7 +24,7 @@
 
 namespace Firebolt::SecureStorage::JsonData
 {
-FireboltSDK::JSON::EnumType<::Firebolt::SecureStorage::StorageScope> StorageScopeEnum({
+inline FireboltSDK::JSON::EnumType<::Firebolt::SecureStorage::StorageScope> StorageScopeEnum({
     { "device", ::Firebolt::SecureStorage::StorageScope::DEVICE },
     { "account", ::Firebolt::SecureStorage::StorageScope::ACCOUNT },
 });

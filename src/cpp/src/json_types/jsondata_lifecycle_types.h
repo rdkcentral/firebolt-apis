@@ -25,14 +25,14 @@
 namespace Firebolt::Lifecycle::JsonData
 {
 
-FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::CloseReason> const CloseReasonEnum({
+inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::CloseReason> const CloseReasonEnum({
     { "remoteButton", ::Firebolt::Lifecycle::CloseReason::REMOTE_BUTTON },
     { "userExit", ::Firebolt::Lifecycle::CloseReason::USER_EXIT },
     { "done", ::Firebolt::Lifecycle::CloseReason::DONE },
     { "error", ::Firebolt::Lifecycle::CloseReason::ERROR },
 });
 
-FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleState> const LifecycleStateEnum({
+inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleState> const LifecycleStateEnum({
     { "initializing", ::Firebolt::Lifecycle::LifecycleState::INITIALIZING },
     { "inactive", ::Firebolt::Lifecycle::LifecycleState::INACTIVE },
     { "foreground", ::Firebolt::Lifecycle::LifecycleState::FOREGROUND },
@@ -41,7 +41,7 @@ FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleState> const Lifecyc
     { "suspended", ::Firebolt::Lifecycle::LifecycleState::SUSPENDED },
 });
 
-FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleEventSource> const LifecycleEventSourceEnum({
+inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleEventSource> const LifecycleEventSourceEnum({
     { "voice", ::Firebolt::Lifecycle::LifecycleEventSource::VOICE },
     { "remote", ::Firebolt::Lifecycle::LifecycleEventSource::REMOTE },
 });

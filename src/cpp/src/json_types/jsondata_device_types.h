@@ -30,6 +30,17 @@
 namespace Firebolt::Device::JsonData
 {
 
+inline FireboltSDK::JSON::EnumType<::Firebolt::Device::NetworkState> const NetworkStateEnum({
+    { "connected",    ::Firebolt::Device::NetworkState::CONNECTED },
+    { "disconnected", ::Firebolt::Device::NetworkState::DISCONNECTED },
+});
+
+inline FireboltSDK::JSON::EnumType<::Firebolt::Device::NetworkType> const NetworkTypeEnum({
+    { "wifi",     ::Firebolt::Device::NetworkType::WIFI },
+    { "ethernet", ::Firebolt::Device::NetworkType::ETHERNET },
+    { "hybrid",   ::Firebolt::Device::NetworkType::HYBRID },
+});
+
 class SemanticVersion : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::SemanticVersion>
 {
 public:
@@ -136,17 +147,6 @@ private:
     bool isDolbyVision_;
     bool isHlg_;
 };
-
-FireboltSDK::JSON::EnumType<::Firebolt::Device::NetworkState> const NetworkStateEnum({
-    { "connected",    ::Firebolt::Device::NetworkState::CONNECTED },
-    { "disconnected", ::Firebolt::Device::NetworkState::DISCONNECTED },
-});
-
-FireboltSDK::JSON::EnumType<::Firebolt::Device::NetworkType> const NetworkTypeEnum({
-    { "wifi",     ::Firebolt::Device::NetworkType::WIFI },
-    { "ethernet", ::Firebolt::Device::NetworkType::ETHERNET },
-    { "hybrid",   ::Firebolt::Device::NetworkType::HYBRID },
-});
 
 class NetworkInfoResult : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::NetworkInfoResult>
 {

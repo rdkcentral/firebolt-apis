@@ -24,13 +24,13 @@
 
 namespace Firebolt::HDMIInput::JsonData
 {
-FireboltSDK::JSON::EnumType<::Firebolt::HDMIInput::EDIDVersion> const EDIDVersionEnum({
+inline FireboltSDK::JSON::EnumType<::Firebolt::HDMIInput::EDIDVersion> const EDIDVersionEnum({
     { "1.4", ::Firebolt::HDMIInput::EDIDVersion::V1_4 },
     { "2.0", ::Firebolt::HDMIInput::EDIDVersion::V2_0 },
     { "unknown", ::Firebolt::HDMIInput::EDIDVersion::UNKNOWN },
 });
 
-FireboltSDK::JSON::EnumType<::Firebolt::HDMIInput::HDMISignalStatus> const HDMISignalStatusEnum({
+inline FireboltSDK::JSON::EnumType<::Firebolt::HDMIInput::HDMISignalStatus> const HDMISignalStatusEnum({
     { "none", ::Firebolt::HDMIInput::HDMISignalStatus::NONE },
     { "stable", ::Firebolt::HDMIInput::HDMISignalStatus::STABLE },
     { "unstable", ::Firebolt::HDMIInput::HDMISignalStatus::UNSTABLE },
