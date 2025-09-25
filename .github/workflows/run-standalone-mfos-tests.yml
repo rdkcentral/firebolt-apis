@@ -10,6 +10,10 @@ on:
     branches: [ next ]
 jobs:
   RunStandaloneTests:
+    permissions:
+      contents: read       # checkout
+      pull-requests: write # PR updates
+      # don’t hit the gh api calls, don’t need actions: read.
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
