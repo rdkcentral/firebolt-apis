@@ -17,6 +17,8 @@ env:
 jobs:
   release:
     name: Release
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       #  Checkout/install project
