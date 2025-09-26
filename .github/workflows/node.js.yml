@@ -15,7 +15,9 @@ on:
 permissions:
   contents: read   # minimal token permissions
   security-events: write   # required for CodeQL analysis uploads
-
+  pull-requests: write
+  actions: write
+  statuses: write
 env:
   HUSKY: 0
   # Turns off installing commit hooks in CI environments
