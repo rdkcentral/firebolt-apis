@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: read   # minimal token permissions
+  security-events: write   # required for CodeQL analysis uploads
 
 env:
   HUSKY: 0
