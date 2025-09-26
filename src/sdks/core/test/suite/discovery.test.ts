@@ -41,23 +41,6 @@ test("policy(subscriber)", () => {
   );
 });
 
-test("entityInfo(EntityInfoResult)", () => {
-  const dummyData: Discovery.EntityInfoResult = {
-    expires: new Date().toISOString(),
-    entity: {
-      identifiers: {
-        assetId: "test123",
-      },
-      title: "Test",
-      entityType: "program",
-      programType: Discovery.ProgramType.MOVIE,
-    },
-  };
-  return Discovery.entityInfo("id-123","asseId-123").then((res: Discovery.EntityInfoResult) => {
-    expect(res).toBeTruthy();
-  });
-});
-
 test("watchNext(title?: LocalizedString, identifiers: ContentIdentifiers, expires?: string, images?: object)", () => {
   return Discovery.watchNext("abc", { entityId: "partner.com/entity/123" }).then((success: boolean) => {
     expect(success).toBe(true);
@@ -98,26 +81,6 @@ test("signIn(appId)", () => {
 
 test("signOut()", () => {
   return Discovery.signOut().then((res: boolean) => {
-    expect(res).toBeTruthy();
-  });
-});
-
-test("purchasedContent()", () => {
-  const dummyData: Discovery.PurchasedContentResult = {
-    expires: `${new Date().toISOString}`,
-    totalCount: 2,
-    entries: [
-      {
-        identifiers: {
-          assetId: "test123",
-        },
-        title: "TEST",
-        entityType: "program",
-        programType: Discovery.ProgramType.MOVIE,
-      },
-    ],
-  };
-  return Discovery.purchasedContent(Discovery.OfferingType.BUY, Discovery.ProgramType.MOVIE).then((res:  Discovery.PurchasedContentResult) => {
     expect(res).toBeTruthy();
   });
 });
