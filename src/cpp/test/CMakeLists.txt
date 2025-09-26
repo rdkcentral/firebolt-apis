@@ -27,21 +27,20 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 list(APPEND CMAKE_MODULE_PATH
-	"${SYSROOT_PATH}/usr/lib/cmake"
-	"${SYSROOT_PATH}/tools/cmake")
+    "${SYSROOT_PATH}/usr/lib/cmake"
+    "${SYSROOT_PATH}/tools/cmake")
+
 message("FIREBOLT_PATH inside cmake " ${FIREBOLT_PATH})
+
 if (FIREBOLT_PATH)
     set(CMAKE_FIREBOLT_PATH
         "${FIREBOLT_PATH}/usr/lib/cmake/Firebolt"
-	"${FIREBOLT_PATH}/usr/lib/cmake/FireboltSDK")
+        "${FIREBOLT_PATH}/usr/lib/cmake/FireboltSDK")
     list(APPEND CMAKE_PREFIX_PATH ${CMAKE_FIREBOLT_PATH})
     list(APPEND CMAKE_MODULE_PATH ${CMAKE_FIREBOLT_PATH})
 else ()
    set(FIREBOLT_PATH "${SYSROOT_PATH}" CACHE INTERNAL "" FORCE)
 endif ()
-
-find_package(WPEFramework CONFIG REQUIRED)
-find_package(${NAMESPACE}Core CONFIG REQUIRED)
 
 set(TESTAPP TestFireboltCore)
 
@@ -51,10 +50,7 @@ add_executable(${TESTAPP} CoreSDKTest.cpp Main.cpp)
 
 target_link_libraries(${TESTAPP}
     PRIVATE
-        ${NAMESPACE}Core::${NAMESPACE}Core
-        ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
-        nlohmann_json_schema_validator
-        gtest_main
+        FireboltSDK::FireboltSDK
 )
 
 target_include_directories(${TESTAPP}
@@ -78,13 +74,18 @@ add_custom_command(
     POST_BUILD
     COMMENT "=================== Installing TestApp ======================"
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${TESTAPP} ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${TESTAPP} ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
 )
 
 if(ENABLE_UNIT_TESTS)
     set(UNIT_TESTS_APP FireboltCoreUnitTests)
 
     message("Setup ${UNIT_TESTS_APP}")
+
+    find_package(WPEFrameworkCore)
+    find_package(WPEFrameworkWebSocket)
+    find_package(nlohmann_json_schema_validator)
+    find_package(GTest)
 
     file(GLOB UNIT_TESTS "unit/*")
 
@@ -93,14 +94,14 @@ if(ENABLE_UNIT_TESTS)
         Unit.cpp
         ${UNIT_TESTS}
     )
-    
-    link_directories(${CMAKE_SOURCE_DIR}/../../Thunder/install/usr/lib/)
+
     target_link_libraries(${UNIT_TESTS_APP}
         PRIVATE
-            ${NAMESPACE}Core::${NAMESPACE}Core
-            ${FIREBOLT_NAMESPACE}SDK::${FIREBOLT_NAMESPACE}SDK
-            nlohmann_json_schema_validator
-            gtest_main
+            FireboltSDK::FireboltSDK
+            WPEFrameworkCore::WPEFrameworkCore
+            WPEFrameworkWebSocket::WPEFrameworkWebSocket
+            nlohmann_json_schema_validator::validator
+            GTest::gtest
     )
 
     target_include_directories(${UNIT_TESTS_APP}

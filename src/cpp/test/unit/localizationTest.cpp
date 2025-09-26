@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+#define MODULE_NAME LocalizationTest
 #include "unit.h"
 
 class LocalizationTest : public ::testing::Test
