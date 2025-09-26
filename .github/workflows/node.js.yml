@@ -12,6 +12,9 @@ on:
       - opened
     branches: [ main ]
 
+permissions:
+  contents: read   # minimal token permissions
+
 env:
   HUSKY: 0
   # Turns off installing commit hooks in CI environments
