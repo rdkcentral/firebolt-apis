@@ -9,6 +9,10 @@ on:
 
 jobs:
   comment-on-pr:
+    permissions:
+      contents: read       # checkout
+      pull-requests: write # PR updates
+      actions: read        # required by utils.sh getArtifactData (gh api artifacts)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
