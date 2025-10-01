@@ -30,7 +30,7 @@ Result<std::string> LocalizationImpl::countryCode() const
 
 Result<std::vector<std::string>> LocalizationImpl::preferredAudioLanguages() const
 {
-    return get<FireboltSDK::JSON::WPE_String, std::vector<std::string>>(_T("localization.preferredAudioLanguages"));
+    return get<FireboltSDK::JSON::NL_Json_Array<FireboltSDK::JSON::String, std::string>, std::vector<std::string>>(_T("localization.preferredAudioLanguages"));
 }
 
 Result<SubscriptionId>
@@ -43,7 +43,7 @@ LocalizationImpl::subscribeOnCountryCodeChanged(std::function<void(const std::st
 Result<SubscriptionId> LocalizationImpl::subscribeOnPreferredAudioLanguagesChanged(
     std::function<void(const std::vector<std::string>&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::WPE_String>(_T("localization.onPreferredAudioLanguagesChanged"),
+    return SubscriptionHelper::subscribe<FireboltSDK::JSON::NL_Json_Array<FireboltSDK::JSON::String, std::string>>(_T("localization.onPreferredAudioLanguagesChanged"),
                                                                     std::move(notification));
 }
 

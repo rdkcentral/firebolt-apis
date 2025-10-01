@@ -77,7 +77,7 @@ Result<std::string> DeviceImpl::platform() const
 
 Result<Resolution> DeviceImpl::screenResolution() const
 {
-    return get<WPEFramework::Core::JSON::DecSInt32, Resolution>(_T("device.screenResolution"));
+    return get<FireboltSDK::JSON::NL_Json_Array<FireboltSDK::JSON::Integer, int32_t>, Resolution>(_T("device.screenResolution"));
 }
 
 Result<std::string> DeviceImpl::sku() const
@@ -97,7 +97,7 @@ Result<std::string> DeviceImpl::uid() const
 
 Result<Resolution> DeviceImpl::videoResolution() const
 {
-    return get<WPEFramework::Core::JSON::DecSInt32, Resolution>(_T("device.videoResolution"));
+    return get<FireboltSDK::JSON::NL_Json_Array<FireboltSDK::JSON::Integer, int32_t>, Resolution>(_T("device.videoResolution"));
 }
 
 // Events

@@ -31,12 +31,12 @@ Result<std::string> ClosedCaptionsImpl::backgroundColor() const
 
 Result<float> ClosedCaptionsImpl::backgroundOpacity() const
 {
-    return get<WPEFramework::Core::JSON::Float, float>(_T("ClosedCaptions.backgroundOpacity"));
+    return get<FireboltSDK::JSON::Float, float>(_T("ClosedCaptions.backgroundOpacity"));
 }
 
 Result<bool> ClosedCaptionsImpl::enabled() const
 {
-    return get<WPEFramework::Core::JSON::Boolean, bool>(_T("ClosedCaptions.enabled"));
+    return get<FireboltSDK::JSON::Boolean, bool>(_T("ClosedCaptions.enabled"));
 }
 
 Result<std::string> ClosedCaptionsImpl::fontColor() const
@@ -62,17 +62,17 @@ Result<Accessibility::FontFamily> ClosedCaptionsImpl::fontFamily() const
 
 Result<float> ClosedCaptionsImpl::fontOpacity() const
 {
-    return get<WPEFramework::Core::JSON::Float, float>(_T("ClosedCaptions.fontOpacity"));
+    return get<FireboltSDK::JSON::Float, float>(_T("ClosedCaptions.fontOpacity"));
 }
 
 Result<float> ClosedCaptionsImpl::fontSize() const
 {
-    return get<WPEFramework::Core::JSON::Float, float>(_T("ClosedCaptions.fontSize"));
+    return get<FireboltSDK::JSON::Float, float>(_T("ClosedCaptions.fontSize"));
 }
 
 Result<std::vector<std::string>> ClosedCaptionsImpl::preferredLanguages() const
 {
-    return get<FireboltSDK::JSON::WPE_String, std::vector<std::string>>(_T("ClosedCaptions.preferredLanguages"));
+    return get<FireboltSDK::JSON::NL_Json_Array<FireboltSDK::JSON::String, std::string>, std::vector<std::string>>(_T("ClosedCaptions.preferredLanguages"));
 }
 
 Result<std::string> ClosedCaptionsImpl::textAlign() const
@@ -92,7 +92,7 @@ Result<std::string> ClosedCaptionsImpl::windowColor() const
 
 Result<float> ClosedCaptionsImpl::windowOpacity() const
 {
-    return get<WPEFramework::Core::JSON::Float, float>(_T("ClosedCaptions.windowOpacity"));
+    return get<FireboltSDK::JSON::Float, float>(_T("ClosedCaptions.windowOpacity"));
 }
 
 Result<void> ClosedCaptionsImpl::setBackgroundColor(const std::string& value)
@@ -177,12 +177,12 @@ ClosedCaptionsImpl::subscribeOnBackgroundColorChanged(std::function<void(const s
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnBackgroundOpacityChanged(std::function<void(float)>&& notification)
 {
     return SubscriptionHelper::subscribe<
-        WPEFramework::Core::JSON::Float>(_T("ClosedCaptions.onBackgroundOpacityChanged"), std::move(notification));
+        FireboltSDK::JSON::Float>(_T("ClosedCaptions.onBackgroundOpacityChanged"), std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnEnabledChanged(std::function<void(bool)>&& notification)
 {
-    return SubscriptionHelper::subscribe<WPEFramework::Core::JSON::Boolean>(_T("ClosedCaptions.onEnabledChanged"),
+    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Boolean>(_T("ClosedCaptions.onEnabledChanged"),
                                                                             std::move(notification));
 }
 
@@ -216,20 +216,20 @@ ClosedCaptionsImpl::subscribeOnFontFamilyChanged(std::function<void(const Access
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnFontOpacityChanged(std::function<void(float)>&& notification)
 {
-    return SubscriptionHelper::subscribe<WPEFramework::Core::JSON::Float>(_T("ClosedCaptions.onFontOpacityChanged"),
+    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Float>(_T("ClosedCaptions.onFontOpacityChanged"),
                                                                           std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnFontSizeChanged(std::function<void(float)>&& notification)
 {
-    return SubscriptionHelper::subscribe<WPEFramework::Core::JSON::Float>(_T("ClosedCaptions.onFontSizeChanged"),
+    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Float>(_T("ClosedCaptions.onFontSizeChanged"),
                                                                           std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnPreferredLanguagesChanged(
     std::function<void(const std::vector<std::string>&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::WPE_String>(_T("ClosedCaptions.onPreferredLanguagesChanged"),
+    return SubscriptionHelper::subscribe<FireboltSDK::JSON::NL_Json_Array<FireboltSDK::JSON::String, std::string>>(_T("ClosedCaptions.onPreferredLanguagesChanged"),
                                                                     std::move(notification));
 }
 
@@ -256,7 +256,7 @@ ClosedCaptionsImpl::subscribeOnWindowColorChanged(std::function<void(const std::
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnWindowOpacityChanged(std::function<void(float)>&& notification)
 {
-    return SubscriptionHelper::subscribe<WPEFramework::Core::JSON::Float>(_T("ClosedCaptions.onWindowOpacityChanged"),
+    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Float>(_T("ClosedCaptions.onWindowOpacityChanged"),
                                                                           std::move(notification));
 }
 
