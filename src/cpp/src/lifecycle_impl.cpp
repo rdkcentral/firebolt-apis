@@ -50,13 +50,13 @@ Result<void> LifecycleImpl::ready()
     nlohmann::json params;
     subscribeOnStateChange();
     const auto status = invokeNL("lifecycle.ready", params);
-    if (status)
-    {
-        WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch> job =
-            WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch>(
-                WPEFramework::Core::ProxyType<FireboltSDK::Transport::Worker>::Create(readyDispatcher, nullptr));
-        WPEFramework::Core::IWorkerPool::Instance().Submit(job);
-    }
+    // if (status)
+    // {
+    //     WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch> job =
+    //         WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch>(
+    //             WPEFramework::Core::ProxyType<FireboltSDK::Transport::Worker>::Create(readyDispatcher, nullptr));
+    //     WPEFramework::Core::IWorkerPool::Instance().Submit(job);
+    // }
     return status;
 }
 

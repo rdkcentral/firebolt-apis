@@ -107,10 +107,6 @@ FireboltDemoService::FireboltDemoService()
     const std::string config = R"({
     "waitTime": 3000,
     "logLevel": "Info",
-    "workerPool": {
-      "queueSize": 8,
-      "threadCount": 3
-    },
     "wsUrl": ")" + url + R"("})";
 
     auto error = Firebolt::IFireboltAccessor::Instance().Initialize(config);

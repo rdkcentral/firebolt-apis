@@ -35,15 +35,10 @@ void CoreSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error 
 
 void CoreSDKTest::CreateFireboltInstance(const std::string& url)
 {
-    const std::string config = "{\
-            \"waitTime\": 1000,\
-            \"logLevel\": \"Info\",\
-            \"workerPool\":{\
-            \"queueSize\": 8,\
-            \"threadCount\": 3\
-            },\
-            \"wsUrl\": " + url +
-                               "}";
+    const std::string config = R"({
+      "waitTime": 1000,
+      "logLevel": "Info",
+      "wsUrl": ")" + url + R"("})";
 
     _connected = false;
     Firebolt::IFireboltAccessor::Instance().Initialize(config);
