@@ -48,7 +48,7 @@ Result<void> HDMIInputImpl::setAutoLowLatencyModeCapable(const std::string& port
     nlohmann::json params;
     params["port"] = port;
     params["value"] = value;
-    return setNL("hdmiinput.setAutoLowLatencyModeCapable", params);
+    return set("hdmiinput.setAutoLowLatencyModeCapable", params);
 }
 
 Result<void> HDMIInputImpl::setEdidVersion(const std::string& port, const EDIDVersion& value)
@@ -56,37 +56,37 @@ Result<void> HDMIInputImpl::setEdidVersion(const std::string& port, const EDIDVe
     nlohmann::json params;
     params["port"] = port;
     params["value"] = FireboltSDK::JSON::ToString(JsonData::EDIDVersionEnum, value);
-    return setNL("HDMIInput.setEdidVersion", params);
+    return set("HDMIInput.setEdidVersion", params);
 }
 
 Result<void> HDMIInputImpl::setLowLatencyMode(const bool value)
 {
-    return setNL("hdmiinput.setLowLatencyMode", value);
+    return set("hdmiinput.setLowLatencyMode", value);
 }
 
 Result<void> HDMIInputImpl::close()
 {
     nlohmann::json params;
-    return invokeNL("HDMIInput.close", params);
+    return invoke("HDMIInput.close", params);
 }
 
 Result<void> HDMIInputImpl::open(const std::string& port)
 {
     nlohmann::json params;
     params["port"] = port;
-    return invokeNL("HDMIInput.open", params);
+    return invoke("HDMIInput.open", params);
 }
 
 Result<HDMIInputPort> HDMIInputImpl::port(const std::string& port)
 {
     nlohmann::json params;
     params["port"] = port;
-    return invokeNL<JsonData::HDMIInputPort, HDMIInputPort>("HDMIInput.port", params);
+    return invoke<JsonData::HDMIInputPort, HDMIInputPort>("HDMIInput.port", params);
 }
 
 Result<std::vector<HDMIInputPort>> HDMIInputImpl::ports() const
 {
-    return invokeNL<FireboltSDK::JSON::NL_Json_Array<JsonData::HDMIInputPort, HDMIInputPort>, std::vector<HDMIInputPort>>("HDMIInput.ports");
+    return invoke<FireboltSDK::JSON::NL_Json_Array<JsonData::HDMIInputPort, HDMIInputPort>, std::vector<HDMIInputPort>>("HDMIInput.ports");
 }
 
 // Events

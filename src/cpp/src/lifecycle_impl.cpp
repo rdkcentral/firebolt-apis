@@ -49,7 +49,7 @@ Result<void> LifecycleImpl::ready()
 {
     nlohmann::json params;
     subscribeOnStateChange();
-    const auto status = invokeNL("lifecycle.ready", params);
+    const auto status = invoke("lifecycle.ready", params);
     // if (status)
     // {
     //     WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch> job =
@@ -64,13 +64,13 @@ Result<void> LifecycleImpl::close(const CloseReason& reason)
 {
     nlohmann::json params;
     params["reason"] = FireboltSDK::JSON::ToString(JsonData::CloseReasonEnum, reason);
-    return invokeNL("lifecycle.close", params);
+    return invoke("lifecycle.close", params);
 }
 
 Result<void> LifecycleImpl::finished()
 {
     nlohmann::json params;
-    return invokeNL("lifecycle.finished", params);
+    return invoke("lifecycle.finished", params);
 }
 
 Result<std::string> LifecycleImpl::state()

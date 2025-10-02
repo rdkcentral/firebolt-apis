@@ -97,73 +97,73 @@ Result<float> ClosedCaptionsImpl::windowOpacity() const
 
 Result<void> ClosedCaptionsImpl::setBackgroundColor(const std::string& value)
 {
-    return setNL("ClosedCaptions.setBackgroundColor", value);
+    return set("ClosedCaptions.setBackgroundColor", value);
 }
 
 Result<void> ClosedCaptionsImpl::setBackgroundOpacity(const float value)
 {
-    return setNL("ClosedCaptions.setBackgroundOpacity", value);
+    return set("ClosedCaptions.setBackgroundOpacity", value);
 }
 
 Result<void> ClosedCaptionsImpl::setEnabled(const bool value)
 {
-    return setNL("ClosedCaptions.setEnabled", value);
+    return set("ClosedCaptions.setEnabled", value);
 }
 
 Result<void> ClosedCaptionsImpl::setFontColor(const std::string& value)
 {
-    return setNL("ClosedCaptions.setFontColor", value);
+    return set("ClosedCaptions.setFontColor", value);
 }
 
 Result<void> ClosedCaptionsImpl::setFontEdge(const Accessibility::FontEdge& value)
 {
-    return setNL("ClosedCaptions.setFontEdge", ::FireboltSDK::JSON::ToString(::Firebolt::Accessibility::JsonData::FontEdgeEnum, value));
+    return set("ClosedCaptions.setFontEdge", ::FireboltSDK::JSON::ToString(::Firebolt::Accessibility::JsonData::FontEdgeEnum, value));
 }
 
 Result<void> ClosedCaptionsImpl::setFontEdgeColor(const std::string& value)
 {
-    return setNL("ClosedCaptions.setFontEdgeColor", value);
+    return set("ClosedCaptions.setFontEdgeColor", value);
 }
 
 Result<void> ClosedCaptionsImpl::setFontFamily(const Accessibility::FontFamily& value)
 {
     Firebolt::Accessibility::JsonData::FontFamily jsonValue{value};
-    return setNL("ClosedCaptions.setFontFamily", ::FireboltSDK::JSON::ToString(::Firebolt::Accessibility::JsonData::FontFamilyEnum, value));
+    return set("ClosedCaptions.setFontFamily", ::FireboltSDK::JSON::ToString(::Firebolt::Accessibility::JsonData::FontFamilyEnum, value));
 }
 
 Result<void> ClosedCaptionsImpl::setFontOpacity(const float value)
 {
-    return setNL("ClosedCaptions.setFontOpacity", value);
+    return set("ClosedCaptions.setFontOpacity", value);
 }
 
 Result<void> ClosedCaptionsImpl::setFontSize(const float value)
 {
-    return setNL("ClosedCaptions.setFontSize", value);
+    return set("ClosedCaptions.setFontSize", value);
 }
 
 Result<void> ClosedCaptionsImpl::setPreferredLanguages(const std::vector<std::string>& value)
 {
-    return setNL("ClosedCaptions.setPreferredLanguages", value);
+    return set("ClosedCaptions.setPreferredLanguages", value);
 }
 
 Result<void> ClosedCaptionsImpl::setTextAlign(const std::string& value)
 {
-    return setNL("ClosedCaptions.setTextAlign", value);
+    return set("ClosedCaptions.setTextAlign", value);
 }
 
 Result<void> ClosedCaptionsImpl::setTextAlignVertical(const std::string& value)
 {
-    return setNL("ClosedCaptions.setTextAlignVertical", value);
+    return set("ClosedCaptions.setTextAlignVertical", value);
 }
 
 Result<void> ClosedCaptionsImpl::setWindowColor(const std::string& value)
 {
-    return setNL("ClosedCaptions.setWindowColor", value);
+    return set("ClosedCaptions.setWindowColor", value);
 }
 
 Result<void> ClosedCaptionsImpl::setWindowOpacity(const float value)
 {
-    return setNL("ClosedCaptions.setWindowOpacity", value);
+    return set("ClosedCaptions.setWindowOpacity", value);
 }
 
 // Events
