@@ -18,11 +18,10 @@ while [[ ! -z $1 ]]; do
   esac; shift
 done
 
-SYSROOT_PATH=${1:-$SYSROOT_PATH}
 [[ ! -z $SYSROOT_PATH ]] || { echo "SYSROOT_PATH not set" >/dev/stderr; exit 1; }
 [[ -e $SYSROOT_PATH ]] || { echo "SYSROOT_PATH not exist ($SYSROOT_PATH)" >/dev/stderr; exit 1; }
 
-[[ -e $bdir ]] || cmake -B $bdir -DSYSROOT_PATH=$SYSROOT_PATH
+[[ -e $bdir ]] || cmake -B $bdir -DSYSROOT_PATH=$SYSROOT_PATH "$@"
 cmake --build $bdir
 
 if $run; then
