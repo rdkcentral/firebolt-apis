@@ -35,8 +35,6 @@ find_package(nlohmann_json)
 
 target_link_libraries(${TARGET}
     PRIVATE
-        WPEFrameworkWebSocket::WPEFrameworkWebSocket
-        WPEFrameworkCore::WPEFrameworkCore
         nlohmann_json::nlohmann_json
     PUBLIC
         FireboltTransport::FireboltTransport

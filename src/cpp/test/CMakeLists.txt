@@ -82,8 +82,6 @@ if(ENABLE_UNIT_TESTS)
 
     message("Setup ${UNIT_TESTS_APP}")
 
-    find_package(WPEFrameworkCore)
-    find_package(WPEFrameworkWebSocket)
     find_package(nlohmann_json_schema_validator)
     find_package(GTest)
 
@@ -98,8 +96,6 @@ if(ENABLE_UNIT_TESTS)
     target_link_libraries(${UNIT_TESTS_APP}
         PRIVATE
             FireboltSDK::FireboltSDK
-            WPEFrameworkCore::WPEFrameworkCore
-            WPEFrameworkWebSocket::WPEFrameworkWebSocket
             nlohmann_json_schema_validator::validator
             GTest::gtest
     )
