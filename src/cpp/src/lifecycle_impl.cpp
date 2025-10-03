@@ -29,7 +29,7 @@ using namespace Firebolt::Helpers;
 
 namespace
 {
-void readyDispatcher(const void* result)
+void readyDispatcher()
 {
     Firebolt::IFireboltAccessor::Instance().MetricsInterface().ready();
 }
@@ -50,13 +50,9 @@ Result<void> LifecycleImpl::ready()
     nlohmann::json params;
     subscribeOnStateChange();
     const auto status = invoke("lifecycle.ready", params);
-    // if (status)
-    // {
-    //     WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch> job =
-    //         WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch>(
-    //             WPEFramework::Core::ProxyType<FireboltSDK::Transport::Worker>::Create(readyDispatcher, nullptr));
-    //     WPEFramework::Core::IWorkerPool::Instance().Submit(job);
-    // }
+    if (status) {
+        readyDispatcher();
+    }
     return status;
 }
 
