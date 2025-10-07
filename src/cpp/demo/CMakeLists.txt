@@ -16,7 +16,9 @@
 
 cmake_minimum_required(VERSION 3.10.0)
 
-project(FireboltCoreSDKDemo)
+if (NOT CMAKE_PROJECT_NAME)
+    project(FireboltCoreSDKDemo)
+endif ()
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX "${SYSROOT_PATH}/usr" CACHE INTERNAL "" FORCE)
@@ -27,14 +29,13 @@ list(APPEND CMAKE_MODULE_PATH
     "${SYSROOT_PATH}/usr/lib/cmake"
     "${SYSROOT_PATH}/tools/cmake")
 
-message("FIREBOLT_PATH inside cmake " ${FIREBOLT_PATH})
 if (FIREBOLT_PATH)
     set(CMAKE_FIREBOLT_PATH
         "${FIREBOLT_PATH}/usr/lib/cmake/FireboltSDK")
     list(APPEND CMAKE_PREFIX_PATH ${CMAKE_FIREBOLT_PATH})
     list(APPEND CMAKE_MODULE_PATH ${CMAKE_FIREBOLT_PATH})
 else ()
-   set(FIREBOLT_PATH "${SYSROOT_PATH}" CACHE INTERNAL "" FORCE)
+    set(FIREBOLT_PATH "${SYSROOT_PATH}" CACHE INTERNAL "" FORCE)
 endif ()
 
 if (STUB_FIREBOLT)
@@ -42,8 +43,9 @@ endif()
 
 # Do not look for FireboltSDK if been called from the main cmake
 if (NOT ENABLE_DEMO_APP)
-  find_package(FireboltSDK CONFIG REQUIRED)
+    find_package(FireboltSDK CONFIG REQUIRED)
 endif ()
+find_package(FireboltTransport CONFIG REQUIRED)
 
 message("Setup ${PROJECT_NAME}")
 

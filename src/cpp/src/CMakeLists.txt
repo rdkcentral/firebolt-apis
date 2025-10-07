@@ -16,10 +16,17 @@
 
 cmake_minimum_required(VERSION 3.3)
 
+include(GNUInstallDirs)
+include(GenerateExportHeader)
+include(CMakePackageConfigHelpers)
+
 set(TARGET ${PROJECT_NAME})
 message("Setup ${TARGET} v${PROJECT_VERSION}")
 
 file(GLOB SOURCES *.cpp json_types/*.cpp)
+
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 add_library(${TARGET} ${FIREBOLT_LIBRARY_TYPE}
     ${SOURCES}
@@ -28,8 +35,9 @@ add_library(${TARGET} ${FIREBOLT_LIBRARY_TYPE}
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 find_package(FireboltTransport CONFIG REQUIRED)
-find_package(WPEFramework CONFIG REQUIRED)
 find_package(nlohmann_json)
+
+generate_export_header(${TARGET})
 
 target_link_libraries(${TARGET}
     PRIVATE
@@ -49,13 +57,12 @@ endif ()
 
 target_include_directories(${TARGET}
     PRIVATE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/json_types>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        # where external projects will look for the library's public headers
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${FIREBOLT_NAMESPACE}>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
 )
 
 set_target_properties(${TARGET} PROPERTIES
@@ -65,20 +72,55 @@ set_target_properties(${TARGET} PROPERTIES
     SOVERSION ${PROJECT_VERSION_MAJOR}
 )
 
-install(TARGETS ${TARGET}
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
+
+configure_package_config_file(
+    "${CMAKE_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)
+
+install(
+    TARGETS ${TARGET}
     EXPORT ${TARGET}Targets
-    ARCHIVE DESTINATION lib COMPONENT libs  # static lib
-    LIBRARY DESTINATION lib COMPONENT libs  # shared lib
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        COMPONENT ${TARGET}_RunTime
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        COMPONENT ${TARGET}_RunTime
+        NAMELINK_COMPONENT ${TARGET}_Devel
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        COMPONENT ${TARGET}_Devel
+)
+
+install(
+    FILES ${CMAKE_BINARY_DIR}/src/${TARGET}Config.cmake
+    DESTINATION lib/cmake/${PROJECT_NAME}
+)
+
+install(
+    EXPORT ${TARGET}Targets
+    NAMESPACE ${TARGET}::
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/${PROJECT_NAME}
 )
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/
-    DESTINATION include/${FIREBOLT_NAMESPACE}
-    FILES_MATCHING PATTERN "*.h")
+    DESTINATION include/${PROJECT_NAME}
+    FILES_MATCHING PATTERN "*.h"
+)
 
 install(
-    FILES ${CMAKE_BINARY_DIR}/src/${TARGET}Config.cmake
-    DESTINATION lib/cmake/${FIREBOLT_NAMESPACE})
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}_export.h
+    DESTINATION include/${PROJECT_NAME}
+)
 
-InstallCMakeConfig(TARGETS ${TARGET})
-InstallPackageConfig(TARGETS ${TARGET} DESCRIPTION "Firebolt Native Core SDK Library")
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+)

@@ -31,7 +31,7 @@ option(ENABLE_DEMO_APP "Build demo app" OFF)
 
 if (FIREBOLT_ENABLE_STATIC_LIB)
     set(FIREBOLT_LIBRARY_TYPE STATIC)
-    add_compile_definitions(FIREBOLTSDK_STATIC)
+    add_compile_definitions(FIREBOLTSDK_STATIC_DEFINE)
 else ()
     set(FIREBOLT_LIBRARY_TYPE SHARED)
 endif ()
@@ -50,7 +50,6 @@ list(APPEND CMAKE_MODULE_PATH
         "${SYSROOT_PATH}/tools/cmake")
 
 
-set(FIREBOLT_NAMESPACE ${PROJECT_NAME} CACHE STRING "Namespace of the project")
 if (ENABLE_UNIT_TESTS)
     set(ENABLE_TESTS ON)
     add_compile_definitions(UNIT_TEST)
@@ -67,9 +66,3 @@ if (ENABLE_TESTS)
    add_subdirectory(test)
 endif()
 
-message("${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}Config.cmake")
-
-# make sure others can make use cmake settings of Firebolt OpenRPC
-configure_file( "${CMAKE_SOURCE_DIR}/cmake/project.cmake.in"
-        "${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}Config.cmake"
-    @ONLY)

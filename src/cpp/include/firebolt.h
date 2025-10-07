@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "Portability.h"
 #include "closedcaptions.h"
 #include "device.h"
 #include "error.h"
@@ -29,6 +28,7 @@
 #include "metrics.h"
 #include "securestorage.h"
 #include <functional>
+#include "fireboltsdk_export.h"
 
 namespace Firebolt
 {
