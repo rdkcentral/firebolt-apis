@@ -22,8 +22,6 @@ include(HelperFunctions)
 project(FireboltSDK)
 project_version("1.0.0")
 
-set(FIREBOLT_TRANSPORT_WAITTIME 1000 CACHE STRING "Maximum time to wait for Transport layer to get response")
-set(FIREBOLT_LOGLEVEL "Info" CACHE STRING  "Log level to be enabled")
 option(FIREBOLT_ENABLE_STATIC_LIB "Create Firebolt library as Static library" OFF)
 option(ENABLE_TESTS "Build openrpc native test" OFF)
 option(ENABLE_UNIT_TESTS "Build openrpc native test" OFF)
@@ -42,13 +40,12 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 list(APPEND CMAKE_PREFIX_PATH
-        "${SYSROOT_PATH}/usr/share/cmake")
+    "${SYSROOT_PATH}/usr/share/cmake")
 
 list(APPEND CMAKE_MODULE_PATH
-        "${SYSROOT_PATH}/usr/share/cmake"
-        "${SYSROOT_PATH}/usr/lib/cmake"
-        "${SYSROOT_PATH}/tools/cmake")
-
+    "${SYSROOT_PATH}/usr/share/cmake"
+    "${SYSROOT_PATH}/usr/lib/cmake"
+)
 
 if (ENABLE_UNIT_TESTS)
     set(ENABLE_TESTS ON)
@@ -59,10 +56,9 @@ endif ()
 add_subdirectory(src)
 
 if (ENABLE_DEMO_APP)
-  add_subdirectory(demo)
+    add_subdirectory(demo)
 endif()
 
 if (ENABLE_TESTS)
-   add_subdirectory(test)
+    add_subdirectory(test)
 endif()
-

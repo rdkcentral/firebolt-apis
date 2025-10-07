@@ -21,41 +21,22 @@ cmake_minimum_required(VERSION 3.3)
 
 set(TESTAPP TestFireboltCore)
 
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set(CMAKE_INSTALL_PREFIX "${SYSROOT_PATH}/usr" CACHE INTERNAL "" FORCE)
-    set(CMAKE_PREFIX_PATH ${SYSROOT_PATH}/usr/lib/cmake CACHE INTERNAL "" FORCE)
-endif()
-
-list(APPEND CMAKE_MODULE_PATH
-    "${SYSROOT_PATH}/usr/lib/cmake"
-    "${SYSROOT_PATH}/tools/cmake")
-
-if (FIREBOLT_PATH)
-    set(CMAKE_FIREBOLT_PATH
-        "${FIREBOLT_PATH}/usr/lib/cmake/FireboltTransport"
-        "${FIREBOLT_PATH}/usr/lib/cmake/FireboltSDK")
-    list(APPEND CMAKE_PREFIX_PATH ${CMAKE_FIREBOLT_PATH})
-    list(APPEND CMAKE_MODULE_PATH ${CMAKE_FIREBOLT_PATH})
-else ()
-   set(FIREBOLT_PATH "${SYSROOT_PATH}" CACHE INTERNAL "" FORCE)
-endif ()
-
+message("Setup ${TESTAPP}")
 
 find_package(FireboltTransport CONFIG REQUIRED)
-
-message("Setup ${TESTAPP}")
 
 add_executable(${TESTAPP} CoreSDKTest.cpp Main.cpp)
 
 target_link_libraries(${TESTAPP}
     PRIVATE
         FireboltTransport::FireboltTransport
+        FireboltSDK
 )
 
 target_include_directories(${TESTAPP}
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../src>
+        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src>
 )
 
 set_target_properties(${TESTAPP} PROPERTIES
@@ -89,6 +70,7 @@ if(ENABLE_UNIT_TESTS)
 
     target_link_libraries(${UNIT_TESTS_APP}
         PRIVATE
+            FireboltSDK
             FireboltTransport::FireboltTransport
             nlohmann_json_schema_validator::validator
             GTest::gtest
@@ -97,7 +79,7 @@ if(ENABLE_UNIT_TESTS)
     target_include_directories(${UNIT_TESTS_APP}
         PRIVATE
             $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/../src>
+            $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src>
     )
 
     set_target_properties(${UNIT_TESTS_APP} PROPERTIES
@@ -131,4 +113,3 @@ if(ENABLE_COVERAGE)
         DEPENDENCIES ${COVERAGE_DEPENDENCIES}
     )
 endif()
-
