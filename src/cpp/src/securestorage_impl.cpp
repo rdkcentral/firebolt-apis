@@ -36,7 +36,7 @@ Result<std::string> SecureStorageImpl::get(const StorageScope& scope, const std:
     nlohmann::json params;
     params["scope"] = FireboltSDK::JSON::ToString(JsonData::StorageScopeEnum, scope);
     params["key"] = key;
-    return invoke<FireboltSDK::JSON::String, std::string>("SecureStorage.get", params);
+    return Firebolt::Helpers::get<FireboltSDK::JSON::String, std::string>("SecureStorage.get", params);
 }
 
 Result<void> SecureStorageImpl::remove(const StorageScope& scope, const std::string& key)
