@@ -73,7 +73,7 @@ Result<void> HDMIInputImpl::close()
 Result<void> HDMIInputImpl::open(const std::string& port)
 {
     nlohmann::json params;
-    params["port"] = port;
+    params["portId"] = port;
     return invoke("HDMIInput.open", params);
 }
 

@@ -88,6 +88,7 @@ void RunAllTests()
         runTest(CoreSDKTest::GetEdidVersion, "GetEdidVersion");
         runTest(CoreSDKTest::SetEdidVersion, "SetEdidVersion");
         runTest(CoreSDKTest::GetHdmiPortInfo, "GetHdmiPortInfo");
+        runTest(CoreSDKTest::OpenHdmiPort, "OpenHdmiPort");
 
         // Lifecycle
         runTest(CoreSDKTest::LifecycleReady, "LifecycleReady");
