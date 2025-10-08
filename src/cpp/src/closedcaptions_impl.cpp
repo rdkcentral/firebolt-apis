@@ -29,9 +29,9 @@ Result<std::string> ClosedCaptionsImpl::backgroundColor() const
     return get<FireboltSDK::JSON::String, std::string>("ClosedCaptions.backgroundColor");
 }
 
-Result<float> ClosedCaptionsImpl::backgroundOpacity() const
+Result<unsigned> ClosedCaptionsImpl::backgroundOpacity() const
 {
-    return get<FireboltSDK::JSON::Float, float>("ClosedCaptions.backgroundOpacity");
+    return get<FireboltSDK::JSON::Unsigned, unsigned>("ClosedCaptions.backgroundOpacity");
 }
 
 Result<bool> ClosedCaptionsImpl::enabled() const
@@ -60,9 +60,9 @@ Result<Accessibility::FontFamily> ClosedCaptionsImpl::fontFamily() const
         "ClosedCaptions.fontFamily");
 }
 
-Result<float> ClosedCaptionsImpl::fontOpacity() const
+Result<unsigned> ClosedCaptionsImpl::fontOpacity() const
 {
-    return get<FireboltSDK::JSON::Float, float>("ClosedCaptions.fontOpacity");
+    return get<FireboltSDK::JSON::Unsigned, unsigned>("ClosedCaptions.fontOpacity");
 }
 
 Result<float> ClosedCaptionsImpl::fontSize() const
@@ -90,9 +90,9 @@ Result<std::string> ClosedCaptionsImpl::windowColor() const
     return get<FireboltSDK::JSON::String, std::string>("ClosedCaptions.windowColor");
 }
 
-Result<float> ClosedCaptionsImpl::windowOpacity() const
+Result<unsigned> ClosedCaptionsImpl::windowOpacity() const
 {
-    return get<FireboltSDK::JSON::Float, float>("ClosedCaptions.windowOpacity");
+    return get<FireboltSDK::JSON::Unsigned, unsigned>("ClosedCaptions.windowOpacity");
 }
 
 Result<void> ClosedCaptionsImpl::setBackgroundColor(const std::string& value)
@@ -100,7 +100,7 @@ Result<void> ClosedCaptionsImpl::setBackgroundColor(const std::string& value)
     return set("ClosedCaptions.setBackgroundColor", value);
 }
 
-Result<void> ClosedCaptionsImpl::setBackgroundOpacity(const float value)
+Result<void> ClosedCaptionsImpl::setBackgroundOpacity(const unsigned value)
 {
     return set("ClosedCaptions.setBackgroundOpacity", value);
 }
@@ -131,7 +131,7 @@ Result<void> ClosedCaptionsImpl::setFontFamily(const Accessibility::FontFamily& 
     return set("ClosedCaptions.setFontFamily", ::FireboltSDK::JSON::ToString(::Firebolt::Accessibility::JsonData::FontFamilyEnum, value));
 }
 
-Result<void> ClosedCaptionsImpl::setFontOpacity(const float value)
+Result<void> ClosedCaptionsImpl::setFontOpacity(const unsigned value)
 {
     return set("ClosedCaptions.setFontOpacity", value);
 }
@@ -161,7 +161,7 @@ Result<void> ClosedCaptionsImpl::setWindowColor(const std::string& value)
     return set("ClosedCaptions.setWindowColor", value);
 }
 
-Result<void> ClosedCaptionsImpl::setWindowOpacity(const float value)
+Result<void> ClosedCaptionsImpl::setWindowOpacity(const unsigned value)
 {
     return set("ClosedCaptions.setWindowOpacity", value);
 }
@@ -174,10 +174,10 @@ ClosedCaptionsImpl::subscribeOnBackgroundColorChanged(std::function<void(const s
                                                                     std::move(notification));
 }
 
-Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnBackgroundOpacityChanged(std::function<void(float)>&& notification)
+Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnBackgroundOpacityChanged(std::function<void(unsigned)>&& notification)
 {
     return SubscriptionHelper::subscribe<
-        FireboltSDK::JSON::Float>("ClosedCaptions.onBackgroundOpacityChanged", std::move(notification));
+        FireboltSDK::JSON::Unsigned>("ClosedCaptions.onBackgroundOpacityChanged", std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnEnabledChanged(std::function<void(bool)>&& notification)
@@ -214,16 +214,16 @@ ClosedCaptionsImpl::subscribeOnFontFamilyChanged(std::function<void(const Access
         Firebolt::Accessibility::JsonData::FontFamily>("ClosedCaptions.onFontFamilyChanged", std::move(notification));
 }
 
-Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnFontOpacityChanged(std::function<void(float)>&& notification)
+Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnFontOpacityChanged(std::function<void(unsigned)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Float>("ClosedCaptions.onFontOpacityChanged",
-                                                                          std::move(notification));
+    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Unsigned>("ClosedCaptions.onFontOpacityChanged",
+                                                                      std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnFontSizeChanged(std::function<void(float)>&& notification)
 {
     return SubscriptionHelper::subscribe<FireboltSDK::JSON::Float>("ClosedCaptions.onFontSizeChanged",
-                                                                          std::move(notification));
+                                                                      std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnPreferredLanguagesChanged(
@@ -254,10 +254,10 @@ ClosedCaptionsImpl::subscribeOnWindowColorChanged(std::function<void(const std::
                                                                     std::move(notification));
 }
 
-Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnWindowOpacityChanged(std::function<void(float)>&& notification)
+Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnWindowOpacityChanged(std::function<void(unsigned)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Float>("ClosedCaptions.onWindowOpacityChanged",
-                                                                          std::move(notification));
+    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Unsigned>("ClosedCaptions.onWindowOpacityChanged",
+                                                                      std::move(notification));
 }
 
 Result<void> ClosedCaptionsImpl::unsubscribe(SubscriptionId id)

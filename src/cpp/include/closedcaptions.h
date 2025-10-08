@@ -48,7 +48,7 @@ public:
      *
      * @retval The backgroundOpacity property or error
      */
-    virtual Result<float> backgroundOpacity() const = 0;
+    virtual Result<unsigned> backgroundOpacity() const = 0;
 
     /**
      * @brief Whether or not closed-captions are enabled.
@@ -90,7 +90,7 @@ public:
      *
      * @retval The fontOpacity property or error
      */
-    virtual Result<float> fontOpacity() const = 0;
+    virtual Result<unsigned> fontOpacity() const = 0;
 
     /**
      * @brief The preferred font size for displaying closed-captions.
@@ -136,7 +136,7 @@ public:
      *
      * @retval The windowOpacity property or error
      */
-    virtual Result<float> windowOpacity() const = 0;
+    virtual Result<unsigned> windowOpacity() const = 0;
 
     /**
      * @brief Set The preferred background color for displaying
@@ -156,7 +156,7 @@ public:
      *
      * @retval The status
      */
-    virtual Result<void> setBackgroundOpacity(const float value) = 0;
+    virtual Result<void> setBackgroundOpacity(const unsigned value) = 0;
 
     /**
      * @brief Set Whether or not closed-captions are enabled.
@@ -210,7 +210,7 @@ public:
      *
      * @retval The status
      */
-    virtual Result<void> setFontOpacity(const float value) = 0;
+    virtual Result<void> setFontOpacity(const unsigned value) = 0;
 
     /**
      * @brief Set The preferred font size for displaying closed-captions.
@@ -268,7 +268,7 @@ public:
      *
      * @retval The status
      */
-    virtual Result<void> setWindowOpacity(const float value) = 0;
+    virtual Result<void> setWindowOpacity(const unsigned value) = 0;
 
     // Events
     /**
@@ -288,7 +288,7 @@ public:
      *
      * @retval The subscriptionId or error
      */
-    virtual Result<SubscriptionId> subscribeOnBackgroundOpacityChanged(std::function<void(float)>&& notification) = 0;
+    virtual Result<SubscriptionId> subscribeOnBackgroundOpacityChanged(std::function<void(unsigned)>&& notification) = 0;
 
     /**
      * @brief Subscribe on the change of Enabled property
@@ -345,7 +345,7 @@ public:
      *
      * @retval The subscriptionId or error
      */
-    virtual Result<SubscriptionId> subscribeOnFontOpacityChanged(std::function<void(float)>&& notification) = 0;
+    virtual Result<SubscriptionId> subscribeOnFontOpacityChanged(std::function<void(unsigned)>&& notification) = 0;
 
     /**
      * @brief Subscribe on the change of FontSize property
@@ -402,7 +402,7 @@ public:
      *
      * @retval The subscriptionId or error
      */
-    virtual Result<SubscriptionId> subscribeOnWindowOpacityChanged(std::function<void(float)>&& notification) = 0;
+    virtual Result<SubscriptionId> subscribeOnWindowOpacityChanged(std::function<void(unsigned)>&& notification) = 0;
 
     /**
      * @brief Remove subscriber from subscribers list. This method is generic for

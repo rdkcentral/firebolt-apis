@@ -103,7 +103,7 @@ void CoreSDKTest::GetClosedCaptionsBackgroundOpacity()
 
 void CoreSDKTest::SetClosedCaptionsBackgroundOpacity()
 {
-    float bgOpacity = 1.0;
+    unsigned bgOpacity = 1;
 
     auto result = Firebolt::IFireboltAccessor::Instance().ClosedCaptionsInterface().setBackgroundOpacity(bgOpacity);
 
