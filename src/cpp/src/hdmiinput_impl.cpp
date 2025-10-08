@@ -80,13 +80,13 @@ Result<void> HDMIInputImpl::open(const std::string& port)
 Result<HDMIInputPort> HDMIInputImpl::port(const std::string& port)
 {
     nlohmann::json params;
-    params["port"] = port;
-    return invoke<JsonData::HDMIInputPort, HDMIInputPort>("HDMIInput.port", params);
+    params["portId"] = port;
+    return get<JsonData::HDMIInputPort, HDMIInputPort>("HDMIInput.port", params);
 }
 
 Result<std::vector<HDMIInputPort>> HDMIInputImpl::ports() const
 {
-    return invoke<FireboltSDK::JSON::NL_Json_Array<JsonData::HDMIInputPort, HDMIInputPort>, std::vector<HDMIInputPort>>("HDMIInput.ports");
+    return get<FireboltSDK::JSON::NL_Json_Array<JsonData::HDMIInputPort, HDMIInputPort>, std::vector<HDMIInputPort>>("HDMIInput.ports");
 }
 
 // Events

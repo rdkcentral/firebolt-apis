@@ -552,7 +552,7 @@ void CoreSDKTest::SetEdidVersion()
     else
     {
         std::string errorMessage = "Error: " + std::to_string(static_cast<int>(result.error()));
-        throw std::runtime_error("SetEdidVersionfailed. " + errorMessage);
+        throw std::runtime_error("SetEdidVersion failed. " + errorMessage);
     }
 }
 

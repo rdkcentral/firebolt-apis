@@ -59,7 +59,7 @@ class SignalChangedInfo : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::HD
 public:
     void FromJson(const nlohmann::json& json) override
     {
-        port = json["port"].get<std::string>();
+        port = json["portId"].get<std::string>();
         signal = HDMISignalStatusEnum.at(json["signal"]);
     }
     ::Firebolt::HDMIInput::SignalChangedInfo Value() const override
@@ -76,7 +76,7 @@ class AutoLowLatencyModeSignalChangedInfo : public FireboltSDK::JSON::NL_Json_Ba
 public:
     void FromJson(const nlohmann::json& json) override
     {
-        port_ = json["port"].get<std::string>();
+        port_ = json["portId"].get<std::string>();
         isAutoLowLatencyModeSignalled_ = json["autoLowLatencyModeSignalled"].get<bool>();
     }
     ::Firebolt::HDMIInput::AutoLowLatencyModeSignalChangedInfo Value() const override
@@ -122,7 +122,7 @@ class AutoLowLatencyModeCapableChangedInfo : public FireboltSDK::JSON::NL_Json_B
 public:
     void FromJson(const nlohmann::json& json) override
     {
-        port_ = json["port"].get<std::string>();
+        port_ = json["portId"].get<std::string>();
         isEnabled_ = json["enabled"].get<bool>();
     }
     ::Firebolt::HDMIInput::AutoLowLatencyModeCapableChangedInfo Value() const override
@@ -139,7 +139,7 @@ class ConnectionChangedInfo : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt
 public:
     void FromJson(const nlohmann::json& json) override
     {
-        port_ = json["port"].get<std::string>();
+        port_ = json["portId"].get<std::string>();
         isConnected_ = json["connected"].get<bool>();
     }
     ::Firebolt::HDMIInput::ConnectionChangedInfo Value() const override
