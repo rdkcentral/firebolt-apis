@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-#include "FireboltSDK.h"
 #include "closedcaptions_impl.h"
 #include "device_impl.h"
 #include "hdmiinput_impl.h"
@@ -26,6 +25,7 @@
 #include "metrics_impl.h"
 #include "securestorage_impl.h"
 #include <firebolt.h>
+#include <Accessor.h>
 
 namespace Firebolt
 {

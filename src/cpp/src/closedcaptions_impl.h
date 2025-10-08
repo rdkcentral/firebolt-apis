@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "closedcaptions.h"
 #include "helpers.h"
 #include "jsondata_accessibility.h"

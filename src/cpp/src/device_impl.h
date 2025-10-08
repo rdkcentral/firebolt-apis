@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include <string>
 
 #include "device.h"

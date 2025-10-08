@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "helpers.h"
 #include "securestorage.h"
 

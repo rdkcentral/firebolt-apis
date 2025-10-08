@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "hdmiinput.h"
 #include "helpers.h"
 

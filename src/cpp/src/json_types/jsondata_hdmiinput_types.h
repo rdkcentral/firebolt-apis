@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "hdmiinput.h"
 
 namespace Firebolt::HDMIInput::JsonData

@@ -23,6 +23,7 @@
 #include "error.h"
 #include <optional>
 #include <vector>
+#include <functional>
 
 namespace Firebolt::HDMIInput
 {

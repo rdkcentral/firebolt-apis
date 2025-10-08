@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "securestorage.h"
 
 namespace Firebolt::SecureStorage::JsonData

@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "common/accessibility.h"
 
 namespace Firebolt::Accessibility::JsonData
