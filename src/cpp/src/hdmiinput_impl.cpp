@@ -19,6 +19,7 @@
 
 #include "hdmiinput_impl.h"
 #include "jsondata_hdmiinput_types.h"
+#include <TypesPriv.h>
 
 using namespace Firebolt::Helpers;
 

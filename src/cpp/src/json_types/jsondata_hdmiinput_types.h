@@ -20,6 +20,7 @@
 #pragma once
 
 #include "hdmiinput.h"
+#include <TypesPriv.h>
 
 namespace Firebolt::HDMIInput::JsonData
 {

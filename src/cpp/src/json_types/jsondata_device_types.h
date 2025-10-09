@@ -20,6 +20,7 @@
 #pragma once
 
 #include "device.h"
+#include <TypesPriv.h>
 
 #include <map>
 #include <string>

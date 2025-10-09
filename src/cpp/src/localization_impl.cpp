@@ -18,6 +18,7 @@
  */
 
 #include "localization_impl.h"
+#include <TypesPriv.h>
 
 using namespace Firebolt::Helpers;
 

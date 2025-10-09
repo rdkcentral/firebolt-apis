@@ -20,6 +20,7 @@
 #pragma once
 
 #include "common/accessibility.h"
+#include <TypesPriv.h>
 
 namespace Firebolt::Accessibility::JsonData
 {

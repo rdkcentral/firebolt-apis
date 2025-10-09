@@ -20,6 +20,7 @@
 #pragma once
 
 #include "securestorage.h"
+#include <TypesPriv.h>
 
 namespace Firebolt::SecureStorage::JsonData
 {

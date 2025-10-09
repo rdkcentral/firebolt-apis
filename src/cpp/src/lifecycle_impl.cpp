@@ -24,6 +24,7 @@
 #include <nlohmann/json.hpp>
 #include <string>
 #include <cctype>
+#include <TypesPriv.h>
 
 using namespace Firebolt::Helpers;
 

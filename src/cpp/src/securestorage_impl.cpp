@@ -19,6 +19,7 @@
 
 #include "securestorage_impl.h"
 #include "jsondata_securestorage_types.h"
+#include <TypesPriv.h>
 
 using namespace Firebolt::Helpers;
 
