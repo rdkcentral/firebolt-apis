@@ -14,8 +14,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-cmake_minimum_required(VERSION 3.3)
-
 include(GNUInstallDirs)
 include(GenerateExportHeader)
 include(CMakePackageConfigHelpers)
@@ -88,12 +86,8 @@ install(
     TARGETS ${TARGET}
     EXPORT ${TARGET}Targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        COMPONENT ${TARGET}_RunTime
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        COMPONENT ${TARGET}_RunTime
-        NAMELINK_COMPONENT ${TARGET}_Devel
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        COMPONENT ${TARGET}_Devel
 )
 
 install(

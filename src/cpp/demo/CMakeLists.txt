@@ -14,10 +14,9 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-cmake_minimum_required(VERSION 3.10.0)
-
 if (NOT CMAKE_PROJECT_NAME)
     project(FireboltCoreSDKDemo)
+    cmake_minimum_required(VERSION 3.10)
 
     if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
         set(CMAKE_INSTALL_PREFIX "${SYSROOT_PATH}/usr" CACHE INTERNAL "" FORCE)

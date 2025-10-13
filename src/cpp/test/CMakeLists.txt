@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-cmake_minimum_required(VERSION 3.3)
-
 set(TESTAPP TestFireboltCore)
 
 message("Setup ${TESTAPP}")
