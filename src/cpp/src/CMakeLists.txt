@@ -33,7 +33,7 @@ add_library(${TARGET} ${FIREBOLT_LIBRARY_TYPE}
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 find_package(FireboltTransport CONFIG REQUIRED)
-find_package(nlohmann_json)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 generate_export_header(${TARGET})
 
@@ -43,15 +43,6 @@ target_link_libraries(${TARGET}
     PUBLIC
         FireboltTransport::FireboltTransport
 )
-
-if (ENABLE_UNIT_TESTS)
-    find_package(nlohmann_json_schema_validator)
-    find_package(GTest)
-    target_link_libraries(${TARGET}
-        PRIVATE
-            nlohmann_json_schema_validator::validator
-            GTest::gtest)
-endif ()
 
 target_include_directories(${TARGET}
     PRIVATE

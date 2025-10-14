@@ -17,8 +17,6 @@
  * limitations under the License.
  */
 
-#define MODULE_NAME DeviceTest
-#include "common/types.h"
 #include "unit.h"
 
 class DeviceTest : public ::testing::Test

@@ -19,6 +19,10 @@
 
 #pragma once
 
-#include "../CoreSDKTest.h"
+#include "firebolt.h"
+#include "error.h"
 #include "json_engine.h"
-#include "gtest/gtest.h"
+#include "common/types.h"
+
+#include <gtest/gtest.h>
+#include <thread>

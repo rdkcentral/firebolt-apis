@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-#define MODULE_NAME HDMIInputTest
 #include "unit.h"
 
 class HDMIInputTest : public ::testing::Test

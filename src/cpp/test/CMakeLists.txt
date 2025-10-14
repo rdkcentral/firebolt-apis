@@ -22,6 +22,7 @@ set(TESTAPP TestFireboltCore)
 message("Setup ${TESTAPP}")
 
 find_package(FireboltTransport CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 add_executable(${TESTAPP} CoreSDKTest.cpp Main.cpp)
 
@@ -29,6 +30,7 @@ target_link_libraries(${TESTAPP}
     PRIVATE
         FireboltTransport::FireboltTransport
         FireboltSDK
+        nlohmann_json::nlohmann_json
 )
 
 target_include_directories(${TESTAPP}
@@ -55,8 +57,8 @@ if(ENABLE_UNIT_TESTS)
 
     message("Setup ${UNIT_TESTS_APP}")
 
-    find_package(nlohmann_json_schema_validator)
-    find_package(GTest)
+    find_package(nlohmann_json_schema_validator CONFIG REQUIRED)
+    find_package(GTest CONFIG REQUIRED)
 
     file(GLOB UNIT_TESTS "unit/*")
 
@@ -70,6 +72,7 @@ if(ENABLE_UNIT_TESTS)
         PRIVATE
             FireboltSDK
             FireboltTransport::FireboltTransport
+            nlohmann_json::nlohmann_json
             nlohmann_json_schema_validator::validator
             GTest::gtest
     )
