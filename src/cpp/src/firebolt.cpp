@@ -25,7 +25,7 @@
 #include "metrics_impl.h"
 #include "securestorage_impl.h"
 #include <firebolt.h>
-#include <Accessor.h>
+#include <Gateway.h>
 
 namespace Firebolt
 {
@@ -39,26 +39,22 @@ public:
     ~FireboltAccessorImpl()
     {
         unsubscribeAll();
-
-        if (accessor_)
-        {
-            accessor_->Dispose();
-            accessor_ = nullptr;
-        }
     }
 
     Firebolt::Error Initialize(const std::string& configLine) override
     {
-        accessor_ = &(FireboltSDK::Transport::Accessor::Instance(configLine));
+        config_ = configLine;
         return Error::None;
     }
 
-    Firebolt::Error Connect(OnConnectionChanged listener) override { return accessor_->Connect(listener); }
+    Firebolt::Error Connect(OnConnectionChanged listener) override {
+        return FireboltSDK::Transport::GetGatewayInstance().Connect(config_, listener);
+    }
 
     Firebolt::Error Disconnect() override
     {
         unsubscribeAll();
-        return accessor_->Disconnect();
+        return FireboltSDK::Transport::GetGatewayInstance().Disconnect();
     }
 
     ClosedCaptions::IClosedCaptions& ClosedCaptionsInterface() override { return closedCaptions_; }
@@ -88,7 +84,7 @@ private:
     }
 
 private:
-    FireboltSDK::Transport::Accessor* accessor_;
+    std::string config_;
     ClosedCaptions::ClosedCaptionsImpl closedCaptions_;
     Device::DeviceImpl device_;
     HDMIInput::HDMIInputImpl hdmiInput_;

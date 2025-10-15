@@ -20,7 +20,6 @@
 #include "FireboltDemoService.h"
 #include <exception>
 #include <iostream>
-#include <thread>
 
 int main()
 try
@@ -28,8 +27,6 @@ try
     std::cout << "Firebolt SDK POC Demo\n";
 
     FireboltDemoService service;
-
-    std::this_thread::sleep_for(std::chrono::seconds(1));
 
     std::string input;
     while (1) {

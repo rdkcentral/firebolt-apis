@@ -106,7 +106,7 @@ FireboltDemoService::FireboltDemoService()
 
     const std::string config = R"({
     "waitTime": 3000,
-    "logLevel": "Info",
+    "log": { "level": "Info" },
     "wsUrl": ")" + url + R"("})";
 
     auto error = Firebolt::IFireboltAccessor::Instance().Initialize(config);
