@@ -1,0 +1,193 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "LifecycleV2",
+        "description": "Methods and events for responding to lifecycleV2 2.0 changes in your app",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "close",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycleV2:state"
+                    ]
+                }
+            ],
+            "summary": "Request that the platform move your app out of focus",
+            "params": [
+                {
+                    "name": "reason",
+                    "summary": "The reason the app is requesting to be closed",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/CloseReason"
+                    }
+                }
+            ],
+            "result": {
+                "name": "success",
+                "schema": {
+                    "const": null
+                }
+            },
+            "examples": [
+                {
+                    "name": "Close the app when the user presses back on the app home screen",
+                    "params": [
+                        {
+                            "name": "reason",
+                            "value": "unload"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": null
+                    }
+                },
+                {
+                    "name": "Close the app when the user selects an exit menu item",
+                    "params": [
+                        {
+                            "name": "reason",
+                            "value": "deactivate"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": null
+                    }
+                }
+            ]
+        },
+        {
+            "name": "state",
+            "summary": "Get the current state of the app.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycleV2:state"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "state",
+                "summary": "the current state of the app.",
+                "schema": {
+                    "$ref": "#/components/schemas/LifecycleState"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "foreground"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "state",
+            "tags": [
+                {
+                    "name": "notifier",
+                    "x-event": "LifecycleV2.onState"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycleV2:state"
+                    ]
+                }
+            ],
+            "summary": "Listen to the state event",
+            "params": [
+                {
+                    "name": "value",
+                    "schema": {
+                        "$ref": "#/components/schemas/LifecycleEvent"
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "Default Result",
+                            "value": {
+                                "newState": "foreground",
+                                "oldState": "inactive"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Move to foreground via remote branded buton",
+                    "params": [
+                        {
+                            "name": "value",
+                            "value": {
+                                "newState": "background",
+                                "oldState": "foreground"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "components": {
+        "schemas": {
+            "CloseReason": {
+                "title": "CloseReason",
+                "description": "The application close reason",
+                "type": "string",
+                "enum": [
+                    "deactivate",
+                    "unload",
+                    "killReload",
+                    "killReactivate"
+                ]
+            },
+            "LifecycleState": {
+                "title": "LifecycleState",
+                "description": "The application lifecycleV2 state",
+                "type": "string",
+                "enum": [
+                    "initializing",
+                    "inactive",
+                    "foreground",
+                    "background",
+                    "suspended",
+                    "terminating"
+                ]
+            },
+            "LifecycleEvent": {
+                "title": "LifecycleEvent",
+                "description": "A an object describing the previous and current states",
+                "type": "object",
+                "required": [
+                    "newState",
+                    "oldState"
+                ],
+                "properties": {
+                    "newState": {
+                        "$ref": "#/components/schemas/LifecycleState",
+                        "description": "The current lifecycleV2 state"
+                    },
+                    "oldState": {
+                        "$ref": "#/components/schemas/LifecycleState",
+                        "description": "The previous lifecycleV2 state"
+                    }
+                }
+            }
+        }
+    }
+}
