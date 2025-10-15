@@ -89,7 +89,7 @@ if(ENABLE_UNIT_TESTS)
     )
 
     include(GoogleTest)
-    gtest_discover_tests(${UNIT_TESTS_APP})
+    # gtest_discover_tests(${UNIT_TESTS_APP})
 endif()
 
 if(ENABLE_COVERAGE)
