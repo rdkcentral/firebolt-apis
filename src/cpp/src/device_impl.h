@@ -19,17 +19,15 @@
 
 #pragma once
 
-#include <string>
-
 #include "device.h"
 #include "helpers.h"
 
 namespace Firebolt::Device
 {
-class DeviceImpl : public IDevice, public Firebolt::Helpers::SubscriptionHelper
+class DeviceImpl : public IDevice
 {
 public:
-    DeviceImpl() = default;
+    explicit DeviceImpl(Firebolt::Helpers::Helper &helper);
     DeviceImpl(const DeviceImpl&) = delete;
     DeviceImpl& operator=(const DeviceImpl&) = delete;
 
@@ -68,5 +66,8 @@ public:
     void unsubscribeAll() override;
 
     Result<DeviceVersion> version() const override;
+
+private:
+    Firebolt::Helpers::Helper &helper_;
 };
 } // namespace Firebolt::Device

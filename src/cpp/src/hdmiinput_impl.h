@@ -24,11 +24,10 @@
 
 namespace Firebolt::HDMIInput
 {
-class HDMIInputImpl : public IHDMIInput, public Firebolt::Helpers::SubscriptionHelper
+class HDMIInputImpl : public IHDMIInput
 {
-
 public:
-    HDMIInputImpl() = default;
+    HDMIInputImpl(Firebolt::Helpers::Helper &helper);
     HDMIInputImpl(const HDMIInputImpl&) = delete;
     HDMIInputImpl& operator=(const HDMIInputImpl&) = delete;
 
@@ -60,5 +59,8 @@ public:
     Result<SubscriptionId> subscribeOnSignalChanged(std::function<void(const SignalChangedInfo&)>&& notification) override;
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;
+
+private:
+    Firebolt::Helpers::Helper &helper_;
 };
 } // namespace Firebolt::HDMIInput

@@ -25,10 +25,10 @@
 
 namespace Firebolt::ClosedCaptions
 {
-class ClosedCaptionsImpl : public IClosedCaptions, public Firebolt::Helpers::SubscriptionHelper
+class ClosedCaptionsImpl : public IClosedCaptions
 {
 public:
-    ClosedCaptionsImpl() = default;
+    explicit ClosedCaptionsImpl(Firebolt::Helpers::Helper &helper);
     ClosedCaptionsImpl(const ClosedCaptionsImpl&) = delete;
     ClosedCaptionsImpl& operator=(const ClosedCaptionsImpl&) = delete;
 
@@ -87,5 +87,8 @@ public:
     Result<SubscriptionId> subscribeOnWindowOpacityChanged(std::function<void(unsigned)>&& notification) override;
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;
+
+private:
+    Firebolt::Helpers::Helper &helper_;
 };
 } // namespace Firebolt::ClosedCaptions

@@ -24,10 +24,10 @@
 
 namespace Firebolt::SecureStorage
 {
-class SecureStorageImpl : public ISecureStorage, public Firebolt::Helpers::SubscriptionHelper
+class SecureStorageImpl : public ISecureStorage
 {
 public:
-    SecureStorageImpl() = default;
+    SecureStorageImpl(Firebolt::Helpers::Helper &helper);
     SecureStorageImpl(const SecureStorageImpl&) = delete;
     SecureStorageImpl& operator=(const SecureStorageImpl&) = delete;
     ~SecureStorageImpl() override = default;
@@ -41,5 +41,8 @@ public:
                            const std::string& value, const std::optional<StorageOptions>& options) override;
     Result<void> removeForApp(const std::string& appId, const StorageScope& scope, const std::string& key) override;
     Result<void> clearForApp(const std::string& appId, const StorageScope& scope) override;
+
+private:
+    Firebolt::Helpers::Helper &helper_;
 };
 } // namespace Firebolt::SecureStorage

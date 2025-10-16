@@ -38,11 +38,13 @@ void readyDispatcher()
 
 namespace Firebolt::Lifecycle
 {
+LifecycleImpl::LifecycleImpl(Firebolt::Helpers::Helper &helper) : helper_(helper) {}
+
 LifecycleImpl::~LifecycleImpl()
 {
     for (const SubscriptionId& id : subscriptions_)
     {
-        SubscriptionHelper::unsubscribe(id);
+        helper_.unsubscribe(id);
     }
 }
 
@@ -50,7 +52,7 @@ Result<void> LifecycleImpl::ready()
 {
     nlohmann::json params;
     subscribeOnStateChange();
-    const auto status = invoke("lifecycle.ready", params);
+    const auto status = helper_.invoke("lifecycle.ready", params);
     if (status) {
         readyDispatcher();
     }
@@ -61,13 +63,13 @@ Result<void> LifecycleImpl::close(const CloseReason& reason)
 {
     nlohmann::json params;
     params["reason"] = FireboltSDK::JSON::ToString(JsonData::CloseReasonEnum, reason);
-    return invoke("lifecycle.close", params);
+    return helper_.invoke("lifecycle.close", params);
 }
 
 Result<void> LifecycleImpl::finished()
 {
     nlohmann::json params;
-    return invoke("lifecycle.finished", params);
+    return helper_.invoke("lifecycle.finished", params);
 }
 
 Result<std::string> LifecycleImpl::state()
@@ -80,37 +82,37 @@ Result<std::string> LifecycleImpl::state()
 
 Result<SubscriptionId> LifecycleImpl::subscribeOnBackgroundChanged(std::function<void(const LifecycleEvent&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::LifecycleEvent>("lifecycle.onBackground", std::move(notification));
+    return helper_.subscribe<JsonData::LifecycleEvent>("lifecycle.onBackground", std::move(notification));
 }
 
 Result<SubscriptionId> LifecycleImpl::subscribeOnForegroundChanged(std::function<void(const LifecycleEvent&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::LifecycleEvent>("lifecycle.onForeground", std::move(notification));
+    return helper_.subscribe<JsonData::LifecycleEvent>("lifecycle.onForeground", std::move(notification));
 }
 
 Result<SubscriptionId> LifecycleImpl::subscribeOnInactiveChanged(std::function<void(const LifecycleEvent&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::LifecycleEvent>("lifecycle.onInactive", std::move(notification));
+    return helper_.subscribe<JsonData::LifecycleEvent>("lifecycle.onInactive", std::move(notification));
 }
 
 Result<SubscriptionId> LifecycleImpl::subscribeOnSuspendedChanged(std::function<void(const LifecycleEvent&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::LifecycleEvent>("lifecycle.onSuspended", std::move(notification));
+    return helper_.subscribe<JsonData::LifecycleEvent>("lifecycle.onSuspended", std::move(notification));
 }
 
 Result<SubscriptionId> LifecycleImpl::subscribeOnUnloadingChanged(std::function<void(const LifecycleEvent&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::LifecycleEvent>("lifecycle.onUnloading", std::move(notification));
+    return helper_.subscribe<JsonData::LifecycleEvent>("lifecycle.onUnloading", std::move(notification));
 }
 
 Result<void> LifecycleImpl::unsubscribe(SubscriptionId id)
 {
-    return SubscriptionHelper::unsubscribe(id);
+    return helper_.unsubscribe(id);
 }
 
 void LifecycleImpl::unsubscribeAll()
 {
-    SubscriptionHelper::unsubscribeAll();
+    helper_.unsubscribeAll();
 }
 
 void LifecycleImpl::onStateChanged(const LifecycleEvent& event)

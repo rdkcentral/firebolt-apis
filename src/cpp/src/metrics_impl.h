@@ -24,14 +24,17 @@
 
 namespace Firebolt::Metrics
 {
-class MetricsImpl : public IMetrics, public Firebolt::Helpers::SubscriptionHelper
+class MetricsImpl : public IMetrics
 {
 public:
-    MetricsImpl() = default;
+    MetricsImpl(Firebolt::Helpers::Helper &helper);
     MetricsImpl(const MetricsImpl&) = delete;
     MetricsImpl& operator=(const MetricsImpl&) = delete;
     ~MetricsImpl() override = default;
 
     Result<bool> ready() override;
+
+private:
+    Firebolt::Helpers::Helper &helper_;
 };
 } // namespace Firebolt::Metrics

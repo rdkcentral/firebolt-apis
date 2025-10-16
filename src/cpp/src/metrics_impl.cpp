@@ -20,13 +20,13 @@
 #include "metrics_impl.h"
 #include <TypesPriv.h>
 
-using namespace Firebolt::Helpers;
-
 namespace Firebolt::Metrics
 {
+MetricsImpl::MetricsImpl(Firebolt::Helpers::Helper &helper) : helper_(helper) {}
+
 Result<bool> MetricsImpl::ready()
 {
     nlohmann::json params;
-    return get<::FireboltSDK::JSON::Boolean, bool>("metrics.ready", params);
+    return helper_.get<::FireboltSDK::JSON::Boolean, bool>("metrics.ready", params);
 }
 } // namespace Firebolt::Metrics

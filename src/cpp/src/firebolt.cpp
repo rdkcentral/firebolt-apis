@@ -25,14 +25,24 @@
 #include "metrics_impl.h"
 #include "securestorage_impl.h"
 #include <firebolt.h>
-#include <Gateway.h>
+#include <helpers.h>
 
 namespace Firebolt
 {
 class FireboltAccessorImpl : public IFireboltAccessor
 {
 public:
-    FireboltAccessorImpl() = default;
+    FireboltAccessorImpl()
+        : closedCaptions_(Firebolt::Helpers::GetHelperInstance())
+        , device_(Firebolt::Helpers::GetHelperInstance())
+        , hdmiInput_(Firebolt::Helpers::GetHelperInstance())
+        , localization_(Firebolt::Helpers::GetHelperInstance())
+        , metrics_(Firebolt::Helpers::GetHelperInstance())
+        , lifecycle_(Firebolt::Helpers::GetHelperInstance())
+        , secureStorage_(Firebolt::Helpers::GetHelperInstance())
+    {
+    }
+
     FireboltAccessorImpl(const FireboltAccessorImpl&) = delete;
     FireboltAccessorImpl& operator=(const FireboltAccessorImpl&) = delete;
 
@@ -58,17 +68,11 @@ public:
     }
 
     ClosedCaptions::IClosedCaptions& ClosedCaptionsInterface() override { return closedCaptions_; }
-
     Device::IDevice& DeviceInterface() override { return device_; }
-
     HDMIInput::IHDMIInput& HDMIInputInterface() override { return hdmiInput_; }
-
     Localization::ILocalization& LocalizationInterface() override { return localization_; }
-
     Metrics::IMetrics& MetricsInterface() override { return metrics_; }
-
     Lifecycle::ILifecycle& LifecycleInterface() override { return lifecycle_; }
-
     SecureStorage::ISecureStorage& SecureStorageInterface() override { return secureStorage_; }
 
 private:
@@ -78,13 +82,12 @@ private:
         device_.unsubscribeAll();
         hdmiInput_.unsubscribeAll();
         localization_.unsubscribeAll();
-        metrics_.unsubscribeAll();
         lifecycle_.unsubscribeAll();
-        secureStorage_.unsubscribeAll();
     }
 
 private:
     std::string config_;
+
     ClosedCaptions::ClosedCaptionsImpl closedCaptions_;
     Device::DeviceImpl device_;
     HDMIInput::HDMIInputImpl hdmiInput_;

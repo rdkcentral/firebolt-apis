@@ -24,11 +24,10 @@
 
 namespace Firebolt::Localization
 {
-class LocalizationImpl : public ILocalization, public Firebolt::Helpers::SubscriptionHelper
+class LocalizationImpl : public ILocalization
 {
-
 public:
-    LocalizationImpl() = default;
+    LocalizationImpl(Firebolt::Helpers::Helper &helper);
     LocalizationImpl(const LocalizationImpl&) = delete;
     LocalizationImpl& operator=(const LocalizationImpl&) = delete;
 
@@ -45,6 +44,9 @@ public:
 
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;
+
+private:
+    Firebolt::Helpers::Helper &helper_;
 };
 
 } // namespace Firebolt::Localization

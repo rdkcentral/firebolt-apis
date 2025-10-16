@@ -27,10 +27,10 @@
 
 namespace Firebolt::Lifecycle
 {
-class LifecycleImpl : public ILifecycle, public Firebolt::Helpers::SubscriptionHelper
+class LifecycleImpl : public ILifecycle
 {
 public:
-    LifecycleImpl() = default;
+    LifecycleImpl(Firebolt::Helpers::Helper &helper);
     LifecycleImpl(const LifecycleImpl&) = delete;
     LifecycleImpl& operator=(const LifecycleImpl&) = delete;
     ~LifecycleImpl() override;
@@ -52,6 +52,7 @@ private:
     void subscribeOnStateChange();
 
 private:
+    Firebolt::Helpers::Helper &helper_;
     std::mutex mutex_;
     LifecycleState currentState_{LifecycleState::INITIALIZING};
     std::set<SubscriptionId> subscriptions_;
