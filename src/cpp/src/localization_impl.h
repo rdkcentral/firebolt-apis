@@ -39,8 +39,7 @@ public:
 
     // Events
     Result<SubscriptionId> subscribeOnCountryCodeChanged(std::function<void(const std::string&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnPreferredAudioLanguagesChanged(
-        std::function<void(const std::vector<std::string>&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnPreferredAudioLanguagesChanged(std::function<void(const std::vector<std::string>&)>&& notification) override;
 
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;

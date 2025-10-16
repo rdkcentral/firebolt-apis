@@ -57,10 +57,8 @@ public:
     Result<SubscriptionId> subscribeOnHdrChanged(std::function<void(const HDRFormatMap&)>&& notification) override;
     Result<SubscriptionId> subscribeOnNameChanged(std::function<void(const std::string&)>&& notification) override;
     Result<SubscriptionId> subscribeOnNetworkChanged(std::function<void(const NetworkInfoResult&)>&& notification) override;
-    Result<SubscriptionId>
-    subscribeOnScreenResolutionChanged(std::function<void(const std::string&)>&& notification) override;
-    Result<SubscriptionId>
-    subscribeOnVideoResolutionChanged(std::function<void(const std::string&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnScreenResolutionChanged(std::function<void(const std::string&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnVideoResolutionChanged(std::function<void(const std::string&)>&& notification) override;
 
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;

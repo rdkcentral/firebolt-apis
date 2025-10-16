@@ -46,14 +46,10 @@ public:
     Result<std::vector<HDMIInputPort>> ports() const override;
 
     // Events
-    Result<SubscriptionId> subscribeOnAutoLowLatencyModeCapableChanged(
-        std::function<void(const AutoLowLatencyModeCapableChangedInfo&)>&& notification) override;
-    Result<SubscriptionId> globalSubscribeOnAutoLowLatencyModeCapableChanged(
-        std::function<void(const AutoLowLatencyModeCapableChangedInfo&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnAutoLowLatencyModeSignalChanged(
-        std::function<void(const AutoLowLatencyModeSignalChangedInfo&)>&& notification) override;
-    Result<SubscriptionId>
-    subscribeOnConnectionChanged(std::function<void(const ConnectionChangedInfo&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnAutoLowLatencyModeCapableChanged(std::function<void(const AutoLowLatencyModeCapableChangedInfo&)>&& notification) override;
+    Result<SubscriptionId> globalSubscribeOnAutoLowLatencyModeCapableChanged(std::function<void(const AutoLowLatencyModeCapableChangedInfo&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnAutoLowLatencyModeSignalChanged(std::function<void(const AutoLowLatencyModeSignalChangedInfo&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnConnectionChanged(std::function<void(const ConnectionChangedInfo&)>&& notification) override;
     Result<SubscriptionId> subscribeOnEdidVersionChanged(std::function<void(const EDIDVersion&)>&& notification) override;
     Result<SubscriptionId> subscribeOnLowLatencyModeChanged(std::function<void(bool)>&& notification) override;
     Result<SubscriptionId> subscribeOnSignalChanged(std::function<void(const SignalChangedInfo&)>&& notification) override;
