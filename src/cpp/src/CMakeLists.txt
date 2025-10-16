@@ -98,8 +98,9 @@ install(
     FILES_MATCHING PATTERN "*.h"
 )
 
+string(TOLOWER "${TARGET}" TARGET_LOWER)
 install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET}_export.h
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_export.h
     DESTINATION include/${PROJECT_NAME}
 )
 
