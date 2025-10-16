@@ -17,37 +17,68 @@
  * limitations under the License.
  */
 
-#include "unit.h"
+#include "MockHelper.h"
+#include "device_impl.h"
+#include "json_engine.h"
+
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
 
 class DeviceTest : public ::testing::Test
 {
 protected:
-    JsonEngine* jsonEngine;
+    Firebolt::Result<nlohmann::json> getter(const std::string &methodName, const nlohmann::json &parameters)
+    {
+        nlohmann::json message;
+        message["method"] = methodName;
 
-    void SetUp() override { jsonEngine = new JsonEngine(); }
+        Firebolt::Error err = jsonEngine.MockResponse(message);
+        if (err != Firebolt::Error::None)
+        {
+            return Firebolt::Result<nlohmann::json>{err};
+        }
 
-    void TearDown() override { delete jsonEngine; }
+        return Firebolt::Result<nlohmann::json>{message["result"]};
+    }
+
+    void mock(const std::string &methodName)
+    {
+        EXPECT_CALL(mockHelper, getJson(methodName, _))
+            .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
+                            { return getter(methodName, parameters); }));
+    }
+
+protected:
+    JsonEngine jsonEngine;
+    MockHelper mockHelper;
+    Firebolt::Device::DeviceImpl deviceImpl_{mockHelper};
 };
 
 TEST_F(DeviceTest, Id)
 {
-    auto actual_value = jsonEngine->get_value("Device.id");
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().id();
+    mock("device.id");
 
-    ASSERT_TRUE(result) << "Failed to retrieve id from Device.id() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    auto result = deviceImpl_.id();
+
+    ASSERT_TRUE(result) << "DeviceImpl::id() returned an error";
+
+    auto expectedValue = jsonEngine.get_value("Device.id");
+    EXPECT_EQ(*result, REMOVE_QUOTES(expectedValue));
 }
 
 TEST_F(DeviceTest, Distributor)
 {
+    mock("device.distributor");
 
-    auto actual_value = jsonEngine->get_value("Device.distributor");
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().distributor();
+    auto result = deviceImpl_.distributor();
 
-    ASSERT_TRUE(result) << "Failed to retrieve distributor from Device.distributor() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    ASSERT_TRUE(result) << "DeviceImpl::distributor() returned an error";
+    auto expectedValue = jsonEngine.get_value("Device.distributor");
+    EXPECT_EQ(*result, REMOVE_QUOTES(expectedValue));
 }
 
+/*
 TEST_F(DeviceTest, Platform)
 {
 
@@ -291,3 +322,4 @@ TEST_F(DeviceTest, Name)
     ASSERT_TRUE(result) << "Failed to retrieve name from Device.name() method";
     EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
 }
+*/

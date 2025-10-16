@@ -28,39 +28,42 @@ if (NOT CMAKE_PROJECT_NAME)
         "${SYSROOT_PATH}/tools/cmake"
     )
 endif ()
+set(DEMO_APP FireboltCoreSDKDemo)
 
-message("Setup ${PROJECT_NAME}")
+
+message("Setup ${DEMO_APP}")
 
 find_package(FireboltTransport CONFIG REQUIRED)
 
-add_executable(${PROJECT_NAME}
+add_executable(${DEMO_APP}
     FireboltDemoService.cpp
     main.cpp)
 
 if (NOT ENABLE_DEMO_APP)
     find_package(FireboltSDK CONFIG REQUIRED)
-    target_link_libraries(${PROJECT_NAME}
+    target_link_libraries(${DEMO_APP}
         PRIVATE
             FireboltSDK::FireboltSDK
     )
 else()
-    target_link_libraries(${PROJECT_NAME}
+  target_link_libraries(${DEMO_APP}
         PRIVATE
             FireboltSDK
     )
 endif ()
 
-target_include_directories(${PROJECT_NAME}
+target_include_directories(${DEMO_APP}
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
+        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src/>
 )
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
+set_target_properties(${DEMO_APP} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
 )
 
 install(
-    TARGETS ${PROJECT_NAME}
+    TARGETS ${DEMO_APP}
     DESTINATION bin
 )

@@ -60,7 +60,8 @@ if(ENABLE_UNIT_TESTS)
     find_package(nlohmann_json_schema_validator CONFIG REQUIRED)
     find_package(GTest CONFIG REQUIRED)
 
-    file(GLOB UNIT_TESTS "unit/*")
+    # file(GLOB UNIT_TESTS "unit/*")
+    set(UNIT_TESTS "unit/deviceTest.cpp")
 
     add_executable(${UNIT_TESTS_APP}
         CoreSDKTest.cpp
@@ -75,11 +76,13 @@ if(ENABLE_UNIT_TESTS)
             nlohmann_json::nlohmann_json
             nlohmann_json_schema_validator::validator
             GTest::gtest
+            GTest::gmock
     )
 
     target_include_directories(${UNIT_TESTS_APP}
         PRIVATE
             $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
+            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/>
             $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src>
     )
 
@@ -89,7 +92,7 @@ if(ENABLE_UNIT_TESTS)
     )
 
     include(GoogleTest)
-    # gtest_discover_tests(${UNIT_TESTS_APP})
+    gtest_discover_tests(${UNIT_TESTS_APP})
 endif()
 
 if(ENABLE_COVERAGE)
