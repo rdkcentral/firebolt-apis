@@ -23,7 +23,7 @@ using namespace Firebolt::Helpers;
 
 namespace Firebolt::ClosedCaptions
 {
-ClosedCaptionsImpl::ClosedCaptionsImpl(Firebolt::Helpers::Helper &helper) : helper_(helper) {}
+ClosedCaptionsImpl::ClosedCaptionsImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
 
 // Methods
 Result<std::string> ClosedCaptionsImpl::backgroundColor() const

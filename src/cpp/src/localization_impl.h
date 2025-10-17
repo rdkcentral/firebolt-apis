@@ -27,7 +27,7 @@ namespace Firebolt::Localization
 class LocalizationImpl : public ILocalization
 {
 public:
-    LocalizationImpl(Firebolt::Helpers::Helper &helper);
+    LocalizationImpl(Firebolt::Helpers::IHelper &helper);
     LocalizationImpl(const LocalizationImpl&) = delete;
     LocalizationImpl& operator=(const LocalizationImpl&) = delete;
 
@@ -45,7 +45,7 @@ public:
     void unsubscribeAll() override;
 
 private:
-    Firebolt::Helpers::Helper &helper_;
+    Firebolt::Helpers::IHelper &helper_;
 };
 
 } // namespace Firebolt::Localization

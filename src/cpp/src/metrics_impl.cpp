@@ -22,7 +22,7 @@
 
 namespace Firebolt::Metrics
 {
-MetricsImpl::MetricsImpl(Firebolt::Helpers::Helper &helper) : helper_(helper) {}
+MetricsImpl::MetricsImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
 
 Result<bool> MetricsImpl::ready()
 {

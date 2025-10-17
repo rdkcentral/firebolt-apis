@@ -25,7 +25,7 @@ using namespace Firebolt::Helpers;
 
 namespace Firebolt::HDMIInput
 {
-HDMIInputImpl::HDMIInputImpl(Firebolt::Helpers::Helper &helper) : helper_(helper) {}
+HDMIInputImpl::HDMIInputImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
 
 Result<bool> HDMIInputImpl::autoLowLatencyModeCapable(const std::string& port) const
 {

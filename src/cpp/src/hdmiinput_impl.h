@@ -27,7 +27,7 @@ namespace Firebolt::HDMIInput
 class HDMIInputImpl : public IHDMIInput
 {
 public:
-    HDMIInputImpl(Firebolt::Helpers::Helper &helper);
+    HDMIInputImpl(Firebolt::Helpers::IHelper &helper);
     HDMIInputImpl(const HDMIInputImpl&) = delete;
     HDMIInputImpl& operator=(const HDMIInputImpl&) = delete;
 
@@ -57,6 +57,6 @@ public:
     void unsubscribeAll() override;
 
 private:
-    Firebolt::Helpers::Helper &helper_;
+    Firebolt::Helpers::IHelper &helper_;
 };
 } // namespace Firebolt::HDMIInput

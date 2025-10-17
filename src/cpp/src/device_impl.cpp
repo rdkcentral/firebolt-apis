@@ -23,7 +23,7 @@
 
 namespace Firebolt::Device
 {
-DeviceImpl::DeviceImpl(Firebolt::Helpers::Helper &helper) : helper_(helper) {}
+DeviceImpl::DeviceImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
 
 // Methods
 Result<AudioProfiles> DeviceImpl::audio() const

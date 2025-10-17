@@ -23,7 +23,7 @@
 
 namespace Firebolt::SecureStorage
 {
-SecureStorageImpl::SecureStorageImpl(Firebolt::Helpers::Helper &helper) : helper_(helper) {}
+SecureStorageImpl::SecureStorageImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
 
 Result<void> SecureStorageImpl::clear(const StorageScope& scope)
 {

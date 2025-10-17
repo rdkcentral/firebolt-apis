@@ -27,7 +27,7 @@ namespace Firebolt::Device
 class DeviceImpl : public IDevice
 {
 public:
-    explicit DeviceImpl(Firebolt::Helpers::Helper &helper);
+    explicit DeviceImpl(Firebolt::Helpers::IHelper &helper);
     DeviceImpl(const DeviceImpl&) = delete;
     DeviceImpl& operator=(const DeviceImpl&) = delete;
 
@@ -66,6 +66,6 @@ public:
     Result<DeviceVersion> version() const override;
 
 private:
-    Firebolt::Helpers::Helper &helper_;
+    Firebolt::Helpers::IHelper &helper_;
 };
 } // namespace Firebolt::Device

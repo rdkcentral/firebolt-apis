@@ -22,7 +22,7 @@
 
 namespace Firebolt::Localization
 {
-LocalizationImpl::LocalizationImpl(Firebolt::Helpers::Helper &helper) : helper_(helper) {}
+LocalizationImpl::LocalizationImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
 
 Result<std::string> LocalizationImpl::countryCode() const
 {

@@ -22,7 +22,7 @@
 #include <gmock/gmock.h>
 #include <helpers.h>
 
-class MockHelper : public Firebolt::Helpers::Helper
+class MockHelper : public Firebolt::Helpers::IHelper
 {
 public:
     MOCK_METHOD(Firebolt::Result<nlohmann::json>, getJson,

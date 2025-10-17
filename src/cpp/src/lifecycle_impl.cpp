@@ -38,7 +38,7 @@ void readyDispatcher()
 
 namespace Firebolt::Lifecycle
 {
-LifecycleImpl::LifecycleImpl(Firebolt::Helpers::Helper &helper) : helper_(helper) {}
+LifecycleImpl::LifecycleImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
 
 LifecycleImpl::~LifecycleImpl()
 {

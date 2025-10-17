@@ -28,7 +28,7 @@ namespace Firebolt::ClosedCaptions
 class ClosedCaptionsImpl : public IClosedCaptions
 {
 public:
-    explicit ClosedCaptionsImpl(Firebolt::Helpers::Helper &helper);
+    explicit ClosedCaptionsImpl(Firebolt::Helpers::IHelper &helper);
     ClosedCaptionsImpl(const ClosedCaptionsImpl&) = delete;
     ClosedCaptionsImpl& operator=(const ClosedCaptionsImpl&) = delete;
 
@@ -84,6 +84,6 @@ public:
     void unsubscribeAll() override;
 
 private:
-    Firebolt::Helpers::Helper &helper_;
+    Firebolt::Helpers::IHelper &helper_;
 };
 } // namespace Firebolt::ClosedCaptions
