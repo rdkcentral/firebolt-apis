@@ -1,0 +1,193 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Lifecycle2",
+        "description": "Methods and events for responding to Lifecycle2 changes in your app.",
+        "version": "0.0.0"
+    },
+    "methods": [
+        {
+            "name": "close",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle2:state"
+                    ]
+                }
+            ],
+            "summary": "Request the platform to deactivate the app, and possibly take further action.",
+            "params": [
+                {
+                    "name": "type",
+                    "summary": "The type of the close app is requesting",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/CloseType"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "schema": {
+                    "type": "null"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Close the app when the user presses back on the app home screen",
+                    "params": [
+                        {
+                            "name": "type",
+                            "value": "unload"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": null
+                    }
+                },
+                {
+                    "name": "Close the app when the user selects an exit menu item",
+                    "params": [
+                        {
+                            "name": "type",
+                            "value": "deactivate"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": null
+                    }
+                }
+            ]
+        },
+        {
+            "name": "state",
+            "summary": "Get the current lifecycle2 state of the app.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle2:state"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "state",
+                "summary": "The current lifecycle2 state of the app.",
+                "schema": {
+                    "$ref": "#/components/schemas/Lifecycle2State"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "active"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "state",
+            "tags": [
+                {
+                    "name": "notifier",
+                    "x-event": "Lifecycle2.onState"
+                },
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle2:state"
+                    ]
+                }
+            ],
+            "summary": "Notification of lifecycle2 state change, raised after the platform has transitioned the app/runtime to the new lifecycle2 state",
+            "params": [
+                {
+                    "name": "value",
+                    "schema": {
+                        "$ref": "#/components/schemas/Lifecycle2Event"
+                    }
+                }
+            ],
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [
+                        {
+                            "name": "value",
+                            "value": {
+                                "newState": "initializing",
+                                "oldState": "active"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "App is deactivated",
+                    "params": [
+                        {
+                            "name": "value",
+                            "value": {
+                                "newState": "active",
+                                "oldState": "paused"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "components": {
+        "schemas": {
+            "CloseType": {
+                "title": "CloseType",
+                "description": "The application close type",
+                "type": "string",
+                "enum": [
+                    "deactivate",
+                    "unload",
+                    "killReload",
+                    "killReactivate"
+                ]
+            },
+            "Lifecycle2State": {
+                "title": "Lifecycle2State",
+                "description": "The application Lifecycle2 state",
+                "type": "string",
+                "enum": [
+                    "initializing",
+                    "active",
+                    "paused",
+                    "suspended",
+                    "hibernated",
+                    "terminating"
+                ]
+            },
+            "Lifecycle2Event": {
+                "title": "Lifecycle2Event",
+                "description": "An object describing the previous and current states",
+                "type": "object",
+                "required": [
+                    "newState",
+                    "oldState"
+                ],
+                "properties": {
+                    "newState": {
+                        "$ref": "#/components/schemas/Lifecycle2State",
+                        "description": "The current Lifecycle2 state"
+                    },
+                    "oldState": {
+                        "$ref": "#/components/schemas/Lifecycle2State",
+                        "description": "The previous Lifecycle2 state"
+                    }
+                }
+            }
+        }
+    }
+}
