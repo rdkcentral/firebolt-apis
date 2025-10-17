@@ -20,7 +20,7 @@
             "params": [
                 {
                     "name": "type",
-                    "summary": "The type the app is requesting to be closed",
+                    "summary": "The type of the close app is requesting",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/CloseType"
@@ -122,20 +122,20 @@
                         {
                             "name": "value",
                             "value": {
-                                "newState": "foreground",
-                                "oldState": "inactive"
+                                "newState": "initializing",
+                                "oldState": "active"
                             }
                         }
                     ]
                 },
                 {
-                    "name": "Move to foreground via remote branded buton",
+                    "name": "App is deactivated",
                     "params": [
                         {
                             "name": "value",
                             "value": {
-                                "newState": "background",
-                                "oldState": "foreground"
+                                "newState": "active",
+                                "oldState": "paused"
                             }
                         }
                     ]
@@ -162,10 +162,10 @@
                 "type": "string",
                 "enum": [
                     "initializing",
-                    "inactive",
-                    "foreground",
-                    "background",
+                    "active",
+                    "paused",
                     "suspended",
+                    "hibernated",
                     "terminating"
                 ]
             },
