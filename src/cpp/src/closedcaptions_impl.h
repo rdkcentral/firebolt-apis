@@ -25,7 +25,7 @@
 
 namespace Firebolt::ClosedCaptions
 {
-class ClosedCaptionsImpl : public IClosedCaptions
+class ClosedCaptionsImpl : public IClosedCaptions, public Firebolt::Helpers::SubscriptionHelper
 {
 public:
     explicit ClosedCaptionsImpl(Firebolt::Helpers::IHelper &helper);
@@ -80,6 +80,7 @@ public:
     Result<SubscriptionId> subscribeOnTextAlignVerticalChanged(std::function<void(const std::string&)>&& notification) override;
     Result<SubscriptionId> subscribeOnWindowColorChanged(std::function<void(const std::string&)>&& notification) override;
     Result<SubscriptionId> subscribeOnWindowOpacityChanged(std::function<void(unsigned)>&& notification) override;
+
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;
 

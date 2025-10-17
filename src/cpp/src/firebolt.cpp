@@ -26,6 +26,7 @@
 #include "securestorage_impl.h"
 #include <firebolt.h>
 #include <helpers.h>
+#include <gateway.h>
 
 namespace Firebolt
 {
