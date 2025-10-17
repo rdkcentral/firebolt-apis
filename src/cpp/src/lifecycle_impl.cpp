@@ -21,10 +21,9 @@
 #include "firebolt.h"
 #include "jsondata_lifecycle_types.h"
 #include <algorithm>
+#include <cctype>
 #include <nlohmann/json.hpp>
 #include <string>
-#include <cctype>
-#include <TypesPriv.h>
 
 using namespace Firebolt::Helpers;
 

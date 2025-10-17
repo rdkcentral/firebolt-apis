@@ -20,9 +20,8 @@
 #pragma once
 
 #include "firebolt.h"
-#include "error.h"
 #include "json_engine.h"
-#include "common/types.h"
-
 #include <gtest/gtest.h>
 #include <thread>
+#include <types/fb-errors.h>
+#include <types/types.h>

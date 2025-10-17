@@ -18,7 +18,6 @@
  */
 
 #include "localization_impl.h"
-#include <TypesPriv.h>
 
 namespace Firebolt::Localization
 {

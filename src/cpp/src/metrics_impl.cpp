@@ -18,7 +18,6 @@
  */
 
 #include "metrics_impl.h"
-#include <TypesPriv.h>
 
 namespace Firebolt::Metrics
 {

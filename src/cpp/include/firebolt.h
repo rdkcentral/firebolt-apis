@@ -21,14 +21,14 @@
 
 #include "closedcaptions.h"
 #include "device.h"
-#include "error.h"
+#include "fireboltsdk_export.h"
 #include "hdmiinput.h"
 #include "lifecycle.h"
 #include "localization.h"
 #include "metrics.h"
 #include "securestorage.h"
 #include <functional>
-#include "fireboltsdk_export.h"
+#include <types/fb-errors.h>
 
 namespace Firebolt
 {

@@ -20,12 +20,12 @@
 #pragma once
 
 #include "device.h"
-#include <TypesPriv.h>
 
-#include <map>
-#include <string>
 #include <algorithm>
+#include <map>
 #include <nlohmann/json.hpp>
+#include <string>
+#include <types/json_types.h>
 
 namespace Firebolt::Device::JsonData
 {

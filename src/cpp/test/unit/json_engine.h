@@ -25,10 +25,9 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-#include <nlohmann/json.hpp>
 #include <nlohmann/json-schema.hpp>
-
-#include "error.h"
+#include <nlohmann/json.hpp>
+#include <types/fb-errors.h>
 
 #ifndef UNIT_TEST
 #error "must be included only for UTs"

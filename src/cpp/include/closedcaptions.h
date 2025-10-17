@@ -20,11 +20,11 @@
 #pragma once
 
 #include "common/accessibility.h"
-#include "common/types.h"
-#include "error.h"
 #include <functional>
 #include <optional>
 #include <string>
+#include <types/fb-errors.h>
+#include <types/types.h>
 #include <vector>
 
 namespace Firebolt::ClosedCaptions

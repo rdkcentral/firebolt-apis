@@ -19,7 +19,6 @@
 
 #include "device_impl.h"
 #include "jsondata_device_types.h"
-#include <TypesPriv.h>
 
 namespace Firebolt::Device
 {

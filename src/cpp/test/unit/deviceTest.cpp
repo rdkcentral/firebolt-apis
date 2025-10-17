@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-#include "MockHelper.h"
 #include "device_impl.h"
 #include "json_engine.h"
+#include "mock_helper.h"
 
 using ::testing::_;
 using ::testing::Invoke;
