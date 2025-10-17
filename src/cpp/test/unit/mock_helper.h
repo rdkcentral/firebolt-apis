@@ -31,11 +31,6 @@ public:
                 (override));
     MOCK_METHOD(Firebolt::Result<void>, invoke, (const std::string &methodName, const nlohmann::json &parameters),
                 (override));
-    MOCK_METHOD(Firebolt::Result<void>, unsubscribe, (::Firebolt::SubscriptionId id), (override));
-    MOCK_METHOD(void, unsubscribeAll, (), (override));
 
 private:
-    MOCK_METHOD(Firebolt::Result<Firebolt::SubscriptionId>, subscribeImpl,
-                (const std::string &eventName, std::any &&notification, void (*callback)(void *, const nlohmann::json &)),
-                (override));
 };
