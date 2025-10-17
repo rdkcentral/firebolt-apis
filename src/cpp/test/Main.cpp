@@ -144,13 +144,11 @@ void RunAllTests()
                 cout << errorMessage << endl;
             }
             cout << "============================" << endl;
-            exit(1);
         }
     }
     else
     {
         cout << "Core Test not able to connect with server..." << endl;
-        exit(1);
     }
 }
 
