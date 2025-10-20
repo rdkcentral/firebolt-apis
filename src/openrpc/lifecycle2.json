@@ -73,7 +73,6 @@
                     ]
                 }
             ],
-            "params": [],
             "result": {
                 "name": "state",
                 "summary": "The current lifecycle2 state of the app.",
@@ -84,7 +83,6 @@
             "examples": [
                 {
                     "name": "Default Example",
-                    "params": [],
                     "result": {
                         "name": "Default Result",
                         "value": "active"
