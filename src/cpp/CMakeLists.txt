@@ -48,6 +48,7 @@ list(APPEND CMAKE_MODULE_PATH
 )
 
 if (ENABLE_UNIT_TESTS)
+    enable_testing()
     set(ENABLE_TESTS ON)
     add_compile_definitions(UNIT_TEST)
     add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-core-open-rpc.json")
