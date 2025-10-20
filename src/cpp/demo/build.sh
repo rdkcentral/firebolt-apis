@@ -4,7 +4,7 @@ set -e
 
 bdir="build"
 run=true
-buildTarget="Debug"
+buildType="Debug"
 
 while [[ ! -z $1 ]]; do
   case $1 in

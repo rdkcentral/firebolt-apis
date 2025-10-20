@@ -6,7 +6,7 @@ bdir="build"
 idir="install"
 do_install=false
 params=
-buildTarget="Debug"
+buildType="Debug"
 
 while [[ ! -z $1 ]]; do
   case $1 in
