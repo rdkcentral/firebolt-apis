@@ -78,73 +78,73 @@ TEST_F(DeviceTest, Distributor)
     EXPECT_EQ(*result, REMOVE_QUOTES(expectedValue));
 }
 
-/*
+
 TEST_F(DeviceTest, Platform)
 {
+    mock("device.platform");
 
-    auto actual_value = jsonEngine->get_value("Device.platform");
+    auto result = deviceImpl_.platform();
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().platform();
-
-    ASSERT_TRUE(result) << "Failed to retrieve platform from Device.platform() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    ASSERT_TRUE(result) << "DeviceImpl::platform() returned an error";
+    auto expectedValue = jsonEngine.get_value("Device.platform");
+    EXPECT_EQ(*result, REMOVE_QUOTES(expectedValue));
 }
 
 TEST_F(DeviceTest, Uid)
 {
+    mock("device.uid");
 
-    auto actual_value = jsonEngine->get_value("Device.uid");
+    auto result = deviceImpl_.uid();
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().uid();
-
-    ASSERT_TRUE(result) << "Failed to retrieve uid from Device.uid() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    ASSERT_TRUE(result) << "DeviceImpl::uid() returned an error";
+    auto expectedValue = jsonEngine.get_value("Device.uid");
+    EXPECT_EQ(*result, REMOVE_QUOTES(expectedValue));
 }
 
 TEST_F(DeviceTest, Type)
 {
+    mock("device.type");
 
-    auto actual_value = jsonEngine->get_value("Device.type");
+    auto result = deviceImpl_.type();
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().type();
-
-    ASSERT_TRUE(result) << "Failed to retrieve type from Device.type() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    ASSERT_TRUE(result) << "DeviceImpl::type() returned an error";
+    auto expectedValue = jsonEngine.get_value("Device.type");
 }
 
 TEST_F(DeviceTest, Model)
 {
+    mock("device.model");
 
-    auto actual_value = jsonEngine->get_value("Device.model");
+    auto result = deviceImpl_.model();
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().model();
-
-    ASSERT_TRUE(result) << "Failed to retrieve model from Device.model() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    ASSERT_TRUE(result) << "DeviceImpl::model() returned an error";
+    auto expectedValue = jsonEngine.get_value("Device.model");
+    EXPECT_EQ(*result, REMOVE_QUOTES(expectedValue));
 }
 
 TEST_F(DeviceTest, Sku)
 {
+    mock("device.sku");
 
-    auto actual_value = jsonEngine->get_value("Device.sku");
+    auto result = deviceImpl_.sku();
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().sku();
-
-    ASSERT_TRUE(result) << "Failed to retrieve sku from Device.sku() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    ASSERT_TRUE(result) << "DeviceImpl::sku() returned an error";
+    auto expectedValue = jsonEngine.get_value("Device.sku");
+    EXPECT_EQ(*result, REMOVE_QUOTES(expectedValue));
 }
 
 TEST_F(DeviceTest, TestDeviceMake)
 {
+    mock("device.make");
 
-    auto actual_value = jsonEngine->get_value("Device.make");
+    auto result = deviceImpl_.make();
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().make();
-
-    ASSERT_TRUE(result) << "Failed to retrieve make from Device.make() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    ASSERT_TRUE(result) << "DeviceImpl::make() returned an error";
+    auto expectedValue = jsonEngine.get_value("Device.make");
+    EXPECT_EQ(*result, REMOVE_QUOTES(expectedValue));
 }
 
+/*
 TEST_F(DeviceTest, Hdcp)
 {
     // Parsing expected JSON values into a BooleanMap

@@ -91,6 +91,11 @@ if(ENABLE_UNIT_TESTS)
         CXX_STANDARD_REQUIRED YES
     )
 
+    set_target_properties(${UNIT_TESTS_APP} PROPERTIES
+        INSTALL_RPATH "$ORIGIN/../src:${SYSROOT_PATH}/usr/lib"
+        BUILD_WITH_INSTALL_RPATH TRUE
+    )
+
     include(GoogleTest)
     gtest_discover_tests(${UNIT_TESTS_APP})
 endif()
