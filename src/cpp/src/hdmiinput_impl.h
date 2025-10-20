@@ -24,7 +24,7 @@
 
 namespace Firebolt::HDMIInput
 {
-class HDMIInputImpl : public IHDMIInput, public Firebolt::Helpers::SubscriptionHelper
+class HDMIInputImpl : public IHDMIInput
 {
 public:
     HDMIInputImpl(Firebolt::Helpers::IHelper &helper);
@@ -53,7 +53,6 @@ public:
     Result<SubscriptionId> subscribeOnEdidVersionChanged(std::function<void(const EDIDVersion&)>&& notification) override;
     Result<SubscriptionId> subscribeOnLowLatencyModeChanged(std::function<void(bool)>&& notification) override;
     Result<SubscriptionId> subscribeOnSignalChanged(std::function<void(const SignalChangedInfo&)>&& notification) override;
-
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;
 

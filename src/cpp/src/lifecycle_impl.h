@@ -27,13 +27,13 @@
 
 namespace Firebolt::Lifecycle
 {
-class LifecycleImpl : public ILifecycle, public Firebolt::Helpers::SubscriptionHelper
+class LifecycleImpl : public ILifecycle
 {
 public:
     LifecycleImpl(Firebolt::Helpers::IHelper &helper);
     LifecycleImpl(const LifecycleImpl&) = delete;
     LifecycleImpl& operator=(const LifecycleImpl&) = delete;
-    ~LifecycleImpl() override = default;
+    ~LifecycleImpl() override;
 
     Result<void> ready() override;
     Result<void> close(const CloseReason& reason) override;
@@ -44,7 +44,6 @@ public:
     Result<SubscriptionId> subscribeOnInactiveChanged(std::function<void(const LifecycleEvent&)>&& notification) override;
     Result<SubscriptionId> subscribeOnSuspendedChanged(std::function<void(const LifecycleEvent&)>&& notification) override;
     Result<SubscriptionId> subscribeOnUnloadingChanged(std::function<void(const LifecycleEvent&)>&& notification) override;
-
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;
 

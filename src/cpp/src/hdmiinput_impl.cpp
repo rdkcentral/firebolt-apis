@@ -88,59 +88,63 @@ Result<HDMIInputPort> HDMIInputImpl::port(const std::string& port)
 
 Result<std::vector<HDMIInputPort>> HDMIInputImpl::ports() const
 {
-    return helper_.get<FireboltSDK::JSON::NL_Json_Array<JsonData::HDMIInputPort, HDMIInputPort>, std::vector<HDMIInputPort>>("HDMIInput.ports");
+    return helper_.get<FireboltSDK::JSON::NL_Json_Array<JsonData::HDMIInputPort, HDMIInputPort>, std::vector<HDMIInputPort>>(
+        "HDMIInput.ports");
 }
 
 // Events
 Result<SubscriptionId> HDMIInputImpl::subscribeOnAutoLowLatencyModeCapableChanged(
     std::function<void(const AutoLowLatencyModeCapableChangedInfo&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::AutoLowLatencyModeCapableChangedInfo>("hdmiinput.onAutoLowLatencyModeCapableChanged",
-                                                                                         std::move(notification));
+    return helper_
+        .subscribe<JsonData::AutoLowLatencyModeCapableChangedInfo>("hdmiinput.onAutoLowLatencyModeCapableChanged",
+                                                                   std::move(notification));
 }
 
 Result<SubscriptionId> HDMIInputImpl::globalSubscribeOnAutoLowLatencyModeCapableChanged(
     std::function<void(const AutoLowLatencyModeCapableChangedInfo&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::AutoLowLatencyModeCapableChangedInfo>("HDMIInput.onAutoLowLatencyModeCapableChanged",
-                                                                                          std::move(notification));
+    return helper_
+        .subscribe<JsonData::AutoLowLatencyModeCapableChangedInfo>("HDMIInput.onAutoLowLatencyModeCapableChanged",
+                                                                   std::move(notification));
 }
 
 Result<SubscriptionId> HDMIInputImpl::subscribeOnAutoLowLatencyModeSignalChanged(
     std::function<void(const AutoLowLatencyModeSignalChangedInfo&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::AutoLowLatencyModeSignalChangedInfo>("hdmiinput.onAutoLowLatencyModeSignalChanged",
-                                                                                        std::move(notification));
+    return helper_
+        .subscribe<JsonData::AutoLowLatencyModeSignalChangedInfo>("hdmiinput.onAutoLowLatencyModeSignalChanged",
+                                                                  std::move(notification));
 }
 
 Result<SubscriptionId>
 HDMIInputImpl::subscribeOnConnectionChanged(std::function<void(const ConnectionChangedInfo&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::ConnectionChangedInfo>("hdmiinput.onConnectionChanged", std::move(notification));
+    return helper_.subscribe<JsonData::ConnectionChangedInfo>("hdmiinput.onConnectionChanged", std::move(notification));
 }
 
 Result<SubscriptionId> HDMIInputImpl::subscribeOnEdidVersionChanged(std::function<void(const EDIDVersion&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::EDIDVersionJson>("hdmiinput.onEdidVersionChanged", std::move(notification));
+    return helper_.subscribe<JsonData::EDIDVersionJson>("hdmiinput.onEdidVersionChanged", std::move(notification));
 }
 
 Result<SubscriptionId> HDMIInputImpl::subscribeOnLowLatencyModeChanged(std::function<void(bool)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Boolean>("hdmiinput.onLowLatencyModeChanged", std::move(notification));
+    return helper_.subscribe<FireboltSDK::JSON::Boolean>("hdmiinput.onLowLatencyModeChanged", std::move(notification));
 }
 
 Result<SubscriptionId> HDMIInputImpl::subscribeOnSignalChanged(std::function<void(const SignalChangedInfo&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<JsonData::SignalChangedInfo>("hdmiinput.onSignalChanged", std::move(notification));
+    return helper_.subscribe<JsonData::SignalChangedInfo>("hdmiinput.onSignalChanged", std::move(notification));
 }
 
 Result<void> HDMIInputImpl::unsubscribe(SubscriptionId id)
 {
-    return SubscriptionHelper::unsubscribe(id);
+    return helper_.unsubscribe(id);
 }
 
 void HDMIInputImpl::unsubscribeAll()
 {
-    SubscriptionHelper::unsubscribeAll();
+    helper_.unsubscribeAll();
 }
 } // namespace Firebolt::HDMIInput

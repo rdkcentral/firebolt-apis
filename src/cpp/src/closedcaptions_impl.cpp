@@ -175,96 +175,96 @@ Result<void> ClosedCaptionsImpl::setWindowOpacity(const unsigned value)
 Result<SubscriptionId>
 ClosedCaptionsImpl::subscribeOnBackgroundColorChanged(std::function<void(const std::string&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onBackgroundColorChanged",
+    return helper_.subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onBackgroundColorChanged",
                                                         std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnBackgroundOpacityChanged(std::function<void(unsigned)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Unsigned>("ClosedCaptions.onBackgroundOpacityChanged",
+    return helper_.subscribe<FireboltSDK::JSON::Unsigned>("ClosedCaptions.onBackgroundOpacityChanged",
                                                           std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnEnabledChanged(std::function<void(bool)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Boolean>("ClosedCaptions.onEnabledChanged", std::move(notification));
+    return helper_.subscribe<FireboltSDK::JSON::Boolean>("ClosedCaptions.onEnabledChanged", std::move(notification));
 }
 
 Result<SubscriptionId>
 ClosedCaptionsImpl::subscribeOnFontColorChanged(std::function<void(const std::string&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onFontColorChanged", std::move(notification));
+    return helper_.subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onFontColorChanged", std::move(notification));
 }
 
 Result<SubscriptionId>
 ClosedCaptionsImpl::subscribeOnFontEdgeChanged(std::function<void(const Accessibility::FontEdge&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<Firebolt::Accessibility::JsonData::FontEdge>("ClosedCaptions.onFontEdgeChanged",
+    return helper_.subscribe<Firebolt::Accessibility::JsonData::FontEdge>("ClosedCaptions.onFontEdgeChanged",
                                                                           std::move(notification));
 }
 
 Result<SubscriptionId>
 ClosedCaptionsImpl::subscribeOnFontEdgeColorChanged(std::function<void(const std::string&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onFontEdgeColorChanged", std::move(notification));
+    return helper_.subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onFontEdgeColorChanged", std::move(notification));
 }
 
 Result<SubscriptionId>
 ClosedCaptionsImpl::subscribeOnFontFamilyChanged(std::function<void(const Accessibility::FontFamily&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<Firebolt::Accessibility::JsonData::FontFamily>("ClosedCaptions.onFontFamilyChanged",
+    return helper_.subscribe<Firebolt::Accessibility::JsonData::FontFamily>("ClosedCaptions.onFontFamilyChanged",
                                                                             std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnFontOpacityChanged(std::function<void(unsigned)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Unsigned>("ClosedCaptions.onFontOpacityChanged", std::move(notification));
+    return helper_.subscribe<FireboltSDK::JSON::Unsigned>("ClosedCaptions.onFontOpacityChanged", std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnFontSizeChanged(std::function<void(float)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Float>("ClosedCaptions.onFontSizeChanged", std::move(notification));
+    return helper_.subscribe<FireboltSDK::JSON::Float>("ClosedCaptions.onFontSizeChanged", std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnPreferredLanguagesChanged(
     std::function<void(const std::vector<std::string>&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::NL_Json_Array<
+    return helper_.subscribe<FireboltSDK::JSON::NL_Json_Array<
         FireboltSDK::JSON::String, std::string>>("ClosedCaptions.onPreferredLanguagesChanged", std::move(notification));
 }
 
 Result<SubscriptionId>
 ClosedCaptionsImpl::subscribeOnTextAlignChanged(std::function<void(const std::string&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onTextAlignChanged", std::move(notification));
+    return helper_.subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onTextAlignChanged", std::move(notification));
 }
 
 Result<SubscriptionId>
 ClosedCaptionsImpl::subscribeOnTextAlignVerticalChanged(std::function<void(const std::string&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onTextAlignVerticalChanged",
+    return helper_.subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onTextAlignVerticalChanged",
                                                         std::move(notification));
 }
 
 Result<SubscriptionId>
 ClosedCaptionsImpl::subscribeOnWindowColorChanged(std::function<void(const std::string&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onWindowColorChanged", std::move(notification));
+    return helper_.subscribe<FireboltSDK::JSON::String>("ClosedCaptions.onWindowColorChanged", std::move(notification));
 }
 
 Result<SubscriptionId> ClosedCaptionsImpl::subscribeOnWindowOpacityChanged(std::function<void(unsigned)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::Unsigned>("ClosedCaptions.onWindowOpacityChanged",
+    return helper_.subscribe<FireboltSDK::JSON::Unsigned>("ClosedCaptions.onWindowOpacityChanged",
                                                           std::move(notification));
 }
 
 Result<void> ClosedCaptionsImpl::unsubscribe(SubscriptionId id)
 {
-    return SubscriptionHelper::unsubscribe(id);
+    return helper_.unsubscribe(id);
 }
 
 void ClosedCaptionsImpl::unsubscribeAll()
 {
-    SubscriptionHelper::unsubscribeAll();
+    helper_.unsubscribeAll();
 }
 } // namespace Firebolt::ClosedCaptions
