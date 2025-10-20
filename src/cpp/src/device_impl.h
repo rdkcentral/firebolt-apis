@@ -67,5 +67,6 @@ public:
 
 private:
     Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::SubscriptionManager subscriptionManager_;
 };
 } // namespace Firebolt::Device

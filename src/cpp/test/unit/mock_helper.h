@@ -25,17 +25,20 @@
 class MockHelper : public Firebolt::Helpers::IHelper
 {
 public:
-    MOCK_METHOD(Firebolt::Result<nlohmann::json>, getJson,
-                (const std::string &methodName, const nlohmann::json &parameters), (override));
     MOCK_METHOD(Firebolt::Result<void>, set, (const std::string &methodName, const nlohmann::json &parameters),
                 (override));
     MOCK_METHOD(Firebolt::Result<void>, invoke, (const std::string &methodName, const nlohmann::json &parameters),
                 (override));
-    MOCK_METHOD(Firebolt::Result<void>, unsubscribe, (::Firebolt::SubscriptionId id), (override));
-    MOCK_METHOD(void, unsubscribeAll, (), (override));
 
-private:
-    MOCK_METHOD(Firebolt::Result<Firebolt::SubscriptionId>, subscribeImpl,
-                (const std::string &eventName, std::any &&notification, void (*callback)(void *, const nlohmann::json &)),
+    MOCK_METHOD(Firebolt::Result<Firebolt::SubscriptionId>, subscribe,
+                (void *owner, const std::string &eventName, std::any &&notification,
+                 void (*callback)(void *, const nlohmann::json &)),
                 (override));
+
+    MOCK_METHOD(Firebolt::Result<void>, unsubscribe, (Firebolt::SubscriptionId id), (override));
+
+    MOCK_METHOD(void, unsubscribeAll, (void *owner), (override));
+
+    MOCK_METHOD(Firebolt::Result<nlohmann::json>, getJson,
+                (const std::string &methodName, const nlohmann::json &parameters), (override));
 };

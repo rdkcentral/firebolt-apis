@@ -21,7 +21,6 @@
 
 #include "closedcaptions.h"
 #include "helpers.h"
-#include "jsondata_accessibility.h"
 
 namespace Firebolt::ClosedCaptions
 {
@@ -85,5 +84,6 @@ public:
 
 private:
     Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::SubscriptionManager subscriptionManager_;
 };
 } // namespace Firebolt::ClosedCaptions

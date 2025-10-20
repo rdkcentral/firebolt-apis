@@ -51,7 +51,7 @@ protected:
 
 protected:
     JsonEngine jsonEngine;
-    MockHelper mockHelper;
+    ::testing::NiceMock<MockHelper> mockHelper;
     Firebolt::Device::DeviceImpl deviceImpl_{mockHelper};
 };
 

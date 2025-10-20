@@ -53,6 +53,7 @@ private:
 
 private:
     Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::SubscriptionManager subscriptionManager_;
     std::mutex mutex_;
     LifecycleState currentState_{LifecycleState::INITIALIZING};
     std::set<SubscriptionId> subscriptions_;

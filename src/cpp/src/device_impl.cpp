@@ -22,7 +22,7 @@
 
 namespace Firebolt::Device
 {
-DeviceImpl::DeviceImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
+DeviceImpl::DeviceImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper), subscriptionManager_(helper, this) {}
 
 // Methods
 Result<AudioProfiles> DeviceImpl::audio() const
@@ -110,53 +110,56 @@ Result<DeviceVersion> DeviceImpl::version() const
 // Events
 Result<SubscriptionId> DeviceImpl::subscribeOnAudioChanged(std::function<void(const AudioProfiles&)>&& notification)
 {
-    // Call the subscribe method on the injected helper object
-    return helper_.subscribe<JsonData::AudioProfiles>("device.onAudioChanged", std::move(notification));
+    return subscriptionManager_.subscribe<JsonData::AudioProfiles>("device.onAudioChanged", std::move(notification));
 }
 
 Result<SubscriptionId> DeviceImpl::subscribeOnDeviceNameChanged(std::function<void(const std::string&)>&& notification)
 {
-    return helper_.subscribe<FireboltSDK::JSON::String>("device.onDeviceNameChanged", std::move(notification));
+    return subscriptionManager_.subscribe<FireboltSDK::JSON::String>("device.onDeviceNameChanged",
+                                                                     std::move(notification));
 }
 
 Result<SubscriptionId> DeviceImpl::subscribeOnHdcpChanged(std::function<void(const HDCPVersionMap&)>&& notification)
 {
-    return helper_.subscribe<JsonData::HDCPVersionMap>("device.onHdcpChanged", std::move(notification));
+    return subscriptionManager_.subscribe<JsonData::HDCPVersionMap>("device.onHdcpChanged", std::move(notification));
 }
 
 Result<SubscriptionId> DeviceImpl::subscribeOnHdrChanged(std::function<void(const HDRFormatMap&)>&& notification)
 {
-    return helper_.subscribe<JsonData::HDRFormatMap>("device.onHdrChanged", std::move(notification));
+    return subscriptionManager_.subscribe<JsonData::HDRFormatMap>("device.onHdrChanged", std::move(notification));
 }
 
 Result<SubscriptionId> DeviceImpl::subscribeOnNameChanged(std::function<void(const std::string&)>&& notification)
 {
-    return helper_.subscribe<FireboltSDK::JSON::String>("device.onNameChanged", std::move(notification));
+    return subscriptionManager_.subscribe<FireboltSDK::JSON::String>("device.onNameChanged", std::move(notification));
 }
 
 Result<SubscriptionId> DeviceImpl::subscribeOnNetworkChanged(std::function<void(const NetworkInfoResult&)>&& notification)
 {
-    return helper_.subscribe<JsonData::NetworkInfoResult>("device.onNetworkChanged", std::move(notification));
+    return subscriptionManager_.subscribe<JsonData::NetworkInfoResult>("device.onNetworkChanged",
+                                                                       std::move(notification));
 }
 
 Result<SubscriptionId> DeviceImpl::subscribeOnScreenResolutionChanged(std::function<void(const std::string&)>&& notification)
 {
-    return helper_.subscribe<FireboltSDK::JSON::String>("device.onScreenResolutionChanged", std::move(notification));
+    return subscriptionManager_.subscribe<FireboltSDK::JSON::String>("device.onScreenResolutionChanged",
+                                                                     std::move(notification));
 }
 
 Result<SubscriptionId> DeviceImpl::subscribeOnVideoResolutionChanged(std::function<void(const std::string&)>&& notification)
 {
-    return helper_.subscribe<FireboltSDK::JSON::String>("device.onVideoResolutionChanged", std::move(notification));
+    return subscriptionManager_.subscribe<FireboltSDK::JSON::String>("device.onVideoResolutionChanged",
+                                                                     std::move(notification));
 }
 
 Result<void> DeviceImpl::unsubscribe(SubscriptionId id)
 {
-    return helper_.unsubscribe(id);
+    return subscriptionManager_.unsubscribe(id);
 }
 
 void DeviceImpl::unsubscribeAll()
 {
-    helper_.unsubscribeAll();
+    subscriptionManager_.unsubscribeAll();
 }
 
 } // namespace Firebolt::Device
