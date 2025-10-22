@@ -30,7 +30,7 @@ public:
     MetricsImpl(Firebolt::Helpers::IHelper &helper);
     MetricsImpl(const MetricsImpl&) = delete;
     MetricsImpl& operator=(const MetricsImpl&) = delete;
-    ~MetricsImpl() override = default;
+    ~MetricsImpl() override;
 
     Result<bool> ready() override;
 
