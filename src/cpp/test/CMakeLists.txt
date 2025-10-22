@@ -61,7 +61,7 @@ if(ENABLE_UNIT_TESTS)
     find_package(GTest CONFIG REQUIRED)
 
     # file(GLOB UNIT_TESTS "unit/*")
-    set(UNIT_TESTS "unit/deviceTest.cpp")
+    set(UNIT_TESTS "unit/deviceTest.cpp" "unit/hdmiInputTest.cpp")
 
     add_executable(${UNIT_TESTS_APP}
         CoreSDKTest.cpp

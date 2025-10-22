@@ -64,17 +64,16 @@ class JsonEngine
                 _file.close();
         }
 
-        std::string get_value(const std::string& method_name)
+        nlohmann::json  get_value(const std::string& method_name)
         {
             for (const auto &method : _data["methods"])
             {
                 if (method.contains("name") && (method["name"] == method_name))
                 {
-                    auto value = method["examples"][0]["result"]["value"];
-                    return value.dump();
+                    return method["examples"][0]["result"]["value"];
                 }
             }
-            return "";
+            return nlohmann::json{};
         }
 
         nlohmann::json read_json_from_file()
@@ -194,8 +193,6 @@ class JsonEngine
         Firebolt::Error MockResponse(nlohmann::json &message)
         {
             std::string methodName = capitalizeFirstChar(message["method"]);
-
-            // Loop through the methods to find the one with the given name
             for (const auto &method : _data["methods"])
             {
                 if (method.contains("name") && (method["name"] == methodName))

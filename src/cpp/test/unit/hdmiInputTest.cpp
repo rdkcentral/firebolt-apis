@@ -17,276 +17,431 @@
  * limitations under the License.
  */
 
-#include "unit.h"
+#include "hdmiinput_impl.h"
+#include "json_engine.h"
+#include "mock_helper.h"
+
+const std::map<std::string, ::Firebolt::HDMIInput::EDIDVersion> EdidVersionMap = {
+    { "1.4", ::Firebolt::HDMIInput::EDIDVersion::V1_4 },
+    { "2.0", ::Firebolt::HDMIInput::EDIDVersion::V2_0 },
+    { "unknown", ::Firebolt::HDMIInput::EDIDVersion::UNKNOWN },
+};
+
+const std::map<std::string, ::Firebolt::HDMIInput::HDMISignalStatus> SignalStatusMap = {
+    { "none", ::Firebolt::HDMIInput::HDMISignalStatus::NONE },
+    { "stable", ::Firebolt::HDMIInput::HDMISignalStatus::STABLE },
+    { "unstable", ::Firebolt::HDMIInput::HDMISignalStatus::UNSTABLE },
+    { "unsupported", ::Firebolt::HDMIInput::HDMISignalStatus::UNSUPPORTED },
+    { "unknown", ::Firebolt::HDMIInput::HDMISignalStatus::UNKNOWN },
+};
 
 class HDMIInputTest : public ::testing::Test
 {
 protected:
-    JsonEngine* jsonEngine;
+    Firebolt::Result<nlohmann::json> getter(const std::string &methodName, const nlohmann::json &parameters)
+    {
+        nlohmann::json message;
+        message["method"] = methodName;
+        if (!parameters.is_null())
+        {
+            message["params"] = parameters;
+        }
 
-    void SetUp() override { jsonEngine = new JsonEngine(); }
+        Firebolt::Error err = jsonEngine.MockResponse(message);
+        if (err != Firebolt::Error::None)
+        {
+            return Firebolt::Result<nlohmann::json>{err};
+        }
 
-    void TearDown() override { delete jsonEngine; }
+        return Firebolt::Result<nlohmann::json>{message["result"]};
+    }
+
+    void mock(const std::string &methodName)
+    {
+        EXPECT_CALL(mockHelper, getJson(methodName, _))
+            .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
+                            { return getter(methodName, parameters); }));
+    }
+
+
+    void mockSubscribe(const std::string &eventName)
+    {
+        EXPECT_CALL(mockHelper, subscribe(_, eventName, _, _))
+            .WillOnce(Invoke(
+                [&](void* owner, const std::string &eventName, std::any &&notification,
+                    void (*callback)(void *, const nlohmann::json &))
+                {
+                    return Firebolt::Result<Firebolt::SubscriptionId>{1};
+                }));
+        EXPECT_CALL(mockHelper, unsubscribe(1)) 
+            .WillOnce(Invoke(
+                [&](Firebolt::SubscriptionId id)
+                {
+                    return Firebolt::Result<void>{Firebolt::Error::None};
+                }));
+    }
+
+protected:
+    JsonEngine jsonEngine;
+    nlohmann::json lastSetParams;
+    ::testing::NiceMock<MockHelper> mockHelper;
+    Firebolt::HDMIInput::HDMIInputImpl hdmiImpl_{mockHelper};
 };
-
-TEST_F(HDMIInputTest, setAutoLowLatencyModeCapable)
-{
-    std::string port = "HDMI1";
-    bool expected_value = true;
-    auto result =
-        Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().setAutoLowLatencyModeCapable(port, expected_value);
-    EXPECT_EQ(result.error(), Firebolt::Error::None)
-        << "Error on calling HDMIInputInterface.setAutoLowLatencyModeCapable() "
-           "method";
-}
 
 TEST_F(HDMIInputTest, autoLowLatencyModeCapable)
 {
     std::string port = "HDMI1";
-    std::string expectedValues = jsonEngine->get_value("HDMIInput.autoLowLatencyModeCapable");
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().autoLowLatencyModeCapable(port);
-    EXPECT_TRUE(result) << "Error on calling HDMIInputInterface.autoLowLatencyModeCapable() "
-                           "method";
-    EXPECT_EQ(REMOVE_QUOTES(expectedValues) == "true", *result) << "Error: wrong autoLowLatencyModeCapable returned by "
-                                                                   "HDMIInputInterface.autoLowLatencyModeCapable()";
+    nlohmann::json expectedParams;
+    expectedParams["port"] = port;
+
+    EXPECT_CALL(mockHelper, getJson("HDMIInput.autoLowLatencyModeCapable", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                return getter(methodName, parameters);
+            }));
+
+    auto result = hdmiImpl_.autoLowLatencyModeCapable(port);
+    ASSERT_TRUE(result) << "HDMIInputImpl::autoLowLatencyModeCapable() returned an error";
+
+    auto expectedValue = jsonEngine.get_value("HDMIInput.autoLowLatencyModeCapable").get<bool>();
+    EXPECT_EQ(*result, expectedValue);
+}
+
+TEST_F(HDMIInputTest, setAutoLowLatencyModeCapable)
+{
+    std::string port = "HDMI1";
+    bool value = true;
+    nlohmann::json expectedParams;
+    expectedParams["port"] = port;
+    expectedParams["value"] = value;
+
+    EXPECT_CALL(mockHelper, set("HDMIInput.setAutoLowLatencyModeCapable", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                lastSetParams = parameters;
+                return Firebolt::Result<void>{Firebolt::Error::None};
+            }));
+
+    auto result = hdmiImpl_.setAutoLowLatencyModeCapable(port, value);
+    ASSERT_TRUE(result) << "Error on calling HDMIInputInterface.setAutoLowLatencyModeCapable() method";
+
+    {
+        nlohmann::json expectedParams;
+        expectedParams["port"] = port;
+
+        EXPECT_CALL(mockHelper, getJson("HDMIInput.autoLowLatencyModeCapable", expectedParams))
+            .WillOnce(Invoke(
+                [&](const std::string &methodName, const nlohmann::json &parameters)
+                {
+                    return Firebolt::Result<nlohmann::json>{lastSetParams["value"]};
+                }));
+        auto result = hdmiImpl_.autoLowLatencyModeCapable(port);
+        ASSERT_TRUE(result) << "Error on calling HDMIInputInterface.autoLowLatencyModeCapable() method";
+
+        EXPECT_EQ(*result, value);
+    }
+}
+
+TEST_F(HDMIInputTest, open)
+{
+    std::string port = "HDMI1";
+    nlohmann::json expectedParams;
+    expectedParams["portId"] = port;
+
+    EXPECT_CALL(mockHelper, invoke("HDMIInput.open", expectedParams))
+        .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
+                         { return Firebolt::Result<void>{Firebolt::Error::None}; }));
+    hdmiImpl_.open(port);
 }
 
 TEST_F(HDMIInputTest, close)
 {
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().close();
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error on calling HDMIInputInterface.close() method";
+    std::string port = "HDMI1";
+    nlohmann::json expectedParams;
+    expectedParams["portId"] = port;
+
+    EXPECT_CALL(mockHelper, invoke("HDMIInput.close", expectedParams)).Times(0);
+    hdmiImpl_.close();
+}
+
+TEST_F(HDMIInputTest, open_then_close)
+{
+    std::string port = "HDMI1";
+    nlohmann::json expectedParams;
+    expectedParams["portId"] = port;
+
+    EXPECT_CALL(mockHelper, invoke("HDMIInput.open", expectedParams))
+        .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
+                         { return Firebolt::Result<void>{Firebolt::Error::None}; }));
+    hdmiImpl_.open(port);
+
+    EXPECT_CALL(mockHelper, invoke("HDMIInput.close", expectedParams))
+        .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
+                         { return Firebolt::Result<void>{Firebolt::Error::None}; }));
+    hdmiImpl_.close();
+}
+
+TEST_F(HDMIInputTest, open_then_open)
+{
+    std::string port1 = "HDMI1";
+    nlohmann::json expectedParams1;
+    expectedParams1["portId"] = port1;
+
+    EXPECT_CALL(mockHelper, invoke("HDMIInput.open", expectedParams1))
+        .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
+                         { return Firebolt::Result<void>{Firebolt::Error::None}; }));
+    hdmiImpl_.open(port1);
+
+    std::string port2 = "HDMI2";
+    nlohmann::json expectedParams2;
+    expectedParams2["portId"] = port2;
+
+    EXPECT_CALL(mockHelper, invoke("HDMIInput.close", expectedParams1))
+        .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
+                         { return Firebolt::Result<void>{Firebolt::Error::None}; }));
+    EXPECT_CALL(mockHelper, invoke("HDMIInput.open", expectedParams2))
+        .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
+                         { return Firebolt::Result<void>{Firebolt::Error::None}; }));
+    hdmiImpl_.open(port2);
 }
 
 TEST_F(HDMIInputTest, edidVersion)
 {
     std::string port = "HDMI1";
-    std::string expectedValues = jsonEngine->get_value("HDMIInput.edidVersion");
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().edidVersion(port);
+    nlohmann::json expectedParams;
+    expectedParams["port"] = port;
 
-    std::string actual_version;
+    EXPECT_CALL(mockHelper, getJson("HDMIInput.edidVersion", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                return getter(methodName, parameters);
+            }));
+
+    auto result = hdmiImpl_.edidVersion(port);
     ASSERT_TRUE(result) << "Error on calling HDMIInputInterface.edidVersion() method";
-    switch (*result)
-    {
-    case Firebolt::HDMIInput::EDIDVersion::V1_4:
-        actual_version = "1.4";
-        break;
-    case Firebolt::HDMIInput::EDIDVersion::V2_0:
-        actual_version = "2.0";
-        break;
-    case Firebolt::HDMIInput::EDIDVersion::UNKNOWN:
-        actual_version = "unknown";
-        break;
-    default:
-        actual_version = "invalid_version";
-    }
 
-    EXPECT_EQ(REMOVE_QUOTES(expectedValues), actual_version) << "Error: wrong edidVersion returned by "
-                                                                "HDMIInputInterface.edidVersion()";
+    auto expectedValue = jsonEngine.get_value("HDMIInput.edidVersion");
+    EXPECT_EQ(*result, EdidVersionMap.at(expectedValue));
 }
 
 TEST_F(HDMIInputTest, setEdidVersion)
 {
     std::string port = "HDMI1";
-    Firebolt::HDMIInput::EDIDVersion expected_version =
-        Firebolt::HDMIInput::EDIDVersion::V1_4; // Replace with appropriate enum
-                                                // value
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().setEdidVersion(port, expected_version);
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error on calling HDMIInputInterface.setEdidVersion() method";
+    std::string valueStr = "2.0";
+    Firebolt::HDMIInput::EDIDVersion value = EdidVersionMap.at(valueStr);
+    nlohmann::json expectedParams;
+    expectedParams["port"] = port;
+    expectedParams["value"] = valueStr;
+
+    EXPECT_CALL(mockHelper, set("HDMIInput.setEdidVersion", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                lastSetParams = parameters;
+                return Firebolt::Result<void>{Firebolt::Error::None};
+            }));
+    auto result = hdmiImpl_.setEdidVersion(port, value);
+    ASSERT_TRUE(result) << "Error on calling HDMIInputInterface.setEdidVersion() method";
+
+    {
+        nlohmann::json expectedParams;
+        expectedParams["port"] = port;
+
+        EXPECT_CALL(mockHelper, getJson("HDMIInput.edidVersion", expectedParams))
+            .WillOnce(Invoke(
+                [&](const std::string &methodName, const nlohmann::json &parameters)
+                {
+                    return Firebolt::Result<nlohmann::json>{lastSetParams["value"]};
+                }));
+        auto result = hdmiImpl_.edidVersion(port);
+        ASSERT_TRUE(result) << "Error on calling HDMIInputInterface.edidVersion() method";
+
+        EXPECT_EQ(*result, value);
+    }
 }
+
 
 TEST_F(HDMIInputTest, lowLatencyMode)
 {
-    std::string expectedValues = jsonEngine->get_value("HDMIInput.lowLatencyMode");
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().lowLatencyMode();
-    ASSERT_TRUE(result) << "Error on calling HDMIInputInterface.lowLatencyMode() method";
-    EXPECT_EQ(REMOVE_QUOTES(expectedValues) == "true", *result) << "Error: wrong lowLatencyMode returned by "
-                                                                   "HDMIInputInterface.lowLatencyMode()";
+    EXPECT_CALL(mockHelper, getJson("HDMIInput.lowLatencyMode", _))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                return getter(methodName, parameters);
+            }));
+
+    auto result = hdmiImpl_.lowLatencyMode();
+    ASSERT_TRUE(result) << "error on get";
+
+    auto expectedValue = jsonEngine.get_value("HDMIInput.lowLatencyMode").get<bool>();
+    EXPECT_EQ(*result, expectedValue);
 }
 
 TEST_F(HDMIInputTest, setLowLatencyMode)
 {
-    bool expected_value = true;
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().setLowLatencyMode(expected_value);
-    EXPECT_EQ(result.error(), Firebolt::Error::None)
-        << "Error on calling HDMIInputInterface.setLowLatencyMode() method";
+    bool value = true;
+    nlohmann::json expectedParams = value;
+
+    EXPECT_CALL(mockHelper, set("HDMIInput.setLowLatencyMode", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                lastSetParams = parameters;
+                return Firebolt::Result<void>{Firebolt::Error::None};
+            }));
+
+    auto result = hdmiImpl_.setLowLatencyMode(value);
+    ASSERT_TRUE(result) << "Error on set";
+
+    {
+        nlohmann::json expectedParams;
+
+        EXPECT_CALL(mockHelper, getJson("HDMIInput.lowLatencyMode", _))
+            .WillOnce(Invoke(
+                [&](const std::string &methodName, const nlohmann::json &parameters)
+                {
+                    return Firebolt::Result<nlohmann::json>{lastSetParams};
+                }));
+        auto result = hdmiImpl_.lowLatencyMode();
+        ASSERT_TRUE(result) << "Error on get";
+
+        EXPECT_EQ(*result, value);
+    }
 }
 
-TEST_F(HDMIInputTest, open)
-{
-    std::string portId = "HDMI1";
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().open(portId);
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error on calling HDMIInputInterface.open() method";
-}
 
 TEST_F(HDMIInputTest, port)
 {
     std::string portId = "HDMI1";
-    std::string expectedValues = jsonEngine->get_value("HDMIInput.port");
-    auto port = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().port(portId);
+    nlohmann::json expectedParams;
+    expectedParams["portId"] = portId;
 
-    ASSERT_TRUE(port);
-    std::string actual_settings;
-    actual_settings += "\"arcCapable\":" + std::string(port->arcCapable ? "true" : "false") + ",";
-    actual_settings += "\"arcConnected\":" + std::string(port->arcConnected ? "true" : "false") + ",";
-    actual_settings +=
-        "\"autoLowLatencyModeCapable\":" + std::string(port->autoLowLatencyModeCapable ? "true" : "false") + ",";
-    actual_settings +=
-        "\"autoLowLatencyModeSignalled\":" + std::string(port->autoLowLatencyModeSignalled ? "true" : "false") + ",";
-    actual_settings += "\"connected\":" + std::string(port->connected ? "true" : "false") + ",";
+    EXPECT_CALL(mockHelper, getJson("HDMIInput.port", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                return getter(methodName, parameters);
+            }));
 
-    switch (port->edidVersion)
-    {
-    case Firebolt::HDMIInput::EDIDVersion::V1_4:
-        actual_settings += "\"edidVersion\":\"1.4\",";
-        break;
-    case Firebolt::HDMIInput::EDIDVersion::V2_0:
-        actual_settings += "\"edidVersion\":\"2.0\",";
-        break;
-    case Firebolt::HDMIInput::EDIDVersion::UNKNOWN:
-        actual_settings += "\"edidVersion\":unknown,";
-        break;
-    default:
-        actual_settings += "\"edidVersion\":invalid,";
-    }
-    actual_settings += "\"port\":\"" + std::string(port->port) + "\",";
+    ::Firebolt::Result<::Firebolt::HDMIInput::HDMIInputPort> result = hdmiImpl_.port(portId);
+    ASSERT_TRUE(result) << "error on get";
 
-    switch (port->signal)
-    {
-    case Firebolt::HDMIInput::HDMISignalStatus::NONE:
-        actual_settings += "\"signal\":\"none\"";
-        break;
-    case Firebolt::HDMIInput::HDMISignalStatus::STABLE:
-        actual_settings += "\"signal\":\"stable\"";
-        break;
-    case Firebolt::HDMIInput::HDMISignalStatus::UNSTABLE:
-        actual_settings += "\"signal\":\"unstable\"";
-        break;
-    case Firebolt::HDMIInput::HDMISignalStatus::UNSUPPORTED:
-        actual_settings += "\"signal\":\"unsupported\"";
-        break;
-    case Firebolt::HDMIInput::HDMISignalStatus::UNKNOWN:
-        actual_settings += "\"signal\":\"unknown\"";
-        break;
-    default:
-        actual_settings += "\"signal\":\"invalid\"";
-    }
-
-    EXPECT_EQ(port.error(), Firebolt::Error::None) << "Error on calling HDMIInputInterface.port() method";
-    EXPECT_EQ(REMOVE_QUOTES(expectedValues), actual_settings)
-        << "Error: wrong port returned by HDMIInputInterface.port()";
+    auto expectedValues = jsonEngine.get_value("HDMIInput.port");
+    EXPECT_EQ(result->port, expectedValues["port"].get<std::string>());
+    EXPECT_EQ(result->arcCapable, expectedValues["arcCapable"].get<bool>());
+    EXPECT_EQ(result->arcConnected, expectedValues["arcConnected"].get<bool>());
+    EXPECT_EQ(result->autoLowLatencyModeCapable, expectedValues["autoLowLatencyModeCapable"].get<bool>());
+    EXPECT_EQ(result->autoLowLatencyModeSignalled, expectedValues["autoLowLatencyModeSignalled"].get<bool>());
+    EXPECT_EQ(result->connected, expectedValues["connected"].get<bool>());
+    EXPECT_EQ(result->edidVersion, EdidVersionMap.at(expectedValues["edidVersion"].get<std::string>()));
+    EXPECT_EQ(result->signal, SignalStatusMap.at(expectedValues["signal"].get<std::string>()));
 }
 
 TEST_F(HDMIInputTest, ports)
 {
-    std::string expectedValues = jsonEngine->get_value("HDMIInput.ports");
-    auto ports = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().ports();
+    EXPECT_CALL(mockHelper, getJson("HDMIInput.ports", _))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                return getter(methodName, parameters);
+            }));
 
-    ASSERT_TRUE(ports);
-    ASSERT_NE(ports->size(), 0) << "Error: ports returned by HDMIInputInterface.ports() is empty";
-    Firebolt::HDMIInput::HDMIInputPort port = ports->at(0);
-    std::string actual_settings = "{";
-    actual_settings += "\"arcCapable\":" + std::string(port.arcCapable ? "true" : "false") + ",";
-    actual_settings += "\"arcConnected\":" + std::string(port.arcConnected ? "true" : "false") + ",";
-    actual_settings +=
-        "\"autoLowLatencyModeCapable\":" + std::string(port.autoLowLatencyModeCapable ? "true" : "false") + ",";
-    actual_settings +=
-        "\"autoLowLatencyModeSignalled\":" + std::string(port.autoLowLatencyModeSignalled ? "true" : "false") + ",";
-    actual_settings += "\"connected\":" + std::string(port.connected ? "true" : "false") + ",";
+    ::Firebolt::Result<std::vector<Firebolt::HDMIInput::HDMIInputPort>> result = hdmiImpl_.ports();
+    ASSERT_TRUE(result) << "error on get";
 
-    switch (port.edidVersion)
+    auto expectedValues = jsonEngine.get_value("HDMIInput.ports");
+    ASSERT_EQ(result->size(), expectedValues.size()) << "number of ports mismatch";
+
+    for (size_t i = 0; i < expectedValues.size(); ++i)
     {
-    case Firebolt::HDMIInput::EDIDVersion::V1_4:
-        actual_settings += "\"edidVersion\":\"1.4\",";
-        break;
-    case Firebolt::HDMIInput::EDIDVersion::V2_0:
-        actual_settings += "\"edidVersion\":\"2.0\",";
-        break;
-    case Firebolt::HDMIInput::EDIDVersion::UNKNOWN:
-        actual_settings += "\"edidVersion\":unknown,";
-        break;
-    default:
-        actual_settings += "\"edidVersion\":invalid,";
-    }
-    actual_settings += "\"port\":\"" + std::string(port.port) + "\",";
+        auto expectedPort = expectedValues[i];
+        auto actualPort = result->at(i);
 
-    switch (port.signal)
-    {
-    case Firebolt::HDMIInput::HDMISignalStatus::NONE:
-        actual_settings += "\"signal\":\"none\"";
-        break;
-    case Firebolt::HDMIInput::HDMISignalStatus::STABLE:
-        actual_settings += "\"signal\":\"stable\"";
-        break;
-    case Firebolt::HDMIInput::HDMISignalStatus::UNSTABLE:
-        actual_settings += "\"signal\":\"unstable\"";
-        break;
-    case Firebolt::HDMIInput::HDMISignalStatus::UNSUPPORTED:
-        actual_settings += "\"signal\":\"unsupported\"";
-        break;
-    case Firebolt::HDMIInput::HDMISignalStatus::UNKNOWN:
-        actual_settings += "\"signal\":\"unknown\"";
-        break;
-    default:
-        actual_settings += "\"signal\":\"invalid\"";
+        EXPECT_EQ(actualPort.port, expectedPort["port"].get<std::string>());
+        EXPECT_EQ(actualPort.arcCapable, expectedPort["arcCapable"].get<bool>());
+        EXPECT_EQ(actualPort.arcConnected, expectedPort["arcConnected"].get<bool>());
+        EXPECT_EQ(actualPort.autoLowLatencyModeCapable, expectedPort["autoLowLatencyModeCapable"].get<bool>());
+        EXPECT_EQ(actualPort.autoLowLatencyModeSignalled, expectedPort["autoLowLatencyModeSignalled"].get<bool>());
+        EXPECT_EQ(actualPort.connected, expectedPort["connected"].get<bool>());
+        EXPECT_EQ(actualPort.edidVersion, EdidVersionMap.at(expectedPort["edidVersion"].get<std::string>()));
+        EXPECT_EQ(actualPort.signal, SignalStatusMap.at(expectedPort["signal"].get<std::string>()));
     }
-    actual_settings += "}";
-
-    EXPECT_EQ(ports.error(), Firebolt::Error::None) << "Error on calling HDMIInputInterface.ports() method";
-    EXPECT_EQ(REMOVE_QUOTES(expectedValues), actual_settings)
-        << "Error: wrong ports returned by HDMIInputInterface.ports()";
 }
 
 // Events related tests
+
 TEST_F(HDMIInputTest, subscribeOnAutoLowLatencyModeCapableChanged)
 {
-    auto id = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().subscribeOnAutoLowLatencyModeCapableChanged(
-        [](auto) { std::cout << "AutoLowLatencyModeCapable changed\n"; });
-    EXPECT_TRUE(id.has_value()) << "Error in subscribing to AutoLowLatencyModeCapable Changed";
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().unsubscribe(id.value_or(0));
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error in unsubscribing to AutoLowLatencyModeCapable Changed";
+    mockSubscribe("HDMIInput.onAutoLowLatencyModeCapableChanged");
+
+    auto id = hdmiImpl_.subscribeOnAutoLowLatencyModeCapableChanged(
+        [](auto) { std::cout << "callback\n"; });
+    ASSERT_TRUE(id) << "error on subscribe ";
+    EXPECT_TRUE(id.has_value()) << "error on id";
+    auto result = hdmiImpl_.unsubscribe(id.value_or(0));
+    ASSERT_TRUE(result) << "error on unsubscribe ";
 }
 
 TEST_F(HDMIInputTest, subscribeOnAutoLowLatencyModeSignalChanged)
 {
-    auto id = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().subscribeOnAutoLowLatencyModeSignalChanged(
-        [](auto) { std::cout << "AutoLowLatencyModeSignal changed\n"; });
-    EXPECT_TRUE(id.has_value()) << "Error in subscribing to AutoLowLatencyModeSignal Changed";
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().unsubscribe(id.value_or(0));
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error in unsubscribing to AutoLowLatencyModeSignal Changed";
+    mockSubscribe("HDMIInput.onAutoLowLatencyModeSignalChanged");
+
+    auto id = hdmiImpl_.subscribeOnAutoLowLatencyModeSignalChanged(
+        [](auto) { std::cout << "callback\n"; });
+    ASSERT_TRUE(id) << "error on subscribe ";
+    EXPECT_TRUE(id.has_value()) << "error on id";
+    auto result = hdmiImpl_.unsubscribe(id.value_or(0));
+    ASSERT_TRUE(result) << "error on unsubscribe ";
 }
+
 
 TEST_F(HDMIInputTest, subscribeOnConnectionChanged)
 {
-    auto id = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().subscribeOnConnectionChanged(
-        [](auto) { std::cout << "Connection changed\n"; });
-    EXPECT_TRUE(id.has_value()) << "Error in subscribing to Connection Changed";
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().unsubscribe(id.value_or(0));
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error in unsubscribing to Connection Changed";
+    mockSubscribe("HDMIInput.onConnectionChanged");
+
+    auto id = hdmiImpl_.subscribeOnConnectionChanged(
+        [](auto) { std::cout << "callback\n"; });
+    ASSERT_TRUE(id) << "error on subscribe ";
+    EXPECT_TRUE(id.has_value()) << "error on id";
+    auto result = hdmiImpl_.unsubscribe(id.value_or(0));
+    ASSERT_TRUE(result) << "error on unsubscribe ";
 }
 
 TEST_F(HDMIInputTest, subscribeOnEdidVersionChanged)
 {
-    auto id = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().subscribeOnEdidVersionChanged(
-        [](auto) { std::cout << "EdidVersion changed\n"; });
-    EXPECT_TRUE(id.has_value()) << "Error in subscribing to EdidVersion Changed";
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().unsubscribe(id.value_or(0));
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error in unsubscribing to EdidVersion Changed";
+    mockSubscribe("HDMIInput.onEdidVersionChanged");
+
+    auto id = hdmiImpl_.subscribeOnEdidVersionChanged(
+        [](auto) { std::cout << "callback\n"; });
+    ASSERT_TRUE(id) << "error on subscribe ";
+    EXPECT_TRUE(id.has_value()) << "error on id";
+    auto result = hdmiImpl_.unsubscribe(id.value_or(0));
+    ASSERT_TRUE(result) << "error on unsubscribe ";
 }
 
 TEST_F(HDMIInputTest, subscribeOnLowLatencyModeChanged)
 {
-    auto id = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().subscribeOnLowLatencyModeChanged(
-        [](auto) { std::cout << "LowLatencyMode changed\n"; });
-    EXPECT_TRUE(id.has_value()) << "Error in subscribing to LowLatencyMode Changed";
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().unsubscribe(id.value_or(0));
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error in unsubscribing to LowLatencyMode Changed";
+    mockSubscribe("HDMIInput.onLowLatencyModeChanged");
+
+    auto id = hdmiImpl_.subscribeOnLowLatencyModeChanged(
+        [](auto) { std::cout << "callback\n"; });
+    ASSERT_TRUE(id) << "error on subscribe ";
+    EXPECT_TRUE(id.has_value()) << "error on id";
+    auto result = hdmiImpl_.unsubscribe(id.value_or(0));
+    ASSERT_TRUE(result) << "error on unsubscribe ";
 }
 
 TEST_F(HDMIInputTest, subscribeOnSignalChanged)
 {
-    auto id = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().subscribeOnSignalChanged(
-        [](auto) { std::cout << "Signal changed\n"; });
-    EXPECT_TRUE(id.has_value()) << "Error in subscribing to Signal Changed";
-    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().unsubscribe(id.value_or(0));
-    EXPECT_EQ(result.error(), Firebolt::Error::None) << "Error in unsubscribing to Signal Changed";
+    mockSubscribe("HDMIInput.onSignalChanged");
+
+    auto id = hdmiImpl_.subscribeOnSignalChanged(
+        [](auto) { std::cout << "callback\n"; });
+    ASSERT_TRUE(id) << "error on subscribe ";
+    EXPECT_TRUE(id.has_value()) << "error on id";
+    auto result = hdmiImpl_.unsubscribe(id.value_or(0));
+    ASSERT_TRUE(result) << "error on unsubscribe ";
 }
