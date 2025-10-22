@@ -68,7 +68,7 @@ protected:
 
 TEST_F(DeviceTest, Id)
 {
-    mock("device.id");
+    mock("Device.id");
 
     auto result = deviceImpl_.id();
     ASSERT_TRUE(result) << "DeviceImpl::id() returned an error";
@@ -79,7 +79,7 @@ TEST_F(DeviceTest, Id)
 
 TEST_F(DeviceTest, Distributor)
 {
-    mock("device.distributor");
+    mock("Device.distributor");
 
     auto result = deviceImpl_.distributor();
     ASSERT_TRUE(result) << "DeviceImpl::distributor() returned an error";
@@ -91,7 +91,7 @@ TEST_F(DeviceTest, Distributor)
 
 TEST_F(DeviceTest, Platform)
 {
-    mock("device.platform");
+    mock("Device.platform");
 
     auto result = deviceImpl_.platform();
     ASSERT_TRUE(result) << "DeviceImpl::platform() returned an error";
@@ -102,7 +102,7 @@ TEST_F(DeviceTest, Platform)
 
 TEST_F(DeviceTest, Uid)
 {
-    mock("device.uid");
+    mock("Device.uid");
 
     auto result = deviceImpl_.uid();
     ASSERT_TRUE(result) << "DeviceImpl::uid() returned an error";
@@ -113,7 +113,7 @@ TEST_F(DeviceTest, Uid)
 
 TEST_F(DeviceTest, Type)
 {
-    mock("device.type");
+    mock("Device.type");
 
     auto result = deviceImpl_.type();
     ASSERT_TRUE(result) << "DeviceImpl::type() returned an error";
@@ -124,7 +124,7 @@ TEST_F(DeviceTest, Type)
 
 TEST_F(DeviceTest, Model)
 {
-    mock("device.model");
+    mock("Device.model");
 
     auto result = deviceImpl_.model();
     ASSERT_TRUE(result) << "DeviceImpl::model() returned an error";
@@ -135,7 +135,7 @@ TEST_F(DeviceTest, Model)
 
 TEST_F(DeviceTest, Sku)
 {
-    mock("device.sku");
+    mock("Device.sku");
 
     auto result = deviceImpl_.sku();
     ASSERT_TRUE(result) << "DeviceImpl::sku() returned an error";
@@ -146,7 +146,7 @@ TEST_F(DeviceTest, Sku)
 
 TEST_F(DeviceTest, TestDeviceMake)
 {
-    mock("device.make");
+    mock("Device.make");
 
     auto result = deviceImpl_.make();
     ASSERT_TRUE(result) << "DeviceImpl::make() returned an error";
@@ -158,7 +158,7 @@ TEST_F(DeviceTest, TestDeviceMake)
 
 TEST_F(DeviceTest, Hdcp)
 {
-    mock("device.hdcp");
+    mock("Device.hdcp");
 
     auto result = deviceImpl_.hdcp();
     ASSERT_TRUE(result) << "Failed to retrieve hdcp from Device.hdcp() method";
@@ -171,7 +171,7 @@ TEST_F(DeviceTest, Hdcp)
 
 TEST_F(DeviceTest, Hdr)
 {
-    mock("device.hdr");
+    mock("Device.hdr");
 
     auto result = deviceImpl_.hdr();
     ASSERT_TRUE(result) << "Failed to retrieve hdr from Device.hdr() method";
@@ -185,7 +185,7 @@ TEST_F(DeviceTest, Hdr)
 
 TEST_F(DeviceTest, Audio)
 {
-    mock("device.audio");
+    mock("Device.audio");
 
     auto result = deviceImpl_.audio();
     ASSERT_TRUE(result) << "Failed to retrieve audio from Device.audio() method";
@@ -199,7 +199,7 @@ TEST_F(DeviceTest, Audio)
 
 TEST_F(DeviceTest, Network)
 {
-    mock("device.network");
+    mock("Device.network");
 
     auto result = deviceImpl_.network();
     ASSERT_TRUE(result) << "Failed to retrieve network from Device.network() method";
@@ -211,7 +211,7 @@ TEST_F(DeviceTest, Network)
 
 TEST_F(DeviceTest, ScreenResolution)
 {
-    mock("device.screenResolution");
+    mock("Device.screenResolution");
 
     auto result = deviceImpl_.screenResolution();
     ASSERT_TRUE(result) << "Failed to retrieve screenResolution from Device.screenResolution() method";
@@ -223,7 +223,7 @@ TEST_F(DeviceTest, ScreenResolution)
 
 TEST_F(DeviceTest, VideoResolution)
 {
-    mock("device.videoResolution");
+    mock("Device.videoResolution");
 
     auto result = deviceImpl_.videoResolution();
     ASSERT_TRUE(result) << "Failed to retrieve videoResolution from Device.videoResolution() method";
@@ -235,7 +235,7 @@ TEST_F(DeviceTest, VideoResolution)
 
 TEST_F(DeviceTest, Name)
 {
-    mock("device.name");
+    mock("Device.name");
 
     auto result = deviceImpl_.name();
     ASSERT_TRUE(result) << "Failed to retrieve name from Device.name() method";
