@@ -28,19 +28,19 @@ LocalizationImpl::LocalizationImpl(Firebolt::Helpers::IHelper &helper)
 
 Result<std::string> LocalizationImpl::countryCode() const
 {
-    return helper_.get<FireboltSDK::JSON::String, std::string>("localization.countryCode");
+    return helper_.get<FireboltSDK::JSON::String, std::string>("Localization.countryCode");
 }
 
 Result<std::vector<std::string>> LocalizationImpl::preferredAudioLanguages() const
 {
     return helper_.get<FireboltSDK::JSON::NL_Json_Array<FireboltSDK::JSON::String, std::string>, std::vector<std::string>>(
-        "localization.preferredAudioLanguages");
+        "Localization.preferredAudioLanguages");
 }
 
 Result<SubscriptionId>
 LocalizationImpl::subscribeOnCountryCodeChanged(std::function<void(const std::string&)>&& notification)
 {
-    return subscriptionManager_.subscribe<FireboltSDK::JSON::String>("localization.onCountryCodeChanged",
+    return subscriptionManager_.subscribe<FireboltSDK::JSON::String>("Localization.onCountryCodeChanged",
                                                                      std::move(notification));
 }
 
@@ -48,7 +48,7 @@ Result<SubscriptionId> LocalizationImpl::subscribeOnPreferredAudioLanguagesChang
     std::function<void(const std::vector<std::string>&)>&& notification)
 {
     return subscriptionManager_.subscribe<FireboltSDK::JSON::NL_Json_Array<
-        FireboltSDK::JSON::String, std::string>>("localization.onPreferredAudioLanguagesChanged",
+        FireboltSDK::JSON::String, std::string>>("Localization.onPreferredAudioLanguagesChanged",
                                                  std::move(notification));
 }
 
