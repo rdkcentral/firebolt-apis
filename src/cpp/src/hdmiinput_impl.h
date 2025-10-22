@@ -21,6 +21,7 @@
 
 #include "hdmiinput.h"
 #include "helpers.h"
+#include <optional>
 
 namespace Firebolt::HDMIInput
 {
@@ -59,5 +60,6 @@ public:
 private:
     Firebolt::Helpers::IHelper &helper_;
     Firebolt::Helpers::SubscriptionManager subscriptionManager_;
+    std::optional<std::string> openedPort_;
 };
 } // namespace Firebolt::HDMIInput

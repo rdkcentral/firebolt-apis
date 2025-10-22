@@ -30,7 +30,7 @@ Result<bool> HDMIInputImpl::autoLowLatencyModeCapable(const std::string& port) c
 {
     nlohmann::json params;
     params["port"] = port;
-    return helper_.get<FireboltSDK::JSON::Boolean, bool>("hdmiinput.autoLowLatencyModeCapable", params);
+    return helper_.get<FireboltSDK::JSON::Boolean, bool>("HDMIInput.autoLowLatencyModeCapable", params);
 }
 
 Result<EDIDVersion> HDMIInputImpl::edidVersion(const std::string& port) const
@@ -42,7 +42,7 @@ Result<EDIDVersion> HDMIInputImpl::edidVersion(const std::string& port) const
 
 Result<bool> HDMIInputImpl::lowLatencyMode() const
 {
-    return helper_.get<FireboltSDK::JSON::Boolean, bool>("hdmiinput.lowLatencyMode");
+    return helper_.get<FireboltSDK::JSON::Boolean, bool>("HDMIInput.lowLatencyMode");
 }
 
 Result<void> HDMIInputImpl::setAutoLowLatencyModeCapable(const std::string& port, const bool value)
@@ -50,7 +50,7 @@ Result<void> HDMIInputImpl::setAutoLowLatencyModeCapable(const std::string& port
     nlohmann::json params;
     params["port"] = port;
     params["value"] = value;
-    return helper_.set("hdmiinput.setAutoLowLatencyModeCapable", params);
+    return helper_.set("HDMIInput.setAutoLowLatencyModeCapable", params);
 }
 
 Result<void> HDMIInputImpl::setEdidVersion(const std::string& port, const EDIDVersion& value)
@@ -63,19 +63,30 @@ Result<void> HDMIInputImpl::setEdidVersion(const std::string& port, const EDIDVe
 
 Result<void> HDMIInputImpl::setLowLatencyMode(const bool value)
 {
-    return helper_.set("hdmiinput.setLowLatencyMode", value);
+    return helper_.set("HDMIInput.setLowLatencyMode", value);
 }
 
 Result<void> HDMIInputImpl::close()
 {
+    if (!openedPort_)
+    {
+        return Result<void>{Firebolt::Error::None};
+    }
     nlohmann::json params;
+    params["portId"] = openedPort_.value();
+    openedPort_.reset();
     return helper_.invoke("HDMIInput.close", params);
 }
 
 Result<void> HDMIInputImpl::open(const std::string& port)
 {
+    if (openedPort_.has_value() && (openedPort_.value() != port))
+    {
+        close();
+    }
     nlohmann::json params;
     params["portId"] = port;
+    openedPort_ = port;
     return helper_.invoke("HDMIInput.open", params);
 }
 
@@ -97,7 +108,7 @@ Result<SubscriptionId> HDMIInputImpl::subscribeOnAutoLowLatencyModeCapableChange
     std::function<void(const AutoLowLatencyModeCapableChangedInfo&)>&& notification)
 {
     return subscriptionManager_
-        .subscribe<JsonData::AutoLowLatencyModeCapableChangedInfo>("hdmiinput.onAutoLowLatencyModeCapableChanged",
+        .subscribe<JsonData::AutoLowLatencyModeCapableChangedInfo>("HDMIInput.onAutoLowLatencyModeCapableChanged",
                                                                    std::move(notification));
 }
 
@@ -113,32 +124,32 @@ Result<SubscriptionId> HDMIInputImpl::subscribeOnAutoLowLatencyModeSignalChanged
     std::function<void(const AutoLowLatencyModeSignalChangedInfo&)>&& notification)
 {
     return subscriptionManager_
-        .subscribe<JsonData::AutoLowLatencyModeSignalChangedInfo>("hdmiinput.onAutoLowLatencyModeSignalChanged",
+        .subscribe<JsonData::AutoLowLatencyModeSignalChangedInfo>("HDMIInput.onAutoLowLatencyModeSignalChanged",
                                                                   std::move(notification));
 }
 
 Result<SubscriptionId>
 HDMIInputImpl::subscribeOnConnectionChanged(std::function<void(const ConnectionChangedInfo&)>&& notification)
 {
-    return subscriptionManager_.subscribe<JsonData::ConnectionChangedInfo>("hdmiinput.onConnectionChanged",
+    return subscriptionManager_.subscribe<JsonData::ConnectionChangedInfo>("HDMIInput.onConnectionChanged",
                                                                            std::move(notification));
 }
 
 Result<SubscriptionId> HDMIInputImpl::subscribeOnEdidVersionChanged(std::function<void(const EDIDVersion&)>&& notification)
 {
-    return subscriptionManager_.subscribe<JsonData::EDIDVersionJson>("hdmiinput.onEdidVersionChanged",
+    return subscriptionManager_.subscribe<JsonData::EDIDVersionJson>("HDMIInput.onEdidVersionChanged",
                                                                      std::move(notification));
 }
 
 Result<SubscriptionId> HDMIInputImpl::subscribeOnLowLatencyModeChanged(std::function<void(bool)>&& notification)
 {
-    return subscriptionManager_.subscribe<FireboltSDK::JSON::Boolean>("hdmiinput.onLowLatencyModeChanged",
+    return subscriptionManager_.subscribe<FireboltSDK::JSON::Boolean>("HDMIInput.onLowLatencyModeChanged",
                                                                       std::move(notification));
 }
 
 Result<SubscriptionId> HDMIInputImpl::subscribeOnSignalChanged(std::function<void(const SignalChangedInfo&)>&& notification)
 {
-    return subscriptionManager_.subscribe<JsonData::SignalChangedInfo>("hdmiinput.onSignalChanged",
+    return subscriptionManager_.subscribe<JsonData::SignalChangedInfo>("HDMIInput.onSignalChanged",
                                                                        std::move(notification));
 }
 
