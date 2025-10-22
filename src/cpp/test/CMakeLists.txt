@@ -60,14 +60,7 @@ if(ENABLE_UNIT_TESTS)
     find_package(nlohmann_json_schema_validator CONFIG REQUIRED)
     find_package(GTest CONFIG REQUIRED)
 
-    # file(GLOB UNIT_TESTS "unit/*")
-    set(UNIT_TESTS
-        "unit/deviceTest.cpp"
-        "unit/hdmiInputTest.cpp"
-        "unit/localizationTest.cpp"
-        "unit/metricsTest.cpp"
-        "unit/secureStorageTest.cpp"
-    )
+    file(GLOB UNIT_TESTS "unit/*")
 
     add_executable(${UNIT_TESTS_APP}
         CoreSDKTest.cpp
