@@ -554,6 +554,20 @@ void CoreSDKTest::OpenHdmiPort()
     }
 }
 
+void CoreSDKTest::CloseHdmiPort()
+{
+    auto result = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().close();
+
+    if (result)
+    {
+        cout << "CloseHdmiPort is a success." << endl;
+    }
+    else
+    {
+        throw std::runtime_error("CloseHdmiPort failed. " + toError(result));
+    }
+}
+
 void CoreSDKTest::GetHdmiPortInfo()
 {
     std::string portId = "HDMI1";
