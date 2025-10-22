@@ -66,6 +66,7 @@ if(ENABLE_UNIT_TESTS)
         "unit/hdmiInputTest.cpp"
         "unit/localizationTest.cpp"
         "unit/metricsTest.cpp"
+        "unit/secureStorageTest.cpp"
     )
 
     add_executable(${UNIT_TESTS_APP}
