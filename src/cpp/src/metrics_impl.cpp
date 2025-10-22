@@ -26,6 +26,6 @@ MetricsImpl::MetricsImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {
 Result<bool> MetricsImpl::ready()
 {
     nlohmann::json params;
-    return helper_.get<::FireboltSDK::JSON::Boolean, bool>("metrics.ready", params);
+    return helper_.get<::FireboltSDK::JSON::Boolean, bool>("Metrics.ready", params);
 }
 } // namespace Firebolt::Metrics
