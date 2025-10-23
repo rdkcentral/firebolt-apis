@@ -1,3 +1,10 @@
+# [1.8.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.7.0...v1.8.0-next.1) (2025-10-23)
+
+
+### Features
+
+* **cpp:** Thunder removal ([#422](https://github.com/rdkcentral/firebolt-apis/issues/422)) ([6345b68](https://github.com/rdkcentral/firebolt-apis/commit/6345b68c65ed25efa9e8a58021651eae0daa2cef))
+
 # [1.7.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.6.0...v1.7.0) (2025-09-04)
 
 
