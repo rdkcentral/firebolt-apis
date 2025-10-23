@@ -19,17 +19,15 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "helpers.h"
 #include "localization.h"
 
 namespace Firebolt::Localization
 {
-class LocalizationImpl : public ILocalization, public Firebolt::Helpers::SubscriptionHelper
+class LocalizationImpl : public ILocalization
 {
-
 public:
-    LocalizationImpl() = default;
+    LocalizationImpl(Firebolt::Helpers::IHelper &helper);
     LocalizationImpl(const LocalizationImpl&) = delete;
     LocalizationImpl& operator=(const LocalizationImpl&) = delete;
 
@@ -41,11 +39,14 @@ public:
 
     // Events
     Result<SubscriptionId> subscribeOnCountryCodeChanged(std::function<void(const std::string&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnPreferredAudioLanguagesChanged(
-        std::function<void(const std::vector<std::string>&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnPreferredAudioLanguagesChanged(std::function<void(const std::vector<std::string>&)>&& notification) override;
 
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;
+
+private:
+    Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::SubscriptionManager subscriptionManager_;
 };
 
 } // namespace Firebolt::Localization

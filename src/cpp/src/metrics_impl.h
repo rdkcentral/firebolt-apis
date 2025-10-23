@@ -19,20 +19,22 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "helpers.h"
 #include "metrics.h"
 
 namespace Firebolt::Metrics
 {
-class MetricsImpl : public IMetrics, public Firebolt::Helpers::SubscriptionHelper
+class MetricsImpl : public IMetrics
 {
 public:
-    MetricsImpl() = default;
+    MetricsImpl(Firebolt::Helpers::IHelper &helper);
     MetricsImpl(const MetricsImpl&) = delete;
     MetricsImpl& operator=(const MetricsImpl&) = delete;
-    ~MetricsImpl() override = default;
+    ~MetricsImpl() override;
 
     Result<bool> ready() override;
+
+private:
+    Firebolt::Helpers::IHelper &helper_;
 };
 } // namespace Firebolt::Metrics

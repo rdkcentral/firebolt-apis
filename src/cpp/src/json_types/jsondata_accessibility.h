@@ -19,12 +19,62 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "common/accessibility.h"
+#include <types/json_types.h>
 
 namespace Firebolt::Accessibility::JsonData
 {
-// Types
-using FontFamily = WPEFramework::Core::JSON::EnumType<FontFamily>;
-using FontEdge = WPEFramework::Core::JSON::EnumType<FontEdge>;
+inline FireboltSDK::JSON::EnumType<::Firebolt::Accessibility::FontFamily> FontFamilyEnum({
+    { "monospaced_serif", ::Firebolt::Accessibility::FontFamily::MONOSPACED_SERIF },
+    { "proportional_serif", ::Firebolt::Accessibility::FontFamily::PROPORTIONAL_SERIF },
+    { "monospaced_sanserif", ::Firebolt::Accessibility::FontFamily::MONOSPACED_SANSERIF },
+    { "proportional_sanserif", ::Firebolt::Accessibility::FontFamily::PROPORTIONAL_SANSERIF },
+    { "smallcaps", ::Firebolt::Accessibility::FontFamily::SMALLCAPS },
+    { "cursive", ::Firebolt::Accessibility::FontFamily::CURSIVE },
+    { "casual", ::Firebolt::Accessibility::FontFamily::CASUAL },
+});
+
+inline FireboltSDK::JSON::EnumType<Firebolt::Accessibility::FontEdge> FontEdgeEnum({
+    { "none", ::Firebolt::Accessibility::FontEdge::NONE },
+    { "raised", ::Firebolt::Accessibility::FontEdge::RAISED },
+    { "depressed", ::Firebolt::Accessibility::FontEdge::DEPRESSED },
+    { "uniform", ::Firebolt::Accessibility::FontEdge::UNIFORM },
+    { "drop_shadow_left", ::Firebolt::Accessibility::FontEdge::DROP_SHADOW_LEFT },
+    { "drop_shadow_right", ::Firebolt::Accessibility::FontEdge::DROP_SHADOW_RIGHT },
+});
+
+class FontFamily : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Accessibility::FontFamily>
+{
+public:
+    FontFamily() = default;
+    FontFamily(::Firebolt::Accessibility::FontFamily value) : value_(value) {}
+    void FromJson(const nlohmann::json& json) override
+    {
+        value_ = FontFamilyEnum.at(json);
+    }
+    ::Firebolt::Accessibility::FontFamily Value() const override
+    {
+        return value_;
+    }
+private:
+    ::Firebolt::Accessibility::FontFamily value_;
+};
+
+class FontEdge : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Accessibility::FontEdge>
+{
+public:
+    FontEdge() = default;
+    FontEdge(::Firebolt::Accessibility::FontEdge value) : value_(value) {}
+    void FromJson(const nlohmann::json& json) override
+    {
+        value_ = FontEdgeEnum.at(json);
+    }
+    ::Firebolt::Accessibility::FontEdge Value() const override
+    {
+        return value_;
+    }
+private:
+    ::Firebolt::Accessibility::FontEdge value_;
+};
+
 } // namespace Firebolt::Accessibility::JsonData

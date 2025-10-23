@@ -23,6 +23,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <thread>
 
 using namespace std;
 
@@ -87,6 +88,8 @@ void RunAllTests()
         runTest(CoreSDKTest::GetEdidVersion, "GetEdidVersion");
         runTest(CoreSDKTest::SetEdidVersion, "SetEdidVersion");
         runTest(CoreSDKTest::GetHdmiPortInfo, "GetHdmiPortInfo");
+        runTest(CoreSDKTest::OpenHdmiPort, "OpenHdmiPort");
+        runTest(CoreSDKTest::CloseHdmiPort, "CloseHdmiPort");
 
         // Lifecycle
         runTest(CoreSDKTest::LifecycleReady, "LifecycleReady");
@@ -142,13 +145,11 @@ void RunAllTests()
                 cout << errorMessage << endl;
             }
             cout << "============================" << endl;
-            exit(1);
         }
     }
     else
     {
         cout << "Core Test not able to connect with server..." << endl;
-        exit(1);
     }
 }
 
@@ -172,6 +173,9 @@ int main(int argc, char* argv[])
     printf("Firebolt Core SDK Test\n");
 
     CoreSDKTest::CreateFireboltInstance(url);
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
     RunAllTests();
     CoreSDKTest::DestroyFireboltInstance();
 

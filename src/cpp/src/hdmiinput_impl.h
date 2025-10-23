@@ -19,17 +19,16 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "hdmiinput.h"
 #include "helpers.h"
+#include <optional>
 
 namespace Firebolt::HDMIInput
 {
-class HDMIInputImpl : public IHDMIInput, public Firebolt::Helpers::SubscriptionHelper
+class HDMIInputImpl : public IHDMIInput
 {
-
 public:
-    HDMIInputImpl() = default;
+    HDMIInputImpl(Firebolt::Helpers::IHelper &helper);
     HDMIInputImpl(const HDMIInputImpl&) = delete;
     HDMIInputImpl& operator=(const HDMIInputImpl&) = delete;
 
@@ -43,23 +42,24 @@ public:
     Result<void> setEdidVersion(const std::string& port, const EDIDVersion& value) override;
     Result<void> setLowLatencyMode(const bool value) override;
     Result<void> close() override;
-    Result<void> open(const std::string& portId) override;
-    Result<HDMIInputPort> port(const std::string& portId) override;
+    Result<void> open(const std::string& port) override;
+    Result<HDMIInputPort> port(const std::string& port) override;
     Result<std::vector<HDMIInputPort>> ports() const override;
 
     // Events
-    Result<SubscriptionId> subscribeOnAutoLowLatencyModeCapableChanged(
-        std::function<void(const AutoLowLatencyModeCapableChangedInfo&)>&& notification) override;
-    Result<SubscriptionId> globalSubscribeOnAutoLowLatencyModeCapableChanged(
-        std::function<void(const AutoLowLatencyModeCapableChangedInfo&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnAutoLowLatencyModeSignalChanged(
-        std::function<void(const AutoLowLatencyModeSignalChangedInfo&)>&& notification) override;
-    Result<SubscriptionId>
-    subscribeOnConnectionChanged(std::function<void(const ConnectionChangedInfo&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnAutoLowLatencyModeCapableChanged(std::function<void(const AutoLowLatencyModeCapableChangedInfo&)>&& notification) override;
+    Result<SubscriptionId> globalSubscribeOnAutoLowLatencyModeCapableChanged(std::function<void(const AutoLowLatencyModeCapableChangedInfo&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnAutoLowLatencyModeSignalChanged(std::function<void(const AutoLowLatencyModeSignalChangedInfo&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnConnectionChanged(std::function<void(const ConnectionChangedInfo&)>&& notification) override;
     Result<SubscriptionId> subscribeOnEdidVersionChanged(std::function<void(const EDIDVersion&)>&& notification) override;
     Result<SubscriptionId> subscribeOnLowLatencyModeChanged(std::function<void(bool)>&& notification) override;
     Result<SubscriptionId> subscribeOnSignalChanged(std::function<void(const SignalChangedInfo&)>&& notification) override;
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;
+
+private:
+    Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::SubscriptionManager subscriptionManager_;
+    std::optional<std::string> openedPort_;
 };
 } // namespace Firebolt::HDMIInput

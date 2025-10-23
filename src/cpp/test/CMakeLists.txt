@@ -17,52 +17,27 @@
 # limitations under the License.
 #
 
-cmake_minimum_required(VERSION 3.3)
-
-project(FireboltCoreSDKTests)
-
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set(CMAKE_INSTALL_PREFIX "${SYSROOT_PATH}/usr" CACHE INTERNAL "" FORCE)
-    set(CMAKE_PREFIX_PATH ${SYSROOT_PATH}/usr/lib/cmake CACHE INTERNAL "" FORCE)
-endif()
-
-list(APPEND CMAKE_MODULE_PATH
-    "${SYSROOT_PATH}/usr/lib/cmake"
-    "${SYSROOT_PATH}/tools/cmake")
-
-message("FIREBOLT_PATH inside cmake " ${FIREBOLT_PATH})
-
-if (FIREBOLT_PATH)
-    set(CMAKE_FIREBOLT_PATH
-        "${FIREBOLT_PATH}/usr/lib/cmake/Firebolt"
-        "${FIREBOLT_PATH}/usr/lib/cmake/FireboltSDK")
-    list(APPEND CMAKE_PREFIX_PATH ${CMAKE_FIREBOLT_PATH})
-    list(APPEND CMAKE_MODULE_PATH ${CMAKE_FIREBOLT_PATH})
-else ()
-   set(FIREBOLT_PATH "${SYSROOT_PATH}" CACHE INTERNAL "" FORCE)
-endif ()
-
 set(TESTAPP TestFireboltCore)
 
 message("Setup ${TESTAPP}")
+
+find_package(FireboltTransport CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 add_executable(${TESTAPP} CoreSDKTest.cpp Main.cpp)
 
 target_link_libraries(${TESTAPP}
     PRIVATE
-        FireboltSDK::FireboltSDK
+        FireboltTransport::FireboltTransport
+        FireboltSDK
+        nlohmann_json::nlohmann_json
 )
 
 target_include_directories(${TESTAPP}
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
+        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src>
 )
-
-if (POLYMORPHICS_REDUCER_METHODS)
-    target_compile_definitions(${TESTAPP}
-        PUBLIC
-            POLYMORPHICS_REDUCER_METHODS=1)
-endif()
 
 set_target_properties(${TESTAPP} PROPERTIES
     CXX_STANDARD 17
@@ -82,14 +57,12 @@ if(ENABLE_UNIT_TESTS)
 
     message("Setup ${UNIT_TESTS_APP}")
 
-    find_package(WPEFrameworkCore)
-    find_package(WPEFrameworkWebSocket)
-    find_package(nlohmann_json_schema_validator)
-    find_package(GTest)
+    find_package(nlohmann_json_schema_validator CONFIG REQUIRED)
+    find_package(GTest CONFIG REQUIRED)
 
     file(GLOB UNIT_TESTS "unit/*")
 
-    add_executable(${UNIT_TESTS_APP} 
+    add_executable(${UNIT_TESTS_APP}
         CoreSDKTest.cpp
         Unit.cpp
         ${UNIT_TESTS}
@@ -97,21 +70,29 @@ if(ENABLE_UNIT_TESTS)
 
     target_link_libraries(${UNIT_TESTS_APP}
         PRIVATE
-            FireboltSDK::FireboltSDK
-            WPEFrameworkCore::WPEFrameworkCore
-            WPEFrameworkWebSocket::WPEFrameworkWebSocket
+            FireboltSDK
+            FireboltTransport::FireboltTransport
+            nlohmann_json::nlohmann_json
             nlohmann_json_schema_validator::validator
             GTest::gtest
+            GTest::gmock
     )
 
     target_include_directories(${UNIT_TESTS_APP}
         PRIVATE
             $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
+            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/>
+            $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src>
     )
 
     set_target_properties(${UNIT_TESTS_APP} PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED YES
+    )
+
+    set_target_properties(${UNIT_TESTS_APP} PROPERTIES
+        INSTALL_RPATH "$ORIGIN/../src:${SYSROOT_PATH}/usr/lib"
+        BUILD_WITH_INSTALL_RPATH TRUE
     )
 
     include(GoogleTest)
@@ -120,7 +101,7 @@ endif()
 
 if(ENABLE_COVERAGE)
     include(${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake)
-    
+
     set(COVERAGE_MAIN "coverage")
     set(COVERAGE_EXCLUDES
         "${CMAKE_SOURCE_DIR}/build/*"
@@ -131,7 +112,7 @@ if(ENABLE_COVERAGE)
 
     set(COVERAGE_EXTRA_FLAGS)
     set(COVERAGE_DEPENDENCIES ${UNIT_TESTS_APP})
-    
+
     setup_target_for_coverage_gcovr_html(
         NAME ${COVERAGE_MAIN}
         BASE_DIRECTORY ${CMAKE_SOURCE_DIR}
@@ -139,5 +120,4 @@ if(ENABLE_COVERAGE)
         EXECUTABLE_ARGS "--test-dir ../build/ --output-on-failure"
         DEPENDENCIES ${COVERAGE_DEPENDENCIES}
     )
-
 endif()

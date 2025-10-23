@@ -19,41 +19,46 @@
 
 #include "localization_impl.h"
 
-using namespace Firebolt::Helpers;
-
 namespace Firebolt::Localization
 {
+LocalizationImpl::LocalizationImpl(Firebolt::Helpers::IHelper &helper)
+    : helper_(helper), subscriptionManager_(helper, this)
+{
+}
+
 Result<std::string> LocalizationImpl::countryCode() const
 {
-    return get<FireboltSDK::JSON::String, std::string>(_T("localization.countryCode"));
+    return helper_.get<FireboltSDK::JSON::String, std::string>("Localization.countryCode");
 }
 
 Result<std::vector<std::string>> LocalizationImpl::preferredAudioLanguages() const
 {
-    return get<FireboltSDK::JSON::String, std::vector<std::string>>(_T("localization.preferredAudioLanguages"));
+    return helper_.get<FireboltSDK::JSON::NL_Json_Array<FireboltSDK::JSON::String, std::string>, std::vector<std::string>>(
+        "Localization.preferredAudioLanguages");
 }
 
 Result<SubscriptionId>
 LocalizationImpl::subscribeOnCountryCodeChanged(std::function<void(const std::string&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::String>(_T("localization.onCountryCodeChanged"),
-                                                                    std::move(notification));
+    return subscriptionManager_.subscribe<FireboltSDK::JSON::String>("Localization.onCountryCodeChanged",
+                                                                     std::move(notification));
 }
 
 Result<SubscriptionId> LocalizationImpl::subscribeOnPreferredAudioLanguagesChanged(
     std::function<void(const std::vector<std::string>&)>&& notification)
 {
-    return SubscriptionHelper::subscribe<FireboltSDK::JSON::String>(_T("localization.onPreferredAudioLanguagesChanged"),
-                                                                    std::move(notification));
+    return subscriptionManager_.subscribe<FireboltSDK::JSON::NL_Json_Array<
+        FireboltSDK::JSON::String, std::string>>("Localization.onPreferredAudioLanguagesChanged",
+                                                 std::move(notification));
 }
 
 Result<void> LocalizationImpl::unsubscribe(SubscriptionId id)
 {
-    return SubscriptionHelper::unsubscribe(id);
+    return subscriptionManager_.unsubscribe(id);
 }
 
 void LocalizationImpl::unsubscribeAll()
 {
-    SubscriptionHelper::unsubscribeAll();
+    subscriptionManager_.unsubscribeAll();
 }
 } // namespace Firebolt::Localization

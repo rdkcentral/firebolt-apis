@@ -19,27 +19,56 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "lifecycle.h"
+#include <types/json_types.h>
 
 namespace Firebolt::Lifecycle::JsonData
 {
-using CloseReason = WPEFramework::Core::JSON::EnumType<::Firebolt::Lifecycle::CloseReason>;
-using LifecycleState = WPEFramework::Core::JSON::EnumType<::Firebolt::Lifecycle::LifecycleState>;
-using LifecycleEventSource = WPEFramework::Core::JSON::EnumType<::Firebolt::Lifecycle::LifecycleEventSource>;
 
-class LifecycleEvent : public WPEFramework::Core::JSON::Container
+inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::CloseReason> const CloseReasonEnum({
+    { "remoteButton", ::Firebolt::Lifecycle::CloseReason::REMOTE_BUTTON },
+    { "userExit", ::Firebolt::Lifecycle::CloseReason::USER_EXIT },
+    { "done", ::Firebolt::Lifecycle::CloseReason::DONE },
+    { "error", ::Firebolt::Lifecycle::CloseReason::ERROR },
+});
+
+inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleState> const LifecycleStateEnum({
+    { "initializing", ::Firebolt::Lifecycle::LifecycleState::INITIALIZING },
+    { "inactive", ::Firebolt::Lifecycle::LifecycleState::INACTIVE },
+    { "foreground", ::Firebolt::Lifecycle::LifecycleState::FOREGROUND },
+    { "background", ::Firebolt::Lifecycle::LifecycleState::BACKGROUND },
+    { "unloading", ::Firebolt::Lifecycle::LifecycleState::UNLOADING },
+    { "suspended", ::Firebolt::Lifecycle::LifecycleState::SUSPENDED },
+});
+
+inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleEventSource> const LifecycleEventSourceEnum({
+    { "voice", ::Firebolt::Lifecycle::LifecycleEventSource::VOICE },
+    { "remote", ::Firebolt::Lifecycle::LifecycleEventSource::REMOTE },
+});
+
+class LifecycleEvent : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Lifecycle::LifecycleEvent>
 {
 public:
-    ~LifecycleEvent() override = default;
-    LifecycleEvent();
-    LifecycleEvent(const LifecycleEvent& other);
-    LifecycleEvent& operator=(const LifecycleEvent& other);
-    ::Firebolt::Lifecycle::LifecycleEvent Value();
-
+    void FromJson(const nlohmann::json& json) override {
+        state_ = LifecycleStateEnum.at(json["state"]);
+        previous_ = LifecycleStateEnum.at(json["previous"]);
+        if (json.contains("source"))
+        {
+            source_ = LifecycleEventSourceEnum.at(json["source"]);
+        }
+    }
+    ::Firebolt::Lifecycle::LifecycleEvent Value() const override
+    {
+        ::Firebolt::Lifecycle::LifecycleEvent result{state_, previous_, std::nullopt};
+        if (source_.has_value())
+        {
+            result.source = source_.value();
+        }
+        return result;
+    }
 private:
     LifecycleState state_;
     LifecycleState previous_;
-    LifecycleEventSource source_;
+    std::optional<LifecycleEventSource> source_;
 };
 } // namespace Firebolt::Lifecycle::JsonData

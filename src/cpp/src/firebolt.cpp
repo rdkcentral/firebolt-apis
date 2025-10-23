@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-#include "FireboltSDK.h"
 #include "closedcaptions_impl.h"
 #include "device_impl.h"
 #include "hdmiinput_impl.h"
@@ -26,53 +25,54 @@
 #include "metrics_impl.h"
 #include "securestorage_impl.h"
 #include <firebolt.h>
+#include <helpers.h>
 
 namespace Firebolt
 {
 class FireboltAccessorImpl : public IFireboltAccessor
 {
 public:
-    FireboltAccessorImpl() = default;
+    FireboltAccessorImpl()
+        : closedCaptions_(Firebolt::Helpers::GetHelperInstance())
+        , device_(Firebolt::Helpers::GetHelperInstance())
+        , hdmiInput_(Firebolt::Helpers::GetHelperInstance())
+        , localization_(Firebolt::Helpers::GetHelperInstance())
+        , metrics_(Firebolt::Helpers::GetHelperInstance())
+        , lifecycle_(Firebolt::Helpers::GetHelperInstance())
+        , secureStorage_(Firebolt::Helpers::GetHelperInstance())
+    {
+    }
+
     FireboltAccessorImpl(const FireboltAccessorImpl&) = delete;
     FireboltAccessorImpl& operator=(const FireboltAccessorImpl&) = delete;
 
     ~FireboltAccessorImpl()
     {
         unsubscribeAll();
-
-        if (accessor_)
-        {
-            accessor_->Dispose();
-            accessor_ = nullptr;
-        }
     }
 
     Firebolt::Error Initialize(const std::string& configLine) override
     {
-        accessor_ = &(FireboltSDK::Transport::Accessor::Instance(configLine));
+        config_ = configLine;
         return Error::None;
     }
 
-    Firebolt::Error Connect(OnConnectionChanged listener) override { return accessor_->Connect(listener); }
+    Firebolt::Error Connect(OnConnectionChanged listener) override {
+        return FireboltSDK::Transport::GetGatewayInstance().Connect(config_, listener);
+    }
 
     Firebolt::Error Disconnect() override
     {
         unsubscribeAll();
-        return accessor_->Disconnect();
+        return FireboltSDK::Transport::GetGatewayInstance().Disconnect();
     }
 
     ClosedCaptions::IClosedCaptions& ClosedCaptionsInterface() override { return closedCaptions_; }
-
     Device::IDevice& DeviceInterface() override { return device_; }
-
     HDMIInput::IHDMIInput& HDMIInputInterface() override { return hdmiInput_; }
-
     Localization::ILocalization& LocalizationInterface() override { return localization_; }
-
     Metrics::IMetrics& MetricsInterface() override { return metrics_; }
-
     Lifecycle::ILifecycle& LifecycleInterface() override { return lifecycle_; }
-
     SecureStorage::ISecureStorage& SecureStorageInterface() override { return secureStorage_; }
 
 private:
@@ -82,13 +82,12 @@ private:
         device_.unsubscribeAll();
         hdmiInput_.unsubscribeAll();
         localization_.unsubscribeAll();
-        metrics_.unsubscribeAll();
         lifecycle_.unsubscribeAll();
-        secureStorage_.unsubscribeAll();
     }
 
 private:
-    FireboltSDK::Transport::Accessor* accessor_;
+    std::string config_;
+
     ClosedCaptions::ClosedCaptionsImpl closedCaptions_;
     Device::DeviceImpl device_;
     HDMIInput::HDMIInputImpl hdmiInput_;
