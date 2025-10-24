@@ -21,11 +21,9 @@
 #include "json_engine.h"
 #include "mock_helper.h"
 
-class MetricsTest : public ::testing::Test
+class MetricsTest : public ::testing::Test, protected MockBase
 {
 protected:
-    JsonEngine jsonEngine;
-    ::testing::NiceMock<MockHelper> mockHelper;
     Firebolt::Metrics::MetricsImpl metricsImpl_{mockHelper};
 };
 

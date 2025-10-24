@@ -36,33 +36,9 @@ const std::map<std::string, ::Firebolt::Device::NetworkState> NetworkStateMap = 
     { "disconnected", ::Firebolt::Device::NetworkState::DISCONNECTED },
 };
 
-class DeviceTest : public ::testing::Test
+class DeviceTest : public ::testing::Test, protected MockBase
 {
 protected:
-    Firebolt::Result<nlohmann::json> getter(const std::string &methodName, const nlohmann::json &parameters)
-    {
-        nlohmann::json message;
-        message["method"] = methodName;
-
-        Firebolt::Error err = jsonEngine.MockResponse(message);
-        if (err != Firebolt::Error::None)
-        {
-            return Firebolt::Result<nlohmann::json>{err};
-        }
-
-        return Firebolt::Result<nlohmann::json>{message["result"]};
-    }
-
-    void mock(const std::string &methodName)
-    {
-        EXPECT_CALL(mockHelper, getJson(methodName, _))
-            .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
-                            { return getter(methodName, parameters); }));
-    }
-
-protected:
-    JsonEngine jsonEngine;
-    ::testing::NiceMock<MockHelper> mockHelper;
     Firebolt::Device::DeviceImpl deviceImpl_{mockHelper};
 };
 

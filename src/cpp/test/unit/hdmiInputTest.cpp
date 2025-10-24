@@ -35,56 +35,9 @@ const std::map<std::string, ::Firebolt::HDMIInput::HDMISignalStatus> SignalStatu
     { "unknown", ::Firebolt::HDMIInput::HDMISignalStatus::UNKNOWN },
 };
 
-class HDMIInputTest : public ::testing::Test
+class HDMIInputTest : public ::testing::Test, protected MockBase
 {
 protected:
-    Firebolt::Result<nlohmann::json> getter(const std::string &methodName, const nlohmann::json &parameters)
-    {
-        nlohmann::json message;
-        message["method"] = methodName;
-        if (!parameters.is_null())
-        {
-            message["params"] = parameters;
-        }
-
-        Firebolt::Error err = jsonEngine.MockResponse(message);
-        if (err != Firebolt::Error::None)
-        {
-            return Firebolt::Result<nlohmann::json>{err};
-        }
-
-        return Firebolt::Result<nlohmann::json>{message["result"]};
-    }
-
-    void mock(const std::string &methodName)
-    {
-        EXPECT_CALL(mockHelper, getJson(methodName, _))
-            .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
-                            { return getter(methodName, parameters); }));
-    }
-
-
-    void mockSubscribe(const std::string &eventName)
-    {
-        EXPECT_CALL(mockHelper, subscribe(_, eventName, _, _))
-            .WillOnce(Invoke(
-                [&](void* owner, const std::string &eventName, std::any &&notification,
-                    void (*callback)(void *, const nlohmann::json &))
-                {
-                    return Firebolt::Result<Firebolt::SubscriptionId>{1};
-                }));
-        EXPECT_CALL(mockHelper, unsubscribe(1)) 
-            .WillOnce(Invoke(
-                [&](Firebolt::SubscriptionId id)
-                {
-                    return Firebolt::Result<void>{Firebolt::Error::None};
-                }));
-    }
-
-protected:
-    JsonEngine jsonEngine;
-    nlohmann::json lastSetParams;
-    ::testing::NiceMock<MockHelper> mockHelper;
     Firebolt::HDMIInput::HDMIInputImpl hdmiImpl_{mockHelper};
 };
 
