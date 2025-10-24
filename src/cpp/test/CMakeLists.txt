@@ -88,15 +88,15 @@ if(ENABLE_UNIT_TESTS)
     set_target_properties(${UNIT_TESTS_APP} PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED YES
-    )
-
-    set_target_properties(${UNIT_TESTS_APP} PROPERTIES
-        INSTALL_RPATH "$ORIGIN/../src:${SYSROOT_PATH}/usr/lib"
-        BUILD_WITH_INSTALL_RPATH TRUE
+        BUILD_RPATH "${CMAKE_BINARY_DIR}/src"
+        INSTALL_RPATH "$ORIGIN/../src"
     )
 
     include(GoogleTest)
-    gtest_discover_tests(${UNIT_TESTS_APP})
+    gtest_discover_tests(${UNIT_TESTS_APP}
+        PROPERTIES
+            ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src"
+    )
 endif()
 
 if(ENABLE_COVERAGE)
