@@ -29,8 +29,8 @@
 #include <nlohmann/json.hpp>
 #include <types/fb-errors.h>
 
-#ifndef UNIT_TEST
-#error "must be included only for UTs"
+#if !(defined COMPONENT_TEST || defined UNIT_TEST)
+  #error "This file must be included only for Unit Tests or Component Tests"
 #endif
 
 using namespace ::testing;

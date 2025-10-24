@@ -26,6 +26,7 @@ option(FIREBOLT_ENABLE_STATIC_LIB "Create Firebolt library as Static library" OF
 option(ENABLE_TESTS "Build openrpc native test" OFF)
 option(ENABLE_UNIT_TESTS "Build openrpc native test" OFF)
 option(ENABLE_DEMO_APP "Build demo app" OFF)
+option(ENABLE_COMPONENT_TESTS "Build component test" OFF)
 
 if (FIREBOLT_ENABLE_STATIC_LIB)
     set(FIREBOLT_LIBRARY_TYPE STATIC)
@@ -54,12 +55,17 @@ if (ENABLE_UNIT_TESTS)
     add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-core-open-rpc.json")
 endif ()
 
+if (ENABLE_COMPONENT_TESTS)
+    add_compile_definitions(COMPONENT_TEST)
+endif ()
+
 add_subdirectory(src)
 
 if (ENABLE_DEMO_APP)
     add_subdirectory(demo)
 endif()
 
-if (ENABLE_TESTS)
+if (ENABLE_TESTS OR ENABLE_COMPONENT_TESTS)
+    add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-core-open-rpc.json")
     add_subdirectory(test)
 endif()
