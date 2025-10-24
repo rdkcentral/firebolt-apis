@@ -17,10 +17,33 @@
 cmake_minimum_required(VERSION 3.10)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-include(HelperFunctions)
 
 project(FireboltSDK)
-project_version("1.0.0")
+
+# <VERSION_BLOCK>
+if (NOT PROJECT_VERSION)
+    find_package(Git QUIET)
+    if (GIT_FOUND)
+        execute_process(
+            COMMAND ${GIT_EXECUTABLE} describe --tags --dirty --match "v[0-9]*"
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            OUTPUT_VARIABLE GIT_VERSION
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_QUIET
+        )
+    endif ()
+
+    if (GIT_VERSION)
+        string(REGEX REPLACE "^v" "" GIT_VERSION "${GIT_VERSION}")
+    else()
+        set(GIT_VERSION "0.1.0-unknown")
+    endif ()
+    set(PROJECT_VERSION "${GIT_VERSION}")
+endif ()
+# </VERSION_BLOCK>
+
+set(VERSION ${PROJECT_VERSION})
+message(STATUS "Project version: ${PROJECT_VERSION}")
 
 option(FIREBOLT_ENABLE_STATIC_LIB "Create Firebolt library as Static library" OFF)
 option(ENABLE_TESTS "Build openrpc native test" OFF)
@@ -29,7 +52,6 @@ option(ENABLE_DEMO_APP "Build demo app" OFF)
 
 if (FIREBOLT_ENABLE_STATIC_LIB)
     set(FIREBOLT_LIBRARY_TYPE STATIC)
-    add_compile_definitions(FIREBOLTSDK_STATIC_DEFINE)
 else ()
     set(FIREBOLT_LIBRARY_TYPE SHARED)
 endif ()
