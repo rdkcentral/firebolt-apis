@@ -23,7 +23,6 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include <thread>
 
 using namespace std;
 
@@ -173,9 +172,6 @@ int main(int argc, char* argv[])
     printf("Firebolt Core SDK Test\n");
 
     CoreSDKTest::CreateFireboltInstance(url);
-
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-
     RunAllTests();
     CoreSDKTest::DestroyFireboltInstance();
 
