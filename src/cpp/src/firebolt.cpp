@@ -19,12 +19,12 @@
 
 #include "closedcaptions_impl.h"
 #include "device_impl.h"
+#include "firebolt.h"
 #include "hdmiinput_impl.h"
 #include "lifecycle_impl.h"
 #include "localization_impl.h"
 #include "metrics_impl.h"
 #include "securestorage_impl.h"
-#include <firebolt.h>
 #include <helpers.h>
 
 namespace Firebolt
