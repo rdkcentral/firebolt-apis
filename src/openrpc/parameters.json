@@ -12,10 +12,10 @@
           {
             "name": "capabilities",
             "x-uses": [
-              "xrn:firebolt:capability:lifecycle:state"
+              "xrn:firebolt:capability:parameters:initialization"
             ]
           }
-        ],
+          ],
           "summary": "Returns any initialization parameters for the app, e.g. initialial `NavigationIntent`.",
         "params": [],
         "result": {
