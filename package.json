@@ -30,6 +30,7 @@
     "version": "node ./src/js/version.mjs sync",
     "dev:setup": "husky install",
     "publish:docs": "node ./src/js/github.io/index.mjs --output",
+    "moscow": "node ./src/js/github.io/moscow.mjs --output",
     "release-notes": "npx semantic-release --dry-run --repository-url git@github.com:rdkcentral/firebolt-apis.git --plugins @semantic-release/commit-analyzer,@semantic-release/release-notes-generator",
     "prepack": "npm run dist"
   },
