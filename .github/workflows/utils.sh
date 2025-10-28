@@ -5,6 +5,21 @@ set -o pipefail
 current_apis_dir=$PWD
 current_dir=${PWD%/*}
 
+if [[ -z $TOOL_VERSION ]]; then
+  TOOL_VERSION='declare -A TOOL_VERSION=(
+    [mock-firebolt]="5d32c6adf908f88c63ada603de41ffdea190eea7"
+    [firebolt-certification-app]="ee2cfd1787b5f6f6ff2e716eeb4fa376c7f6643b"
+    [puppeteer]="24.17.0"
+    [mochawesome-report-generator]="6.2.0"
+  )'
+fi
+eval "$TOOL_VERSION"
+echo "Dependencies taken from the following versions" >/dev/stderr
+for i in ${!TOOL_VERSION[*]}; do
+  echo "- $i: ${TOOL_VERSION[$i]}"
+done | sort >/dev/stderr
+echo >/dev/stderr
+
 # Function to check if a branch exists in the remote repository
 function branch_exists() {
     local branch=$1

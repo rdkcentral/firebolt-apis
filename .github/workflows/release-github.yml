@@ -106,7 +106,7 @@ jobs:
       - name: Install npm & apt dependencies
         run: |
           echo "Installing apt dependencies..."
-          apt update
+          sudo apt update
           echo "Installing Boost..."
           sudo apt-get install -y libboost-all-dev cmake jq
           npm install
