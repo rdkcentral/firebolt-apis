@@ -207,8 +207,14 @@ jobs:
           NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN  }}
         run: |
           echo "user=${{ secrets.CPP_ARTIFACT_USER }}"
-          curl -v -u ${{ secrets.CPP_ARTIFACT_USER }}:${{ secrets.CPP_ARTIFACT_SECRET }} -T firebolt-apis--core-sdk-$RELEASE_VERSION.tar.gz "${{ vars.DEPLOY_URL }}"
-          curl -v -u ${{ secrets.CPP_ARTIFACT_USER }}:${{ secrets.CPP_ARTIFACT_SECRET }} -T firebolt-apis--core-demo-$RELEASE_VERSION.tar.gz "${{ vars.DEPLOY_URL }}"
+          curl -v -u ${{ secrets.CPP_ARTIFACT_USER }}:${{ secrets.CPP_ARTIFACT_SECRET }} -T ${{ github.workspace }}/release/firebolt-apis--core-sdk-$RELEASE_VERSION.tar.gz "${{ vars.DEPLOY_URL }}"
+          curl -v -u ${{ secrets.CPP_ARTIFACT_USER }}:${{ secrets.CPP_ARTIFACT_SECRET }} -T ${{ github.workspace }}/release/firebolt-apis--core-demo-$RELEASE_VERSION.tar.gz "${{ vars.DEPLOY_URL }}"
+
+      - name: Upload native packages as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release
+          path: ${{ github.workspace }}/release
 
       - name: Dry-run Firebolt SDKs to NPM
         if: steps.check_build.outputs.result == 'true' && (github.ref_name == 'main' && github.event_name != 'workflow_dispatch')
