@@ -1,3 +1,10 @@
+# [1.8.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.1...v1.8.0-next.2) (2025-10-28)
+
+
+### Features
+
+* thunder post removal ([#424](https://github.com/rdkcentral/firebolt-apis/issues/424)) ([544e536](https://github.com/rdkcentral/firebolt-apis/commit/544e53637a57251c2d3ade64cf35c03913c072f4))
+
 # [1.8.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.7.0...v1.8.0-next.1) (2025-10-23)
 
 
