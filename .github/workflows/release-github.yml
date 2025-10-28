@@ -98,38 +98,17 @@ jobs:
             const fs = require('fs');
             const path = './src/sdks/core/dist/lib/firebolt.mjs';
             return fs.existsSync(path);
+
       - name: File Existence Output
         run: |
           echo "File exists: ${{ steps.check_build.outputs.result }}"
-
-      - name: Get version from package.json
-        run: |
-          RELEASE_VERSION=$(node -p "require('./package.json').version")
-          echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
-          echo "build_cpp_source=true" >> $GITHUB_ENV
-          echo "RELEASE_VERSION=$RELEASE_VERSION"
-
-      - name: Set cpp build source condition
-        if: steps.check_build.outputs.result == 'false' || (github.ref_name == 'main' && github.event_name != 'pull_request' && github.event_name != 'workflow_dispatch')
-        run: echo "build_cpp_source=false" >> $GITHUB_ENV
-
-      - name: Generate and configure SSH key
-        run: |
-          mkdir -p /root/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /root/.ssh/id_ed25519
-          chmod 600 /root/.ssh/id_ed25519
-
-          touch /root/.ssh/known_hosts
-          chmod 644 /root/.ssh/known_hosts
-          ssh-keyscan github.com >> /root/.ssh/known_hosts
-          chmod 644 /root/.ssh/known_hosts
 
       - name: Install npm & apt dependencies
         run: |
           echo "Installing apt dependencies..."
           apt update
           echo "Installing Boost..."
-          sudo apt-get install -y libboost-all-dev cmake
+          sudo apt-get install -y libboost-all-dev cmake jq
           npm install
 
       - name: Build and Install Project Dependencies
@@ -138,6 +117,12 @@ jobs:
           mkdir -p ${{ env.SYSROOT_PATH }}
           ./.github/scripts/install-deps.sh --deps "${{ env.DEPS_FILE }}" --sysroot "${{ env.SYSROOT_PATH }}"
           echo "Dependencies built and installed to ${{ env.SYSROOT_PATH }}"
+
+      - name: Get version from package.json
+        run: |
+          RELEASE_VERSION=$(jq -r ".version" ./package.json)
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=$RELEASE_VERSION"
 
       - name: Make Release package of firebolt-native APIs
         run: |
