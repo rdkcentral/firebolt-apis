@@ -19,10 +19,51 @@ env:
   DEPS_FILE: ./src/cpp/.deps
 
 jobs:
+  setup_deps_release:
+    runs-on: ubuntu-latest
+    outputs:
+      deps_cache_key: ${{ steps.cache-key.outputs.hash }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Generate Dependency Hash Key
+        id: cache-key
+        run: echo "hash=$(sha256sum ${{ env.DEPS_FILE }} | awk '{print $1}')" >> $GITHUB_OUTPUT
+
+      - name: Restore Dependency Cache
+        uses: actions/cache@v4
+        id: cache-restore
+        with:
+          path: ${{ env.SYSROOT_PATH }}
+          key: ${{ runner.os }}-deps-${{ steps.cache-key.outputs.hash }}
+
+      - name: Build and Install System-Dependencies
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        run: |
+          echo "Installing apt dependencies..."
+          sudo apt-get update -y
+          echo "Installing Boost..."
+          sudo apt-get install -y libboost-all-dev
+
+      - name: Build and Install Project Dependencies
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        run: |
+          echo "Building dependencies..."
+          mkdir -p ${{ env.SYSROOT_PATH }}
+          ./.github/scripts/install-deps.sh --deps "${{ env.DEPS_FILE }}" --sysroot "${{ env.SYSROOT_PATH }}"
+          echo "Dependencies built and installed to ${{ env.SYSROOT_PATH }}"
+
+      - name: Cache Save Confirmation
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        run: echo "New dependency cache will be saved."
+
   release:
     name: Release
     permissions:
       contents: read
+    needs: setup_deps_release
     runs-on: ubuntu-latest
     steps:
       #  Checkout/install project
@@ -32,10 +73,18 @@ jobs:
           fetch-depth: 0
           repo-token: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }}
           persist-credentials: false
+
+      - name: Restore Dependency Cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.SYSROOT_PATH }}
+          key: ${{ runner.os }}-deps-${{ needs.setup_deps_release.outputs.deps_cache_key }}
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+
       - name: Set up NPM token
         env:
           NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN  }} # <-- allow npm publish for each workspace
@@ -49,21 +98,25 @@ jobs:
         run: |
           echo "NPM_DIST_TAG=latest" >> $GITHUB_ENV
           echo "DOCS_TAG=latest" >> $GITHUB_ENV
+
       - name: Set next tags
         if: github.ref_name == 'next' && github.event_name != 'pull_request'
         run: |
           echo "NPM_DIST_TAG=next" >> $GITHUB_ENV
           echo "DOCS_TAG=next" >> $GITHUB_ENV
+
       - name: Set next-major tags
         if: github.ref_name == 'next-major' && github.event_name != 'pull_request'
         run: |
           echo "NPM_DIST_TAG=next-major" >> $GITHUB_ENV
           echo "DOCS_TAGE=next-major" >> $GITHUB_ENV
+
       - name: Set feature branch tags
         if: github.ref_name != 'main' && github.ref_name != 'next' && github.ref_name != 'next-major' && github.event_name != 'pull_request'
         run: |
           echo "NPM_DIST_TAG=test" >> $GITHUB_ENV
           echo "FEATURE_BRANCH=${{ github.ref_name }}" >> $GITHUB_ENV
+
       - name: Set PR tags
         if: github.ref_name != 'main' && github.ref_name != 'next' && github.ref_name != 'next-major' && github.event_name == 'pull_request'
         run: |
@@ -76,12 +129,16 @@ jobs:
         if: (github.ref_name != 'main' && github.event_name != 'pull_request') || github.event_name == 'workflow_dispatch'
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
-        run: npx semantic-release
+        run: |
+          git config --global --add safe.directory '*'
+          npx semantic-release
+
       - name: Dry-run mono-artifact
         if: (github.ref_name == 'main' && github.event_name != 'workflow_dispatch') || github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
         run: npx semantic-release --dry-run
+
       - name: Build artifacts for feature branches
         if: github.ref_name != 'main' && github.ref_name != 'next' && github.ref_name != 'next-major'
         run: |
@@ -90,6 +147,7 @@ jobs:
           npm version prerelease --preid $PRERELEASE --git-tag-version false
           npm version prerelease --preid $PRERELEASE --workspaces --git-tag-version false
           npm run dist
+
       - name: Check if semantic-release created a build
         id: check_build
         uses: actions/github-script@v6
@@ -110,13 +168,6 @@ jobs:
           echo "Installing Boost..."
           sudo apt-get install -y libboost-all-dev cmake jq
           npm install
-
-      - name: Build and Install Project Dependencies
-        run: |
-          echo "Building dependencies..."
-          mkdir -p ${{ env.SYSROOT_PATH }}
-          ./.github/scripts/install-deps.sh --deps "${{ env.DEPS_FILE }}" --sysroot "${{ env.SYSROOT_PATH }}"
-          echo "Dependencies built and installed to ${{ env.SYSROOT_PATH }}"
 
       - name: Get version from package.json
         run: |
@@ -164,6 +215,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN  }} # <-- Allows semantic-release to publish to npm without 2 factor auth.
         run: npm publish --tag $NPM_DIST_TAG --workspaces --dry-run
+
       - name: Checkout firebolt GitHub.io repository
         if: steps.check_build.outputs.result == 'true'
         env:
@@ -171,6 +223,7 @@ jobs:
         run: |
           cd /tmp
           git clone https://rdkcentral:$GITHUB_TOKEN@github.com/rdkcentral/firebolt.git ./firebolt-docs
+
       - name: Release docs to GitHub.io
         if: steps.check_build.outputs.result == 'true' && (github.ref_name == 'main' || github.ref_name == 'next' || github.ref_name == 'next-major' || github.event_name == 'pull_request' || github.ref_name == 'feature/high-contrast-ui')
         env:
