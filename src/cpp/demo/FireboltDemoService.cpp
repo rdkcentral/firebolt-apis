@@ -109,13 +109,9 @@ FireboltDemoService::FireboltDemoService()
     "log": { "level": "Info" },
     "wsUrl": ")" + url + R"("})";
 
-    auto error = Firebolt::IFireboltAccessor::Instance().Initialize(config);
-    if (Firebolt::Error::None != error)
-    {
-        throw std::runtime_error("Failed to initialize");
-    }
-    error = Firebolt::IFireboltAccessor::Instance().Connect([this](const bool connected, const Firebolt::Error error)
-                                                            { this->onConnectionChanged(connected, error); });
+    auto error =
+        Firebolt::IFireboltAccessor::Instance().Connect(config, [this](const bool connected, const Firebolt::Error error)
+                                                        { this->onConnectionChanged(connected, error); });
     if (Firebolt::Error::None != error)
     {
         throw std::runtime_error("Failed to connect");

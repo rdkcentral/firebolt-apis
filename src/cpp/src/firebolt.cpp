@@ -51,14 +51,9 @@ public:
         unsubscribeAll();
     }
 
-    Firebolt::Error Initialize(const std::string& configLine) override
+    Firebolt::Error Connect(const std::string &config, OnConnectionChanged listener) override
     {
-        config_ = configLine;
-        return Error::None;
-    }
-
-    Firebolt::Error Connect(OnConnectionChanged listener) override {
-        return FireboltSDK::Transport::GetGatewayInstance().Connect(config_, listener);
+        return FireboltSDK::Transport::GetGatewayInstance().Connect(config, listener);
     }
 
     Firebolt::Error Disconnect() override
@@ -86,8 +81,6 @@ private:
     }
 
 private:
-    std::string config_;
-
     ClosedCaptions::ClosedCaptionsImpl closedCaptions_;
     Device::DeviceImpl device_;
     HDMIInput::HDMIInputImpl hdmiInput_;

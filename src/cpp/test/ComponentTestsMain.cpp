@@ -42,8 +42,7 @@ void createFireboltInstance(const std::string &url)
       "wsUrl": ")" + url + R"("})";
 
     gConnected = false;
-    Firebolt::IFireboltAccessor::Instance().Initialize(config);
-    Firebolt::IFireboltAccessor::Instance().Connect(connectionChanged);
+    Firebolt::IFireboltAccessor::Instance().Connect(config, connectionChanged);
 }
 
 void destroyFireboltInstance()
