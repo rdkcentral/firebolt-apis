@@ -46,8 +46,8 @@ class LifecycleImpl : public ILifecycle
 {
 public:
     LifecycleImpl(Firebolt::Helpers::IHelper &helper);
-    LifecycleImpl(const LifecycleImpl&) = delete;
-    LifecycleImpl& operator=(const LifecycleImpl&) = delete;
+    LifecycleImpl(const LifecycleImpl &) = delete;
+    LifecycleImpl &operator=(const LifecycleImpl &) = delete;
     ~LifecycleImpl() override;
 
     Result<void> ready();
@@ -55,22 +55,21 @@ public:
     Result<void> finished();
 
     virtual Result<LifecycleState> getCurrentState() const;
-    Result<SubscriptionId>
-    subscribeOnStateChanged(std::function<void(const LifecycleState& oldState, const LifecycleState& newState)>&& notification) override;
+    Result<SubscriptionId> subscribeOnStateChanged(
+        std::function<void(const LifecycleState &oldState, const LifecycleState &newState)> &&notification) override;
 
     virtual Result<void> unsubscribe(SubscriptionId id) override;
     virtual void unsubscribeAll() override;
 
 private:
-    void onStateChanged(const LifecycleEvent& event);
+    void onStateChanged(const LifecycleEvent &event);
     void subscribeToStateChangeEvents();
 
-    Result<SubscriptionId> subscribeOnBackgroundChanged(std::function<void(const LifecycleEvent&)>&& notification);
-    Result<SubscriptionId> subscribeOnForegroundChanged(std::function<void(const LifecycleEvent&)>&& notification);
-    Result<SubscriptionId> subscribeOnInactiveChanged(std::function<void(const LifecycleEvent&)>&& notification);
-    Result<SubscriptionId> subscribeOnSuspendedChanged(std::function<void(const LifecycleEvent&)>&& notification);
-    Result<SubscriptionId> subscribeOnUnloadingChanged(std::function<void(const LifecycleEvent&)>&& notification);
-
+    Result<SubscriptionId> subscribeOnBackgroundChanged(std::function<void(const LifecycleEvent &)> &&notification);
+    Result<SubscriptionId> subscribeOnForegroundChanged(std::function<void(const LifecycleEvent &)> &&notification);
+    Result<SubscriptionId> subscribeOnInactiveChanged(std::function<void(const LifecycleEvent &)> &&notification);
+    Result<SubscriptionId> subscribeOnSuspendedChanged(std::function<void(const LifecycleEvent &)> &&notification);
+    Result<SubscriptionId> subscribeOnUnloadingChanged(std::function<void(const LifecycleEvent &)> &&notification);
 
 private:
     Firebolt::Helpers::IHelper &helper_;
@@ -80,9 +79,10 @@ private:
     Firebolt::Helpers::SubscriptionManager subscriptionManager_;
 
     uint64_t currentId_{0};
-    std::map<uint64_t, std::function<void(const LifecycleState& oldState, const LifecycleState& newState)>> onStateChangedCallbacks_;
+    std::map<uint64_t, std::function<void(const LifecycleState &oldState, const LifecycleState &newState)>>
+        onStateChangedCallbacks_;
 
 public:
     friend class ::LifecycleTest;
-};  
+};
 } // namespace Firebolt::Lifecycle
