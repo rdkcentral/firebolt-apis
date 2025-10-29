@@ -41,7 +41,13 @@
         "npmPublish": false,
         "tarballDir": "./"
       }
-    ],    
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "./.github/scripts/mk-release-package.sh --version ${nextRelease.version} --package firebolt-apis--native-core"
+      }
+    ],
     [
       "@semantic-release/git",
       {
@@ -51,8 +57,11 @@
     [
       "@semantic-release/github",
       {
-        "assets": "./*.tgz"
+        "assets": [
+          { "path":"./*.tgz" },
+          { "path": "build/firebolt-apis--native-core-*.tar.gz", "label": "Source Code - native (tar.gz)" }
+        ]
       }
-    ]    
+    ]
   ]
 } 
