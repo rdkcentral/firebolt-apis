@@ -88,14 +88,9 @@ install(
 )
 
 install(
-    FILES ${CMAKE_BINARY_DIR}/src/${TARGET}Config.cmake
-    DESTINATION lib/cmake/${PROJECT_NAME}
-)
-
-install(
     EXPORT ${TARGET}Targets
     NAMESPACE ${TARGET}::
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/${PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
 install(
