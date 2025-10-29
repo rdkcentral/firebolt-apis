@@ -55,46 +55,36 @@ public:
     static IFireboltAccessor& Instance();
 
     /**
-     * @brief Inititalize the Firebolt SDK. Sets up the Transport, WorkerPool and
-     *        Logging Subsystems.
+     * @brief Attempt a initialize Firebolt SDK and connection to the endpoint using given config.
+     *        This method is asynchronous and the user is expected to wait for the OnConnectionChanged callback
+     *        to report successful connection before calling SDK methods
      *
-     * @param configLine : JSON String with configuration options. At a minimum the
-     *                     user is expected to pass in the Websocket URL.
+     * @param config: JSON String with configuration options. At a minimum the
+     *                user is expected to pass in the Websocket URL.
      *
-     *                     CONFIG Format:
-     *                     {
-     *                        "waitTime": 3000,
-     *                        "wsUrl": "ws://127.0.0.1:9998",
-     *                        "log": {
-     *                            "level": "Info",
-     *                            "format": {
-     *                                "ts": true,
-     *                                "location": false,
-     *                                "function": true,
-     *                                "thread": true
-     *                            }
-     *                        },
-     *                        "RPCv2": true,
-     *                        "logLevel": "Info"
-     *                     }
-     *                     # waitTime    : time in milliseconds to wait for a response from the endpoint
-     *                     # logInfo     : while still supported, use the "log" object above
-     *
-     * @return Firebolt::Error
-     */
-
-    virtual Firebolt::Error Initialize(const std::string& configLine) = 0;
-
-    /**
-     * @brief Attempt a connection to the endpoint. This method is asynchronous
-     *        and the user is expected to wait for the OnConnectionChanged callback to
-     *        report successful connection before calling SDK methods
+     *                CONFIG Format:
+     *                {
+     *                   "waitTime": 3000,
+     *                   "wsUrl": "ws://127.0.0.1:9998",
+     *                   "log": {
+     *                       "level": "Info",
+     *                       "format": {
+     *                           "ts": true,
+     *                           "location": false,
+     *                           "function": true,
+     *                           "thread": true
+     *                       }
+     *                   },
+     *                   "logLevel": "Info"
+     *                }
+     *                # waitTime    : time in milliseconds to wait for a response from the endpoint
+     *                # logLevel    : deprecated, while still supported use the "log" object instead
      *
      * @param listener : Connection status listener
      *
      * @return Firebolt::Error
      */
-    virtual Firebolt::Error Connect(OnConnectionChanged listener) = 0;
+    virtual Firebolt::Error Connect(const std::string &config, OnConnectionChanged listener) = 0;
 
     /**
      * @brief Disconnects from the Websocket endpoint.
