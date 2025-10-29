@@ -583,6 +583,8 @@ void CoreSDKTest::GetHdmiPortInfo()
     }
 }
 
+#ifdef USE_LIFECYCLE1
+
 void CoreSDKTest::LifecycleReady()
 {
     auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().ready();
@@ -814,6 +816,8 @@ void CoreSDKTest::UnsubscribeOnLifecycleUnloadingChanged()
         throw std::runtime_error("Unsubscribe LifecycleUnloading failed. " + toError(result));
     }
 }
+
+#endif  //USE_LIFECYCLE1
 
 void CoreSDKTest::GetLocalizationCountryCode()
 {

@@ -19,26 +19,28 @@
 
 #pragma once
 
+#ifndef USE_LIFECYCLE1
+
 #include "lifecycle.h"
 #include <types/json_types.h>
 
 namespace Firebolt::Lifecycle::JsonData
 {
 
-inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::CloseReason> const CloseReasonEnum({
-    { "remoteButton", ::Firebolt::Lifecycle::CloseReason::REMOTE_BUTTON },
-    { "userExit", ::Firebolt::Lifecycle::CloseReason::USER_EXIT },
-    { "done", ::Firebolt::Lifecycle::CloseReason::DONE },
-    { "error", ::Firebolt::Lifecycle::CloseReason::ERROR },
+inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::CloseType> const CloseReasonEnum({
+    { "deactivate", ::Firebolt::Lifecycle::CloseType::DEACTIVATE },
+    { "unload", ::Firebolt::Lifecycle::CloseType::UNLOAD },
+    { "kill_reload", ::Firebolt::Lifecycle::CloseType::KILL_RELOAD },
+    { "kill_reactivate", ::Firebolt::Lifecycle::CloseType::KILL_REACTIVATE },
 });
 
 inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleState> const LifecycleStateEnum({
     { "initializing", ::Firebolt::Lifecycle::LifecycleState::INITIALIZING },
-    { "inactive", ::Firebolt::Lifecycle::LifecycleState::INACTIVE },
-    { "foreground", ::Firebolt::Lifecycle::LifecycleState::FOREGROUND },
-    { "background", ::Firebolt::Lifecycle::LifecycleState::BACKGROUND },
-    { "unloading", ::Firebolt::Lifecycle::LifecycleState::UNLOADING },
+    { "active", ::Firebolt::Lifecycle::LifecycleState::ACTIVE },
+    { "paused", ::Firebolt::Lifecycle::LifecycleState::PAUSED },
     { "suspended", ::Firebolt::Lifecycle::LifecycleState::SUSPENDED },
+    { "hibernated", ::Firebolt::Lifecycle::LifecycleState::HIBERNATED },
+    { "terminating", ::Firebolt::Lifecycle::LifecycleState::TERMINATING },
 });
 
 inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleEventSource> const LifecycleEventSourceEnum({
@@ -57,6 +59,7 @@ public:
             source_ = LifecycleEventSourceEnum.at(json["source"]);
         }
     }
+    
     ::Firebolt::Lifecycle::LifecycleEvent Value() const override
     {
         ::Firebolt::Lifecycle::LifecycleEvent result{state_, previous_, std::nullopt};
@@ -66,9 +69,17 @@ public:
         }
         return result;
     }
+
+    //std::tuple<::Firebolt::Lifecycle::LifecycleState, ::Firebolt::Lifecycle::LifecycleState> Value() const override
+    //{
+     //   return std::make_tuple(state_, previous_);
+   // }
 private:
     LifecycleState state_;
     LifecycleState previous_;
     std::optional<LifecycleEventSource> source_;
 };
+
 } // namespace Firebolt::Lifecycle::JsonData
+
+#endif // USE_LIFECYCLE1

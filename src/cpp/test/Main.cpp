@@ -91,6 +91,8 @@ void RunAllTests()
         runTest(CoreSDKTest::OpenHdmiPort, "OpenHdmiPort");
         runTest(CoreSDKTest::CloseHdmiPort, "CloseHdmiPort");
 
+        
+#ifdef USE_LIFECYCLE1
         // Lifecycle
         runTest(CoreSDKTest::LifecycleReady, "LifecycleReady");
         runTest(CoreSDKTest::LifecycleClose, "LifecycleClose");
@@ -106,6 +108,7 @@ void RunAllTests()
         runTest(CoreSDKTest::UnsubscribeOnLifecycleSuspendedChanged, "UnsubscribeOnLifecycleSuspendedChanged");
         runTest(CoreSDKTest::SubscribeOnLifecycleUnloadingChanged, "SubscribeOnLifecycleUnloadingChanged");
         runTest(CoreSDKTest::UnsubscribeOnLifecycleUnloadingChanged, "UnsubscribeOnLifecycleUnloadingChanged");
+#endif //USE_LIFECYCLE1
 
         // Localization
         runTest(CoreSDKTest::GetLocalizationCountryCode, "GetLocalizationCountryCode");
