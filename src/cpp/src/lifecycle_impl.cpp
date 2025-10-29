@@ -57,7 +57,8 @@ Result<void> LifecycleImpl::ready()
     return status;
 }
 
-Result<void> LifecycleImpl::close(const CloseType &reason) const {
+Result<void> LifecycleImpl::close(const CloseType &reason) const 
+{
     nlohmann::json params;
     params["reason"] = FireboltSDK::JSON::ToString(JsonData::CloseReasonEnum, reason);
     return helper_.invoke("lifecycle.close", params);
@@ -69,7 +70,8 @@ Result<void> LifecycleImpl::finished()
     return helper_.invoke("lifecycle.finished", params);
 }
 
-Result<LifecycleState> LifecycleImpl::getCurrentState() const {
+Result<LifecycleState> LifecycleImpl::getCurrentState() const 
+{
     return Result<LifecycleState>(currentState_); 
 }
 
@@ -94,8 +96,8 @@ void LifecycleImpl::onStateChanged(const LifecycleEvent& event)
 }
 
 Result<SubscriptionId>
-    LifecycleImpl::subscribeOnStateChanged(std::function<void(const LifecycleState& oldState, const LifecycleState& newState)>&& notification) {
-
+    LifecycleImpl::subscribeOnStateChanged(std::function<void(const LifecycleState& oldState, const LifecycleState& newState)>&& notification) 
+{
     std::lock_guard<std::mutex> lock(mutex_);
 
     uint64_t newId = ++currentId_;
@@ -104,7 +106,8 @@ Result<SubscriptionId>
     return Result<SubscriptionId>(newId);
 }
 
-Result<void> LifecycleImpl::unsubscribe(SubscriptionId id) {
+Result<void> LifecycleImpl::unsubscribe(SubscriptionId id) 
+{
     std::lock_guard<std::mutex> lock(mutex_);
     auto it = onStateChangedCallbacks_.find(id);
     if (it == onStateChangedCallbacks_.end()) {
@@ -114,7 +117,8 @@ Result<void> LifecycleImpl::unsubscribe(SubscriptionId id) {
     return Result<void>(Firebolt::Error::None);
 }
 
-void LifecycleImpl::unsubscribeAll()  {
+void LifecycleImpl::unsubscribeAll()
+{
     std::lock_guard<std::mutex> lock(mutex_);
     onStateChangedCallbacks_.clear();
 }

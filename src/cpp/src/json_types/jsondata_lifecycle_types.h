@@ -19,8 +19,6 @@
 
 #pragma once
 
-#ifndef USE_LIFECYCLE1
-
 #include "lifecycle.h"
 #include <types/json_types.h>
 
@@ -70,10 +68,6 @@ public:
         return result;
     }
 
-    //std::tuple<::Firebolt::Lifecycle::LifecycleState, ::Firebolt::Lifecycle::LifecycleState> Value() const override
-    //{
-     //   return std::make_tuple(state_, previous_);
-   // }
 private:
     LifecycleState state_;
     LifecycleState previous_;
@@ -81,5 +75,3 @@ private:
 };
 
 } // namespace Firebolt::Lifecycle::JsonData
-
-#endif // USE_LIFECYCLE1

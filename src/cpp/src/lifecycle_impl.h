@@ -29,7 +29,7 @@ class LifecycleTest;
 
 namespace Firebolt::Lifecycle
 {
-    enum class LifecycleEventSource
+enum class LifecycleEventSource
 {
     VOICE,
     REMOTE
