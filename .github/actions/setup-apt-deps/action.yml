@@ -22,3 +22,8 @@ runs:
           libboost-all-dev \
           cmake \
           jq
+
+    - name: Ensure apt cache is readable
+      shell: bash
+      run: |
+        sudo chmod -R a+r /var/cache/apt/archives
