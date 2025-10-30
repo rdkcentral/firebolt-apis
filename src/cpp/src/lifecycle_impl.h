@@ -25,37 +25,64 @@
 #include <set>
 #include <string>
 
+class LifecycleTest;
+
 namespace Firebolt::Lifecycle
 {
+enum class LifecycleEventSource
+{
+    VOICE,
+    REMOTE
+};
+
+struct LifecycleEvent
+{
+    LifecycleState state;
+    LifecycleState previous;
+    std::optional<LifecycleEventSource> source;
+};
+
 class LifecycleImpl : public ILifecycle
 {
 public:
     LifecycleImpl(Firebolt::Helpers::IHelper &helper);
-    LifecycleImpl(const LifecycleImpl&) = delete;
-    LifecycleImpl& operator=(const LifecycleImpl&) = delete;
+    LifecycleImpl(const LifecycleImpl &) = delete;
+    LifecycleImpl &operator=(const LifecycleImpl &) = delete;
     ~LifecycleImpl() override;
 
-    Result<void> ready() override;
-    Result<void> close(const CloseReason& reason) override;
-    Result<void> finished() override;
-    Result<std::string> state() override;
-    Result<SubscriptionId> subscribeOnBackgroundChanged(std::function<void(const LifecycleEvent&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnForegroundChanged(std::function<void(const LifecycleEvent&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnInactiveChanged(std::function<void(const LifecycleEvent&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnSuspendedChanged(std::function<void(const LifecycleEvent&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnUnloadingChanged(std::function<void(const LifecycleEvent&)>&& notification) override;
-    Result<void> unsubscribe(SubscriptionId id) override;
-    void unsubscribeAll() override;
+    Result<void> ready();
+    virtual Result<void> close(const CloseType &type) const override;
+    Result<void> finished();
+
+    virtual Result<LifecycleState> getCurrentState() const;
+    Result<SubscriptionId> subscribeOnStateChanged(
+        std::function<void(const LifecycleState &oldState, const LifecycleState &newState)> &&notification) override;
+
+    virtual Result<void> unsubscribe(SubscriptionId id) override;
+    virtual void unsubscribeAll() override;
 
 private:
-    void onStateChanged(const LifecycleEvent& event);
-    void subscribeOnStateChange();
+    void onStateChanged(const LifecycleEvent &event);
+    void subscribeToStateChangeEvents();
+
+    Result<SubscriptionId> subscribeOnBackgroundChanged(std::function<void(const LifecycleEvent &)> &&notification);
+    Result<SubscriptionId> subscribeOnForegroundChanged(std::function<void(const LifecycleEvent &)> &&notification);
+    Result<SubscriptionId> subscribeOnInactiveChanged(std::function<void(const LifecycleEvent &)> &&notification);
+    Result<SubscriptionId> subscribeOnSuspendedChanged(std::function<void(const LifecycleEvent &)> &&notification);
+    Result<SubscriptionId> subscribeOnUnloadingChanged(std::function<void(const LifecycleEvent &)> &&notification);
 
 private:
     Firebolt::Helpers::IHelper &helper_;
-    Firebolt::Helpers::SubscriptionManager subscriptionManager_;
     std::mutex mutex_;
     LifecycleState currentState_{LifecycleState::INITIALIZING};
     std::set<SubscriptionId> subscriptions_;
+    Firebolt::Helpers::SubscriptionManager subscriptionManager_;
+
+    uint64_t currentId_{0};
+    std::map<uint64_t, std::function<void(const LifecycleState &oldState, const LifecycleState &newState)>>
+        onStateChangedCallbacks_;
+
+public:
+    friend class ::LifecycleTest;
 };
 } // namespace Firebolt::Lifecycle
