@@ -38,4 +38,3 @@ outputs:
   deps_cache_key:
     description: "The cache key for the dependencies."
     value: ${{ steps.cache-key.outputs.hash }}
-

@@ -28,6 +28,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Ensure apt cache writable before restore
+        if: runner.os == 'Linux'
+        run: |
+          sudo mkdir -p /var/cache/apt/archives
+          sudo chmod -R a+rw /var/cache/apt/archives
+
       - name: Setup CXX Dependencies
         id: setup-deps
         uses: ./.github/actions/setup-cxx-deps
