@@ -1,0 +1,55 @@
+name: 'Setup CXX Dependencies'
+description: 'Sets up the C++ dependencies and caches them.'
+runs:
+  using: "composite"
+
+  steps:
+    - name: Generate Dependency Hash Key
+      id: cache-key
+      shell: bash
+      run: echo "hash=$(sha256sum ${{ env.DEPS_FILE }} | awk '{print $1}')" >> $GITHUB_OUTPUT
+
+    - name: Restore Dependency Cache
+      uses: actions/cache@v4
+      id: cache-restore
+      with:
+        path: ${{ env.SYSROOT_PATH }}
+        key: ${{ runner.os }}-deps-${{ steps.cache-key.outputs.hash }}
+
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: ${{ runner.os }}-apt-cache-v1
+
+      - name: Install apt dependencies
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        shell: bash
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y --no-install-recommends \
+            libboost-all-dev \
+            cmake \
+            jq
+
+    - name: Build and Install Project Dependencies
+      if: steps.cache-restore.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        echo "Building dependencies..."
+        mkdir -p ${{ env.SYSROOT_PATH }}
+        ./.github/scripts/install-deps.sh --deps "${{ env.DEPS_FILE }}" --sysroot "${{ env.SYSROOT_PATH }}"
+        echo "Dependencies built and installed to ${{ env.SYSROOT_PATH }}"
+
+    - name: Cache Save Confirmation
+      if: steps.cache-restore.outputs.cache-hit != 'true'
+      shell: bash
+      run: echo "New dependency cache will be saved."
+
+outputs:
+  deps_cache_key:
+    description: "The cache key for the dependencies."
+    value: ${{ steps.cache-key.outputs.hash }}
+
