@@ -63,21 +63,8 @@ jobs:
           NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN  }} # <-- allow npm publish for each workspace
         run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc'
 
-      - name: Cache apt packages
-        uses: actions/cache@v4
-        with:
-          path: /var/cache/apt/archives
-          key: ${{ runner.os }}-apt-cache-v1
-
       - name: Install apt dependencies
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y --no-install-recommends \
-            libboost-all-dev \
-            cmake \
-            jq
+        uses: ./.github/actions/setup-apt-deps
 
       - name: Install npm dependencies
         run: |

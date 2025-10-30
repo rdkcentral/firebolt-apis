@@ -16,23 +16,8 @@ runs:
         path: ${{ env.SYSROOT_PATH }}
         key: ${{ runner.os }}-deps-${{ steps.cache-key.outputs.hash }}
 
-    - name: Cache apt packages
-      uses: actions/cache@v4
-      with:
-        path: /var/cache/apt/archives
-        key: ${{ runner.os }}-apt-cache-v1
-
     - name: Install apt dependencies
-      if: steps.cache-restore.outputs.cache-hit != 'true'
-      shell: bash
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        sudo apt-get update -y
-        sudo apt-get install -y --no-install-recommends \
-          libboost-all-dev \
-          cmake \
-          jq
+      uses: ./.github/actions/setup-apt-deps
 
     - name: Build and Install Project Dependencies
       if: steps.cache-restore.outputs.cache-hit != 'true'
