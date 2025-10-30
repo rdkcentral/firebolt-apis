@@ -3,19 +3,30 @@ description: 'Sets up the apt dependencies and caches them.'
 runs:
   using: "composite"
   steps:
-    - name: Ensure apt cache is accessible - pre
+    - name: Prepare local apt cache directory
       shell: bash
       run: |
-        sudo chmod -R a+rw /var/cache/apt/archives
+        mkdir -p "${{ runner.temp }}/apt-cache"
 
-    - name: Cache apt packages
+    - name: Cache apt packages (restore to temp)
       id: cache-apt
       uses: actions/cache@v4
       with:
-        path: /var/cache/apt/archives
+        path: ${{ runner.temp }}/apt-cache
         key: ${{ runner.os }}-apt-cache-${{ hashFiles('.github/actions/setup-apt-deps/action.yml') }}
         restore-keys: |
           ${{ runner.os }}-apt-cache-
+
+    - name: Move cached packages into apt archives (if any)
+      shell: bash
+      run: |
+        if [ -d "${{ runner.temp }}/apt-cache" ] && [ "$(ls -A "${{ runner.temp }}/apt-cache")" ]; then
+          echo "Copying cached apt packages into /var/cache/apt/archives"
+          sudo mkdir -p /var/cache/apt/archives
+          sudo cp -a "${{ runner.temp }}/apt-cache/." /var/cache/apt/archives/
+        else
+          echo "No cached apt packages to copy"
+        fi
 
     - name: Install apt dependencies
       shell: bash
@@ -28,7 +39,9 @@ runs:
           cmake \
           jq
 
-    - name: Ensure apt cache is accessible - post
+    - name: Save newly-downloaded apt packages into runner temp for cache
       shell: bash
       run: |
-        sudo chmod -R a+rw /var/cache/apt/archives
+        mkdir -p "${{ runner.temp }}/apt-cache"
+        sudo cp -a /var/cache/apt/archives/. "${{ runner.temp }}/apt-cache/"
+        sudo chmod -R a+rw "${{ runner.temp }}/apt-cache"
