@@ -3,6 +3,11 @@ description: 'Sets up the apt dependencies and caches them.'
 runs:
   using: "composite"
   steps:
+    - name: Ensure apt cache is accessible - pre
+      shell: bash
+      run: |
+        sudo chmod -R a+rw /var/cache/apt/archives
+
     - name: Cache apt packages
       id: cache-apt
       uses: actions/cache@v4
