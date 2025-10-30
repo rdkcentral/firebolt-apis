@@ -49,8 +49,7 @@ void CoreSDKTest::CreateFireboltInstance(const std::string& url)
       "wsUrl": ")" + url + R"("})";
 
     _connected = false;
-    Firebolt::IFireboltAccessor::Instance().Initialize(config);
-    Firebolt::IFireboltAccessor::Instance().Connect(ConnectionChanged);
+    Firebolt::IFireboltAccessor::Instance().Connect(config, ConnectionChanged);
 }
 
 void CoreSDKTest::DestroyFireboltInstance()

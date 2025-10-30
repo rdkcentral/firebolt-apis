@@ -25,7 +25,10 @@ file(GLOB SOURCES *.cpp json_types/*.cpp)
 
 if(NOT ENABLE_UNIT_TESTS)
     set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-    set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+    set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
+else()
+    set(CMAKE_CXX_VISIBILITY_PRESET default)
+    set(CMAKE_VISIBILITY_INLINES_HIDDEN OFF)
 endif()
 
 add_library(${TARGET} ${FIREBOLT_LIBRARY_TYPE}
@@ -56,6 +59,7 @@ target_include_directories(${TARGET}
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
 )
 
+string(REGEX REPLACE "^v?([0-9]+)\\.([0-9]+)\\.([0-9]+).*" "\\1" PROJECT_VERSION_MAJOR ${PROJECT_VERSION})
 set_target_properties(${TARGET} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
@@ -84,14 +88,9 @@ install(
 )
 
 install(
-    FILES ${CMAKE_BINARY_DIR}/src/${TARGET}Config.cmake
-    DESTINATION lib/cmake/${PROJECT_NAME}
-)
-
-install(
     EXPORT ${TARGET}Targets
     NAMESPACE ${TARGET}::
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/cmake/${PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 )
 
 install(
