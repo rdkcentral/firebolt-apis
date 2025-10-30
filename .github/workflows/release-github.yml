@@ -172,7 +172,7 @@ jobs:
 
       - name: Deploy Core Native Sources
         id: deploy_runtime_apis_cpp
-        if: ${{ env.DEPLOY_ARTIFACTS == 'true' }} && steps.check_build.outputs.result == 'true' && github.event_name != 'pull_request' && (github.ref_name != 'main' || github.event_name == 'workflow_dispatch')
+        if: false && steps.check_build.outputs.result == 'true' && github.event_name != 'pull_request' && (github.ref_name != 'main' || github.event_name == 'workflow_dispatch')
         env:
           NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN  }}
         run: |
@@ -201,7 +201,7 @@ jobs:
           git clone https://rdkcentral:$GITHUB_TOKEN@github.com/rdkcentral/firebolt.git ./firebolt-docs
 
       - name: Release docs to GitHub.io
-        if: steps.check_build.outputs.result == 'true' && (github.ref_name == 'main' || github.ref_name == 'next' || github.ref_name == 'next-major' || github.event_name == 'pull_request' || github.ref_name == 'feature/high-contrast-ui')
+        if: steps.check_build.outputs.result == 'true' && (github.ref_name == 'main' || github.ref_name == 'next' || github.ref_name == 'next-major')
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
         run: |
