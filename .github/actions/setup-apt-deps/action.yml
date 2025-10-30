@@ -3,10 +3,10 @@ description: 'Sets up the apt dependencies and caches them.'
 runs:
   using: "composite"
   steps:
-    - name: Ensure apt cache is readable - pre
+    - name: Ensure apt cache is writable
       shell: bash
       run: |
-        sudo chmod -R a+r /var/cache/apt/archives
+        sudo chmod -R a+rw /var/cache/apt/archives
 
     - name: Cache apt packages
       id: cache-apt
@@ -28,7 +28,7 @@ runs:
           cmake \
           jq
 
-    - name: Ensure apt cache is readable - post
+    - name: Ensure apt cache is readable
       shell: bash
       run: |
         sudo chmod -R a+r /var/cache/apt/archives

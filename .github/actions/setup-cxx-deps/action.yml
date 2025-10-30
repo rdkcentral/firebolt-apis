@@ -17,6 +17,7 @@ runs:
         key: ${{ runner.os }}-deps-${{ steps.cache-key.outputs.hash }}
 
     - name: Install apt dependencies
+      if: steps.cache-restore.outputs.cache-hit != 'true'
       uses: ./.github/actions/setup-apt-deps
 
     - name: Build and Install Project Dependencies
