@@ -11,6 +11,7 @@ runs:
         key: ${{ runner.os }}-apt-cache-${{ hashFiles(format('{0}/action.yml', github.action_path)) }}
 
     - name: Install apt dependencies
+      shell: bash
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
