@@ -2,7 +2,7 @@
     "openrpc": "1.2.4",
     "info": {
         "title": "Lifecycle2",
-        "description": "Methods and events for responding to Lifecycle2 changes in your app.",
+        "description": "Methods and events for responding to Lifecycle changes in your app.",
         "version": "0.0.0"
     },
     "methods": [
@@ -64,7 +64,7 @@
         },
         {
             "name": "state",
-            "summary": "Get the current lifecycle2 state of the app.",
+            "summary": "Get the current lifecycle state of the app.",
             "tags": [
                 {
                     "name": "capabilities",
@@ -76,7 +76,7 @@
             "params": [],
             "result": {
                 "name": "state",
-                "summary": "The current lifecycle2 state of the app.",
+                "summary": "The current lifecycle state of the app.",
                 "schema": {
                     "$ref": "#/components/schemas/Lifecycle2State"
                 }
@@ -106,7 +106,7 @@
                     ]
                 }
             ],
-            "summary": "Notification of lifecycle2 state change, raised after the platform has transitioned the app/runtime to the new lifecycle2 state",
+            "summary": "Notification of lifecycle state change, raised after the platform has transitioned the app/runtime to the new lifecycle state",
             "params": [
                 {
                     "name": "value",
@@ -122,8 +122,8 @@
                         {
                             "name": "value",
                             "value": {
-                                "newState": "initializing",
-                                "oldState": "active"
+                                "newState": "paused",
+                                "oldState": "initializing"
                             }
                         }
                     ]
@@ -134,8 +134,8 @@
                         {
                             "name": "value",
                             "value": {
-                                "newState": "active",
-                                "oldState": "paused"
+                                "newState": "paused",
+                                "oldState": "active"
                             }
                         }
                     ]
@@ -158,7 +158,7 @@
             },
             "Lifecycle2State": {
                 "title": "Lifecycle2State",
-                "description": "The application Lifecycle2 state",
+                "description": "The application Lifecycle state",
                 "type": "string",
                 "enum": [
                     "initializing",
@@ -180,11 +180,11 @@
                 "properties": {
                     "newState": {
                         "$ref": "#/components/schemas/Lifecycle2State",
-                        "description": "The current Lifecycle2 state"
+                        "description": "The current Lifecycle state"
                     },
                     "oldState": {
                         "$ref": "#/components/schemas/Lifecycle2State",
-                        "description": "The previous Lifecycle2 state"
+                        "description": "The previous Lifecycle state"
                     }
                 }
             }
