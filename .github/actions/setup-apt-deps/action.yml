@@ -22,8 +22,10 @@ runs:
       run: |
         if [ -d "${{ runner.temp }}/apt-cache" ] && [ "$(ls -A "${{ runner.temp }}/apt-cache")" ]; then
           echo "Copying cached apt packages into /var/cache/apt/archives"
-          sudo mkdir -p /var/cache/apt/archives
-          sudo cp -a "${{ runner.temp }}/apt-cache/." /var/cache/apt/archives/
+          SUDO=""
+          (( "$(id -u)" != 0 )) && command -v sudo >/dev/null 2>&1 && SUDO=sudo
+          $SUDO mkdir -p /var/cache/apt/archives
+          $SUDO cp -a "${{ runner.temp }}/apt-cache/." /var/cache/apt/archives/
         else
           echo "No cached apt packages to copy"
         fi
@@ -33,8 +35,10 @@ runs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo apt-get update -y
-        sudo apt-get install -y --no-install-recommends \
+        SUDO=""
+        (( "$(id -u)" != 0 )) && command -v sudo >/dev/null 2>&1 && SUDO=sudo
+        $SUDO apt-get update -y
+        $SUDO apt-get install -y --no-install-recommends \
           libboost-all-dev \
           cmake \
           jq
@@ -43,5 +47,7 @@ runs:
       shell: bash
       run: |
         mkdir -p "${{ runner.temp }}/apt-cache"
-        sudo cp -a /var/cache/apt/archives/. "${{ runner.temp }}/apt-cache/"
-        sudo chmod -R a+rw "${{ runner.temp }}/apt-cache"
+        SUDO=""
+        (( "$(id -u)" != 0 )) && command -v sudo >/dev/null 2>&1 && SUDO=sudo
+        $SUDO cp -a /var/cache/apt/archives/. "${{ runner.temp }}/apt-cache/"
+        $SUDO chmod -R a+rw "${{ runner.temp }}/apt-cache"
