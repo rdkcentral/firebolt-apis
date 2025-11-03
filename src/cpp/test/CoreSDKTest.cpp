@@ -18,6 +18,7 @@
  */
 
 #include "CoreSDKTest.h"
+#include <firebolt_config.h>
 #include <iomanip>
 #include <stdexcept>
 #include <string>
@@ -43,10 +44,14 @@ void CoreSDKTest::ConnectionChanged(const bool connected, const Firebolt::Error 
 
 void CoreSDKTest::CreateFireboltInstance(const std::string& url)
 {
-    const std::string config = R"({
-      "waitTime": 1000,
-      "logLevel": "Info",
-      "wsUrl": ")" + url + R"("})";
+    FireboltSDK::Config config = {
+        .wsUrl = url,
+        .waitTime_ms = 1000,
+        .log =
+            {
+                .level = "Info",
+            },
+    };
 
     _connected = false;
     Firebolt::IFireboltAccessor::Instance().Connect(config, ConnectionChanged);

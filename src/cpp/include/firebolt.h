@@ -28,6 +28,7 @@
 #include "metrics.h"
 #include "securestorage.h"
 #include <functional>
+#include <firebolt_config.h>
 #include <types/fb-errors.h>
 
 namespace Firebolt
@@ -59,32 +60,13 @@ public:
      *        This method is asynchronous and the user is expected to wait for the OnConnectionChanged callback
      *        to report successful connection before calling SDK methods
      *
-     * @param config: JSON String with configuration options. At a minimum the
-     *                user is expected to pass in the Websocket URL.
-     *
-     *                CONFIG Format:
-     *                {
-     *                   "waitTime": 3000,
-     *                   "wsUrl": "ws://127.0.0.1:9998",
-     *                   "log": {
-     *                       "level": "Info",
-     *                       "format": {
-     *                           "ts": true,
-     *                           "location": false,
-     *                           "function": true,
-     *                           "thread": true
-     *                       }
-     *                   },
-     *                   "logLevel": "Info"
-     *                }
-     *                # waitTime    : time in milliseconds to wait for a response from the endpoint
-     *                # logLevel    : deprecated, while still supported use the "log" object instead
+     * @param config: Configuration parameters
      *
      * @param listener : Connection status listener
      *
      * @return Firebolt::Error
      */
-    virtual Firebolt::Error Connect(const std::string &config, OnConnectionChanged listener) = 0;
+    virtual Firebolt::Error Connect(const FireboltSDK::Config &config, OnConnectionChanged listener) = 0;
 
     /**
      * @brief Disconnects from the Websocket endpoint.
