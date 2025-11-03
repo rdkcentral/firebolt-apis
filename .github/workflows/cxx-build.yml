@@ -27,42 +27,15 @@ jobs:
   setup_deps:
     runs-on: ubuntu-latest
     outputs:
-      deps_cache_key: ${{ steps.cache-key.outputs.hash }}
+      deps_cache_key: ${{ steps.setup-deps.outputs.deps_cache_key }}
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Generate Dependency Hash Key
-        id: cache-key
-        run: echo "hash=$(sha256sum ${{ env.DEPS_FILE }} | awk '{print $1}')" >> $GITHUB_OUTPUT
-
-      - name: Restore Dependency Cache
-        uses: actions/cache@v4
-        id: cache-restore
-        with:
-          path: ${{ env.SYSROOT_PATH }}
-          key: ${{ runner.os }}-deps-${{ steps.cache-key.outputs.hash }}
-
-      - name: Build and Install System-Dependencies
-        if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: |
-          echo "Installing apt dependencies..."
-          sudo apt-get update -y
-          echo "Installing Boost..."
-          sudo apt-get install -y libboost-all-dev
-
-      - name: Build and Install Project Dependencies
-        if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: |
-          echo "Building dependencies..."
-          mkdir -p ${{ env.SYSROOT_PATH }}
-          ./.github/scripts/install-deps.sh --deps "${{ env.DEPS_FILE }}" --sysroot "${{ env.SYSROOT_PATH }}"
-          echo "Dependencies built and installed to ${{ env.SYSROOT_PATH }}"
-
-      - name: Cache Save Confirmation
-        if: steps.cache-restore.outputs.cache-hit != 'true'
-        run: echo "New dependency cache will be saved."
+      - name: Setup CXX Dependencies
+        id: setup-deps
+        uses: ./.github/actions/setup-cxx-deps
 
   build_project:
     needs: setup_deps
@@ -88,12 +61,7 @@ jobs:
           echo "version-native: $VERSION"
 
       - name: Install apt dependencies
-        run: |
-          echo "Installing apt dependencies..."
-          sudo apt-get update -y
-          sudo apt-get install -y cmake
-          echo "Installing Boost..."
-          sudo apt-get install -y libboost-all-dev
+        uses: ./.github/actions/setup-apt-deps
 
       - name: Configure CMake
         run: |
@@ -131,4 +99,3 @@ jobs:
         with:
           name: release
           path: ${{ github.workspace }}/release
-
