@@ -29,17 +29,10 @@ class LifecycleTest;
 
 namespace Firebolt::Lifecycle
 {
-enum class LifecycleEventSource
-{
-    VOICE,
-    REMOTE
-};
-
 struct LifecycleEvent
 {
     LifecycleState state;
     LifecycleState previous;
-    std::optional<LifecycleEventSource> source;
 };
 
 class LifecycleImpl : public ILifecycle
@@ -50,11 +43,9 @@ public:
     LifecycleImpl &operator=(const LifecycleImpl &) = delete;
     ~LifecycleImpl() override;
 
-    Result<void> ready();
     virtual Result<void> close(const CloseType &type) const override;
-    Result<void> finished();
+    virtual Result<LifecycleState> getCurrentState() const override;
 
-    virtual Result<LifecycleState> getCurrentState() const;
     Result<SubscriptionId> subscribeOnStateChanged(
         std::function<void(const LifecycleState &oldState, const LifecycleState &newState)> &&notification) override;
 
@@ -62,25 +53,10 @@ public:
     virtual void unsubscribeAll() override;
 
 private:
-    void onStateChanged(const LifecycleEvent &event);
-    void subscribeToStateChangeEvents();
-
-    Result<SubscriptionId> subscribeOnBackgroundChanged(std::function<void(const LifecycleEvent &)> &&notification);
-    Result<SubscriptionId> subscribeOnForegroundChanged(std::function<void(const LifecycleEvent &)> &&notification);
-    Result<SubscriptionId> subscribeOnInactiveChanged(std::function<void(const LifecycleEvent &)> &&notification);
-    Result<SubscriptionId> subscribeOnSuspendedChanged(std::function<void(const LifecycleEvent &)> &&notification);
-    Result<SubscriptionId> subscribeOnUnloadingChanged(std::function<void(const LifecycleEvent &)> &&notification);
 
 private:
     Firebolt::Helpers::IHelper &helper_;
-    std::mutex mutex_;
-    LifecycleState currentState_{LifecycleState::INITIALIZING};
-    std::set<SubscriptionId> subscriptions_;
     Firebolt::Helpers::SubscriptionManager subscriptionManager_;
-
-    uint64_t currentId_{0};
-    std::map<uint64_t, std::function<void(const LifecycleState &oldState, const LifecycleState &newState)>>
-        onStateChangedCallbacks_;
 
 public:
     friend class ::LifecycleTest;

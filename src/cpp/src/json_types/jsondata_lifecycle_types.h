@@ -41,38 +41,34 @@ inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleState> const 
     {"terminating", ::Firebolt::Lifecycle::LifecycleState::TERMINATING},
 });
 
-inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleEventSource> const LifecycleEventSourceEnum({
-    {"voice", ::Firebolt::Lifecycle::LifecycleEventSource::VOICE},
-    {"remote", ::Firebolt::Lifecycle::LifecycleEventSource::REMOTE},
-});
-
-class LifecycleEvent : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Lifecycle::LifecycleEvent>
+class LifecycleState : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Lifecycle::LifecycleState>
 {
 public:
     void FromJson(const nlohmann::json &json) override
     {
         state_ = LifecycleStateEnum.at(json["state"]);
-        previous_ = LifecycleStateEnum.at(json["previous"]);
-        if (json.contains("source"))
-        {
-            source_ = LifecycleEventSourceEnum.at(json["source"]);
-        }
     }
-
-    ::Firebolt::Lifecycle::LifecycleEvent Value() const override
+    ::Firebolt::Lifecycle::LifecycleState Value() const override
     {
-        ::Firebolt::Lifecycle::LifecycleEvent result{state_, previous_, std::nullopt};
-        if (source_.has_value())
-        {
-            result.source = source_.value();
-        }
-        return result;
+        return state_;
     }
-
 private:
-    LifecycleState state_;
-    LifecycleState previous_;
-    std::optional<LifecycleEventSource> source_;
+    ::Firebolt::Lifecycle::LifecycleState state_;
+};
+
+class LifecycleEvent : public FireboltSDK::JSON::NL_Json_Basic<std::tuple<::Firebolt::Lifecycle::LifecycleState, ::Firebolt::Lifecycle::LifecycleState>>
+{
+public:
+    void FromJson(const nlohmann::json& json) override {
+        oldState_ = LifecycleStateEnum.at(json["oldState"]);
+        newState_ = LifecycleStateEnum.at(json["newState"]);
+    }
+    std::tuple<::Firebolt::Lifecycle::LifecycleState, ::Firebolt::Lifecycle::LifecycleState> Value() const override {
+        return std::make_tuple(oldState_, newState_);
+    }
+private:
+    ::Firebolt::Lifecycle::LifecycleState oldState_;
+    ::Firebolt::Lifecycle::LifecycleState newState_;
 };
 
 } // namespace Firebolt::Lifecycle::JsonData
