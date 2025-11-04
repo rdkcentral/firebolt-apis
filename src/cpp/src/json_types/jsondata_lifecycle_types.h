@@ -46,7 +46,7 @@ class LifecycleState : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Lifec
 public:
     void FromJson(const nlohmann::json &json) override
     {
-        state_ = LifecycleStateEnum.at(json["state"]);
+        state_ = LifecycleStateEnum.at(json.get<std::string>());
     }
     ::Firebolt::Lifecycle::LifecycleState Value() const override
     {
