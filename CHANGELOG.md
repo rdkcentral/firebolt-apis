@@ -1,3 +1,10 @@
+# [1.8.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.4...v1.8.0-next.5) (2025-11-04)
+
+
+### Features
+
+* **cpp:** Compile all test apps at once ([#433](https://github.com/rdkcentral/firebolt-apis/issues/433)) ([561dffc](https://github.com/rdkcentral/firebolt-apis/commit/561dffceee42f4f4402d095734a8b2d64bd28589))
+
 # [1.8.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.3...v1.8.0-next.4) (2025-11-04)
 
 
