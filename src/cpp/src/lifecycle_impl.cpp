@@ -40,20 +40,18 @@ LifecycleImpl::~LifecycleImpl()
 
 Result<void> LifecycleImpl::close(const CloseType &reason) const
 {
-    nlohmann::json params;
-    params["type"] = FireboltSDK::JSON::ToString(JsonData::CloseReasonEnum, reason);
-    return helper_.invoke("lifecycle.close", params);
+    return helper_.invoke("Lifecycle.close", FireboltSDK::JSON::ToString(JsonData::CloseReasonEnum, reason));
 }
 
 Result<LifecycleState> LifecycleImpl::getCurrentState() const
 {
-    return helper_.get<JsonData::LifecycleState, LifecycleState>("lifecycle.state");
+    return helper_.get<JsonData::LifecycleState, LifecycleState>("Lifecycle.state");
 }
 
 Result<SubscriptionId> LifecycleImpl::subscribeOnStateChanged(
     std::function<void(const LifecycleState &oldState, const LifecycleState &newState)> &&notification)
 {
-    return subscriptionManager_.subscribe<JsonData::LifecycleEvent>("lifecycle.onState", std::move(notification));
+    return subscriptionManager_.subscribe<JsonData::LifecycleEvent>("Lifecycle.onState", std::move(notification));
 }
 
 Result<void> LifecycleImpl::unsubscribe(SubscriptionId id)
