@@ -1,3 +1,10 @@
+# [1.8.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.3...v1.8.0-next.4) (2025-11-04)
+
+
+### Features
+
+* Lifecycle 2.0 ([#432](https://github.com/rdkcentral/firebolt-apis/issues/432)) ([3139d57](https://github.com/rdkcentral/firebolt-apis/commit/3139d57bacf12b821b753ea7faf13152b86dacba))
+
 # [1.8.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.2...v1.8.0-next.3) (2025-10-29)
 
 

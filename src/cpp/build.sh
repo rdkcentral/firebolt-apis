@@ -14,8 +14,6 @@ while [[ ! -z $1 ]]; do
   --release) buildTarget="Release";;
   --sysroot) SYSROOT_PATH="$2"; shift;;
   -i | --install) do_install=true;;
-  +ut)    params+=" -DENABLE_UNIT_TESTS=ON";;
-  +ct)    params+=" -DENABLE_COMPONENT_TESTS=ON";;
   +tests) params+=" -DENABLE_TESTS=ON";;
   +demo)  params+=" -DENABLE_DEMO_APP=ON";;
   --) shift; break;;
