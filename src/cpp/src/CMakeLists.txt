@@ -31,7 +31,7 @@ else()
     set(CMAKE_VISIBILITY_INLINES_HIDDEN OFF)
 endif()
 
-add_library(${TARGET} ${FIREBOLT_LIBRARY_TYPE}
+add_library(${TARGET}
     ${SOURCES}
 )
 
