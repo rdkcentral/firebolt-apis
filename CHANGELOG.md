@@ -1,3 +1,10 @@
+# [1.8.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.6...v1.8.0-next.7) (2025-11-04)
+
+
+### Bug Fixes
+
+* Update Lifecycle 2.0 to schema, update UTs ([#435](https://github.com/rdkcentral/firebolt-apis/issues/435)) ([0e28575](https://github.com/rdkcentral/firebolt-apis/commit/0e2857506b59f77b58a088566cbd8b6bb89252bf))
+
 # [1.8.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.5...v1.8.0-next.6) (2025-11-04)
 
 
