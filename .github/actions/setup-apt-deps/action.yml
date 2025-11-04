@@ -39,9 +39,10 @@ runs:
         (( "$(id -u)" != 0 )) && command -v sudo >/dev/null 2>&1 && SUDO=sudo
         $SUDO apt-get update -y
         $SUDO apt-get install -y --no-install-recommends \
-          libboost-all-dev \
           cmake \
-          jq
+          jq \
+          libboost-all-dev \
+          libcurl4-openssl-dev
 
     - name: Save newly-downloaded apt packages into runner temp for cache
       shell: bash
