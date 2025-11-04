@@ -25,50 +25,50 @@
 namespace Firebolt::Lifecycle::JsonData
 {
 
-inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::CloseReason> const CloseReasonEnum({
-    { "remoteButton", ::Firebolt::Lifecycle::CloseReason::REMOTE_BUTTON },
-    { "userExit", ::Firebolt::Lifecycle::CloseReason::USER_EXIT },
-    { "done", ::Firebolt::Lifecycle::CloseReason::DONE },
-    { "error", ::Firebolt::Lifecycle::CloseReason::ERROR },
+inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::CloseType> const CloseReasonEnum({
+    {"deactivate", ::Firebolt::Lifecycle::CloseType::DEACTIVATE},
+    {"unload", ::Firebolt::Lifecycle::CloseType::UNLOAD},
+    {"kill_reload", ::Firebolt::Lifecycle::CloseType::KILL_RELOAD},
+    {"kill_reactivate", ::Firebolt::Lifecycle::CloseType::KILL_REACTIVATE},
 });
 
 inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleState> const LifecycleStateEnum({
-    { "initializing", ::Firebolt::Lifecycle::LifecycleState::INITIALIZING },
-    { "inactive", ::Firebolt::Lifecycle::LifecycleState::INACTIVE },
-    { "foreground", ::Firebolt::Lifecycle::LifecycleState::FOREGROUND },
-    { "background", ::Firebolt::Lifecycle::LifecycleState::BACKGROUND },
-    { "unloading", ::Firebolt::Lifecycle::LifecycleState::UNLOADING },
-    { "suspended", ::Firebolt::Lifecycle::LifecycleState::SUSPENDED },
+    {"initializing", ::Firebolt::Lifecycle::LifecycleState::INITIALIZING},
+    {"active", ::Firebolt::Lifecycle::LifecycleState::ACTIVE},
+    {"paused", ::Firebolt::Lifecycle::LifecycleState::PAUSED},
+    {"suspended", ::Firebolt::Lifecycle::LifecycleState::SUSPENDED},
+    {"hibernated", ::Firebolt::Lifecycle::LifecycleState::HIBERNATED},
+    {"terminating", ::Firebolt::Lifecycle::LifecycleState::TERMINATING},
 });
 
-inline FireboltSDK::JSON::EnumType<::Firebolt::Lifecycle::LifecycleEventSource> const LifecycleEventSourceEnum({
-    { "voice", ::Firebolt::Lifecycle::LifecycleEventSource::VOICE },
-    { "remote", ::Firebolt::Lifecycle::LifecycleEventSource::REMOTE },
-});
+class LifecycleState : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Lifecycle::LifecycleState>
+{
+public:
+    void FromJson(const nlohmann::json &json) override
+    {
+        state_ = LifecycleStateEnum.at(json["state"]);
+    }
+    ::Firebolt::Lifecycle::LifecycleState Value() const override
+    {
+        return state_;
+    }
+private:
+    ::Firebolt::Lifecycle::LifecycleState state_;
+};
 
-class LifecycleEvent : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Lifecycle::LifecycleEvent>
+class LifecycleEvent : public FireboltSDK::JSON::NL_Json_Basic<std::tuple<::Firebolt::Lifecycle::LifecycleState, ::Firebolt::Lifecycle::LifecycleState>>
 {
 public:
     void FromJson(const nlohmann::json& json) override {
-        state_ = LifecycleStateEnum.at(json["state"]);
-        previous_ = LifecycleStateEnum.at(json["previous"]);
-        if (json.contains("source"))
-        {
-            source_ = LifecycleEventSourceEnum.at(json["source"]);
-        }
+        oldState_ = LifecycleStateEnum.at(json["oldState"]);
+        newState_ = LifecycleStateEnum.at(json["newState"]);
     }
-    ::Firebolt::Lifecycle::LifecycleEvent Value() const override
-    {
-        ::Firebolt::Lifecycle::LifecycleEvent result{state_, previous_, std::nullopt};
-        if (source_.has_value())
-        {
-            result.source = source_.value();
-        }
-        return result;
+    std::tuple<::Firebolt::Lifecycle::LifecycleState, ::Firebolt::Lifecycle::LifecycleState> Value() const override {
+        return std::make_tuple(oldState_, newState_);
     }
 private:
-    LifecycleState state_;
-    LifecycleState previous_;
-    std::optional<LifecycleEventSource> source_;
+    ::Firebolt::Lifecycle::LifecycleState oldState_;
+    ::Firebolt::Lifecycle::LifecycleState newState_;
 };
+
 } // namespace Firebolt::Lifecycle::JsonData
