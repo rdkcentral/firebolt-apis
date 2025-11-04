@@ -48,13 +48,16 @@ protected:
                              { return Firebolt::Result<Firebolt::SubscriptionId>(Firebolt::Error::None); }));
     }
 
-    void simulateStateChange()
+    void mock_get(const std::string &methodName)
     {
-        // Simulate a state change
-        Firebolt::Lifecycle::LifecycleEvent event{.state = Firebolt::Lifecycle::LifecycleState::ACTIVE,
-                                                  .previous = Firebolt::Lifecycle::LifecycleState::INITIALIZING};
-    
-        //lifecycleImpl_.onStateChanged(event);
+        EXPECT_CALL(mockHelper, getJson(methodName, _))
+            .WillOnce(Invoke(
+                [](const std::string &methodName, const nlohmann::json &parameters)
+                {
+                    nlohmann::json response;
+                    response["result"] = "INITIALIZING";
+                    return Firebolt::Result<nlohmann::json>{response};
+                }));
     }
 
 protected:
@@ -94,6 +97,8 @@ TEST_F(LifecycleTest, close)
 
 TEST_F(LifecycleTest, getCurrentState)
 {
+    mock_get("lifecycle.state");
+
     Firebolt::Result<Firebolt::Lifecycle::LifecycleState> result = lifecycleImpl_.getCurrentState();
     ASSERT_TRUE(result) << "Failed to retrieve current state from Lifecycle.getCurrentState() method";
     EXPECT_EQ(*result, Firebolt::Lifecycle::LifecycleState::INITIALIZING)
