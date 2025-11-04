@@ -23,7 +23,7 @@ message("Setup ${TARGET} v${PROJECT_VERSION}")
 
 file(GLOB SOURCES *.cpp json_types/*.cpp)
 
-if(NOT ENABLE_UNIT_TESTS)
+if(NOT ENABLE_TESTS)
     set(CMAKE_CXX_VISIBILITY_PRESET hidden)
     set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 else()

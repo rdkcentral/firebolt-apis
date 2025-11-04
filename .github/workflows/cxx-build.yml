@@ -68,7 +68,7 @@ jobs:
           cmake -B build -S src/cpp \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_INSTALL_PREFIX:PATH=${{ env.SYSROOT_PATH }}/usr \
-            -DENABLE_UNIT_TESTS=ON
+            -DENABLE_TESTS=ON -DDISCOVER_UT=ON -DDISCOVER_CT=OFF
 
       - name: Build Project
         run: cmake --build build
