@@ -45,17 +45,11 @@ endif ()
 set(VERSION ${PROJECT_VERSION})
 message(STATUS "Project version: ${PROJECT_VERSION}")
 
-option(FIREBOLT_ENABLE_STATIC_LIB "Create Firebolt library as Static library" OFF)
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 option(ENABLE_TESTS "Build openrpc native test" OFF)
 option(DISCOVER_UT "Discover all Unit Tests" ON)
 option(DISCOVER_CT "Discover all Component Tests" ON)
 option(ENABLE_DEMO_APP "Build demo app" OFF)
-
-if (FIREBOLT_ENABLE_STATIC_LIB)
-    set(FIREBOLT_LIBRARY_TYPE STATIC)
-else ()
-    set(FIREBOLT_LIBRARY_TYPE SHARED)
-endif ()
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX "${SYSROOT_PATH}/usr" CACHE INTERNAL "" FORCE)
