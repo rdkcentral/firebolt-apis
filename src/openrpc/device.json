@@ -85,6 +85,11 @@
           "x-uses": [
             "xrn:firebolt:capability:device:info"
           ]
+        },
+        {
+          "name": "deprecated",
+          "x-alternative": "Use non-Firebolt APIs specific to your platform, e.g. W3C APIs",
+          "x-since": "1.6.0"
         }
       ],
       "result": {
