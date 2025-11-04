@@ -1,3 +1,10 @@
+# [1.8.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.5...v1.8.0-next.6) (2025-11-04)
+
+
+### Bug Fixes
+
+* **cpp:** Use cmake way to control shared/static library ([#434](https://github.com/rdkcentral/firebolt-apis/issues/434)) ([c0d0eaf](https://github.com/rdkcentral/firebolt-apis/commit/c0d0eaf1835558ed83ac5d7b8b0b3e60c69f3c08))
+
 # [1.8.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.4...v1.8.0-next.5) (2025-11-04)
 
 
