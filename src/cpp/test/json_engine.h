@@ -29,10 +29,6 @@
 #include <nlohmann/json.hpp>
 #include <types/fb-errors.h>
 
-#if !(defined COMPONENT_TEST || defined UNIT_TEST)
-  #error "This file must be included only for Unit Tests or Component Tests"
-#endif
-
 using namespace ::testing;
 
 #define REMOVE_QUOTES(s) (s.substr(1, s.length() - 2))
