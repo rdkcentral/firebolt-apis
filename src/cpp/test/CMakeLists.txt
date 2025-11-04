@@ -19,10 +19,19 @@
 
 set(TESTAPP TestFireboltCore)
 
-message("Setup ${TESTAPP}")
-
 find_package(FireboltTransport CONFIG REQUIRED)
+find_package(Curl REQUIRED )
+find_package(GTest CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
+find_package(nlohmann_json_schema_validator CONFIG REQUIRED)
+
+include(GoogleTest)
+
+enable_testing()
+
+add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-core-open-rpc.json")
+
+message("Setup ${TESTAPP}")
 
 add_executable(${TESTAPP} CoreSDKTest.cpp Main.cpp)
 
@@ -47,113 +56,103 @@ set_target_properties(${TESTAPP} PROPERTIES
 add_custom_command(
     TARGET ${TESTAPP}
     POST_BUILD
-    COMMENT "=================== Installing TestApp ======================"
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${TESTAPP} ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
 )
 
-if(ENABLE_UNIT_TESTS)
-    set(UNIT_TESTS_APP FireboltCoreUnitTests)
+set(UNIT_TESTS_APP FireboltCoreUnitTests)
 
-    message("Setup ${UNIT_TESTS_APP}")
+message("Setup ${UNIT_TESTS_APP}")
 
-    find_package(nlohmann_json_schema_validator CONFIG REQUIRED)
-    find_package(GTest CONFIG REQUIRED)
+file(GLOB UNIT_TESTS "unit/*")
 
-    file(GLOB UNIT_TESTS "unit/*")
+add_executable(${UNIT_TESTS_APP}
+    CoreSDKTest.cpp
+    Unit.cpp
+    ${UNIT_TESTS}
+)
 
-    add_executable(${UNIT_TESTS_APP}
-        CoreSDKTest.cpp
-        Unit.cpp
-        ${UNIT_TESTS}
-    )
+target_link_libraries(${UNIT_TESTS_APP}
+    PRIVATE
+        FireboltSDK
+        FireboltTransport::FireboltTransport
+        nlohmann_json::nlohmann_json
+        nlohmann_json_schema_validator::validator
+        GTest::gtest
+        GTest::gmock
+)
 
-    target_link_libraries(${UNIT_TESTS_APP}
-        PRIVATE
-            FireboltSDK
-            FireboltTransport::FireboltTransport
-            nlohmann_json::nlohmann_json
-            nlohmann_json_schema_validator::validator
-            GTest::gtest
-            GTest::gmock
-    )
+target_include_directories(${UNIT_TESTS_APP}
+    PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/>
+        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/test/>
+)
 
-    target_include_directories(${UNIT_TESTS_APP}
-        PRIVATE
-            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
-            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/>
-            $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src>
-            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/test/>
-    )
+set_target_properties(${UNIT_TESTS_APP} PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    BUILD_RPATH "${CMAKE_BINARY_DIR}/src"
+    INSTALL_RPATH "$ORIGIN/../src"
+)
 
-    set_target_properties(${UNIT_TESTS_APP} PROPERTIES
-        CXX_STANDARD 17
-        CXX_STANDARD_REQUIRED YES
-        BUILD_RPATH "${CMAKE_BINARY_DIR}/src"
-        INSTALL_RPATH "$ORIGIN/../src"
-    )
-
-    include(GoogleTest)
+if(DISCOVER_UT)
     gtest_discover_tests(${UNIT_TESTS_APP}
         PROPERTIES
             ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src"
     )
 endif()
 
-if(ENABLE_COMPONENT_TESTS)
-    set(COMPONENT_TESTS_APP FireboltCoreComponentTests)
+set(COMPONENT_TESTS_APP FireboltCoreComponentTests)
 
-    message("Setup ${COMPONENT_TESTS_APP}")
+message("Setup ${COMPONENT_TESTS_APP}")
 
-    find_package(nlohmann_json_schema_validator CONFIG REQUIRED)
-    find_package(GTest CONFIG REQUIRED)
-    find_package( Curl REQUIRED )
+# file(GLOB COMPONENT_TESTS "component/*")
+set(COMPONENT_TESTS "component/deviceTest.cpp"
+                    "component/utils.cpp"
+                    "component/metricsTest.cpp"
+                    "component/localizationTest.cpp"
+                    "component/hdmiInputTest.cpp"
+                    "component/secureStorageTest.cpp"
+                    )
 
-    # file(GLOB COMPONENT_TESTS "component/*")
-    set(COMPONENT_TESTS "component/deviceTest.cpp"
-                        "component/utils.cpp"
-                        "component/metricsTest.cpp"
-                        "component/localizationTest.cpp"
-                        "component/hdmiInputTest.cpp"
-                        "component/secureStorageTest.cpp"
-                        )
+add_executable(${COMPONENT_TESTS_APP}
+    ComponentTestsMain.cpp
+    ${COMPONENT_TESTS}
+)
 
-    add_executable(${COMPONENT_TESTS_APP}
-        ComponentTestsMain.cpp
-        ${COMPONENT_TESTS}
+target_link_libraries(${COMPONENT_TESTS_APP}
+    PRIVATE
+        FireboltSDK
+        FireboltTransport::FireboltTransport
+        nlohmann_json::nlohmann_json
+        nlohmann_json_schema_validator::validator
+        CURL::libcurl
+        GTest::gtest
+        GTest::gmock
+)
+
+target_include_directories(${COMPONENT_TESTS_APP}
+    PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/>
+        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src>
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/test/>
+)
+
+set_target_properties(${COMPONENT_TESTS_APP} PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    BUILD_RPATH "${CMAKE_BINARY_DIR}/src"
+    INSTALL_RPATH "$ORIGIN/../src"
+)
+
+if(DISCOVER_CT)
+    gtest_discover_tests(${COMPONENT_TESTS_APP}
+        PROPERTIES
+            ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src"
     )
-
-    target_link_libraries(${COMPONENT_TESTS_APP}
-        PRIVATE
-            FireboltSDK
-            FireboltTransport::FireboltTransport
-            nlohmann_json::nlohmann_json
-            nlohmann_json_schema_validator::validator
-            CURL::libcurl
-            GTest::gtest
-            GTest::gmock
-    )
-
-    target_include_directories(${COMPONENT_TESTS_APP}
-        PRIVATE
-            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
-            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/>
-            $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src>
-            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/test/>
-    )
-
-    set_target_properties(${COMPONENT_TESTS_APP} PROPERTIES
-        CXX_STANDARD 17
-        CXX_STANDARD_REQUIRED YES
-    )
-
-    set_target_properties(${COMPONENT_TESTS_APP} PROPERTIES
-        INSTALL_RPATH "$ORIGIN/../src:${SYSROOT_PATH}/usr/lib"
-        BUILD_WITH_INSTALL_RPATH TRUE
-    )
-
-    include(GoogleTest)
-    gtest_discover_tests(${COMPONENT_TESTS_APP})
 endif()
 
 if(ENABLE_COVERAGE)

@@ -47,9 +47,9 @@ message(STATUS "Project version: ${PROJECT_VERSION}")
 
 option(FIREBOLT_ENABLE_STATIC_LIB "Create Firebolt library as Static library" OFF)
 option(ENABLE_TESTS "Build openrpc native test" OFF)
-option(ENABLE_UNIT_TESTS "Build openrpc native test" OFF)
+option(DISCOVER_UT "Discover all Unit Tests" ON)
+option(DISCOVER_CT "Discover all Component Tests" ON)
 option(ENABLE_DEMO_APP "Build demo app" OFF)
-option(ENABLE_COMPONENT_TESTS "Build component test" OFF)
 
 if (FIREBOLT_ENABLE_STATIC_LIB)
     set(FIREBOLT_LIBRARY_TYPE STATIC)
@@ -70,24 +70,12 @@ list(APPEND CMAKE_MODULE_PATH
     "${SYSROOT_PATH}/usr/lib/cmake"
 )
 
-if (ENABLE_UNIT_TESTS)
-    enable_testing()
-    set(ENABLE_TESTS ON)
-    add_compile_definitions(UNIT_TEST)
-    add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-core-open-rpc.json")
-endif ()
-
-if (ENABLE_COMPONENT_TESTS)
-    add_compile_definitions(COMPONENT_TEST)
-endif ()
-
 add_subdirectory(src)
 
 if (ENABLE_DEMO_APP)
     add_subdirectory(demo)
 endif()
 
-if (ENABLE_TESTS OR ENABLE_COMPONENT_TESTS)
-    add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-core-open-rpc.json")
+if (ENABLE_TESTS)
     add_subdirectory(test)
 endif()
