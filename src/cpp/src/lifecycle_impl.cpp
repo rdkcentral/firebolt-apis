@@ -51,7 +51,7 @@ Result<LifecycleState> LifecycleImpl::getCurrentState() const
 Result<SubscriptionId> LifecycleImpl::subscribeOnStateChanged(
     std::function<void(const LifecycleState &oldState, const LifecycleState &newState)> &&notification)
 {
-    return subscriptionManager_.subscribe<JsonData::LifecycleEvent>("Lifecycle2.onState", std::move(notification));
+    return subscriptionManager_.subscribe<JsonData::LifecycleEvent>("Lifecycle2.onStateChanged", std::move(notification));
 }
 
 Result<void> LifecycleImpl::unsubscribe(SubscriptionId id)
