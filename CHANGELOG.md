@@ -1,3 +1,10 @@
+# [1.8.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.7...v1.8.0-next.8) (2025-11-05)
+
+
+### Features
+
+* **cpp:** Update to changes around config ([#436](https://github.com/rdkcentral/firebolt-apis/issues/436)) ([dbab3ca](https://github.com/rdkcentral/firebolt-apis/commit/dbab3ca2b040808b408b2523c529cac08056ee3a))
+
 # [1.8.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.6...v1.8.0-next.7) (2025-11-04)
 
 
