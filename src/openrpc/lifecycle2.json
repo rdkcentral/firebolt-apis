@@ -93,11 +93,12 @@
             ]
         },
         {
-            "name": "state",
+            "name": "stateChanged",
             "tags": [
                 {
                     "name": "notifier",
-                    "x-event": "Lifecycle2.onState"
+                    "x-event": "Lifecycle2.onStateChanged",
+                    "x-contextual-parameters": 0
                 },
                 {
                     "name": "capabilities",
@@ -109,17 +110,14 @@
             "summary": "Notification of lifecycle state change, raised after the platform has transitioned the app/runtime to the new lifecycle state",
             "params": [
                 {
-                    "name": "newState",
-                    "required": true,
+                    "name": "history",
                     "schema": {
-                        "$ref": "#/components/schemas/Lifecycle2State"
-                    }
-                },
-                {
-                    "name": "oldState",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/Lifecycle2State"
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {
+                            "title": "Lifecycle2Event",
+                            "$ref": "#/components/schemas/Lifecycle2Event"
+                        }
                     }
                 }
             ],
@@ -128,25 +126,34 @@
                     "name": "Default Example",
                     "params": [
                         {
-                            "name": "newState",
-                            "value": "paused"
-                        },
-                        {
-                            "name": "oldState",
-                            "value": "initializing"
+                            "name": "states",
+                            "value": [
+                                {
+                                    "newState": "paused",
+                                    "oldState": "initializing",
+                                    "focused": false
+                                }
+                            ]
                         }
                     ]
                 },
                 {
-                    "name": "App is deactivated",
+                    "name": "App is activated",
                     "params": [
                         {
-                            "name": "newState",
-                            "value": "paused"
-                        },
-                        {
-                            "name": "oldState",
-                            "value": "active"
+                            "name": "states",
+                            "value": [
+                                {
+                                    "newState": "paused",
+                                    "oldState": "initializing",
+                                    "focused": true
+                                },
+                                {
+                                    "newState": "active",
+                                    "oldState": "paused",
+                                    "focused": true
+                                }
+                            ]
                         }
                     ]
                 }
@@ -178,6 +185,21 @@
                     "hibernated",
                     "terminating"
                 ]
+            },
+            "Lifecycle2Event": {
+                "title": "Lifecycle2Event",
+                "type": "object",
+                "properties": {
+                    "newState": {
+                        "$ref": "#/components/schemas/Lifecycle2State"
+                    },
+                    "oldState": {
+                        "$ref": "#/components/schemas/Lifecycle2State"
+                    },
+                    "focused": {
+                        "type": "boolean"
+                    }
+                }
             }
         }
     }
