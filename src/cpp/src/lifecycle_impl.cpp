@@ -48,10 +48,12 @@ Result<LifecycleState> LifecycleImpl::getCurrentState() const
     return helper_.get<JsonData::LifecycleState, LifecycleState>("Lifecycle.state");
 }
 
-Result<SubscriptionId> LifecycleImpl::subscribeOnStateChanged(
-    std::function<void(const LifecycleState &oldState, const LifecycleState &newState)> &&notification)
+Result<SubscriptionId>
+LifecycleImpl::subscribeOnStateChanged(std::function<void(const std::vector<StateTransition> &)> &&notification)
 {
-    return subscriptionManager_.subscribe<JsonData::LifecycleEvent>("Lifecycle.onState", std::move(notification));
+    return subscriptionManager_.subscribe<
+        FireboltSDK::JSON::NL_Json_Array<JsonData::StateTransition, StateTransition>>("Lifecycle.onStateChanged",
+                                                                                      std::move(notification));
 }
 
 Result<void> LifecycleImpl::unsubscribe(SubscriptionId id)

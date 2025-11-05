@@ -56,19 +56,23 @@ private:
     ::Firebolt::Lifecycle::LifecycleState state_;
 };
 
-class LifecycleEvent : public FireboltSDK::JSON::NL_Json_Basic<std::tuple<::Firebolt::Lifecycle::LifecycleState, ::Firebolt::Lifecycle::LifecycleState>>
+class StateTransition : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Lifecycle::StateTransition>
 {
 public:
     void FromJson(const nlohmann::json& json) override {
         oldState_ = LifecycleStateEnum.at(json["oldState"]);
         newState_ = LifecycleStateEnum.at(json["newState"]);
+        focused_ = json["focused"].get<bool>();
     }
-    std::tuple<::Firebolt::Lifecycle::LifecycleState, ::Firebolt::Lifecycle::LifecycleState> Value() const override {
-        return std::make_tuple(oldState_, newState_);
+    ::Firebolt::Lifecycle::StateTransition Value() const override
+    {
+        return ::Firebolt::Lifecycle::StateTransition{oldState_, newState_, focused_};
     }
+
 private:
     ::Firebolt::Lifecycle::LifecycleState oldState_;
     ::Firebolt::Lifecycle::LifecycleState newState_;
+    bool focused_;
 };
 
 } // namespace Firebolt::Lifecycle::JsonData
