@@ -44,7 +44,7 @@ protected:
 TEST_F(LifecycleTest, close)
 {
     nlohmann::json expectedParams = "deactivate";
-    EXPECT_CALL(mockHelper, invoke("Lifecycle.close", expectedParams))
+    EXPECT_CALL(mockHelper, invoke("Lifecycle2.close", expectedParams))
         .WillOnce(Invoke(
             [&](const std::string &methodName, const nlohmann::json &parameters)
             {
@@ -57,7 +57,7 @@ TEST_F(LifecycleTest, close)
 
 TEST_F(LifecycleTest, getCurrentState)
 {
-    EXPECT_CALL(mockHelper, getJson("Lifecycle.state", _))
+    EXPECT_CALL(mockHelper, getJson("Lifecycle2.state", _))
         .WillOnce(Invoke(
             [](const std::string &methodName, const nlohmann::json &parameters)
             {
@@ -72,7 +72,7 @@ TEST_F(LifecycleTest, getCurrentState)
 
 TEST_F(LifecycleTest, subscribeOnStateChanged)
 {
-    EXPECT_CALL(mockHelper, subscribe(_, "Lifecycle.onState", _, _))
+    EXPECT_CALL(mockHelper, subscribe(_, "Lifecycle2.onStateChanged", _, _))
         .WillOnce(Invoke(
             [&](void* owner, const std::string &eventName, std::any &&notification, void (*callback)(void *, const nlohmann::json &))
             {
