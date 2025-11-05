@@ -109,9 +109,17 @@
             "summary": "Notification of lifecycle state change, raised after the platform has transitioned the app/runtime to the new lifecycle state",
             "params": [
                 {
-                    "name": "value",
+                    "name": "newState",
+                    "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/Lifecycle2Event"
+                        "$ref": "#/components/schemas/Lifecycle2State"
+                    }
+                },
+                {
+                    "name": "oldState",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/Lifecycle2State"
                     }
                 }
             ],
@@ -120,11 +128,12 @@
                     "name": "Default Example",
                     "params": [
                         {
-                            "name": "value",
-                            "value": {
-                                "newState": "paused",
-                                "oldState": "initializing"
-                            }
+                            "name": "newState",
+                            "value": "paused"
+                        },
+                        {
+                            "name": "oldState",
+                            "value": "initializing"
                         }
                     ]
                 },
@@ -132,11 +141,12 @@
                     "name": "App is deactivated",
                     "params": [
                         {
-                            "name": "value",
-                            "value": {
-                                "newState": "paused",
-                                "oldState": "active"
-                            }
+                            "name": "newState",
+                            "value": "paused"
+                        },
+                        {
+                            "name": "oldState",
+                            "value": "active"
                         }
                     ]
                 }
@@ -168,25 +178,6 @@
                     "hibernated",
                     "terminating"
                 ]
-            },
-            "Lifecycle2Event": {
-                "title": "Lifecycle2Event",
-                "description": "An object describing the previous and current states",
-                "type": "object",
-                "required": [
-                    "newState",
-                    "oldState"
-                ],
-                "properties": {
-                    "newState": {
-                        "$ref": "#/components/schemas/Lifecycle2State",
-                        "description": "The current Lifecycle state"
-                    },
-                    "oldState": {
-                        "$ref": "#/components/schemas/Lifecycle2State",
-                        "description": "The previous Lifecycle state"
-                    }
-                }
             }
         }
     }
