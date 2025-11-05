@@ -19,6 +19,7 @@
 
 #include "FireboltDemoService.h"
 #include <cstdlib>
+#include <firebolt_config.h>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -104,10 +105,14 @@ FireboltDemoService::FireboltDemoService()
     }
     std::cout << "Using firebolt URL: " << url << std::endl;
 
-    const std::string config = R"({
-    "waitTime": 3000,
-    "log": { "level": "Info" },
-    "wsUrl": ")" + url + R"("})";
+    FireboltSDK::Config config = {
+        .wsUrl = url,
+        .waitTime_ms = 3000,
+        .log =
+            {
+                .level = "Info",
+            },
+    };
 
     auto error =
         Firebolt::IFireboltAccessor::Instance().Connect(config, [this](const bool connected, const Firebolt::Error error)

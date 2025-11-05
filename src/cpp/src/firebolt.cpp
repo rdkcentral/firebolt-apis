@@ -51,7 +51,7 @@ public:
         unsubscribeAll();
     }
 
-    Firebolt::Error Connect(const std::string &config, OnConnectionChanged listener) override
+    Firebolt::Error Connect(const FireboltSDK::Config &config, OnConnectionChanged listener) override
     {
         return FireboltSDK::Transport::GetGatewayInstance().Connect(config, listener);
     }
