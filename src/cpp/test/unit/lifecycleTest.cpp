@@ -43,7 +43,8 @@ protected:
 
 TEST_F(LifecycleTest, close)
 {
-    nlohmann::json expectedParams = "deactivate";
+    nlohmann::json expectedParams;
+    expectedParams["type"] = "deactivate";
     EXPECT_CALL(mockHelper, invoke("Lifecycle2.close", expectedParams))
         .WillOnce(Invoke(
             [&](const std::string &methodName, const nlohmann::json &parameters)
