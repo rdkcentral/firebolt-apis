@@ -41,7 +41,7 @@ LifecycleImpl::~LifecycleImpl()
 Result<void> LifecycleImpl::close(const CloseType &reason) const
 {
     nlohmann::json params;
-    params["type"] = FireboltSDK::JSON::ToString(JsonData::CloseReasonEnum, reason)
+    params["type"] = FireboltSDK::JSON::ToString(JsonData::CloseReasonEnum, reason);
     return helper_.invoke("Lifecycle2.close", params);
 }
 
