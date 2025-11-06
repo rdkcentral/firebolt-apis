@@ -115,6 +115,7 @@ set(COMPONENT_TESTS "component/deviceTest.cpp"
                     "component/localizationTest.cpp"
                     "component/hdmiInputTest.cpp"
                     "component/secureStorageTest.cpp"
+                    "component/lifecycle2Test.cpp"
                     )
 
 add_executable(${COMPONENT_TESTS_APP}
