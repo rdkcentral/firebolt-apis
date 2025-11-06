@@ -83,8 +83,9 @@ TEST_F(LifecycleTest, subscribeOnStateChanged)
         .WillOnce(Return(Firebolt::Result<void>{Firebolt::Error::None}));
 
     auto id = lifecycleImpl_.subscribeOnStateChanged(
-        [](Firebolt::Lifecycle::LifecycleState old, Firebolt::Lifecycle::LifecycleState newState)
-        {});
+        [](const std::vector<Firebolt::Lifecycle::StateChange> &changes)
+        {
+        });
 
     ASSERT_TRUE(id) << "error on subscribe ";
     EXPECT_EQ(id.value(), 1);
