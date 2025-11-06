@@ -23,6 +23,7 @@
 #include <string>
 #include <types/fb-errors.h>
 #include <types/types.h>
+#include <vector>
 
 namespace Firebolt::Lifecycle
 {
@@ -51,6 +52,16 @@ enum class CloseType
     KILL_REACTIVATE,
 };
 
+/**
+ * @brief Represents a transition between two lifecycle states, including whether the app is focused after the transition
+ */
+struct StateChange
+{
+    LifecycleState oldState;
+    LifecycleState newState;
+    bool focused;
+};
+
 class ILifecycle
 {
 public:
@@ -71,14 +82,14 @@ public:
     virtual Result<LifecycleState> getCurrentState() const = 0;
 
     /**
-     * @brief Subscribe on the change of Lifecycle state
+     * @brief Subscribe to lifecycle state changes
      *
-     * @param notification : The callback function
+     * @param notification : The callback function, which receives a vector of state changes performed by the platform
      *
      * @retval The subscriptionId or error
      */
     virtual Result<SubscriptionId>
-    subscribeOnStateChanged(std::function<void(const LifecycleState& oldState, const LifecycleState& newState)>&& notification) = 0;
+    subscribeOnStateChanged(std::function<void(const std::vector<StateChange>&)> &&notification) = 0;
 
     /**
      * @brief Remove subscriber from subscribers list. This method is generic for
