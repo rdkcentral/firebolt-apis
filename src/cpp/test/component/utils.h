@@ -24,10 +24,13 @@
 #include <string>
 #include <condition_variable>
 #include <mutex>
+#include <nlohmann/json.hpp>
 
 std::string httpGet(const std::string &url);
 std::string httpPost(const std::string &url, const std::string &postData);
+
 void triggerEvent(const std::string &method, const std::string &params);
+void triggerRaw(const nlohmann::json &payload);
 
 void verifyEventSubscription(const Firebolt::Result<Firebolt::SubscriptionId> &id);
 void verifyUnsubscribeResult(const Firebolt::Result<void> &result);

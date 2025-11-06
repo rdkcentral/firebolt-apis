@@ -61,13 +61,16 @@ TEST_F(LifecycleTest, state)
 TEST_F(LifecycleTest, subscribeOnState)
 {
     auto id = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnStateChanged(
-        [&](const auto &oldState, const auto &newState)
+        [&](const std::vector<Firebolt::Lifecycle::StateChange> &changes)
         {
-            std::cout << "[Subscription] Lifecycle state changed: " << static_cast<int>(newState)
-                      << ", old state: " << static_cast<int>(oldState) << std::endl;
+            EXPECT_EQ(changes.size(), 1);
+            std::cout << "[Subscription] Lifecycle state changed: " << static_cast<int>(changes[0].newState)
+                      << ", old state: " << static_cast<int>(changes[0].oldState)
+                      << ", focused: " << changes[0].focused << std::endl;
 
-            EXPECT_EQ(newState, Firebolt::Lifecycle::LifecycleState::PAUSED);
-            EXPECT_EQ(oldState, Firebolt::Lifecycle::LifecycleState::INITIALIZING);
+            EXPECT_EQ(changes[0].newState, Firebolt::Lifecycle::LifecycleState::PAUSED);
+            EXPECT_EQ(changes[0].oldState, Firebolt::Lifecycle::LifecycleState::INITIALIZING);
+            EXPECT_EQ(changes[0].focused, true);
 
             {
                 std::lock_guard<std::mutex> lock(mtx);
@@ -76,8 +79,18 @@ TEST_F(LifecycleTest, subscribeOnState)
             cv.notify_one();
         });
     verifyEventSubscription(id);
+
     // Trigger the event from the mock server
-    triggerEvent("Device.onStateChanged", R"({ "newState": "active", "oldState": "paused" })");
+    nlohmann::json arr = nlohmann::json::array({ {
+        { "newState", "paused" },
+        { "oldState", "initializing" },
+        { "focused", true },
+    } });
+    nlohmann::json eventParams = {
+        { "method", "lifecycle2.stateChanged" },
+        { "params", arr }
+    };
+    triggerRaw(eventParams);
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
