@@ -14,7 +14,7 @@
 			"Discovery": "Your App likely wants to integrate with the Platform's discovery capabilities. For example to add a \"Watch Next\" tile that links to your app from the platform's home screen.\n\nGetting access to this information requires to connect to lower level APIs made available by the platform. Since implementations differ between operators and platforms, the Firebolt SDK offers a Discovery module, that exposes a generic, agnostic interface to the developer.\n\nUnder the hood, an underlaying transport layer will then take care of calling the right APIs for the actual platform implementation that your App is running on.\n\nThe Discovery plugin is used to _send_ information to the Platform.\n\n### Localization\nApps should provide all user-facing strings in the device's language, as specified by the Firebolt `Localization.language` property.\n\nApps should provide prices in the same currency presented in the app. If multiple currencies are supported in the app, the app should provide prices in the user's current default currency.",
 			"HDMIInput": "Methods for managing HDMI inputs on an HDMI sink device.",
 			"Keyboard": "Methods for prompting users to enter text with task-oriented UX",
-			"Lifecycle": "Methods and events for responding to lifecycle changes in your app",
+			"Lifecycle2": "Methods and events for responding to lifecycle changes in your app",
 			"Localization": "Methods for accessessing location and language preferences",
 			"Metrics": "Methods for sending metrics",
 			"Parameters": "Methods for getting initialization parameters for an app cold launch.",
@@ -6093,457 +6093,92 @@
 				}
 			]
 		},
-		{
-			"name": "Lifecycle.ready",
-			"tags": [
-				{
-					"name": "calls-metrics"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:ready"
-					]
-				},
-				{
-					"name": "exclude-from-sdk"
-				}
-			],
-			"summary": "Notify the platform that the app is ready",
-			"params": [],
-			"result": {
-				"name": "result",
-				"schema": {
-					"const": null
-				}
-			},
-			"examples": [
-				{
-					"name": "Let the platform know that your app is ready",
-					"params": [],
-					"result": {
-						"name": "Default Result",
-						"value": null
-					}
-				}
-			]
-		},
-		{
-			"name": "Lifecycle.close",
-			"tags": [
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Request that the platform move your app out of focus",
-			"params": [
-				{
-					"name": "reason",
-					"summary": "The reason the app is requesting to be closed",
-					"required": true,
-					"schema": {
-						"$ref": "#/x-schemas/Lifecycle/CloseReason"
-					}
-				}
-			],
-			"result": {
-				"name": "success",
-				"schema": {
-					"const": null
-				}
-			},
-			"examples": [
-				{
-					"name": "Close the app when the user presses back on the app home screen",
-					"params": [
-						{
-							"name": "reason",
-							"value": "remoteButton"
-						}
-					],
-					"result": {
-						"name": "Default Result",
-						"value": null
-					}
-				},
-				{
-					"name": "Close the app when the user selects an exit menu item",
-					"params": [
-						{
-							"name": "reason",
-							"value": "userExit"
-						}
-					],
-					"result": {
-						"name": "Default Result",
-						"value": null
-					}
-				}
-			]
-		},
-		{
-			"name": "Lifecycle.finished",
-			"tags": [
-				{
-					"name": "exclude-from-sdk"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Notify the platform that the app is done unloading",
-			"params": [],
-			"result": {
-				"name": "results",
-				"schema": {
-					"const": null
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [],
-					"result": {
-						"name": "Default Result",
-						"value": null
-					}
-				}
-			]
-		},
-		{
-			"name": "Lifecycle.state",
-			"summary": "Get the current state of the app. This function is **synchronous**.",
-			"tags": [
-				{
-					"name": "synchronous"
-				},
-				{
-					"name": "exclude-from-sdk"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"params": [],
-			"result": {
-				"name": "state",
-				"summary": "the current state of the app.",
-				"schema": {
-					"$ref": "#/x-schemas/Lifecycle/LifecycleState"
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [],
-					"result": {
-						"name": "Default Result",
-						"value": "foreground"
-					}
-				}
-			]
-		},
-		{
-			"name": "Lifecycle.onInactive",
-			"tags": [
-				{
-					"name": "event"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the inactive event",
-			"params": [
-				{
-					"name": "listen",
-					"required": true,
-					"schema": {
-						"type": "boolean"
-					}
-				}
-			],
-			"result": {
-				"name": "value",
-				"schema": {
-					"anyOf": [
-						{
-							"$ref": "#/x-schemas/Types/ListenResponse"
-						},
-						{
-							"$ref": "#/components/schemas/LifecycleEvent"
-						}
-					]
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-						{
-							"name": "listen",
-							"value": true
-						}
-					],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "inactive",
-							"previous": "initializing"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "Lifecycle.onForeground",
-			"tags": [
-				{
-					"name": "event"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the foreground event",
-			"params": [
-				{
-					"name": "listen",
-					"required": true,
-					"schema": {
-						"type": "boolean"
-					}
-				}
-			],
-			"result": {
-				"name": "value",
-				"schema": {
-					"anyOf": [
-						{
-							"$ref": "#/x-schemas/Types/ListenResponse"
-						},
-						{
-							"$ref": "#/components/schemas/LifecycleEvent"
-						}
-					]
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-						{
-							"name": "listen",
-							"value": true
-						}
-					],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "foreground",
-							"previous": "inactive"
-						}
-					}
-				},
-				{
-					"name": "Move to foreground via remote branded buton",
-					"params": [
-						{
-							"name": "listen",
-							"value": true
-						}
-					],
-					"result": {
-						"name": "value",
-						"value": {
-							"state": "foreground",
-							"previous": "inactive",
-							"source": "remote"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "Lifecycle.onBackground",
-			"tags": [
-				{
-					"name": "event"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the background event",
-			"params": [
-				{
-					"name": "listen",
-					"required": true,
-					"schema": {
-						"type": "boolean"
-					}
-				}
-			],
-			"result": {
-				"name": "value",
-				"schema": {
-					"anyOf": [
-						{
-							"$ref": "#/x-schemas/Types/ListenResponse"
-						},
-						{
-							"$ref": "#/components/schemas/LifecycleEvent"
-						}
-					]
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-						{
-							"name": "listen",
-							"value": true
-						}
-					],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "background",
-							"previous": "foreground"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "Lifecycle.onSuspended",
-			"tags": [
-				{
-					"name": "event"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the suspended event",
-			"params": [
-				{
-					"name": "listen",
-					"required": true,
-					"schema": {
-						"type": "boolean"
-					}
-				}
-			],
-			"result": {
-				"name": "value",
-				"schema": {
-					"anyOf": [
-						{
-							"$ref": "#/x-schemas/Types/ListenResponse"
-						},
-						{
-							"$ref": "#/components/schemas/LifecycleEvent"
-						}
-					]
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-						{
-							"name": "listen",
-							"value": true
-						}
-					],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "suspended",
-							"previous": "inactive"
-						}
-					}
-				}
-			]
-		},
-		{
-			"name": "Lifecycle.onUnloading",
-			"tags": [
-				{
-					"name": "event"
-				},
-				{
-					"name": "capabilities",
-					"x-uses": [
-						"xrn:firebolt:capability:lifecycle:state"
-					]
-				}
-			],
-			"summary": "Listen to the unloading event",
-			"params": [
-				{
-					"name": "listen",
-					"required": true,
-					"schema": {
-						"type": "boolean"
-					}
-				}
-			],
-			"result": {
-				"name": "value",
-				"schema": {
-					"anyOf": [
-						{
-							"$ref": "#/x-schemas/Types/ListenResponse"
-						},
-						{
-							"$ref": "#/components/schemas/LifecycleEvent"
-						}
-					]
-				}
-			},
-			"examples": [
-				{
-					"name": "Default Example",
-					"params": [
-						{
-							"name": "listen",
-							"value": true
-						}
-					],
-					"result": {
-						"name": "Default Result",
-						"value": {
-							"state": "unloading",
-							"previous": "inactive"
-						}
-					}
-				}
-			]
-		},
+        {
+            "name": "Lifecycle2.close",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle2:state"
+                    ]
+                }
+            ],
+            "summary": "Request the platform to deactivate the app, and possibly take further action.",
+            "params": [
+                {
+                    "name": "type",
+                    "summary": "The type of the close app is requesting",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/CloseType"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "schema": {
+                    "type": "null"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Close the app when the user presses back on the app home screen",
+                    "params": [
+                        {
+                            "name": "type",
+                            "value": "unload"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": null
+                    }
+                },
+                {
+                    "name": "Close the app when the user selects an exit menu item",
+                    "params": [
+                        {
+                            "name": "type",
+                            "value": "deactivate"
+                        }
+                    ],
+                    "result": {
+                        "name": "Default Result",
+                        "value": null
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Lifecycle2.state",
+            "summary": "Get the current lifecycle state of the app.",
+            "tags": [
+                {
+                    "name": "capabilities",
+                    "x-uses": [
+                        "xrn:firebolt:capability:lifecycle2:state"
+                    ]
+                }
+            ],
+            "params": [],
+            "result": {
+                "name": "state",
+                "summary": "The current lifecycle state of the app.",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "examples": [
+                {
+                    "name": "Default Example",
+                    "params": [],
+                    "result": {
+                        "name": "Default Result",
+                        "value": "active"
+                    }
+                }
+            ]
+        },	
 		{
 			"name": "Localization.locality",
 			"tags": [
@@ -12479,32 +12114,32 @@
 				}
 			}
 		},
-		"Lifecycle": {
+		"Lifecycle2": {
 			"uri": "https://meta.comcast.com/firebolt/lifecycle",
-			"CloseReason": {
-				"title": "CloseReason",
-				"description": "The application close reason",
-				"type": "string",
-				"enum": [
-					"remoteButton",
-					"userExit",
-					"done",
-					"error"
-				]
-			},
-			"LifecycleState": {
-				"title": "LifecycleState",
-				"description": "The application lifecycle state",
-				"type": "string",
-				"enum": [
-					"initializing",
-					"inactive",
-					"foreground",
-					"background",
-					"unloading",
-					"suspended"
-				]
-			}
+            "CloseType": {
+                "title": "CloseType",
+                "description": "The application close type",
+                "type": "string",
+                "enum": [
+                    "deactivate",
+                    "unload",
+                    "killReload",
+                    "killReactivate"
+                ]
+            },
+            "Lifecycle2State": {
+                "title": "Lifecycle2State",
+                "description": "The application Lifecycle state",
+                "type": "string",
+                "enum": [
+                    "initializing",
+                    "active",
+                    "paused",
+                    "suspended",
+                    "hibernated",
+                    "terminating"
+                ]
+            }
 		},
 		"SecondScreen": {
 			"uri": "https://meta.comcast.com/firebolt/secondscreen",
