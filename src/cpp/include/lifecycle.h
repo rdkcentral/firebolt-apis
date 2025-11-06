@@ -55,7 +55,7 @@ enum class CloseType
 /**
  * @brief Represents a transition between two lifecycle states, including whether the app is focused after the transition
  */
-struct StateTransition
+struct StateChange
 {
     LifecycleState oldState;
     LifecycleState newState;
@@ -84,13 +84,12 @@ public:
     /**
      * @brief Subscribe to lifecycle state changes
      *
-     * @param notification : The callback function, which receives a vector of StateTransition objects representing the
-     *                       list of state transitions performed by the platform
+     * @param notification : The callback function, which receives a vector of state changes performed by the platform
      *
      * @retval The subscriptionId or error
      */
     virtual Result<SubscriptionId>
-    subscribeOnStateChanged(std::function<void(const std::vector<StateTransition>&)> &&notification) = 0;
+    subscribeOnStateChanged(std::function<void(const std::vector<StateChange>&)> &&notification) = 0;
 
     /**
      * @brief Remove subscriber from subscribers list. This method is generic for

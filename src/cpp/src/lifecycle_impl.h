@@ -47,7 +47,7 @@ public:
     virtual Result<LifecycleState> getCurrentState() const override;
 
     Result<SubscriptionId>
-    subscribeOnStateChanged(std::function<void(const std::vector<StateTransition> &)> &&notification) override;
+    subscribeOnStateChanged(std::function<void(const std::vector<StateChange> &)> &&notification) override;
 
     virtual Result<void> unsubscribe(SubscriptionId id) override;
     virtual void unsubscribeAll() override;
