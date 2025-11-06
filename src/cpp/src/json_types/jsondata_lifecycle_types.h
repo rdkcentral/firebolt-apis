@@ -56,7 +56,7 @@ private:
     ::Firebolt::Lifecycle::LifecycleState state_;
 };
 
-class StateTransition : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Lifecycle::StateTransition>
+class StateChange : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Lifecycle::StateChange>
 {
 public:
     void FromJson(const nlohmann::json& json) override {
@@ -64,9 +64,9 @@ public:
         newState_ = LifecycleStateEnum.at(json["newState"]);
         focused_ = json["focused"].get<bool>();
     }
-    ::Firebolt::Lifecycle::StateTransition Value() const override
+    ::Firebolt::Lifecycle::StateChange Value() const override
     {
-        return ::Firebolt::Lifecycle::StateTransition{oldState_, newState_, focused_};
+        return ::Firebolt::Lifecycle::StateChange{oldState_, newState_, focused_};
     }
 
 private:
