@@ -1,3 +1,10 @@
+# [1.8.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.9...v1.8.0-next.10) (2025-11-06)
+
+
+### Features
+
+* **cpp:** Update version of transport ([#440](https://github.com/rdkcentral/firebolt-apis/issues/440)) ([4000be2](https://github.com/rdkcentral/firebolt-apis/commit/4000be2ab466bca1b3c93c20cf01080d2a01bb9a))
+
 # [1.8.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.8...v1.8.0-next.9) (2025-11-06)
 
 
