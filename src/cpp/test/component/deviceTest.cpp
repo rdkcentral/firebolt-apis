@@ -218,10 +218,8 @@ TEST_F(DeviceTest, subscribeOnAudioChanged)
         });
     verifyEventSubscription(id);
     // Trigger the event from the mock server
-    // triggerEvent("Device.onAudioChanged",
-    //             R"({ "stereo": true, "dolbyDigital5.1": true, "dolbyDigital5.1+": true, "dolbyAtmos": true })");
-    triggerRaw(
-        R"({"method":"device.audioChanged","params":{ "stereo": true, "dolbyDigital5.1": true, "dolbyDigital5.1+": true, "dolbyAtmos": true }})");
+    triggerEvent("Device.onAudioChanged",
+                 R"({ "stereo": true, "dolbyDigital5.1": true, "dolbyDigital5.1+": true, "dolbyAtmos": true })");
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
@@ -302,8 +300,7 @@ TEST_F(DeviceTest, subscribeOnNetworkChanged)
         });
     verifyEventSubscription(id);
     // Trigger the event from the mock server
-    // triggerEvent("Device.onNetworkChanged", R"({ "state": "connected", "type": "wifi"})");
-    triggerRaw(R"({"method":"device.networkChanged","params":{ "state": "connected", "type": "wifi"}})");
+    triggerEvent("Device.onNetworkChanged", R"({ "state": "connected", "type": "wifi"})");
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
