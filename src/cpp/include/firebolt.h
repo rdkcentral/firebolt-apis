@@ -19,16 +19,17 @@
 
 #pragma once
 
-#include "Portability.h"
 #include "closedcaptions.h"
 #include "device.h"
-#include "error.h"
+#include "fireboltsdk_export.h"
 #include "hdmiinput.h"
 #include "lifecycle.h"
 #include "localization.h"
 #include "metrics.h"
 #include "securestorage.h"
 #include <functional>
+#include <firebolt_config.h>
+#include <types/fb-errors.h>
 
 namespace Firebolt
 {
@@ -55,39 +56,17 @@ public:
     static IFireboltAccessor& Instance();
 
     /**
-     * @brief Inititalize the Firebolt SDK. Sets up the Transport, WorkerPool and
-     *        Logging Subsystems.
+     * @brief Attempt a initialize Firebolt SDK and connection to the endpoint using given config.
+     *        This method is asynchronous and the user is expected to wait for the OnConnectionChanged callback
+     *        to report successful connection before calling SDK methods
      *
-     * @param configLine : JSON String with configuration options. At a minimum the
-     *                     user is expected to pass in the Websocket URL.
-     *
-     *                     CONFIG Format:
-     *                      {
-     *                         "waitTime": 1000,
-     *                         "logLevel": "Info",
-     *                         "workerPool":{
-     *                           "queueSize": 8,
-     *                           "threadCount": 3
-     *                          },
-     *                         "wsUrl": "ws://127.0.0.1:9998"
-     *                      }
-     *
-     *
-     * @return Firebolt::Error
-     */
-
-    virtual Firebolt::Error Initialize(const std::string& configLine) = 0;
-
-    /**
-     * @brief Attempt a connection to the endpoint. This method is asynchronous
-     *        and the user is expected to wait for the OnConnectionChanged callback to
-     *        report successful connection before calling SDK methods
+     * @param config: Configuration parameters
      *
      * @param listener : Connection status listener
      *
      * @return Firebolt::Error
      */
-    virtual Firebolt::Error Connect(OnConnectionChanged listener) = 0;
+    virtual Firebolt::Error Connect(const FireboltSDK::Config &config, OnConnectionChanged listener) = 0;
 
     /**
      * @brief Disconnects from the Websocket endpoint.

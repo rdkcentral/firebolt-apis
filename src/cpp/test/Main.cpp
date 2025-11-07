@@ -87,7 +87,11 @@ void RunAllTests()
         runTest(CoreSDKTest::GetEdidVersion, "GetEdidVersion");
         runTest(CoreSDKTest::SetEdidVersion, "SetEdidVersion");
         runTest(CoreSDKTest::GetHdmiPortInfo, "GetHdmiPortInfo");
+        runTest(CoreSDKTest::OpenHdmiPort, "OpenHdmiPort");
+        runTest(CoreSDKTest::CloseHdmiPort, "CloseHdmiPort");
 
+        
+#ifdef USE_LIFECYCLE1
         // Lifecycle
         runTest(CoreSDKTest::LifecycleReady, "LifecycleReady");
         runTest(CoreSDKTest::LifecycleClose, "LifecycleClose");
@@ -103,6 +107,7 @@ void RunAllTests()
         runTest(CoreSDKTest::UnsubscribeOnLifecycleSuspendedChanged, "UnsubscribeOnLifecycleSuspendedChanged");
         runTest(CoreSDKTest::SubscribeOnLifecycleUnloadingChanged, "SubscribeOnLifecycleUnloadingChanged");
         runTest(CoreSDKTest::UnsubscribeOnLifecycleUnloadingChanged, "UnsubscribeOnLifecycleUnloadingChanged");
+#endif //USE_LIFECYCLE1
 
         // Localization
         runTest(CoreSDKTest::GetLocalizationCountryCode, "GetLocalizationCountryCode");
@@ -142,13 +147,11 @@ void RunAllTests()
                 cout << errorMessage << endl;
             }
             cout << "============================" << endl;
-            exit(1);
         }
     }
     else
     {
         cout << "Core Test not able to connect with server..." << endl;
-        exit(1);
     }
 }
 

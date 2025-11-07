@@ -19,51 +19,47 @@
 
 #pragma once
 
-#include "common/types.h"
-#include "error.h"
 #include <functional>
 #include <string>
+#include <types/fb-errors.h>
+#include <types/types.h>
+#include <vector>
 
 namespace Firebolt::Lifecycle
 {
-/**
- * @brief The application close reason
- */
-enum class CloseReason
-{
-    REMOTE_BUTTON,
-    USER_EXIT,
-    DONE,
-    ERROR
-};
 
 /**
- * @brief The application lifecycle state
+ * @brief The app lifecycle state
  */
 enum class LifecycleState
 {
     INITIALIZING,
-    INACTIVE,
-    FOREGROUND,
-    BACKGROUND,
-    UNLOADING,
-    SUSPENDED
+    ACTIVE,
+    PAUSED,
+    SUSPENDED,
+    HIBERNATED,
+    TERMINATING,
 };
 
 /**
- * @brief The source of the lifecycle change.
+ * @brief The app close type
  */
-enum class LifecycleEventSource
+enum class CloseType
 {
-    VOICE,
-    REMOTE
+    DEACTIVATE,
+    UNLOAD,
+    KILL_RELOAD,
+    KILL_REACTIVATE,
 };
 
-struct LifecycleEvent
+/**
+ * @brief Represents a transition between two lifecycle states, including whether the app is focused after the transition
+ */
+struct StateChange
 {
-    LifecycleState state;
-    LifecycleState previous;
-    std::optional<LifecycleEventSource> source;
+    LifecycleState oldState;
+    LifecycleState newState;
+    bool focused;
 };
 
 class ILifecycle
@@ -72,84 +68,28 @@ public:
     virtual ~ILifecycle() = default;
 
     /**
-     * @brief Notify the platform that the app is ready
-     *
-     * @retval The status
-     */
-    virtual Result<void> ready() = 0;
-
-    /**
      * @brief Request that the platform move your app out of focus
      *
-     * @param[in]  reason : The reason the app is requesting to be closed
-     *
-     * @retval The status
+     * @param[in] type The type of the close app is requesting
      */
-    virtual Result<void> close(const CloseReason& reason) = 0;
+    virtual Result<void> close(const CloseType &type) const = 0;
 
     /**
-     * @brief Notify the platform that the app is done unloading
+     * @brief Get the current lifecycle state of the app
      *
-     * @retval The status
+     * @retval The current lifecycle state or error
      */
-    virtual Result<void> finished() = 0;
+    virtual Result<LifecycleState> getCurrentState() const = 0;
 
     /**
-     * @brief Get the current state of the app. This function is **synchronous**.
+     * @brief Subscribe to lifecycle state changes
      *
-     * @retval The method call result
-     */
-    virtual Result<std::string> state() = 0;
-
-    /**
-     * @brief Listen to the background event
-     *
-     * @param[in]  notification        : The callback function
+     * @param notification : The callback function, which receives a vector of state changes performed by the platform
      *
      * @retval The subscriptionId or error
      */
     virtual Result<SubscriptionId>
-    subscribeOnBackgroundChanged(std::function<void(const LifecycleEvent&)>&& notification) = 0;
-
-    /**
-     * @brief Listen to the foreground event
-     *
-     * @param[in]  notification        : The callback function
-     *
-     * @retval The subscriptionId or error
-     */
-    virtual Result<SubscriptionId>
-    subscribeOnForegroundChanged(std::function<void(const LifecycleEvent&)>&& notification) = 0;
-
-    /**
-     * @brief Listen to the inactive event
-     *
-     * @param[in]  notification        : The callback function
-     *
-     * @retval The subscriptionId or error
-     */
-    virtual Result<SubscriptionId>
-    subscribeOnInactiveChanged(std::function<void(const LifecycleEvent&)>&& notification) = 0;
-
-    /**
-     * @brief Listen to the suspended event
-     *
-     * @param[in]  notification        : The callback function
-     *
-     * @retval The subscriptionId or error
-     */
-    virtual Result<SubscriptionId>
-    subscribeOnSuspendedChanged(std::function<void(const LifecycleEvent&)>&& notification) = 0;
-
-    /**
-     * @brief Listen to the unloading event
-     *
-     * @param[in]  notification        : The callback function
-     *
-     * @retval The subscriptionId or error
-     */
-    virtual Result<SubscriptionId>
-    subscribeOnUnloadingChanged(std::function<void(const LifecycleEvent&)>&& notification) = 0;
+    subscribeOnStateChanged(std::function<void(const std::vector<StateChange>&)> &&notification) = 0;
 
     /**
      * @brief Remove subscriber from subscribers list. This method is generic for
