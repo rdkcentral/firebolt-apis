@@ -14,59 +14,56 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-cmake_minimum_required(VERSION 3.10.0)
+if (NOT CMAKE_PROJECT_NAME)
+    cmake_minimum_required(VERSION 3.10)
+    project(FireboltCoreSDKDemo)
 
-project(FireboltCoreSDKDemo)
+    if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+        set(CMAKE_INSTALL_PREFIX "${SYSROOT_PATH}/usr" CACHE INTERNAL "" FORCE)
+        set(CMAKE_PREFIX_PATH ${SYSROOT_PATH}/usr/lib/cmake CACHE INTERNAL "" FORCE)
+    endif()
 
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set(CMAKE_INSTALL_PREFIX "${SYSROOT_PATH}/usr" CACHE INTERNAL "" FORCE)
-    set(CMAKE_PREFIX_PATH ${SYSROOT_PATH}/usr/lib/cmake CACHE INTERNAL "" FORCE)
-endif()
-
-list(APPEND CMAKE_MODULE_PATH
-    "${SYSROOT_PATH}/usr/lib/cmake"
-    "${SYSROOT_PATH}/tools/cmake")
-
-message("FIREBOLT_PATH inside cmake " ${FIREBOLT_PATH})
-if (FIREBOLT_PATH)
-    set(CMAKE_FIREBOLT_PATH
-        "${FIREBOLT_PATH}/usr/lib/cmake/FireboltSDK")
-    list(APPEND CMAKE_PREFIX_PATH ${CMAKE_FIREBOLT_PATH})
-    list(APPEND CMAKE_MODULE_PATH ${CMAKE_FIREBOLT_PATH})
-else ()
-   set(FIREBOLT_PATH "${SYSROOT_PATH}" CACHE INTERNAL "" FORCE)
+    list(APPEND CMAKE_MODULE_PATH
+        "${SYSROOT_PATH}/usr/lib/cmake"
+        "${SYSROOT_PATH}/tools/cmake"
+    )
 endif ()
+set(DEMO_APP FireboltCoreSDKDemo)
 
-if (STUB_FIREBOLT)
-endif()
 
-# Do not look for FireboltSDK if been called from the main cmake
-if (NOT ENABLE_DEMO_APP)
-  find_package(FireboltSDK CONFIG REQUIRED)
-endif ()
+message("Setup ${DEMO_APP}")
 
-message("Setup ${PROJECT_NAME}")
+find_package(FireboltTransport CONFIG REQUIRED)
 
-add_executable(${PROJECT_NAME}
+add_executable(${DEMO_APP}
     FireboltDemoService.cpp
     main.cpp)
 
-target_link_libraries(${PROJECT_NAME}
-    PRIVATE
-        FireboltSDK::FireboltSDK
-)
+if (NOT ENABLE_DEMO_APP)
+    find_package(FireboltSDK CONFIG REQUIRED)
+    target_link_libraries(${DEMO_APP}
+        PRIVATE
+            FireboltSDK::FireboltSDK
+    )
+else()
+  target_link_libraries(${DEMO_APP}
+        PRIVATE
+            FireboltSDK
+    )
+endif ()
 
-target_include_directories(${PROJECT_NAME}
+target_include_directories(${DEMO_APP}
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
+        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src/>
 )
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
+set_target_properties(${DEMO_APP} PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
 )
 
 install(
-    TARGETS ${PROJECT_NAME}
+    TARGETS ${DEMO_APP}
     DESTINATION bin
 )

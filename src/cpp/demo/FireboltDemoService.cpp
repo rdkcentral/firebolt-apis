@@ -19,6 +19,7 @@
 
 #include "FireboltDemoService.h"
 #include <cstdlib>
+#include <firebolt_config.h>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -104,22 +105,18 @@ FireboltDemoService::FireboltDemoService()
     }
     std::cout << "Using firebolt URL: " << url << std::endl;
 
-    const std::string config = "{\
-    \"waitTime\": 3000,\
-    \"logLevel\": \"Info\",\
-    \"workerPool\":{\
-    \"queueSize\": 8,\
-    \"threadCount\": 3\
-    },\
-    \"wsUrl\": " + url + "}";
+    FireboltSDK::Config config = {
+        .wsUrl = url,
+        .waitTime_ms = 3000,
+        .log =
+            {
+                .level = "Info",
+            },
+    };
 
-    auto error = Firebolt::IFireboltAccessor::Instance().Initialize(config);
-    if (Firebolt::Error::None != error)
-    {
-        throw std::runtime_error("Failed to initialize");
-    }
-    error = Firebolt::IFireboltAccessor::Instance().Connect([this](const bool connected, const Firebolt::Error error)
-                                                            { this->onConnectionChanged(connected, error); });
+    auto error =
+        Firebolt::IFireboltAccessor::Instance().Connect(config, [this](const bool connected, const Firebolt::Error error)
+                                                        { this->onConnectionChanged(connected, error); });
     if (Firebolt::Error::None != error)
     {
         throw std::runtime_error("Failed to connect");
@@ -186,6 +183,99 @@ void FireboltDemoService::unsubscribeAll()
                       << std::endl;
         }
     }
+}
+
+
+std::string bool2str(const bool value)
+{
+    return value ? "true" : "false";
+}
+
+void FireboltDemoService::ownDemo()
+{
+    if (auto id = Firebolt::IFireboltAccessor::Instance().DeviceInterface().id()) {
+        std::cout << "Id: " << *id << std::endl;
+    } else {
+        std::cout << "id: failed, error: " << id.error() << std::endl;
+    }
+    if (auto name = Firebolt::IFireboltAccessor::Instance().DeviceInterface().name()) {
+        std::cout << "name: " << *name << std::endl;
+    } else {
+        std::cout << "name: failed, error: " << name.error() << std::endl;
+    }
+    if (auto model = Firebolt::IFireboltAccessor::Instance().DeviceInterface().model()) {
+        std::cout << "model: " << *model << std::endl;
+    } else {
+        std::cout << "model: failed, error: " << model.error() << std::endl;
+    }
+    if (auto version = Firebolt::IFireboltAccessor::Instance().DeviceInterface().version()) {
+        std::cout << "sdl-ver: " << version->sdk.major << "." << version->sdk.minor << "." << version->sdk.patch
+                  << " " << version->sdk.readable << std::endl;
+        std::cout << "api-ver: " << version->api.major << "." << version->api.minor << "." << version->api.patch
+                  << " " << version->api.readable << std::endl;
+        std::cout << "f/w-ver: " << version->firmware.major << "." << version->firmware.minor << "."
+                  << version->firmware.patch << " " << version->firmware.readable << std::endl;
+        std::cout << "dbg-ver: " << version->debug << std::endl;
+    } else {
+        std::cout << "version: failed, error: << " << version.error() << std::endl;
+    }
+    if (auto audio = Firebolt::IFireboltAccessor::Instance().DeviceInterface().audio()) {
+        std::cout << "audio profiles: "
+                  << "stereo: " << bool2str(audio->stereo) << ", "
+                  << "dd5.1: " << bool2str(audio->dolbyDigital5_1) << ", "
+                  << "dd5.1+: " << bool2str(audio->dolbyDigital5_1_plus) << ", "
+                  << "datmos: " << bool2str(audio->dolbyAtmos) << std::endl;
+    } else {
+        std::cout << "audio: failed, error: " << audio.error() << std::endl;
+    }
+    if (auto hdcp = Firebolt::IFireboltAccessor::Instance().DeviceInterface().hdcp()) {
+        std::cout << "hdcp: "
+                  << "1.4: " << bool2str(hdcp->hdcp1_4) << ", "
+                  << "2.2: " << bool2str(hdcp->hdcp2_2) << std::endl;
+    } else {
+        std::cout << "hdcp: failed, error: " << hdcp.error() << std::endl;
+    }
+    if (auto ports = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().ports()) {
+        std::cout << "ports: " << ports->size() << std::endl;
+        for (const auto& i : *ports) {
+          std::cout << "     : "
+                    << i.port << ", "
+                    << i.connected << ", "
+                    << static_cast<int>(i.signal) << ", "
+                    << i.arcCapable << ", "
+                    << i.arcConnected << ", "
+                    << static_cast<int>(i.edidVersion) << ", "
+                    << i.autoLowLatencyModeCapable << ", "
+                    << i.autoLowLatencyModeSignalled << std::endl;
+        }
+    } else {
+        std::cout << "hdmi-ports: failed, error: " << ports.error() << std::endl;
+    }
+    if(auto edid = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().setEdidVersion("HDMI1", Firebolt::HDMIInput::EDIDVersion::V1_4)) {
+        std::cout << "hdmi-set-edid: OK" << std::endl;
+    } else {
+        std::cout << "hdmi-set-edid: failed, error: " << edid.error() << std::endl;
+    }
+}
+
+void FireboltDemoService::ownSubscriptionDemo()
+{
+    auto subscriptionId = Firebolt::IFireboltAccessor::Instance().DeviceInterface().subscribeOnNetworkChanged(
+        [](const auto& network) { std::cout << "[Subscription] Network changed: state: " << static_cast<int>(network.state) << ", type: " << static_cast<int>(network.type) << std::endl; });
+    if (!subscriptionId) {
+        std::cout << "Failed to subscribe on NetworkChanged, error: " << subscriptionId.error() << std::endl;
+        return;
+    }
+    std::string input;
+    std::cout << "Press a 'q' to quit" << std::endl;
+    while (1) {
+        getline(std::cin, input);
+        if (false) {
+        } else if (input == "q") {
+            break;
+        }
+    }
+    Firebolt::IFireboltAccessor::Instance().DeviceInterface().unsubscribe(*subscriptionId);
 }
 
 FireboltDemoService::DeviceInfo FireboltDemoService::getAndPrintDeviceValues()

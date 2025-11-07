@@ -1,5 +1,6 @@
 permissions:
   contents: read
+
 name: CXX build
 on:
   repository_dispatch:
@@ -19,86 +20,82 @@ defaults:
 
 env:
   HUSKY: 0
+  SYSROOT_PATH: ${{ github.workspace }}/deps_install
+  DEPS_FILE: ./src/cpp/.deps
 
 jobs:
-  dependencies:
-    name: Build Dependencies
+  setup_deps:
     runs-on: ubuntu-latest
-    container:
-      image: node:23.3.0
+    outputs:
+      deps_cache_key: ${{ steps.setup-deps.outputs.deps_cache_key }}
+
     steps:
-      - name: Checkout firebolt-apis
-        uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Clone and Install Thunder
-        env:
-          TOOL_VERSION: ${{ vars.TOOL_VERSION }}
-        run: |
-          apt update
-          apt install -y cmake ninja-build python3-pip python3.11-venv
-          python3 -m venv firebolt-env
-          source firebolt-env/bin/activate
-          pip install jsonref
-          .github/workflows/utils.sh cloneAndInstallThunder
+      - name: Setup CXX Dependencies
+        id: setup-deps
+        uses: ./.github/actions/setup-cxx-deps
 
-      - name: Clone and Install Dependencies
-        env:
-          TOOL_VERSION: ${{ vars.TOOL_VERSION }}
-        run: |
-          .github/workflows/utils.sh cloneAndInstallDeps
-
-      - name: Clone and Install Transport
-        env:
-          TOOL_VERSION: ${{ vars.TOOL_VERSION }}
-        run: |
-          .github/workflows/utils.sh cloneAndInstallTransport
-
-      - name: Upload the library artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dependencies
-          path: /__w/firebolt-apis/install/
-
-  core_native_lib:
-    name: Build Core Native Library
-    needs: [dependencies]
+  build_project:
+    needs: setup_deps
     runs-on: ubuntu-latest
-    container:
-      image: node:23.3.0
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Download Dependencies
-        uses: actions/download-artifact@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
         with:
-          name: dependencies
-          path: /__w/firebolt-apis/install/
+          fetch-depth: 0
 
-      - name: Install npm & apt dependencies
-        run: |
-          apt update
-          apt install -y cmake
-          npm install
+      - name: Restore Dependency Cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.SYSROOT_PATH }}
+          key: ${{ runner.os }}-deps-${{ needs.setup_deps.outputs.deps_cache_key }}
 
-      - name: Build Core Native Lib
-        env:
-          UT_NATIVE_IGNORE_FAIL: ${{ vars.UT_NATIVE_IGNORE_FAIL }}
+      - name: Get version
         run: |
-          git config --global --add safe.directory /__w/firebolt-apis/firebolt-apis
-          .github/workflows/utils.sh buildRuntimeCoreSDK
+          git config --global --add safe.directory '*'
+          VERSION=$(git describe --tags --dirty --match "v[0-9]*")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "version-native: $VERSION"
 
-      - name: Deploy Core Native Sources
-        if: ${{ env.DEPLOY_ARTIFACTS == 'true' }}
-        env:
-          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN  }}
+      - name: Install apt dependencies
+        uses: ./.github/actions/setup-apt-deps
+
+      - name: Configure CMake
         run: |
-          echo "user=${{ secrets.CPP_ARTIFACT_USER }}"
-          curl -v -u ${{ secrets.CPP_ARTIFACT_USER }}:${{ secrets.CPP_ARTIFACT_SECRET }} -T firebolt-apis--core-sdk-$RELEASE_VERSION.tgz "${{ vars.DEPLOY_URL }}"
+          cmake -B build -S src/cpp \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX:PATH=${{ env.SYSROOT_PATH }}/usr \
+            -DENABLE_TESTS=ON -DDISCOVER_UT=ON -DDISCOVER_CT=OFF
+
+      - name: Build Project
+        run: cmake --build build
+
+      - name: Run Tests
+        run: |
+          cp src/cpp/firebolt-core-open-rpc.json build/test/
+          ctest --test-dir build/test
+
+      - name: Make Release package of Native SDK
+        run: |
+          ./.github/scripts/mk-release-package.sh \
+            --version ${{ env.VERSION }} \
+            --package firebolt-apis-native \
+            --subpath ./src/cpp \
+            --dst ${{ github.workspace }}/release
+
+      - name: Make Release package of Native Demo
+        run: |
+          ./.github/scripts/mk-release-package.sh \
+            --version ${{ env.VERSION }} \
+            --package firebolt-apis-native-demo \
+            --subpath ./src/cpp/demo \
+            --dst ${{ github.workspace }}/release
 
       - name: Upload native packages as an artifact
         uses: actions/upload-artifact@v4
         with:
           name: release
           path: ${{ github.workspace }}/release
-

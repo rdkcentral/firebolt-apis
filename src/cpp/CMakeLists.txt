@@ -14,27 +14,42 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 3.10)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-include(HelperFunctions)
 
 project(FireboltSDK)
-project_version("1.0.0")
 
-set(FIREBOLT_TRANSPORT_WAITTIME 1000 CACHE STRING "Maximum time to wait for Transport layer to get response")
-set(FIREBOLT_LOGLEVEL "Info" CACHE STRING  "Log level to be enabled")
-option(FIREBOLT_ENABLE_STATIC_LIB "Create Firebolt library as Static library" OFF)
-option(ENABLE_TESTS "Build openrpc native test" OFF)
-option(ENABLE_UNIT_TESTS "Build openrpc native test" OFF)
-option(ENABLE_DEMO_APP "Build demo app" OFF)
+# <VERSION_BLOCK>
+if (NOT PROJECT_VERSION)
+    find_package(Git QUIET)
+    if (GIT_FOUND)
+        execute_process(
+            COMMAND ${GIT_EXECUTABLE} describe --tags --dirty --match "v[0-9]*"
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            OUTPUT_VARIABLE GIT_VERSION
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_QUIET
+        )
+    endif ()
 
-if (FIREBOLT_ENABLE_STATIC_LIB)
-    set(FIREBOLT_LIBRARY_TYPE STATIC)
-    add_compile_definitions(FIREBOLTSDK_STATIC)
-else ()
-    set(FIREBOLT_LIBRARY_TYPE SHARED)
+    if (GIT_VERSION)
+        string(REGEX REPLACE "^v" "" GIT_VERSION "${GIT_VERSION}")
+    else()
+        set(GIT_VERSION "0.1.0-unknown")
+    endif ()
+    set(PROJECT_VERSION "${GIT_VERSION}")
 endif ()
+# </VERSION_BLOCK>
+
+set(VERSION ${PROJECT_VERSION})
+message(STATUS "Project version: ${PROJECT_VERSION}")
+
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(ENABLE_TESTS "Build openrpc native test" OFF)
+option(DISCOVER_UT "Discover all Unit Tests" ON)
+option(DISCOVER_CT "Discover all Component Tests" ON)
+option(ENABLE_DEMO_APP "Build demo app" OFF)
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX "${SYSROOT_PATH}/usr" CACHE INTERNAL "" FORCE)
@@ -42,34 +57,19 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 list(APPEND CMAKE_PREFIX_PATH
-        "${SYSROOT_PATH}/usr/share/cmake")
+    "${SYSROOT_PATH}/usr/share/cmake")
 
 list(APPEND CMAKE_MODULE_PATH
-        "${SYSROOT_PATH}/usr/share/cmake"
-        "${SYSROOT_PATH}/usr/lib/cmake"
-        "${SYSROOT_PATH}/tools/cmake")
-
-
-set(FIREBOLT_NAMESPACE ${PROJECT_NAME} CACHE STRING "Namespace of the project")
-if (ENABLE_UNIT_TESTS)
-    set(ENABLE_TESTS ON)
-    add_compile_definitions(UNIT_TEST)
-    add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-core-open-rpc.json")
-endif ()
+    "${SYSROOT_PATH}/usr/share/cmake"
+    "${SYSROOT_PATH}/usr/lib/cmake"
+)
 
 add_subdirectory(src)
 
 if (ENABLE_DEMO_APP)
-  add_subdirectory(demo)
+    add_subdirectory(demo)
 endif()
 
 if (ENABLE_TESTS)
-   add_subdirectory(test)
+    add_subdirectory(test)
 endif()
-
-message("${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}Config.cmake")
-
-# make sure others can make use cmake settings of Firebolt OpenRPC
-configure_file( "${CMAKE_SOURCE_DIR}/cmake/project.cmake.in"
-        "${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}Config.cmake"
-    @ONLY)

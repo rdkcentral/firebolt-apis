@@ -19,13 +19,14 @@
 
 #include "metrics_impl.h"
 
-using namespace Firebolt::Helpers;
-
 namespace Firebolt::Metrics
 {
+MetricsImpl::MetricsImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
+MetricsImpl::~MetricsImpl() {}
+
 Result<bool> MetricsImpl::ready()
 {
-    Parameters params;
-    return invoke<WPEFramework::Core::JSON::Boolean, bool>("metrics.ready", params);
+    nlohmann::json params;
+    return helper_.get<::FireboltSDK::JSON::Boolean, bool>("Metrics.ready", params);
 }
 } // namespace Firebolt::Metrics

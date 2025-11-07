@@ -1,3 +1,80 @@
+# [1.8.0-next.11](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.10...v1.8.0-next.11) (2025-11-07)
+
+
+### Bug Fixes
+
+* Lifecycle ([#443](https://github.com/rdkcentral/firebolt-apis/issues/443)) ([de4864e](https://github.com/rdkcentral/firebolt-apis/commit/de4864e9a640c0bcc2bbdffe25cf4a63d9f71232))
+
+# [1.8.0-next.10](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.9...v1.8.0-next.10) (2025-11-06)
+
+
+### Features
+
+* **cpp:** Update version of transport ([#440](https://github.com/rdkcentral/firebolt-apis/issues/440)) ([4000be2](https://github.com/rdkcentral/firebolt-apis/commit/4000be2ab466bca1b3c93c20cf01080d2a01bb9a))
+
+# [1.8.0-next.9](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.8...v1.8.0-next.9) (2025-11-06)
+
+
+### Features
+
+* **cpp:** Lifecycle2 event ([#441](https://github.com/rdkcentral/firebolt-apis/issues/441)) ([a804c91](https://github.com/rdkcentral/firebolt-apis/commit/a804c915365ced4cf29ebb6815e26de026da9435))
+
+# [1.8.0-next.8](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.7...v1.8.0-next.8) (2025-11-05)
+
+
+### Features
+
+* **cpp:** Update to changes around config ([#436](https://github.com/rdkcentral/firebolt-apis/issues/436)) ([dbab3ca](https://github.com/rdkcentral/firebolt-apis/commit/dbab3ca2b040808b408b2523c529cac08056ee3a))
+
+# [1.8.0-next.7](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.6...v1.8.0-next.7) (2025-11-04)
+
+
+### Bug Fixes
+
+* Update Lifecycle 2.0 to schema, update UTs ([#435](https://github.com/rdkcentral/firebolt-apis/issues/435)) ([0e28575](https://github.com/rdkcentral/firebolt-apis/commit/0e2857506b59f77b58a088566cbd8b6bb89252bf))
+
+# [1.8.0-next.6](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.5...v1.8.0-next.6) (2025-11-04)
+
+
+### Bug Fixes
+
+* **cpp:** Use cmake way to control shared/static library ([#434](https://github.com/rdkcentral/firebolt-apis/issues/434)) ([c0d0eaf](https://github.com/rdkcentral/firebolt-apis/commit/c0d0eaf1835558ed83ac5d7b8b0b3e60c69f3c08))
+
+# [1.8.0-next.5](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.4...v1.8.0-next.5) (2025-11-04)
+
+
+### Features
+
+* **cpp:** Compile all test apps at once ([#433](https://github.com/rdkcentral/firebolt-apis/issues/433)) ([561dffc](https://github.com/rdkcentral/firebolt-apis/commit/561dffceee42f4f4402d095734a8b2d64bd28589))
+
+# [1.8.0-next.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.3...v1.8.0-next.4) (2025-11-04)
+
+
+### Features
+
+* Lifecycle 2.0 ([#432](https://github.com/rdkcentral/firebolt-apis/issues/432)) ([3139d57](https://github.com/rdkcentral/firebolt-apis/commit/3139d57bacf12b821b753ea7faf13152b86dacba))
+
+# [1.8.0-next.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.2...v1.8.0-next.3) (2025-10-29)
+
+
+### Features
+
+* **cpp:** Change initialization of the transport ([#428](https://github.com/rdkcentral/firebolt-apis/issues/428)) ([48b6fb4](https://github.com/rdkcentral/firebolt-apis/commit/48b6fb4d1d87eb6a404afc0d11a25f5e2da8a161))
+
+# [1.8.0-next.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.1...v1.8.0-next.2) (2025-10-28)
+
+
+### Features
+
+* thunder post removal ([#424](https://github.com/rdkcentral/firebolt-apis/issues/424)) ([544e536](https://github.com/rdkcentral/firebolt-apis/commit/544e53637a57251c2d3ade64cf35c03913c072f4))
+
+# [1.8.0-next.1](https://github.com/rdkcentral/firebolt-apis/compare/v1.7.0...v1.8.0-next.1) (2025-10-23)
+
+
+### Features
+
+* **cpp:** Thunder removal ([#422](https://github.com/rdkcentral/firebolt-apis/issues/422)) ([6345b68](https://github.com/rdkcentral/firebolt-apis/commit/6345b68c65ed25efa9e8a58021651eae0daa2cef))
+
 # [1.7.0](https://github.com/rdkcentral/firebolt-apis/compare/v1.6.0...v1.7.0) (2025-09-04)
 
 

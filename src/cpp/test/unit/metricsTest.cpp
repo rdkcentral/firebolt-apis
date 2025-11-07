@@ -17,24 +17,24 @@
  * limitations under the License.
  */
 
-#define MODULE_NAME MetricsTest
-#include "unit.h"
+#include "metrics_impl.h"
+#include "json_engine.h"
+#include "mock_helper.h"
 
-class MetricsTest : public ::testing::Test
+class MetricsTest : public ::testing::Test, protected MockBase
 {
 protected:
-    JsonEngine* jsonEngine;
-
-    void SetUp() override { jsonEngine = new JsonEngine(); }
-
-    void TearDown() override { delete jsonEngine; }
+    Firebolt::Metrics::MetricsImpl metricsImpl_{mockHelper};
 };
 
 TEST_F(MetricsTest, ready)
 {
-    std::string expectedValues = jsonEngine->get_value("Metrics.ready");
-    auto result = Firebolt::IFireboltAccessor::Instance().MetricsInterface().ready();
-    ASSERT_TRUE(result) << "Error on calling metrics.ready() method";
-    EXPECT_EQ(expectedValues == "true", *result) << "Error: wrong ready returned by "
-                                                    "metrics.ready()";
+    EXPECT_CALL(mockHelper, getJson("Metrics.ready", _))
+        .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
+                        { return Firebolt::Result<nlohmann::json>{jsonEngine.get_value("Metrics.ready")}; }));
+
+    auto result = metricsImpl_.ready();
+    ASSERT_TRUE(result) << "error on get";
+    auto expectedValue = jsonEngine.get_value("Metrics.ready");
+    EXPECT_EQ(*result, expectedValue);
 }
