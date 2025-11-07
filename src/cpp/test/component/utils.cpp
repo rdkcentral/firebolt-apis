@@ -92,9 +92,9 @@ std::string httpPost(const std::string &url, const std::string &postData)
     return (res == CURLE_OK) ? response : "";
 }
 
-void triggerRaw(const nlohmann::json &payload)
+void triggerRaw(const std::string &payload)
 {
-    httpPost("http://localhost:3333/api/v1/raw", payload.dump());
+    httpPost("http://localhost:3333/api/v1/raw", payload);
 }
 
 void triggerEvent(const std::string &method, const std::string &params)

@@ -81,16 +81,8 @@ TEST_F(LifecycleTest, subscribeOnState)
     verifyEventSubscription(id);
 
     // Trigger the event from the mock server
-    nlohmann::json arr = nlohmann::json::array({ {
-        { "newState", "paused" },
-        { "oldState", "initializing" },
-        { "focused", true },
-    } });
-    nlohmann::json eventParams = {
-        { "method", "lifecycle2.stateChanged" },
-        { "params", arr }
-    };
-    triggerRaw(eventParams);
+    triggerEvent("Lifecycle2.onStateChanged", R"([{"focused":true,"newState":"paused","oldState":"initializing"}])");
+    // triggerRaw(R"({"method":"lifecycle2.stateChanged","params":[{"focused":true,"newState":"paused","oldState":"initializing"}]})");
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
