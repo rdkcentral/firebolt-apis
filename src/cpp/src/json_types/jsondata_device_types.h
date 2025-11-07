@@ -49,7 +49,10 @@ public:
         major = json["major"].get<int32_t>();
         minor = json["minor"].get<int32_t>();
         patch = json["patch"].get<int32_t>();
-        readable = json["readable"].get<std::string>();
+        if (json.contains("readable"))
+        {
+            readable = json["readable"].get<std::string>();
+        }
     }
 
     ::Firebolt::Device::SemanticVersion Value() const override
@@ -69,11 +72,26 @@ class DeviceVersion : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device
 public:
     void FromJson(const nlohmann::json& json) override
     {
-        sdk_.FromJson(json["sdk"]);
-        api_.FromJson(json["api"]);
-        firmware_.FromJson(json["firmware"]);
-        os_.FromJson(json["os"]);
-        debug_ = to_string(json["debug"]);
+        if (json.contains("sdk"))
+        {
+            sdk_.FromJson(json["sdk"]);
+        }
+        if (json.contains("api"))
+        {
+            api_.FromJson(json["api"]);
+        }
+        if (json.contains("firmware"))
+        {
+            firmware_.FromJson(json["firmware"]);
+        }
+        if (json.contains("os"))
+        {
+            os_.FromJson(json["os"]);
+        }
+        if (json.contains("debug"))
+        {
+            debug_ = to_string(json["debug"]);
+        }
     }
 
     ::Firebolt::Device::DeviceVersion Value() const override
