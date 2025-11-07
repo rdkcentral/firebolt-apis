@@ -61,10 +61,10 @@ public:
     }
 
 private:
-    int32_t major;
-    int32_t minor;
-    int32_t patch;
-    std::string readable;
+    int32_t major = 0;
+    int32_t minor = 0;
+    int32_t patch = 0;
+    std::string readable = "";
 };
 
 class DeviceVersion : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::DeviceVersion>
@@ -104,7 +104,7 @@ private:
     SemanticVersion api_;
     SemanticVersion firmware_;
     SemanticVersion os_;
-    std::string debug_;
+    std::string debug_{""};
 };
 
 class AudioProfiles : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::AudioProfiles>
