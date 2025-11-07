@@ -61,8 +61,11 @@ TEST_F(LifecycleTest, state)
 TEST_F(LifecycleTest, subscribeOnState)
 {
     auto id = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnStateChanged(
-        [&](const auto &oldState, const auto &newState)
+        [&](const std::vector<Firebolt::Lifecycle::StateChange> &changes)
         {
+            EXPECT_EQ(changes.size(), 2);
+            auto newState = changes[0].newState;
+            auto oldState = changes[0].oldState;
             std::cout << "[Subscription] Lifecycle state changed: " << static_cast<int>(newState)
                       << ", old state: " << static_cast<int>(oldState) << std::endl;
 
@@ -77,8 +80,8 @@ TEST_F(LifecycleTest, subscribeOnState)
         });
     verifyEventSubscription(id);
     // Trigger the event from the mock server
-    triggerEvent("Device.onStateChanged", R"({ "newState": "active", "oldState": "paused" })");
-
+    //triggerEvent("Lifecycle2.stateChanged", R"({"0":{"newState":"paused","oldState":"initializing","focused":true},"1":{"newState":"active","oldState":"paused","focused":true} })");
+    triggerEvent("Lifecycle2.stateChanged", R"([{"newState":"paused","oldState":"initializing","focused":true},{"newState":"active","oldState":"paused","focused":true}])");
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
     auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().unsubscribe(id.value());

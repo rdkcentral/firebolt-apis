@@ -96,9 +96,9 @@ void triggerEvent(const std::string &method, const std::string &params)
 {
     nlohmann::json eventMessage;
     eventMessage["method"] = method;
-    eventMessage["result"] = nlohmann::json::parse(params);
+    eventMessage["params"] = nlohmann::json::parse(params);
 
-    httpPost("http://localhost:3333/api/v1/event", eventMessage.dump());
+    httpPost("http://localhost:3333/api/v1/raw", eventMessage.dump());
 }
 
 void verifyEventSubscription(const Firebolt::Result<Firebolt::SubscriptionId> &id)
