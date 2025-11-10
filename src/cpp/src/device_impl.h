@@ -28,45 +28,19 @@ class DeviceImpl : public IDevice
 {
 public:
     explicit DeviceImpl(Firebolt::Helpers::IHelper &helper);
-    DeviceImpl(const DeviceImpl&) = delete;
-    DeviceImpl& operator=(const DeviceImpl&) = delete;
+    DeviceImpl(const DeviceImpl &) = delete;
+    DeviceImpl &operator=(const DeviceImpl &) = delete;
 
     ~DeviceImpl() override = default;
 
-    // Methods
-    Result<AudioProfiles> audio() const override;
-    Result<std::string> distributor() const override;
-    Result<HDCPVersionMap> hdcp() const override;
-    Result<HDRFormatMap> hdr() const override;
-    Result<std::string> id() const override;
-    Result<std::string> make() const override;
-    Result<std::string> model() const override;
-    Result<std::string> name() const override;
-    Result<NetworkInfoResult> network() const override;
-    Result<std::string> platform() const override;
-    Result<Resolution> screenResolution() const override;
-    Result<std::string> sku() const override;
-    Result<std::string> type() const override;
-    Result<std::string> uid() const override;
-    Result<Resolution> videoResolution() const override;
-
-    // Events
-    Result<SubscriptionId> subscribeOnAudioChanged(std::function<void(const AudioProfiles&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnDeviceNameChanged(std::function<void(const std::string&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnHdcpChanged(std::function<void(const HDCPVersionMap&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnHdrChanged(std::function<void(const HDRFormatMap&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnNameChanged(std::function<void(const std::string&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnNetworkChanged(std::function<void(const NetworkInfoResult&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnScreenResolutionChanged(std::function<void(const std::string&)>&& notification) override;
-    Result<SubscriptionId> subscribeOnVideoResolutionChanged(std::function<void(const std::string&)>&& notification) override;
-
-    Result<void> unsubscribe(SubscriptionId id) override;
-    void unsubscribeAll() override;
-
-    Result<DeviceVersion> version() const override;
+    Result<Firebolt::Device::Category> category() const override;
+    Result<std::string> chipsetId() override;
+    Result<uint32_t> uptime() override;
+    Result<uint32_t> timeInActiveState() override;
+    Result<MemoryInfo> memoryInfo() override;
 
 private:
     Firebolt::Helpers::IHelper &helper_;
-    Firebolt::Helpers::SubscriptionManager subscriptionManager_;
+    // Methods
 };
 } // namespace Firebolt::Device
