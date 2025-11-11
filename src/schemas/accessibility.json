@@ -181,25 +181,20 @@
                     "type": "boolean",
                     "description": "Whether or not voice guidance should be enabled by default"
                 },
-                "navigationHints": {
-                    "type": "boolean",
-                    "description": "Whether or not voice guidance should include additional navigation hints"
-                },
                 "rate": {
                     "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/SpeechRate",
                     "description": "The rate at which voice guidance speech will be read back to the user"
                 },
-                "speed": {
-                    "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/SpeechRate",
-                    "description": "**DEPRECATED** Use rate instead. The rate at which voice guidance speech will be read back to the user"
+                "navigationHints": {
+                    "type": "boolean",
+                    "description": "Whether or not voice guidance should include additional navigation hints"
                 }
             },
             "examples": [
                 {
                     "enabled": true,
                     "navigationHints": true,
-                    "rate": 1.0,
-                    "speed": 1.0
+                    "rate": 0.8
                 }
             ]
         }

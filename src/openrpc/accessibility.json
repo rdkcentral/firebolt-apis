@@ -7,55 +7,35 @@
   },
   "methods": [
     {
-      "name": "closedCaptions",
-      "summary": "Get the user's preferred closed-captions settings",
+      "name": "audioDescription",
+      "summary": "Get the user's preferred audio description settings",
       "params": [],
       "tags": [
         {
-          "name": "deprecated",
-          "x-alternative": "Accessibility.closedCaptionsSettings()",
-          "x-since": "0.6.0"
+          "name": "property:readonly"
         },
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:accessibility:closedcaptions"
+            "xrn:firebolt:capability:accessibility:audiodescriptions"
           ]
         }
       ],
       "result": {
-        "name": "closedCaptionsSettings",
-        "summary": "the closed captions settings",
+        "name": "setting",
+        "summary": "the audio description setting",
         "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/ClosedCaptionsSettings"
+          "type": "boolean"
         }
       },
       "examples": [
         {
-          "name": "Getting the closed captions settings",
+          "name": "Getting the audio description setting",
           "params": [],
           "result": {
-            "name": "settings",
+            "name": "Default Result",
             "value": {
-              "enabled": true,
-              "styles": {
-                "fontFamily": "monospaced_sanserif",
-                "fontSize": 1,
-                "fontColor": "#ffffff",
-                "fontEdge": "none",
-                "fontEdgeColor": "#7F7F7F",
-                "fontOpacity": 100,
-                "backgroundColor": "#000000",
-                "backgroundOpacity": 100,
-                "textAlign": "center",
-                "textAlignVertical": "middle",
-                "windowColor": "white",
-                "windowOpacity": 50
-              },
-              "preferredLanguages": [
-                "eng",
-                "spa"
-              ]
+              "enabled": true
             }
           }
         }
@@ -148,45 +128,6 @@
       ]
     },
     {
-      "name": "voiceGuidance",
-      "summary": "Get the user's preferred voice guidance settings",
-      "params": [],
-      "tags": [
-        {
-          "name": "deprecated",
-          "x-alternative": "Accessibility.voiceGuidanceSettings()",
-          "x-since": "0.6.0"
-        },
-        {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:accessibility:voiceguidance"
-          ]
-        }
-      ],
-      "result": {
-        "name": "settings",
-        "summary": "the voice guidance settings",
-        "schema": {
-          "$ref": "https://meta.comcast.com/firebolt/accessibility#/definitions/VoiceGuidanceSettings"
-        }
-      },
-      "examples": [
-        {
-          "name": "Getting the voice guidance settings",
-          "params": [],
-          "result": {
-            "name": "Default Result",
-            "value": {
-              "enabled": true,
-              "navigationHints": true,
-              "rate": 1.0
-            }
-          }
-        }
-      ]
-    },
-    {
       "name": "voiceGuidanceSettings",
       "summary": "Get the user's preferred voice guidance settings",
       "params": [],
@@ -218,41 +159,6 @@
               "enabled": true,
               "navigationHints": true,
               "rate": 1.0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "audioDescriptionSettings",
-      "summary": "Get the user's preferred audio description settings",
-      "params": [],
-      "tags": [
-        {
-          "name": "property:readonly"
-        },
-        {
-          "name": "capabilities",
-          "x-uses": [
-            "xrn:firebolt:capability:accessibility:audiodescriptions"
-          ]
-        }
-      ],
-      "result": {
-        "name": "settings",
-        "summary": "the audio description settings",
-        "schema": {
-          "$ref": "#/components/schemas/AudioDescriptionSettings"
-        }
-      },
-      "examples": [
-        {
-          "name": "Getting the audio description settings",
-          "params": [],
-          "result": {
-            "name": "Default Result",
-            "value": {
-              "enabled": true
             }
           }
         }
