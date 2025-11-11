@@ -33,11 +33,9 @@ public:
 
     ~DeviceImpl() override = default;
 
-    Result<Firebolt::Device::Category> category() const override;
+    Result<Firebolt::Device::DeviceClass> deviceClass() const override;
     Result<std::string> chipsetId() override;
     Result<uint32_t> uptime() override;
-    Result<uint32_t> timeInActiveState() override;
-    Result<MemoryInfo> memoryInfo() override;
 
 private:
     Firebolt::Helpers::IHelper &helper_;

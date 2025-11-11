@@ -33,25 +33,16 @@ namespace Firebolt::Device
  */
 // Enums
 /**
- * @brief Category The device category
+ * @brief DeviceClass The device class
  */
-enum class Category
+enum class DeviceClass
 {
-    STB,    //with tuner/demod, no integrated display
-    OTT,    //no tuner/demod, no integrated display
-    TV,     //possibly tuner/demod, with integrated display
+    STB, // with tuner/demod, no integrated display
+    OTT, // no tuner/demod, no integrated display
+    TV,  // possibly tuner/demod, with integrated display
 };
 
 // Types
-/**
- * @brief MemoryInfo values in units of 1024 bytes
- */
-struct MemoryInfo {
-    uint32_t userMemoryUsed;   
-    uint32_t userMemoryLimit;
-    uint32_t gpuMemoryUsed;
-    uint32_t gpuMemoryLimit;
-};
 
 class IDevice
 {
@@ -62,7 +53,7 @@ public:
      *
      * @retval The category property or error
      */
-    virtual Result<Category> category() const = 0;
+    virtual Result<DeviceClass> deviceClass() const = 0;
 
     /**
      * @brief Returns chipset ID as a printable string, e,g. RTD1319
@@ -77,20 +68,6 @@ public:
      * @retval The uptime in seconds or error
      */
     virtual Result<uint32_t> uptime() = 0;
-
-    /**
-     * @brief Returns the time in seconds since the device is active
-     *
-     * @retval The time in active state in seconds or error
-     */
-    virtual Result<uint32_t> timeInActiveState() = 0;
-
-    /**
-     * @brief Returns information about container memory usage, in units of 1024 bytes
-     *
-     * @retval MemoryInfo struct or error
-     */
-    virtual Result<MemoryInfo> memoryInfo() = 0;
 };
 
 } // namespace Firebolt::Device

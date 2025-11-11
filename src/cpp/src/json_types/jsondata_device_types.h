@@ -30,48 +30,28 @@
 namespace Firebolt::Device::JsonData
 {
 // Enums
-inline FireboltSDK::JSON::EnumType<::Firebolt::Device::Category> const CategoryEnum({
-    { "stb", ::Firebolt::Device::Category::STB },
-    { "ott", ::Firebolt::Device::Category::OTT },
-    { "tv",  ::Firebolt::Device::Category::TV },
+inline FireboltSDK::JSON::EnumType<::Firebolt::Device::DeviceClass> const DeviceClassEnum({
+    { "stb", ::Firebolt::Device::DeviceClass::STB },
+    { "ott", ::Firebolt::Device::DeviceClass::OTT },
+    { "tv",  ::Firebolt::Device::DeviceClass::TV },
 });
 
 // Types
-class MemoryInfo : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::MemoryInfo>
+
+class DeviceClassJson : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::DeviceClass>
 {
 public:
     void FromJson(const nlohmann::json& json) override
     {
-        userMemoryUsed_ = json["userMemoryUsed"].get<uint32_t>();
-        userMemoryLimit_ = json["userMemoryLimit"].get<uint32_t>();
-        gpuMemoryUsed_ = json["gpuMemoryUsed"].get<uint32_t>();
-        gpuMemoryLimit_ = json["gpuMemoryLimit"].get<uint32_t>();
+        deviceClass_ = DeviceClassEnum.at(json);
     }
-    ::Firebolt::Device::MemoryInfo Value() const override
+    ::Firebolt::Device::DeviceClass Value() const override
     {
-        return ::Firebolt::Device::MemoryInfo{userMemoryUsed_, userMemoryLimit_, gpuMemoryUsed_, gpuMemoryLimit_};
-    }
-private:
-    uint32_t userMemoryUsed_;
-    uint32_t userMemoryLimit_;
-    uint32_t gpuMemoryUsed_;
-    uint32_t gpuMemoryLimit_;
-};
-    
-class CategoryJson : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::Category>
-{
-public:
-    void FromJson(const nlohmann::json& json) override
-    {
-        category_ = CategoryEnum.at(json);
-    }
-    ::Firebolt::Device::Category Value() const override
-    {
-        return category_;
+        return deviceClass_;
     }               
     
 private:
-    ::Firebolt::Device::Category category_; 
+    ::Firebolt::Device::DeviceClass deviceClass_; 
 };
 
 } // namespace Firebolt::Device::JsonData

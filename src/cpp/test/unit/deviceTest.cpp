@@ -35,21 +35,21 @@ protected:
     Firebolt::Device::DeviceImpl deviceImpl_{mockHelper};
 };
 
-TEST_F(DeviceTest, Category)
+TEST_F(DeviceTest, DeviceClass)
 {
 #ifdef USE_LOCAL_RESPONSE
     nlohmann::json expectedValue = "stb";
-    mock_with_response("Device.category", expectedValue);
+    mock_with_response("Device.deviceClass", expectedValue);
 #else
-    mock("Device.category");
-    auto expectedValue = jsonEngine.get_value("Device.category");
+    mock("Device.deviceClass");
+    auto expectedValue = jsonEngine.get_value("Device.deviceClass");
 #endif
 
-    auto result = deviceImpl_.category();
+    auto result = deviceImpl_.deviceClass();
 
-    ASSERT_TRUE(result) << "DeviceImpl::category() returned an error";
+    ASSERT_TRUE(result) << "DeviceImpl::deviceClass() returned an error";
 
-    EXPECT_EQ(static_cast<int>(*result), static_cast<int>(Firebolt::Device::JsonData::CategoryEnum.at(expectedValue)));
+    EXPECT_EQ(static_cast<int>(*result), static_cast<int>(Firebolt::Device::JsonData::DeviceClassEnum.at(expectedValue)));
 }
 
 TEST_F(DeviceTest, ChipsetId)
@@ -82,27 +82,4 @@ TEST_F(DeviceTest, Uptime)
     ASSERT_TRUE(result) << "DeviceImpl::uptime() returned an error";
 
     EXPECT_EQ(*result, expectedValue);
-}
-
-TEST_F(DeviceTest, MemoryInfo)
-{
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = {{"userMemoryUsed", 204800},
-                                    {"userMemoryLimit", 409600},
-                                    {"gpuMemoryUsed", 102400},
-                                    {"gpuMemoryLimit", 204800}};
-    mock_with_response("Device.memoryInfo", expectedValue);
-#else
-    mock("Device.memoryInfo");
-    auto expectedValue = jsonEngine.get_value("Device.memoryInfo");
-#endif
-
-    auto result = deviceImpl_.memoryInfo();
-
-    ASSERT_TRUE(result) << "DeviceImpl::memoryInfo() returned an error";
-
-    EXPECT_EQ(result->userMemoryUsed, expectedValue["userMemoryUsed"].get<uint32_t>());
-    EXPECT_EQ(result->userMemoryLimit, expectedValue["userMemoryLimit"].get<uint32_t>());
-    EXPECT_EQ(result->gpuMemoryUsed, expectedValue["gpuMemoryUsed"].get<uint32_t>());
-    EXPECT_EQ(result->gpuMemoryLimit, expectedValue["gpuMemoryLimit"].get<uint32_t>());
 }
