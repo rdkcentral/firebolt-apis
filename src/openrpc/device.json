@@ -3,12 +3,12 @@
   "info": {
     "title": "Device",
     "description": "A module for querying about the device and it's capabilities.",
-    "version": "0.0.0"
+    "version": "1.0.0"
   },
   "methods": [
     {
       "name": "uid",
-      "summary": "Returns a persistent unique UUID for the current app and device.  The UUID is reset when the app or device is reset",
+      "summary": "Returns a persistent unique UUID for the current app and device. The UUID is reset when the app or device is reset",
       "params": [],
       "tags": [
         {
@@ -23,7 +23,7 @@
       ],
       "result": {
         "name": "uniqueId",
-        "summary": "A unique UUID",
+        "summary": "A unique UUID for this app-device pair.",
         "schema": {
           "type": "string"
         }
@@ -40,8 +40,8 @@
       ]
     },
     {
-      "name": "class",
-      "summary": "Returns the class of the device",
+      "name": "deviceClass",
+      "summary": "Returns the device class type.",
       "params": [],
       "tags": [
         {
@@ -53,7 +53,7 @@
       ],
       "result": {
         "name": "deviceClass",
-        "summary": "the device class",
+        "summary": "The device class",
         "schema": {
           "$ref": "#/components/schemas/DeviceClass"
         }

@@ -1,0 +1,77 @@
+{
+  "openrpc": "1.2.4",
+  "info": {
+    "title": "App",
+    "description": "Provides methods to retrieve application-level system information.",
+    "version": "1.0.0"
+  },
+  "methods": [
+    {
+      "name": "memoryInfo",
+      "summary": "Returns information about container memory usage, in units of 1024 bytes.",
+      "tags": [
+        {
+          "name": "property"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:accessibility:App"
+          ]
+        }
+      ],
+      "params": [],
+      "result": {
+        "name": "result",
+        "schema": {
+          "$ref": "#/components/schemas/MemoryInfo"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example",
+          "params": [],
+          "result": {
+            "userMemoryUsed": 123456,
+            "userMemoryLimit": 789012,
+            "gpuMemoryUsed": 345678,
+            "gpuMemoryLimit": 901234
+          }
+        }
+      ]
+    }
+  ],
+  "components": {
+    "schemas": {
+      "MemoryInfo": {
+        "title": "MemoryInfo",
+        "type": "object",
+        "description": "Describes current and maximum memory usage of the container.",
+        "properties": {
+          "userMemoryUsed": {
+            "type": "integer",
+            "description": "Bytes of user memory currently used."
+          },
+          "userMemoryLimit": {
+            "type": "integer",
+            "description": "Maximum user memory available in bytes."
+          },
+          "gpuMemoryUsed": {
+            "type": "integer",
+            "description": "Bytes of GPU memory currently used."
+          },
+          "gpuMemoryLimit": {
+            "type": "integer",
+            "description": "Maximum GPU memory available in bytes."
+          }
+        },
+        "required": [
+          "userMemoryUsed",
+          "userMemoryLimit",
+          "gpuMemoryUsed",
+          "gpuMemoryLimit"
+        ]
+      }
+    }
+  }
+}
