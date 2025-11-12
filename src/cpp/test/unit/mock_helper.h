@@ -71,6 +71,12 @@ protected:
                             { return getter(methodName, parameters); }));
     }
 
+    void mock_with_response(const std::string &methodName, const nlohmann::json &response)
+    {
+        EXPECT_CALL(mockHelper, getJson(methodName, _))
+            .WillOnce(Invoke([response](const std::string &methodName, const nlohmann::json &parameters)
+                             { return Firebolt::Result<nlohmann::json>{response}; }));
+    }
 
     void mockSubscribe(const std::string &eventName)
     {

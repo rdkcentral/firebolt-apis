@@ -74,7 +74,6 @@ private:
     void unsubscribeAll()
     {
         closedCaptions_.unsubscribeAll();
-        device_.unsubscribeAll();
         hdmiInput_.unsubscribeAll();
         localization_.unsubscribeAll();
         lifecycle_.unsubscribeAll();
