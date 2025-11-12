@@ -49,25 +49,18 @@ class IDevice
 public:
     virtual ~IDevice() = default;
     /**
-     * @brief Get the category of the device
+     * @brief Get the class of the device
      *
-     * @retval The category property or error
+     * @retval The class property or error
      */
-    virtual Result<DeviceClass> deviceClass() const = 0;
-
-    /**
-     * @brief Returns chipset ID as a printable string, e,g. RTD1319
-     *
-     * @retval The chipset ID or error
-     */
-    virtual Result<std::string> chipsetId() = 0;
+    virtual Result<DeviceClass> getClass() const = 0;
 
     /**
      * @brief Returns number of seconds since most recent device boot, including any time spent during deep sleep
      *
      * @retval The uptime in seconds or error
      */
-    virtual Result<uint32_t> uptime() = 0;
+    virtual Result<uint32_t> uptime() const = 0;
 };
 
 } // namespace Firebolt::Device

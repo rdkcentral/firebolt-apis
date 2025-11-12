@@ -24,17 +24,12 @@ namespace Firebolt::Device
 {
 DeviceImpl::DeviceImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
 
-Result<DeviceClass> DeviceImpl::deviceClass() const
+Result<DeviceClass> DeviceImpl::getClass() const
 {
-    return Result(helper_.get<JsonData::DeviceClassJson, DeviceClass>("Device.deviceClass"));
+    return Result(helper_.get<JsonData::DeviceClassJson, DeviceClass>("Device.class"));
 }
 
-Result<std::string> DeviceImpl::chipsetId()
-{
-    return helper_.get<FireboltSDK::JSON::String, std::string>("Device.chipsetId");
-}
-
-Result<uint32_t> DeviceImpl::uptime()
+Result<uint32_t> DeviceImpl::uptime() const
 {
     return helper_.get<FireboltSDK::JSON::Integer, uint32_t>("Device.uptime");
 }
