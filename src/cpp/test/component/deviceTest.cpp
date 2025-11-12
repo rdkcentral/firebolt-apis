@@ -218,10 +218,8 @@ TEST_F(DeviceTest, subscribeOnAudioChanged)
         });
     verifyEventSubscription(id);
     // Trigger the event from the mock server
-    // triggerEvent("Device.onAudioChanged",
-    //             R"({ "stereo": true, "dolbyDigital5.1": true, "dolbyDigital5.1+": true, "dolbyAtmos": true })");
-    triggerRaw(
-        R"({"method":"device.audioChanged","params":{ "stereo": true, "dolbyDigital5.1": true, "dolbyDigital5.1+": true, "dolbyAtmos": true }})");
+    triggerEvent("Device.audioChanged",
+                 R"({ "stereo": true, "dolbyDigital5.1": true, "dolbyDigital5.1+": true, "dolbyAtmos": true })");
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
@@ -247,7 +245,7 @@ TEST_F(DeviceTest, subscribeOnDeviceNameChanged)
         });
     verifyEventSubscription(id);
     // Trigger the event from the mock server
-    triggerEvent("Device.onDeviceNameChanged", R"({ "name": "Test Device Name" })");
+    triggerEvent("Device.deviceNameChanged", R"({ "name": "Test Device Name" })");
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
@@ -274,7 +272,7 @@ TEST_F(DeviceTest, subscribeOnHdcpChanged)
         });
     verifyEventSubscription(id);
     // Trigger the event from the mock server
-    triggerEvent("Device.onHdcpChanged", R"({ "version": 2, "state": 1 })");
+    triggerEvent("Device.hdcpChanged", R"({ "version": 2, "state": 1 })");
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
@@ -302,8 +300,7 @@ TEST_F(DeviceTest, subscribeOnNetworkChanged)
         });
     verifyEventSubscription(id);
     // Trigger the event from the mock server
-    // triggerEvent("Device.onNetworkChanged", R"({ "state": "connected", "type": "wifi"})");
-    triggerRaw(R"({"method":"device.networkChanged","params":{ "state": "connected", "type": "wifi"}})");
+    triggerEvent("Device.networkChanged", R"({ "state": "connected", "type": "wifi"})");
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
