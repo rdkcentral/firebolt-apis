@@ -100,7 +100,23 @@ void triggerRaw(const std::string &payload)
 void triggerEvent(const std::string &method, const std::string &params)
 {
     nlohmann::json eventMessage;
-    eventMessage["method"] = method;
+    size_t dotPos = method.find('.');
+    if (dotPos != std::string::npos && method.size() > dotPos + 1)
+    {
+        std::string module = method.substr(0, dotPos);
+        std::string event = method.substr(dotPos + 1);
+        if (event.find("on") != 0)
+        {
+            if (!event.empty())
+                event[0] = static_cast<char>(std::toupper(event[0]));
+            event = "on" + event;
+        }
+        eventMessage["method"] = module + "." + event;
+    }
+    else
+    {
+        eventMessage["method"] = method;
+    }
     eventMessage["result"] = nlohmann::json::parse(params);
 
     httpPost("http://localhost:3333/api/v1/event", eventMessage.dump());
