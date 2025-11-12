@@ -60,7 +60,8 @@
                 "xrn:firebolt:capability:device:name",
                 "xrn:firebolt:capability:device:sku",
                 "xrn:firebolt:capability:device:uid",
-                "xrn:firebolt:capability:network:status"
+                "xrn:firebolt:capability:network:status",
+                "xrn:firebolt:capability:device:class"
             ]
         },
         {

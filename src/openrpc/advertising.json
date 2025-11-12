@@ -17,9 +17,7 @@
         }
       ],
       "summary": "Returns the IFA.",
-      "params": [
-      
-      ],
+      "params": [],
       "result": {
         "name": "advertisingId",
         "summary": "The advertising ID",
@@ -54,9 +52,7 @@
         },
         {
           "name": "Getting the advertising ID with scope content",
-          "params": [
-
-          ],
+          "params": [],
           "result": {
             "name": "Default Result",
             "value": {
@@ -71,23 +67,17 @@
   ],
   "components": {
     "schemas": {
-
       "AdvertisingIdResult": {
         "title": "AdvertisingIdResult",
         "type": "object",
         "properties": {
           "ifa": {
             "type": "string",
-            "description": "UUID conforming to IAB standard",
-            "enum":[
-              "dpid",
-              "sspid",
-              "sessionid"
-            ]
+            "description": "UUID conforming to IAB standard"
           },
           "ifa_type": {
             "type": "string",
-            "description": "source of the IFA as defined by IAB"
+            "description": "Source of the IFA as defined by IAB"
           },
           "lmt": {
             "type": "string",
@@ -95,7 +85,7 @@
               "0",
               "1"
             ],
-            "description": "boolean that if set to 1, user has requested ad tracking and measurement is disabled"
+            "description": "Boolean that if set to 1, user has requested ad tracking and measurement is disabled"
           }
         },
         "required": [

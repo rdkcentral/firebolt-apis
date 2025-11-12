@@ -11,12 +11,9 @@
       "summary": "Returns information about container memory usage, in units of 1024 bytes.",
       "tags": [
         {
-          "name": "property"
-        },
-        {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:accessibility:App"
+            "xrn:firebolt:capability:accessibility:app"
           ]
         }
       ],
@@ -50,19 +47,19 @@
         "properties": {
           "userMemoryUsed": {
             "type": "integer",
-            "description": "Bytes of user memory currently used."
+            "description": "User memory currently used in 1024 bytes."
           },
           "userMemoryLimit": {
             "type": "integer",
-            "description": "Maximum user memory available in bytes."
+            "description": "Maximum user memory available in 1024 bytes."
           },
           "gpuMemoryUsed": {
             "type": "integer",
-            "description": "Bytes of GPU memory currently used."
+            "description": "GPU memory currently used in 1024 bytes."
           },
           "gpuMemoryLimit": {
             "type": "integer",
-            "description": "Maximum GPU memory available in bytes."
+            "description": "Maximum GPU memory available in 1024 bytes."
           }
         },
         "required": [

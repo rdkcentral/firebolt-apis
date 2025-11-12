@@ -10,7 +10,7 @@
       "name": "country",
       "tags": [
         {
-          "name": "property"
+          "name": "property:readonly"
         },
         {
           "name": "capabilities",
@@ -19,7 +19,7 @@
           ]
         }
       ],
-      "summary": "Get the ISO 3166-1 alpha-2 code for the country device is located in",
+      "summary": "Returns the ISO 3166-1 alpha-2 code for the country device is located in.",
       "params": [],
       "result": {
         "name": "code",
@@ -36,16 +36,24 @@
             "name": "Default Result",
             "value": "US"
           }
+        },
+        {
+          "name": "Another example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "GB"
+          }
         }
       ]
     },
     {
       "name": "preferredAudioLanguages",
-      "summary": "Get a prioritized list of ISO 639-1/2 codes for the preferred audio languages on this device.",
+      "summary": "Returns a list of ISO 639-2/B codes for the preferred audio languages on this device.",
       "params": [],
       "tags": [
         {
-          "name": "property"
+          "name": "property:readonly"
         },
         {
           "name": "capabilities",
@@ -82,7 +90,7 @@
       "name": "locale",
       "tags": [
         {
-          "name": "property"
+          "name": "property:readonly"
         },
         {
           "name": "capabilities",
@@ -91,7 +99,7 @@
           ]
         }
       ],
-      "summary": "Get the *full* BCP 47 code, including script, region, variant, etc., for the preferred langauage/locale",
+      "summary": "Get the *full* BCP 47 code, including script, region, variant, etc., for the preferred locale",
       "params": [],
       "result": {
         "name": "locale",
