@@ -102,9 +102,9 @@ jobs:
             --config ${{ github.workspace }}/.github/mock-firebolt/config.json \
             --openrpc ${{ github.workspace }}/.github/mock-firebolt/firebolt-open-rpc.json \
             --app-openrpc ${{ github.workspace }}/src/cpp/firebolt-core-open-rpc.json \
-            --test-exe ${{ github.workspace }}/src/cpp/build/test/FireboltComponentTests
+            --test-exe ${{ github.workspace }}/src/cpp/build/test/FireboltCoreComponentTests
 
-      - name: Run Tests
+      - name: Run Unit Tests
         run: |
           cp src/cpp/firebolt-core-open-rpc.json build/test/
           ctest --test-dir build/test
