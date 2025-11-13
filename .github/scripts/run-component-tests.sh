@@ -63,8 +63,8 @@ set +xv
 echo "------"
 cd $mockPath/server
 npm start 2>&1 | sed 's|^|MOCK: |' &
-echo "Mock started at pid: $mock_pid"
 mock_pid=$!
+echo "Mock started at pid: $mock_pid"
 
 sleep 1
 
