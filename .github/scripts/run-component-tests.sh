@@ -52,7 +52,7 @@ jq '
 
 echo "Starting mock-server, $mockPath/server"
 cd $mockPath/server
-npm start |& sed 's/^/MFOS: /' &
+npm start &
 mock_pid=$!
 echo "Mock started at pid: $mock_pid"
 
