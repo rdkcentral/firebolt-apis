@@ -97,6 +97,7 @@ jobs:
 
       - name: Run Component Tests
         run: |
+          cp src/cpp/firebolt-core-open-rpc.json build/test/
           ./.github/scripts/run-component-tests.sh \
             --mock ${{ env.MOCK_PATH }} \
             --config ${{ github.workspace }}/.github/mock-firebolt/config.json \
