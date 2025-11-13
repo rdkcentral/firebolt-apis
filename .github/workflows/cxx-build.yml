@@ -22,6 +22,9 @@ env:
   HUSKY: 0
   SYSROOT_PATH: ${{ github.workspace }}/deps_install
   DEPS_FILE: ./src/cpp/.deps
+  MOCK_PATH: ${{ github.workspace }}/mock-firebolt
+  MOCK_SHA1SUM: cf0c4b35b5f3997bd9e6f82a18d57eafa0c62192
+  MOCK_PATCH: ${{ github.workspace }}/.github/mock-firebolt/events.patch
 
 jobs:
   setup_deps:
@@ -37,8 +40,18 @@ jobs:
         id: setup-deps
         uses: ./.github/actions/setup-cxx-deps
 
+  setup_mock:
+    runs-on: ubuntu-latest
+    outputs:
+      deps_cache_key: ${{ steps.setup-mock.outputs.deps_cache_key }}
+
+    steps:
+      - name: Setup Mock-Firebolt
+        id: setup-mock
+        uses: ./.github/actions/setup-mock
+
   build_project:
-    needs: setup_deps
+    needs: [setup_deps, setup_mock]
     runs-on: ubuntu-latest
 
     steps:
@@ -52,6 +65,12 @@ jobs:
         with:
           path: ${{ env.SYSROOT_PATH }}
           key: ${{ runner.os }}-deps-${{ needs.setup_deps.outputs.deps_cache_key }}
+
+      - name: Restore Mock-Firebolt Cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.MOCK_PATH }}
+          key: ${{ runner.os }}-mock-${{ needs.setup_mock.outputs.deps_cache_key }}
 
       - name: Get version
         run: |
@@ -73,6 +92,15 @@ jobs:
       - name: Build Project
         run: cmake --build build
 
+      - name: Run Component Tests
+        run: |
+          ./.github/scripts/run-component-tests.sh \
+            --mock ${{ env.MOCK_PATH }} \
+            --config ${{ github.workspace }}/.github/mock-firebolt/config.json \
+            --openrpc ${{ github.workspace }}/.github/mock-firebolt/firebolt-open-rpc.json \
+            --app-openrpc ${{ github.workspace }}/src/cpp/firebolt-core-open-rpc.json \
+            --test-exe ${{ github.workspace }}/src/cpp/build/test/FireboltComponentTests
+
       - name: Run Tests
         run: |
           cp src/cpp/firebolt-core-open-rpc.json build/test/
@@ -88,6 +116,7 @@ jobs:
 
       - name: Make Release package of Native Demo
         run: |
+          cp src/cpp/firebolt-core-open-rpc.json build/test/
           ./.github/scripts/mk-release-package.sh \
             --version ${{ env.VERSION }} \
             --package firebolt-apis-native-demo \
