@@ -50,16 +50,12 @@ jq '
 ' \
   $mockConfig > $cfgFile
 echo "------"
-set -xv
 cat $cfgFile
-set +xv
 echo "------"
 
 echo "Starting mock-server, $mockPath/server"
 echo "------"
-set -xv
-ls -al  $mockPath
-set +xv
+find $mockPath
 echo "------"
 cd $mockPath/server
 npm start 2>&1 | sed 's|^|MOCK: |' &
@@ -68,12 +64,10 @@ echo "Mock started at pid: $mock_pid"
 
 sleep 1
 
-echo "Executing Component Tests"
-set -xv
+echo "Starting Component Tests"
 cd $(dirname $testExe)
 "./$(basename $testExe)"
 exitCode=$?
-set +xv
 
 kill-rec $mock_pid
 
