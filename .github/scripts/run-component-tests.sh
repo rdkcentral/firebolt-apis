@@ -49,20 +49,14 @@ jq '
   | (.supportedToAppOpenRPCs[] | select(.name=="coreToApp")).fileName = "'"$specAppOpenRpc"'"
 ' \
   $mockConfig > $cfgFile
-echo "------"
-cat $cfgFile
-echo "------"
 
 echo "Starting mock-server, $mockPath/server"
-echo "------"
-find $mockPath
-echo "------"
 cd $mockPath/server
-npm start 2>&1 | sed 's|^|MOCK: |' &
+npm start &
 mock_pid=$!
 echo "Mock started at pid: $mock_pid"
 
-sleep 1
+sleep 5
 
 echo "Starting Component Tests"
 cd $(dirname $testExe)
