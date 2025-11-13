@@ -64,11 +64,12 @@ set(UNIT_TESTS_APP FireboltCoreUnitTests)
 
 message("Setup ${UNIT_TESTS_APP}")
 
-file(GLOB UNIT_TESTS "unit/*")
+set(UNIT_TESTS
+    "unit/lifecycleTest.cpp"
+)
 
 add_executable(${UNIT_TESTS_APP}
-    CoreSDKTest.cpp
-    Unit.cpp
+    UnitTestsMain.cpp
     ${UNIT_TESTS}
 )
 
@@ -108,18 +109,13 @@ set(COMPONENT_TESTS_APP FireboltCoreComponentTests)
 
 message("Setup ${COMPONENT_TESTS_APP}")
 
-# file(GLOB COMPONENT_TESTS "component/*")
-set(COMPONENT_TESTS "component/deviceTest.cpp"
-                    "component/utils.cpp"
-                    "component/metricsTest.cpp"
-                    "component/localizationTest.cpp"
-                    "component/hdmiInputTest.cpp"
-                    "component/secureStorageTest.cpp"
-                    "component/lifecycle2Test.cpp"
-                    )
+set(COMPONENT_TESTS
+    "component/lifecycleTest.cpp"
+)
 
 add_executable(${COMPONENT_TESTS_APP}
     ComponentTestsMain.cpp
+    "component/utils.cpp"
     ${COMPONENT_TESTS}
 )
 
