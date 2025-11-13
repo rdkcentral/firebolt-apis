@@ -95,6 +95,11 @@ jobs:
       - name: Build Project
         run: cmake --build build
 
+      - name: Run Unit Tests
+        run: |
+          cp src/cpp/firebolt-core-open-rpc.json build/test/
+          ctest --test-dir build/test
+
       - name: Run Component Tests
         run: |
           cp src/cpp/firebolt-core-open-rpc.json build/test/
@@ -104,11 +109,6 @@ jobs:
             --openrpc ${{ github.workspace }}/.github/mock-firebolt/firebolt-open-rpc.json \
             --app-openrpc ${{ github.workspace }}/src/cpp/firebolt-core-open-rpc.json \
             --test-exe ${{ github.workspace }}/build/test/FireboltCoreComponentTests
-
-      - name: Run Unit Tests
-        run: |
-          cp src/cpp/firebolt-core-open-rpc.json build/test/
-          ctest --test-dir build/test
 
       - name: Make Release package of Native SDK
         run: |
@@ -120,7 +120,6 @@ jobs:
 
       - name: Make Release package of Native Demo
         run: |
-          cp src/cpp/firebolt-core-open-rpc.json build/test/
           ./.github/scripts/mk-release-package.sh \
             --version ${{ env.VERSION }} \
             --package firebolt-apis-native-demo \
