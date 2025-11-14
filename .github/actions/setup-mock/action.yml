@@ -7,7 +7,7 @@ runs:
     - name: Generate Dependency Hash Key
       id: cache-key
       shell: bash
-      run: echo "hash=${{ env.MOCK_SHA1SUM }}" >> $GITHUB_OUTPUT
+      run: echo "hash=$( ( echo "${{ env.MOCK_SHA1SUM }}"; sha256sum "${{ env.MOCK_PATCH }}" ) | sha256sum | awk '{print $1}')" >> $GITHUB_OUTPUT
 
     - name: Restore Dependency Cache
       uses: actions/cache@v4
