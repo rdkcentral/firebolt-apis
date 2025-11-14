@@ -45,34 +45,6 @@ kill-rec() {
   kill -9 "$pid"
 }
 
-start_mfos()
-{
-  cd $current_dir/mock-firebolt/server
-  cp $current_apis_dir/dist/firebolt-open-rpc.json src/firebolt-open-rpc.json
-  cat src/.mf.config.SAMPLE.json \
-  | jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' \
-  | jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' \
-  > src/.mf.config.json
-  npm install
-  npm start |& add_ts "MFOS" | tee >(clean_ansi >$current_dir/log-mfos.log)
-}
-
-start_fca()
-{
-  cd $current_dir/firebolt-certification-app
-  git checkout package.json
-  cat package.json \
-  | jq '.dependencies["@firebolt-js/sdk"] = "file:'"$current_apis_dir"'/src/sdks/core"' \
-  > package.json.tmp && mv package.json.tmp package.json
-  npm install
-  npm start |& add_ts "FCA" | tee >(clean_ansi >$current_dir/log-fca.log)
-}
-
-set_intent() {
-  cd $current_dir
-  echo "Curl request with runTest install on initialization: $(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)"
-}
-
 run_mfos_tests()
 {
   cd $current_dir
@@ -201,16 +173,33 @@ runTests() {
     git apply $current_apis_dir/.github/fca/dependency.patch
   fi
 
-  start_mfos &
+  echo "starting mfos"
+  cd $current_dir/mock-firebolt/server
+  cp $current_apis_dir/dist/firebolt-open-rpc.json src/firebolt-open-rpc.json
+  cat src/.mf.config.SAMPLE.json \
+  | jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' \
+  | jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' \
+  > src/.mf.config.json
+  npm install
+  npm start |& add_ts "MFOS" | tee >(clean_ansi >$current_dir/log-mfos.log) &
   mfos_pid=$!
 
-  start_fca &
+  echo "starting fca"
+  cd $current_dir/firebolt-certification-app
+  git checkout package.json
+  cat package.json \
+  | jq '.dependencies["@firebolt-js/sdk"] = "file:'"$current_apis_dir"'/src/sdks/core"' \
+  > package.json.tmp && mv package.json.tmp package.json
+  npm install
+  npm start  |& add_ts "FCA" | tee >(clean_ansi >$current_dir/log-fca.log) &
   fca_pid=$!
 
   echo "Waiting a while for setting up mfos & fca"
   sleep 15
 
-  set_intent
+  cd $current_dir
+  echo "Curl request with runTest install on initialization: $(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)"
+
   run_mfos_tests
 
   kill-rec $mfos_pid
