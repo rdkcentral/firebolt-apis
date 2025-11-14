@@ -56,7 +56,8 @@ npm start &
 mock_pid=$!
 echo "Mock started at pid: $mock_pid"
 
-sleep 2
+echo "Waiting 10s to ensure mock-server is up&ready"
+sleep 10
 
 echo "Starting Component Tests"
 cd $(dirname $testExe)
