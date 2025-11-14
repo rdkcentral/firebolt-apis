@@ -1,0 +1,195 @@
+diff --git a/server/src/configureAPI.mjs b/server/src/configureAPI.mjs
+index 7113253..1292396 100644
+--- a/server/src/configureAPI.mjs
++++ b/server/src/configureAPI.mjs
+@@ -20,6 +20,7 @@
+ 
+ 'use strict';
+ 
++import * as rawApi from './routes/api/raw.mjs'
+ import * as healthApi from './routes/api/health.mjs';
+ import * as metaApi from './routes/api/meta.mjs';
+ import * as stateApi from './routes/api/state.mjs';
+@@ -40,6 +41,10 @@ function configureAPI(app) {
+     // Get all OpenRPC metadata
+     app.get('/api/v1/meta',                             metaApi.getMeta);
+ 
++    // ============================ Raw Test Routes ===========================
++
++    app.post('/api/v1/raw',  rawApi.rawPayload);
++
+     // ======================= State-Related API Routes =======================
+     
+     // Set latency min and max, either globally or per method
+diff --git a/server/src/events.mjs b/server/src/events.mjs
+index 3c2930e..adb2d05 100644
+--- a/server/src/events.mjs
++++ b/server/src/events.mjs
+@@ -280,9 +280,8 @@ function sendBroadcastEvent(ws, userId, method, result, msg, fSuccess, fErr, fFa
+  * @returns {Object} - The formatted JSON-RPC 2.0 payload.
+  */
+ 
+-function createBidirectionalPayload(method, params) {
++function createBidirectionalEventPayload(method, params) {
+     return {
+-        id: id++,  // Increment and return `id` in one step
+         jsonrpc: "2.0",
+         method,
+         params
+@@ -356,7 +355,7 @@ function emitResponse(finalResult, msg, userId, method) {
+   // Check if bidirectional mode is enabled
+   if (config.dotConfig.bidirectional) {
+     const bidirectionalMethod = unidirectionalEventToBiDirectional(method);
+-    let payload = createBidirectionalPayload(bidirectionalMethod, finalResult);
++    let payload = createBidirectionalEventPayload(bidirectionalMethod, finalResult);
+ 
+     wsArr.forEach((ws) => {
+       ws.send(JSON.stringify(payload)); // Send bidirectional event
+@@ -466,6 +465,7 @@ function coreSendEvent(isBroadcast, ws, userId, method, result, msg, fSuccess, f
+       if( config.validate.includes("events") ) {
+         const resultErrors = fireboltOpenRpc.validateMethodResult(finalResult, method);
+         if ( resultErrors && resultErrors.length > 0 ) {
++          logger.error(`${method} validation error for ${method} with ${JSON.stringify(finalResult)}, err: ${JSON.stringify(resultErrors)}`);
+           fErr.call(null, 'validationError', method);
+           return
+         }
+diff --git a/server/src/fireboltOpenRpc.mjs b/server/src/fireboltOpenRpc.mjs
+index ddb4fe2..14a77b5 100644
+--- a/server/src/fireboltOpenRpc.mjs
++++ b/server/src/fireboltOpenRpc.mjs
+@@ -158,7 +158,7 @@ function validateMethodCall(methodName, params) {
+     logger.error('Method:');
+     logger.error(methodName);
+     logger.error('Params:');
+-    logger.error(params);
++    logger.error(JSON.stringify(params));
+     logger.error('Exception:');
+     logger.error(ex);
+     errors.push(`ERROR: Could not validate call to method ${methodName} with params ${JSON.stringify(params)}`);
+@@ -180,8 +180,31 @@ function validateMethodResult(val, methodName) {
+   if ( typeof val === 'string' && val.trimStart().startsWith('function') ) { return errors; }
+ 
+   try {
+-    const oMethod = getMethod(methodName);
+-    const oResult = oMethod.result;
++    let oMethod = undefined;
++    let oResult = undefined;
++    if (config.dotConfig.bidirectional && methodName.includes('.on') && methodName.endsWith('Changed')) {
++      let [module, method] = methodName.split('.');
++      if (method.startsWith('on') && method.endsWith('Changed')) {
++        methodName = `${module}.${method.charAt(2).toLowerCase() + method.slice(3)}`;
++        let oMethod = getMethod(methodName);
++        if (oMethod && oMethod.tags) {
++          const notifierTag = oMethod.tags.find(oTag => oTag['x-notifier-for']);
++          if (notifierTag && notifierTag['x-notifier-for']) {
++            methodName = notifierTag['x-notifier-for'];
++            oMethod = getMethod(methodName);
++            oResult = oMethod.result;
++          } else {
++            oResult = oMethod.params[0];
++          }
++        }
++      }
++    }
++    if (!oMethod) {
++      oMethod = getMethod(methodName);
++    }
++    if (!oResult) {
++      oResult = oMethod.result;
++    }
+     let oSchema = oResult.schema;
+     if ( '$ref' in oSchema  ) {
+       const ref = oSchema['$ref'];
+@@ -199,7 +222,7 @@ function validateMethodResult(val, methodName) {
+   } catch ( ex ) {
+     logger.error('ERROR: Could not validate value:');
+     logger.error('Value:');
+-    logger.error(val);
++    logger.error(JSON.stringify(val));
+     logger.error('Method:');
+     logger.error(methodName);
+     logger.error('Exception:');
+diff --git a/server/src/routes/api/event.mjs b/server/src/routes/api/event.mjs
+index 0c851c8..93fa6ec 100644
+--- a/server/src/routes/api/event.mjs
++++ b/server/src/routes/api/event.mjs
+@@ -30,7 +30,11 @@ import * as events from '../../events.mjs';
+ function sendEvent(req, res) {
+   const { ws } = res.locals; // Like magic!
+   const userId = getUserIdFromReq(req);
+-  const { method, result } = req.body;
++  let { method, result } = req.body;
++  let [ moduleN, methodN ] = method.split('.');
++  if (!methodN.startsWith('on') && methodN.endsWith('Changed')) {
++    method = `${moduleN}.on${methodN.charAt(0).toUpperCase() + methodN.slice(1)}`;
++  }
+ 
+   function fSuccess() {
+     res.status(200).send({
+diff --git a/server/src/routes/api/raw.mjs b/server/src/routes/api/raw.mjs
+new file mode 100644
+index 0000000..e6b20bd
+--- /dev/null
++++ b/server/src/routes/api/raw.mjs
+@@ -0,0 +1,61 @@
++/*
++ * If not stated otherwise in this file or this component's LICENSE file the
++ * following copyright and licenses apply:
++ *
++ * Copyright 2025 Sky UK
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++// HTTP-based API routes: Raw, without any validation, just "jsonrpc": "2.0" field is being added to the paload
++
++'use strict';
++
++import { getUserIdFromReq } from '../../util.mjs';
++import * as userManagement from '../../userManagement.mjs'
++
++// --- Route Handlers ---
++
++// POST /api/v1/raw
++// Expected body: Any
++function rawPayload(req, res) {
++    try {
++        const userId = getUserIdFromReq(req);
++        const ws = userManagement.getWsForUser(userId)
++
++        const payload = {
++            jsonrpc: "2.0",
++            ...req.body
++        };
++
++        console.log(`Sending raw payload: ${JSON.stringify(payload)}`);
++
++        ws.send(JSON.stringify(payload));
++
++        res.status(200).send({
++            status: "Sent payload"
++        })
++    } catch (error) {
++        console.error(error)
++        res.status(500).send({
++            status: "Cannot send payload",
++            error
++        })
++    }
++}
++
++// --- Exports ---
++
++export {
++  rawPayload,
++};
