@@ -22,11 +22,13 @@ specOpenRpc=
 specAppOpenRpc=
 mockPath=
 mockConfig=
+mockPort=9998
 testExe=
 
 while [[ ! -z ${1:-} ]]; do
     case $1 in
     --mock) mockPath="$2"; shift;;
+    --port) mockPort="$2"; shift;;
     --config) mockConfig="$2"; shift;;
     --openrpc) specOpenRpc="$2"; shift;;
     --app-openrpc) specAppOpenRpc="$2"; shift;;
@@ -56,8 +58,15 @@ npm start &
 mock_pid=$!
 echo "Mock started at pid: $mock_pid"
 
-echo "Waiting 10s to ensure mock-server is up&ready"
-sleep 10
+sleep 1
+try=0
+maxTries=10
+while ! nc -z localhost $mockPort >/dev/null 2>&1; do
+  (( try < maxTries )) || die "Mock server not ready after $try tries"
+  (( ++try ))
+  printf "%d/%d Waiting for mock-server to be up&ready\n" $try $maxTries
+  sleep 1
+done
 
 echo "Starting Component Tests"
 cd $(dirname $testExe)
