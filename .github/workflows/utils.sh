@@ -5,15 +5,12 @@ set -o pipefail
 current_apis_dir=$PWD
 current_dir=${PWD%/*}
 
-if [[ -z $TOOL_VERSION ]]; then
-  TOOL_VERSION='declare -A TOOL_VERSION=(
-    [mock-firebolt]="5d32c6adf908f88c63ada603de41ffdea190eea7"
-    [firebolt-certification-app]="ee2cfd1787b5f6f6ff2e716eeb4fa376c7f6643b"
-    [puppeteer]="24.17.0"
-    [mochawesome-report-generator]="6.2.0"
-  )'
-fi
-eval "$TOOL_VERSION"
+declare -A TOOL_VERSION=(
+  [mock-firebolt]="5d32c6adf908f88c63ada603de41ffdea190eea7"
+  [firebolt-certification-app]="ee2cfd1787b5f6f6ff2e716eeb4fa376c7f6643b"
+  [puppeteer]="24.17.0"
+  [mochawesome-report-generator]="6.2.0")
+
 echo "Dependencies taken from the following versions" >/dev/stderr
 for i in ${!TOOL_VERSION[*]}; do
   echo "- $i: ${TOOL_VERSION[$i]}"
@@ -26,7 +23,7 @@ function branch_exists() {
     git ls-remote --heads https://github.com/rdkcentral/firebolt-apis.git "$branch" | grep -q "$branch"
 }
 
-function add_ts() {
+add_ts() {
   local prefix=$1 start=$((${EPOCHREALTIME/[,.]}/1000)) delta= l=
   cat - | while read -r l; do
     delta=$((${EPOCHREALTIME/[,.]}/1000 - start))
@@ -34,92 +31,57 @@ function add_ts() {
   done
 }
 
-function clean_ansi() {
+clean_ansi() {
   sed -u -e 's/\x1b\[[0-9;]\+[mMGK]//g' -e 's/\x1b\[[Jm]//g'
 }
 
-function runTests(){
-  echo "Determine the branch to checkout"
-  # Convert event name to lowercase
-  PR_BRANCH="${EVENT_NAME,,}"
-
-  # Check if OPENRPC_PR_BRANCH is not empty and the event is repository_dispatch
-  if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$PR_BRANCH" == "repository_dispatch" ]; then
-      # Check if the branch exists in firebolt-apis
-      if branch_exists "$OPENRPC_PR_BRANCH"; then
-          PR_BRANCH=$OPENRPC_PR_BRANCH
-          echo "Using branch from OPENRPC_PR_BRANCH: $OPENRPC_PR_BRANCH"
-      else
-          echo "Branch '$OPENRPC_PR_BRANCH' does not exist in firebolt-apis. Defaulting to 'next'."
-          PR_BRANCH="next"
-      fi
-  elif [ "$PR_BRANCH" == "pull_request" ]; then
-      # If it's a pull request event, use the PR branch
-      PR_BRANCH=$PR_HEAD_REF
-  elif [ "$PR_BRANCH" == "push" ]; then
-      # For push events, extract the branch name
-      PR_BRANCH=$GITHUB_REF
-      PR_BRANCH="${PR_BRANCH#refs/heads/}"
-  else
-      echo "Unsupported event: $EVENT_NAME"
-      exit 1
+kill-rec() {
+  local pid="$1" i= children=
+  if children="$(pgrep -P "$pid")"; then
+    for i in $children; do
+      kill-rec $i
+    done
   fi
+  kill -9 "$pid"
+}
 
-  cd $current_dir
-  if [[ ! -e firebolt-apis ]]; then
-    echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
-    git clone --branch $PR_BRANCH https://github.com/rdkcentral/firebolt-apis.git
-  fi
-  echo "Cd to firebolt-apis repo and compile firebolt-open-rpc.json"
-  cd firebolt-apis
-  if [ "$EVENT_NAME" == "repository_dispatch" ]; then
-  # If OPENRPC_PR_BRANCH is set and is not 'next'
-    if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$OPENRPC_PR_BRANCH" != "next" ]; then
-      echo "Updating OpenRPC dependency to branch: $OPENRPC_PR_BRANCH"
-      jq ".dependencies[\"@firebolt-js/openrpc\"] = \"file:../firebolt-openrpc#$OPENRPC_PR_BRANCH\"" package.json > package.json.tmp && mv package.json.tmp package.json
-    fi
-  fi
-  npm i
-  npm run compile
-  npm run dist
-
-  cd $current_dir
-  echo "Clone mfos repo and start it in the background"
-  git clone --depth 1 --branch main https://github.com/rdkcentral/mock-firebolt.git
-  cd mock-firebolt
-  git fetch --shallow-since=2025-01-01
-  git reset --hard ${TOOL_VERSION[mock-firebolt]}
-  cd server
+start_mfos()
+{
+  cd $current_dir/mock-firebolt/server
   cp $current_apis_dir/dist/firebolt-open-rpc.json src/firebolt-open-rpc.json
   cat src/.mf.config.SAMPLE.json \
   | jq 'del(.supportedOpenRPCs[] | select(.name == "core"))' \
   | jq '.supportedOpenRPCs += [{"name": "core","cliFlag": null,"cliShortFlag": null,"fileName": "firebolt-open-rpc.json","enabled": true}]' \
   > src/.mf.config.json
   npm install
-  npm start |& add_ts "MFOS" | tee >(clean_ansi >$current_dir/log-mfos.log) &
+  npm start |& add_ts "MFOS" | tee >(clean_ansi >$current_dir/log-mfos.log)
+}
 
-  cd $current_dir
-  echo "Clone fca repo and start it in the background"
-  git clone --depth 1 --branch main https://github.com/rdkcentral/firebolt-certification-app.git
-  cd firebolt-certification-app
-  git fetch --shallow-since=2025-01-01
-  git reset --hard ${TOOL_VERSION[firebolt-certification-app]}
+start_fca()
+{
+  cd $current_dir/firebolt-certification-app
+  git checkout package.json
   cat package.json \
   | jq '.dependencies["@firebolt-js/sdk"] = "file:'"$current_apis_dir"'/src/sdks/core"' \
   > package.json.tmp && mv package.json.tmp package.json
   npm install
-  # npm start 2>&1 | grep -v "Error:.*Cannot find module.*/plugins/" &
-  npm start |& add_ts "FCA" | tee >(clean_ansi >$current_dir/log-fca.log) &
-  sleep 15
+  npm start |& add_ts "FCA" | tee >(clean_ansi >$current_dir/log-fca.log)
+}
 
+set_intent() {
   cd $current_dir
   echo "Curl request with runTest install on initialization: $(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)"
+}
 
+run_mfos_tests()
+{
+  cd $current_dir
   echo "Run mfos tests in a headless browser"
-  npm install puppeteer@24.17.0
+  npm install puppeteer@${TOOL_VERSION[puppeteer]}
   echo "Start xvfb"
   export DISPLAY=":99"
-  Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
+  Xvfb $DISPLAY -screen 0 1024x768x24 |& add_ts "XVFB" | tee >(clean_ansi >$current_dir/log-xvfb.log) >/dev/null 2>&1 &
+  xvfb_pid=$!
 
   echo "Run headless browser script with puppeteer"
   node -e '
@@ -170,6 +132,91 @@ function runTests(){
       await browser.close();
     })();
   '
+  kill-rec $xvfb_pid
+}
+
+runTests() {
+  echo "Determine the branch to checkout"
+  # Convert event name to lowercase
+  PR_BRANCH="${EVENT_NAME,,}"
+
+  # Check if OPENRPC_PR_BRANCH is not empty and the event is repository_dispatch
+  if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$PR_BRANCH" == "repository_dispatch" ]; then
+      # Check if the branch exists in firebolt-apis
+      if branch_exists "$OPENRPC_PR_BRANCH"; then
+          PR_BRANCH=$OPENRPC_PR_BRANCH
+          echo "Using branch from OPENRPC_PR_BRANCH: $OPENRPC_PR_BRANCH"
+      else
+          echo "Branch '$OPENRPC_PR_BRANCH' does not exist in firebolt-apis. Defaulting to 'next'."
+          PR_BRANCH="next"
+      fi
+  elif [ "$PR_BRANCH" == "pull_request" ]; then
+      # If it's a pull request event, use the PR branch
+      PR_BRANCH=$PR_HEAD_REF
+  elif [ "$PR_BRANCH" == "push" ]; then
+      # For push events, extract the branch name
+      PR_BRANCH=$GITHUB_REF
+      PR_BRANCH="${PR_BRANCH#refs/heads/}"
+  else
+      echo "Unsupported event: $EVENT_NAME"
+      exit 1
+  fi
+
+  cd $current_dir
+  if [[ ! -e firebolt-apis ]]; then
+    echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
+    git clone --branch $PR_BRANCH https://github.com/rdkcentral/firebolt-apis.git
+  fi
+  echo "Cd to firebolt-apis repo and compile firebolt-open-rpc.json"
+  cd firebolt-apis
+  if [ "$EVENT_NAME" == "repository_dispatch" ]; then
+  # If OPENRPC_PR_BRANCH is set and is not 'next'
+    if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$OPENRPC_PR_BRANCH" != "next" ]; then
+      echo "Updating OpenRPC dependency to branch: $OPENRPC_PR_BRANCH"
+      jq ".dependencies[\"@firebolt-js/openrpc\"] = \"file:../firebolt-openrpc#$OPENRPC_PR_BRANCH\"" package.json > package.json.tmp && mv package.json.tmp package.json
+    fi
+  fi
+
+  echo "compile firebolt-open-rpc.json"
+  npm i
+  npm run compile
+  npm run dist
+
+  cd $current_dir
+  if [[ ! -e mock-firebolt ]]; then
+    echo "Clone mfos repo and start it in the background"
+    git clone --depth 1 --branch main https://github.com/rdkcentral/mock-firebolt.git
+    cd mock-firebolt
+    git fetch --shallow-since=2025-01-01
+    git checkout ${TOOL_VERSION[mock-firebolt]}
+  fi
+
+  cd $current_dir
+  if [[ ! -e firebolt-certification-app ]]; then
+    echo "Clone fca repo and start it in the background"
+    git clone --depth 1 --branch main https://github.com/rdkcentral/firebolt-certification-app.git
+    cd firebolt-certification-app
+    git fetch --shallow-since=2025-01-01
+    git checkout ${TOOL_VERSION[firebolt-certification-app]}
+    git apply $current_apis_dir/.github/fca/dependency.patch
+  fi
+
+  start_mfos &
+  mfos_pid=$!
+
+  start_fca &
+  fca_pid=$!
+
+  echo "Waiting a while for setting up mfos & fca"
+  sleep 15
+
+  set_intent
+  run_mfos_tests
+
+  kill-rec $mfos_pid
+  kill-rec $fca_pid
+
+  cd $current_dir
   [[ -e report.json ]] || { echo "Report not created"; exit 1; }
   echo "Create html and json assets"
   npm install mochawesome-report-generator@6.2.0
@@ -194,7 +241,7 @@ function runTests(){
   gzip $report_dir/log-mfos.log $report_dir/log-fca.log
 }
 
-function getResults(){
+getResults() {
   local failures=999
   [[ -e $current_apis_dir/report/report.json ]] && failures=$(jq -r '.stats.failures' $current_apis_dir/report/report.json)
   echo "If failures more than 0, fail the job, failures=$failures"
@@ -205,7 +252,7 @@ function getResults(){
   fi
 }
 
-function getArtifactData(){
+getArtifactData() {
   PREVIOUS_JOB_ID=$(jq -r '.id' <<< "$WORKFLOW_RUN_EVENT_OBJ") && echo "PREVIOUS_JOB_ID=$PREVIOUS_JOB_ID" >> "$GITHUB_ENV"
   SUITE_ID=$(jq -r '.check_suite_id' <<< "$WORKFLOW_RUN_EVENT_OBJ") && echo "SUITE_ID=$SUITE_ID" >> "$GITHUB_ENV"
   ARTIFACT_ID=$(gh api "/repos/$OWNER/$REPO/actions/artifacts" --jq ".artifacts[] | select(.workflow_run.id==$PREVIOUS_JOB_ID and .expired==false) | .id") && echo "ARTIFACT_ID=$ARTIFACT_ID" >> "$GITHUB_ENV"
@@ -214,7 +261,7 @@ function getArtifactData(){
   JOB_PATH="$SERVER_URL/$GITHUB_REPO/actions/runs/$PREVIOUS_JOB_ID" && echo "JOB_PATH=$JOB_PATH" >> "$GITHUB_ENV"
 }
 
-function unzipArtifact(){
+unzipArtifact() {
   unzip report.zip
   # Extract values from report.json
   report=$(cat report.json | jq -r '.')
