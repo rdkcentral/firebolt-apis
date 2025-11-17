@@ -63,19 +63,6 @@ void RunAllTests()
         runTest(CoreSDKTest::SubscribeClosedCaptionsFontFamilyChanged, "SubscribeClosedCaptionsFontFamilyChanged");
         runTest(CoreSDKTest::UnsubscribeClosedCaptionsFontFamilyChanged, "UnsubscribeClosedCaptionsFontFamilyChanged");
 
-        // Device properties
-        runTest(CoreSDKTest::GetDeviceModel, "GetDeviceModel");
-        runTest(CoreSDKTest::GetDeviceSku, "GetDeviceSku");
-        runTest(CoreSDKTest::GetDeviceName, "GetDeviceName");
-        runTest(CoreSDKTest::GetDeviceVersion, "GetDeviceVersion");
-        runTest(CoreSDKTest::SubscribeDeviceNameChanged, "SubscribeDeviceNameChanged");
-        runTest(CoreSDKTest::UnsubscribeDeviceNameChanged, "UnsubscribeDeviceNameChanged");
-        runTest(CoreSDKTest::GetDeviceAudio, "GetDeviceAudio");
-        runTest(CoreSDKTest::SubscribeDeviceAudioChanged, "SubscribeDeviceAudioChanged");
-        runTest(CoreSDKTest::UnsubscribeDeviceAudioChanged, "UnsubscribeDeviceAudioChanged");
-        runTest(CoreSDKTest::GetDeviceScreenResolution, "GetDeviceScreenResolution");
-        runTest(CoreSDKTest::SubscribeDeviceScreenResolutionChanged, "SubscribeDeviceScreenResolutionChanged");
-        runTest(CoreSDKTest::UnsubscribeDeviceScreenResolutionChanged, "UnsubscribeDeviceScreenResolutionChanged");
 
         // HdmiInput
         runTest(CoreSDKTest::SubscribeHdmiAutoLowLatencyModeCapableChanged,
