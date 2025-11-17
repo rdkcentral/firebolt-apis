@@ -1,3 +1,10 @@
+# [1.8.0-next.12](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.11...v1.8.0-next.12) (2025-11-17)
+
+
+### Bug Fixes
+
+* Set pedantic compilation ([#450](https://github.com/rdkcentral/firebolt-apis/issues/450)) ([c3d4e3f](https://github.com/rdkcentral/firebolt-apis/commit/c3d4e3f13084e5310e91a877c61686fbbb82c1a8))
+
 # [1.8.0-next.11](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.10...v1.8.0-next.11) (2025-11-07)
 
 
