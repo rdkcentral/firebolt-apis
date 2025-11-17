@@ -7,9 +7,7 @@
     "firebolt-version": "./src/js/version.mjs"
   },
   "workspaces": [
-    "src/sdks/core",
-    "src/sdks/manage",
-    "src/sdks/discovery"
+    "src/sdks/core"
   ],
   "scripts": {
     "fs:setup": "npm run clean && mkdir -p dist",
