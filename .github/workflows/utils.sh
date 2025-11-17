@@ -170,6 +170,7 @@ runTests() {
     cd firebolt-certification-app
     git fetch --shallow-since=2025-01-01
     git checkout ${TOOL_VERSION[firebolt-certification-app]}
+    echo "Applying dependency patch: $current_apis_dir/.github/fca/dependency.patch"
     git apply $current_apis_dir/.github/fca/dependency.patch
   fi
 
@@ -186,7 +187,6 @@ runTests() {
 
   echo "starting fca"
   cd $current_dir/firebolt-certification-app
-  git checkout package.json
   cat package.json \
   | jq '.dependencies["@firebolt-js/sdk"] = "file:'"$current_apis_dir"'/src/sdks/core"' \
   > package.json.tmp && mv package.json.tmp package.json
