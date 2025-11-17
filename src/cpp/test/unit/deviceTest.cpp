@@ -35,7 +35,7 @@ protected:
     Firebolt::Device::DeviceImpl deviceImpl_{mockHelper};
 };
 
-TEST_F(DeviceTest, DeviceClass)
+TEST_F(DeviceTest, GetClass)
 {
 #ifdef USE_LOCAL_RESPONSE
     nlohmann::json expectedValue = "stb";
@@ -45,27 +45,11 @@ TEST_F(DeviceTest, DeviceClass)
     auto expectedValue = jsonEngine.get_value("Device.deviceClass");
 #endif
 
-    auto result = deviceImpl_.deviceClass();
+    auto result = deviceImpl_.getClass();
 
-    ASSERT_TRUE(result) << "DeviceImpl::deviceClass() returned an error";
+    ASSERT_TRUE(result) << "DeviceImpl::getClass() returned an error";
 
     EXPECT_EQ(static_cast<int>(*result), static_cast<int>(Firebolt::Device::JsonData::DeviceClassEnum.at(expectedValue)));
-}
-
-TEST_F(DeviceTest, ChipsetId)
-{
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = "RTD1319";
-    mock_with_response("Device.chipsetId", expectedValue);
-#else
-    mock("Device.chipsetId");
-    auto expectedValue = jsonEngine.get_value("Device.chipsetId");
-#endif
-
-    auto result = deviceImpl_.chipsetId();
-    ASSERT_TRUE(result) << "DeviceImpl::chipsetId() returned an error";
-
-    EXPECT_EQ(*result, expectedValue);
 }
 
 TEST_F(DeviceTest, Uptime)

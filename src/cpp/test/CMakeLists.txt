@@ -66,6 +66,7 @@ message("Setup ${UNIT_TESTS_APP}")
 
 set(UNIT_TESTS
     "unit/lifecycleTest.cpp"
+    "unit/deviceTest.cpp"
 )
 
 add_executable(${UNIT_TESTS_APP}
