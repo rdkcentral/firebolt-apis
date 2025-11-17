@@ -30,8 +30,9 @@ if (NOT CMAKE_PROJECT_NAME)
 endif ()
 set(DEMO_APP FireboltCoreSDKDemo)
 
-
 message("Setup ${DEMO_APP}")
+
+add_compile_options(-Wall -Wextra -Wpedantic)
 
 find_package(FireboltTransport CONFIG REQUIRED)
 
