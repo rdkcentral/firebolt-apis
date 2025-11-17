@@ -1,7 +1,7 @@
 {
   "openrpc": "1.2.4",
   "info": {
-    "title": "App",
+    "title": "Stats",
     "description": "Provides methods to retrieve application-level system information.",
     "version": "1.0.0"
   },
@@ -29,10 +29,10 @@
           "name": "Default example",
           "params": [],
           "result": {
-            "userMemoryUsed": 123456,
-            "userMemoryLimit": 789012,
-            "gpuMemoryUsed": 345678,
-            "gpuMemoryLimit": 901234
+            "userMemoryUsedKiB": 123456,
+            "userMemoryLimitKiB": 789012,
+            "gpuMemoryUsedKiB": 345678,
+            "gpuMemoryLimitKiB": 901234
           }
         }
       ]
@@ -45,28 +45,28 @@
         "type": "object",
         "description": "Describes current and maximum memory usage of the container.",
         "properties": {
-          "userMemoryUsed": {
+          "userMemoryUsedKiB": {
             "type": "integer",
             "description": "User memory currently used in 1024 bytes."
           },
-          "userMemoryLimit": {
+          "userMemoryLimitKiB": {
             "type": "integer",
             "description": "Maximum user memory available in 1024 bytes."
           },
-          "gpuMemoryUsed": {
+          "gpuMemoryUsedKiB": {
             "type": "integer",
             "description": "GPU memory currently used in 1024 bytes."
           },
-          "gpuMemoryLimit": {
+          "gpuMemoryLimitKiB": {
             "type": "integer",
             "description": "Maximum GPU memory available in 1024 bytes."
           }
         },
         "required": [
-          "userMemoryUsed",
-          "userMemoryLimit",
-          "gpuMemoryUsed",
-          "gpuMemoryLimit"
+          "userMemoryUsedKiB",
+          "userMemoryLimitKiB",
+          "gpuMemoryUsedKiB",
+          "gpuMemoryLimitKiB"
         ]
       }
     }

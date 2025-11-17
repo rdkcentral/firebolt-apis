@@ -1,0 +1,96 @@
+{
+  "openrpc": "1.2.4",
+  "info": {
+    "title": "Display",
+    "description": "A module for querying about the display",
+    "version": "1.0.0"
+  },
+  "methods": [
+    {
+      "name": "size",
+      "summary": "Returns the physical dimensions of the connected or integral display, in centimeters. Returns 0, 0 on a OTT/STB device when a display is not connected over HDMI",
+      "params": [],
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:display:size"
+          ]
+        }
+      ],
+      "result": {
+        "name": "size",
+        "summary": "The display size in centimeters",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "integer",
+              "description": "The width of the display in centimeters"
+            },
+            "height": {
+              "type": "integer",
+              "description": "The height of the display in centimeters"
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the display size",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "width": 48,
+              "height": 27
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "maxResolution",
+      "summary": "Returns the physical/native resolution of the connected or integral display, in pixels. Returns 0, 0 on a OTT/STB device when a display is not connected over HDMI",
+      "params": [],
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:display:maxresolution"
+          ]
+        }
+      ],
+      "result": {
+        "name": "maxResolution",
+        "summary": "The display resolution",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "integer",
+              "description": "The width of the display in pixels"
+            },
+            "height": {
+              "type": "integer",
+              "description": "The height of the display in pixels"
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the display size",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": {
+              "width": 1920,
+              "height": 1080
+            }
+          }
+        }
+      ]
+    }    
+  ]
+}

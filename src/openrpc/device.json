@@ -37,7 +37,7 @@
       ]
     },
     {
-      "name": "class",
+      "name": "deviceClass",
       "summary": "Returns the class of the device",
       "params": [],
       "tags": [
