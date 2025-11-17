@@ -105,14 +105,10 @@ FireboltDemoService::FireboltDemoService()
     }
     std::cout << "Using firebolt URL: " << url << std::endl;
 
-    FireboltSDK::Config config = {
-        .wsUrl = url,
-        .waitTime_ms = 3000,
-        .log =
-            {
-                .level = "Info",
-            },
-    };
+    FireboltSDK::Config config;
+    config.wsUrl = url;
+    config.waitTime_ms = 3000;
+    config.log.level = "Debug";
 
     auto error =
         Firebolt::IFireboltAccessor::Instance().Connect(config, [this](const bool connected, const Firebolt::Error error)
@@ -393,6 +389,7 @@ FireboltDemoService::DeviceInfo FireboltDemoService::getAndPrintDeviceValues()
 
 void FireboltDemoService::onConnectionChanged(const bool connected, const Firebolt::Error error)
 {
+    (void)error; //unused
     std::unique_lock<std::mutex> lock{mutex_};
     connected_ = connected;
     cv_.notify_one();
