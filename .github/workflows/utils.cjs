@@ -35,7 +35,11 @@ async function createComment(github, context) {
 
     const body = `
         MFOS standalone sanity report - CORE,MANAGE,DISCOVERY:
-        Total Passes - ${Passes} Failures - ${Failures} Pending - ${Pending} Skipped - ${Skipped}
+        Total:
+        - Passes: ${Passes}
+        - Failures: ${Failures}
+        - Pending: ${Pending}
+        - Skipped: ${Skipped}
         Report JSON/HTML Files: ${ARTIFACT_URL}
         Job Logs: ${JOB_PATH}
     `;
