@@ -33,8 +33,9 @@ public:
 
     ~DeviceImpl() override = default;
 
-    Result<DeviceClass> getClass() const override;
+    Result<DeviceClass> deviceClass() const override;
     Result<uint32_t> uptime() const override;
+    Result<std::string> uid() const override;
 
 private:
     Firebolt::Helpers::IHelper &helper_;

@@ -53,7 +53,7 @@ public:
      *
      * @retval The class property or error
      */
-    virtual Result<DeviceClass> getClass() const = 0;
+    virtual Result<DeviceClass> deviceClass() const = 0;
 
     /**
      * @brief Returns number of seconds since most recent device boot, including any time spent during deep sleep
@@ -61,6 +61,13 @@ public:
      * @retval The uptime in seconds or error
      */
     virtual Result<uint32_t> uptime() const = 0;
+
+    /**
+     * @brief Returns a persistent unique UUID for the current app and device.  The UUID is reset when the app or device is reset
+     *
+     * @retval The uid string or error
+     */
+    virtual Result<std::string> uid() const = 0;
 };
 
 } // namespace Firebolt::Device

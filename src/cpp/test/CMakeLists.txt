@@ -112,6 +112,7 @@ message("Setup ${COMPONENT_TESTS_APP}")
 
 set(COMPONENT_TESTS
     "component/lifecycleTest.cpp"
+    #"component/deviceTest.cpp"
 )
 
 add_executable(${COMPONENT_TESTS_APP}

@@ -39,15 +39,15 @@ TEST_F(DeviceTest, GetClass)
 {
 #ifdef USE_LOCAL_RESPONSE
     nlohmann::json expectedValue = "stb";
-    mock_with_response("Device.deviceClass", expectedValue);
+    mock_with_response(Firebolt::Device::JsonData::Method::deviceClass, expectedValue);
 #else
-    mock("Device.deviceClass");
-    auto expectedValue = jsonEngine.get_value("Device.deviceClass");
+    mock(Firebolt::Device::JsonData::Method::deviceClass);
+    auto expectedValue = jsonEngine.get_    value(Firebolt::Device::JsonData::Method::deviceClass);
 #endif
 
-    auto result = deviceImpl_.getClass();
+    auto result = deviceImpl_.deviceClass();
 
-    ASSERT_TRUE(result) << "DeviceImpl::getClass() returned an error";
+    ASSERT_TRUE(result) << "DeviceImpl::deviceClass() returned an error";
 
     EXPECT_EQ(static_cast<int>(*result), static_cast<int>(Firebolt::Device::JsonData::DeviceClassEnum.at(expectedValue)));
 }
@@ -56,14 +56,30 @@ TEST_F(DeviceTest, Uptime)
 {
 #ifdef USE_LOCAL_RESPONSE
     nlohmann::json expectedValue = 3600;
-    mock_with_response("Device.uptime", expectedValue);
+    mock_with_response(Firebolt::Device::JsonData::Method::uptime, expectedValue);
 #else
-    mock("Device.uptime");
-    auto expectedValue = jsonEngine.get_value("Device.uptime");
+    mock(Firebolt::Device::JsonData::Method::uptime);
+    auto expectedValue = jsonEngine.get_value(Firebolt::Device::JsonData::Method::uptime);
 #endif
 
     auto result = deviceImpl_.uptime();
     ASSERT_TRUE(result) << "DeviceImpl::uptime() returned an error";
+
+    EXPECT_EQ(*result, expectedValue);
+}
+
+TEST_F(DeviceTest, Uid)
+{
+#ifdef USE_LOCAL_RESPONSE
+    nlohmann::json expectedValue = "123e4567-e89b-12d3-a456-426614174000";
+    mock_with_response(Firebolt::Device::JsonData::Method::uid, expectedValue);
+#else
+    mock(Firebolt::Device::JsonData::Method::uid);
+    auto expectedValue = jsonEngine.get_value(Firebolt::Device::JsonData::Method::uid);
+#endif  
+
+    auto result = deviceImpl_.uid();
+    ASSERT_TRUE(result) << "DeviceImpl::uid() returned an error";
 
     EXPECT_EQ(*result, expectedValue);
 }
