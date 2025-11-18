@@ -42,7 +42,7 @@ void createFireboltInstance(const std::string &url)
         .waitTime_ms = 1000,
         .log =
             {
-                .level = "Info",
+                .level = "Debug",
             },
     };
 
