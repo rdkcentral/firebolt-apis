@@ -27,6 +27,7 @@
 #include "localization.h"
 #include "metrics.h"
 #include "securestorage.h"
+#include "accessibility.h"
 #include <functional>
 #include <firebolt_config.h>
 #include <types/fb-errors.h>
@@ -123,5 +124,12 @@ public:
      * @return Reference to SecureStorage interface
      */
     virtual SecureStorage::ISecureStorage& SecureStorageInterface() = 0;
+
+    /**
+     * @brief Returns instance of Accessibiilty interface
+     *
+     * @return Reference to Accessibility interface
+     */
+    virtual Accessibility::IAccessibility& AccessibilityInterface() = 0;
 };
 } // namespace Firebolt

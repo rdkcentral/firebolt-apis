@@ -66,6 +66,7 @@ message("Setup ${UNIT_TESTS_APP}")
 
 set(UNIT_TESTS
     "unit/lifecycleTest.cpp"
+    "unit/accessibilityTest.cpp"
 )
 
 add_executable(${UNIT_TESTS_APP}
@@ -111,6 +112,7 @@ message("Setup ${COMPONENT_TESTS_APP}")
 
 set(COMPONENT_TESTS
     "component/lifecycleTest.cpp"
+    #"component/accessibilityTest.cpp"
 )
 
 add_executable(${COMPONENT_TESTS_APP}

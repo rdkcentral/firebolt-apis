@@ -25,6 +25,7 @@
 #include "localization_impl.h"
 #include "metrics_impl.h"
 #include "securestorage_impl.h"
+#include "accessibility_impl.h"
 #include <helpers.h>
 
 namespace Firebolt
@@ -40,6 +41,7 @@ public:
         , metrics_(Firebolt::Helpers::GetHelperInstance())
         , lifecycle_(Firebolt::Helpers::GetHelperInstance())
         , secureStorage_(Firebolt::Helpers::GetHelperInstance())
+		, accessibility_(Firebolt::Helpers::GetHelperInstance())
     {
     }
 
@@ -62,13 +64,14 @@ public:
         return FireboltSDK::Transport::GetGatewayInstance().Disconnect();
     }
 
-    ClosedCaptions::IClosedCaptions& ClosedCaptionsInterface() override { return closedCaptions_; }
-    Device::IDevice& DeviceInterface() override { return device_; }
-    HDMIInput::IHDMIInput& HDMIInputInterface() override { return hdmiInput_; }
-    Localization::ILocalization& LocalizationInterface() override { return localization_; }
-    Metrics::IMetrics& MetricsInterface() override { return metrics_; }
-    Lifecycle::ILifecycle& LifecycleInterface() override { return lifecycle_; }
-    SecureStorage::ISecureStorage& SecureStorageInterface() override { return secureStorage_; }
+    ClosedCaptions::IClosedCaptions &ClosedCaptionsInterface() override { return closedCaptions_; }
+    Device::IDevice &DeviceInterface() override { return device_; }
+    HDMIInput::IHDMIInput &HDMIInputInterface() override { return hdmiInput_; }
+    Localization::ILocalization &LocalizationInterface() override { return localization_; }
+    Metrics::IMetrics &MetricsInterface() override { return metrics_; }
+    Lifecycle::ILifecycle &LifecycleInterface() override { return lifecycle_; }
+    SecureStorage::ISecureStorage &SecureStorageInterface() override { return secureStorage_; }
+    Accessibility::IAccessibility &AccessibilityInterface() override { return accessibility_; }
 
 private:
     void unsubscribeAll()
@@ -78,6 +81,7 @@ private:
         hdmiInput_.unsubscribeAll();
         localization_.unsubscribeAll();
         lifecycle_.unsubscribeAll();
+        accessibility_.unsubscribeAll();
     }
 
 private:
@@ -88,6 +92,7 @@ private:
     Metrics::MetricsImpl metrics_;
     Lifecycle::LifecycleImpl lifecycle_;
     SecureStorage::SecureStorageImpl secureStorage_;
+    Accessibility::AccessibilityImpl accessibility_;
 };
 
 /* static */ IFireboltAccessor& IFireboltAccessor::Instance()
