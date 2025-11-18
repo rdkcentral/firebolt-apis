@@ -21,7 +21,7 @@ defaults:
 env:
   HUSKY: 0
   SYSROOT_PATH: ${{ github.workspace }}/deps_install
-  DEPS_FILE: ./src/cpp/.deps
+  DEPS_FILE: ${{ github.workspace }}/.github/deps
   MOCK_PATH: ${{ github.workspace }}/mock-firebolt
   MOCK_SHA1SUM: cf0c4b35b5f3997bd9e6f82a18d57eafa0c62192
   MOCK_PATCH: ${{ github.workspace }}/.github/mock-firebolt/events.patch
@@ -97,17 +97,17 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          cp src/cpp/firebolt-core-open-rpc.json build/test/
+          cp ${{ github.workspace }}/.github/openrpc/firebolt-app-open-rpc.json build/test/firebolt-core-open-rpc.json
           ctest --test-dir build/test
 
       - name: Run Component Tests
         run: |
-          cp src/cpp/firebolt-core-open-rpc.json build/test/
+          cp ${{ github.workspace }}/.github/openrpc/firebolt-app-open-rpc.json build/test/firebolt-core-open-rpc.json
           ./.github/scripts/run-component-tests.sh \
             --mock ${{ env.MOCK_PATH }} \
             --config ${{ github.workspace }}/.github/mock-firebolt/config.json \
-            --openrpc ${{ github.workspace }}/.github/mock-firebolt/firebolt-open-rpc.json \
-            --app-openrpc ${{ github.workspace }}/src/cpp/firebolt-core-open-rpc.json \
+            --openrpc ${{ github.workspace }}/.github/openrpc/firebolt-open-rpc.json \
+            --app-openrpc ${{ github.workspace }}/.github/openrpc/firebolt-app-open-rpc.json \
             --test-exe ${{ github.workspace }}/build/test/FireboltCoreComponentTests
 
       - name: Make Release package of Native SDK
