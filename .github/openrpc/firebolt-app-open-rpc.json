@@ -1,0 +1,802 @@
+{
+	"openrpc": "1.2.4",
+	"info": {
+		"title": "Firebolt JSON-RPC API",
+		"version": "1.8.0-next.11"
+	},
+	"methods": [
+		{
+			"name": "rpc.discover",
+			"summary": "The OpenRPC schema for this JSON-RPC API",
+			"params": [],
+			"tags": [
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:rpc:discover"
+					]
+				}
+			],
+			"result": {
+				"name": "OpenRPC Schema",
+				"schema": {
+					"type": "object"
+				}
+			},
+			"examples": [
+				{
+					"name": "Default",
+					"params": [],
+					"result": {
+						"name": "schema",
+						"value": {}
+					}
+				}
+			]
+		},
+		{
+			"name": "Lifecycle2.stateChanged",
+			"tags": [
+				{
+					"name": "notifier",
+					"x-event": "Lifecycle2.onStateChanged",
+					"x-contextual-parameters": 0
+				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:lifecycle2:state"
+					]
+				}
+			],
+			"summary": "Notification of lifecycle state change, raised after the platform has transitioned the app/runtime to the new lifecycle state",
+			"params": [
+				{
+					"name": "history",
+					"schema": {
+						"type": "array",
+						"minItems": 1,
+						"items": {
+							"title": "StateChange",
+							"$ref": "#/components/schemas/StateChange"
+						}
+					}
+				}
+			],
+			"examples": [
+				{
+					"name": "App is active after being initialized",
+					"params": [
+						{
+							"name": "states",
+							"value": [
+								{
+									"newState": "paused",
+									"oldState": "initializing",
+									"focused": true
+								},
+								{
+									"newState": "active",
+									"oldState": "paused",
+									"focused": true
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Single transition to paused state",
+					"params": [
+						{
+							"name": "states",
+							"value": [
+								{
+									"newState": "paused",
+									"oldState": "initializing",
+									"focused": false
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Accessibility.audioDescriptionChanged",
+			"summary": "Returns the audio description setting of the device",
+			"params": [
+				{
+					"name": "setting",
+					"summary": "the audio description setting",
+					"schema": {
+						"type": "boolean"
+					}
+				}
+			],
+			"tags": [
+				{
+					"name": "notifier",
+					"x-notifier-for": "Accessibility.audioDescription",
+					"x-event": "Accessibility.onAudioDescriptionChanged"
+				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:accessibility:audiodescriptions"
+					]
+				}
+			],
+			"examples": [
+				{
+					"name": "Getting the audio description setting",
+					"params": [
+						{
+							"name": "enabled",
+							"value": true
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Accessibility.closedCaptionsSettingsChanged",
+			"summary": "Returns captions settings: enabled, and a list of zero or more languages in order of decreasing preference",
+			"params": [
+				{
+					"name": "enabled",
+					"schema": {
+						"type": "boolean",
+						"description": "Whether or not closed-captions should be enabled by default"
+					}
+				},
+				{
+					"name": "styles",
+					"schema": {
+						"$ref": "#/x-schemas/Accessibility/ClosedCaptionsStyles"
+					}
+				},
+				{
+					"name": "preferredLanguages",
+					"schema": {
+						"type": "array",
+						"items": {
+							"$ref": "#/x-schemas/Localization/ISO639_2Language"
+						}
+					}
+				}
+			],
+			"tags": [
+				{
+					"name": "notifier",
+					"x-notifier-for": "Accessibility.closedCaptionsSettings",
+					"x-event": "Accessibility.onClosedCaptionsSettingsChanged"
+				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:accessibility:closedcaptions"
+					]
+				}
+			],
+			"examples": [
+				{
+					"name": "Getting the closed captions settings",
+					"params": [
+						{
+							"name": "enabled",
+							"value": true
+						},
+						{
+							"name": "styles",
+							"value": {
+								"fontFamily": "monospaced_sanserif",
+								"fontSize": 1,
+								"fontColor": "#ffffff",
+								"fontEdge": "none",
+								"fontEdgeColor": "#7F7F7F",
+								"fontOpacity": 100,
+								"backgroundColor": "#000000",
+								"backgroundOpacity": 100,
+								"textAlign": "center",
+								"textAlignVertical": "middle",
+								"windowColor": "white",
+								"windowOpacity": 50
+							}
+						},
+						{
+							"name": "preferredLanguages",
+							"value": [
+								"eng",
+								"spa"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Accessibility.highContrastUIChanged",
+			"summary": "Returns the high contrast UI device setting",
+			"params": [
+				{
+					"name": "highContrastUI",
+					"summary": "Whether high-contrast UI mode is enabled",
+					"schema": {
+						"type": "boolean"
+					}
+				}
+			],
+			"tags": [
+				{
+					"name": "notifier",
+					"x-notifier-for": "Accessibility.highContrastUI",
+					"x-event": "Accessibility.onHighContrastUIChanged"
+				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:accessibility:highcontrastui"
+					]
+				}
+			],
+			"examples": [
+				{
+					"name": "High-contrast UI mode is enabled",
+					"params": [
+						{
+							"name": "Default Result",
+							"value": true
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Accessibility.voiceGuidanceSettingsChanged",
+			"summary": "Returns voice guidance settings: enabled, rate, and verbosity",
+			"params": [
+				{
+					"name": "enabled",
+					"schema": {
+						"type": "boolean",
+						"description": "Whether or not voice guidance should be enabled by default"
+					}
+				},
+				{
+					"name": "rate",
+					"schema": {
+						"$ref": "#/x-schemas/Accessibility/SpeechRate",
+						"description": "The rate at which voice guidance speech will be read back to the user"
+					}
+				},
+				{
+					"name": "navigationHints",
+					"schema": {
+						"type": "boolean",
+						"description": "Whether or not voice guidance should include additional navigation hints"
+					}
+				}
+			],
+			"tags": [
+				{
+					"name": "notifier",
+					"x-notifier-for": "Accessibility.voiceGuidanceSettings",
+					"x-event": "Accessibility.onVoiceGuidanceSettingsChanged"
+				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:accessibility:voiceguidance"
+					]
+				}
+			],
+			"examples": [
+				{
+					"name": "Getting the voice guidance settings",
+					"params": [
+						{
+							"name": "enabled",
+							"value": true
+						},
+						{
+							"name": "rate",
+							"value": 0.8
+						},
+						{
+							"name": "navigationHints",
+							"value": true
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Localization.countryChanged",
+			"tags": [
+				{
+					"name": "notifier",
+					"x-notifier-for": "Localization.country",
+					"x-event": "Localization.onCountryChanged"
+				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:localization:country-code"
+					]
+				}
+			],
+			"summary": "Returns the ISO 3166-1 alpha-2 code for the country device is located in.",
+			"params": [
+				{
+					"name": "code",
+					"summary": "The device country code.",
+					"schema": {
+						"$ref": "#/x-schemas/Localization/CountryCode"
+					}
+				}
+			],
+			"examples": [
+				{
+					"name": "Default example",
+					"params": [
+						{
+							"name": "Default Result",
+							"value": "US"
+						}
+					]
+				},
+				{
+					"name": "Another example",
+					"params": [
+						{
+							"name": "Default Result",
+							"value": "GB"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Localization.preferredAudioLanguagesChanged",
+			"summary": "Returns a list of ISO 639-2/B codes for the preferred audio languages on this device.",
+			"params": [
+				{
+					"name": "languages",
+					"summary": "The preferred audio languages.",
+					"schema": {
+						"type": "array",
+						"items": {
+							"$ref": "#/x-schemas/Localization/ISO639_2Language"
+						}
+					}
+				}
+			],
+			"tags": [
+				{
+					"name": "notifier",
+					"x-notifier-for": "Localization.preferredAudioLanguages",
+					"x-event": "Localization.onPreferredAudioLanguagesChanged"
+				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:localization:language"
+					]
+				}
+			],
+			"examples": [
+				{
+					"name": "Default example",
+					"params": [
+						{
+							"name": "Default Result",
+							"value": [
+								"spa",
+								"eng"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Localization.localeChanged",
+			"tags": [
+				{
+					"name": "notifier",
+					"x-notifier-for": "Localization.locale",
+					"x-event": "Localization.onLocaleChanged"
+				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:localization:locale"
+					]
+				}
+			],
+			"summary": "Get the *full* BCP 47 code, including script, region, variant, etc., for the preferred locale",
+			"params": [
+				{
+					"name": "locale",
+					"summary": "The device locale.",
+					"schema": {
+						"$ref": "#/x-schemas/Localization/Locale"
+					}
+				}
+			],
+			"examples": [
+				{
+					"name": "Default example",
+					"params": [
+						{
+							"name": "Default Result",
+							"value": "en-US"
+						}
+					]
+				}
+			]
+		}
+	],
+	"components": {
+		"schemas": {
+			"InitializeResult": {
+				"title": "InitializeResult",
+				"type": "object",
+				"required": [
+					"version"
+				],
+				"properties": {
+					"version": {
+						"$ref": "#/x-schemas/Types/SemanticVersion",
+						"description": "The semantic version of the FEE."
+					}
+				},
+				"additionalProperties": false
+			},
+			"AdvertisingIdResult": {
+				"title": "AdvertisingIdResult",
+				"type": "object",
+				"properties": {
+					"ifa": {
+						"type": "string",
+						"description": "UUID conforming to IAB standard"
+					},
+					"ifa_type": {
+						"type": "string",
+						"description": "Source of the IFA as defined by IAB"
+					},
+					"lmt": {
+						"type": "string",
+						"enum": [
+							"0",
+							"1"
+						],
+						"description": "Boolean that if set to 1, user has requested ad tracking and measurement is disabled"
+					}
+				},
+				"required": [
+					"ifa",
+					"ifa_type",
+					"lmt"
+				]
+			},
+			"DeviceClass": {
+				"title": "DeviceClass",
+				"type": "string",
+				"enum": [
+					"ott",
+					"stb",
+					"tv"
+				],
+				"description": "The type of device"
+			},
+			"CloseType": {
+				"title": "CloseType",
+				"description": "The application close type",
+				"type": "string",
+				"enum": [
+					"deactivate",
+					"unload",
+					"killReload",
+					"killReactivate"
+				]
+			},
+			"LifecycleState": {
+				"title": "LifecycleState",
+				"description": "The application Lifecycle state",
+				"type": "string",
+				"enum": [
+					"initializing",
+					"active",
+					"paused",
+					"suspended",
+					"hibernated",
+					"terminating"
+				]
+			},
+			"StateChange": {
+				"title": "StateChange",
+				"type": "object",
+				"properties": {
+					"newState": {
+						"$ref": "#/components/schemas/LifecycleState"
+					},
+					"oldState": {
+						"$ref": "#/components/schemas/LifecycleState"
+					},
+					"focused": {
+						"type": "boolean"
+					}
+				}
+			},
+			"MemoryInfo": {
+				"title": "MemoryInfo",
+				"type": "object",
+				"description": "Describes current and maximum memory usage of the container.",
+				"properties": {
+					"userMemoryUsedKiB": {
+						"type": "integer",
+						"description": "User memory currently used in 1024 bytes."
+					},
+					"userMemoryLimitKiB": {
+						"type": "integer",
+						"description": "Maximum user memory available in 1024 bytes."
+					},
+					"gpuMemoryUsedKiB": {
+						"type": "integer",
+						"description": "GPU memory currently used in 1024 bytes."
+					},
+					"gpuMemoryLimitKiB": {
+						"type": "integer",
+						"description": "Maximum GPU memory available in 1024 bytes."
+					}
+				},
+				"required": [
+					"userMemoryUsedKiB",
+					"userMemoryLimitKiB",
+					"gpuMemoryUsedKiB",
+					"gpuMemoryLimitKiB"
+				]
+			}
+		}
+	},
+	"x-schemas": {
+		"Types": {
+			"uri": "https://meta.comcast.com/firebolt/types",
+			"SemanticVersion": {
+				"title": "SemanticVersion",
+				"type": "object",
+				"properties": {
+					"major": {
+						"type": "integer",
+						"minimum": 0
+					},
+					"minor": {
+						"type": "integer",
+						"minimum": 0
+					},
+					"patch": {
+						"type": "integer",
+						"minimum": 0
+					},
+					"readable": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"major",
+					"minor",
+					"patch",
+					"readable"
+				],
+				"additionalProperties": false
+			}
+		},
+		"Accessibility": {
+			"uri": "https://meta.comcast.com/firebolt/accessibility",
+			"ClosedCaptionsSettings": {
+				"title": "ClosedCaptionsSettings",
+				"type": "object",
+				"required": [
+					"enabled"
+				],
+				"properties": {
+					"enabled": {
+						"type": "boolean",
+						"description": "Whether or not closed-captions should be enabled by default"
+					},
+					"styles": {
+						"$ref": "#/x-schemas/Accessibility/ClosedCaptionsStyles"
+					},
+					"preferredLanguages": {
+						"type": "array",
+						"items": {
+							"$ref": "#/x-schemas/Localization/ISO639_2Language"
+						}
+					}
+				},
+				"examples": [
+					{
+						"enabled": true,
+						"styles": {
+							"fontFamily": "monospaced_serif",
+							"fontSize": 1,
+							"fontColor": "#ffffff",
+							"fontEdge": "none",
+							"fontEdgeColor": "#7F7F7F",
+							"fontOpacity": 100,
+							"backgroundColor": "#000000",
+							"backgroundOpacity": 100,
+							"textAlign": "center",
+							"textAlignVertical": "middle",
+							"windowColor": "white",
+							"windowOpacity": 50
+						},
+						"preferredLanguages": [
+							"eng",
+							"spa"
+						]
+					}
+				]
+			},
+			"VoiceGuidanceSettings": {
+				"title": "VoiceGuidanceSettings",
+				"type": "object",
+				"required": [
+					"enabled",
+					"navigationHints",
+					"rate"
+				],
+				"properties": {
+					"enabled": {
+						"type": "boolean",
+						"description": "Whether or not voice guidance should be enabled by default"
+					},
+					"rate": {
+						"$ref": "#/x-schemas/Accessibility/SpeechRate",
+						"description": "The rate at which voice guidance speech will be read back to the user"
+					},
+					"navigationHints": {
+						"type": "boolean",
+						"description": "Whether or not voice guidance should include additional navigation hints"
+					}
+				},
+				"examples": [
+					{
+						"enabled": true,
+						"navigationHints": true,
+						"rate": 0.8
+					}
+				]
+			},
+			"SpeechRate": {
+				"title": "SpeechRate",
+				"type": "number",
+				"minimum": 0.1,
+				"maximum": 10
+			},
+			"ClosedCaptionsStyles": {
+				"title": "ClosedCaptionsStyles",
+				"type": "object",
+				"description": "The default styles to use when displaying closed-captions",
+				"properties": {
+					"fontFamily": {
+						"$ref": "#/x-schemas/Accessibility/FontFamily"
+					},
+					"fontSize": {
+						"$ref": "#/x-schemas/Accessibility/FontSize"
+					},
+					"fontColor": {
+						"$ref": "#/x-schemas/Accessibility/Color"
+					},
+					"fontEdge": {
+						"$ref": "#/x-schemas/Accessibility/FontEdge"
+					},
+					"fontEdgeColor": {
+						"$ref": "#/x-schemas/Accessibility/Color"
+					},
+					"fontOpacity": {
+						"$ref": "#/x-schemas/Accessibility/Opacity"
+					},
+					"backgroundColor": {
+						"$ref": "#/x-schemas/Accessibility/Color"
+					},
+					"backgroundOpacity": {
+						"$ref": "#/x-schemas/Accessibility/Opacity"
+					},
+					"textAlign": {
+						"$ref": "#/x-schemas/Accessibility/HorizontalAlignment"
+					},
+					"textAlignVertical": {
+						"$ref": "#/x-schemas/Accessibility/VerticalAlignment"
+					},
+					"windowColor": {
+						"$ref": "#/x-schemas/Accessibility/Color"
+					},
+					"windowOpacity": {
+						"$ref": "#/x-schemas/Accessibility/Opacity"
+					}
+				}
+			},
+			"FontFamily": {
+				"type": [
+					"string",
+					"null"
+				],
+				"enum": [
+					"monospaced_serif",
+					"proportional_serif",
+					"monospaced_sanserif",
+					"proportional_sanserif",
+					"smallcaps",
+					"cursive",
+					"casual",
+					null
+				]
+			},
+			"FontSize": {
+				"type": [
+					"number",
+					"null"
+				],
+				"minimum": 0
+			},
+			"Color": {
+				"type": [
+					"string",
+					"null"
+				]
+			},
+			"FontEdge": {
+				"type": [
+					"string",
+					"null"
+				],
+				"enum": [
+					"none",
+					"raised",
+					"depressed",
+					"uniform",
+					"drop_shadow_left",
+					"drop_shadow_right",
+					null
+				]
+			},
+			"Opacity": {
+				"type": [
+					"number",
+					"null"
+				],
+				"minimum": 0,
+				"maximum": 100
+			},
+			"HorizontalAlignment": {
+				"type": [
+					"string",
+					"null"
+				]
+			},
+			"VerticalAlignment": {
+				"type": [
+					"string",
+					"null"
+				]
+			}
+		},
+		"Localization": {
+			"uri": "https://meta.comcast.com/firebolt/localization",
+			"ISO639_2Language": {
+				"type": "string",
+				"pattern": "^[a-z]{3}$"
+			},
+			"CountryCode": {
+				"type": "string",
+				"pattern": "^[A-Z]{2}$"
+			},
+			"Locale": {
+				"type": "string",
+				"pattern": "^[a-zA-Z]+([a-zA-Z0-9\\-]*)$"
+			}
+		}
+	}
+}
