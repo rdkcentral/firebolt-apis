@@ -27,6 +27,7 @@
 #include "localization.h"
 #include "metrics.h"
 #include "securestorage.h"
+#include "stats.h"
 #include <functional>
 #include <firebolt_config.h>
 #include <types/fb-errors.h>
@@ -123,5 +124,12 @@ public:
      * @return Reference to SecureStorage interface
      */
     virtual SecureStorage::ISecureStorage& SecureStorageInterface() = 0;
+
+    /**
+     * @brief Returns instance of Stats interface
+     *
+     * @return Reference to Stats interface
+     */
+    virtual Stats::IStats& StatsInterface() = 0;
 };
 } // namespace Firebolt

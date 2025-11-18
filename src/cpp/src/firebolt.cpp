@@ -25,6 +25,7 @@
 #include "localization_impl.h"
 #include "metrics_impl.h"
 #include "securestorage_impl.h"
+#include "stats_impl.h"
 #include <helpers.h>
 
 namespace Firebolt
@@ -39,7 +40,8 @@ public:
         , localization_(Firebolt::Helpers::GetHelperInstance())
         , metrics_(Firebolt::Helpers::GetHelperInstance())
         , lifecycle_(Firebolt::Helpers::GetHelperInstance())
-        , secureStorage_(Firebolt::Helpers::GetHelperInstance())
+        , secureStorage_(Firebolt::Helpers::GetHelperInstance()),
+          stats_(Firebolt::Helpers::GetHelperInstance())
     {
     }
 
@@ -69,6 +71,7 @@ public:
     Metrics::IMetrics& MetricsInterface() override { return metrics_; }
     Lifecycle::ILifecycle& LifecycleInterface() override { return lifecycle_; }
     SecureStorage::ISecureStorage& SecureStorageInterface() override { return secureStorage_; }
+    Stats::IStats& StatsInterface() override { return stats_; }
 
 private:
     void unsubscribeAll()
@@ -88,6 +91,7 @@ private:
     Metrics::MetricsImpl metrics_;
     Lifecycle::LifecycleImpl lifecycle_;
     SecureStorage::SecureStorageImpl secureStorage_;
+    Stats::StatsImpl stats_;
 };
 
 /* static */ IFireboltAccessor& IFireboltAccessor::Instance()
