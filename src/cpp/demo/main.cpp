@@ -24,23 +24,23 @@
 int main()
 try
 {
-    std::cout << "Firebolt SDK POC Demo\n";
+    std::cout << "Firebolt SDK POC Demo" << std::endl;
 
     FireboltDemoService service;
 
     std::string input;
     while (1) {
-        service.ownDemo();
-        std::cout << "Press a key to rerun, 's' for subscribe  or 'q' to quit" << std::endl;
+        std::cout << "Lifecycle" << std::endl;
+        service.lifecycle();
+        std::cout << "All subscribers are registered, events can be sent to the app from mock" << std::endl;
+        std::cout << "Press 'q' to quit" << std::endl;
         getline(std::cin, input);
-        if (false) {
-        } else if (input == "s") {
-            service.ownSubscriptionDemo();
-        } else if (input == "q") {
+        if (input == "q")
+        {
             break;
         }
+        service.unsubscribeAll();
     }
-
     return 0;
 }
 catch (const std::exception& e)
