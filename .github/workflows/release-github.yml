@@ -16,7 +16,7 @@ on:
 env:
   HUSKY: 0
   SYSROOT_PATH: ${{ github.workspace }}/deps_install
-  DEPS_FILE: ./src/cpp/.deps
+  DEPS_FILE: ${{ github.workspace }}/.github/deps
 
 jobs:
   setup_deps:

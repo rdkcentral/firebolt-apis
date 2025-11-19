@@ -1,3 +1,10 @@
+# [1.8.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.12...v1.8.0-next.13) (2025-11-18)
+
+
+### Features
+
+* New payload spec ([#454](https://github.com/rdkcentral/firebolt-apis/issues/454)) ([8b9718b](https://github.com/rdkcentral/firebolt-apis/commit/8b9718b2458545739c216d77ba86135973866485))
+
 # [1.8.0-next.12](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.11...v1.8.0-next.12) (2025-11-17)
 
 

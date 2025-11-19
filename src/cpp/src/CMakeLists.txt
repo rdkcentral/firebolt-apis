@@ -41,6 +41,9 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 find_package(FireboltTransport CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
+if (TRANPORT_LINKAGE_STATIC)
+    find_package(websocketpp CONFIG REQUIRED)
+endif()
 
 generate_export_header(${TARGET})
 

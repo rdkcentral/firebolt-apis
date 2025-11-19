@@ -49,6 +49,7 @@ option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 option(ENABLE_TESTS "Build openrpc native test" OFF)
 option(DISCOVER_UT "Discover all Unit Tests" ON)
 option(DISCOVER_CT "Discover all Component Tests" ON)
+option(TRANSPORT_LINKAGE_STATIC "Link transport library statically (ON) or shared (OFF)" OFF)
 option(ENABLE_DEMO_APP "Build demo app" OFF)
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
