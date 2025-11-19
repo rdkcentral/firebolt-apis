@@ -1,3 +1,10 @@
+# [1.8.0-next.14](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.13...v1.8.0-next.14) (2025-11-19)
+
+
+### Features
+
+* Update namings ([#455](https://github.com/rdkcentral/firebolt-apis/issues/455)) ([2432e35](https://github.com/rdkcentral/firebolt-apis/commit/2432e356f16e0d98d3db0be34198be4a59679e4d))
+
 # [1.8.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.12...v1.8.0-next.13) (2025-11-18)
 
 
