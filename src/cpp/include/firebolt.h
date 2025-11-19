@@ -27,6 +27,7 @@
 #include "localization.h"
 #include "metrics.h"
 #include "securestorage.h"
+#include "advertising.h"
 #include <functional>
 #include <firebolt_config.h>
 #include <types/fb-errors.h>
@@ -123,5 +124,12 @@ public:
      * @return Reference to SecureStorage interface
      */
     virtual SecureStorage::ISecureStorage& SecureStorageInterface() = 0;
+
+    /**
+     * @brief Returns instance of Advertising interface
+     *
+     * @return Reference to Advertising interface
+     */    
+    virtual Advertising::IAdvertising& AdvertisingInterface() = 0;
 };
 } // namespace Firebolt
