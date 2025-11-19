@@ -37,7 +37,7 @@ protected:
 
 TEST_F(DeviceTest, GetClass)
 {
-    auto expectedValue = jsonEngine.get_value(Firebolt::Device::JsonData::Method::deviceClass);
+    auto expectedValue = jsonEngine.get_value("Device.deviceClass");
     auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().deviceClass();
     ASSERT_TRUE(result) << "DeviceImpl::deviceClass() returned an error";
     EXPECT_EQ(static_cast<int>(*result), static_cast<int>(Firebolt::Device::JsonData::DeviceClassEnum.at(expectedValue)));
@@ -45,15 +45,23 @@ TEST_F(DeviceTest, GetClass)
 
 TEST_F(DeviceTest, Uptime)
 {
-    auto expectedValue = jsonEngine.get_value(Firebolt::Device::JsonData::Method::uptime);
+    auto expectedValue = jsonEngine.get_value("Device.uptime");
     auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().uptime();
     ASSERT_TRUE(result) << "DeviceImpl::uptime() returned an error";
     EXPECT_EQ(*result, expectedValue);
 }
 
+TEST_F(DeviceTest, TimeInActiveState)
+{
+    auto expectedValue = jsonEngine.get_value("Device.timeInActiveState");
+    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().timeInActiveState();
+    ASSERT_TRUE(result) << "DeviceImpl::timeInActiveState() returned an error";
+    EXPECT_EQ(*result, expectedValue);
+}   
+
 TEST_F(DeviceTest, Uid)
 {
-    auto expectedValue = jsonEngine.get_value(Firebolt::Device::JsonData::Method::uid);
+    auto expectedValue = jsonEngine.get_value("Device.uid");
     auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().uid();
     ASSERT_TRUE(result) << "DeviceImpl::uid() returned an error";
     EXPECT_EQ(*result, expectedValue);

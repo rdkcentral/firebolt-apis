@@ -26,16 +26,21 @@ DeviceImpl::DeviceImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
 
 Result<DeviceClass> DeviceImpl::deviceClass() const
 {
-    return Result(helper_.get<JsonData::DeviceClassJson, DeviceClass>(Firebolt::Device::JsonData::Method::deviceClass));
+    return Result(helper_.get<JsonData::DeviceClassJson, DeviceClass>("Device.deviceClass"));
+}
+
+Result<u_int32_t> DeviceImpl::timeInActiveState() const
+{
+    return helper_.get<FireboltSDK::JSON::Integer, u_int32_t>("Device.timeInActiveState");
 }
 
 Result<uint32_t> DeviceImpl::uptime() const
 {
-    return helper_.get<FireboltSDK::JSON::Integer, uint32_t>(Firebolt::Device::JsonData::Method::uptime);
+    return helper_.get<FireboltSDK::JSON::Integer, uint32_t>("Device.uptime");
 }
 
 Result<std::string> DeviceImpl::uid() const
 {
-    return helper_.get<FireboltSDK::JSON::String, std::string>(Firebolt::Device::JsonData::Method::uid);
+    return helper_.get<FireboltSDK::JSON::String, std::string>("Device.uid");
 }
 } // namespace Firebolt::Device

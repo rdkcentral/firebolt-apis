@@ -39,10 +39,10 @@ TEST_F(DeviceTest, GetClass)
 {
 #ifdef USE_LOCAL_RESPONSE
     nlohmann::json expectedValue = "stb";
-    mock_with_response(Firebolt::Device::JsonData::Method::deviceClass, expectedValue);
+    mock_with_response("Device.deviceClass", expectedValue);
 #else
-    mock(Firebolt::Device::JsonData::Method::deviceClass);
-    auto expectedValue = jsonEngine.get_    value(Firebolt::Device::JsonData::Method::deviceClass);
+    mock("Device.deviceClass");
+    auto expectedValue = jsonEngine.get_    value("Device.deviceClass");
 #endif
 
     auto result = deviceImpl_.deviceClass();
@@ -52,14 +52,29 @@ TEST_F(DeviceTest, GetClass)
     EXPECT_EQ(static_cast<int>(*result), static_cast<int>(Firebolt::Device::JsonData::DeviceClassEnum.at(expectedValue)));
 }
 
+TEST_F(DeviceTest, TimeInActiveState)
+{
+#ifdef USE_LOCAL_RESPONSE
+    nlohmann::json expectedValue = 1800;
+    mock_with_response("Device.timeInActiveState", expectedValue);
+#else
+    mock("Device.timeInActiveState");
+    auto expectedValue = jsonEngine.get_value("Device.timeInActiveState");
+#endif
+    auto result = deviceImpl_.timeInActiveState();
+    ASSERT_TRUE(result) << "DeviceImpl::timeInActiveState() returned an error";
+
+    EXPECT_EQ(*result, expectedValue);
+}
+
 TEST_F(DeviceTest, Uptime)
 {
 #ifdef USE_LOCAL_RESPONSE
     nlohmann::json expectedValue = 3600;
-    mock_with_response(Firebolt::Device::JsonData::Method::uptime, expectedValue);
+    mock_with_response("Device.uptime", expectedValue);
 #else
-    mock(Firebolt::Device::JsonData::Method::uptime);
-    auto expectedValue = jsonEngine.get_value(Firebolt::Device::JsonData::Method::uptime);
+    mock("Device.uptime");
+    auto expectedValue = jsonEngine.get_value("Device.uptime");
 #endif
 
     auto result = deviceImpl_.uptime();
@@ -72,10 +87,10 @@ TEST_F(DeviceTest, Uid)
 {
 #ifdef USE_LOCAL_RESPONSE
     nlohmann::json expectedValue = "123e4567-e89b-12d3-a456-426614174000";
-    mock_with_response(Firebolt::Device::JsonData::Method::uid, expectedValue);
+    mock_with_response("Device.uid", expectedValue);
 #else
-    mock(Firebolt::Device::JsonData::Method::uid);
-    auto expectedValue = jsonEngine.get_value(Firebolt::Device::JsonData::Method::uid);
+    mock("Device.uid");
+    auto expectedValue = jsonEngine.get_value("Device.uid");
 #endif  
 
     auto result = deviceImpl_.uid();

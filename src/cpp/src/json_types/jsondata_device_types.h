@@ -29,32 +29,14 @@
 
 namespace Firebolt::Device::JsonData
 {
-namespace Method
-{
-static const std::string deviceClass = "Device.deviceClass";
-static const std::string uptime = "Device.uptime";
-static const std::string uid = "Device.uid";
-} // namespace Method
-
-namespace Field
-{
-namespace DeviceClass
-{
-static const std::string STB = "stb";
-static const std::string OTT = "ott";
-static const std::string TV = "tv";
-} // namespace DeviceClass
-} // namespace Field
-
 // Enums
 inline FireboltSDK::JSON::EnumType<::Firebolt::Device::DeviceClass> const DeviceClassEnum({
-    {Field::DeviceClass::STB, ::Firebolt::Device::DeviceClass::STB},
-    {Field::DeviceClass::OTT, ::Firebolt::Device::DeviceClass::OTT},
-    {Field::DeviceClass::TV, ::Firebolt::Device::DeviceClass::TV},
+    {"stb", ::Firebolt::Device::DeviceClass::STB},
+    {"ott", ::Firebolt::Device::DeviceClass::OTT},
+    {"tv", ::Firebolt::Device::DeviceClass::TV},
 });
 
 // Types
-
 class DeviceClassJson : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::DeviceClass>
 {
 public:
