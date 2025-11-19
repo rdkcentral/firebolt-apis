@@ -18,8 +18,8 @@
  */
 
 #include "FireboltDemoService.h"
+#include "Firebolt/config.h"
 #include <cstdlib>
-#include <firebolt_config.h>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -105,10 +105,10 @@ FireboltDemoService::FireboltDemoService()
     }
     std::cout << "Using firebolt URL: " << url << std::endl;
 
-    FireboltSDK::Config config;
+    Firebolt::Config config;
     config.wsUrl = url;
     config.waitTime_ms = 3000;
-    config.log.level = "Debug";
+    config.log.level = Firebolt::LogLevel::Debug;
 
     auto error =
         Firebolt::IFireboltAccessor::Instance().Connect(config, [this](const bool connected, const Firebolt::Error error)
@@ -131,260 +131,49 @@ FireboltDemoService::~FireboltDemoService()
     deinitialize();
 }
 
-void FireboltDemoService::setupDeviceSubscriptions()
-{
-    std::cout << "Setup Device subscriptions..." << std::endl;
-    auto subscriptionId = Firebolt::IFireboltAccessor::Instance().DeviceInterface().subscribeOnDeviceNameChanged(
-        [](const auto& deviceName)
-        { std::cout << "[Subscription] Device name changed to: " << deviceName << std::endl; });
-    if (subscriptionId)
-    {
-        deviceSubscriptionIds_.insert(*subscriptionId);
-    }
-    else
-    {
-        std::cout << "Failed to subscribe on DeviceNameChanged, error: " << subscriptionId.error() << std::endl;
-    }
-    subscriptionId = Firebolt::IFireboltAccessor::Instance().DeviceInterface().subscribeOnNameChanged(
-        [](const auto& name) { std::cout << "[Subscription] Name changed to: " << name << std::endl; });
-    if (subscriptionId)
-    {
-        deviceSubscriptionIds_.insert(*subscriptionId);
-    }
-    else
-    {
-        std::cout << "Failed to subscribe on NameChanged, error: " << subscriptionId.error() << std::endl;
-    }
-    subscriptionId = Firebolt::IFireboltAccessor::Instance().DeviceInterface().subscribeOnNetworkChanged(
-        [](const auto& network) { std::cout << "[Subscription] Network changed: state: " << static_cast<int>(network.state) << ", type: " << static_cast<int>(network.type) << std::endl; });
-    if (subscriptionId)
-    {
-        deviceSubscriptionIds_.insert(*subscriptionId);
-    }
-    else
-    {
-        std::cout << "Failed to subscribe on NetworkChanged, error: " << subscriptionId.error() << std::endl;
-    }
-}
-
-void FireboltDemoService::unsubscribeAll()
-{
-    std::cout << "Unsubscribing..." << std::endl;
-    for (const auto& subscriptionId : deviceSubscriptionIds_)
-    {
-        auto result{Firebolt::IFireboltAccessor::Instance().DeviceInterface().unsubscribe(subscriptionId)};
-        if (!result)
-        {
-            std::cout << "Device unsubscribe with id: " << subscriptionId << " failed, error: " << result.error()
-                      << std::endl;
-        }
-    }
-}
-
-
 std::string bool2str(const bool value)
 {
     return value ? "true" : "false";
 }
 
-void FireboltDemoService::ownDemo()
+void FireboltDemoService::lifecycle()
 {
-    if (auto id = Firebolt::IFireboltAccessor::Instance().DeviceInterface().id()) {
-        std::cout << "Id: " << *id << std::endl;
-    } else {
-        std::cout << "id: failed, error: " << id.error() << std::endl;
+    auto state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().getCurrentState();
+    if (state)
+    {
+      std::cout << "Current state: " << static_cast<int>(*state) << std::endl;
     }
-    if (auto name = Firebolt::IFireboltAccessor::Instance().DeviceInterface().name()) {
-        std::cout << "name: " << *name << std::endl;
-    } else {
-        std::cout << "name: failed, error: " << name.error() << std::endl;
+    else
+    {
+        std::cout << "Cannot get current state, err:" << static_cast<int32_t>(state.error()) << std::endl;
     }
-    if (auto model = Firebolt::IFireboltAccessor::Instance().DeviceInterface().model()) {
-        std::cout << "model: " << *model << std::endl;
-    } else {
-        std::cout << "model: failed, error: " << model.error() << std::endl;
-    }
-    if (auto version = Firebolt::IFireboltAccessor::Instance().DeviceInterface().version()) {
-        std::cout << "sdl-ver: " << version->sdk.major << "." << version->sdk.minor << "." << version->sdk.patch
-                  << " " << version->sdk.readable << std::endl;
-        std::cout << "api-ver: " << version->api.major << "." << version->api.minor << "." << version->api.patch
-                  << " " << version->api.readable << std::endl;
-        std::cout << "f/w-ver: " << version->firmware.major << "." << version->firmware.minor << "."
-                  << version->firmware.patch << " " << version->firmware.readable << std::endl;
-        std::cout << "dbg-ver: " << version->debug << std::endl;
-    } else {
-        std::cout << "version: failed, error: << " << version.error() << std::endl;
-    }
-    if (auto audio = Firebolt::IFireboltAccessor::Instance().DeviceInterface().audio()) {
-        std::cout << "audio profiles: "
-                  << "stereo: " << bool2str(audio->stereo) << ", "
-                  << "dd5.1: " << bool2str(audio->dolbyDigital5_1) << ", "
-                  << "dd5.1+: " << bool2str(audio->dolbyDigital5_1_plus) << ", "
-                  << "datmos: " << bool2str(audio->dolbyAtmos) << std::endl;
-    } else {
-        std::cout << "audio: failed, error: " << audio.error() << std::endl;
-    }
-    if (auto hdcp = Firebolt::IFireboltAccessor::Instance().DeviceInterface().hdcp()) {
-        std::cout << "hdcp: "
-                  << "1.4: " << bool2str(hdcp->hdcp1_4) << ", "
-                  << "2.2: " << bool2str(hdcp->hdcp2_2) << std::endl;
-    } else {
-        std::cout << "hdcp: failed, error: " << hdcp.error() << std::endl;
-    }
-    if (auto ports = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().ports()) {
-        std::cout << "ports: " << ports->size() << std::endl;
-        for (const auto& i : *ports) {
-          std::cout << "     : "
-                    << i.port << ", "
-                    << i.connected << ", "
-                    << static_cast<int>(i.signal) << ", "
-                    << i.arcCapable << ", "
-                    << i.arcConnected << ", "
-                    << static_cast<int>(i.edidVersion) << ", "
-                    << i.autoLowLatencyModeCapable << ", "
-                    << i.autoLowLatencyModeSignalled << std::endl;
-        }
-    } else {
-        std::cout << "hdmi-ports: failed, error: " << ports.error() << std::endl;
-    }
-    if(auto edid = Firebolt::IFireboltAccessor::Instance().HDMIInputInterface().setEdidVersion("HDMI1", Firebolt::HDMIInput::EDIDVersion::V1_4)) {
-        std::cout << "hdmi-set-edid: OK" << std::endl;
-    } else {
-        std::cout << "hdmi-set-edid: failed, error: " << edid.error() << std::endl;
-    }
-}
 
-void FireboltDemoService::ownSubscriptionDemo()
-{
-    auto subscriptionId = Firebolt::IFireboltAccessor::Instance().DeviceInterface().subscribeOnNetworkChanged(
-        [](const auto& network) { std::cout << "[Subscription] Network changed: state: " << static_cast<int>(network.state) << ", type: " << static_cast<int>(network.type) << std::endl; });
-    if (!subscriptionId) {
-        std::cout << "Failed to subscribe on NetworkChanged, error: " << subscriptionId.error() << std::endl;
+    auto id = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnStateChanged(
+        [&](const std::vector<Firebolt::Lifecycle::StateChange> &changes)
+        {
+            std::cout << "[Subscription] Lifecycle state changed: " << static_cast<int>(changes[0].newState)
+                      << ", old state: " << static_cast<int>(changes[0].oldState) << ", focused: " << changes[0].focused
+                      << std::endl;
+        });
+    if (!id)
+    {
+        std::cout << "Failed to subscribe, error: " << id.error() << std::endl;
         return;
     }
-    std::string input;
-    std::cout << "Press a 'q' to quit" << std::endl;
-    while (1) {
-        getline(std::cin, input);
-        if (false) {
-        } else if (input == "q") {
-            break;
-        }
-    }
-    Firebolt::IFireboltAccessor::Instance().DeviceInterface().unsubscribe(*subscriptionId);
+    lifecycleSubscriptionIds_.insert(*id);
 }
 
-FireboltDemoService::DeviceInfo FireboltDemoService::getAndPrintDeviceValues()
+void FireboltDemoService::unsubscribeAll()
 {
-    std::cout << "Get and print device values..." << std::endl;
-    DeviceInfo result;
-    if (auto id = Firebolt::IFireboltAccessor::Instance().DeviceInterface().id())
+    std::cout << "Unsubscribing..." << std::endl;
+    for (const auto &id : lifecycleSubscriptionIds_)
     {
-        std::cout << "Device Id is: " << *id << std::endl;
-        result.id = *id;
+        auto result{Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(id)};
+        if (!result)
+        {
+            std::cout << "Unsubscribe with id: " << id << " failed, error: " << result.error() << std::endl;
+        }
     }
-    else
-    {
-        std::cout << "Get device id failed, error: << " << id.error() << std::endl;
-    }
-    if (auto manufacturer = Firebolt::IFireboltAccessor::Instance().DeviceInterface().make())
-    {
-        std::cout << "Device manufacturer is: " << *manufacturer << std::endl;
-        result.manufacturer = *manufacturer;
-    }
-    else
-    {
-        std::cout << "Get device manufacturer failed, error: << " << manufacturer.error() << std::endl;
-    }
-    if (auto model = Firebolt::IFireboltAccessor::Instance().DeviceInterface().model())
-    {
-        std::cout << "Device model is: " << *model << std::endl;
-        result.model = *model;
-    }
-    else
-    {
-        std::cout << "Get device model failed, error: << " << model.error() << std::endl;
-    }
-    if (auto name = Firebolt::IFireboltAccessor::Instance().DeviceInterface().name())
-    {
-        std::cout << "Device name is: " << *name << std::endl;
-        result.name = *name;
-        currentDeviceName_ = *name;
-    }
-    else
-    {
-        std::cout << "Get device name failed, error: << " << name.error() << std::endl;
-    }
-    if (auto platform = Firebolt::IFireboltAccessor::Instance().DeviceInterface().platform())
-    {
-        std::cout << "Device platform is: " << *platform << std::endl;
-        result.platform = *platform;
-    }
-    else
-    {
-        std::cout << "Get device platform failed, error: << " << platform.error() << std::endl;
-    }
-    if (auto type = Firebolt::IFireboltAccessor::Instance().DeviceInterface().type())
-    {
-        std::cout << "Device type is: " << *type << std::endl;
-        result.type = *type;
-    }
-    else
-    {
-        std::cout << "Get device type failed, error: << " << type.error() << std::endl;
-    }
-    if (auto uid = Firebolt::IFireboltAccessor::Instance().DeviceInterface().uid())
-    {
-        std::cout << "Device uid is: " << *uid << std::endl;
-        result.uid = *uid;
-    }
-    else
-    {
-        std::cout << "Get device uid failed, error: << " << uid.error() << std::endl;
-    }
-    if (auto version = Firebolt::IFireboltAccessor::Instance().DeviceInterface().version())
-    {
-        std::cout << "SDL version is: " << version->sdk.major << "." << version->sdk.minor << "." << version->sdk.patch
-                  << " " << version->sdk.readable << std::endl;
-        std::cout << "API version is: " << version->api.major << "." << version->api.minor << "." << version->api.patch
-                  << " " << version->api.readable << std::endl;
-        std::cout << "Firmware version is: " << version->firmware.major << "." << version->firmware.minor << "."
-                  << version->firmware.patch << " " << version->firmware.readable << std::endl;
-        std::cout << "Debug version info is: " << version->debug << std::endl;
-    }
-    else
-    {
-        std::cout << "Device version failed, error: << " << version.error() << std::endl;
-    }
-    if (auto networkInfo = Firebolt::IFireboltAccessor::Instance().DeviceInterface().network())
-    {
-        std::cout << "Device network is: state: " << static_cast<int>(networkInfo->state) << ", type: " << static_cast<int>(networkInfo->type)
-                  << std::endl;
-    }
-    else
-    {
-        std::cout << "Get device network failed, error: << " << networkInfo.error() << std::endl;
-    }
-    if (auto screenResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution())
-    {
-        std::cout << "Device screen resolution is: " << screenResolution.value()[0] << ", "
-                  << screenResolution.value()[1] << std::endl;
-    }
-    else
-    {
-        std::cout << "Get device screen resolution failed, error: << " << screenResolution.error() << std::endl;
-    }
-    if (auto videoResolution = Firebolt::IFireboltAccessor::Instance().DeviceInterface().videoResolution())
-    {
-        std::cout << "Device video resolution is: " << videoResolution.value()[0] << ", " << videoResolution.value()[1]
-                  << std::endl;
-    }
-    else
-    {
-        std::cout << "Get device video resolution failed, error: << " << videoResolution.error() << std::endl;
-    }
-
-    return result;
 }
 
 void FireboltDemoService::onConnectionChanged(const bool connected, const Firebolt::Error error)

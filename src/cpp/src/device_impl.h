@@ -20,7 +20,7 @@
 #pragma once
 
 #include "device.h"
-#include "helpers.h"
+#include "Firebolt/helpers.h"
 
 namespace Firebolt::Device
 {

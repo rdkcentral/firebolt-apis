@@ -19,21 +19,19 @@
 
 #pragma once
 
-#include "closedcaptions.h"
+#include "fireboltclient_export.h"
 #include "device.h"
-#include "fireboltsdk_export.h"
-#include "hdmiinput.h"
 #include "lifecycle.h"
 #include "localization.h"
 #include "metrics.h"
 #include "securestorage.h"
+#include "Firebolt/config.h"
+#include "Firebolt/types.h"
 #include <functional>
-#include <firebolt_config.h>
-#include <types/fb-errors.h>
 
 namespace Firebolt
 {
-class FIREBOLTSDK_EXPORT IFireboltAccessor
+class FIREBOLTCLIENT_EXPORT IFireboltAccessor
 {
 public:
     virtual ~IFireboltAccessor() = default;
@@ -56,9 +54,9 @@ public:
     static IFireboltAccessor& Instance();
 
     /**
-     * @brief Attempt a initialize Firebolt SDK and connection to the endpoint using given config.
+     * @brief Attempt a initialize Firebolt Client and connection to the endpoint using given config.
      *        This method is asynchronous and the user is expected to wait for the OnConnectionChanged callback
-     *        to report successful connection before calling SDK methods
+     *        to report successful connection before calling APIs methods
      *
      * @param config: Configuration parameters
      *
@@ -66,7 +64,7 @@ public:
      *
      * @return Firebolt::Error
      */
-    virtual Firebolt::Error Connect(const FireboltSDK::Config &config, OnConnectionChanged listener) = 0;
+    virtual Firebolt::Error Connect(const Firebolt::Config &config, OnConnectionChanged listener) = 0;
 
     /**
      * @brief Disconnects from the Websocket endpoint.
@@ -76,25 +74,11 @@ public:
     virtual Firebolt::Error Disconnect() = 0;
 
     /**
-     * @brief Returns instance of ClosedCaptions interface
-     *
-     * @return Reference to ClosedCaptions interface
-     */
-    virtual ClosedCaptions::IClosedCaptions& ClosedCaptionsInterface() = 0;
-
-    /**
      * @brief Returns instance of Device interface
      *
      * @return Reference to Device interface
      */
     virtual Device::IDevice& DeviceInterface() = 0;
-
-    /**
-     * @brief Returns instance of HDMIInput interface
-     *
-     * @return Reference to HDMIInput interface
-     */
-    virtual HDMIInput::IHDMIInput& HDMIInputInterface() = 0;
 
     /**
      * @brief Returns instance of Localization interface

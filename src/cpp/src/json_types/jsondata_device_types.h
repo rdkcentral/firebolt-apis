@@ -22,22 +22,22 @@
 #include "device.h"
 
 #include <algorithm>
+#include "Firebolt/json_types.h"
 #include <map>
 #include <nlohmann/json.hpp>
 #include <string>
-#include <types/json_types.h>
 
 namespace Firebolt::Device::JsonData
 {
 // Enums
-inline FireboltSDK::JSON::EnumType<::Firebolt::Device::DeviceClass> const DeviceClassEnum({
+inline Firebolt::JSON::EnumType<::Firebolt::Device::DeviceClass> const DeviceClassEnum({
     {"stb", ::Firebolt::Device::DeviceClass::STB},
     {"ott", ::Firebolt::Device::DeviceClass::OTT},
     {"tv", ::Firebolt::Device::DeviceClass::TV},
 });
 
 // Types
-class DeviceClassJson : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::DeviceClass>
+class DeviceClassJson : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Device::DeviceClass>
 {
 public:
     void FromJson(const nlohmann::json &json) override { deviceClass_ = DeviceClassEnum.at(json); }
