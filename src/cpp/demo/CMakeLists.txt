@@ -16,7 +16,7 @@
 
 if (NOT CMAKE_PROJECT_NAME)
     cmake_minimum_required(VERSION 3.10)
-    project(FireboltCoreSDKDemo)
+    project(FireboltCoreDemo)
 
     if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
         set(CMAKE_INSTALL_PREFIX "${SYSROOT_PATH}/usr" CACHE INTERNAL "" FORCE)
@@ -28,7 +28,7 @@ if (NOT CMAKE_PROJECT_NAME)
         "${SYSROOT_PATH}/tools/cmake"
     )
 endif ()
-set(DEMO_APP FireboltCoreSDKDemo)
+set(DEMO_APP FireboltCoreDemo)
 
 message("Setup ${DEMO_APP}")
 
@@ -41,15 +41,16 @@ add_executable(${DEMO_APP}
     main.cpp)
 
 if (NOT ENABLE_DEMO_APP)
-    find_package(FireboltSDK CONFIG REQUIRED)
+    find_package(FireboltClient CONFIG REQUIRED)
     target_link_libraries(${DEMO_APP}
         PRIVATE
-            FireboltSDK::FireboltSDK
+            FireboltTransport::FireboltTransport
+            FireboltClient::FireboltClient
     )
 else()
   target_link_libraries(${DEMO_APP}
         PRIVATE
-            FireboltSDK
+            FireboltClient
     )
 endif ()
 

@@ -19,7 +19,6 @@
 
 #pragma once
 
-#include <types/fb-errors.h>
 #include <types/types.h>
 
 namespace Firebolt::SecureStorage

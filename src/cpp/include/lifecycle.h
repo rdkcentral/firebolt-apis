@@ -19,10 +19,9 @@
 
 #pragma once
 
+#include <types/types.h>
 #include <functional>
 #include <string>
-#include <types/fb-errors.h>
-#include <types/types.h>
 #include <vector>
 
 namespace Firebolt::Lifecycle

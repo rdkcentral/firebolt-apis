@@ -24,7 +24,7 @@
 
 namespace Firebolt::Accessibility::JsonData
 {
-inline FireboltSDK::JSON::EnumType<::Firebolt::Accessibility::FontFamily> FontFamilyEnum({
+inline Firebolt::JSON::EnumType<::Firebolt::Accessibility::FontFamily> FontFamilyEnum({
     { "monospaced_serif", ::Firebolt::Accessibility::FontFamily::MONOSPACED_SERIF },
     { "proportional_serif", ::Firebolt::Accessibility::FontFamily::PROPORTIONAL_SERIF },
     { "monospaced_sanserif", ::Firebolt::Accessibility::FontFamily::MONOSPACED_SANSERIF },
@@ -34,7 +34,7 @@ inline FireboltSDK::JSON::EnumType<::Firebolt::Accessibility::FontFamily> FontFa
     { "casual", ::Firebolt::Accessibility::FontFamily::CASUAL },
 });
 
-inline FireboltSDK::JSON::EnumType<Firebolt::Accessibility::FontEdge> FontEdgeEnum({
+inline Firebolt::JSON::EnumType<Firebolt::Accessibility::FontEdge> FontEdgeEnum({
     { "none", ::Firebolt::Accessibility::FontEdge::NONE },
     { "raised", ::Firebolt::Accessibility::FontEdge::RAISED },
     { "depressed", ::Firebolt::Accessibility::FontEdge::DEPRESSED },
@@ -43,7 +43,7 @@ inline FireboltSDK::JSON::EnumType<Firebolt::Accessibility::FontEdge> FontEdgeEn
     { "drop_shadow_right", ::Firebolt::Accessibility::FontEdge::DROP_SHADOW_RIGHT },
 });
 
-class FontFamily : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Accessibility::FontFamily>
+class FontFamily : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Accessibility::FontFamily>
 {
 public:
     FontFamily() = default;
@@ -60,7 +60,7 @@ private:
     ::Firebolt::Accessibility::FontFamily value_;
 };
 
-class FontEdge : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Accessibility::FontEdge>
+class FontEdge : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Accessibility::FontEdge>
 {
 public:
     FontEdge() = default;

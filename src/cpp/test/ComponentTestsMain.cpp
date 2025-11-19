@@ -20,7 +20,7 @@
 #include "firebolt.h"
 #include "gtest/gtest.h"
 
-#include <firebolt_config.h>
+#include <config.h>
 #include <iostream>
 #include <string>
 #include <thread>
@@ -37,14 +37,10 @@ void connectionChanged(const bool connected, const Firebolt::Error error)
 
 void createFireboltInstance(const std::string &url)
 {
-    FireboltSDK::Config config = {
-        .wsUrl = url,
-        .waitTime_ms = 1000,
-        .log =
-            {
-                .level = "Debug",
-            },
-    };
+    Firebolt::Config config;
+    config.wsUrl = url;
+    config.waitTime_ms = 1000;
+    config.log.level = Firebolt::LogLevel::Debug;
 
     gConnected = false;
     Firebolt::IFireboltAccessor::Instance().Connect(config, connectionChanged);

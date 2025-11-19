@@ -23,25 +23,14 @@
 #include <iostream>
 #include <map>
 
-class CoreSDKTest
+class CoreClientTest
 {
 public:
-    CoreSDKTest() = default;
-    virtual ~CoreSDKTest() = default;
+    CoreClientTest() = default;
+    virtual ~CoreClientTest() = default;
 
     static void CreateFireboltInstance(const std::string& url);
     static void DestroyFireboltInstance();
-
-    // ClosedCaptions
-    static void GetClosedCaptionsBackgroundOpacity();
-    static void SetClosedCaptionsBackgroundOpacity();
-    static void SubscribeClosedCaptionsBackgroundOpacityChanged();
-    static void UnsubscribeClosedCaptionsBackgroundOpacityChanged();
-
-    static void GetClosedCaptionsFontFamily();
-    static void SetClosedCaptionsFontFamily();
-    static void SubscribeClosedCaptionsFontFamilyChanged();
-    static void UnsubscribeClosedCaptionsFontFamilyChanged();
 
     // Device
     static void GetDeviceName();
@@ -56,35 +45,6 @@ public:
     static void GetDeviceScreenResolution();
     static void SubscribeDeviceScreenResolutionChanged();
     static void UnsubscribeDeviceScreenResolutionChanged();
-
-    // HdmiInput
-    static void SubscribeHdmiAutoLowLatencyModeCapableChanged();
-    static void UnsubscribeHdmiAutoLowLatencyModeCapableChanged();
-    static void GetAutoLowLatencyModeCapable();
-    static void SetAutoLowLatencyModeCapable();
-    static void GetEdidVersion();
-    static void SetEdidVersion();
-    static void OpenHdmiPort();
-    static void CloseHdmiPort();
-    static void GetHdmiPortInfo();
-
-    #ifdef USE_LIFECYCLE1
-    // Lifecycle
-    static void LifecycleReady();
-    static void LifecycleClose();
-    static void LifecycleFinished();
-    static void LifecycleState();
-    static void SubscribeOnLifecycleBackgroundChanged();
-    static void UnsubscribeOnLifecycleBackgroundChanged();
-    static void SubscribeOnLifecycleForegroundChanged();
-    static void UnsubscribeOnLifecycleForegroundChanged();
-    static void SubscribeOnLifecycleInactiveChanged();
-    static void UnsubscribeOnLifecycleInactiveChanged();
-    static void SubscribeOnLifecycleSuspendedChanged();
-    static void UnsubscribeOnLifecycleSuspendedChanged();
-    static void SubscribeOnLifecycleUnloadingChanged();
-    static void UnsubscribeOnLifecycleUnloadingChanged();
-    #endif // USE_LIFECYCLE1
 
     // Localization
     static void GetLocalizationCountryCode();
@@ -114,18 +74,9 @@ private:
 
     enum class Subscriptions
     {
-        ClosedCaptionsOpacity,
-        ClosedCaptionsFontFamily,
-        ContentDecryptionWatermarkStatus,
         DeviceName,
         DeviceAudio,
         DeviceScreenResolution,
-        HdmiInputAutoLowLatencyModeCapable,
-        LifecycleBackgroundChanged,
-        LifecycleForegroundChanged,
-        LifecycleInactiveChanged,
-        LifecycleSuspendedChanged,
-        LifecycleUnloadingChanged,
         LocalizationCountryCodeChanged,
         LocalizationPreferredAudioLanguagesChanged
     };

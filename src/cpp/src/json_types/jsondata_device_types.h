@@ -30,18 +30,18 @@
 namespace Firebolt::Device::JsonData
 {
 
-inline FireboltSDK::JSON::EnumType<::Firebolt::Device::NetworkState> const NetworkStateEnum({
+inline Firebolt::JSON::EnumType<::Firebolt::Device::NetworkState> const NetworkStateEnum({
     { "connected",    ::Firebolt::Device::NetworkState::CONNECTED },
     { "disconnected", ::Firebolt::Device::NetworkState::DISCONNECTED },
 });
 
-inline FireboltSDK::JSON::EnumType<::Firebolt::Device::NetworkType> const NetworkTypeEnum({
+inline Firebolt::JSON::EnumType<::Firebolt::Device::NetworkType> const NetworkTypeEnum({
     { "wifi",     ::Firebolt::Device::NetworkType::WIFI },
     { "ethernet", ::Firebolt::Device::NetworkType::ETHERNET },
     { "hybrid",   ::Firebolt::Device::NetworkType::HYBRID },
 });
 
-class SemanticVersion : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::SemanticVersion>
+class SemanticVersion : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Device::SemanticVersion>
 {
 public:
     void FromJson(const nlohmann::json& json) override
@@ -67,7 +67,7 @@ private:
     std::string readable = "";
 };
 
-class DeviceVersion : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::DeviceVersion>
+class DeviceVersion : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Device::DeviceVersion>
 {
 public:
     void FromJson(const nlohmann::json& json) override
@@ -107,7 +107,7 @@ private:
     std::string debug_{""};
 };
 
-class AudioProfiles : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::AudioProfiles>
+class AudioProfiles : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Device::AudioProfiles>
 {
 public:
     void FromJson(const nlohmann::json& json) override
@@ -128,7 +128,7 @@ private:
     bool isDolbyAtmos_;
 };
 
-class HDCPVersionMap : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::HDCPVersionMap>
+class HDCPVersionMap : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Device::HDCPVersionMap>
 {
 public:
     void FromJson(const nlohmann::json& json) override
@@ -145,7 +145,7 @@ private:
     bool isHdcp2_2_;
 };
 
-class HDRFormatMap : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::HDRFormatMap>
+class HDRFormatMap : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Device::HDRFormatMap>
 {
 public:
     void FromJson(const nlohmann::json& json) override
@@ -166,7 +166,7 @@ private:
     bool isHlg_;
 };
 
-class NetworkInfoResult : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::NetworkInfoResult>
+class NetworkInfoResult : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Device::NetworkInfoResult>
 {
 public:
     void FromJson(const nlohmann::json& json) override
