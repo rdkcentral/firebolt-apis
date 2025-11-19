@@ -18,8 +18,8 @@
  */
 
 #include "FireboltDemoService.h"
+#include "Firebolt/config.h"
 #include <cstdlib>
-#include <firebolt_config.h>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -105,10 +105,10 @@ FireboltDemoService::FireboltDemoService()
     }
     std::cout << "Using firebolt URL: " << url << std::endl;
 
-    FireboltSDK::Config config;
+    Firebolt::Config config;
     config.wsUrl = url;
     config.waitTime_ms = 3000;
-    config.log.level = "Debug";
+    config.log.level = Firebolt::LogLevel::Debug;
 
     auto error =
         Firebolt::IFireboltAccessor::Instance().Connect(config, [this](const bool connected, const Firebolt::Error error)
@@ -138,6 +138,16 @@ std::string bool2str(const bool value)
 
 void FireboltDemoService::lifecycle()
 {
+    auto state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().getCurrentState();
+    if (state)
+    {
+      std::cout << "Current state: " << static_cast<int>(*state) << std::endl;
+    }
+    else
+    {
+        std::cout << "Cannot get current state, err:" << static_cast<int32_t>(state.error()) << std::endl;
+    }
+
     auto id = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnStateChanged(
         [&](const std::vector<Firebolt::Lifecycle::StateChange> &changes)
         {

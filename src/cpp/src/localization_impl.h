@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "helpers.h"
 #include "localization.h"
+#include "Firebolt/helpers.h"
 
 namespace Firebolt::Localization
 {

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "firebolt.h"
+#include "Firebolt/firebolt.h"
 #include <condition_variable>
 #include <mutex>
 #include <set>
