@@ -19,7 +19,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include <types/types.h>
+#include "Firebolt/types.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>

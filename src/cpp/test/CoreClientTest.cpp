@@ -18,7 +18,7 @@
  */
 
 #include "CoreClientTest.h"
-#include <config.h>
+#include "Firebolt/config.h"
 #include <iomanip>
 #include <stdexcept>
 #include <string>

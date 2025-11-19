@@ -61,7 +61,7 @@ target_include_directories(${TARGET}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Firebolt>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 string(REGEX REPLACE "^v?([0-9]+)\\.([0-9]+)\\.([0-9]+).*" "\\1" PROJECT_VERSION_MAJOR ${PROJECT_VERSION})
@@ -100,14 +100,14 @@ install(
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/
-    DESTINATION include/Firebolt
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Firebolt
     FILES_MATCHING PATTERN "*.h"
 )
 
 string(TOLOWER "${TARGET}" TARGET_LOWER)
 install(
     FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_export.h
-    DESTINATION include/Firebolt
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Firebolt
 )
 
 install(

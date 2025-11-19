@@ -22,10 +22,10 @@
 #include "device.h"
 
 #include <algorithm>
+#include "Firebolt/json_types.h"
 #include <map>
 #include <nlohmann/json.hpp>
 #include <string>
-#include <types/json_types.h>
 
 namespace Firebolt::Device::JsonData
 {

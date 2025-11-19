@@ -19,8 +19,7 @@
 
 #include "firebolt.h"
 #include "gtest/gtest.h"
-
-#include <config.h>
+#include "Firebolt/config.h"
 #include <iostream>
 #include <string>
 #include <thread>

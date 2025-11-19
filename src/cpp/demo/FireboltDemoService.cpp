@@ -18,7 +18,7 @@
  */
 
 #include "FireboltDemoService.h"
-#include <config.h>
+#include "Firebolt/config.h"
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>

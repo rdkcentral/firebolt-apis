@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <types/types.h>
+#include "Firebolt/types.h"
+#include <functional>
 #include <optional>
 #include <vector>
 

@@ -25,8 +25,8 @@
 #include "localization.h"
 #include "metrics.h"
 #include "securestorage.h"
-#include <config.h>
-#include <types/types.h>
+#include "Firebolt/config.h"
+#include "Firebolt/types.h"
 #include <functional>
 
 namespace Firebolt

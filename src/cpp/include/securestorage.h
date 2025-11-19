@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <types/types.h>
+#include "Firebolt/types.h"
 
 namespace Firebolt::SecureStorage
 {
