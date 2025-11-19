@@ -36,7 +36,6 @@ jobs:
           GITHUB_REF: ${{ github.ref }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
           INTENT: ${{ vars.INTENT }}
-          TOOL_VERSION: ${{ vars.TOOL_VERSION }}
           OPENRPC_PR_BRANCH: ${{ env.OPENRPC_PR_BRANCH }} # Comes from OPENRPC repo if triggered externally
         run: |
           ./.github/workflows/utils.sh runTests
