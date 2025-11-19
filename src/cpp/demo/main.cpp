@@ -28,19 +28,19 @@ try
 
     FireboltDemoService service;
 
-    std::string input;
+    std::cout << "Lifecycle" << std::endl;
+    service.lifecycle();
     while (1) {
-        std::cout << "Lifecycle" << std::endl;
-        service.lifecycle();
         std::cout << "All subscribers are registered, events can be sent to the app from mock" << std::endl;
         std::cout << "Press 'q' to quit" << std::endl;
+        std::string input;
         getline(std::cin, input);
         if (input == "q")
         {
             break;
         }
-        service.unsubscribeAll();
     }
+    service.unsubscribeAll();
     return 0;
 }
 catch (const std::exception& e)
