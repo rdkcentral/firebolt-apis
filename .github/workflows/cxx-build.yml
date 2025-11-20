@@ -106,7 +106,7 @@ jobs:
           ./.github/scripts/run-component-tests.sh \
             --mock ${{ env.MOCK_PATH }} \
             --config ${{ github.workspace }}/.github/mock-firebolt/config.json \
-            --openrpc ${{ github.workspace }}/.github/openrpc/firebolt-open-rpc.json \
+            --openrpc ${{ github.workspace }}/src/cpp/firebolt-open-rpc.json \
             --app-openrpc ${{ github.workspace }}/.github/openrpc/firebolt-app-open-rpc.json \
             --test-exe ${{ github.workspace }}/build/test/FireboltClientComponentTests
 

@@ -132,9 +132,7 @@
 					"params": [],
 					"result": {
 						"name": "Default Result",
-						"value": {
-							"enabled": true
-						}
+						"value": true
 					}
 				}
 			]
@@ -726,7 +724,7 @@
 			]
 		},
 		{
-			"name": "Stats.memoryInfo",
+			"name": "Stats.memoryUsage",
 			"summary": "Returns information about container memory usage, in units of 1024 bytes.",
 			"tags": [
 				{
@@ -748,10 +746,13 @@
 					"name": "Default example",
 					"params": [],
 					"result": {
-						"userMemoryUsedKiB": 123456,
-						"userMemoryLimitKiB": 789012,
-						"gpuMemoryUsedKiB": 345678,
-						"gpuMemoryLimitKiB": 901234
+						"name": "Default Result",
+						"value": {
+							"userMemoryUsedKiB": 123456,
+							"userMemoryLimitKiB": 789012,
+							"gpuMemoryUsedKiB": 345678,
+							"gpuMemoryLimitKiB": 901234
+						}
 					}
 				}
 			]
@@ -762,7 +763,7 @@
 				{
 					"name": "event",
 					"x-contextual-parameters": 0,
-					"x-notifier": "Lifecycle2.stateChanged"
+					"x-notifier": "Lifecycle2.onStateChanged"
 				},
 				{
 					"name": "capabilities",
@@ -829,7 +830,7 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Accessibility.audioDescriptionChanged",
+					"x-notifier": "Accessibility.onAudioDescriptionChanged",
 					"x-subscriber-for": "Accessibility.audioDescription"
 				},
 				{
@@ -875,7 +876,7 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Accessibility.closedCaptionsSettingsChanged",
+					"x-notifier": "Accessibility.onClosedCaptionsSettingsChanged",
 					"x-subscriber-for": "Accessibility.closedCaptionsSettings"
 				},
 				{
@@ -921,7 +922,7 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Accessibility.highContrastUIChanged",
+					"x-notifier": "Accessibility.onHighContrastUIChanged",
 					"x-subscriber-for": "Accessibility.highContrastUI"
 				},
 				{
@@ -967,7 +968,7 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Accessibility.voiceGuidanceSettingsChanged",
+					"x-notifier": "Accessibility.onVoiceGuidanceSettingsChanged",
 					"x-subscriber-for": "Accessibility.voiceGuidanceSettings"
 				},
 				{
@@ -1004,7 +1005,7 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Localization.countryChanged",
+					"x-notifier": "Localization.onCountryChanged",
 					"x-subscriber-for": "Localization.country"
 				},
 				{
@@ -1072,7 +1073,7 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Localization.preferredAudioLanguagesChanged",
+					"x-notifier": "Localization.onPreferredAudioLanguagesChanged",
 					"x-subscriber-for": "Localization.preferredAudioLanguages"
 				},
 				{
@@ -1109,7 +1110,7 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Localization.localeChanged",
+					"x-notifier": "Localization.onLocaleChanged",
 					"x-subscriber-for": "Localization.locale"
 				},
 				{

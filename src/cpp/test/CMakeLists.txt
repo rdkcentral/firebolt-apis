@@ -29,7 +29,7 @@ include(GoogleTest)
 
 enable_testing()
 
-add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-core-open-rpc.json")
+add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-open-rpc.json")
 
 message("Setup ${TESTAPP}")
 
