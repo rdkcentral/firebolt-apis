@@ -115,10 +115,10 @@ message("Setup ${COMPONENT_TESTS_APP}")
 
 set(COMPONENT_TESTS
     # "component/accessibilityTest.cpp"
-    # "component/advertisingTest.cpp"
+    "component/advertisingTest.cpp"
     "component/deviceTest.cpp"
     "component/lifecycleTest.cpp"
-    # "component/statsTest.cpp"
+    "component/statsTest.cpp"
 )
 
 add_executable(${COMPONENT_TESTS_APP}

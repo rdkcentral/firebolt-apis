@@ -60,15 +60,5 @@ public:
      *
      */
     virtual Result<Ifa> advertisingId() const = 0;
-
-    /**
-     * @brief  Return a persistent unique UUID for
-     * the current app and device.  The UUID is reset
-     * when the app or device is reset
-     *
-     *
-     * @return Uid or error
-     */
-    virtual Result<std::string> uid() const = 0;
 };
 } // namespace Firebolt::Advertising

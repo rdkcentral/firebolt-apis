@@ -45,12 +45,3 @@ TEST_F(AdvertisingTest, AdvertisingId)
     EXPECT_EQ(result->ifa_type, expectedValue["ifa_type"].get<std::string>());
     EXPECT_EQ(result->lmt, expectedValue["lmt"].get<std::string>());
 }
-
-TEST_F(AdvertisingTest, Uid)
-{
-    auto expectedValue = jsonEngine.get_value("Advertising.uid");
-    auto result = Firebolt::IFireboltAccessor::Instance().AdvertisingInterface().uid();
-    ASSERT_TRUE(result) << "AdvertisingImpl::uid() returned an error";
-    EXPECT_EQ(*result, expectedValue.get<std::string>());
-}
-

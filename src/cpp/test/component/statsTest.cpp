@@ -33,14 +33,14 @@ protected:
 
 TEST_F(StatsTest, MemoryUsage)
 {
-    auto expectedValue = jsonEngine.get_value("memoryUsage");
+    auto expectedValue = jsonEngine.get_value("Stats.memoryUsage");
 
     auto result = Firebolt::IFireboltAccessor::Instance().StatsInterface().memoryUsage();
 
     ASSERT_TRUE(result) << "StatsImpl::memoryUsage() returned an error";
 
     EXPECT_EQ(result->gpuMemoryLimit,
-              expectedValue.at("userMemoryUsedKiB").get<uint32_t>());
+              expectedValue.at("gpuMemoryLimitKiB").get<uint32_t>());
     EXPECT_EQ(result->gpuMemoryUsed,
               expectedValue.at("gpuMemoryUsedKiB").get<uint32_t>());
     EXPECT_EQ(result->userMemoryLimit,

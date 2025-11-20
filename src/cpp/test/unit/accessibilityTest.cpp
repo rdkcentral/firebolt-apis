@@ -26,9 +26,6 @@ using ::testing::_;
 using ::testing::Invoke;
 using ::testing::Return;
 
-// define when json rpc schema is not available
-#define USE_LOCAL_RESPONSE
-
 class AccessibilityTest : public ::testing::Test, protected MockBase
 {
 protected:
@@ -37,13 +34,8 @@ protected:
 
 TEST_F(AccessibilityTest, AudioDescription)
 {
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = false;
-    mock_with_response("Accessibility.audioDescription", expectedValue);
-#else
     mock("Accessibility.audioDescription");
     auto expectedValue = jsonEngine.get_value("Accessibility.audioDescription");
-#endif
 
     auto result = accessibilityImpl_.audioDescription();
 
@@ -67,18 +59,14 @@ TEST_F(AccessibilityTest, SubscribeOnAudioDescriptionChanged)
 
 TEST_F(AccessibilityTest, ClosedCaptionsSettings)
 {
-    Firebolt::Accessibility::ClosedCaptionsSettings settings{true, {"en", "fr"}};
-    nlohmann::json expectedValue = {{"enabled", settings.enabled},
-                                    {"preferredLanguages",
-                                     settings.preferredLanguages}};
-
-    mock_with_response("Accessibility.closedCaptionsSettings", expectedValue);
+    mock("Accessibility.closedCaptionsSettings");
+    auto expectedValue = jsonEngine.get_value("Accessibility.closedCaptionsSettings");
 
     auto result = accessibilityImpl_.closedCaptionsSettings();
 
     ASSERT_TRUE(result) << "AccessibilityImpl::closedCaptionsSettings() returned an error";
-    EXPECT_EQ((*result).enabled, settings.enabled);
-    EXPECT_EQ((*result).preferredLanguages, settings.preferredLanguages);
+    EXPECT_EQ((*result).enabled, expectedValue["enabled"].get<bool>());
+    EXPECT_EQ((*result).preferredLanguages, expectedValue["preferredLanguages"].get<std::vector<std::string>>());
 }
 
 TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
@@ -97,13 +85,8 @@ TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
         
 TEST_F(AccessibilityTest, HighContrastUI)
 {
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = true;
-    mock_with_response("Accessibility.highContrastUI", expectedValue);
-#else
     mock("Accessibility.highContrastUI");
     auto expectedValue = jsonEngine.get_value("Accessibility.highContrastUI");
-#endif
 
     auto result = accessibilityImpl_.highContrastUI();
 
@@ -127,23 +110,15 @@ TEST_F(AccessibilityTest, SubscribeOnHighContrastUIChanged)
 
 TEST_F(AccessibilityTest, VoiceGuidanceSettings)
 {
-#ifdef USE_LOCAL_RESPONSE
-    Firebolt::Accessibility::VoiceGuidanceSettings settings{true, 1.5, true};
-    nlohmann::json expectedValue = {{"enabled", settings.enabled},
-                                    {"rate", settings.rate},
-                                    {"navigationHints", settings.navigationHints}};
-#else
     mock("Accessibility.voiceGuidanceSettings");
     auto expectedValue = jsonEngine.get_value("Accessibility.voiceGuidanceSettings");
-#endif
-    mock_with_response("Accessibility.voiceGuidanceSettings", expectedValue);
 
     auto result = accessibilityImpl_.voiceGuidanceSettings();
 
     ASSERT_TRUE(result) << "AccessibilityImpl::voiceGuidanceSettings() returned an error";
-    EXPECT_EQ((*result).enabled, settings.enabled);
-    EXPECT_EQ((*result).rate, settings.rate);
-    EXPECT_EQ((*result).navigationHints, settings.navigationHints);
+    EXPECT_EQ((*result).enabled, expectedValue["enabled"].get<bool>());
+    EXPECT_EQ((*result).rate, expectedValue["rate"].get<float>());
+    EXPECT_EQ((*result).navigationHints, expectedValue["navigationHints"].get<bool>());
 }
 
 TEST_F(AccessibilityTest, SubscribeOnVoiceGuidanceSettingsChanged)

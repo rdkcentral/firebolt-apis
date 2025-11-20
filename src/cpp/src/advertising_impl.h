@@ -34,7 +34,6 @@ public:
     ~AdvertisingImpl() override = default;
 
     Result<Ifa> advertisingId() const override;
-    Result<std::string> uid() const override;
 
 private:
     Firebolt::Helpers::IHelper &helper_;
