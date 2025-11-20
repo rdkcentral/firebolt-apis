@@ -563,11 +563,10 @@
       ]
     },
 		{
-			"name": "deviceNameChanged",
+			"name": "onDeviceNameChanged",
 			"tags": [
 				{
-					"name": "notifier",
-					"x-event": "Device.onDeviceNameChanged"
+					"name": "notifier"
 				},
 				{
 					"name": "deprecated",

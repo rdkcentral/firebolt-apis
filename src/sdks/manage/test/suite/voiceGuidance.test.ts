@@ -31,28 +31,28 @@ test("VoiceGuidance.speed()", () => {
   });
 });
 
-test("VoiceGuidance.listen() for enabledChanged event", () => {
-  return VoiceGuidance.listen("enabledChanged", () => {}).then(
+test("VoiceGuidance.listen() for onEnabledChanged event", () => {
+  return VoiceGuidance.listen("onEnabledChanged", () => {}).then(
     (res: number) => {
       expect(res > 0).toBe(true);
     }
   );
 });
 
-test("VoiceGuidance.once() for enabledChanged event", () => {
-  return VoiceGuidance.once("enabledChanged", () => {}).then((res: number) => {
+test("VoiceGuidance.once() for onEnabledChanged event", () => {
+  return VoiceGuidance.once("onEnabledChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
-test("VoiceGuidance.listen() for speedChanged event", () => {
-  return VoiceGuidance.listen("speedChanged", () => {}).then((res: number) => {
+test("VoiceGuidance.listen() for onSpeedChanged event", () => {
+  return VoiceGuidance.listen("onSpeedChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
-test("VoiceGuidance.once() for speedChanged event", () => {
-  return VoiceGuidance.once("speedChanged", () => {}).then((res: number) => {
+test("VoiceGuidance.once() for onSpeedChanged event", () => {
+  return VoiceGuidance.once("onSpeedChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });

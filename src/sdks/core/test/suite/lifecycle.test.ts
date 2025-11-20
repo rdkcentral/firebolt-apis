@@ -54,11 +54,11 @@ beforeAll(() => {
     callback(event);
   });
 
-  Lifecycle.once("foreground", () => {
+  Lifecycle.once("onForeground", () => {
     Lifecycle.close(Lifecycle.CloseReason.USER_EXIT);
   });
 
-  MockTransport.event("Lifecycle", "inactive", null);
+  MockTransport.event("Lifecycle", "onInactive", null);
 
   Lifecycle.ready().then((_) => {
     readyResolved = true;
@@ -67,17 +67,16 @@ beforeAll(() => {
     console.error("Error in Lifecycle.ready: ", err);
   });
 
-  MockTransport.event("Lifecycle", "foreground", null);
+  MockTransport.event("Lifecycle", "onForeground", null);
 
   let p = new Promise<void>((resolve, reject) => {
-    Lifecycle.once("unloading", (_) => {
-      Lifecycle.finished();
+    Lifecycle.once("onUnloading", (_) => {
       setTimeout(() => {
         resolve();
       }, 100);
     });
   });
-  MockTransport.event("Lifecycle", "unloading", null);
+  MockTransport.event("Lifecycle", "onUnloading", null);
 
   return p
 });
@@ -97,73 +96,73 @@ test('App starts up in the "initializing" state', () => {
 });
 
 test('App moves to the "inactive" state next', () => {
-  expect(callback).nthCalledWith(1, "inactive");
+  expect(callback).nthCalledWith(1, "onInactive");
 });
 
 test('App moves to the "foreground" state next', () => {
-  expect(callback).nthCalledWith(2, "foreground");
+  expect(callback).nthCalledWith(2, "onForeground");
 });
 
 test('App moves to the "unloading" state next', () => {
-  expect(callback).nthCalledWith(3, "unloading");
+  expect(callback).nthCalledWith(3, "onUnloading");
 });
 
 test("listen() background event.", () => {
-  return Lifecycle.listen("background", () => { }).then((res: number) => {
+  return Lifecycle.listen("onBackground", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() background event.", () => {
-  return Lifecycle.once("background", () => { }).then((res: number) => {
+  return Lifecycle.once("onBackground", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() foreground event.", () => {
-  return Lifecycle.listen("foreground", () => { }).then((res: number) => {
+  return Lifecycle.listen("onForeground", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() foreground event.", () => {
-  return Lifecycle.once("foreground", () => { }).then((res: number) => {
+  return Lifecycle.once("onForeground", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() inactive event.", () => {
-  return Lifecycle.listen("inactive", () => { }).then((res: number) => {
+  return Lifecycle.listen("onInactive", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() inactive event.", () => {
-  return Lifecycle.once("inactive", () => { }).then((res: number) => {
+  return Lifecycle.once("onInactive", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() suspended event.", () => {
-  return Lifecycle.listen("suspended", () => { }).then((res: number) => {
+  return Lifecycle.listen("onSuspended", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() suspended event.", () => {
-  return Lifecycle.once("suspended", () => { }).then((res: number) => {
+  return Lifecycle.once("onSuspended", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() unloading event.", () => {
-  return Lifecycle.listen("unloading", () => { }).then((res: number) => {
+  return Lifecycle.listen("onUnloading", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() unloading event.", () => {
-  return Lifecycle.once("unloading", () => { }).then((res: number) => {
+  return Lifecycle.once("onUnloading", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });

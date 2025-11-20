@@ -72,13 +72,13 @@ test("once()", () => {
 });
 
 test("listen() specific Advertising event.", () => {
-  return Advertising.listen("policyChanged", () => {}).then((res: number) => {
+  return Advertising.listen("onPolicyChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() specific Advertising event.", () => {
-  return Advertising.once("policyChanged", () => {}).then((res: number) => {
+  return Advertising.once("onPolicyChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });

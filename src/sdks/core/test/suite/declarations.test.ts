@@ -39,7 +39,7 @@ class DiscoveryProvider implements Discovery.Discovery {
 */
 
 test('Able to get TypeScript listenerId', () => {
-    return Lifecycle.listen('inactive', () => { }).then((id: number) => {
+    return Lifecycle.listen('onInactive', () => { }).then((id: number) => {
         listenerId = id
         expect(listenerId > 0).toBe(true)
     })

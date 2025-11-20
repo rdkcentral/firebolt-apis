@@ -50,7 +50,7 @@ test("Localization.locale()", () => {
 });
 
 test("Localization.listen()", () => {
-  return Localization.listen("localityChanged", () => {}).then(
+  return Localization.listen("onLocalityChanged", () => {}).then(
     (res: Number) => {
       expect(res > 0).toBe(true);
     }
@@ -58,7 +58,7 @@ test("Localization.listen()", () => {
 });
 
 test("Localization.once()", () => {
-  return Localization.once("localityChanged", () => {}).then((res: Number) => {
+  return Localization.once("onLocalityChanged", () => {}).then((res: Number) => {
     expect(res > 0).toBe(true);
   });
 });

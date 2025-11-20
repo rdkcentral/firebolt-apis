@@ -38,14 +38,14 @@ test("HDMIInput.edidVersion()", () => {
 })
 
 test("HDMIInput.onConnectionChanged()", () => {
-    return HDMIInput.listen('connectionChanged', (info: HDMIInput.ConnectionChangedInfo) => {
+    return HDMIInput.listen('onConnectionChanged', (info: HDMIInput.ConnectionChangedInfo) => {
     }).then( (id: number) => {
         expect(typeof id).toBe('number')
     })
 })
 
 test("HDMIInput.onSignalChanged()", () => {
-    return HDMIInput.listen('signalChanged', (info: HDMIInput.SignalChangedInfo) => {
+    return HDMIInput.listen('onSignalChanged', (info: HDMIInput.SignalChangedInfo) => {
     }).then( (id: number) => {
         expect(typeof id).toBe('number')
     })

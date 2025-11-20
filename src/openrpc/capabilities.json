@@ -613,11 +613,10 @@
             ]
         },
         {
-        "name": "available",
+        "name": "onAvailable",
         "tags": [
           {
-            "name": "notifier",
-            "x-event": "Capabilities.onAvailable"
+            "name": "notifier"
           },
           {
             "name": "capabilities",
@@ -675,11 +674,10 @@
         ]
       },
       {
-        "name": "unavailable",
+        "name": "onUnavailable",
         "tags": [
           {
-            "name": "notifier",
-            "x-event": "Capabilities.onUnavailable"
+            "name": "notifier"
           },
           {
             "name": "capabilities",
@@ -737,11 +735,10 @@
         ]
       },
       {
-        "name": "granted",
+        "name": "onGranted",
         "tags": [
           {
-            "name": "notifier",
-            "x-event": "Capabilities.onGranted"
+            "name": "notifier"
           },
           {
             "name": "capabilities",
@@ -809,11 +806,10 @@
         ]
       },
       {
-        "name": "revoked",
+        "name": "onRevoked",
         "tags": [
           {
-            "name": "notifier",
-            "x-event": "Capabilities.onRevoked"
+            "name": "notifier"
           },
           {
             "name": "capabilities",

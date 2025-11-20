@@ -164,7 +164,7 @@
       ]
     },
     {
-      "name": "connectionChanged",
+      "name": "onConnectionChanged",
       "tags": [
         {
           "name": "notifier"
@@ -200,7 +200,7 @@
       ]
     },
     {
-      "name": "signalChanged",
+      "name": "onSignalChanged",
       "tags": [
         {
           "name": "notifier"
@@ -274,7 +274,7 @@
       ]
     },
     {
-      "name": "autoLowLatencyModeSignalChanged",
+      "name": "onAutoLowLatencyModeSignalChanged",
       "summary": "Notification for changes to ALLM status of any input device.",
       "tags": [
         {
