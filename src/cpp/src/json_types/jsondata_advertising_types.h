@@ -20,13 +20,12 @@
 #pragma once
 
 #include "advertising.h"
-
+#include <firebolt/json_types.h>
 #include <algorithm>
 #include <iostream>
 #include <map>
 #include <nlohmann/json.hpp>
 #include <string>
-#include "Firebolt/json_types.h"
 
 namespace Firebolt::Advertising::JsonData
 {

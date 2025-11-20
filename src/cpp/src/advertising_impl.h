@@ -20,7 +20,7 @@
 #pragma once
 
 #include "advertising.h"
-#include "Firebolt/helpers.h"
+#include <firebolt/helpers.h>
 
 namespace Firebolt::Advertising
 {

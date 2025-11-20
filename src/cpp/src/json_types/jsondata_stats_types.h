@@ -20,12 +20,11 @@
 #pragma once
 
 #include "stats.h"
-
+#include <firebolt/json_types.h>
 #include <algorithm>
 #include <map>
 #include <nlohmann/json.hpp>
 #include <string>
-#include "Firebolt/json_types.h"
 
 namespace Firebolt::Stats::JsonData
 {
