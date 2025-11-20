@@ -38,7 +38,6 @@ public:
         ifa = json["ifa"].get<std::string>();
         ifa_type = json["ifa_type"].get<std::string>();
         lmt = json["lmt"].get<std::string>();
-        std::cout << "Parsed IfaJson - ifa: " << ifa << ", ifa_type: " << ifa_type << ", lmt: " << lmt << std::endl;
     }
     ::Firebolt::Advertising::Ifa Value() const override { return ::Firebolt::Advertising::Ifa{ifa, ifa_type, lmt}; }
 
