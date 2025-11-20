@@ -85,6 +85,6 @@ TEST_F(LifecycleTest, subscribeOnState)
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().unsubscribe(id.value());
+    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(id.value());
     verifyUnsubscribeResult(result);
 }

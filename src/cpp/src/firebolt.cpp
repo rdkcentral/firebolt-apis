@@ -67,7 +67,6 @@ public:
 private:
     void unsubscribeAll()
     {
-        device_.unsubscribeAll();
         localization_.unsubscribeAll();
         lifecycle_.unsubscribeAll();
     }

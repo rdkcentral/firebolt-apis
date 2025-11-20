@@ -32,20 +32,6 @@ public:
     static void CreateFireboltInstance(const std::string& url);
     static void DestroyFireboltInstance();
 
-    // Device
-    static void GetDeviceName();
-    static void GetDeviceVersion();
-    static void SubscribeDeviceNameChanged();
-    static void UnsubscribeDeviceNameChanged();
-    static void GetDeviceModel();
-    static void GetDeviceSku();
-    static void GetDeviceAudio();
-    static void SubscribeDeviceAudioChanged();
-    static void UnsubscribeDeviceAudioChanged();
-    static void GetDeviceScreenResolution();
-    static void SubscribeDeviceScreenResolutionChanged();
-    static void UnsubscribeDeviceScreenResolutionChanged();
-
     // Localization
     static void GetLocalizationCountryCode();
     static void GetLocalizationPreferredAudioLanguages();

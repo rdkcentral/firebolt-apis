@@ -49,21 +49,6 @@ void RunAllTests()
     // Ensure the connection is ready before running tests
     if (CoreClientTest::WaitOnConnectionReady())
     {
-
-        // Device properties
-        runTest(CoreClientTest::GetDeviceModel, "GetDeviceModel");
-        runTest(CoreClientTest::GetDeviceSku, "GetDeviceSku");
-        runTest(CoreClientTest::GetDeviceName, "GetDeviceName");
-        runTest(CoreClientTest::GetDeviceVersion, "GetDeviceVersion");
-        runTest(CoreClientTest::SubscribeDeviceNameChanged, "SubscribeDeviceNameChanged");
-        runTest(CoreClientTest::UnsubscribeDeviceNameChanged, "UnsubscribeDeviceNameChanged");
-        runTest(CoreClientTest::GetDeviceAudio, "GetDeviceAudio");
-        runTest(CoreClientTest::SubscribeDeviceAudioChanged, "SubscribeDeviceAudioChanged");
-        runTest(CoreClientTest::UnsubscribeDeviceAudioChanged, "UnsubscribeDeviceAudioChanged");
-        runTest(CoreClientTest::GetDeviceScreenResolution, "GetDeviceScreenResolution");
-        runTest(CoreClientTest::SubscribeDeviceScreenResolutionChanged, "SubscribeDeviceScreenResolutionChanged");
-        runTest(CoreClientTest::UnsubscribeDeviceScreenResolutionChanged, "UnsubscribeDeviceScreenResolutionChanged");
-
         // Localization
         runTest(CoreClientTest::GetLocalizationCountryCode, "GetLocalizationCountryCode");
         runTest(CoreClientTest::GetLocalizationPreferredAudioLanguages, "GetLocalizationPreferredAudioLanguages");
