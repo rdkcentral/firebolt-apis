@@ -20,7 +20,7 @@
 #pragma once
 
 #include "lifecycle.h"
-#include "Firebolt/json_types.h"
+#include <firebolt/json_types.h>
 
 namespace Firebolt::Lifecycle::JsonData
 {

@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include "device_impl.h"
 #include "firebolt.h"
+#include "device_impl.h"
 #include "lifecycle_impl.h"
 #include "localization_impl.h"
 #include "metrics_impl.h"
@@ -26,7 +26,7 @@
 #include "advertising_impl.h"
 #include "stats_impl.h"
 #include "accessibility_impl.h"
-#include "Firebolt/helpers.h"
+#include <firebolt/helpers.h>
 
 namespace Firebolt
 {

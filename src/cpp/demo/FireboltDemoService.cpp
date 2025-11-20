@@ -18,7 +18,7 @@
  */
 
 #include "FireboltDemoService.h"
-#include "Firebolt/config.h"
+#include <firebolt/config.h>
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
@@ -70,7 +70,7 @@ std::ostream& operator<<(std::ostream& out, Firebolt::Error& error)
         out << "InvalidParams";
         break;
     }
-    case Firebolt::Error::CapabilityNotAvaialbale:
+    case Firebolt::Error::CapabilityNotAvailable:
     {
         out << "CapabilityNotAvaialbale";
         break;

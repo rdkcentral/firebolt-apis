@@ -28,8 +28,8 @@
 #include "advertising.h"
 #include "stats.h"
 #include "accessibility.h"
-#include "Firebolt/config.h"
-#include "Firebolt/types.h"
+#include <firebolt/config.h>
+#include <firebolt/types.h>
 #include <functional>
 
 namespace Firebolt
