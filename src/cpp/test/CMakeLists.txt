@@ -67,6 +67,8 @@ message("Setup ${UNIT_TESTS_APP}")
 set(UNIT_TESTS
     "unit/lifecycleTest.cpp"
     "unit/deviceTest.cpp"
+    "unit/advertisingTest.cpp"
+    "unit/statsTest.cpp"
     "unit/accessibilityTest.cpp"
 )
 
@@ -114,6 +116,8 @@ message("Setup ${COMPONENT_TESTS_APP}")
 set(COMPONENT_TESTS
     "component/lifecycleTest.cpp"
     #"component/deviceTest.cpp"
+    #"component/advertisingTest.cpp"
+    #"component/statsTest.cpp"
     #"component/accessibilityTest.cpp"
 )
 
