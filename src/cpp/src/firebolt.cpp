@@ -25,6 +25,7 @@
 #include "securestorage_impl.h"
 #include "advertising_impl.h"
 #include "stats_impl.h"
+#include "accessibility_impl.h"
 #include "Firebolt/helpers.h"
 
 namespace Firebolt
@@ -40,6 +41,7 @@ public:
         , secureStorage_(Firebolt::Helpers::GetHelperInstance())
         , advertising_(Firebolt::Helpers::GetHelperInstance())
         , stats_(Firebolt::Helpers::GetHelperInstance())
+        , accessibility_(Firebolt::Helpers::GetHelperInstance())
     {
     }
 
@@ -69,12 +71,14 @@ public:
     SecureStorage::ISecureStorage& SecureStorageInterface() override { return secureStorage_; }
     Advertising::IAdvertising& AdvertisingInterface() override { return advertising_; }
     Stats::IStats& StatsInterface() override { return stats_; }
+    Accessibility::IAccessibility &AccessibilityInterface() override { return accessibility_; }
 
 private:
     void unsubscribeAll()
     {
         localization_.unsubscribeAll();
         lifecycle_.unsubscribeAll();
+        accessibility_.unsubscribeAll();
     }
 
 private:
@@ -85,6 +89,7 @@ private:
     SecureStorage::SecureStorageImpl secureStorage_;
     Advertising::AdvertisingImpl advertising_;
     Stats::StatsImpl stats_;
+    Accessibility::AccessibilityImpl accessibility_;
 };
 
 /* static */ IFireboltAccessor& IFireboltAccessor::Instance()
@@ -93,5 +98,3 @@ private:
     return impl;
 }
 } // namespace Firebolt
-
-

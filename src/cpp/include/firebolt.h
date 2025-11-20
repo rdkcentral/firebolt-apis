@@ -27,6 +27,7 @@
 #include "securestorage.h"
 #include "advertising.h"
 #include "stats.h"
+#include "accessibility.h"
 #include "Firebolt/config.h"
 #include "Firebolt/types.h"
 #include <functional>
@@ -123,5 +124,12 @@ public:
      * @return Reference to Stats interface
      */
     virtual Stats::IStats& StatsInterface() = 0;
+
+    /**
+     * @brief Returns instance of Accessibiilty interface
+     *
+     * @return Reference to Accessibility interface
+     */
+    virtual Accessibility::IAccessibility& AccessibilityInterface() = 0;
 };
 } // namespace Firebolt
