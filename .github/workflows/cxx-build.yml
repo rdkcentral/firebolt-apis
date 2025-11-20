@@ -97,12 +97,12 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          cp ${{ github.workspace }}/src/cpp/firebolt-core-open-rpc.json build/test/
+          cp ${{ github.workspace }}/src/cpp/firebolt-open-rpc.json build/test/
           ctest --test-dir build/test
 
       - name: Run Component Tests
         run: |
-          cp ${{ github.workspace }}/src/cpp/firebolt-core-open-rpc.json build/test/
+          cp ${{ github.workspace }}/src/cpp/firebolt-open-rpc.json build/test/
           ./.github/scripts/run-component-tests.sh \
             --mock ${{ env.MOCK_PATH }} \
             --config ${{ github.workspace }}/.github/mock-firebolt/config.json \
