@@ -39,10 +39,10 @@ TEST_F(AccessibilityTest, AudioDescription)
 {
 #ifdef USE_LOCAL_RESPONSE
     nlohmann::json expectedValue = false;
-    mock_with_response(Firebolt::Accessibility::JsonData::Method::audioDescription, expectedValue);
+    mock_with_response("Accessibility.audioDescription", expectedValue);
 #else
-    mock(Firebolt::Accessibility::JsonData::Method::audioDescription);
-    auto expectedValue = jsonEngine.get_value(Firebolt::Accessibility::JsonData::Method::audioDescription);
+    mock("Accessibility.audioDescription");
+    auto expectedValue = jsonEngine.get_value("Accessibility.audioDescription");
 #endif
 
     auto result = accessibilityImpl_.audioDescription();
@@ -55,7 +55,7 @@ TEST_F(AccessibilityTest, AudioDescription)
 TEST_F(AccessibilityTest, SubscribeOnAudioDescriptionChanged)
 {
     nlohmann::json expectedValue = 1;
-    mockSubscribe(Firebolt::Accessibility::JsonData::OnChanged::audioDescription);
+    mockSubscribe("Accessibility.onAudioDescriptionChanged");
 
     auto result = accessibilityImpl_.subscribeOnAudioDescriptionChanged([&](bool value) {});
 
@@ -68,11 +68,11 @@ TEST_F(AccessibilityTest, SubscribeOnAudioDescriptionChanged)
 TEST_F(AccessibilityTest, ClosedCaptionsSettings)
 {
     Firebolt::Accessibility::ClosedCaptionsSettings settings{true, {"en", "fr"}};
-    nlohmann::json expectedValue = {{Firebolt::Accessibility::JsonData::Field::ClosedCaptionsSettings::enabled, settings.enabled},
-                                    {Firebolt::Accessibility::JsonData::Field::ClosedCaptionsSettings::preferredLanguages,
+    nlohmann::json expectedValue = {{"enabled", settings.enabled},
+                                    {"preferredLanguages",
                                      settings.preferredLanguages}};
 
-    mock_with_response(Firebolt::Accessibility::JsonData::Method::closedCaptionsSettings, expectedValue);
+    mock_with_response("Accessibility.closedCaptionsSettings", expectedValue);
 
     auto result = accessibilityImpl_.closedCaptionsSettings();
 
@@ -84,7 +84,7 @@ TEST_F(AccessibilityTest, ClosedCaptionsSettings)
 TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
 {
     nlohmann::json expectedValue = 1;
-    mockSubscribe(Firebolt::Accessibility::JsonData::OnChanged::closedCaptionsSettings);
+    mockSubscribe("Accessibility.onClosedCaptionsSettingsChanged");
 
     auto result = accessibilityImpl_.subscribeOnClosedCaptionsSettingsChanged(
         [&](const Firebolt::Accessibility::ClosedCaptionsSettings &settings) {});
@@ -94,15 +94,15 @@ TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
 
     accessibilityImpl_.unsubscribe(*result);
 }
-
+        
 TEST_F(AccessibilityTest, HighContrastUI)
 {
 #ifdef USE_LOCAL_RESPONSE
     nlohmann::json expectedValue = true;
-    mock_with_response(Firebolt::Accessibility::JsonData::Method::highContrastUI, expectedValue);
+    mock_with_response("Accessibility.highContrastUI", expectedValue);
 #else
-    mock(Firebolt::Accessibility::JsonData::Method::highContrastUI);
-    auto expectedValue = jsonEngine.get_value(Firebolt::Accessibility::JsonData::Method::highContrastUI );
+    mock("Accessibility.highContrastUI");
+    auto expectedValue = jsonEngine.get_value("Accessibility.highContrastUI");
 #endif
 
     auto result = accessibilityImpl_.highContrastUI();
@@ -115,7 +115,7 @@ TEST_F(AccessibilityTest, HighContrastUI)
 TEST_F(AccessibilityTest, SubscribeOnHighContrastUIChanged)
 {
     nlohmann::json expectedValue = 1;
-    mockSubscribe(Firebolt::Accessibility::JsonData::OnChanged::highContrastUI);
+    mockSubscribe("Accessibility.onHighContrastUIChanged");
 
     auto result = accessibilityImpl_.subscribeOnHighContrastUIChanged([&](bool value) {});
 
@@ -129,14 +129,14 @@ TEST_F(AccessibilityTest, VoiceGuidanceSettings)
 {
 #ifdef USE_LOCAL_RESPONSE
     Firebolt::Accessibility::VoiceGuidanceSettings settings{true, 1.5, true};
-    nlohmann::json expectedValue = {{Firebolt::Accessibility::JsonData::Field::VoiceGuidanceSettings::enabled, settings.enabled},
-                                    {Firebolt::Accessibility::JsonData::Field::VoiceGuidanceSettings::rate, settings.rate},
-                                    {Firebolt::Accessibility::JsonData::Field::VoiceGuidanceSettings::navigationHints, settings.navigationHints}};
+    nlohmann::json expectedValue = {{"enabled", settings.enabled},
+                                    {"rate", settings.rate},
+                                    {"navigationHints", settings.navigationHints}};
 #else
-    mock(Firebolt::Accessibility::JsonData::Method::voiceGuidanceSettings);
-    auto expectedValue = jsonEngine.get_value(Firebolt::Accessibility::JsonData::Method::voiceGuidanceSettings);
+    mock("Accessibility.voiceGuidanceSettings");
+    auto expectedValue = jsonEngine.get_value("Accessibility.voiceGuidanceSettings");
 #endif
-    mock_with_response(Firebolt::Accessibility::JsonData::Method::voiceGuidanceSettings, expectedValue);
+    mock_with_response("Accessibility.voiceGuidanceSettings", expectedValue);
 
     auto result = accessibilityImpl_.voiceGuidanceSettings();
 
@@ -149,7 +149,7 @@ TEST_F(AccessibilityTest, VoiceGuidanceSettings)
 TEST_F(AccessibilityTest, SubscribeOnVoiceGuidanceSettingsChanged)
 {
     nlohmann::json expectedValue = 1;
-    mockSubscribe(Firebolt::Accessibility::JsonData::OnChanged::voiceGuidanceSettings);
+    mockSubscribe("Accessibility.onVoiceGuidanceSettingsChanged");
 
     auto result = accessibilityImpl_.subscribeOnVoiceGuidanceSettingsChanged(
         [&](const Firebolt::Accessibility::VoiceGuidanceSettings &settings) {});

@@ -20,7 +20,7 @@
 #pragma once
 
 #include "accessibility.h"
-#include "helpers.h"
+#include "Firebolt/helpers.h"
 
 namespace Firebolt::Accessibility
 {

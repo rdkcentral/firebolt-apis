@@ -20,49 +20,17 @@
 #pragma once
 
 #include "accessibility.h"
-#include <types/json_types.h>
+#include "Firebolt/json_types.h"
 
 namespace Firebolt::Accessibility::JsonData
 {
-namespace Method
-{
-static const std::string audioDescription = "Accessibility.audioDescription";
-static const std::string closedCaptionsSettings = "Accessibility.closedCaptionsSettings";
-static const std::string highContrastUI = "Accessibility.highContrastUI";
-static const std::string voiceGuidanceSettings = "Accessibility.voiceGuidanceSettings";
-} // namespace Method
-
-namespace OnChanged
-{
-static const std::string audioDescription = "Accessibility.onAudioDescriptionChanged";
-static const std::string closedCaptionsSettings = "Accessibility.onClosedCaptionsSettingsChanged";
-static const std::string highContrastUI = "Accessibility.onHighContrastUIChanged";
-static const std::string voiceGuidanceSettings = "Accessibility.onVoiceGuidanceSettingsChanged";
-} // namespace OnChanged
-
-namespace Field
-{
-namespace ClosedCaptionsSettings
-{
-static const std::string enabled = "enabled";
-static const std::string preferredLanguages = "preferredLanguages";
-} // namespace ClosedCaptionsSettings
-
-namespace VoiceGuidanceSettings
-{
-static const std::string enabled = "enabled";
-static const std::string rate = "rate";
-static const std::string navigationHints = "navigationHints";
-} // namespace VoiceGuidanceSettings
-} // namespace Field
-
-class ClosedCaptionsSettings : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Accessibility::ClosedCaptionsSettings>
+class ClosedCaptionsSettings : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Accessibility::ClosedCaptionsSettings>
 {
 public:
     void FromJson(const nlohmann::json& json) override
     {
-        enabled_ = json[Field::ClosedCaptionsSettings::enabled].get<bool>();
-        preferredLanguages_ = json[Field::ClosedCaptionsSettings::preferredLanguages].get<std::vector<std::string>>();
+        enabled_ = json["enabled"].get<bool>();
+        preferredLanguages_ = json["preferredLanguages"].get<std::vector<std::string>>();
     }
     ::Firebolt::Accessibility::ClosedCaptionsSettings Value() const override
     {
@@ -73,14 +41,14 @@ private:
     std::vector<std::string> preferredLanguages_;
 };
 
-class VoiceGuidanceSettings : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Accessibility::VoiceGuidanceSettings>
+class VoiceGuidanceSettings : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Accessibility::VoiceGuidanceSettings>
 {
 public:
     void FromJson(const nlohmann::json& json) override
     {
-        enabled_ = json[Field::VoiceGuidanceSettings::enabled].get<bool>();
-        rate_ = json[Field::VoiceGuidanceSettings::rate].get<float>();
-        navigationHints_ = json[Field::VoiceGuidanceSettings::navigationHints].get<bool>();
+        enabled_ = json["enabled"].get<bool>();
+        rate_ = json["rate"].get<float>();
+        navigationHints_ = json["navigationHints"].get<bool>();
     }
     ::Firebolt::Accessibility::VoiceGuidanceSettings Value() const override
     {

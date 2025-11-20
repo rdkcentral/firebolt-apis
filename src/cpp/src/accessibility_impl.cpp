@@ -18,72 +18,132 @@
  */
 
 #include "accessibility_impl.h"
-#include "jsondata_accessibility_types.h"
+#include "json_engine.h"
+#include "firebolt.h"
+#include "json_types/jsondata_accessibility_types.h"
+#include "mock_helper.h"
 
-namespace Firebolt::Accessibility
-{
-AccessibilityImpl::AccessibilityImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper), 
-    subscriptionManager_(helper, this) {}
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
 
-Result<bool> AccessibilityImpl::audioDescription() const
+class AccessibilityTest : public ::testing::Test, protected MockBase
 {
-    return helper_.get<FireboltSDK::JSON::Boolean, bool>(JsonData::Method::audioDescription);
+protected:
+    void SetUp() override { eventReceived = false; }
+
+    // Create a condition variable and mutex to wait for the events to be received
+    std::condition_variable cv;
+    std::mutex mtx;
+    bool eventReceived;
+
+    JsonEngine jsonEngine;
+};
+
+TEST_F(AccessibilityTest, AudioDescription)
+{
+    auto expectedValue = jsonEngine.get_value("Accessibility.audioDescription");
+    auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().audioDescription();
+    ASSERT_TRUE(result) << "AccessibilityImpl::audioDescription() returned an error";
+    EXPECT_EQ(*result, expectedValue);
 }
 
-Result<SubscriptionId>
-        AccessibilityImpl::subscribeOnAudioDescriptionChanged(std::function<void(bool)> &&notification) 
+TEST_F(AccessibilityTest, SubscribeOnAudioDescriptionChanged)
 {
-    return subscriptionManager_.subscribe<FireboltSDK::JSON::Boolean, bool>(
-        JsonData::OnChanged::audioDescription, std::move(notification));      
+ 
 }
 
-Result<ClosedCaptionsSettings> AccessibilityImpl::closedCaptionsSettings() const
+TEST_F(AccessibilityTest, ClosedCaptionsSettings)
 {
-    return helper_.get<JsonData::ClosedCaptionsSettings, ClosedCaptionsSettings>(
-        JsonData::Method::closedCaptionsSettings);            
+    Firebolt::Accessibility::ClosedCaptionsSettings settings{true, {"en", "fr"}};
+    nlohmann::json expectedValue = {{"enabled", settings.enabled},
+                                    {"preferredLanguages",
+                                     settings.preferredLanguages}};
+
+    mock_with_response("Accessibility.closedCaptionsSettings", expectedValue);
+
+    auto result = accessibilityImpl_.closedCaptionsSettings();
+
+    ASSERT_TRUE(result) << "AccessibilityImpl::closedCaptionsSettings() returned an error";
+    EXPECT_EQ((*result).enabled, settings.enabled);
+    EXPECT_EQ((*result).preferredLanguages, settings.preferredLanguages);
 }
 
-Result<SubscriptionId>
-        AccessibilityImpl::subscribeOnClosedCaptionsSettingsChanged(std::function<
-            void(const ClosedCaptionsSettings &)> &&notification)
+TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
 {
-    return subscriptionManager_.subscribe<JsonData::ClosedCaptionsSettings>(
-        JsonData::OnChanged::closedCaptionsSettings, std::move(notification));      
+    nlohmann::json expectedValue = 1;
+    mockSubscribe("Accessibility.onClosedCaptionsSettingsChanged");
+
+    auto result = accessibilityImpl_.subscribeOnClosedCaptionsSettingsChanged(
+        [&](const Firebolt::Accessibility::ClosedCaptionsSettings &settings) {});
+
+    ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnClosedCaptionsSettingsChanged() returned an error";
+    EXPECT_EQ(*result, expectedValue);
+
+    accessibilityImpl_.unsubscribe(*result);
+}
+        
+TEST_F(AccessibilityTest, HighContrastUI)
+{
+#ifdef USE_LOCAL_RESPONSE
+    nlohmann::json expectedValue = true;
+    mock_with_response("Accessibility.highContrastUI", expectedValue);
+#else
+    mock("Accessibility.highContrastUI");
+    auto expectedValue = jsonEngine.get_value("Accessibility.highContrastUI");
+#endif
+
+    auto result = accessibilityImpl_.highContrastUI();
+
+    ASSERT_TRUE(result) << "AccessibilityImpl::highContrastUI() returned an error";
+
+    EXPECT_EQ(*result, expectedValue);
 }
 
-Result<bool> AccessibilityImpl::highContrastUI() const
+TEST_F(AccessibilityTest, SubscribeOnHighContrastUIChanged)
 {
-    return helper_.get<FireboltSDK::JSON::Boolean, bool>(JsonData::Method::highContrastUI);
+    nlohmann::json expectedValue = 1;
+    mockSubscribe("Accessibility.onHighContrastUIChanged");
+
+    auto result = accessibilityImpl_.subscribeOnHighContrastUIChanged([&](bool value) {});
+
+    ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnHighContrastUIChanged() returned an error";
+    EXPECT_EQ(*result, expectedValue);
+
+    accessibilityImpl_.unsubscribe(*result);
 }
 
-Result<SubscriptionId>
-        AccessibilityImpl::subscribeOnHighContrastUIChanged(std::function<void(bool)> &&notification)
+TEST_F(AccessibilityTest, VoiceGuidanceSettings)
 {
-    return subscriptionManager_.subscribe<FireboltSDK::JSON::Boolean, bool>(
-        JsonData::OnChanged::highContrastUI, std::move(notification));      
-}   
+#ifdef USE_LOCAL_RESPONSE
+    Firebolt::Accessibility::VoiceGuidanceSettings settings{true, 1.5, true};
+    nlohmann::json expectedValue = {{"enabled", settings.enabled},
+                                    {"rate", settings.rate},
+                                    {"navigationHints", settings.navigationHints}};
+#else
+    mock("Accessibility.voiceGuidanceSettings");
+    auto expectedValue = jsonEngine.get_value("Accessibility.voiceGuidanceSettings");
+#endif
+    mock_with_response("Accessibility.voiceGuidanceSettings", expectedValue);
 
-Result<VoiceGuidanceSettings> AccessibilityImpl::voiceGuidanceSettings() const
-{
-    return helper_.get<JsonData::VoiceGuidanceSettings, VoiceGuidanceSettings>(
-        JsonData::Method::voiceGuidanceSettings);            
+    auto result = accessibilityImpl_.voiceGuidanceSettings();
+
+    ASSERT_TRUE(result) << "AccessibilityImpl::voiceGuidanceSettings() returned an error";
+    EXPECT_EQ((*result).enabled, settings.enabled);
+    EXPECT_EQ((*result).rate, settings.rate);
+    EXPECT_EQ((*result).navigationHints, settings.navigationHints);
 }
 
-Result<SubscriptionId>
-        AccessibilityImpl::subscribeOnVoiceGuidanceSettingsChanged(std::function<
-            void(const VoiceGuidanceSettings &)> &&notification)
+TEST_F(AccessibilityTest, SubscribeOnVoiceGuidanceSettingsChanged)
 {
-    return subscriptionManager_.subscribe<JsonData::VoiceGuidanceSettings>(
-        JsonData::OnChanged::voiceGuidanceSettings, std::move(notification));      
-}   
+    nlohmann::json expectedValue = 1;
+    mockSubscribe("Accessibility.onVoiceGuidanceSettingsChanged");
 
-Result<void> AccessibilityImpl::unsubscribe(SubscriptionId id)
-{
-    return subscriptionManager_.unsubscribe(id);
-}
+    auto result = accessibilityImpl_.subscribeOnVoiceGuidanceSettingsChanged(
+        [&](const Firebolt::Accessibility::VoiceGuidanceSettings &settings) {});
 
-void AccessibilityImpl::unsubscribeAll()
-{
-    subscriptionManager_.unsubscribeAll();
+    ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnVoiceGuidanceSettingsChanged() returned an error";
+    EXPECT_EQ(*result, expectedValue);
+
+    accessibilityImpl_.unsubscribe(*result);
 }
-} // namespace Firebolt::Accessibility
