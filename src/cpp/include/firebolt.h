@@ -20,14 +20,14 @@
 #pragma once
 
 #include "fireboltclient_export.h"
+#include "accessibility.h"
+#include "advertising.h"
 #include "device.h"
 #include "lifecycle.h"
 #include "localization.h"
 #include "metrics.h"
 #include "securestorage.h"
-#include "advertising.h"
 #include "stats.h"
-#include "accessibility.h"
 #include <firebolt/config.h>
 #include <firebolt/types.h>
 #include <functional>
@@ -77,11 +77,33 @@ public:
     virtual Firebolt::Error Disconnect() = 0;
 
     /**
+     * @brief Returns instance of Accessibiilty interface
+     *
+     * @return Reference to Accessibility interface
+     */
+
+    virtual Accessibility::IAccessibility& AccessibilityInterface() = 0;
+
+    /**
+     * @brief Returns instance of Advertising interface
+     *
+     * @return Reference to Advertising interface
+     */
+    virtual Advertising::IAdvertising& AdvertisingInterface() = 0;
+
+    /**
      * @brief Returns instance of Device interface
      *
      * @return Reference to Device interface
      */
     virtual Device::IDevice& DeviceInterface() = 0;
+
+    /**
+     * @brief Returns instance of Lifecycle interface
+     *
+     * @return Reference to Lifecycle interface
+     */
+    virtual Lifecycle::ILifecycle& LifecycleInterface() = 0;
 
     /**
      * @brief Returns instance of Localization interface
@@ -98,13 +120,6 @@ public:
     virtual Metrics::IMetrics& MetricsInterface() = 0;
 
     /**
-     * @brief Returns instance of Lifecycle interface
-     *
-     * @return Reference to Lifecycle interface
-     */
-    virtual Lifecycle::ILifecycle& LifecycleInterface() = 0;
-
-    /**
      * @brief Returns instance of SecureStorage interface
      *
      * @return Reference to SecureStorage interface
@@ -112,24 +127,10 @@ public:
     virtual SecureStorage::ISecureStorage& SecureStorageInterface() = 0;
 
     /**
-     * @brief Returns instance of Advertising interface
-     *
-     * @return Reference to Advertising interface
-     */
-    virtual Advertising::IAdvertising& AdvertisingInterface() = 0;
-
-    /**
      * @brief Returns instance of Stats interface
      *
      * @return Reference to Stats interface
      */
     virtual Stats::IStats& StatsInterface() = 0;
-
-    /**
-     * @brief Returns instance of Accessibiilty interface
-     *
-     * @return Reference to Accessibility interface
-     */
-    virtual Accessibility::IAccessibility& AccessibilityInterface() = 0;
 };
 } // namespace Firebolt
