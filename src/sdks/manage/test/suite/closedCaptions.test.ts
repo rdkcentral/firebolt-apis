@@ -86,7 +86,7 @@ test("ClosedCaptions.textAlignVertical()", () => {
 });
 
 test("ClosedCaptions.listen()", () => {
-  return ClosedCaptions.listen("fontColorChanged", () => {}).then(
+  return ClosedCaptions.listen("onFontColorChanged", () => {}).then(
     (res: number) => {
       expect(res > 0).toBe(true);
     }
@@ -94,7 +94,7 @@ test("ClosedCaptions.listen()", () => {
 });
 
 test("ClosedCaptions.once()", () => {
-  return ClosedCaptions.once("fontColorChanged", () => {}).then(
+  return ClosedCaptions.once("onFontColorChanged", () => {}).then(
     (res: number) => {
       expect(res > 0).toBe(true);
     }

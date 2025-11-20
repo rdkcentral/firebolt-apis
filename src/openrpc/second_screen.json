@@ -105,11 +105,10 @@
       ]
     },
     {
-      "name": "launchRequest",
+      "name": "onLaunchRequest",
       "tags": [
         {
-          "name": "notifier",
-          "x-event": "SecondScreen.onLaunchRequest"
+          "name": "notifier"
         },
         {
           "name": "capabilities",
@@ -143,11 +142,10 @@
       ]
     },
     {
-      "name": "closeRequest",
+      "name": "onCloseRequest",
       "tags": [
         {
-          "name": "notifier",
-          "x-event": "SecondScreen.onCloseRequest"
+          "name": "notifier"
         },
         {
           "name": "capabilities",

@@ -201,79 +201,79 @@ test("Device.network(subscriber)", () => {
 });
 
 test("listen() audioChanged event.", () => {
-  return Device.listen("audioChanged", () => {}).then((res: number) => {
+  return Device.listen("onAudioChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() audioChanged event.", () => {
-  return Device.once("audioChanged", () => {}).then((res: number) => {
+  return Device.once("onAudioChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() deviceNameChanged event.", () => {
-  return Device.listen("deviceNameChanged", () => {}).then((res: number) => {
+  return Device.listen("onDeviceNameChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() deviceNameChanged event.", () => {
-  return Device.once("deviceNameChanged", () => {}).then((res: number) => {
+  return Device.once("onDeviceNameChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() hdcpChanged event.", () => {
-  return Device.listen("hdcpChanged", () => {}).then((res: number) => {
+  return Device.listen("onHdcpChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() hdcpChanged event.", () => {
-  return Device.once("hdcpChanged", () => {}).then((res: number) => {
+  return Device.once("onHdcpChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() hdrChanged event.", () => {
-  return Device.listen("hdrChanged", () => {}).then((res: number) => {
+  return Device.listen("onHdrChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() hdrChanged event.", () => {
-  return Device.once("hdrChanged", () => {}).then((res: number) => {
+  return Device.once("onHdrChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() nameChanged event.", () => {
-  return Device.listen("nameChanged", () => {}).then((res: number) => {
+  return Device.listen("onNameChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() nameChanged event.", () => {
-  return Device.once("nameChanged", () => {}).then((res: number) => {
+  return Device.once("onNameChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() networkChanged event.", () => {
-  return Device.listen("networkChanged", () => {}).then((res: number) => {
+  return Device.listen("onNetworkChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() networkChanged event.", () => {
-  return Device.once("networkChanged", () => {}).then((res: number) => {
+  return Device.once("onNetworkChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() screenResolutionChanged event.", () => {
-  return Device.listen("screenResolutionChanged", () => {}).then(
+  return Device.listen("onScreenResolutionChanged", () => {}).then(
     (res: number) => {
       expect(res > 0).toBe(true);
     }
@@ -281,7 +281,7 @@ test("listen() screenResolutionChanged event.", () => {
 });
 
 test("once() screenResolutionChanged event.", () => {
-  return Device.once("screenResolutionChanged", () => {}).then(
+  return Device.once("onScreenResolutionChanged", () => {}).then(
     (res: number) => {
       expect(res > 0).toBe(true);
     }
@@ -289,7 +289,7 @@ test("once() screenResolutionChanged event.", () => {
 });
 
 test("listen() videoResolutionChanged event.", () => {
-  return Device.listen("videoResolutionChanged", () => {}).then(
+  return Device.listen("onVideoResolutionChanged", () => {}).then(
     (res: number) => {
       expect(res > 0).toBe(true);
     }
@@ -297,7 +297,7 @@ test("listen() videoResolutionChanged event.", () => {
 });
 
 test("once() videoResolutionChanged event.", () => {
-  return Device.once("videoResolutionChanged", () => {}).then((res: number) => {
+  return Device.once("onVideoResolutionChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });

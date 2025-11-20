@@ -1215,11 +1215,10 @@
 			]
 		},
 		{
-			"name": "navigateTo",
+			"name": "onNavigateTo",
 			"tags": [
 				{
-					"name": "notifier",
-					"x-event": "Discovery.onNavigateTo"
+					"name": "notifier"
 				},
 				{
 					"name": "capabilities",
@@ -1355,11 +1354,10 @@
 			]
 		},
 		{
-			"name": "signIn",
+			"name": "onSignIn",
 			"tags": [
 				{
-					"name": "notifier",
-					"x-event": "Discovery.onSignIn"
+					"name": "notifier"
 				},
 				{
 					"name": "capabilities",
@@ -1400,11 +1398,10 @@
 			]
 		},
 		{
-			"name": "signOut",
+			"name": "onSignOut",
 			"tags": [
 				{
-					"name": "notifier",
-					"x-event": "Discovery.onSignOut"
+					"name": "notifier"
 				},
 				{
 					"name": "capabilities",

@@ -33,7 +33,8 @@ export const store = {
 async function ready() {
   let readyRes;
   await prioritize('Lifecycle', (event, value) => {
-    store._current = event
+    // we need to remove the "on" prefix for the state
+    store._current = event.replace(/^on/, '')
   })
   readyRes = await Gateway.request('Lifecycle.ready', {})
   setTimeout(_ => {
