@@ -23,6 +23,7 @@
 #include "localization_impl.h"
 #include "metrics_impl.h"
 #include "securestorage_impl.h"
+#include "advertising_impl.h"
 #include "stats_impl.h"
 #include "Firebolt/helpers.h"
 
@@ -36,8 +37,9 @@ public:
         , localization_(Firebolt::Helpers::GetHelperInstance())
         , metrics_(Firebolt::Helpers::GetHelperInstance())
         , lifecycle_(Firebolt::Helpers::GetHelperInstance())
-        , secureStorage_(Firebolt::Helpers::GetHelperInstance()),
-          stats_(Firebolt::Helpers::GetHelperInstance())
+        , secureStorage_(Firebolt::Helpers::GetHelperInstance())
+        , advertising_(Firebolt::Helpers::GetHelperInstance())
+        , stats_(Firebolt::Helpers::GetHelperInstance())
     {
     }
 
@@ -65,6 +67,7 @@ public:
     Metrics::IMetrics& MetricsInterface() override { return metrics_; }
     Lifecycle::ILifecycle& LifecycleInterface() override { return lifecycle_; }
     SecureStorage::ISecureStorage& SecureStorageInterface() override { return secureStorage_; }
+    Advertising::IAdvertising& AdvertisingInterface() override { return advertising_; }
     Stats::IStats& StatsInterface() override { return stats_; }
 
 private:
@@ -80,6 +83,7 @@ private:
     Metrics::MetricsImpl metrics_;
     Lifecycle::LifecycleImpl lifecycle_;
     SecureStorage::SecureStorageImpl secureStorage_;
+    Advertising::AdvertisingImpl advertising_;
     Stats::StatsImpl stats_;
 };
 

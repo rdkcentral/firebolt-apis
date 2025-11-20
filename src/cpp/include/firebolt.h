@@ -25,6 +25,7 @@
 #include "localization.h"
 #include "metrics.h"
 #include "securestorage.h"
+#include "advertising.h"
 #include "stats.h"
 #include "Firebolt/config.h"
 #include "Firebolt/types.h"
@@ -108,6 +109,13 @@ public:
      * @return Reference to SecureStorage interface
      */
     virtual SecureStorage::ISecureStorage& SecureStorageInterface() = 0;
+
+    /**
+     * @brief Returns instance of Advertising interface
+     *
+     * @return Reference to Advertising interface
+     */
+    virtual Advertising::IAdvertising& AdvertisingInterface() = 0;
 
     /**
      * @brief Returns instance of Stats interface
