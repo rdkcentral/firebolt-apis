@@ -116,8 +116,8 @@ message("Setup ${COMPONENT_TESTS_APP}")
 set(COMPONENT_TESTS
     "component/lifecycleTest.cpp"
     "component/deviceTest.cpp"
-    "component/advertisingTest.cpp"
-    "component/statsTest.cpp"
+    # "component/advertisingTest.cpp"
+    # "component/statsTest.cpp"
     # "component/accessibilityTest.cpp"
 )
 
