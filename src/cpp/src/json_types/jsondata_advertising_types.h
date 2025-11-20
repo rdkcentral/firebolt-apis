@@ -26,11 +26,11 @@
 #include <map>
 #include <nlohmann/json.hpp>
 #include <string>
-#include <types/json_types.h>
+#include "Firebolt/json_types.h"
 
 namespace Firebolt::Advertising::JsonData
 {
-class IfaJson : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Advertising::Ifa>
+class IfaJson : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Advertising::Ifa>
 {
 public:
     void FromJson(const nlohmann::json &json) override

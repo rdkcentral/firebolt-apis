@@ -31,6 +31,6 @@ Result<Ifa> AdvertisingImpl::advertisingId() const
 
 Result<std::string> AdvertisingImpl::uid() const
 {
-    return helper_.get<FireboltSDK::JSON::String, std::string>("Advertising.uid");
+    return helper_.get<Firebolt::JSON::String, std::string>("Advertising.uid");
 }
 } // namespace Firebolt::Advertising

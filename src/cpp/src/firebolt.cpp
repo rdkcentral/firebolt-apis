@@ -17,16 +17,14 @@
  * limitations under the License.
  */
 
-#include "closedcaptions_impl.h"
 #include "device_impl.h"
 #include "firebolt.h"
-#include "hdmiinput_impl.h"
 #include "lifecycle_impl.h"
 #include "localization_impl.h"
 #include "metrics_impl.h"
 #include "securestorage_impl.h"
 #include "advertising_impl.h"
-#include <helpers.h>
+#include "Firebolt/helpers.h"
 
 namespace Firebolt
 {
@@ -34,9 +32,7 @@ class FireboltAccessorImpl : public IFireboltAccessor
 {
 public:
     FireboltAccessorImpl()
-        : closedCaptions_(Firebolt::Helpers::GetHelperInstance())
-        , device_(Firebolt::Helpers::GetHelperInstance())
-        , hdmiInput_(Firebolt::Helpers::GetHelperInstance())
+        : device_(Firebolt::Helpers::GetHelperInstance())
         , localization_(Firebolt::Helpers::GetHelperInstance())
         , metrics_(Firebolt::Helpers::GetHelperInstance())
         , lifecycle_(Firebolt::Helpers::GetHelperInstance())
@@ -53,20 +49,18 @@ public:
         unsubscribeAll();
     }
 
-    Firebolt::Error Connect(const FireboltSDK::Config &config, OnConnectionChanged listener) override
+    Firebolt::Error Connect(const Firebolt::Config &config, OnConnectionChanged listener) override
     {
-        return FireboltSDK::Transport::GetGatewayInstance().Connect(config, listener);
+        return Firebolt::Transport::GetGatewayInstance().Connect(config, listener);
     }
 
     Firebolt::Error Disconnect() override
     {
         unsubscribeAll();
-        return FireboltSDK::Transport::GetGatewayInstance().Disconnect();
+        return Firebolt::Transport::GetGatewayInstance().Disconnect();
     }
 
-    ClosedCaptions::IClosedCaptions& ClosedCaptionsInterface() override { return closedCaptions_; }
     Device::IDevice& DeviceInterface() override { return device_; }
-    HDMIInput::IHDMIInput& HDMIInputInterface() override { return hdmiInput_; }
     Localization::ILocalization& LocalizationInterface() override { return localization_; }
     Metrics::IMetrics& MetricsInterface() override { return metrics_; }
     Lifecycle::ILifecycle& LifecycleInterface() override { return lifecycle_; }
@@ -76,16 +70,12 @@ public:
 private:
     void unsubscribeAll()
     {
-        closedCaptions_.unsubscribeAll();
-        hdmiInput_.unsubscribeAll();
         localization_.unsubscribeAll();
         lifecycle_.unsubscribeAll();
     }
 
 private:
-    ClosedCaptions::ClosedCaptionsImpl closedCaptions_;
     Device::DeviceImpl device_;
-    HDMIInput::HDMIInputImpl hdmiInput_;
     Localization::LocalizationImpl localization_;
     Metrics::MetricsImpl metrics_;
     Lifecycle::LifecycleImpl lifecycle_;
@@ -99,3 +89,5 @@ private:
     return impl;
 }
 } // namespace Firebolt
+
+

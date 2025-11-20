@@ -20,16 +20,16 @@
 #pragma once
 
 #include "securestorage.h"
-#include <types/json_types.h>
+#include "Firebolt/json_types.h"
 
 namespace Firebolt::SecureStorage::JsonData
 {
-inline FireboltSDK::JSON::EnumType<::Firebolt::SecureStorage::StorageScope> StorageScopeEnum({
+inline Firebolt::JSON::EnumType<::Firebolt::SecureStorage::StorageScope> StorageScopeEnum({
     { "device", ::Firebolt::SecureStorage::StorageScope::DEVICE },
     { "account", ::Firebolt::SecureStorage::StorageScope::ACCOUNT },
 });
 
-class StorageOptions : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::SecureStorage::StorageOptions>
+class StorageOptions : public Firebolt::JSON::NL_Json_Basic<::Firebolt::SecureStorage::StorageOptions>
 {
 public:
     void FromJson(const nlohmann::json& json) override

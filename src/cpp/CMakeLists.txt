@@ -18,7 +18,7 @@ cmake_minimum_required(VERSION 3.10)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-project(FireboltSDK)
+project(FireboltClient)
 
 # <VERSION_BLOCK>
 if (NOT PROJECT_VERSION)

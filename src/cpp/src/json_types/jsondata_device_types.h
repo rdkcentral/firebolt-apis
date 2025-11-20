@@ -22,40 +22,22 @@
 #include "device.h"
 
 #include <algorithm>
+#include "Firebolt/json_types.h"
 #include <map>
 #include <nlohmann/json.hpp>
 #include <string>
-#include <types/json_types.h>
 
 namespace Firebolt::Device::JsonData
 {
-namespace Method
-{
-static const std::string deviceClass = "Device.deviceClass";
-static const std::string uptime = "Device.uptime";
-static const std::string uid = "Device.uid";
-} // namespace Method
-
-namespace Field
-{
-namespace DeviceClass
-{
-static const std::string STB = "stb";
-static const std::string OTT = "ott";
-static const std::string TV = "tv";
-} // namespace DeviceClass
-} // namespace Field
-
 // Enums
-inline FireboltSDK::JSON::EnumType<::Firebolt::Device::DeviceClass> const DeviceClassEnum({
-    {Field::DeviceClass::STB, ::Firebolt::Device::DeviceClass::STB},
-    {Field::DeviceClass::OTT, ::Firebolt::Device::DeviceClass::OTT},
-    {Field::DeviceClass::TV, ::Firebolt::Device::DeviceClass::TV},
+inline Firebolt::JSON::EnumType<::Firebolt::Device::DeviceClass> const DeviceClassEnum({
+    {"stb", ::Firebolt::Device::DeviceClass::STB},
+    {"ott", ::Firebolt::Device::DeviceClass::OTT},
+    {"tv", ::Firebolt::Device::DeviceClass::TV},
 });
 
 // Types
-
-class DeviceClassJson : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Device::DeviceClass>
+class DeviceClassJson : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Device::DeviceClass>
 {
 public:
     void FromJson(const nlohmann::json &json) override { deviceClass_ = DeviceClassEnum.at(json); }

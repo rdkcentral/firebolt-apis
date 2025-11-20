@@ -1,3 +1,17 @@
+# [1.8.0-next.15](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.14...v1.8.0-next.15) (2025-11-20)
+
+
+### Features
+
+* Device API ([#451](https://github.com/rdkcentral/firebolt-apis/issues/451)) ([c0bde26](https://github.com/rdkcentral/firebolt-apis/commit/c0bde2676d2fd2b9670441877cafd4d3ce522ab5))
+
+# [1.8.0-next.14](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.13...v1.8.0-next.14) (2025-11-19)
+
+
+### Features
+
+* Update namings ([#455](https://github.com/rdkcentral/firebolt-apis/issues/455)) ([2432e35](https://github.com/rdkcentral/firebolt-apis/commit/2432e356f16e0d98d3db0be34198be4a59679e4d))
+
 # [1.8.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.12...v1.8.0-next.13) (2025-11-18)
 
 

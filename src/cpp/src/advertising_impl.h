@@ -20,8 +20,7 @@
 #pragma once
 
 #include "advertising.h"
-#include "helpers.h"
-
+#include "Firebolt/helpers.h"
 
 namespace Firebolt::Advertising
 {
@@ -39,6 +38,5 @@ public:
 
 private:
     Firebolt::Helpers::IHelper &helper_;
-    // Methods
 };
-} // namespace Firebolt::Device
+} // namespace Firebolt::Advertising

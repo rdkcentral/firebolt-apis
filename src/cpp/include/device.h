@@ -19,18 +19,14 @@
 
 #pragma once
 
+#include "Firebolt/types.h"
 #include <functional>
 #include <optional>
 #include <string>
-#include <types/fb-errors.h>
-#include <types/types.h>
 #include <vector>
 
 namespace Firebolt::Device
 {
-/**
- * @brief NetworkState The type of network that is currently active
- */
 // Enums
 /**
  * @brief DeviceClass The device class
@@ -61,6 +57,14 @@ public:
      * @retval The uptime in seconds or error
      */
     virtual Result<uint32_t> uptime() const = 0;
+
+    /**
+     * @brief Returns number of seconds since most recent device boot, including any time spent during deep sleep
+     *
+     * @retval The uptime in seconds or error
+     */
+    virtual Result<u_int32_t> timeInActiveState() const = 0;
+
 
     /**
      * @brief Returns a persistent unique UUID for the current app and device.  The UUID is reset when the app or device is reset
