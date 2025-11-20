@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "helpers.h"
 #include "securestorage.h"
+#include "Firebolt/helpers.h"
 
 namespace Firebolt::SecureStorage
 {

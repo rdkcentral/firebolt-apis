@@ -20,7 +20,7 @@
 #pragma once
 
 #include <gmock/gmock.h>
-#include <helpers.h>
+#include "Firebolt/helpers.h"
 
 class MockHelper : public Firebolt::Helpers::IHelper
 {

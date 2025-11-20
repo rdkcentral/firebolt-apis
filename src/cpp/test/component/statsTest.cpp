@@ -33,18 +33,18 @@ protected:
 
 TEST_F(StatsTest, MemoryUsage)
 {
-    auto expectedValue = jsonEngine.get_value(Firebolt::Stats::JsonData::Method::memoryUsage);
+    auto expectedValue = jsonEngine.get_value("memoryUsage");
 
     auto result = Firebolt::IFireboltAccessor::Instance().StatsInterface().memoryUsage();
 
     ASSERT_TRUE(result) << "StatsImpl::memoryUsage() returned an error";
 
     EXPECT_EQ(result->gpuMemoryLimit,
-              expectedValue.at(Firebolt::Stats::JsonData::Field::MemoryInfo::gpuMemoryLimit).get<uint32_t>());
+              expectedValue.at("userMemoryUsedKiB").get<uint32_t>());
     EXPECT_EQ(result->gpuMemoryUsed,
-              expectedValue.at(Firebolt::Stats::JsonData::Field::MemoryInfo::gpuMemoryUsed).get<uint32_t>());
+              expectedValue.at("gpuMemoryUsedKiB").get<uint32_t>());
     EXPECT_EQ(result->userMemoryLimit,
-              expectedValue.at(Firebolt::Stats::JsonData::Field::MemoryInfo::userMemoryLimit).get<uint32_t>());
+              expectedValue.at("userMemoryLimitKiB").get<uint32_t>());
     EXPECT_EQ(result->userMemoryUsed,
-              expectedValue.at(Firebolt::Stats::JsonData::Field::MemoryInfo::userMemoryUsed).get<uint32_t>());
+              expectedValue.at("userMemoryUsedKiB").get<uint32_t>());
 }

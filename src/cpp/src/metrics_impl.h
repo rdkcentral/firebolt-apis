@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "helpers.h"
 #include "metrics.h"
+#include "Firebolt/helpers.h"
 
 namespace Firebolt::Metrics
 {

@@ -17,17 +17,16 @@
  */
 #pragma once
 
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <filesystem>
-
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-
+#include "Firebolt/types.h"
+#include <filesystem>
+#include <fstream>
+#include <iostream>
 #include <nlohmann/json-schema.hpp>
 #include <nlohmann/json.hpp>
-#include <types/fb-errors.h>
+#include <vector>
+
 
 using namespace ::testing;
 
@@ -144,7 +143,7 @@ class JsonEngine
             std::string methodName = capitalizeFirstChar(message["method"]);
 
             /* TODO: Add a flag here that will be set to true if the method name is found in the rpc block, u
-               Use the flag to validate "Method not found" or other errors from SDK if applicable */
+               Use the flag to validate "Method not found" or other errors if applicable */
             for (const auto &method : _data["methods"])
             {
                 if (method.contains("name") && (method["name"] == methodName))

@@ -40,7 +40,7 @@ StatsImpl::~StatsImpl()
 
 Result<MemoryInfo> StatsImpl::memoryUsage() const
 {
-    return helper_.get<JsonData::MemoryInfo, MemoryInfo>(JsonData::Method::memoryUsage);
+    return helper_.get<JsonData::MemoryInfo, MemoryInfo>("memoryUsage");
 }
     
 } // namespace Firebolt::Stats

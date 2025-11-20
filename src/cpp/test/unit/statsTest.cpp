@@ -38,26 +38,26 @@ protected:
 TEST_F(StatsTest, MemoryUsage)
 {
 #ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = {{Firebolt::Stats::JsonData::Field::MemoryInfo::userMemoryUsed, 12345},
-                                    {Firebolt::Stats::JsonData::Field::MemoryInfo::userMemoryLimit, 67890},
-                                    {Firebolt::Stats::JsonData::Field::MemoryInfo::gpuMemoryUsed, 11111},
-                                    {Firebolt::Stats::JsonData::Field::MemoryInfo::gpuMemoryLimit, 22222}};
-    mock_with_response(Firebolt::Stats::JsonData::Method::memoryUsage, expectedValue);
+    nlohmann::json expectedValue = {{"userMemoryUsedKiB", 12345},
+                                    {"userMemoryLimitKiB", 67890},
+                                    {"gpuMemoryUsedKiB", 11111},
+                                    {"gpuMemoryLimitKiB", 22222}};
+    mock_with_response("memoryUsage", expectedValue);
 #else
-    mock(Firebolt::Stats::JsonData::Method::memoryUsage);
-    auto expectedValue = jsonEngine.get_value(Firebolt::Stats::JsonData::Method::memoryUsage);
+    mock("memoryUsage");
+    auto expectedValue = jsonEngine.get_value("memoryUsage");
 #endif
 
     auto result = statsImpl_.memoryUsage();
 
     ASSERT_TRUE(result) << "StatsImpl::memoryUsage() returned an error";
-
-    EXPECT_EQ(result->gpuMemoryLimit,
-              expectedValue.at(Firebolt::Stats::JsonData::Field::MemoryInfo::gpuMemoryLimit).get<uint32_t>());
-    EXPECT_EQ(result->gpuMemoryUsed,
-              expectedValue.at(Firebolt::Stats::JsonData::Field::MemoryInfo::gpuMemoryUsed).get<uint32_t>());
-    EXPECT_EQ(result->userMemoryLimit,
-              expectedValue.at(Firebolt::Stats::JsonData::Field::MemoryInfo::userMemoryLimit).get<uint32_t>());
+    
     EXPECT_EQ(result->userMemoryUsed,
-              expectedValue.at(Firebolt::Stats::JsonData::Field::MemoryInfo::userMemoryUsed).get<uint32_t>());
+              expectedValue.at("userMemoryUsedKiB").get<uint32_t>());
+    EXPECT_EQ(result->userMemoryLimit,
+              expectedValue.at("userMemoryLimitKiB").get<uint32_t>());
+    EXPECT_EQ(result->gpuMemoryUsed,
+              expectedValue.at("gpuMemoryUsedKiB").get<uint32_t>());
+    EXPECT_EQ(result->gpuMemoryLimit,
+              expectedValue.at("gpuMemoryLimitKiB").get<uint32_t>());
 }

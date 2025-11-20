@@ -25,41 +25,25 @@
 #include <map>
 #include <nlohmann/json.hpp>
 #include <string>
-#include <types/json_types.h>
+#include "Firebolt/json_types.h"
 
 namespace Firebolt::Stats::JsonData
 {
-
-namespace Method
-{
-static const std::string memoryUsage = "Stats.memoryUsage";
-} // namespace Method
-
-namespace Field
-{
-namespace MemoryInfo
-{
-static const std::string userMemoryUsed = "userMemoryUsedKiB";
-static const std::string userMemoryLimit = "userMemoryLimitKiB";
-static const std::string gpuMemoryUsed = "gpuMemoryUsedKiB";
-static const std::string gpuMemoryLimit = "gpuMemoryLimitKiB";
-} // namespace MemoryInfo
-} // namespace Field
-
-class MemoryInfo : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::Stats::MemoryInfo>
+class MemoryInfo : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Stats::MemoryInfo>
 {
 public:
     void FromJson(const nlohmann::json& json) override
     {
-        userMemoryUsed = json[Field::MemoryInfo::userMemoryUsed].get<uint32_t>();
-        userMemoryLimit = json[Field::MemoryInfo::userMemoryLimit].get<uint32_t>();
-        gpuMemoryUsed = json[Field::MemoryInfo::gpuMemoryUsed].get<uint32_t>();
-        gpuMemoryLimit = json[Field::MemoryInfo::gpuMemoryLimit].get<uint32_t>();
+        userMemoryUsed = json["userMemoryUsedKiB"].get<uint32_t>();
+        userMemoryLimit = json["userMemoryLimitKiB"].get<uint32_t>();
+        gpuMemoryUsed = json["gpuMemoryUsedKiB"].get<uint32_t>();
+        gpuMemoryLimit = json["gpuMemoryLimitKiB"].get<uint32_t>();
     }
     ::Firebolt::Stats::MemoryInfo Value() const override
     {
         return ::Firebolt::Stats::MemoryInfo{userMemoryUsed, userMemoryLimit, gpuMemoryUsed, gpuMemoryLimit};
     }
+
 private:
     uint32_t userMemoryUsed;
     uint32_t userMemoryLimit;

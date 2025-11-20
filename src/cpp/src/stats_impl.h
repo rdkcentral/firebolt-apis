@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "helpers.h"
+#include "Firebolt/helpers.h"
 #include "stats.h"
 #include <mutex>
 #include <set>
@@ -27,7 +27,6 @@
 
 namespace Firebolt::Stats
 {
-
 
 class StatsImpl : public IStats
 {
@@ -38,8 +37,6 @@ public:
     ~StatsImpl() override;
 
     virtual Result<MemoryInfo> memoryUsage() const override;
-
-private:
 
 private:
     Firebolt::Helpers::IHelper &helper_;

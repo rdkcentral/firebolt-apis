@@ -19,9 +19,9 @@
 
 #pragma once
 
+#include "Firebolt/types.h"
+#include <functional>
 #include <optional>
-#include <types/fb-errors.h>
-#include <types/types.h>
 #include <vector>
 
 namespace Firebolt::Localization
