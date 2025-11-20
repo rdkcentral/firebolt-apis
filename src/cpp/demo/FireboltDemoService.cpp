@@ -138,7 +138,7 @@ std::string bool2str(const bool value)
 
 void FireboltDemoService::lifecycle()
 {
-    auto state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().getCurrentState();
+    auto state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state();
     if (state)
     {
       std::cout << "Current state: " << static_cast<int>(*state) << std::endl;

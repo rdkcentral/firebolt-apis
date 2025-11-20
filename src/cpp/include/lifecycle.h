@@ -78,7 +78,7 @@ public:
      *
      * @retval The current lifecycle state or error
      */
-    virtual Result<LifecycleState> getCurrentState() const = 0;
+    virtual Result<LifecycleState> state() const = 0;
 
     /**
      * @brief Subscribe to lifecycle state changes

@@ -44,7 +44,7 @@ public:
     ~LifecycleImpl() override;
 
     virtual Result<void> close(const CloseType &type) const override;
-    virtual Result<LifecycleState> getCurrentState() const override;
+    virtual Result<LifecycleState> state() const override;
 
     Result<SubscriptionId>
     subscribeOnStateChanged(std::function<void(const std::vector<StateChange> &)> &&notification) override;

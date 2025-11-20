@@ -51,8 +51,8 @@ TEST_F(LifecycleTest, close)
 TEST_F(LifecycleTest, state)
 {
     Firebolt::Result<Firebolt::Lifecycle::LifecycleState> result =
-        Firebolt::IFireboltAccessor::Instance().LifecycleInterface().getCurrentState();
-    ASSERT_TRUE(result) << "Error on calling LifecycleInterface.getCurrentState() method";
+        Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state();
+    ASSERT_TRUE(result) << "Error on calling LifecycleInterface.state() method";
 
     auto expectedValue = jsonEngine.get_value("Lifecycle.state");
     EXPECT_EQ(*result, Firebolt::Lifecycle::LifecycleState::ACTIVE);

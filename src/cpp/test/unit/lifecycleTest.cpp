@@ -56,7 +56,7 @@ TEST_F(LifecycleTest, close)
     ASSERT_TRUE(result) << "Error on invoke";
 }
 
-TEST_F(LifecycleTest, getCurrentState)
+TEST_F(LifecycleTest, state)
 {
     EXPECT_CALL(mockHelper, getJson("Lifecycle2.state", _))
         .WillOnce(Invoke(
@@ -66,8 +66,8 @@ TEST_F(LifecycleTest, getCurrentState)
                 return Firebolt::Result<nlohmann::json>{response};
             }));
 
-    Firebolt::Result<Firebolt::Lifecycle::LifecycleState> result = lifecycleImpl_.getCurrentState();
-    ASSERT_TRUE(result) << "Failed to retrieve current state from Lifecycle.getCurrentState() method";
+    Firebolt::Result<Firebolt::Lifecycle::LifecycleState> result = lifecycleImpl_.state();
+    ASSERT_TRUE(result) << "Failed to retrieve current state from Lifecycle.state() method";
     EXPECT_EQ(*result, Firebolt::Lifecycle::LifecycleState::INITIALIZING);
 }
 
