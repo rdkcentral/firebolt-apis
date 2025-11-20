@@ -1,3 +1,10 @@
+# [1.8.0-next.16](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.15...v1.8.0-next.16) (2025-11-20)
+
+
+### Features
+
+* Advertising api ([#457](https://github.com/rdkcentral/firebolt-apis/issues/457)) ([5f83d37](https://github.com/rdkcentral/firebolt-apis/commit/5f83d37e6a899e6fc3dbb9d043de4e3049d05fe9))
+
 # [1.8.0-next.15](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.14...v1.8.0-next.15) (2025-11-20)
 
 
