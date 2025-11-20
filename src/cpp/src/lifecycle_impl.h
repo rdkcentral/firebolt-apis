@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include "helpers.h"
 #include "lifecycle.h"
+#include "Firebolt/helpers.h"
 #include <mutex>
 #include <set>
 #include <string>

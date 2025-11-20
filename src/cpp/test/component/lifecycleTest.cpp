@@ -81,10 +81,10 @@ TEST_F(LifecycleTest, subscribeOnState)
     verifyEventSubscription(id);
 
     // Trigger the event from the mock server
-    triggerEvent("Lifecycle2.stateChanged", R"([{"focused":true,"newState":"paused","oldState":"initializing"}])");
+    triggerEvent("Lifecycle2.onStateChanged", R"([{"focused":true,"newState":"paused","oldState":"initializing"}])");
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().unsubscribe(id.value());
+    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(id.value());
     verifyUnsubscribeResult(result);
 }

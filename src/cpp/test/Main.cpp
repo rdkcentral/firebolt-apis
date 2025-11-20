@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include "CoreSDKTest.h"
+#include "CoreClientTest.h"
 #include <getopt.h>
 #include <iostream>
 #include <stdexcept>
@@ -47,96 +47,36 @@ void RunAllTests()
     };
 
     // Ensure the connection is ready before running tests
-    if (CoreSDKTest::WaitOnConnectionReady())
+    if (CoreClientTest::WaitOnConnectionReady())
     {
-
-        // ClosedCaptions methods
-        runTest(CoreSDKTest::GetClosedCaptionsBackgroundOpacity, "GetClosedCaptionsBackgroundOpacity");
-        runTest(CoreSDKTest::SetClosedCaptionsBackgroundOpacity, "SetClosedCaptionsBackgroundOpacity");
-        runTest(CoreSDKTest::SubscribeClosedCaptionsBackgroundOpacityChanged,
-                "SubscribeClosedCaptionsBackgroundOpacityChanged");
-        runTest(CoreSDKTest::UnsubscribeClosedCaptionsBackgroundOpacityChanged,
-                "UnsubscribeClosedCaptionsBackgroundOpacityChanged");
-
-        runTest(CoreSDKTest::GetClosedCaptionsFontFamily, "GetClosedCaptionsFontFamily");
-        runTest(CoreSDKTest::SetClosedCaptionsFontFamily, "SetClosedCaptionsFontFamily");
-        runTest(CoreSDKTest::SubscribeClosedCaptionsFontFamilyChanged, "SubscribeClosedCaptionsFontFamilyChanged");
-        runTest(CoreSDKTest::UnsubscribeClosedCaptionsFontFamilyChanged, "UnsubscribeClosedCaptionsFontFamilyChanged");
-
-        // Device properties
-        runTest(CoreSDKTest::GetDeviceModel, "GetDeviceModel");
-        runTest(CoreSDKTest::GetDeviceSku, "GetDeviceSku");
-        runTest(CoreSDKTest::GetDeviceName, "GetDeviceName");
-        runTest(CoreSDKTest::GetDeviceVersion, "GetDeviceVersion");
-        runTest(CoreSDKTest::SubscribeDeviceNameChanged, "SubscribeDeviceNameChanged");
-        runTest(CoreSDKTest::UnsubscribeDeviceNameChanged, "UnsubscribeDeviceNameChanged");
-        runTest(CoreSDKTest::GetDeviceAudio, "GetDeviceAudio");
-        runTest(CoreSDKTest::SubscribeDeviceAudioChanged, "SubscribeDeviceAudioChanged");
-        runTest(CoreSDKTest::UnsubscribeDeviceAudioChanged, "UnsubscribeDeviceAudioChanged");
-        runTest(CoreSDKTest::GetDeviceScreenResolution, "GetDeviceScreenResolution");
-        runTest(CoreSDKTest::SubscribeDeviceScreenResolutionChanged, "SubscribeDeviceScreenResolutionChanged");
-        runTest(CoreSDKTest::UnsubscribeDeviceScreenResolutionChanged, "UnsubscribeDeviceScreenResolutionChanged");
-
-        // HdmiInput
-        runTest(CoreSDKTest::SubscribeHdmiAutoLowLatencyModeCapableChanged,
-                "SubscribeHdmiAutoLowLatencyModeCapableChanged");
-        runTest(CoreSDKTest::UnsubscribeHdmiAutoLowLatencyModeCapableChanged,
-                "UnsubscribeHdmiAutoLowLatencyModeCapableChanged");
-        runTest(CoreSDKTest::GetAutoLowLatencyModeCapable, "GetAutoLowLatencyModeCapable");
-        runTest(CoreSDKTest::SetAutoLowLatencyModeCapable, "SetAutoLowLatencyModeCapable");
-        runTest(CoreSDKTest::GetEdidVersion, "GetEdidVersion");
-        runTest(CoreSDKTest::SetEdidVersion, "SetEdidVersion");
-        runTest(CoreSDKTest::GetHdmiPortInfo, "GetHdmiPortInfo");
-        runTest(CoreSDKTest::OpenHdmiPort, "OpenHdmiPort");
-        runTest(CoreSDKTest::CloseHdmiPort, "CloseHdmiPort");
-
-        
-#ifdef USE_LIFECYCLE1
-        // Lifecycle
-        runTest(CoreSDKTest::LifecycleReady, "LifecycleReady");
-        runTest(CoreSDKTest::LifecycleClose, "LifecycleClose");
-        runTest(CoreSDKTest::LifecycleFinished, "LifecycleFinished");
-        runTest(CoreSDKTest::LifecycleState, "LifecycleState");
-        runTest(CoreSDKTest::SubscribeOnLifecycleBackgroundChanged, "SubscribeOnLifecycleBackgroundChanged");
-        runTest(CoreSDKTest::UnsubscribeOnLifecycleBackgroundChanged, "UnsubscribeOnLifecycleBackgroundChanged");
-        runTest(CoreSDKTest::SubscribeOnLifecycleForegroundChanged, "SubscribeOnLifecycleForegroundChanged");
-        runTest(CoreSDKTest::UnsubscribeOnLifecycleForegroundChanged, "UnsubscribeOnLifecycleForegroundChanged");
-        runTest(CoreSDKTest::SubscribeOnLifecycleInactiveChanged, "SubscribeOnLifecycleInactiveChanged");
-        runTest(CoreSDKTest::UnsubscribeOnLifecycleInactiveChanged, "UnsubscribeOnLifecycleInactiveChanged");
-        runTest(CoreSDKTest::SubscribeOnLifecycleSuspendedChanged, "SubscribeOnLifecycleSuspendedChanged");
-        runTest(CoreSDKTest::UnsubscribeOnLifecycleSuspendedChanged, "UnsubscribeOnLifecycleSuspendedChanged");
-        runTest(CoreSDKTest::SubscribeOnLifecycleUnloadingChanged, "SubscribeOnLifecycleUnloadingChanged");
-        runTest(CoreSDKTest::UnsubscribeOnLifecycleUnloadingChanged, "UnsubscribeOnLifecycleUnloadingChanged");
-#endif //USE_LIFECYCLE1
-
         // Localization
-        runTest(CoreSDKTest::GetLocalizationCountryCode, "GetLocalizationCountryCode");
-        runTest(CoreSDKTest::GetLocalizationPreferredAudioLanguages, "GetLocalizationPreferredAudioLanguages");
-        runTest(CoreSDKTest::SubscribeOnLocalizationCountryCodeChanged, "SubscribeOnLocalizationCountryCodeChanged");
-        runTest(CoreSDKTest::UnsubscribeOnLocalizationCountryCodeChanged,
+        runTest(CoreClientTest::GetLocalizationCountryCode, "GetLocalizationCountryCode");
+        runTest(CoreClientTest::GetLocalizationPreferredAudioLanguages, "GetLocalizationPreferredAudioLanguages");
+        runTest(CoreClientTest::SubscribeOnLocalizationCountryCodeChanged, "SubscribeOnLocalizationCountryCodeChanged");
+        runTest(CoreClientTest::UnsubscribeOnLocalizationCountryCodeChanged,
                 "UnsubscribeOnLocalizationCountryCodeChanged");
-        runTest(CoreSDKTest::SubscribeOnLocalizationPreferredAudioLanguagesChanged,
+        runTest(CoreClientTest::SubscribeOnLocalizationPreferredAudioLanguagesChanged,
                 "SubscribeOnLocalizationPreferredAudioLanguagesChanged");
-        runTest(CoreSDKTest::UnsubscribeOnLocalizationPreferredAudioLanguagesChanged,
+        runTest(CoreClientTest::UnsubscribeOnLocalizationPreferredAudioLanguagesChanged,
                 "UnsubscribeOnLocalizationPreferredAudioLanguagesChanged");
 
         // Metrics
-        runTest(CoreSDKTest::MetricsReady, "MetricsReady");
+        runTest(CoreClientTest::MetricsReady, "MetricsReady");
 
         // SecureStorage
-        runTest(CoreSDKTest::ClearSecureStorage, "ClearSecureStorage");
-        runTest(CoreSDKTest::GetSecureStorage, "GetSecureStorage");
-        runTest(CoreSDKTest::RemoveSecureStorage, "RemoveSecureStorage");
-        runTest(CoreSDKTest::SetSecureStorage, "SetSecureStorage");
-        runTest(CoreSDKTest::SetSecureStorageForApp, "SetSecureStorageForApp");
-        runTest(CoreSDKTest::RemoveSecureStorageForApp, "RemoveSecureStorageForApp");
-        runTest(CoreSDKTest::ClearSecureStorageForApp, "ClearSecureStorageForApp");
+        runTest(CoreClientTest::ClearSecureStorage, "ClearSecureStorage");
+        runTest(CoreClientTest::GetSecureStorage, "GetSecureStorage");
+        runTest(CoreClientTest::RemoveSecureStorage, "RemoveSecureStorage");
+        runTest(CoreClientTest::SetSecureStorage, "SetSecureStorage");
+        runTest(CoreClientTest::SetSecureStorageForApp, "SetSecureStorageForApp");
+        runTest(CoreClientTest::RemoveSecureStorageForApp, "RemoveSecureStorageForApp");
+        runTest(CoreClientTest::ClearSecureStorageForApp, "ClearSecureStorageForApp");
 
         if (allTestsPassed)
         {
-            cout << "============================" << endl;
-            cout << "ALL CORE SDK TESTS SUCCEEDED!" << endl;
-            cout << "============================" << endl;
+            cout << "=========================" << endl;
+            cout << "ALL CORE TESTS SUCCEEDED!" << endl;
+            cout << "=========================" << endl;
         }
         else
         {
@@ -172,11 +112,11 @@ int main(int argc, char* argv[])
         }
     }
 
-    printf("Firebolt Core SDK Test\n");
+    printf("Firebolt Core Test\n");
 
-    CoreSDKTest::CreateFireboltInstance(url);
+    CoreClientTest::CreateFireboltInstance(url);
     RunAllTests();
-    CoreSDKTest::DestroyFireboltInstance();
+    CoreClientTest::DestroyFireboltInstance();
 
     return 0;
 }

@@ -22,29 +22,32 @@
 #include <iostream>
 
 int main()
-try
 {
-    std::cout << "Firebolt SDK POC Demo\n";
+    try
+    {
+        std::cout << "Firebolt Client POC Demo" << std::endl;
 
-    FireboltDemoService service;
+        FireboltDemoService service;
 
-    std::string input;
-    while (1) {
-        service.ownDemo();
-        std::cout << "Press a key to rerun, 's' for subscribe  or 'q' to quit" << std::endl;
-        getline(std::cin, input);
-        if (false) {
-        } else if (input == "s") {
-            service.ownSubscriptionDemo();
-        } else if (input == "q") {
-            break;
+        std::cout << "Lifecycle" << std::endl;
+        service.lifecycle();
+        std::cout << std::endl;
+        std::cout << "All subscribers are registered, events can be sent to the app from mock" << std::endl;
+        while (1) {
+            std::cout << "Press 'q' to quit" << std::endl;
+            std::string input;
+            getline(std::cin, input);
+            if (input == "q")
+            {
+                break;
+            }
         }
+        service.unsubscribeAll();
+        return 0;
     }
-
-    return 0;
-}
-catch (const std::exception& e)
-{
-    std::cout << "Firebolt SDK error: " << e.what() << std::endl;
-    return -1;
+    catch (const std::exception& e)
+    {
+        std::cout << "Firebolt error: " << e.what() << std::endl;
+        return 1;
+    }
 }
