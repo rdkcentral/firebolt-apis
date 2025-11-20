@@ -29,7 +29,7 @@ include(GoogleTest)
 
 enable_testing()
 
-add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-app-open-rpc.json")
+add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-core-open-rpc.json")
 
 message("Setup ${TESTAPP}")
 
@@ -115,10 +115,10 @@ message("Setup ${COMPONENT_TESTS_APP}")
 
 set(COMPONENT_TESTS
     "component/lifecycleTest.cpp"
-    #"component/deviceTest.cpp"
-    #"component/advertisingTest.cpp"
-    #"component/statsTest.cpp"
-    #"component/accessibilityTest.cpp"
+    "component/deviceTest.cpp"
+    "component/advertisingTest.cpp"
+    "component/statsTest.cpp"
+    # "component/accessibilityTest.cpp"
 )
 
 add_executable(${COMPONENT_TESTS_APP}
