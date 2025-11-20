@@ -4,6 +4,7 @@
 ### Features
 
 * Accessibility API ([#452](https://github.com/rdkcentral/firebolt-apis/issues/452)) ([15a78ec](https://github.com/rdkcentral/firebolt-apis/commit/15a78ec63da8ac7389c91fd11e6639111be88e22))
+* Stats API ([#453](https://github.com/rdkcentral/firebolt-apis/issues/453)) ([2bfa1ad](https://github.com/rdkcentral/firebolt-apis/commit/2bfa1ad64c268a850a349f2e155a094f582bfcde))
 
 # [1.8.0-next.16](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.15...v1.8.0-next.16) (2025-11-20)
 
