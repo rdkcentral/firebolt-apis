@@ -64,8 +64,11 @@ public:
     static void SetAutoLowLatencyModeCapable();
     static void GetEdidVersion();
     static void SetEdidVersion();
+    static void OpenHdmiPort();
+    static void CloseHdmiPort();
     static void GetHdmiPortInfo();
 
+    #ifdef USE_LIFECYCLE1
     // Lifecycle
     static void LifecycleReady();
     static void LifecycleClose();
@@ -81,6 +84,7 @@ public:
     static void UnsubscribeOnLifecycleSuspendedChanged();
     static void SubscribeOnLifecycleUnloadingChanged();
     static void UnsubscribeOnLifecycleUnloadingChanged();
+    #endif // USE_LIFECYCLE1
 
     // Localization
     static void GetLocalizationCountryCode();

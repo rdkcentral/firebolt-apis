@@ -21,6 +21,21 @@ listed below. Your use of this material within the component is also subject to 
 conditions of these licenses. The LICENSE file contains the text of all the licenses which apply
 within this component..
 
+nlohmann::json
+Copyright (c) 2013-2025 Niels Lohmann
+Licensed under the MIT License
+https://github.com/nlohmann/json
+
+WebSocket++
+Copyright (c) 2014, Peter Thorson. All rights reserved.
+Licensed under the BSD 3-clause license
+https://github.com/zaphoyd/websocketpp
+
+Google Test (gtest)
+Copyright 2008, Google Inc.
+Licensed under the BSD 3-clause license
+https://github.com/google/googletest
+
 Material from husky is:
 Copyright (c) 2021 typicode
 Licensed under the MIT License

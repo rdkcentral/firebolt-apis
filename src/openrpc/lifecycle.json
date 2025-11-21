@@ -158,11 +158,10 @@
       ]
     },
     {
-      "name": "inactive",
+      "name": "onInactive",
       "tags": [
         {
-          "name": "notifier",
-          "x-event": "Lifecycle.onInactive"
+          "name": "notifier"
         },
         {
           "name": "capabilities",
@@ -194,11 +193,10 @@
       ]
     },
     {
-      "name": "foreground",
+      "name": "onForeground",
       "tags": [
         {
-          "name": "notifier",
-          "x-event": "Lifecycle.onForeground"
+          "name": "notifier"
         },
         {
           "name": "capabilities",
@@ -243,11 +241,10 @@
       ]
     },
     {
-      "name": "background",
+      "name": "onBackground",
       "tags": [
         {
-          "name": "notifier",
-          "x-event": "Lifecycle.onBackground"
+          "name": "notifier"
         },
         {
           "name": "capabilities",
@@ -279,11 +276,10 @@
       ]
     },
     {
-      "name": "suspended",
+      "name": "onSuspended",
       "tags": [
         {
-          "name": "notifier",
-          "x-event": "Lifecycle.onSuspended"
+          "name": "notifier"
         },
         {
           "name": "capabilities",
@@ -315,11 +311,10 @@
       ]
     },
     {
-      "name": "unloading",
+      "name": "onUnloading",
       "tags": [
         {
-          "name": "notifier",
-          "x-event": "Lifecycle.onUnloading"
+          "name": "notifier"
         },
         {
           "name": "capabilities",

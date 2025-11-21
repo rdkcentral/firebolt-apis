@@ -14,7 +14,10 @@ on:
 
 permissions:
   contents: read   # minimal token permissions
-
+  security-events: write   # required for CodeQL analysis uploads
+  pull-requests: write
+  actions: write
+  statuses: write
 env:
   HUSKY: 0
   # Turns off installing commit hooks in CI environments
@@ -31,6 +34,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+          submodules: recursive
+    # CodeQL steps
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: javascript
+        source-root: src
+        queries: +security-and-quality
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
@@ -46,3 +58,9 @@ jobs:
     - run: npm run sdks
     - run: npm run test
     - run: npm run docs
+    
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:javascript"
+        upload: true

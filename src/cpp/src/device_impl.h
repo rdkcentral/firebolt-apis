@@ -19,18 +19,15 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
-#include <string>
-
 #include "device.h"
 #include "helpers.h"
 
 namespace Firebolt::Device
 {
-class DeviceImpl : public IDevice, public Firebolt::Helpers::SubscriptionHelper
+class DeviceImpl : public IDevice
 {
 public:
-    DeviceImpl() = default;
+    explicit DeviceImpl(Firebolt::Helpers::IHelper &helper);
     DeviceImpl(const DeviceImpl&) = delete;
     DeviceImpl& operator=(const DeviceImpl&) = delete;
 
@@ -60,14 +57,16 @@ public:
     Result<SubscriptionId> subscribeOnHdrChanged(std::function<void(const HDRFormatMap&)>&& notification) override;
     Result<SubscriptionId> subscribeOnNameChanged(std::function<void(const std::string&)>&& notification) override;
     Result<SubscriptionId> subscribeOnNetworkChanged(std::function<void(const NetworkInfoResult&)>&& notification) override;
-    Result<SubscriptionId>
-    subscribeOnScreenResolutionChanged(std::function<void(const std::string&)>&& notification) override;
-    Result<SubscriptionId>
-    subscribeOnVideoResolutionChanged(std::function<void(const std::string&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnScreenResolutionChanged(std::function<void(const std::string&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnVideoResolutionChanged(std::function<void(const std::string&)>&& notification) override;
 
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;
 
     Result<DeviceVersion> version() const override;
+
+private:
+    Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::SubscriptionManager subscriptionManager_;
 };
 } // namespace Firebolt::Device

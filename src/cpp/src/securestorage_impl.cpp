@@ -20,70 +20,74 @@
 #include "securestorage_impl.h"
 #include "jsondata_securestorage_types.h"
 
-using namespace Firebolt::Helpers;
-
 namespace Firebolt::SecureStorage
 {
+SecureStorageImpl::SecureStorageImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
+
 Result<void> SecureStorageImpl::clear(const StorageScope& scope)
 {
-    Parameters params;
-    params.add<JsonData::StorageScope>(_T("scope"), scope);
-    return invoke("SecureStorage.clear", params);
+    nlohmann::json params;
+    params["scope"] = FireboltSDK::JSON::ToString(JsonData::StorageScopeEnum, scope);
+    return helper_.invoke("SecureStorage.clear", params);
 }
 
 Result<std::string> SecureStorageImpl::get(const StorageScope& scope, const std::string& key)
 {
-    Parameters params;
-    params.add<JsonData::StorageScope>(_T("scope"), scope);
-    params.add(_T("key"), key);
-    return invoke<FireboltSDK::JSON::String, std::string>("SecureStorage.get", params);
+    nlohmann::json params;
+    params["scope"] = FireboltSDK::JSON::ToString(JsonData::StorageScopeEnum, scope);
+    params["key"] = key;
+    return helper_.get<FireboltSDK::JSON::String, std::string>("SecureStorage.get", params);
 }
 
 Result<void> SecureStorageImpl::remove(const StorageScope& scope, const std::string& key)
 {
-    Parameters params;
-    params.add<JsonData::StorageScope>(_T("scope"), scope);
-    params.add(_T("key"), key);
-    return invoke("SecureStorage.remove", params);
+    nlohmann::json params;
+    params["scope"] = FireboltSDK::JSON::ToString(JsonData::StorageScopeEnum, scope);
+    params["key"] = key;
+    return helper_.invoke("SecureStorage.remove", params);
 }
 
 Result<void> SecureStorageImpl::set(const StorageScope& scope, const std::string& key, const std::string& value,
                                     const std::optional<StorageOptions>& options)
 {
-    Parameters params;
-    params.add<JsonData::StorageScope>(_T("scope"), scope);
-    params.add(_T("key"), key);
-    params.add(_T("value"), value);
-    params.add<JsonData::StorageOptions>(_T("options"), options);
-    return invoke("SecureStorage.set", params);
+    nlohmann::json params;
+    params["scope"] = FireboltSDK::JSON::ToString(JsonData::StorageScopeEnum, scope);
+    params["key"] = key;
+    params["value"] = value;
+    if (options.has_value()) {
+        params["options"] = nlohmann::json{{"ttl", options->ttl}};
+    }
+    return helper_.invoke("SecureStorage.set", params);
 }
 
 Result<void> SecureStorageImpl::setForApp(const std::string& appId, const StorageScope& scope, const std::string& key,
                                           const std::string& value, const std::optional<StorageOptions>& options)
 {
-    Parameters params;
-    params.add(_T("appId"), appId);
-    params.add<JsonData::StorageScope>(_T("scope"), scope);
-    params.add(_T("key"), key);
-    params.add(_T("value"), value);
-    params.add<JsonData::StorageOptions>(_T("options"), options);
-    return invoke("SecureStorage.setForApp", params);
+    nlohmann::json params;
+    params["appId"] = appId;
+    params["scope"] = FireboltSDK::JSON::ToString(JsonData::StorageScopeEnum, scope);
+    params["key"] = key;
+    params["value"] = value;
+    if (options.has_value()) {
+        params["options"] = nlohmann::json{{"ttl", options->ttl}};
+    }
+    return helper_.invoke("SecureStorage.setForApp", params);
 }
 
 Result<void> SecureStorageImpl::removeForApp(const std::string& appId, const StorageScope& scope, const std::string& key)
 {
-    Parameters params;
-    params.add(_T("appId"), appId);
-    params.add<JsonData::StorageScope>(_T("scope"), scope);
-    params.add(_T("key"), key);
-    return invoke("SecureStorage.removeForApp", params);
+    nlohmann::json params;
+    params["appId"] = appId;
+    params["scope"] = FireboltSDK::JSON::ToString(JsonData::StorageScopeEnum, scope);
+    params["key"] = key;
+    return helper_.invoke("SecureStorage.removeForApp", params);
 }
 
 Result<void> SecureStorageImpl::clearForApp(const std::string& appId, const StorageScope& scope)
 {
-    Parameters params;
-    params.add(_T("appId"), appId);
-    params.add<JsonData::StorageScope>(_T("scope"), scope);
-    return invoke("SecureStorage.clearForApp", params);
+    nlohmann::json params;
+    params["appId"] = appId;
+    params["scope"] = FireboltSDK::JSON::ToString(JsonData::StorageScopeEnum, scope);
+    return helper_.invoke("SecureStorage.clearForApp", params);
 }
 } // namespace Firebolt::SecureStorage

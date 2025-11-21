@@ -19,16 +19,15 @@
 
 #pragma once
 
-#include "FireboltSDK.h"
 #include "helpers.h"
 #include "securestorage.h"
 
 namespace Firebolt::SecureStorage
 {
-class SecureStorageImpl : public ISecureStorage, public Firebolt::Helpers::SubscriptionHelper
+class SecureStorageImpl : public ISecureStorage
 {
 public:
-    SecureStorageImpl() = default;
+    SecureStorageImpl(Firebolt::Helpers::IHelper &helper);
     SecureStorageImpl(const SecureStorageImpl&) = delete;
     SecureStorageImpl& operator=(const SecureStorageImpl&) = delete;
     ~SecureStorageImpl() override = default;
@@ -42,5 +41,8 @@ public:
                            const std::string& value, const std::optional<StorageOptions>& options) override;
     Result<void> removeForApp(const std::string& appId, const StorageScope& scope, const std::string& key) override;
     Result<void> clearForApp(const std::string& appId, const StorageScope& scope) override;
+
+private:
+    Firebolt::Helpers::IHelper &helper_;
 };
 } // namespace Firebolt::SecureStorage

@@ -47,6 +47,8 @@ public:
     FireboltDemoService& operator=(FireboltDemoService&&) = delete;
 
     DeviceInfo getAndPrintDeviceValues();
+    void ownDemo();
+    void ownSubscriptionDemo();
 
     void setupDeviceSubscriptions();
     void unsubscribeAll();

@@ -17,15 +17,11 @@
  * limitations under the License.
  */
 
-#include "CoreSDKTest.h"
 #include "gtest/gtest.h"
 
 int main(int argc, char** argv)
 {
-    std::string url = "ws://localhost:9998";
-    CoreSDKTest::CreateFireboltInstance(url);
     ::testing::InitGoogleTest(&argc, argv);
     const auto errorCode = RUN_ALL_TESTS();
-    CoreSDKTest::DestroyFireboltInstance();
     return errorCode;
 }

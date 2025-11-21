@@ -45,10 +45,11 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "@firebolt-js/openrpc": "git+https://github.com/rdkcentral/firebolt-openrpc.git#4bd47d46f72b4482b7e5a739cbaf79667765acc5",
+    "@firebolt-js/openrpc": "git+https://github.com/rdkcentral/firebolt-openrpc.git#be8644345070544c1fc4d4614dfdf0bff7dc42a1",
     "@firebolt-js/schemas": "2.0.0",
     "@saithodev/semantic-release-backmerge": "^3.2.0",
     "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^11.0.3",
     "@semantic-release/release-notes-generator": "^10.0.1",

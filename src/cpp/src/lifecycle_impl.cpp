@@ -20,165 +20,51 @@
 #include "lifecycle_impl.h"
 #include "firebolt.h"
 #include "jsondata_lifecycle_types.h"
+#include <algorithm>
+#include <cctype>
+#include <iostream>
+#include <nlohmann/json.hpp>
+#include <string>
 
 using namespace Firebolt::Helpers;
 
-namespace
-{
-void readyDispatcher(const void* result)
-{
-    Firebolt::IFireboltAccessor::Instance().MetricsInterface().ready();
-}
-} // namespace
-
 namespace Firebolt::Lifecycle
 {
+LifecycleImpl::LifecycleImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper), subscriptionManager_(helper, this)
+{
+}
+
 LifecycleImpl::~LifecycleImpl()
 {
-    for (const SubscriptionId& id : subscriptions_)
-    {
-        SubscriptionHelper::unsubscribe(id);
-    }
 }
 
-Result<void> LifecycleImpl::ready()
+Result<void> LifecycleImpl::close(const CloseType &reason) const
 {
-    subscribeOnStateChange();
-    Parameters params;
-    const auto status = invoke("lifecycle.ready", params);
-    if (status)
-    {
-        WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch> job =
-            WPEFramework::Core::ProxyType<WPEFramework::Core::IDispatch>(
-                WPEFramework::Core::ProxyType<FireboltSDK::Transport::Worker>::Create(readyDispatcher, nullptr));
-        WPEFramework::Core::IWorkerPool::Instance().Submit(job);
-    }
-    return status;
+    nlohmann::json params;
+    params["type"] = FireboltSDK::JSON::ToString(JsonData::CloseReasonEnum, reason);
+    return helper_.invoke("Lifecycle2.close", params);
 }
 
-Result<void> LifecycleImpl::close(const CloseReason& reason)
+Result<LifecycleState> LifecycleImpl::getCurrentState() const
 {
-    Parameters params;
-    params.add<JsonData::CloseReason>(_T("reason"), reason);
-    return invoke("lifecycle.close", params);
+    return helper_.get<JsonData::LifecycleState, LifecycleState>("Lifecycle2.state");
 }
 
-Result<void> LifecycleImpl::finished()
+Result<SubscriptionId>
+LifecycleImpl::subscribeOnStateChanged(std::function<void(const std::vector<StateChange> &)> &&notification)
 {
-    Parameters params;
-    return invoke("lifecycle.finished", params);
-}
-
-Result<std::string> LifecycleImpl::state()
-{
-    std::unique_lock lock{mutex_};
-    return Result<std::string>{currentState_};
-}
-
-Result<SubscriptionId> LifecycleImpl::subscribeOnBackgroundChanged(std::function<void(const LifecycleEvent&)>&& notification)
-{
-    return SubscriptionHelper::subscribe<JsonData::LifecycleEvent>(_T("lifecycle.onBackground"), std::move(notification));
-}
-
-Result<SubscriptionId> LifecycleImpl::subscribeOnForegroundChanged(std::function<void(const LifecycleEvent&)>&& notification)
-{
-    return SubscriptionHelper::subscribe<JsonData::LifecycleEvent>(_T("lifecycle.onForeground"), std::move(notification));
-}
-
-Result<SubscriptionId> LifecycleImpl::subscribeOnInactiveChanged(std::function<void(const LifecycleEvent&)>&& notification)
-{
-    return SubscriptionHelper::subscribe<JsonData::LifecycleEvent>(_T("lifecycle.onInactive"), std::move(notification));
-}
-
-Result<SubscriptionId> LifecycleImpl::subscribeOnSuspendedChanged(std::function<void(const LifecycleEvent&)>&& notification)
-{
-    return SubscriptionHelper::subscribe<JsonData::LifecycleEvent>(_T("lifecycle.onSuspended"), std::move(notification));
-}
-
-Result<SubscriptionId> LifecycleImpl::subscribeOnUnloadingChanged(std::function<void(const LifecycleEvent&)>&& notification)
-{
-    return SubscriptionHelper::subscribe<JsonData::LifecycleEvent>(_T("lifecycle.onUnloading"), std::move(notification));
+    return subscriptionManager_.subscribe<
+        FireboltSDK::JSON::NL_Json_Array<JsonData::StateChange, StateChange>>("Lifecycle2.onStateChanged",
+                                                                                      std::move(notification));
 }
 
 Result<void> LifecycleImpl::unsubscribe(SubscriptionId id)
 {
-    return SubscriptionHelper::unsubscribe(id);
+    return subscriptionManager_.unsubscribe(id);
 }
 
 void LifecycleImpl::unsubscribeAll()
 {
-    SubscriptionHelper::unsubscribeAll();
-}
-
-void LifecycleImpl::onStateChanged(const LifecycleEvent& event)
-{
-    std::unique_lock lock{mutex_};
-    switch (event.state)
-    {
-    case LifecycleState::INITIALIZING:
-    {
-        currentState_ = "INITIALIZING";
-        break;
-    }
-    case LifecycleState::INACTIVE:
-    {
-        currentState_ = "INACTIVE";
-        break;
-    }
-    case LifecycleState::FOREGROUND:
-    {
-        currentState_ = "FOREGROUND";
-        break;
-    }
-    case LifecycleState::BACKGROUND:
-    {
-        currentState_ = "BACKGROUND";
-        break;
-    }
-    case LifecycleState::UNLOADING:
-    {
-        currentState_ = "UNLOADING";
-        break;
-    }
-    case LifecycleState::SUSPENDED:
-    {
-        currentState_ = "SUSPENDED";
-        break;
-    }
-    default:
-    {
-        break;
-    }
-    }
-}
-
-void LifecycleImpl::subscribeOnStateChange()
-{
-    auto callback = [this](const LifecycleEvent& event) { this->onStateChanged(event); };
-    auto result = subscribeOnBackgroundChanged(callback);
-    if (result)
-    {
-        subscriptions_.insert(*result);
-    }
-    result = subscribeOnForegroundChanged(callback);
-    if (result)
-    {
-        subscriptions_.insert(*result);
-    }
-    result = subscribeOnInactiveChanged(callback);
-    if (result)
-    {
-        subscriptions_.insert(*result);
-    }
-    result = subscribeOnSuspendedChanged(callback);
-    if (result)
-    {
-        subscriptions_.insert(*result);
-    }
-    result = subscribeOnUnloadingChanged(callback);
-    if (result)
-    {
-        subscriptions_.insert(*result);
-    }
+    subscriptionManager_.unsubscribeAll();
 }
 } // namespace Firebolt::Lifecycle

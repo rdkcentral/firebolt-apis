@@ -37,7 +37,7 @@ test("latlon", () => {
 });
 
 test("listen() languageChanged event.", () => {
-  return Localization.listen("languageChanged", () => {}).then(
+  return Localization.listen("onLanguageChanged", () => {}).then(
     (res: number) => {
       expect(res > 0).toBe(true);
     }
@@ -45,7 +45,7 @@ test("listen() languageChanged event.", () => {
 });
 
 test("once() languageChanged event.", () => {
-  return Localization.once("languageChanged", () => {}).then((res: number) => {
+  return Localization.once("onLanguageChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });

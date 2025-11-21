@@ -17,112 +17,80 @@
  * limitations under the License.
  */
 
-#define MODULE_NAME LifecycleTest
-#include "unit.h"
-#include <thread>
+#include "lifecycle_impl.h"
+#include "json_engine.h"
+#include "mock_helper.h"
 
-class LifecycleTest : public ::testing::Test
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
+
+class LifecycleTest : public ::testing::Test, protected MockBase
 {
 protected:
-    JsonEngine* jsonEngine;
+    void SetUp() override
+    {
+    }
 
-    void SetUp() override { jsonEngine = new JsonEngine(); }
+    void TearDown() override
+    {
+        EXPECT_CALL(mockHelper, unsubscribeAll(_))
+            .WillRepeatedly(Invoke([](auto) { return Firebolt::Result<void>(Firebolt::Error::None); }));
+    }
 
-    void TearDown() override { delete jsonEngine; }
+    Firebolt::Lifecycle::LifecycleImpl lifecycleImpl_{mockHelper};
 };
-
-TEST_F(LifecycleTest, ready)
-{
-    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().ready();
-    EXPECT_EQ(Firebolt::Error::None, result.error()) << "Error: wrong error code returned by "
-                                                        "Lifecycle.ready()";
-
-    // To let dispatcher execute internal job and avoid warnings
-    // To be removed, when Transport Layer is refactored
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-}
 
 TEST_F(LifecycleTest, close)
 {
-    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().close(
-        Firebolt::Lifecycle::CloseReason::REMOTE_BUTTON);
-    EXPECT_EQ(Firebolt::Error::None, result.error()) << "Error: wrong error code returned by "
-                                                        "Lifecycle.close()";
+    nlohmann::json expectedParams;
+    expectedParams["type"] = "deactivate";
+    EXPECT_CALL(mockHelper, invoke("Lifecycle2.close", expectedParams))
+        .WillOnce(Invoke(
+            [&](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                return Firebolt::Result<void>{Firebolt::Error::None};
+            }));
+
+    auto result = lifecycleImpl_.close(Firebolt::Lifecycle::CloseType::DEACTIVATE);
+    ASSERT_TRUE(result) << "Error on invoke";
 }
 
-TEST_F(LifecycleTest, finished)
+TEST_F(LifecycleTest, getCurrentState)
 {
-    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().finished();
-    EXPECT_EQ(Firebolt::Error::None, result.error()) << "Error: wrong error code returned by "
-                                                        "Lifecycle.finished()";
+    EXPECT_CALL(mockHelper, getJson("Lifecycle2.state", _))
+        .WillOnce(Invoke(
+            [](const std::string &methodName, const nlohmann::json &parameters)
+            {
+                nlohmann::json response = "initializing";
+                return Firebolt::Result<nlohmann::json>{response};
+            }));
+
+    Firebolt::Result<Firebolt::Lifecycle::LifecycleState> result = lifecycleImpl_.getCurrentState();
+    ASSERT_TRUE(result) << "Failed to retrieve current state from Lifecycle.getCurrentState() method";
+    EXPECT_EQ(*result, Firebolt::Lifecycle::LifecycleState::INITIALIZING);
 }
 
-TEST_F(LifecycleTest, state)
+TEST_F(LifecycleTest, subscribeOnStateChanged)
 {
-    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state();
-    ASSERT_TRUE(result) << "Error on calling Lifecycle.state() method";
+    EXPECT_CALL(mockHelper, subscribe(_, "Lifecycle2.onStateChanged", _, _))
+        .WillOnce(Invoke(
+            [&](void* owner, const std::string &eventName, std::any &&notification, void (*callback)(void *, const nlohmann::json &))
+            {
+                return Firebolt::Result<Firebolt::SubscriptionId>{1};
+            }));
 
-    // Value set by subscription in ready(). "INITIALIZING" is an initial value
-    EXPECT_EQ("INITIALIZING", *result) << "Error: wrong value returned by "
-                                          "Lifecycle.state()";
+    EXPECT_CALL(mockHelper, unsubscribe(1))
+        .WillOnce(Return(Firebolt::Result<void>{Firebolt::Error::None}));
+
+    auto id = lifecycleImpl_.subscribeOnStateChanged(
+        [](const std::vector<Firebolt::Lifecycle::StateChange> &changes)
+        {
+        });
+
+    ASSERT_TRUE(id) << "error on subscribe ";
+    EXPECT_EQ(id.value(), 1);
+
+    auto result = lifecycleImpl_.unsubscribe(id.value());
+    ASSERT_TRUE(result) << "error on unsubscribe";
 }
-
-#if 0
-TEST_F(LifecycleTest, subscribeOnBackgroundChanged)
-{
-    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnBackgroundChanged(
-        [](const auto&) { std::cout << "Background changed\n"; });
-    EXPECT_TRUE(result) << "Error in subscribing to Background";
-
-    auto unsubResult = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(result.value_or(0));
-    EXPECT_EQ(unsubResult.error(), Firebolt::Error::None) << "Error in unsubscribing to Background";
-}
-#endif
-
-#if 0
-TEST_F(LifecycleTest, subscribeOnForegroundChanged)
-{
-    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnForegroundChanged(
-        [](const auto&) { std::cout << "Foreground changed\n"; });
-    EXPECT_TRUE(result) << "Error in subscribing to Foreground";
-
-    auto unsubResult = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(result.value_or(0));
-    EXPECT_EQ(unsubResult.error(), Firebolt::Error::None) << "Error in unsubscribing to Foreground";
-}
-#endif
-
-#if 0
-TEST_F(LifecycleTest, subscribeOnInactiveChanged)
-{
-    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnInactiveChanged(
-        [](const auto&) { std::cout << "Inactive changed\n"; });
-    EXPECT_TRUE(result) << "Error in subscribing to Inactive";
-
-    auto unsubResult = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(result.value_or(0));
-    EXPECT_EQ(unsubResult.error(), Firebolt::Error::None) << "Error in unsubscribing to Inactive";
-}
-#endif
-
-#if 0
-TEST_F(LifecycleTest, subscribeOnSuspendedChanged)
-{
-    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnSuspendedChanged(
-        [](const auto&) { std::cout << "Suspended changed\n"; });
-    EXPECT_TRUE(result) << "Error in subscribing to Suspended";
-
-    auto unsubResult = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(result.value_or(0));
-    EXPECT_EQ(unsubResult.error(), Firebolt::Error::None) << "Error in unsubscribing to Suspended";
-}
-#endif
-
-#if 0
-TEST_F(LifecycleTest, subscribeOnUnloadingChanged)
-{
-    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnUnloadingChanged(
-        [](const auto&) { std::cout << "Unloading changed\n"; });
-    EXPECT_TRUE(result) << "Error in subscribing to Unloading";
-
-    auto unsubResult = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(result.value_or(0));
-    EXPECT_EQ(unsubResult.error(), Firebolt::Error::None) << "Error in unsubscribing to Unloading";
-}
-#endif

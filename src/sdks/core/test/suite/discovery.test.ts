@@ -123,25 +123,25 @@ test("purchasedContent()", () => {
 });
 
 test("listen() navigateTo event.", () => {
-  return Discovery.listen("navigateTo", () => { }).then((res: number) => {
+  return Discovery.listen("onNavigateTo", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() navigateTo event.", () => {
-  return Discovery.once("navigateTo", () => { }).then((res: number) => {
+  return Discovery.once("onNavigateTo", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("listen() policyChanged event.", () => {
-  return Discovery.listen("policyChanged", () => { }).then((res: number) => {
+  return Discovery.listen("onPolicyChanged", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test("once() policyChanged event.", () => {
-  return Discovery.once("policyChanged", () => { }).then((res: number) => {
+  return Discovery.once("onPolicyChanged", () => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });

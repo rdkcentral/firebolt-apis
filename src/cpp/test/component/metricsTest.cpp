@@ -17,8 +17,20 @@
  * limitations under the License.
  */
 
-#pragma once
-
-#include "../CoreSDKTest.h"
 #include "json_engine.h"
+#include "firebolt.h"
 #include "gtest/gtest.h"
+
+class MetricsTest : public ::testing::Test
+{
+protected:
+    JsonEngine jsonEngine;
+};
+
+TEST_F(MetricsTest, ready)
+{
+    auto result = Firebolt::IFireboltAccessor::Instance().MetricsInterface().ready();
+    ASSERT_TRUE(result) << "error on get";
+    auto expectedValue = jsonEngine.get_value("Metrics.ready");
+    EXPECT_EQ(*result, expectedValue);
+}

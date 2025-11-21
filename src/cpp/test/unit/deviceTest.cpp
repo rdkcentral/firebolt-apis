@@ -17,279 +17,205 @@
  * limitations under the License.
  */
 
-#define MODULE_NAME DeviceTest
-#include "common/types.h"
-#include "unit.h"
+#include "device_impl.h"
+#include "json_engine.h"
+#include "mock_helper.h"
 
-class DeviceTest : public ::testing::Test
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::Return;
+
+const std::map<std::string, ::Firebolt::Device::NetworkType> NetworkTypeMap = {
+    { "wifi", ::Firebolt::Device::NetworkType::WIFI },
+    { "ethernet", ::Firebolt::Device::NetworkType::ETHERNET },
+    { "hybrid", ::Firebolt::Device::NetworkType::HYBRID },
+};
+
+const std::map<std::string, ::Firebolt::Device::NetworkState> NetworkStateMap = {
+    { "connected", ::Firebolt::Device::NetworkState::CONNECTED },
+    { "disconnected", ::Firebolt::Device::NetworkState::DISCONNECTED },
+};
+
+class DeviceTest : public ::testing::Test, protected MockBase
 {
 protected:
-    JsonEngine* jsonEngine;
-
-    void SetUp() override { jsonEngine = new JsonEngine(); }
-
-    void TearDown() override { delete jsonEngine; }
+    Firebolt::Device::DeviceImpl deviceImpl_{mockHelper};
 };
 
 TEST_F(DeviceTest, Id)
 {
-    auto actual_value = jsonEngine->get_value("Device.id");
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().id();
+    mock("Device.id");
 
-    ASSERT_TRUE(result) << "Failed to retrieve id from Device.id() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    auto result = deviceImpl_.id();
+    ASSERT_TRUE(result) << "DeviceImpl::id() returned an error";
+
+    auto expectedValue = jsonEngine.get_value("Device.id");
+    EXPECT_EQ(*result, expectedValue);
 }
 
 TEST_F(DeviceTest, Distributor)
 {
+    mock("Device.distributor");
 
-    auto actual_value = jsonEngine->get_value("Device.distributor");
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().distributor();
+    auto result = deviceImpl_.distributor();
+    ASSERT_TRUE(result) << "DeviceImpl::distributor() returned an error";
 
-    ASSERT_TRUE(result) << "Failed to retrieve distributor from Device.distributor() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    auto expectedValue = jsonEngine.get_value("Device.distributor");
+    EXPECT_EQ(*result, expectedValue);
 }
+
 
 TEST_F(DeviceTest, Platform)
 {
+    mock("Device.platform");
 
-    auto actual_value = jsonEngine->get_value("Device.platform");
+    auto result = deviceImpl_.platform();
+    ASSERT_TRUE(result) << "DeviceImpl::platform() returned an error";
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().platform();
-
-    ASSERT_TRUE(result) << "Failed to retrieve platform from Device.platform() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    auto expectedValue = jsonEngine.get_value("Device.platform");
+    EXPECT_EQ(*result, expectedValue);
 }
 
 TEST_F(DeviceTest, Uid)
 {
+    mock("Device.uid");
 
-    auto actual_value = jsonEngine->get_value("Device.uid");
+    auto result = deviceImpl_.uid();
+    ASSERT_TRUE(result) << "DeviceImpl::uid() returned an error";
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().uid();
-
-    ASSERT_TRUE(result) << "Failed to retrieve uid from Device.uid() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    auto expectedValue = jsonEngine.get_value("Device.uid");
+    EXPECT_EQ(*result, expectedValue);
 }
 
 TEST_F(DeviceTest, Type)
 {
+    mock("Device.type");
 
-    auto actual_value = jsonEngine->get_value("Device.type");
+    auto result = deviceImpl_.type();
+    ASSERT_TRUE(result) << "DeviceImpl::type() returned an error";
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().type();
-
-    ASSERT_TRUE(result) << "Failed to retrieve type from Device.type() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    auto expectedValue = jsonEngine.get_value("Device.type");
+    EXPECT_EQ(*result, expectedValue);
 }
 
 TEST_F(DeviceTest, Model)
 {
+    mock("Device.model");
 
-    auto actual_value = jsonEngine->get_value("Device.model");
+    auto result = deviceImpl_.model();
+    ASSERT_TRUE(result) << "DeviceImpl::model() returned an error";
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().model();
-
-    ASSERT_TRUE(result) << "Failed to retrieve model from Device.model() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    auto expectedValue = jsonEngine.get_value("Device.model");
+    EXPECT_EQ(*result, expectedValue);
 }
 
 TEST_F(DeviceTest, Sku)
 {
+    mock("Device.sku");
 
-    auto actual_value = jsonEngine->get_value("Device.sku");
+    auto result = deviceImpl_.sku();
+    ASSERT_TRUE(result) << "DeviceImpl::sku() returned an error";
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().sku();
-
-    ASSERT_TRUE(result) << "Failed to retrieve sku from Device.sku() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    auto expectedValue = jsonEngine.get_value("Device.sku");
+    EXPECT_EQ(*result, expectedValue);
 }
 
 TEST_F(DeviceTest, TestDeviceMake)
 {
+    mock("Device.make");
 
-    auto actual_value = jsonEngine->get_value("Device.make");
+    auto result = deviceImpl_.make();
+    ASSERT_TRUE(result) << "DeviceImpl::make() returned an error";
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().make();
-
-    ASSERT_TRUE(result) << "Failed to retrieve make from Device.make() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+    auto expectedValue = jsonEngine.get_value("Device.make");
+    EXPECT_EQ(*result, expectedValue);
 }
+
 
 TEST_F(DeviceTest, Hdcp)
 {
-    // Parsing expected JSON values into a BooleanMap
-    nlohmann::json expectedJson = nlohmann::json::parse(jsonEngine->get_value("Device.hdcp"));
-    Firebolt::Types::BooleanMap expectedValues;
+    mock("Device.hdcp");
 
-    for (auto it = expectedJson.begin(); it != expectedJson.end(); ++it)
-    {
-        expectedValues[it.key()] = it.value().get<bool>();
-    }
-
-    // Getting the actual value from the DeviceInterface
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().hdcp();
-
+    auto result = deviceImpl_.hdcp();
     ASSERT_TRUE(result) << "Failed to retrieve hdcp from Device.hdcp() method";
 
-    // Convert HDCPVersionMap to BooleanMap for comparison
-    Firebolt::Types::BooleanMap actualValues;
-    actualValues["hdcp1.4"] = result->hdcp1_4;
-    actualValues["hdcp2.2"] = result->hdcp2_2;
-
-    EXPECT_EQ(actualValues, expectedValues);
+    auto expectedValue = jsonEngine.get_value("Device.hdcp");
+    EXPECT_EQ(result->hdcp1_4, expectedValue["hdcp1.4"]);
+    EXPECT_EQ(result->hdcp2_2, expectedValue["hdcp2.2"]);
 }
+
 
 TEST_F(DeviceTest, Hdr)
 {
-    // Parsing expected JSON values into a BooleanMap
-    nlohmann::json expectedJson = nlohmann::json::parse(jsonEngine->get_value("Device.hdr"));
-    Firebolt::Types::BooleanMap expectedValues;
+    mock("Device.hdr");
 
-    for (auto it = expectedJson.begin(); it != expectedJson.end(); ++it)
-    {
-        expectedValues[it.key()] = it.value().get<bool>();
-    }
-
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().hdr();
-
+    auto result = deviceImpl_.hdr();
     ASSERT_TRUE(result) << "Failed to retrieve hdr from Device.hdr() method";
 
-    // Convert HDRFormatMap to BooleanMap for comparison
-    Firebolt::Types::BooleanMap actualValues{};
-    actualValues["hdr10"] = result->hdr10;
-    actualValues["hdr10Plus"] = result->hdr10Plus;
-    actualValues["dolbyVision"] = result->dolbyVision;
-    actualValues["hlg"] = result->hlg;
-
-    EXPECT_EQ(actualValues, expectedValues);
+    auto expectedValue = jsonEngine.get_value("Device.hdr");
+    EXPECT_EQ(result->hdr10, expectedValue["hdr10"]);
+    EXPECT_EQ(result->hdr10Plus, expectedValue["hdr10Plus"]);
+    EXPECT_EQ(result->dolbyVision, expectedValue["dolbyVision"]);
+    EXPECT_EQ(result->hlg, expectedValue["hlg"]);
 }
 
 TEST_F(DeviceTest, Audio)
 {
-    nlohmann::json expectedValues = nlohmann::json::parse(jsonEngine->get_value("Device.audio"));
+    mock("Device.audio");
 
-    // Getting the actual value from the DeviceInterface
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().audio();
-
+    auto result = deviceImpl_.audio();
     ASSERT_TRUE(result) << "Failed to retrieve audio from Device.audio() method";
-    EXPECT_EQ(result->stereo, expectedValues["stereo"]);
-    EXPECT_EQ(result->dolbyDigital5_1, expectedValues["dolbyDigital5.1"]);
-    EXPECT_EQ(result->dolbyDigital5_1_plus, expectedValues["dolbyDigital5.1+"]);
-    EXPECT_EQ(result->dolbyAtmos, expectedValues["dolbyAtmos"]);
-}
 
-std::string networkTypeToString(Firebolt::Device::NetworkType type)
-{
-    switch (type)
-    {
-    case Firebolt::Device::NetworkType::WIFI:
-        return "wifi";
-    case Firebolt::Device::NetworkType::ETHERNET:
-        return "ethernet";
-    case Firebolt::Device::NetworkType::HYBRID:
-        return "hybrid";
-    default:
-        return "";
-    }
-}
-
-std::string networkStateToString(Firebolt::Device::NetworkState state)
-{
-    switch (state)
-    {
-    case Firebolt::Device::NetworkState::CONNECTED:
-        return "connected";
-    case Firebolt::Device::NetworkState::DISCONNECTED:
-        return "disconnected";
-    default:
-        return "";
-    }
+    auto expectedValue = jsonEngine.get_value("Device.audio");
+    EXPECT_EQ(result->stereo, expectedValue["stereo"]);
+    EXPECT_EQ(result->dolbyDigital5_1, expectedValue["dolbyDigital5.1"]);
+    EXPECT_EQ(result->dolbyDigital5_1_plus, expectedValue["dolbyDigital5.1+"]);
+    EXPECT_EQ(result->dolbyAtmos, expectedValue["dolbyAtmos"]);
 }
 
 TEST_F(DeviceTest, Network)
 {
-    nlohmann::json expectedValues = nlohmann::json::parse(jsonEngine->get_value("Device.network"));
+    mock("Device.network");
 
-    // Getting the actual value from the DeviceInterface
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().network();
-
-    // Perform the assertions
+    auto result = deviceImpl_.network();
     ASSERT_TRUE(result) << "Failed to retrieve network from Device.network() method";
-    EXPECT_EQ(networkStateToString(result->state), expectedValues["state"]);
-    EXPECT_EQ(networkTypeToString(result->type), expectedValues["type"]);
+
+    auto expectedValue = jsonEngine.get_value("Device.network");
+    EXPECT_EQ(result->state, NetworkStateMap.at(expectedValue["state"]));
+    EXPECT_EQ(result->type, NetworkTypeMap.at(expectedValue["type"]));
 }
 
 TEST_F(DeviceTest, ScreenResolution)
 {
-    // Parse expected JSON values
-    nlohmann::json expectedJson;
-    std::string jsonString{};
-    try
-    {
-        jsonString = jsonEngine->get_value("Device.screenResolution");
-        expectedJson = nlohmann::json::parse(jsonString);
-    }
-    catch (const nlohmann::json::exception& e)
-    {
-        FAIL() << "Failed to parse JSON: " << e.what();
-    }
+    mock("Device.screenResolution");
 
-    // Validate that expectedJson is an array and has the required number of
-    // elements
-    if (!expectedJson.is_array())
-    {
-        FAIL() << "Expected JSON is not an array: " << expectedJson.dump(4);
-    }
+    auto result = deviceImpl_.screenResolution();
+    ASSERT_TRUE(result) << "Failed to retrieve screenResolution from Device.screenResolution() method";
 
-    // Getting the actual value from the DeviceInterface
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().screenResolution();
-
-    // Perform the assertions
-    ASSERT_TRUE(result) << "Failed to retrieve screenResolution from "
-                           "Device.screenResolution() method";
-    std::string resultStr = "[" + std::to_string(result.value()[0]) + "," + std::to_string(result.value()[1]) + "]";
-    EXPECT_EQ(resultStr, jsonString);
+    auto expectedValue = jsonEngine.get_value("Device.screenResolution");
+    EXPECT_EQ(result->at(0), expectedValue[0]);
+    EXPECT_EQ(result->at(1), expectedValue[1]);
 }
 
 TEST_F(DeviceTest, VideoResolution)
 {
-    // Parse expected JSON values
-    nlohmann::json expectedJson;
-    std::string jsonString{};
-    try
-    {
-        jsonString = jsonEngine->get_value("Device.videoResolution");
-        expectedJson = nlohmann::json::parse(jsonString);
-    }
-    catch (const nlohmann::json::exception& e)
-    {
-        FAIL() << "Failed to parse JSON: " << e.what();
-    }
+    mock("Device.videoResolution");
 
-    // Validate that expectedJson is an array and has the required number of
-    // elements
-    if (!expectedJson.is_array())
-    {
-        FAIL() << "Expected JSON is not an array: " << expectedJson.dump(4);
-    }
+    auto result = deviceImpl_.videoResolution();
+    ASSERT_TRUE(result) << "Failed to retrieve videoResolution from Device.videoResolution() method";
 
-    // Getting the actual value from the DeviceInterface
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().videoResolution();
-
-    // Perform the assertions
-    ASSERT_TRUE(result) << "Failed to retrieve videoResolution from Device.videoResolution() "
-                           "method";
-    std::string resultStr = "[" + std::to_string(result.value()[0]) + "," + std::to_string(result.value()[1]) + "]";
-    EXPECT_EQ(resultStr, jsonString);
+    auto expectedValue = jsonEngine.get_value("Device.videoResolution");
+    EXPECT_EQ(result->at(0), expectedValue[0]);
+    EXPECT_EQ(result->at(1), expectedValue[1]);
 }
 
 TEST_F(DeviceTest, Name)
 {
-    auto actual_value = jsonEngine->get_value("Device.name");
+    mock("Device.name");
 
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().name();
-
+    auto result = deviceImpl_.name();
     ASSERT_TRUE(result) << "Failed to retrieve name from Device.name() method";
-    EXPECT_EQ(*result, REMOVE_QUOTES(actual_value));
+
+    auto expectedValue = jsonEngine.get_value("Device.name");
+    EXPECT_EQ(*result, expectedValue);
 }

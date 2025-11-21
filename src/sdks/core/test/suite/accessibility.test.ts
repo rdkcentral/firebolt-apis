@@ -35,25 +35,25 @@ test('once', () => {
 
 
 test('listen ClosedCaptionsSettings', () => {
-  return Accessibility.listen((event: 'closedCaptionsSettingsChanged', listener: { data: Accessibility.ClosedCaptionsSettings }) => { }).then((res: number) => {
+  return Accessibility.listen((event: 'onClosedCaptionsSettingsChanged', listener: { data: Accessibility.ClosedCaptionsSettings }) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('once ClosedCaptionsSettings', () => {
-  return Accessibility.once((event: 'closedCaptionsSettingsChanged', listener: { data: Accessibility.ClosedCaptionsSettings }) => { }).then((res: number) => {
+  return Accessibility.once((event: 'onClosedCaptionsSettingsChanged', listener: { data: Accessibility.ClosedCaptionsSettings }) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('listen VoiceGuidanceSettings', () => {
-  return Accessibility.listen((event: 'closedCaptionsSettingsChanged', listener: { data: Accessibility.VoiceGuidanceSettings }) => { }).then((res: number) => {
+  return Accessibility.listen((event: 'onVoiceGuidanceSettingsChanged', listener: { data: Accessibility.VoiceGuidanceSettings }) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('once VoiceGuidanceSettings', () => {
-  return Accessibility.once((event: 'closedCaptionsSettingsChanged', listener: { data: Accessibility.VoiceGuidanceSettings }) => { }).then((res: number) => {
+  return Accessibility.once((event: 'onVoiceGuidanceSettingsChanged', listener: { data: Accessibility.VoiceGuidanceSettings }) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
