@@ -20,7 +20,7 @@
 #pragma once
 
 #include "localization.h"
-#include "Firebolt/helpers.h"
+#include <firebolt/helpers.h>
 
 namespace Firebolt::Localization
 {

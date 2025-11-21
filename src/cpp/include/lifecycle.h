@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "Firebolt/types.h"
+#include <firebolt/types.h>
 #include <functional>
 #include <string>
 #include <vector>
@@ -52,13 +52,12 @@ enum class CloseType
 };
 
 /**
- * @brief Represents a transition between two lifecycle states, including whether the app is focused after the transition
+ * @brief Represents a transition between two lifecycle states
  */
 struct StateChange
 {
     LifecycleState oldState;
     LifecycleState newState;
-    bool focused;
 };
 
 class ILifecycle
@@ -78,7 +77,7 @@ public:
      *
      * @retval The current lifecycle state or error
      */
-    virtual Result<LifecycleState> getCurrentState() const = 0;
+    virtual Result<LifecycleState> state() const = 0;
 
     /**
      * @brief Subscribe to lifecycle state changes

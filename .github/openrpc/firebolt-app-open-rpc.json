@@ -35,12 +35,12 @@
 			]
 		},
 		{
-			"name": "Lifecycle2.stateChanged",
+			"name": "Lifecycle2.onStateChanged",
 			"tags": [
 				{
 					"name": "notifier",
-					"x-event": "Lifecycle2.onStateChanged",
-					"x-contextual-parameters": 0
+					"x-contextual-parameters": 0,
+					"x-event": "Lifecycle2.onStateChanged"
 				},
 				{
 					"name": "capabilities",
@@ -72,13 +72,11 @@
 							"value": [
 								{
 									"newState": "paused",
-									"oldState": "initializing",
-									"focused": true
+									"oldState": "initializing"
 								},
 								{
 									"newState": "active",
-									"oldState": "paused",
-									"focused": true
+									"oldState": "paused"
 								}
 							]
 						}
@@ -92,8 +90,7 @@
 							"value": [
 								{
 									"newState": "paused",
-									"oldState": "initializing",
-									"focused": false
+									"oldState": "initializing"
 								}
 							]
 						}
@@ -102,7 +99,7 @@
 			]
 		},
 		{
-			"name": "Accessibility.audioDescriptionChanged",
+			"name": "Accessibility.onAudioDescriptionChanged",
 			"summary": "Returns the audio description setting of the device",
 			"params": [
 				{
@@ -139,7 +136,7 @@
 			]
 		},
 		{
-			"name": "Accessibility.closedCaptionsSettingsChanged",
+			"name": "Accessibility.onClosedCaptionsSettingsChanged",
 			"summary": "Returns captions settings: enabled, and a list of zero or more languages in order of decreasing preference",
 			"params": [
 				{
@@ -215,7 +212,7 @@
 			]
 		},
 		{
-			"name": "Accessibility.highContrastUIChanged",
+			"name": "Accessibility.onHighContrastUIChanged",
 			"summary": "Returns the high contrast UI device setting",
 			"params": [
 				{
@@ -252,7 +249,7 @@
 			]
 		},
 		{
-			"name": "Accessibility.voiceGuidanceSettingsChanged",
+			"name": "Accessibility.onVoiceGuidanceSettingsChanged",
 			"summary": "Returns voice guidance settings: enabled, rate, and verbosity",
 			"params": [
 				{
@@ -311,7 +308,7 @@
 			]
 		},
 		{
-			"name": "Localization.countryChanged",
+			"name": "Localization.onCountryChanged",
 			"tags": [
 				{
 					"name": "notifier",
@@ -357,7 +354,7 @@
 			]
 		},
 		{
-			"name": "Localization.preferredAudioLanguagesChanged",
+			"name": "Localization.onPreferredAudioLanguagesChanged",
 			"summary": "Returns a list of ISO 639-2/B codes for the preferred audio languages on this device.",
 			"params": [
 				{
@@ -400,7 +397,7 @@
 			]
 		},
 		{
-			"name": "Localization.localeChanged",
+			"name": "Localization.onLocaleChanged",
 			"tags": [
 				{
 					"name": "notifier",
@@ -523,9 +520,6 @@
 					},
 					"oldState": {
 						"$ref": "#/components/schemas/LifecycleState"
-					},
-					"focused": {
-						"type": "boolean"
 					}
 				}
 			},

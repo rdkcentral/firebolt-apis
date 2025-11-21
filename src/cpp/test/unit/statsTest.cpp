@@ -26,9 +26,6 @@ using ::testing::_;
 using ::testing::Invoke;
 using ::testing::Return;
 
-// define when json rpc schema is not available
-#define USE_LOCAL_RESPONSE
-
 class StatsTest : public ::testing::Test, protected MockBase
 {
 protected:
@@ -37,21 +34,13 @@ protected:
 
 TEST_F(StatsTest, MemoryUsage)
 {
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = {{"userMemoryUsedKiB", 12345},
-                                    {"userMemoryLimitKiB", 67890},
-                                    {"gpuMemoryUsedKiB", 11111},
-                                    {"gpuMemoryLimitKiB", 22222}};
-    mock_with_response("memoryUsage", expectedValue);
-#else
-    mock("memoryUsage");
-    auto expectedValue = jsonEngine.get_value("memoryUsage");
-#endif
+    mock("Stats.memoryUsage");
+    auto expectedValue = jsonEngine.get_value("Stats.memoryUsage");
 
     auto result = statsImpl_.memoryUsage();
 
     ASSERT_TRUE(result) << "StatsImpl::memoryUsage() returned an error";
-    
+
     EXPECT_EQ(result->userMemoryUsed,
               expectedValue.at("userMemoryUsedKiB").get<uint32_t>());
     EXPECT_EQ(result->userMemoryLimit,

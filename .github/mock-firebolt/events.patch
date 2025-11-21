@@ -68,10 +68,37 @@ index 3c2930e..5503eae 100644
            return
          }
 diff --git a/server/src/fireboltOpenRpc.mjs b/server/src/fireboltOpenRpc.mjs
-index ddb4fe2..edaf9ff 100644
+index ddb4fe2..440ffc4 100644
 --- a/server/src/fireboltOpenRpc.mjs
 +++ b/server/src/fireboltOpenRpc.mjs
-@@ -158,7 +158,7 @@ function validateMethodCall(methodName, params) {
+@@ -61,16 +61,22 @@ function getMeta() {
+   return meta;
+ }
+ 
+-function getMethod(methodName) {
++function getMethod(methodName, sdk = undefined) {
+   if (config.app.caseInsensitiveModules) {
+     methodName = createCaseAgnosticMethod(methodName);
+   }
+ 
+   const sources = getOpenRPCSources();
+ 
+-  for (const { name: sdkName } of sources) {
+-    if (methodMaps[sdkName]?.[methodName]) {
+-      return methodMaps[sdkName][methodName];
++  if (sdk === undefined) {
++    for (const { name: sdkName } of sources) {
++      if (methodMaps[sdkName]?.[methodName]) {
++        return methodMaps[sdkName][methodName];
++      }
++    }
++  } else {
++    if (methodMaps[sdk]?.[methodName]) {
++      return methodMaps[sdk][methodName];
+     }
+   }
+   return undefined;
+@@ -158,7 +164,7 @@ function validateMethodCall(methodName, params) {
      logger.error('Method:');
      logger.error(methodName);
      logger.error('Params:');
@@ -80,7 +107,7 @@ index ddb4fe2..edaf9ff 100644
      logger.error('Exception:');
      logger.error(ex);
      errors.push(`ERROR: Could not validate call to method ${methodName} with params ${JSON.stringify(params)}`);
-@@ -180,8 +180,31 @@ function validateMethodResult(val, methodName) {
+@@ -180,8 +186,30 @@ function validateMethodResult(val, methodName) {
    if ( typeof val === 'string' && val.trimStart().startsWith('function') ) { return errors; }
  
    try {
@@ -91,8 +118,7 @@ index ddb4fe2..edaf9ff 100644
 +    if (config.dotConfig.bidirectional && methodName.includes('.on') && methodName.endsWith('Changed')) {
 +      let [module, method] = methodName.split('.');
 +      if (method.startsWith('on') && method.endsWith('Changed')) {
-+        methodName = `${module}.${method.charAt(2).toLowerCase() + method.slice(3)}`;
-+        let oMethod = getMethod(methodName);
++        let oMethod = getMethod(methodName, "coreToApp");
 +        if (oMethod && oMethod.tags) {
 +          const notifierTag = oMethod.tags.find(oTag => oTag['x-notifier-for']);
 +          if (notifierTag && notifierTag['x-notifier-for']) {
@@ -114,7 +140,7 @@ index ddb4fe2..edaf9ff 100644
      let oSchema = oResult.schema;
      if ( '$ref' in oSchema  ) {
        const ref = oSchema['$ref'];
-@@ -199,12 +222,12 @@ function validateMethodResult(val, methodName) {
+@@ -199,12 +227,12 @@ function validateMethodResult(val, methodName) {
    } catch ( ex ) {
      logger.error('ERROR: Could not validate value:');
      logger.error('Value:');

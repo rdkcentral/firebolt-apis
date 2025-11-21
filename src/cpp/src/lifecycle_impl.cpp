@@ -45,7 +45,7 @@ Result<void> LifecycleImpl::close(const CloseType &reason) const
     return helper_.invoke("Lifecycle2.close", params);
 }
 
-Result<LifecycleState> LifecycleImpl::getCurrentState() const
+Result<LifecycleState> LifecycleImpl::state() const
 {
     return helper_.get<JsonData::LifecycleState, LifecycleState>("Lifecycle2.state");
 }

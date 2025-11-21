@@ -20,10 +20,24 @@
 #pragma once
 
 #include "accessibility.h"
-#include "Firebolt/json_types.h"
+#include <firebolt/json_types.h>
 
 namespace Firebolt::Accessibility::JsonData
 {
+class AudioDescription : public Firebolt::JSON::NL_Json_Basic<bool>
+{
+public:
+    void FromJson(const nlohmann::json& json) override
+    {
+        value_ = json["enabled"].get<bool>();
+    }
+    bool Value() const override
+    {
+        return value_;
+    }
+private:
+    bool value_;
+};
 class ClosedCaptionsSettings : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Accessibility::ClosedCaptionsSettings>
 {
 public:

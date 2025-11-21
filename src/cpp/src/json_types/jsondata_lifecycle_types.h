@@ -20,7 +20,7 @@
 #pragma once
 
 #include "lifecycle.h"
-#include "Firebolt/json_types.h"
+#include <firebolt/json_types.h>
 
 namespace Firebolt::Lifecycle::JsonData
 {
@@ -62,17 +62,15 @@ public:
     void FromJson(const nlohmann::json& json) override {
         oldState_ = LifecycleStateEnum.at(json["oldState"]);
         newState_ = LifecycleStateEnum.at(json["newState"]);
-        focused_ = json["focused"].get<bool>();
     }
     ::Firebolt::Lifecycle::StateChange Value() const override
     {
-        return ::Firebolt::Lifecycle::StateChange{oldState_, newState_, focused_};
+        return ::Firebolt::Lifecycle::StateChange{oldState_, newState_};
     }
 
 private:
     ::Firebolt::Lifecycle::LifecycleState oldState_;
     ::Firebolt::Lifecycle::LifecycleState newState_;
-    bool focused_;
 };
 
 } // namespace Firebolt::Lifecycle::JsonData

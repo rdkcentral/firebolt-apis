@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "Firebolt/types.h"
+#include <firebolt/types.h>
 
 namespace Firebolt::Metrics
 {

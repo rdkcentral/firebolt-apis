@@ -18,7 +18,7 @@
  */
 
 #include "FireboltDemoService.h"
-#include "Firebolt/config.h"
+#include <firebolt/config.h>
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
@@ -70,7 +70,7 @@ std::ostream& operator<<(std::ostream& out, Firebolt::Error& error)
         out << "InvalidParams";
         break;
     }
-    case Firebolt::Error::CapabilityNotAvaialbale:
+    case Firebolt::Error::CapabilityNotAvailable:
     {
         out << "CapabilityNotAvaialbale";
         break;
@@ -138,7 +138,7 @@ std::string bool2str(const bool value)
 
 void FireboltDemoService::lifecycle()
 {
-    auto state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().getCurrentState();
+    auto state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state();
     if (state)
     {
       std::cout << "Current state: " << static_cast<int>(*state) << std::endl;

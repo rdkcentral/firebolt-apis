@@ -20,7 +20,7 @@
 #pragma once
 
 #include "advertising.h"
-#include "Firebolt/helpers.h"
+#include <firebolt/helpers.h>
 
 namespace Firebolt::Advertising
 {
@@ -34,7 +34,6 @@ public:
     ~AdvertisingImpl() override = default;
 
     Result<Ifa> advertisingId() const override;
-    Result<std::string> uid() const override;
 
 private:
     Firebolt::Helpers::IHelper &helper_;

@@ -20,9 +20,8 @@
 #pragma once
 
 #include "device.h"
-
+#include <firebolt/json_types.h>
 #include <algorithm>
-#include "Firebolt/json_types.h"
 #include <map>
 #include <nlohmann/json.hpp>
 #include <string>
