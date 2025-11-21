@@ -1,3 +1,10 @@
+# [1.8.0-next.19](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.18...v1.8.0-next.19) (2025-11-21)
+
+
+### Features
+
+* Presentation API ([#461](https://github.com/rdkcentral/firebolt-apis/issues/461)) ([72268df](https://github.com/rdkcentral/firebolt-apis/commit/72268dfec24b258009833cc583f2b49fcc58e00c))
+
 # [1.8.0-next.18](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.17...v1.8.0-next.18) (2025-11-21)
 
 
