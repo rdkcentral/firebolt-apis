@@ -72,13 +72,11 @@
 							"value": [
 								{
 									"newState": "paused",
-									"oldState": "initializing",
-									"focused": true
+									"oldState": "initializing"
 								},
 								{
 									"newState": "active",
-									"oldState": "paused",
-									"focused": true
+									"oldState": "paused"
 								}
 							]
 						}
@@ -92,8 +90,7 @@
 							"value": [
 								{
 									"newState": "paused",
-									"oldState": "initializing",
-									"focused": false
+									"oldState": "initializing"
 								}
 							]
 						}
@@ -523,9 +520,6 @@
 					},
 					"oldState": {
 						"$ref": "#/components/schemas/LifecycleState"
-					},
-					"focused": {
-						"type": "boolean"
 					}
 				}
 			},

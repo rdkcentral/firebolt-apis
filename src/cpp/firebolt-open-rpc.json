@@ -1240,9 +1240,6 @@
 					},
 					"oldState": {
 						"$ref": "#/components/schemas/LifecycleState"
-					},
-					"focused": {
-						"type": "boolean"
 					}
 				}
 			},

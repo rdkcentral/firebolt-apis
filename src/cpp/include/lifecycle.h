@@ -52,13 +52,12 @@ enum class CloseType
 };
 
 /**
- * @brief Represents a transition between two lifecycle states, including whether the app is focused after the transition
+ * @brief Represents a transition between two lifecycle states
  */
 struct StateChange
 {
     LifecycleState oldState;
     LifecycleState newState;
-    bool focused;
 };
 
 class ILifecycle

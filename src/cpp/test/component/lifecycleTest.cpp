@@ -65,12 +65,10 @@ TEST_F(LifecycleTest, subscribeOnState)
         {
             EXPECT_EQ(changes.size(), 1);
             std::cout << "[Subscription] Lifecycle state changed: " << static_cast<int>(changes[0].newState)
-                      << ", old state: " << static_cast<int>(changes[0].oldState)
-                      << ", focused: " << changes[0].focused << std::endl;
+                      << ", old state: " << static_cast<int>(changes[0].oldState) << std::endl;
 
             EXPECT_EQ(changes[0].newState, Firebolt::Lifecycle::LifecycleState::PAUSED);
             EXPECT_EQ(changes[0].oldState, Firebolt::Lifecycle::LifecycleState::INITIALIZING);
-            EXPECT_EQ(changes[0].focused, true);
 
             {
                 std::lock_guard<std::mutex> lock(mtx);
@@ -81,7 +79,7 @@ TEST_F(LifecycleTest, subscribeOnState)
     verifyEventSubscription(id);
 
     // Trigger the event from the mock server
-    triggerEvent("Lifecycle2.onStateChanged", R"([{"focused":true,"newState":"paused","oldState":"initializing"}])");
+    triggerEvent("Lifecycle2.onStateChanged", R"([{"newState":"paused","oldState":"initializing"}])");
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
