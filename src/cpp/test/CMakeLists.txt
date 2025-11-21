@@ -69,6 +69,7 @@ set(UNIT_TESTS
     "unit/advertisingTest.cpp"
     "unit/deviceTest.cpp"
     "unit/lifecycleTest.cpp"
+    "unit/presentationTest.cpp"
     "unit/statsTest.cpp"
 )
 
@@ -118,6 +119,7 @@ set(COMPONENT_TESTS
     "component/advertisingTest.cpp"
     "component/deviceTest.cpp"
     "component/lifecycleTest.cpp"
+    "component/presentationTest.cpp"
     "component/statsTest.cpp"
 )
 
