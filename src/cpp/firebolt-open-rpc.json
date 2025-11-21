@@ -132,7 +132,9 @@
 					"params": [],
 					"result": {
 						"name": "Default Result",
-						"value": true
+						"value": {
+							"enabled": true
+						}
 					}
 				}
 			]

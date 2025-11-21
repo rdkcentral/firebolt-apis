@@ -36,7 +36,6 @@ TEST_F(AdvertisingTest, advertisingId)
 {
     mock("Advertising.advertisingId");
     auto expectedValue = jsonEngine.get_value("Advertising.advertisingId");
-    std::cout << "***Expected Value from JSON Engine: " << expectedValue.dump() << std::endl;
 
     auto result = advertisingImpl_.advertisingId();
     ASSERT_TRUE(result) << "AdvertisingImpl::advertisingId() returned an error";
