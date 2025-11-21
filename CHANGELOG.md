@@ -1,3 +1,25 @@
+# [1.8.0-next-major.3](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next-major.2...v1.8.0-next-major.3) (2025-11-21)
+
+
+### Bug Fixes
+
+* **cpp:** Use cmake way to control shared/static library ([#434](https://github.com/rdkcentral/firebolt-apis/issues/434)) ([c0d0eaf](https://github.com/rdkcentral/firebolt-apis/commit/c0d0eaf1835558ed83ac5d7b8b0b3e60c69f3c08))
+* Lifecycle ([#443](https://github.com/rdkcentral/firebolt-apis/issues/443)) ([de4864e](https://github.com/rdkcentral/firebolt-apis/commit/de4864e9a640c0bcc2bbdffe25cf4a63d9f71232))
+* Update Lifecycle 2.0 to schema, update UTs ([#435](https://github.com/rdkcentral/firebolt-apis/issues/435)) ([0e28575](https://github.com/rdkcentral/firebolt-apis/commit/0e2857506b59f77b58a088566cbd8b6bb89252bf))
+
+
+### Features
+
+* **cpp:** Change initialization of the transport ([#428](https://github.com/rdkcentral/firebolt-apis/issues/428)) ([48b6fb4](https://github.com/rdkcentral/firebolt-apis/commit/48b6fb4d1d87eb6a404afc0d11a25f5e2da8a161))
+* **cpp:** Compile all test apps at once ([#433](https://github.com/rdkcentral/firebolt-apis/issues/433)) ([561dffc](https://github.com/rdkcentral/firebolt-apis/commit/561dffceee42f4f4402d095734a8b2d64bd28589))
+* **cpp:** Lifecycle2 event ([#441](https://github.com/rdkcentral/firebolt-apis/issues/441)) ([a804c91](https://github.com/rdkcentral/firebolt-apis/commit/a804c915365ced4cf29ebb6815e26de026da9435))
+* **cpp:** Thunder removal ([#422](https://github.com/rdkcentral/firebolt-apis/issues/422)) ([6345b68](https://github.com/rdkcentral/firebolt-apis/commit/6345b68c65ed25efa9e8a58021651eae0daa2cef))
+* **cpp:** Update to changes around config ([#436](https://github.com/rdkcentral/firebolt-apis/issues/436)) ([dbab3ca](https://github.com/rdkcentral/firebolt-apis/commit/dbab3ca2b040808b408b2523c529cac08056ee3a))
+* **cpp:** Update version of transport ([#440](https://github.com/rdkcentral/firebolt-apis/issues/440)) ([4000be2](https://github.com/rdkcentral/firebolt-apis/commit/4000be2ab466bca1b3c93c20cf01080d2a01bb9a))
+* Lifecycle 2.0 ([#432](https://github.com/rdkcentral/firebolt-apis/issues/432)) ([3139d57](https://github.com/rdkcentral/firebolt-apis/commit/3139d57bacf12b821b753ea7faf13152b86dacba))
+* Sync  package.json and package-lock.json ([9827f00](https://github.com/rdkcentral/firebolt-apis/commit/9827f00292cdc7b739e34e2b204632fcd9798529))
+* thunder post removal ([#424](https://github.com/rdkcentral/firebolt-apis/issues/424)) ([544e536](https://github.com/rdkcentral/firebolt-apis/commit/544e53637a57251c2d3ade64cf35c03913c072f4))
+
 # [1.8.0-next-major.2](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next-major.1...v1.8.0-next-major.2) (2025-09-22)
 
 
