@@ -18,14 +18,15 @@
  */
 
 #include "firebolt.h"
+#include "accessibility_impl.h"
+#include "advertising_impl.h"
 #include "device_impl.h"
 #include "lifecycle_impl.h"
 #include "localization_impl.h"
 #include "metrics_impl.h"
+#include "presentation_impl.h"
 #include "securestorage_impl.h"
-#include "advertising_impl.h"
 #include "stats_impl.h"
-#include "accessibility_impl.h"
 #include <firebolt/helpers.h>
 
 namespace Firebolt
@@ -40,6 +41,7 @@ public:
         , lifecycle_(Firebolt::Helpers::GetHelperInstance())
         , localization_(Firebolt::Helpers::GetHelperInstance())
         , metrics_(Firebolt::Helpers::GetHelperInstance())
+        , presentation_(Firebolt::Helpers::GetHelperInstance())
         , secureStorage_(Firebolt::Helpers::GetHelperInstance())
         , stats_(Firebolt::Helpers::GetHelperInstance())
     {
@@ -69,6 +71,7 @@ public:
     Device::IDevice& DeviceInterface() override { return device_; }
     Lifecycle::ILifecycle& LifecycleInterface() override { return lifecycle_; }
     Localization::ILocalization& LocalizationInterface() override { return localization_; }
+    Presentation::IPresentation& PresentationInterface() override { return presentation_; }
     Metrics::IMetrics& MetricsInterface() override { return metrics_; }
     SecureStorage::ISecureStorage& SecureStorageInterface() override { return secureStorage_; }
     Stats::IStats& StatsInterface() override { return stats_; }
@@ -79,6 +82,7 @@ private:
         accessibility_.unsubscribeAll();
         lifecycle_.unsubscribeAll();
         localization_.unsubscribeAll();
+        presentation_.unsubscribeAll();
     }
 
 private:
@@ -88,6 +92,7 @@ private:
     Lifecycle::LifecycleImpl lifecycle_;
     Localization::LocalizationImpl localization_;
     Metrics::MetricsImpl metrics_;
+    Presentation::PresentationImpl presentation_;
     SecureStorage::SecureStorageImpl secureStorage_;
     Stats::StatsImpl stats_;
 };

@@ -45,7 +45,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:lifecycle2:state"
+						"xrn:firebolt:capability:cpp-client-only"
 					]
 				}
 			],
@@ -119,7 +119,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:audiodescriptions"
+						"xrn:firebolt:capability:accessibility:audio-descriptions"
 					]
 				}
 			],
@@ -171,7 +171,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:closedcaptions"
+						"xrn:firebolt:capability:accessibility:closed-captions"
 					]
 				}
 			],
@@ -232,7 +232,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:highcontrastui"
+						"xrn:firebolt:capability:accessibility:high-contrast-ui"
 					]
 				}
 			],
@@ -283,7 +283,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:voiceguidance"
+						"xrn:firebolt:capability:accessibility:voice-guidance"
 					]
 				}
 			],
@@ -377,7 +377,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:localization:language"
+						"xrn:firebolt:capability:localization:preferred-audio-languages"
 					]
 				}
 			],
@@ -428,6 +428,43 @@
 						{
 							"name": "Default Result",
 							"value": "en-US"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Presentation.onFocusedChanged",
+			"tags": [
+				{
+					"name": "notifier",
+					"x-notifier-for": "Presentation.focused",
+					"x-event": "Presentation.onFocusedChanged"
+				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:cpp-client-only"
+					]
+				}
+			],
+			"summary": "Whether the app is in focus, i.e. receiving key presses. Provided for those apps/runtimes that cannot use Wayland",
+			"params": [
+				{
+					"name": "focused",
+					"summary": "Whether the app is in focus.",
+					"schema": {
+						"type": "boolean"
+					}
+				}
+			],
+			"examples": [
+				{
+					"name": "Default example",
+					"params": [
+						{
+							"name": "Default Result",
+							"value": true
 						}
 					]
 				}
@@ -523,8 +560,8 @@
 					}
 				}
 			},
-			"MemoryInfo": {
-				"title": "MemoryInfo",
+			"MemoryUsage": {
+				"title": "MemoryUsage",
 				"type": "object",
 				"description": "Describes current and maximum memory usage of the container.",
 				"properties": {

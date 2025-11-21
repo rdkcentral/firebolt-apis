@@ -26,6 +26,7 @@
 #include "lifecycle.h"
 #include "localization.h"
 #include "metrics.h"
+#include "presentation.h"
 #include "securestorage.h"
 #include "stats.h"
 #include <firebolt/config.h>
@@ -118,6 +119,13 @@ public:
      * @return Reference to Metrics interface
      */
     virtual Metrics::IMetrics& MetricsInterface() = 0;
+
+    /**
+     * @brief Returns instance of Presentation interface
+     *
+     * @return Reference to Presentation interface
+     */
+    virtual Presentation::IPresentation& PresentationInterface() = 0;
 
     /**
      * @brief Returns instance of SecureStorage interface
