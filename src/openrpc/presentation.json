@@ -1,0 +1,46 @@
+{
+  "openrpc": "1.2.4",
+  "info": {
+    "title": "Presentation",
+    "description": "Methods for accessing Presentation preferences.",
+    "version": "1.0.0"
+  },
+  "methods": [
+    {
+      "name": "focused",
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:cpp-client-only"
+          ]
+        }
+      ],
+      "summary": "Whether the app is in focus, i.e. receiving key presses. Provided for those apps/runtimes that cannot use Wayland",
+      "params": [],
+      "result": {
+        "name": "focused",
+        "summary": "Whether the app is in focus.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "Default example",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": true
+          }
+        }
+      ]
+    }
+  ],
+  "components": {
+    "schemas": {}
+  }
+}

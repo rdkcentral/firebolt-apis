@@ -17,7 +17,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:accessibility:audiodescriptions"
+            "xrn:firebolt:capability:accessibility:audio-descriptions"
           ]
         }
       ],
@@ -52,7 +52,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:accessibility:closedcaptions"
+            "xrn:firebolt:capability:accessibility:closed-captions"
           ]
         }
       ],
@@ -105,7 +105,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:accessibility:highcontrastui"
+            "xrn:firebolt:capability:accessibility:high-contrast-ui"
           ]
         }
       ],
@@ -138,7 +138,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:accessibility:voiceguidance"
+            "xrn:firebolt:capability:accessibility:voice-guidance"
           ]
         }
       ],
@@ -166,7 +166,6 @@
     }
   ],
   "components": {
-    "schemas": {
-    }
+    "schemas": {}
   }
 }

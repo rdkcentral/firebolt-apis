@@ -7,13 +7,13 @@
   },
   "methods": [
     {
-      "name": "memoryInfo",
+      "name": "memoryUsage",
       "summary": "Returns information about container memory usage, in units of 1024 bytes.",
       "tags": [
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:accessibility:app"
+            "xrn:firebolt:capability:cpp-client-only"
           ]
         }
       ],
@@ -21,7 +21,7 @@
       "result": {
         "name": "result",
         "schema": {
-          "$ref": "#/components/schemas/MemoryInfo"
+          "$ref": "#/components/schemas/MemoryUsage"
         }
       },
       "examples": [
@@ -29,10 +29,14 @@
           "name": "Default example",
           "params": [],
           "result": {
-            "userMemoryUsedKiB": 123456,
-            "userMemoryLimitKiB": 789012,
-            "gpuMemoryUsedKiB": 345678,
-            "gpuMemoryLimitKiB": 901234
+            "name": "value",
+            "description": "The memory usage information",
+            "value": {
+              "userMemoryUsedKiB": 123456,
+              "userMemoryLimitKiB": 789012,
+              "gpuMemoryUsedKiB": 345678,
+              "gpuMemoryLimitKiB": 901234
+            }
           }
         }
       ]
@@ -40,8 +44,8 @@
   ],
   "components": {
     "schemas": {
-      "MemoryInfo": {
-        "title": "MemoryInfo",
+      "MemoryUsage": {
+        "title": "MemoryUsage",
         "type": "object",
         "description": "Describes current and maximum memory usage of the container.",
         "properties": {

@@ -44,7 +44,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:device:class"
+            "xrn:firebolt:capability:device:device-class"
           ]
         }
       ],
@@ -74,7 +74,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:device:uptime"
+            "xrn:firebolt:capability:cpp-client-only"
           ]
         }
       ],
@@ -104,7 +104,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:device:uptime"
+            "xrn:firebolt:capability:cpp-client-only"
           ]
         }
       ],
@@ -122,6 +122,36 @@
           "result": {
             "name": "Default Result",
             "value": 654321
+          }
+        }
+      ]
+    },
+    {
+      "name": "chipsetId",
+      "summary": "Returns chipset ID as a printable string, e.g. BCM72180",
+      "params": [],
+      "tags": [
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:cpp-client-only"
+          ]
+        }
+      ],
+      "result": {
+        "name": "chipsetId",
+        "summary": "The device chipset ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        {
+          "name": "Getting the device chipset ID",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": "BCM72180"
           }
         }
       ]

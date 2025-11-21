@@ -12,7 +12,7 @@
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:lifecycle2:state"
+                        "xrn:firebolt:capability:cpp-client-only"
                     ]
                 }
             ],
@@ -69,7 +69,7 @@
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:lifecycle2:state"
+                        "xrn:firebolt:capability:cpp-client-only"
                     ]
                 }
             ],
@@ -93,17 +93,16 @@
             ]
         },
         {
-            "name": "stateChanged",
+            "name": "onStateChanged",
             "tags": [
                 {
                     "name": "notifier",
-                    "x-event": "Lifecycle2.onStateChanged",
                     "x-contextual-parameters": 0
                 },
                 {
                     "name": "capabilities",
                     "x-uses": [
-                        "xrn:firebolt:capability:lifecycle2:state"
+                        "xrn:firebolt:capability:cpp-client-only"
                     ]
                 }
             ],
@@ -130,18 +129,16 @@
                             "value": [
                                 {
                                     "newState": "paused",
-                                    "oldState": "initializing",
-                                    "focused": true
+                                    "oldState": "initializing"
                                 },
                                 {
                                     "newState": "active",
-                                    "oldState": "paused",
-                                    "focused": true
+                                    "oldState": "paused"
                                 }
                             ]
                         }
                     ]
-                },                
+                },
                 {
                     "name": "Single transition to paused state",
                     "params": [
@@ -150,8 +147,7 @@
                             "value": [
                                 {
                                     "newState": "paused",
-                                    "oldState": "initializing",
-                                    "focused": false
+                                    "oldState": "initializing"
                                 }
                             ]
                         }
@@ -195,9 +191,6 @@
                     },
                     "oldState": {
                         "$ref": "#/components/schemas/LifecycleState"
-                    },
-                    "focused": {
-                        "type": "boolean"
                     }
                 }
             }

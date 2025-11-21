@@ -6,86 +6,30 @@
         {
             "module": "Accessibility",
             "use": [
-                "xrn:firebolt:capability:accessibility:audiodescriptions",
-                "xrn:firebolt:capability:accessibility:closedcaptions",
-                "xrn:firebolt:capability:accessibility:highcontrastui",
-                "xrn:firebolt:capability:accessibility:voiceguidance"
-            ]
-        },
-        {
-            "module": "Account",
-            "use": [
-                "xrn:firebolt:capability:account:id",
-                "xrn:firebolt:capability:account:uid"
+                "xrn:firebolt:capability:accessibility:audio-descriptions",
+                "xrn:firebolt:capability:accessibility:closed-captions",
+                "xrn:firebolt:capability:accessibility:high-contrast-ui",
+                "xrn:firebolt:capability:accessibility:voice-guidance"
             ]
         },
         {
             "module": "Advertising",
             "use": [
-                "xrn:firebolt:capability:advertising:configuration",
-                "xrn:firebolt:capability:advertising:identifier",
-                "xrn:firebolt:capability:advertising:policy"
-            ]
-        },
-        {
-            "module": "Authentication",
-            "use": [
-                "xrn:firebolt:capability:token:device",
-                "xrn:firebolt:capability:token:platform",
-                "xrn:firebolt:capability:token:root",
-                "xrn:firebolt:capability:token:session"
-            ]
-        },
-        {
-            "module": "Capabilities",
-            "use": [
-                "xrn:firebolt:capability:capabilities:info",
-                "xrn:firebolt:capability:capabilities:request"
-            ]
-        },
-        {
-            "module": "HDMIInput",
-            "use": [
-                "xrn:firebolt:capability:inputs:hdmi"
+                "xrn:firebolt:capability:advertising:identifier"
             ]
         },
         {
             "module": "Device",
             "use": [
-                "xrn:firebolt:capability:device:distributor",
-                "xrn:firebolt:capability:device:id",
-                "xrn:firebolt:capability:device:info",
-                "xrn:firebolt:capability:device:make",
-                "xrn:firebolt:capability:device:model",
-                "xrn:firebolt:capability:device:name",
-                "xrn:firebolt:capability:device:sku",
                 "xrn:firebolt:capability:device:uid",
-                "xrn:firebolt:capability:network:status",
-                "xrn:firebolt:capability:device:class"
+                "xrn:firebolt:capability:device:device-class",
+                "xrn:firebolt:capability:cpp-client-only"
             ]
         },
         {
-            "module": "Discovery",
+            "module": "Display",
             "use": [
-                "xrn:firebolt:capability:discovery:navigate-to",
-                "xrn:firebolt:capability:discovery:policy",
-                "xrn:firebolt:capability:discovery:content-access",
-                "xrn:firebolt:capability:discovery:sign-in-status",
-                "xrn:firebolt:capability:discovery:watch-next",
-                "xrn:firebolt:capability:discovery:watched",
-                "xrn:firebolt:capability:lifecycle:launch",
-                "xrn:firebolt:capability:discovery:entity-info",
-                "xrn:firebolt:capability:discovery:purchased-content",
-                "xrn:firebolt:capability:discovery:interest"
-            ],
-            "manage": [
-                "xrn:firebolt:capability:discovery:entity-info",
-                "xrn:firebolt:capability:discovery:purchased-content"
-            ],            
-            "provide": [
-                "xrn:firebolt:capability:discovery:entity-info",
-                "xrn:firebolt:capability:discovery:purchased-content",
-                "xrn:firebolt:capability:discovery:interest"
+                "xrn:firebolt:capability:cpp-client-only"
             ]
         },
         {
@@ -95,28 +39,17 @@
             ]
         },
         {
-            "module": "Keyboard",
+            "module": "Lifecycle2",
             "use": [
-                "xrn:firebolt:capability:input:keyboard"
-            ]
-        },
-        {
-            "module": "Lifecycle",
-            "use": [
-                "xrn:firebolt:capability:lifecycle:ready",
-                "xrn:firebolt:capability:lifecycle:state"
+                "xrn:firebolt:capability:cpp-client-only"
             ]
         },
         {
             "module": "Localization",
             "use": [
                 "xrn:firebolt:capability:localization:country-code",
-                "xrn:firebolt:capability:localization:language",
-                "xrn:firebolt:capability:localization:locale",
-                "xrn:firebolt:capability:localization:locality",
-                "xrn:firebolt:capability:localization:location",
-                "xrn:firebolt:capability:localization:postal-code",
-                "xrn:firebolt:capability:localization:additional-info"
+                "xrn:firebolt:capability:localization:preferred-audio-languages",
+                "xrn:firebolt:capability:localization:locale"
             ]
         },
         {
@@ -127,30 +60,21 @@
             ]
         },
         {
-            "module": "Parameters",
+            "module": "Presentation",
             "use": [
-                "xrn:firebolt:capability:lifecycle:state"
-            ]
-        },
-        {
-            "module": "Profile",
-            "use": [
-                "xrn:firebolt:capability:approve:content",
-                "xrn:firebolt:capability:approve:purchase",
-                "xrn:firebolt:capability:profile:flags"
-            ]
-        },
-        {
-            "module": "SecondScreen",
-            "use": [
-                "xrn:firebolt:capability:protocol:dial",
-                "xrn:firebolt:capability:secondscreen:protocol"
+                "xrn:firebolt:capability:cpp-client-only"
             ]
         },
         {
             "module": "SecureStorage",
             "use": [
                 "xrn:firebolt:capability:storage:secure"
+            ]
+        },
+        {
+            "module": "Stats",
+            "use": [
+                "xrn:firebolt:capability:cpp-client-only"
             ]
         }
     ]

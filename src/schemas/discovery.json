@@ -2,20 +2,33 @@
   "title": "Discovery",
   "$id": "https://meta.comcast.com/firebolt/discovery",
   "anyOf": [
-      {"$ref": "#/definitions/InterestType"},
-      {"$ref": "#/definitions/InterestReason"},
-      {"$ref": "#/definitions/InterestResult"}
+    {
+      "$ref": "#/definitions/InterestType"
+    },
+    {
+      "$ref": "#/definitions/InterestReason"
+    },
+    {
+      "$ref": "#/definitions/InterestResult"
+    }
   ],
   "definitions": {
     "InterestType": {
       "title": "InterestType",
       "type": "string",
-      "enum": ["interest", "disinterest"]
+      "enum": [
+        "interest",
+        "disinterest"
+      ]
     },
     "InterestReason": {
       "title": "InterestReason",
       "type": "string",
-      "enum": ["playlist", "reaction", "recording"]
+      "enum": [
+        "playlist",
+        "reaction",
+        "recording"
+      ]
     },
     "InterestResult": {
       "title": "InterestResult",

@@ -117,7 +117,10 @@
                 },
                 "parameters": {
                     "description": "The result of the provider response.",
-                    "type": ["object", "null"]
+                    "type": [
+                        "object",
+                        "null"
+                    ]
                 }
             }
         },
@@ -158,7 +161,10 @@
                     "minimum": 1
                 }
             },
-            "required": [ "width", "height" ]
+            "required": [
+                "width",
+                "height"
+            ]
         },
         "Image": {
             "type": "object",
@@ -180,12 +186,18 @@
                     "description": "The type of the image.",
                     "type": "string",
                     "enum": [
-                        "icon", "poster", "banner", "splash", "hero"
+                        "icon",
+                        "poster",
+                        "banner",
+                        "splash",
+                        "hero"
                     ]
                 }
             },
             "required": [
-                "uri", "aspectRatio", "type"
+                "uri",
+                "aspectRatio",
+                "type"
             ]
         }
     }

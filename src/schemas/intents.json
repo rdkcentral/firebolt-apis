@@ -358,7 +358,9 @@
                         }
                     },
                     "not": {
-                        "required": [ "data" ]
+                        "required": [
+                            "data"
+                        ]
                     }
                 }
             ],
@@ -392,7 +394,9 @@
                         }
                     },
                     "not": {
-                        "required": [ "data" ]
+                        "required": [
+                            "data"
+                        ]
                     }
                 }
             ],
@@ -456,7 +460,9 @@
                 },
                 {
                     "type": "object",
-                    "required": [ "data" ],
+                    "required": [
+                        "data"
+                    ],
                     "properties": {
                         "action": {
                             "const": "channel"
@@ -667,7 +673,9 @@
                             "additionalProperties": false
                         }
                     },
-                    "required": [ "data" ]
+                    "required": [
+                        "data"
+                    ]
                 }
             ],
             "examples": [
@@ -1174,7 +1182,9 @@
                 },
                 {
                     "type": "object",
-                    "required": [ "data" ],
+                    "required": [
+                        "data"
+                    ],
                     "properties": {
                         "action": {
                             "const": "focus"
@@ -1230,7 +1240,9 @@
                         }
                     },
                     "not": {
-                        "required": [ "data" ]
+                        "required": [
+                            "data"
+                        ]
                     }
                 }
             ],
@@ -1261,7 +1273,9 @@
                         }
                     },
                     "not": {
-                        "required": [ "data" ]
+                        "required": [
+                            "data"
+                        ]
                     }
                 }
             ],
@@ -1292,7 +1306,9 @@
                         }
                     },
                     "not": {
-                        "required": [ "data" ]
+                        "required": [
+                            "data"
+                        ]
                     }
                 }
             ],
@@ -1317,7 +1333,9 @@
                 },
                 {
                     "type": "object",
-                    "required": [ "data" ],
+                    "required": [
+                        "data"
+                    ],
                     "properties": {
                         "action": {
                             "const": "scroll"
@@ -1445,9 +1463,13 @@
                                     "const": true
                                 }
                             },
-                            "required": [ "value" ],
+                            "required": [
+                                "value"
+                            ],
                             "if": {
-                                "required": [ "relative" ]
+                                "required": [
+                                    "relative"
+                                ]
                             },
                             "then": {
                                 "properties": {
@@ -1568,15 +1590,21 @@
                                 }
                             },
                             "if": {
-                                "required": [ "value" ]
+                                "required": [
+                                    "value"
+                                ]
                             },
                             "then": {
                                 "not": {
-                                    "required": [ "toggle" ]
+                                    "required": [
+                                        "toggle"
+                                    ]
                                 }
                             },
                             "else": {
-                                "required": [ "toggle" ]
+                                "required": [
+                                    "toggle"
+                                ]
                             },
                             "additionalProperties": false
                         }
@@ -2029,10 +2057,14 @@
                                             "const": true
                                         }
                                     },
-                                    "required": [ "seconds" ],
+                                    "required": [
+                                        "seconds"
+                                    ],
                                     "if": {
                                         "not": {
-                                            "required": [ "relative" ]
+                                            "required": [
+                                                "relative"
+                                            ]
                                         }
                                     },
                                     "then": {
@@ -2229,14 +2261,20 @@
                                 }
                             },
                             "if": {
-                                "required": [ "value" ]
+                                "required": [
+                                    "value"
+                                ]
                             },
                             "then": {
                                 "not": {
-                                    "required": [ "toggle" ]
+                                    "required": [
+                                        "toggle"
+                                    ]
                                 },
                                 "if": {
-                                    "required": [ "relative" ]
+                                    "required": [
+                                        "relative"
+                                    ]
                                 },
                                 "then": {
                                     "properties": {
@@ -2259,11 +2297,15 @@
                             },
                             "else": {
                                 "if": {
-                                    "required": [ "toggle" ]
+                                    "required": [
+                                        "toggle"
+                                    ]
                                 },
                                 "then": {
                                     "not": {
-                                        "required": [ "value" ]
+                                        "required": [
+                                            "value"
+                                        ]
                                     }
                                 }
                             },
@@ -2334,15 +2376,21 @@
                                 }
                             },
                             "if": {
-                                "required": [ "value" ]
+                                "required": [
+                                    "value"
+                                ]
                             },
                             "then": {
                                 "not": {
-                                    "required": [ "toggle" ]
+                                    "required": [
+                                        "toggle"
+                                    ]
                                 }
                             },
                             "else": {
-                                "required": [ "toggle" ]
+                                "required": [
+                                    "toggle"
+                                ]
                             },
                             "additionalProperties": false
                         }
@@ -2547,7 +2595,6 @@
                 }
             ]
         },
-
         "Identifier": {
             "type": "string"
         },

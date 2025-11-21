@@ -2,15 +2,22 @@
   "$id": "https://meta.comcast.com/firebolt/errors",
   "title": "Errors",
   "oneOf": [
-    { "$ref": "#/definitions/FireboltError" },
-    { "$ref": "#/definitions/UserNotAuthenticatedError" }
+    {
+      "$ref": "#/definitions/FireboltError"
+    },
+    {
+      "$ref": "#/definitions/UserNotAuthenticatedError"
+    }
   ],
   "definitions": {
     "FireboltError": {
       "title": "FireboltError",
       "description": "An error resulting from calling a Firebolt method.",
       "type": "object",
-      "required": ["code", "message"],
+      "required": [
+        "code",
+        "message"
+      ],
       "properties": {
         "code": {
           "type": "number"
@@ -32,7 +39,9 @@
     "UserNotAuthenticatedError": {
       "title": "UserNotAuthenticatedError",
       "allOf": [
-        { "$ref": "#/definitions/FireboltError" },
+        {
+          "$ref": "#/definitions/FireboltError"
+        },
         {
           "type": "object",
           "properties": {

@@ -30,7 +30,7 @@
                 {
                     "$ref": "#/definitions/PlaylistEntity"
                 }
-            ]            
+            ]
         },
         "EntityDetails": {
             "title": "EntityDetails",
@@ -123,7 +123,7 @@
                 "musicType",
                 "entityId"
             ]
-        },        
+        },
         "MovieEntity": {
             "title": "MovieEntity",
             "description": "A Firebolt compliant representation of a Movie entity.",

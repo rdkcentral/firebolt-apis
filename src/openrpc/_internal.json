@@ -59,12 +59,12 @@
                 "major": 1,
                 "minor": 0,
                 "patch": 0,
-                "readable": "Firebolt FEE 1.0.0"                
+                "readable": "Firebolt FEE 1.0.0"
               }
             }
           }
-        }            
-      ]    
+        }
+      ]
     }
   ],
   "components": {
@@ -72,7 +72,9 @@
       "InitializeResult": {
         "title": "InitializeResult",
         "type": "object",
-        "required": ["version"],
+        "required": [
+          "version"
+        ],
         "properties": {
           "version": {
             "$ref": "https://meta.comcast.com/firebolt/types#/definitions/SemanticVersion",

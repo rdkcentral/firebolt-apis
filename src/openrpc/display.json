@@ -14,7 +14,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:display:size"
+            "xrn:firebolt:capability:cpp-client-only"
           ]
         }
       ],
@@ -57,7 +57,7 @@
         {
           "name": "capabilities",
           "x-uses": [
-            "xrn:firebolt:capability:display:maxresolution"
+            "xrn:firebolt:capability:cpp-client-only"
           ]
         }
       ],
@@ -91,6 +91,6 @@
           }
         }
       ]
-    }    
+    }
   ]
 }
