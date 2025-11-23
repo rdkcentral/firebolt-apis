@@ -54,6 +54,7 @@
     "@semantic-release/npm": "^11.0.3",
     "@semantic-release/release-notes-generator": "^10.0.1",
     "ajv": "^6.12.6",
+    "form-data": ">=4.0.4",
     "husky": "^8.0.0",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.3",
