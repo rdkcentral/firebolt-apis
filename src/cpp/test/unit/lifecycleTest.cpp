@@ -43,7 +43,7 @@ TEST_F(LifecycleTest, close)
     nlohmann::json expectedParams;
     expectedParams["type"] = "deactivate";
     EXPECT_CALL(mockHelper, invoke("Lifecycle2.close", expectedParams))
-        .WillOnce(Invoke([&](const std::string& methodName, const nlohmann::json& parameters)
+        .WillOnce(Invoke([&](const std::string& /*methodName*/, const nlohmann::json& /*parameters*/)
                          { return Firebolt::Result<void>{Firebolt::Error::None}; }));
 
     auto result = lifecycleImpl_.close(Firebolt::Lifecycle::CloseType::DEACTIVATE);
@@ -54,7 +54,7 @@ TEST_F(LifecycleTest, state)
 {
     EXPECT_CALL(mockHelper, getJson("Lifecycle2.state", _))
         .WillOnce(Invoke(
-            [](const std::string& methodName, const nlohmann::json& parameters)
+            [](const std::string& /*methodName*/, const nlohmann::json& /*parameters*/)
             {
                 nlohmann::json response = "initializing";
                 return Firebolt::Result<nlohmann::json>{response};
@@ -68,8 +68,8 @@ TEST_F(LifecycleTest, state)
 TEST_F(LifecycleTest, subscribeOnStateChanged)
 {
     EXPECT_CALL(mockHelper, subscribe(_, "Lifecycle2.onStateChanged", _, _))
-        .WillOnce(Invoke([&](void* owner, const std::string& eventName, std::any&& notification,
-                             void (*callback)(void*, const nlohmann::json&))
+        .WillOnce(Invoke([&](void* /*owner*/, const std::string& /*eventName*/, std::any&& /*notification*/,
+                             void (* /*callback*/)(void*, const nlohmann::json&))
                          { return Firebolt::Result<Firebolt::SubscriptionId>{1}; }));
 
     EXPECT_CALL(mockHelper, unsubscribe(1)).WillOnce(Return(Firebolt::Result<void>{Firebolt::Error::None}));

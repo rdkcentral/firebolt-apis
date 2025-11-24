@@ -65,6 +65,8 @@ list(APPEND CMAKE_MODULE_PATH
     "${SYSROOT_PATH}/usr/lib/cmake"
 )
 
+add_compile_options(-Wall -Wextra -Wpedantic)
+
 add_subdirectory(src)
 
 if (ENABLE_DEMO_APP)
