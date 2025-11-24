@@ -1,3 +1,10 @@
+# [1.8.0-next.22](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.21...v1.8.0-next.22) (2025-11-24)
+
+
+### Features
+
+* compilation warnings ([#464](https://github.com/rdkcentral/firebolt-apis/issues/464)) ([7fed125](https://github.com/rdkcentral/firebolt-apis/commit/7fed1255b5f90091929e75b60c5ecd096a28fbac))
+
 # [1.8.0-next.21](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.20...v1.8.0-next.21) (2025-11-24)
 
 
