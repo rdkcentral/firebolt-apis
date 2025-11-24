@@ -145,7 +145,7 @@ void FireboltDemoService::lifecycle()
     }
     else
     {
-        std::cout << "Cannot get current state, err:" << static_cast<int32_t>(state.error()) << std::endl;
+        std::cout << "Cannot get current state, err:" << state.error() << std::endl;
     }
 
     auto id = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnStateChanged(
@@ -162,12 +162,41 @@ void FireboltDemoService::lifecycle()
     lifecycleSubscriptionIds_.insert(*id);
 }
 
+void FireboltDemoService::presentation()
+{
+    auto focus = Firebolt::IFireboltAccessor::Instance().PresentationInterface().focused();
+    if (focus)
+    {
+        std::cout << "Current focus: " << static_cast<int>(*focus) << std::endl;
+    }
+    else
+    {
+        std::cout << "Cannot get current focus, err:" << focus.error() << std::endl;
+    }
+    auto id = Firebolt::IFireboltAccessor::Instance().PresentationInterface().subscribeOnFocusedChanged(
+        [&](const bool focus) { std::cout << "[Subscription] Presentation  focus changed: " << focus << std::endl; });
+    if (!id)
+    {
+        std::cout << "Failed to subscribe, error: " << id.error() << std::endl;
+        return;
+    }
+    presentationSubscriptionIds_.insert(*id);
+}
+
 void FireboltDemoService::unsubscribeAll()
 {
     std::cout << "Unsubscribing..." << std::endl;
     for (const auto& id : lifecycleSubscriptionIds_)
     {
         auto result{Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(id)};
+        if (!result)
+        {
+            std::cout << "Unsubscribe with id: " << id << " failed, error: " << result.error() << std::endl;
+        }
+    }
+    for (const auto& id : presentationSubscriptionIds_)
+    {
+        auto result{Firebolt::IFireboltAccessor::Instance().PresentationInterface().unsubscribe(id)};
         if (!result)
         {
             std::cout << "Unsubscribe with id: " << id << " failed, error: " << result.error() << std::endl;

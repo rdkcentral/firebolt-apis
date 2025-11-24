@@ -35,6 +35,7 @@ public:
     FireboltDemoService& operator=(FireboltDemoService&&) = delete;
 
     void lifecycle();
+    void presentation();
 
     void unsubscribeAll();
 
@@ -47,4 +48,5 @@ private:
     std::condition_variable cv_;
     bool connected_{false};
     std::set<Firebolt::SubscriptionId> lifecycleSubscriptionIds_;
+    std::set<Firebolt::SubscriptionId> presentationSubscriptionIds_;
 };
