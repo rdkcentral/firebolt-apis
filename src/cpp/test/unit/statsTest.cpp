@@ -18,13 +18,8 @@
  */
 
 #include "json_engine.h"
-#include "json_types/jsondata_stats_types.h"
 #include "mock_helper.h"
 #include "stats_impl.h"
-
-using ::testing::_;
-using ::testing::Invoke;
-using ::testing::Return;
 
 class StatsTest : public ::testing::Test, protected MockBase
 {

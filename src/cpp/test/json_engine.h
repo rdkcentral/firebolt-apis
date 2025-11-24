@@ -18,21 +18,20 @@
 #pragma once
 
 #include "gtest/gtest.h"
-#include "gmock/gmock.h"
 #include <firebolt/types.h>
-#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json-schema.hpp>
 #include <nlohmann/json.hpp>
-#include <vector>
 
+#ifndef UT_OPEN_RPC_FILE
+#define UT_OPEN_RPC_FILE "firebolt-open-rpc.json"
+#endif
 
 using namespace ::testing;
 
 #define REMOVE_QUOTES(s) (s.substr(1, s.length() - 2))
 #define STRING_TO_BOOL(s) (s == "true" ? true : false)
-
 
 inline std::string capitalizeFirstChar(std::string str) {
     if (!str.empty()) {

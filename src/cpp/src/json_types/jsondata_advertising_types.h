@@ -21,9 +21,6 @@
 
 #include "advertising.h"
 #include <firebolt/json_types.h>
-#include <algorithm>
-#include <iostream>
-#include <map>
 #include <nlohmann/json.hpp>
 #include <string>
 
@@ -32,13 +29,13 @@ namespace Firebolt::Advertising::JsonData
 class IfaJson : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Advertising::Ifa>
 {
 public:
-    void FromJson(const nlohmann::json &json) override
+    void fromJson(const nlohmann::json &json) override
     {
         ifa = json["ifa"].get<std::string>();
         ifa_type = json["ifa_type"].get<std::string>();
         lmt = json["lmt"].get<std::string>();
     }
-    ::Firebolt::Advertising::Ifa Value() const override { return ::Firebolt::Advertising::Ifa{ifa, ifa_type, lmt}; }
+    ::Firebolt::Advertising::Ifa value() const override { return ::Firebolt::Advertising::Ifa{ifa, ifa_type, lmt}; }
 
 private:
     std::string ifa;

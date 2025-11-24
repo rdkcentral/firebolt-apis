@@ -21,24 +21,21 @@
 
 #include "stats.h"
 #include <firebolt/json_types.h>
-#include <algorithm>
-#include <map>
 #include <nlohmann/json.hpp>
-#include <string>
 
 namespace Firebolt::Stats::JsonData
 {
 class MemoryInfo : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Stats::MemoryInfo>
 {
 public:
-    void FromJson(const nlohmann::json& json) override
+    void fromJson(const nlohmann::json& json) override
     {
         userMemoryUsed = json["userMemoryUsedKiB"].get<uint32_t>();
         userMemoryLimit = json["userMemoryLimitKiB"].get<uint32_t>();
         gpuMemoryUsed = json["gpuMemoryUsedKiB"].get<uint32_t>();
         gpuMemoryLimit = json["gpuMemoryLimitKiB"].get<uint32_t>();
     }
-    ::Firebolt::Stats::MemoryInfo Value() const override
+    ::Firebolt::Stats::MemoryInfo value() const override
     {
         return ::Firebolt::Stats::MemoryInfo{userMemoryUsed, userMemoryLimit, gpuMemoryUsed, gpuMemoryLimit};
     }

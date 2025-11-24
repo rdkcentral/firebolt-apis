@@ -18,7 +18,6 @@
  */
 
 #include "lifecycle_impl.h"
-#include "json_engine.h"
 #include "mock_helper.h"
 
 using ::testing::_;

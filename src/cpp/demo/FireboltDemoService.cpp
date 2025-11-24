@@ -152,8 +152,7 @@ void FireboltDemoService::lifecycle()
         [&](const std::vector<Firebolt::Lifecycle::StateChange> &changes)
         {
             std::cout << "[Subscription] Lifecycle state changed: " << static_cast<int>(changes[0].newState)
-                      << ", old state: " << static_cast<int>(changes[0].oldState) << ", focused: " << changes[0].focused
-                      << std::endl;
+                      << ", old state: " << static_cast<int>(changes[0].oldState) << std::endl;
         });
     if (!id)
     {
@@ -176,9 +175,8 @@ void FireboltDemoService::unsubscribeAll()
     }
 }
 
-void FireboltDemoService::onConnectionChanged(const bool connected, const Firebolt::Error error)
+void FireboltDemoService::onConnectionChanged(const bool connected, const Firebolt::Error /* error */)
 {
-    (void)error; //unused
     std::unique_lock<std::mutex> lock{mutex_};
     connected_ = connected;
     cv_.notify_one();

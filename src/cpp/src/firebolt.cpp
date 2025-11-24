@@ -27,7 +27,7 @@
 #include "presentation_impl.h"
 #include "securestorage_impl.h"
 #include "stats_impl.h"
-#include <firebolt/helpers.h>
+#include <firebolt/gateway.h>
 
 namespace Firebolt
 {
@@ -57,13 +57,13 @@ public:
 
     Firebolt::Error Connect(const Firebolt::Config &config, OnConnectionChanged listener) override
     {
-        return Firebolt::Transport::GetGatewayInstance().Connect(config, listener);
+        return Firebolt::Transport::GetGatewayInstance().connect(config, listener);
     }
 
     Firebolt::Error Disconnect() override
     {
         unsubscribeAll();
-        return Firebolt::Transport::GetGatewayInstance().Disconnect();
+        return Firebolt::Transport::GetGatewayInstance().disconnect();
     }
 
     Accessibility::IAccessibility &AccessibilityInterface() override { return accessibility_; }

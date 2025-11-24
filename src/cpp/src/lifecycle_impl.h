@@ -21,9 +21,6 @@
 
 #include "lifecycle.h"
 #include <firebolt/helpers.h>
-#include <mutex>
-#include <set>
-#include <string>
 
 class LifecycleTest;
 

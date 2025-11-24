@@ -21,10 +21,6 @@
 #include "json_engine.h"
 #include "mock_helper.h"
 
-using ::testing::_;
-using ::testing::Invoke;
-using ::testing::Return;
-
 class PresentationTest : public ::testing::Test, protected MockBase
 {
 protected:
@@ -47,7 +43,7 @@ TEST_F(PresentationTest, SubscribeOnFocusedChanged)
 {
     mockSubscribe("Presentation.onFocusedChanged");
 
-    auto id = presentationImpl.subscribeOnFocusedChanged([&](bool value) {});
+    auto id = presentationImpl.subscribeOnFocusedChanged([&](bool /*value*/) {});
     ASSERT_TRUE(id) << "error on subscribe";
     EXPECT_EQ(*id, 1);
 

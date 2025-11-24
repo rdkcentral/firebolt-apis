@@ -27,11 +27,11 @@ namespace Firebolt::Accessibility::JsonData
 class AudioDescription : public Firebolt::JSON::NL_Json_Basic<bool>
 {
 public:
-    void FromJson(const nlohmann::json& json) override
+    void fromJson(const nlohmann::json& json) override
     {
         value_ = json["enabled"].get<bool>();
     }
-    bool Value() const override
+    bool value() const override
     {
         return value_;
     }
@@ -41,12 +41,12 @@ private:
 class ClosedCaptionsSettings : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Accessibility::ClosedCaptionsSettings>
 {
 public:
-    void FromJson(const nlohmann::json& json) override
+    void fromJson(const nlohmann::json& json) override
     {
         enabled_ = json["enabled"].get<bool>();
         preferredLanguages_ = json["preferredLanguages"].get<std::vector<std::string>>();
     }
-    ::Firebolt::Accessibility::ClosedCaptionsSettings Value() const override
+    ::Firebolt::Accessibility::ClosedCaptionsSettings value() const override
     {
         return ::Firebolt::Accessibility::ClosedCaptionsSettings{enabled_, preferredLanguages_};
     }
@@ -58,13 +58,13 @@ private:
 class VoiceGuidanceSettings : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Accessibility::VoiceGuidanceSettings>
 {
 public:
-    void FromJson(const nlohmann::json& json) override
+    void fromJson(const nlohmann::json& json) override
     {
         enabled_ = json["enabled"].get<bool>();
         rate_ = json["rate"].get<float>();
         navigationHints_ = json["navigationHints"].get<bool>();
     }
-    ::Firebolt::Accessibility::VoiceGuidanceSettings Value() const override
+    ::Firebolt::Accessibility::VoiceGuidanceSettings value() const override
     {
         return ::Firebolt::Accessibility::VoiceGuidanceSettings{enabled_, rate_, navigationHints_};
     }

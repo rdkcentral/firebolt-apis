@@ -18,11 +18,8 @@
  */
 
 #include "stats_impl.h"
-#include "firebolt.h"
 #include "jsondata_stats_types.h"
-#include <algorithm>
 #include <cctype>
-#include <iostream>
 #include <nlohmann/json.hpp>
 #include <string>
 

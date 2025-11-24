@@ -64,7 +64,7 @@ TEST_F(SecureStorageTest, clear)
 
     EXPECT_CALL(mockHelper, invoke("SecureStorage.clear", expectedParams))
         .WillOnce(Invoke(
-            [&](const std::string &methodName, const nlohmann::json &parameters)
+            [&](const std::string &/*methodName*/, const nlohmann::json &/*parameters*/)
             {
                 return Firebolt::Result<void>{Firebolt::Error::None};
             }));
@@ -83,7 +83,7 @@ TEST_F(SecureStorageTest, remove)
 
     EXPECT_CALL(mockHelper, invoke("SecureStorage.remove", expectedParams))
         .WillOnce(Invoke(
-            [&](const std::string &methodName, const nlohmann::json &parameters)
+            [&](const std::string &/*methodName*/, const nlohmann::json &/*parameters*/)
             {
                 return Firebolt::Result<void>{Firebolt::Error::None};
             }));
@@ -108,7 +108,7 @@ TEST_F(SecureStorageTest, set)
 
     EXPECT_CALL(mockHelper, invoke("SecureStorage.set", expectedParams))
         .WillOnce(Invoke(
-            [&](const std::string &methodName, const nlohmann::json &parameters)
+            [&](const std::string &/*methodName*/, const nlohmann::json &parameters)
             {
                 lastSetParams = parameters;
                 return Firebolt::Result<void>{Firebolt::Error::None};
@@ -124,7 +124,7 @@ TEST_F(SecureStorageTest, set)
 
         EXPECT_CALL(mockHelper, getJson("SecureStorage.get", expectedParams))
             .WillOnce(Invoke(
-                [&](const std::string &methodName, const nlohmann::json &parameters)
+                [&](const std::string &/*methodName*/, const nlohmann::json &/*parameters*/)
                 {
                     return Firebolt::Result<nlohmann::json>{lastSetParams["value"]};
                 }));
@@ -151,7 +151,7 @@ TEST_F(SecureStorageTest, setForApp)
 
     EXPECT_CALL(mockHelper, invoke("SecureStorage.setForApp", expectedParams))
         .WillOnce(Invoke(
-            [&](const std::string &methodName, const nlohmann::json &parameters)
+            [&](const std::string &/*methodName*/, const nlohmann::json &parameters)
             {
                 lastSetParams = parameters;
                 return Firebolt::Result<void>{Firebolt::Error::None};
@@ -174,7 +174,7 @@ TEST_F(SecureStorageTest, removeForApp)
 
     EXPECT_CALL(mockHelper, invoke("SecureStorage.removeForApp", expectedParams))
         .WillOnce(Invoke(
-            [&](const std::string &methodName, const nlohmann::json &parameters)
+            [&](const std::string &/*methodName*/, const nlohmann::json &/*parameters*/)
             {
                 return Firebolt::Result<void>{Firebolt::Error::None};
             }));
@@ -193,7 +193,7 @@ TEST_F(SecureStorageTest, clearForApp)
 
     EXPECT_CALL(mockHelper, invoke("SecureStorage.clearForApp", expectedParams))
         .WillOnce(Invoke(
-            [&](const std::string &methodName, const nlohmann::json &parameters)
+            [&](const std::string &/*methodName*/, const nlohmann::json &/*parameters*/)
             {
                 return Firebolt::Result<void>{Firebolt::Error::None};
             }));
