@@ -1,3 +1,10 @@
+# [1.8.0-next.21](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.20...v1.8.0-next.21) (2025-11-24)
+
+
+### Features
+
+* Update clang formatter, format code, add a checker in ci ([#465](https://github.com/rdkcentral/firebolt-apis/issues/465)) ([6299894](https://github.com/rdkcentral/firebolt-apis/commit/62998949071c64b77100ed8a93122fd4b551eb1f))
+
 # [1.8.0-next.20](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.19...v1.8.0-next.20) (2025-11-24)
 
 
