@@ -70,7 +70,7 @@ TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
     mockSubscribe("Accessibility.onClosedCaptionsSettingsChanged");
 
     auto result = accessibilityImpl_.subscribeOnClosedCaptionsSettingsChanged(
-        [&](const Firebolt::Accessibility::ClosedCaptionsSettings & /*settings*/) {});
+        [&](const Firebolt::Accessibility::ClosedCaptionsSettings& /*settings*/) {});
 
     ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnClosedCaptionsSettingsChanged() returned an error";
     EXPECT_EQ(*result, expectedValue);
@@ -122,7 +122,7 @@ TEST_F(AccessibilityTest, SubscribeOnVoiceGuidanceSettingsChanged)
     mockSubscribe("Accessibility.onVoiceGuidanceSettingsChanged");
 
     auto result = accessibilityImpl_.subscribeOnVoiceGuidanceSettingsChanged(
-        [&](const Firebolt::Accessibility::VoiceGuidanceSettings &/*settings*/) {});
+        [&](const Firebolt::Accessibility::VoiceGuidanceSettings& /*settings*/) {});
 
     ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnVoiceGuidanceSettingsChanged() returned an error";
     EXPECT_EQ(*result, expectedValue);

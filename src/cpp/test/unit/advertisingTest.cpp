@@ -39,4 +39,3 @@ TEST_F(AdvertisingTest, advertisingId)
     EXPECT_EQ(result->ifa_type, expectedValue["ifa_type"].get<std::string>());
     EXPECT_EQ(result->lmt, expectedValue["lmt"].get<std::string>());
 }
-

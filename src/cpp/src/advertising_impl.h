@@ -27,15 +27,15 @@ namespace Firebolt::Advertising
 class AdvertisingImpl : public IAdvertising
 {
 public:
-    explicit AdvertisingImpl(Firebolt::Helpers::IHelper &helper);
-    AdvertisingImpl(const AdvertisingImpl &) = delete;
-    AdvertisingImpl &operator=(const AdvertisingImpl &) = delete;
+    explicit AdvertisingImpl(Firebolt::Helpers::IHelper& helper);
+    AdvertisingImpl(const AdvertisingImpl&) = delete;
+    AdvertisingImpl& operator=(const AdvertisingImpl&) = delete;
 
     ~AdvertisingImpl() override = default;
 
     Result<Ifa> advertisingId() const override;
 
 private:
-    Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::IHelper& helper_;
 };
 } // namespace Firebolt::Advertising

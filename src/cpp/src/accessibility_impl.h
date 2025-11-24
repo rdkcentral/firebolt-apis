@@ -29,31 +29,31 @@ class AccessibilityImpl : public IAccessibility
 {
 
 public:
-    explicit AccessibilityImpl(Firebolt::Helpers::IHelper &helper);
-    AccessibilityImpl(const AccessibilityImpl &) = delete;
-    AccessibilityImpl &operator=(const AccessibilityImpl &) = delete;
+    explicit AccessibilityImpl(Firebolt::Helpers::IHelper& helper);
+    AccessibilityImpl(const AccessibilityImpl&) = delete;
+    AccessibilityImpl& operator=(const AccessibilityImpl&) = delete;
 
     ~AccessibilityImpl() override = default;
 
     Result<bool> audioDescription() const override;
-    Result<SubscriptionId> subscribeOnAudioDescriptionChanged(std::function<void(bool)> &&notification) override;
+    Result<SubscriptionId> subscribeOnAudioDescriptionChanged(std::function<void(bool)>&& notification) override;
     Result<ClosedCaptionsSettings> closedCaptionsSettings() const override;
     Result<SubscriptionId>
-    subscribeOnClosedCaptionsSettingsChanged(std::function<void(const ClosedCaptionsSettings &)> &&notification) override;
+    subscribeOnClosedCaptionsSettingsChanged(std::function<void(const ClosedCaptionsSettings&)>&& notification) override;
 
     Result<bool> highContrastUI() const override;
 
-    Result<SubscriptionId> subscribeOnHighContrastUIChanged(std::function<void(bool)> &&notification) override;
+    Result<SubscriptionId> subscribeOnHighContrastUIChanged(std::function<void(bool)>&& notification) override;
 
     Result<VoiceGuidanceSettings> voiceGuidanceSettings() const override;
     Result<SubscriptionId>
-    subscribeOnVoiceGuidanceSettingsChanged(std::function<void(const VoiceGuidanceSettings &)> &&notification) override;
+    subscribeOnVoiceGuidanceSettingsChanged(std::function<void(const VoiceGuidanceSettings&)>&& notification) override;
 
     virtual Result<void> unsubscribe(SubscriptionId id) override;
     virtual void unsubscribeAll() override;
 
 private:
-    Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::IHelper& helper_;
     Firebolt::Helpers::SubscriptionManager subscriptionManager_;
 };
 } // namespace Firebolt::Accessibility

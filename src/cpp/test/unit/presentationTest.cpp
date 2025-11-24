@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-#include "presentation_impl.h"
 #include "json_engine.h"
 #include "mock_helper.h"
+#include "presentation_impl.h"
 
 class PresentationTest : public ::testing::Test, protected MockBase
 {

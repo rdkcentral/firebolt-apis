@@ -22,8 +22,9 @@
 
 namespace Firebolt::Presentation
 {
-PresentationImpl::PresentationImpl(Firebolt::Helpers::IHelper &helper)
-    : helper_(helper), subscriptionManager_(helper, this)
+PresentationImpl::PresentationImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper),
+      subscriptionManager_(helper, this)
 {
 }
 
@@ -32,7 +33,7 @@ Result<bool> PresentationImpl::focused() const
     return helper_.get<Firebolt::JSON::Boolean, bool>("Presentation.focused");
 }
 
-Result<SubscriptionId> PresentationImpl::subscribeOnFocusedChanged(std::function<void(bool)> &&notification)
+Result<SubscriptionId> PresentationImpl::subscribeOnFocusedChanged(std::function<void(bool)>&& notification)
 {
     return subscriptionManager_.subscribe<Firebolt::JSON::Boolean, bool>("Presentation.onFocusedChanged",
                                                                          std::move(notification));

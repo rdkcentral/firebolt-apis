@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include "localization_impl.h"
 #include "json_engine.h"
+#include "localization_impl.h"
 #include "mock_helper.h"
 
 class LocalizationTest : public ::testing::Test, protected MockBase
@@ -51,13 +51,11 @@ TEST_F(LocalizationTest, PreferredAudioLanguages)
     EXPECT_EQ(resultSet, expectedSet);
 }
 
-
 TEST_F(LocalizationTest, subscribeOnCountryCodeChanged)
 {
     mockSubscribe("Localization.onCountryCodeChanged");
 
-    auto id = localizationImpl_.subscribeOnCountryCodeChanged(
-        [](auto) { std::cout << "callback\n"; });
+    auto id = localizationImpl_.subscribeOnCountryCodeChanged([](auto) { std::cout << "callback\n"; });
     ASSERT_TRUE(id) << "error on subscribe ";
     EXPECT_TRUE(id.has_value()) << "error on id";
     auto result = localizationImpl_.unsubscribe(id.value_or(0));
@@ -68,8 +66,7 @@ TEST_F(LocalizationTest, subscribeOnPreferredAudioLanguagesChanged)
 {
     mockSubscribe("Localization.onPreferredAudioLanguagesChanged");
 
-    auto id = localizationImpl_.subscribeOnPreferredAudioLanguagesChanged(
-        [](auto) { std::cout << "callback\n"; });
+    auto id = localizationImpl_.subscribeOnPreferredAudioLanguagesChanged([](auto) { std::cout << "callback\n"; });
     ASSERT_TRUE(id) << "error on subscribe ";
     EXPECT_TRUE(id.has_value()) << "error on id";
     auto result = localizationImpl_.unsubscribe(id.value_or(0));

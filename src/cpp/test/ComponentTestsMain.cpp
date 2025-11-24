@@ -34,7 +34,7 @@ void connectionChanged(const bool connected, const Firebolt::Error error)
     gConnected = connected;
 }
 
-void createFireboltInstance(const std::string &url)
+void createFireboltInstance(const std::string& url)
 {
     Firebolt::Config config;
     config.wsUrl = url;
@@ -67,7 +67,7 @@ bool waitOnConnectionReady()
     return gConnected;
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     string url = "ws://127.0.0.1:9998";
     createFireboltInstance(url);

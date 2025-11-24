@@ -27,17 +27,16 @@ using namespace Firebolt::Helpers;
 
 namespace Firebolt::Stats
 {
-StatsImpl::StatsImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper)
+StatsImpl::StatsImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper)
 {
 }
 
-StatsImpl::~StatsImpl()
-{
-}
+StatsImpl::~StatsImpl() {}
 
 Result<MemoryInfo> StatsImpl::memoryUsage() const
 {
     return helper_.get<JsonData::MemoryInfo, MemoryInfo>("Stats.memoryUsage");
 }
-    
+
 } // namespace Firebolt::Stats

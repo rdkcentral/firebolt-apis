@@ -27,15 +27,15 @@ using namespace Firebolt::Helpers;
 
 namespace Firebolt::Lifecycle
 {
-LifecycleImpl::LifecycleImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper), subscriptionManager_(helper, this)
+LifecycleImpl::LifecycleImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper),
+      subscriptionManager_(helper, this)
 {
 }
 
-LifecycleImpl::~LifecycleImpl()
-{
-}
+LifecycleImpl::~LifecycleImpl() {}
 
-Result<void> LifecycleImpl::close(const CloseType &reason) const
+Result<void> LifecycleImpl::close(const CloseType& reason) const
 {
     nlohmann::json params;
     params["type"] = Firebolt::JSON::toString(JsonData::CloseReasonEnum, reason);
@@ -48,10 +48,10 @@ Result<LifecycleState> LifecycleImpl::state() const
 }
 
 Result<SubscriptionId>
-LifecycleImpl::subscribeOnStateChanged(std::function<void(const std::vector<StateChange> &)> &&notification)
+LifecycleImpl::subscribeOnStateChanged(std::function<void(const std::vector<StateChange>&)>&& notification)
 {
-    return subscriptionManager_.subscribe<
-        Firebolt::JSON::NL_Json_Array<JsonData::StateChange, StateChange>>("Lifecycle2.onStateChanged",
+    return subscriptionManager_
+        .subscribe<Firebolt::JSON::NL_Json_Array<JsonData::StateChange, StateChange>>("Lifecycle2.onStateChanged",
                                                                                       std::move(notification));
 }
 

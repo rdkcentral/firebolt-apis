@@ -25,14 +25,14 @@
 namespace Firebolt::Lifecycle::JsonData
 {
 
-inline Firebolt::JSON::EnumType<::Firebolt::Lifecycle::CloseType> const CloseReasonEnum({
+inline const Firebolt::JSON::EnumType<::Firebolt::Lifecycle::CloseType> CloseReasonEnum({
     {"deactivate", ::Firebolt::Lifecycle::CloseType::DEACTIVATE},
     {"unload", ::Firebolt::Lifecycle::CloseType::UNLOAD},
     {"kill_reload", ::Firebolt::Lifecycle::CloseType::KILL_RELOAD},
     {"kill_reactivate", ::Firebolt::Lifecycle::CloseType::KILL_REACTIVATE},
 });
 
-inline Firebolt::JSON::EnumType<::Firebolt::Lifecycle::LifecycleState> const LifecycleStateEnum({
+inline const Firebolt::JSON::EnumType<::Firebolt::Lifecycle::LifecycleState> LifecycleStateEnum({
     {"initializing", ::Firebolt::Lifecycle::LifecycleState::INITIALIZING},
     {"active", ::Firebolt::Lifecycle::LifecycleState::ACTIVE},
     {"paused", ::Firebolt::Lifecycle::LifecycleState::PAUSED},
@@ -44,14 +44,9 @@ inline Firebolt::JSON::EnumType<::Firebolt::Lifecycle::LifecycleState> const Lif
 class LifecycleState : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Lifecycle::LifecycleState>
 {
 public:
-    void fromJson(const nlohmann::json &json) override
-    {
-        state_ = LifecycleStateEnum.at(json.get<std::string>());
-    }
-    ::Firebolt::Lifecycle::LifecycleState value() const override
-    {
-        return state_;
-    }
+    void fromJson(const nlohmann::json& json) override { state_ = LifecycleStateEnum.at(json.get<std::string>()); }
+    ::Firebolt::Lifecycle::LifecycleState value() const override { return state_; }
+
 private:
     ::Firebolt::Lifecycle::LifecycleState state_;
 };
@@ -59,7 +54,8 @@ private:
 class StateChange : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Lifecycle::StateChange>
 {
 public:
-    void fromJson(const nlohmann::json& json) override {
+    void fromJson(const nlohmann::json& json) override
+    {
         oldState_ = LifecycleStateEnum.at(json["oldState"]);
         newState_ = LifecycleStateEnum.at(json["newState"]);
     }

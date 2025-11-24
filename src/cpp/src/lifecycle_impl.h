@@ -35,24 +35,23 @@ struct LifecycleEvent
 class LifecycleImpl : public ILifecycle
 {
 public:
-    LifecycleImpl(Firebolt::Helpers::IHelper &helper);
-    LifecycleImpl(const LifecycleImpl &) = delete;
-    LifecycleImpl &operator=(const LifecycleImpl &) = delete;
+    LifecycleImpl(Firebolt::Helpers::IHelper& helper);
+    LifecycleImpl(const LifecycleImpl&) = delete;
+    LifecycleImpl& operator=(const LifecycleImpl&) = delete;
     ~LifecycleImpl() override;
 
-    virtual Result<void> close(const CloseType &type) const override;
+    virtual Result<void> close(const CloseType& type) const override;
     virtual Result<LifecycleState> state() const override;
 
     Result<SubscriptionId>
-    subscribeOnStateChanged(std::function<void(const std::vector<StateChange> &)> &&notification) override;
+    subscribeOnStateChanged(std::function<void(const std::vector<StateChange>&)>&& notification) override;
 
     virtual Result<void> unsubscribe(SubscriptionId id) override;
     virtual void unsubscribeAll() override;
 
 private:
-
 private:
-    Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::IHelper& helper_;
     Firebolt::Helpers::SubscriptionManager subscriptionManager_;
 
 public:
