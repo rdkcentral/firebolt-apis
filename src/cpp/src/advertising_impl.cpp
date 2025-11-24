@@ -22,7 +22,10 @@
 
 namespace Firebolt::Advertising
 {
-AdvertisingImpl::AdvertisingImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
+AdvertisingImpl::AdvertisingImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper)
+{
+}
 
 Result<Ifa> AdvertisingImpl::advertisingId() const
 {

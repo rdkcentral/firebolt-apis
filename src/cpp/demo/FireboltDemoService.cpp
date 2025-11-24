@@ -18,8 +18,8 @@
  */
 
 #include "FireboltDemoService.h"
-#include <firebolt/config.h>
 #include <cstdlib>
+#include <firebolt/config.h>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -141,7 +141,7 @@ void FireboltDemoService::lifecycle()
     auto state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state();
     if (state)
     {
-      std::cout << "Current state: " << static_cast<int>(*state) << std::endl;
+        std::cout << "Current state: " << static_cast<int>(*state) << std::endl;
     }
     else
     {
@@ -149,7 +149,7 @@ void FireboltDemoService::lifecycle()
     }
 
     auto id = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnStateChanged(
-        [&](const std::vector<Firebolt::Lifecycle::StateChange> &changes)
+        [&](const std::vector<Firebolt::Lifecycle::StateChange>& changes)
         {
             std::cout << "[Subscription] Lifecycle state changed: " << static_cast<int>(changes[0].newState)
                       << ", old state: " << static_cast<int>(changes[0].oldState) << std::endl;
@@ -165,7 +165,7 @@ void FireboltDemoService::lifecycle()
 void FireboltDemoService::unsubscribeAll()
 {
     std::cout << "Unsubscribing..." << std::endl;
-    for (const auto &id : lifecycleSubscriptionIds_)
+    for (const auto& id : lifecycleSubscriptionIds_)
     {
         auto result{Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(id)};
         if (!result)

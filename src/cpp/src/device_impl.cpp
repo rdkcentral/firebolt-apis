@@ -22,7 +22,10 @@
 
 namespace Firebolt::Device
 {
-DeviceImpl::DeviceImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
+DeviceImpl::DeviceImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper)
+{
+}
 
 Result<DeviceClass> DeviceImpl::deviceClass() const
 {

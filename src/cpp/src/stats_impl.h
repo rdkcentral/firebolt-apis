@@ -28,14 +28,14 @@ namespace Firebolt::Stats
 class StatsImpl : public IStats
 {
 public:
-    StatsImpl(Firebolt::Helpers::IHelper &helper);
-    StatsImpl(const StatsImpl &) = delete;  
-    StatsImpl &operator=(const StatsImpl &) = delete;
+    StatsImpl(Firebolt::Helpers::IHelper& helper);
+    StatsImpl(const StatsImpl&) = delete;
+    StatsImpl& operator=(const StatsImpl&) = delete;
     ~StatsImpl() override;
 
     virtual Result<MemoryInfo> memoryUsage() const override;
 
 private:
-    Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::IHelper& helper_;
 };
 } // namespace Firebolt::Stats

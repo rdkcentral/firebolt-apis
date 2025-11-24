@@ -25,21 +25,19 @@
 namespace Firebolt::SecureStorage::JsonData
 {
 inline Firebolt::JSON::EnumType<::Firebolt::SecureStorage::StorageScope> StorageScopeEnum({
-    { "device", ::Firebolt::SecureStorage::StorageScope::DEVICE },
-    { "account", ::Firebolt::SecureStorage::StorageScope::ACCOUNT },
+    {"device", ::Firebolt::SecureStorage::StorageScope::DEVICE},
+    {"account", ::Firebolt::SecureStorage::StorageScope::ACCOUNT},
 });
 
 class StorageOptions : public Firebolt::JSON::NL_Json_Basic<::Firebolt::SecureStorage::StorageOptions>
 {
 public:
-    void fromJson(const nlohmann::json& json) override
-    {
-        ttl_ = json.at("ttl").get<float>();
-    }
+    void fromJson(const nlohmann::json& json) override { ttl_ = json.at("ttl").get<float>(); }
     ::Firebolt::SecureStorage::StorageOptions value() const override
     {
         return ::Firebolt::SecureStorage::StorageOptions{ttl_};
     }
+
 private:
     float ttl_;
 };

@@ -27,9 +27,7 @@ using ::testing::Return;
 class LifecycleTest : public ::testing::Test, protected MockBase
 {
 protected:
-    void SetUp() override
-    {
-    }
+    void SetUp() override {}
 
     void TearDown() override
     {
@@ -45,11 +43,8 @@ TEST_F(LifecycleTest, close)
     nlohmann::json expectedParams;
     expectedParams["type"] = "deactivate";
     EXPECT_CALL(mockHelper, invoke("Lifecycle2.close", expectedParams))
-        .WillOnce(Invoke(
-            [&](const std::string &methodName, const nlohmann::json &parameters)
-            {
-                return Firebolt::Result<void>{Firebolt::Error::None};
-            }));
+        .WillOnce(Invoke([&](const std::string& methodName, const nlohmann::json& parameters)
+                         { return Firebolt::Result<void>{Firebolt::Error::None}; }));
 
     auto result = lifecycleImpl_.close(Firebolt::Lifecycle::CloseType::DEACTIVATE);
     ASSERT_TRUE(result) << "Error on invoke";
@@ -59,7 +54,7 @@ TEST_F(LifecycleTest, state)
 {
     EXPECT_CALL(mockHelper, getJson("Lifecycle2.state", _))
         .WillOnce(Invoke(
-            [](const std::string &methodName, const nlohmann::json &parameters)
+            [](const std::string& methodName, const nlohmann::json& parameters)
             {
                 nlohmann::json response = "initializing";
                 return Firebolt::Result<nlohmann::json>{response};
@@ -73,19 +68,14 @@ TEST_F(LifecycleTest, state)
 TEST_F(LifecycleTest, subscribeOnStateChanged)
 {
     EXPECT_CALL(mockHelper, subscribe(_, "Lifecycle2.onStateChanged", _, _))
-        .WillOnce(Invoke(
-            [&](void* owner, const std::string &eventName, std::any &&notification, void (*callback)(void *, const nlohmann::json &))
-            {
-                return Firebolt::Result<Firebolt::SubscriptionId>{1};
-            }));
+        .WillOnce(Invoke([&](void* owner, const std::string& eventName, std::any&& notification,
+                             void (*callback)(void*, const nlohmann::json&))
+                         { return Firebolt::Result<Firebolt::SubscriptionId>{1}; }));
 
-    EXPECT_CALL(mockHelper, unsubscribe(1))
-        .WillOnce(Return(Firebolt::Result<void>{Firebolt::Error::None}));
+    EXPECT_CALL(mockHelper, unsubscribe(1)).WillOnce(Return(Firebolt::Result<void>{Firebolt::Error::None}));
 
-    auto id = lifecycleImpl_.subscribeOnStateChanged(
-        [](const std::vector<Firebolt::Lifecycle::StateChange> &changes)
-        {
-        });
+    auto id =
+        lifecycleImpl_.subscribeOnStateChanged([](const std::vector<Firebolt::Lifecycle::StateChange>& /*changes*/) {});
 
     ASSERT_TRUE(id) << "error on subscribe ";
     EXPECT_EQ(id.value(), 1);

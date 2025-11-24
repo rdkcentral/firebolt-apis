@@ -26,7 +26,7 @@
 namespace Firebolt::Device::JsonData
 {
 // Enums
-inline Firebolt::JSON::EnumType<::Firebolt::Device::DeviceClass> const DeviceClassEnum({
+inline const Firebolt::JSON::EnumType<::Firebolt::Device::DeviceClass> DeviceClassEnum({
     {"stb", ::Firebolt::Device::DeviceClass::STB},
     {"ott", ::Firebolt::Device::DeviceClass::OTT},
     {"tv", ::Firebolt::Device::DeviceClass::TV},
@@ -36,7 +36,7 @@ inline Firebolt::JSON::EnumType<::Firebolt::Device::DeviceClass> const DeviceCla
 class DeviceClassJson : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Device::DeviceClass>
 {
 public:
-    void fromJson(const nlohmann::json &json) override { deviceClass_ = DeviceClassEnum.at(json); }
+    void fromJson(const nlohmann::json& json) override { deviceClass_ = DeviceClassEnum.at(json); }
     ::Firebolt::Device::DeviceClass value() const override { return deviceClass_; }
 
 private:

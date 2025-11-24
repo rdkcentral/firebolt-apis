@@ -33,7 +33,8 @@ int main()
         service.lifecycle();
         std::cout << std::endl;
         std::cout << "All subscribers are registered, events can be sent to the app from mock" << std::endl;
-        while (1) {
+        while (1)
+        {
             std::cout << "Press 'q' to quit" << std::endl;
             std::string input;
             getline(std::cin, input);

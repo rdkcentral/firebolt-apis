@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include "json_engine.h"
 #include "firebolt.h"
+#include "json_engine.h"
 #include "gtest/gtest.h"
 
 class MetricsTest : public ::testing::Test

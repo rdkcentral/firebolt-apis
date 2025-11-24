@@ -70,7 +70,7 @@ public:
      *
      * @param[in] type The type of the close app is requesting
      */
-    virtual Result<void> close(const CloseType &type) const = 0;
+    virtual Result<void> close(const CloseType& type) const = 0;
 
     /**
      * @brief Get the current lifecycle state of the app
@@ -87,7 +87,7 @@ public:
      * @retval The subscriptionId or error
      */
     virtual Result<SubscriptionId>
-    subscribeOnStateChanged(std::function<void(const std::vector<StateChange>&)> &&notification) = 0;
+    subscribeOnStateChanged(std::function<void(const std::vector<StateChange>&)>&& notification) = 0;
 
     /**
      * @brief Remove subscriber from subscribers list. This method is generic for

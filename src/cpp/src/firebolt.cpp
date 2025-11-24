@@ -35,27 +35,24 @@ class FireboltAccessorImpl : public IFireboltAccessor
 {
 public:
     FireboltAccessorImpl()
-        : accessibility_(Firebolt::Helpers::GetHelperInstance())
-        , advertising_(Firebolt::Helpers::GetHelperInstance())
-        , device_(Firebolt::Helpers::GetHelperInstance())
-        , lifecycle_(Firebolt::Helpers::GetHelperInstance())
-        , localization_(Firebolt::Helpers::GetHelperInstance())
-        , metrics_(Firebolt::Helpers::GetHelperInstance())
-        , presentation_(Firebolt::Helpers::GetHelperInstance())
-        , secureStorage_(Firebolt::Helpers::GetHelperInstance())
-        , stats_(Firebolt::Helpers::GetHelperInstance())
+        : accessibility_(Firebolt::Helpers::GetHelperInstance()),
+          advertising_(Firebolt::Helpers::GetHelperInstance()),
+          device_(Firebolt::Helpers::GetHelperInstance()),
+          lifecycle_(Firebolt::Helpers::GetHelperInstance()),
+          localization_(Firebolt::Helpers::GetHelperInstance()),
+          metrics_(Firebolt::Helpers::GetHelperInstance()),
+          presentation_(Firebolt::Helpers::GetHelperInstance()),
+          secureStorage_(Firebolt::Helpers::GetHelperInstance()),
+          stats_(Firebolt::Helpers::GetHelperInstance())
     {
     }
 
     FireboltAccessorImpl(const FireboltAccessorImpl&) = delete;
     FireboltAccessorImpl& operator=(const FireboltAccessorImpl&) = delete;
 
-    ~FireboltAccessorImpl()
-    {
-        unsubscribeAll();
-    }
+    ~FireboltAccessorImpl() { unsubscribeAll(); }
 
-    Firebolt::Error Connect(const Firebolt::Config &config, OnConnectionChanged listener) override
+    Firebolt::Error Connect(const Firebolt::Config& config, OnConnectionChanged listener) override
     {
         return Firebolt::Transport::GetGatewayInstance().connect(config, listener);
     }
@@ -66,7 +63,7 @@ public:
         return Firebolt::Transport::GetGatewayInstance().disconnect();
     }
 
-    Accessibility::IAccessibility &AccessibilityInterface() override { return accessibility_; }
+    Accessibility::IAccessibility& AccessibilityInterface() override { return accessibility_; }
     Advertising::IAdvertising& AdvertisingInterface() override { return advertising_; }
     Device::IDevice& DeviceInterface() override { return device_; }
     Lifecycle::ILifecycle& LifecycleInterface() override { return lifecycle_; }

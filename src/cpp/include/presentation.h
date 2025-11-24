@@ -43,7 +43,7 @@ public:
      *
      * @retval The subscriptionId or error
      */
-    virtual Result<SubscriptionId> subscribeOnFocusedChanged(std::function<void(bool)> &&notification) = 0;
+    virtual Result<SubscriptionId> subscribeOnFocusedChanged(std::function<void(bool)>&& notification) = 0;
 
     /**
      * @brief Remove subscriber from subscribers list. This method is generic for

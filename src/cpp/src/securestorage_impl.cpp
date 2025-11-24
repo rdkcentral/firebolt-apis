@@ -22,7 +22,10 @@
 
 namespace Firebolt::SecureStorage
 {
-SecureStorageImpl::SecureStorageImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
+SecureStorageImpl::SecureStorageImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper)
+{
+}
 
 Result<void> SecureStorageImpl::clear(const StorageScope& scope)
 {
@@ -54,7 +57,8 @@ Result<void> SecureStorageImpl::set(const StorageScope& scope, const std::string
     params["scope"] = Firebolt::JSON::toString(JsonData::StorageScopeEnum, scope);
     params["key"] = key;
     params["value"] = value;
-    if (options.has_value()) {
+    if (options.has_value())
+    {
         params["options"] = nlohmann::json{{"ttl", options->ttl}};
     }
     return helper_.invoke("SecureStorage.set", params);
@@ -68,7 +72,8 @@ Result<void> SecureStorageImpl::setForApp(const std::string& appId, const Storag
     params["scope"] = Firebolt::JSON::toString(JsonData::StorageScopeEnum, scope);
     params["key"] = key;
     params["value"] = value;
-    if (options.has_value()) {
+    if (options.has_value())
+    {
         params["options"] = nlohmann::json{{"ttl", options->ttl}};
     }
     return helper_.invoke("SecureStorage.setForApp", params);

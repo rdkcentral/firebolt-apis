@@ -19,10 +19,10 @@
 
 #pragma once
 
-#include "fireboltclient_export.h"
 #include "accessibility.h"
 #include "advertising.h"
 #include "device.h"
+#include "fireboltclient_export.h"
 #include "lifecycle.h"
 #include "localization.h"
 #include "metrics.h"
@@ -68,7 +68,7 @@ public:
      *
      * @return Firebolt::Error
      */
-    virtual Firebolt::Error Connect(const Firebolt::Config &config, OnConnectionChanged listener) = 0;
+    virtual Firebolt::Error Connect(const Firebolt::Config& config, OnConnectionChanged listener) = 0;
 
     /**
      * @brief Disconnects from the Websocket endpoint.
