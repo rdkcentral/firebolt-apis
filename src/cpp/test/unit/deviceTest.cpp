@@ -22,10 +22,6 @@
 #include "mock_helper.h"
 #include "json_types/jsondata_device_types.h"
 
-using ::testing::_;
-using ::testing::Invoke;
-using ::testing::Return;
-
 class DeviceTest : public ::testing::Test, protected MockBase
 {
 protected:

@@ -32,11 +32,11 @@ inline Firebolt::JSON::EnumType<::Firebolt::SecureStorage::StorageScope> Storage
 class StorageOptions : public Firebolt::JSON::NL_Json_Basic<::Firebolt::SecureStorage::StorageOptions>
 {
 public:
-    void FromJson(const nlohmann::json& json) override
+    void fromJson(const nlohmann::json& json) override
     {
         ttl_ = json.at("ttl").get<float>();
     }
-    ::Firebolt::SecureStorage::StorageOptions Value() const override
+    ::Firebolt::SecureStorage::StorageOptions value() const override
     {
         return ::Firebolt::SecureStorage::StorageOptions{ttl_};
     }

@@ -18,7 +18,7 @@
  */
 
 #include "presentation_impl.h"
-#include "jsondata_accessibility_types.h"
+#include <firebolt/json_types.h>
 
 namespace Firebolt::Presentation
 {

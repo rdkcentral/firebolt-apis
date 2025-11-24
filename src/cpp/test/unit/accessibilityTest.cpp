@@ -19,12 +19,7 @@
 
 #include "accessibility_impl.h"
 #include "json_engine.h"
-#include "json_types/jsondata_accessibility_types.h"
 #include "mock_helper.h"
-
-using ::testing::_;
-using ::testing::Invoke;
-using ::testing::Return;
 
 class AccessibilityTest : public ::testing::Test, protected MockBase
 {
@@ -49,7 +44,7 @@ TEST_F(AccessibilityTest, SubscribeOnAudioDescriptionChanged)
     nlohmann::json expectedValue = 1;
     mockSubscribe("Accessibility.onAudioDescriptionChanged");
 
-    auto result = accessibilityImpl_.subscribeOnAudioDescriptionChanged([&](bool value) {});
+    auto result = accessibilityImpl_.subscribeOnAudioDescriptionChanged([&](bool /*value*/) {});
 
     ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnAudioDescriptionChanged() returned an error";
     EXPECT_EQ(*result, expectedValue);
@@ -75,14 +70,14 @@ TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
     mockSubscribe("Accessibility.onClosedCaptionsSettingsChanged");
 
     auto result = accessibilityImpl_.subscribeOnClosedCaptionsSettingsChanged(
-        [&](const Firebolt::Accessibility::ClosedCaptionsSettings &settings) {});
+        [&](const Firebolt::Accessibility::ClosedCaptionsSettings & /*settings*/) {});
 
     ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnClosedCaptionsSettingsChanged() returned an error";
     EXPECT_EQ(*result, expectedValue);
 
     accessibilityImpl_.unsubscribe(*result);
 }
-        
+
 TEST_F(AccessibilityTest, HighContrastUI)
 {
     mock("Accessibility.highContrastUI");
@@ -100,7 +95,7 @@ TEST_F(AccessibilityTest, SubscribeOnHighContrastUIChanged)
     nlohmann::json expectedValue = 1;
     mockSubscribe("Accessibility.onHighContrastUIChanged");
 
-    auto result = accessibilityImpl_.subscribeOnHighContrastUIChanged([&](bool value) {});
+    auto result = accessibilityImpl_.subscribeOnHighContrastUIChanged([&](bool /*value*/) {});
 
     ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnHighContrastUIChanged() returned an error";
     EXPECT_EQ(*result, expectedValue);
@@ -127,7 +122,7 @@ TEST_F(AccessibilityTest, SubscribeOnVoiceGuidanceSettingsChanged)
     mockSubscribe("Accessibility.onVoiceGuidanceSettingsChanged");
 
     auto result = accessibilityImpl_.subscribeOnVoiceGuidanceSettingsChanged(
-        [&](const Firebolt::Accessibility::VoiceGuidanceSettings &settings) {});
+        [&](const Firebolt::Accessibility::VoiceGuidanceSettings &/*settings*/) {});
 
     ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnVoiceGuidanceSettingsChanged() returned an error";
     EXPECT_EQ(*result, expectedValue);

@@ -18,11 +18,8 @@
  */
 
 #include "lifecycle_impl.h"
-#include "firebolt.h"
 #include "jsondata_lifecycle_types.h"
-#include <algorithm>
 #include <cctype>
-#include <iostream>
 #include <nlohmann/json.hpp>
 #include <string>
 
@@ -41,7 +38,7 @@ LifecycleImpl::~LifecycleImpl()
 Result<void> LifecycleImpl::close(const CloseType &reason) const
 {
     nlohmann::json params;
-    params["type"] = Firebolt::JSON::ToString(JsonData::CloseReasonEnum, reason);
+    params["type"] = Firebolt::JSON::toString(JsonData::CloseReasonEnum, reason);
     return helper_.invoke("Lifecycle2.close", params);
 }
 

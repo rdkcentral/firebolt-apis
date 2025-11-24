@@ -17,12 +17,13 @@
  * limitations under the License.
  */
 
+#include "firebolt.h"
 #include "CoreClientTest.h"
 #include <firebolt/config.h>
-#include <iomanip>
 #include <stdexcept>
 #include <string>
 #include <unistd.h>
+#include <iostream>
 
 using namespace std;
 bool CoreClientTest::_connected;

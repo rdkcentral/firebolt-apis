@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "json_engine.h"
 #include <gmock/gmock.h>
 #include <firebolt/helpers.h>
 
@@ -74,7 +75,7 @@ protected:
     void mock_with_response(const std::string &methodName, const nlohmann::json &response)
     {
         EXPECT_CALL(mockHelper, getJson(methodName, _))
-            .WillOnce(Invoke([response](const std::string &methodName, const nlohmann::json &parameters)
+            .WillOnce(Invoke([response](const std::string &/*methodName*/, const nlohmann::json &/*parameters*/)
                              { return Firebolt::Result<nlohmann::json>{response}; }));
     }
 
@@ -82,14 +83,14 @@ protected:
     {
         EXPECT_CALL(mockHelper, subscribe(_, eventName, _, _))
             .WillOnce(Invoke(
-                [&](void* owner, const std::string &eventName, std::any &&notification,
-                    void (*callback)(void *, const nlohmann::json &))
+                [&](void* /*owner*/, const std::string &/*eventName*/, std::any &&/*notification*/,
+                    void (* /*callback*/)(void *, const nlohmann::json &))
                 {
                     return Firebolt::Result<Firebolt::SubscriptionId>{1};
                 }));
         EXPECT_CALL(mockHelper, unsubscribe(1))
             .WillOnce(Invoke(
-                [&](Firebolt::SubscriptionId id)
+                [&](Firebolt::SubscriptionId /*id*/)
                 {
                     return Firebolt::Result<void>{Firebolt::Error::None};
                 }));

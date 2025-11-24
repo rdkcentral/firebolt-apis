@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include "firebolt.h"
-#include <iostream>
+#include <firebolt/types.h>
 #include <map>
+#include <string>
 
 class CoreClientTest
 {
