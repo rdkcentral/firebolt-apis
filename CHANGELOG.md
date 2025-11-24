@@ -1,3 +1,10 @@
+# [1.8.0-next.20](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.19...v1.8.0-next.20) (2025-11-24)
+
+
+### Features
+
+* Clean up code, update to changes in transport ([#462](https://github.com/rdkcentral/firebolt-apis/issues/462)) ([caae282](https://github.com/rdkcentral/firebolt-apis/commit/caae2824ff68c1c4bb1ed021761410a1b717c1a2))
+
 # [1.8.0-next.19](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.18...v1.8.0-next.19) (2025-11-21)
 
 
