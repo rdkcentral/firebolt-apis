@@ -100,7 +100,6 @@ void triggerRaw(const std::string& payload)
 void triggerEvent(const std::string& method, const std::string& params)
 {
     nlohmann::json eventMessage;
-    size_t dotPos = method.find('.');
     eventMessage["method"] = method;
     eventMessage["result"] = nlohmann::json::parse(params);
 
