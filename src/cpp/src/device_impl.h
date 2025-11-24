@@ -27,9 +27,9 @@ namespace Firebolt::Device
 class DeviceImpl : public IDevice
 {
 public:
-    explicit DeviceImpl(Firebolt::Helpers::IHelper &helper);
-    DeviceImpl(const DeviceImpl &) = delete;
-    DeviceImpl &operator=(const DeviceImpl &) = delete;
+    explicit DeviceImpl(Firebolt::Helpers::IHelper& helper);
+    DeviceImpl(const DeviceImpl&) = delete;
+    DeviceImpl& operator=(const DeviceImpl&) = delete;
 
     ~DeviceImpl() override = default;
 
@@ -39,7 +39,7 @@ public:
     Result<std::string> uid() const override;
 
 private:
-    Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::IHelper& helper_;
     // Methods
 };
 } // namespace Firebolt::Device

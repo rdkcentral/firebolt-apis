@@ -29,7 +29,7 @@ namespace Firebolt::Advertising::JsonData
 class IfaJson : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Advertising::Ifa>
 {
 public:
-    void fromJson(const nlohmann::json &json) override
+    void fromJson(const nlohmann::json& json) override
     {
         ifa = json["ifa"].get<std::string>();
         ifa_type = json["ifa_type"].get<std::string>();

@@ -27,7 +27,7 @@ namespace Firebolt::Metrics
 class MetricsImpl : public IMetrics
 {
 public:
-    MetricsImpl(Firebolt::Helpers::IHelper &helper);
+    MetricsImpl(Firebolt::Helpers::IHelper& helper);
     MetricsImpl(const MetricsImpl&) = delete;
     MetricsImpl& operator=(const MetricsImpl&) = delete;
     ~MetricsImpl() override;
@@ -35,6 +35,6 @@ public:
     Result<bool> ready() override;
 
 private:
-    Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::IHelper& helper_;
 };
 } // namespace Firebolt::Metrics

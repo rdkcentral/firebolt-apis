@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-#include "firebolt.h"
 #include "component/utils.h"
+#include "firebolt.h"
 #include "json_engine.h"
-#include <gtest/gtest.h>
 #include <condition_variable>
+#include <gtest/gtest.h>
 #include <iostream>
 #include <mutex>
 #include <thread>
@@ -50,7 +50,7 @@ TEST_F(PresentationTest, focused)
 TEST_F(PresentationTest, subscribeOnFocusedChanged)
 {
     auto id = Firebolt::IFireboltAccessor::Instance().PresentationInterface().subscribeOnFocusedChanged(
-        [&](const bool &focus)
+        [&](const bool& focus)
         {
             EXPECT_EQ(focus, true);
             {

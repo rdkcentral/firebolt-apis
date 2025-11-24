@@ -27,14 +27,9 @@ namespace Firebolt::Accessibility::JsonData
 class AudioDescription : public Firebolt::JSON::NL_Json_Basic<bool>
 {
 public:
-    void fromJson(const nlohmann::json& json) override
-    {
-        value_ = json["enabled"].get<bool>();
-    }
-    bool value() const override
-    {
-        return value_;
-    }
+    void fromJson(const nlohmann::json& json) override { value_ = json["enabled"].get<bool>(); }
+    bool value() const override { return value_; }
+
 private:
     bool value_;
 };
@@ -50,6 +45,7 @@ public:
     {
         return ::Firebolt::Accessibility::ClosedCaptionsSettings{enabled_, preferredLanguages_};
     }
+
 private:
     bool enabled_;
     std::vector<std::string> preferredLanguages_;
@@ -68,6 +64,7 @@ public:
     {
         return ::Firebolt::Accessibility::VoiceGuidanceSettings{enabled_, rate_, navigationHints_};
     }
+
 private:
     bool enabled_;
     float rate_;

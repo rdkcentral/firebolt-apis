@@ -29,20 +29,20 @@ class PresentationImpl : public IPresentation
 {
 
 public:
-    explicit PresentationImpl(Firebolt::Helpers::IHelper &helper);
-    PresentationImpl(const PresentationImpl &) = delete;
-    PresentationImpl &operator=(const PresentationImpl &) = delete;
+    explicit PresentationImpl(Firebolt::Helpers::IHelper& helper);
+    PresentationImpl(const PresentationImpl&) = delete;
+    PresentationImpl& operator=(const PresentationImpl&) = delete;
 
     ~PresentationImpl() override = default;
 
     Result<bool> focused() const override;
-    Result<SubscriptionId> subscribeOnFocusedChanged(std::function<void(bool)> &&notification) override;
+    Result<SubscriptionId> subscribeOnFocusedChanged(std::function<void(bool)>&& notification) override;
 
     virtual Result<void> unsubscribe(SubscriptionId id) override;
     virtual void unsubscribeAll() override;
 
 private:
-    Firebolt::Helpers::IHelper &helper_;
+    Firebolt::Helpers::IHelper& helper_;
     Firebolt::Helpers::SubscriptionManager subscriptionManager_;
 };
 } // namespace Firebolt::Presentation

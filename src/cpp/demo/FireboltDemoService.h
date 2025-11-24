@@ -19,8 +19,8 @@
 
 #pragma once
 
-#include <firebolt/firebolt.h>
 #include <condition_variable>
+#include <firebolt/firebolt.h>
 #include <mutex>
 #include <set>
 
