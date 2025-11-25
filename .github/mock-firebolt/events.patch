@@ -35,7 +35,7 @@ index 7113253..1292396 100644
      
      // Set latency min and max, either globally or per method
 diff --git a/server/src/events.mjs b/server/src/events.mjs
-index 3c2930e..5503eae 100644
+index 3c2930e..8b43f92 100644
 --- a/server/src/events.mjs
 +++ b/server/src/events.mjs
 @@ -280,9 +280,8 @@ function sendBroadcastEvent(ws, userId, method, result, msg, fSuccess, fErr, fFa
@@ -59,11 +59,18 @@ index 3c2930e..5503eae 100644
  
      wsArr.forEach((ws) => {
        ws.send(JSON.stringify(payload)); // Send bidirectional event
-@@ -466,6 +464,7 @@ function coreSendEvent(isBroadcast, ws, userId, method, result, msg, fSuccess, f
+@@ -464,8 +462,13 @@ function coreSendEvent(isBroadcast, ws, userId, method, result, msg, fSuccess, f
+       const finalResult = ( postResult ? postResult : result );
+       // Error to be logged in "novalidate mode" if result validation failed
        if( config.validate.includes("events") ) {
-         const resultErrors = fireboltOpenRpc.validateMethodResult(finalResult, method);
+-        const resultErrors = fireboltOpenRpc.validateMethodResult(finalResult, method);
++        let resultToValidate = finalResult;
++        if ( typeof finalResult === 'object' && finalResult !== null && Object.keys(finalResult).length === 1 && ('value' in finalResult) ) {
++          resultToValidate = finalResult.value;
++        }
++        const resultErrors = fireboltOpenRpc.validateMethodResult(resultToValidate, method);
          if ( resultErrors && resultErrors.length > 0 ) {
-+          logger.error(`${method} validation error for ${method} with ${JSON.stringify(finalResult)}, err: ${JSON.stringify(resultErrors)}`);
++          logger.error(`${method} validation error for ${method} with ${JSON.stringify(resultToValidate)}, err: ${JSON.stringify(resultErrors)}`);
            fErr.call(null, 'validationError', method);
            return
          }
