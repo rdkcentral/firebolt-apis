@@ -1,3 +1,10 @@
+# [1.8.0-next.25](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.24...v1.8.0-next.25) (2025-11-25)
+
+
+### Features
+
+* Set transport version to be used ([#468](https://github.com/rdkcentral/firebolt-apis/issues/468)) ([a8589dc](https://github.com/rdkcentral/firebolt-apis/commit/a8589dc0f72208eb3bbe09908a224746deb849c7))
+
 # [1.8.0-next.24](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.23...v1.8.0-next.24) (2025-11-25)
 
 
