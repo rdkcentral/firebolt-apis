@@ -1,3 +1,10 @@
+# [1.8.0-next.24](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.23...v1.8.0-next.24) (2025-11-25)
+
+
+### Features
+
+* Update demo app with presentation ([#466](https://github.com/rdkcentral/firebolt-apis/issues/466)) ([d16361c](https://github.com/rdkcentral/firebolt-apis/commit/d16361c733407102f9780c2bf3e252a154ef22d6))
+
 # [1.8.0-next.23](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.22...v1.8.0-next.23) (2025-11-25)
 
 

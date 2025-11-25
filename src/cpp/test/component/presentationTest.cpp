@@ -61,8 +61,7 @@ TEST_F(PresentationTest, subscribeOnFocusedChanged)
         });
     verifyEventSubscription(id);
 
-    triggerRaw(R"({ "method":"Presentation.onFocusedChanged", "params":{ "value": true }})");
-    // triggerEvent("Presentation.onFocusedChanged", R"({ "value": true })");
+    triggerEvent("Presentation.onFocusedChanged", R"({ "value": true })");
 
     verifyEventReceived(mtx, cv, eventReceived);
     auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(id.value());
