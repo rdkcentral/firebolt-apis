@@ -56,7 +56,7 @@ public:
     Firebolt::Error Connect(const Firebolt::Config& config, OnConnectionChanged listener) override
     {
         auto result = Firebolt::Transport::GetGatewayInstance().connect(config, listener);
-        FIREBOLT_LOG_INFO("Firebolt-Client", "Version: %s", Version::String);
+        FIREBOLT_LOG_NOTICE("Client", "Version: %s", Version::String);
         return result;
     }
 
