@@ -21,13 +21,7 @@
 #include "json_engine.h"
 #include "json_types/jsondata_accessibility_types.h"
 #include "firebolt.h"
-
-using ::testing::_;
-using ::testing::Invoke;
-using ::testing::Return;
-
-// define when json rpc schema is not available
-#define USE_LOCAL_RESPONSE
+#include "utils.h"
 
 class AccessibilityTest : public ::testing::Test
 {
@@ -51,112 +45,139 @@ TEST_F(AccessibilityTest, AudioDescription)
 
     EXPECT_EQ(*result, expectedValue);
 }
-/*
+
 TEST_F(AccessibilityTest, SubscribeOnAudioDescriptionChanged)
 {
-    nlohmann::json expectedValue = 1;
-    mockSubscribe("Accessibility.onAudioDescriptionChanged");
+    auto id = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().subscribeOnAudioDescriptionChanged(  
 
-    auto result = accessibilityImpl_.subscribeOnAudioDescriptionChanged([&](bool value) {});
+        [&](const bool& enabled)
+        {
+            std::cout << "[Subscription] Accessibility audio description changed" << std::endl;
 
-    ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnAudioDescriptionChanged() returned an error";
-    EXPECT_EQ(*result, expectedValue);
+            EXPECT_EQ(enabled, false);
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                eventReceived = true;
+            }
+            cv.notify_one();
+        });
+    verifyEventSubscription(id);
 
-    accessibilityImpl_.unsubscribe(*result);
+    triggerEvent("Accessibility.onAudioDescriptionChanged", R"({"value": false})");
+    verifyEventReceived(mtx, cv, eventReceived);
+
+    // Unsubscribe from the event
+    auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(id.value());
+    verifyUnsubscribeResult(result);
 }
 
 TEST_F(AccessibilityTest, ClosedCaptionsSettings)
 {
-    Firebolt::Accessibility::ClosedCaptionsSettings settings{true, {"en", "fr"}};
-    nlohmann::json expectedValue = {{"enabled", settings.enabled},
-                                    {"preferredLanguages",
-                                     settings.preferredLanguages}};
-
-    mock_with_response("Accessibility.closedCaptionsSettings", expectedValue);
-
-    auto result = accessibilityImpl_.closedCaptionsSettings();
-
+    auto expectedValue = jsonEngine.get_value("Accessibility.closedCaptionsSettings");
+    auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().closedCaptionsSettings();
     ASSERT_TRUE(result) << "AccessibilityImpl::closedCaptionsSettings() returned an error";
-    EXPECT_EQ((*result).enabled, settings.enabled);
-    EXPECT_EQ((*result).preferredLanguages, settings.preferredLanguages);
+    EXPECT_EQ((*result).enabled, expectedValue.at("enabled").get<bool>());
+    EXPECT_EQ((*result).preferredLanguages, expectedValue.at("preferredLanguages").get<std::vector<std::string>>());
 }
 
 TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
 {
-    nlohmann::json expectedValue = 1;
-    mockSubscribe("Accessibility.onClosedCaptionsSettingsChanged");
+    auto id = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().subscribeOnClosedCaptionsSettingsChanged(
+        [&](const Firebolt::Accessibility::ClosedCaptionsSettings& settings)
+        {
+            std::cout << "[Subscription] Accessibility closed captions settings changed" << std::endl;
 
-    auto result = accessibilityImpl_.subscribeOnClosedCaptionsSettingsChanged(
-        [&](const Firebolt::Accessibility::ClosedCaptionsSettings &settings) {});
+            EXPECT_EQ(settings.enabled, true);
+            EXPECT_EQ(settings.preferredLanguages.size(), 2);
+            EXPECT_EQ(settings.preferredLanguages[0], "eng");
+            EXPECT_EQ(settings.preferredLanguages[1], "fra");
 
-    ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnClosedCaptionsSettingsChanged() returned an error";
-    EXPECT_EQ(*result, expectedValue);
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                eventReceived = true;
+            }
+            cv.notify_one();
+        });
+    verifyEventSubscription(id);
 
-    accessibilityImpl_.unsubscribe(*result);
-}
-        
+    triggerEvent("Accessibility.onClosedCaptionsSettingsChanged",
+                 R"({"enabled": true, "preferredLanguages": ["eng", "fra"]})");
+    verifyEventReceived(mtx, cv, eventReceived);
+
+    // Unsubscribe from the event
+    auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(id.value());
+    verifyUnsubscribeResult(result);
+    }
+
+
 TEST_F(AccessibilityTest, HighContrastUI)
 {
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = true;
-    mock_with_response("Accessibility.highContrastUI", expectedValue);
-#else
-    mock("Accessibility.highContrastUI");
     auto expectedValue = jsonEngine.get_value("Accessibility.highContrastUI");
-#endif
-
-    auto result = accessibilityImpl_.highContrastUI();
+    auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().highContrastUI();
 
     ASSERT_TRUE(result) << "AccessibilityImpl::highContrastUI() returned an error";
-
     EXPECT_EQ(*result, expectedValue);
 }
 
 TEST_F(AccessibilityTest, SubscribeOnHighContrastUIChanged)
 {
-    nlohmann::json expectedValue = 1;
-    mockSubscribe("Accessibility.onHighContrastUIChanged");
+    auto id = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().subscribeOnHighContrastUIChanged(
+        [&](const bool& enabled)
+        {
+            std::cout << "[Subscription] Accessibility high contrast UI changed" << std::endl;
 
-    auto result = accessibilityImpl_.subscribeOnHighContrastUIChanged([&](bool value) {});
+            EXPECT_EQ(enabled, true);
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                eventReceived = true;
+            }
+            cv.notify_one();
+        });
+    verifyEventSubscription(id);
 
-    ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnHighContrastUIChanged() returned an error";
-    EXPECT_EQ(*result, expectedValue);
+    triggerEvent("Accessibility.onHighContrastUIChanged", R"({"value": true})");
+    verifyEventReceived(mtx, cv, eventReceived);
 
-    accessibilityImpl_.unsubscribe(*result);
+    // Unsubscribe from the event
+    auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(id.value());
+    verifyUnsubscribeResult(result);
 }
 
 TEST_F(AccessibilityTest, VoiceGuidanceSettings)
 {
-#ifdef USE_LOCAL_RESPONSE
-    Firebolt::Accessibility::VoiceGuidanceSettings settings{true, 1.5, true};
-    nlohmann::json expectedValue = {{"enabled", settings.enabled},
-                                    {"rate", settings.rate},
-                                    {"navigationHints", settings.navigationHints}};
-#else
-    mock("Accessibility.voiceGuidanceSettings");
     auto expectedValue = jsonEngine.get_value("Accessibility.voiceGuidanceSettings");
-#endif
-    mock_with_response("Accessibility.voiceGuidanceSettings", expectedValue);
-
-    auto result = accessibilityImpl_.voiceGuidanceSettings();
+    auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().voiceGuidanceSettings();
 
     ASSERT_TRUE(result) << "AccessibilityImpl::voiceGuidanceSettings() returned an error";
-    EXPECT_EQ((*result).enabled, settings.enabled);
-    EXPECT_EQ((*result).rate, settings.rate);
-    EXPECT_EQ((*result).navigationHints, settings.navigationHints);
+    EXPECT_EQ((*result).enabled, expectedValue.at("enabled").get<bool>());
+    EXPECT_EQ((*result).rate, expectedValue.at("rate").get<float>());
+    EXPECT_EQ((*result).navigationHints, expectedValue.at("navigationHints").get<bool>());
 }
 
 TEST_F(AccessibilityTest, SubscribeOnVoiceGuidanceSettingsChanged)
 {
-    nlohmann::json expectedValue = 1;
-    mockSubscribe("Accessibility.onVoiceGuidanceSettingsChanged");
+    auto id = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().subscribeOnVoiceGuidanceSettingsChanged(
+        [&](const Firebolt::Accessibility::VoiceGuidanceSettings& settings)
+        {
+            std::cout << "[Subscription] Accessibility voice guidance settings changed" << std::endl;
 
-    auto result = accessibilityImpl_.subscribeOnVoiceGuidanceSettingsChanged(
-        [&](const Firebolt::Accessibility::VoiceGuidanceSettings &settings) {});
+            EXPECT_EQ(settings.enabled, false);
+            EXPECT_EQ(settings.rate, 1.0f);
+            EXPECT_EQ(settings.navigationHints, false);
 
-    ASSERT_TRUE(result) << "AccessibilityImpl::subscribeOnVoiceGuidanceSettingsChanged() returned an error";
-    EXPECT_EQ(*result, expectedValue);
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                eventReceived = true;
+            }
+            cv.notify_one();
+        });
+    verifyEventSubscription(id);
 
-    accessibilityImpl_.unsubscribe(*result);
+    triggerEvent("Accessibility.onVoiceGuidanceSettingsChanged",
+                 R"({"enabled": false, "rate": 1.0, "navigationHints": false})");
+    verifyEventReceived(mtx, cv, eventReceived);
+
+    // Unsubscribe from the event
+    auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(id.value());
+    verifyUnsubscribeResult(result);
 }
-*/
