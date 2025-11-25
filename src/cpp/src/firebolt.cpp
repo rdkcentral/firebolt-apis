@@ -21,6 +21,7 @@
 #include "accessibility_impl.h"
 #include "advertising_impl.h"
 #include "device_impl.h"
+#include "fireboltclient_version.h"
 #include "lifecycle_impl.h"
 #include "localization_impl.h"
 #include "metrics_impl.h"
@@ -54,7 +55,9 @@ public:
 
     Firebolt::Error Connect(const Firebolt::Config& config, OnConnectionChanged listener) override
     {
-        return Firebolt::Transport::GetGatewayInstance().connect(config, listener);
+        auto result = Firebolt::Transport::GetGatewayInstance().connect(config, listener);
+        FIREBOLT_LOG_INFO("Firebolt-Client", "Version: %s", Version::String);
+        return result;
     }
 
     Firebolt::Error Disconnect() override
