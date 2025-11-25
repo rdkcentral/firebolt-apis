@@ -27,7 +27,7 @@ if (NOT PROJECT_VERSION)
 
     if (GIT_FOUND)
         execute_process(
-            COMMAND ${GIT_EXECUTABLE} describe --tags --dirty --match "v[0-9]*.[0-9]*.[0-9]*"
+            COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0 --match "v[0-9]*.[0-9]*.[0-9]*"
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
             OUTPUT_VARIABLE GIT_VERSION
             OUTPUT_STRIP_TRAILING_WHITESPACE
@@ -46,6 +46,13 @@ if (NOT PROJECT_VERSION)
 
     set(PROJECT_VERSION "${VERSION_STRING}" CACHE STRING "Project version string")
 endif ()
+
+if(EXISTS "${CMAKE_SOURCE_DIR}/.transport.version")
+    file(READ "${CMAKE_SOURCE_DIR}/.transport.version" FIREBOLT_TRANSPORT_VERSION)
+    string(STRIP ${FIREBOLT_TRANSPORT_VERSION} FIREBOLT_TRANSPORT_VERSION)
+else()
+    message(FATAL_ERROR "Could not determine firebolt-native-transport version from .transport.version")
+endif()
 
 set(VERSION ${PROJECT_VERSION})
 string(REGEX REPLACE "^v?([0-9]+)\\.([0-9]+)\\.([0-9]+).*" "\\1" PROJECT_VERSION_MAJOR ${PROJECT_VERSION})

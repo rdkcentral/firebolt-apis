@@ -40,6 +40,13 @@ add_library(${TARGET}
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 find_package(FireboltTransport CONFIG REQUIRED)
+
+if(NOT FireboltTransport_VERSION STREQUAL FIREBOLT_TRANSPORT_VERSION)
+    message(FATAL_ERROR "FireboltTransport version mismatch! "
+                        "Expected ${FIREBOLT_TRANSPORT_VERSION} but found ${FireboltTransport_VERSION}. "
+                        "Please check your installation.")
+endif()
+
 find_package(nlohmann_json CONFIG REQUIRED)
 if (TRANPORT_LINKAGE_STATIC)
     find_package(websocketpp CONFIG REQUIRED)
