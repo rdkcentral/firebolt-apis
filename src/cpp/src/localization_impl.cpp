@@ -18,11 +18,13 @@
  */
 
 #include "localization_impl.h"
+#include <firebolt/json_types.h>
 
 namespace Firebolt::Localization
 {
-LocalizationImpl::LocalizationImpl(Firebolt::Helpers::IHelper &helper)
-    : helper_(helper), subscriptionManager_(helper, this)
+LocalizationImpl::LocalizationImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper),
+      subscriptionManager_(helper, this)
 {
 }
 
@@ -41,15 +43,14 @@ Result<SubscriptionId>
 LocalizationImpl::subscribeOnCountryCodeChanged(std::function<void(const std::string&)>&& notification)
 {
     return subscriptionManager_.subscribe<Firebolt::JSON::String>("Localization.onCountryCodeChanged",
-                                                                     std::move(notification));
+                                                                  std::move(notification));
 }
 
 Result<SubscriptionId> LocalizationImpl::subscribeOnPreferredAudioLanguagesChanged(
     std::function<void(const std::vector<std::string>&)>&& notification)
 {
     return subscriptionManager_.subscribe<Firebolt::JSON::NL_Json_Array<
-        Firebolt::JSON::String, std::string>>("Localization.onPreferredAudioLanguagesChanged",
-                                                 std::move(notification));
+        Firebolt::JSON::String, std::string>>("Localization.onPreferredAudioLanguagesChanged", std::move(notification));
 }
 
 Result<void> LocalizationImpl::unsubscribe(SubscriptionId id)

@@ -19,22 +19,23 @@
 
 #pragma once
 
-#include "metrics.h"
+#include "advertising.h"
 #include <firebolt/helpers.h>
 
-namespace Firebolt::Metrics
+namespace Firebolt::Advertising
 {
-class MetricsImpl : public IMetrics
+class AdvertisingImpl : public IAdvertising
 {
 public:
-    MetricsImpl(Firebolt::Helpers::IHelper& helper);
-    MetricsImpl(const MetricsImpl&) = delete;
-    MetricsImpl& operator=(const MetricsImpl&) = delete;
-    ~MetricsImpl() override;
+    explicit AdvertisingImpl(Firebolt::Helpers::IHelper& helper);
+    AdvertisingImpl(const AdvertisingImpl&) = delete;
+    AdvertisingImpl& operator=(const AdvertisingImpl&) = delete;
 
-    Result<bool> ready() override;
+    ~AdvertisingImpl() override = default;
+
+    Result<Ifa> advertisingId() const override;
 
 private:
     Firebolt::Helpers::IHelper& helper_;
 };
-} // namespace Firebolt::Metrics
+} // namespace Firebolt::Advertising

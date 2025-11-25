@@ -17,24 +17,25 @@
  * limitations under the License.
  */
 
+#include "firebolt.h"
 #include "json_engine.h"
-#include "metrics_impl.h"
-#include "mock_helper.h"
 
-class MetricsTest : public ::testing::Test, protected MockBase
+class StatsTest : public ::testing::Test
 {
 protected:
-    Firebolt::Metrics::MetricsImpl metricsImpl_{mockHelper};
+    JsonEngine jsonEngine;
 };
 
-TEST_F(MetricsTest, ready)
+TEST_F(StatsTest, MemoryUsage)
 {
-    EXPECT_CALL(mockHelper, getJson("Metrics.ready", _))
-        .WillOnce(Invoke([&](const std::string& methodName, const nlohmann::json& parameters)
-                         { return Firebolt::Result<nlohmann::json>{jsonEngine.get_value("Metrics.ready")}; }));
+    auto expectedValue = jsonEngine.get_value("Stats.memoryUsage");
 
-    auto result = metricsImpl_.ready();
-    ASSERT_TRUE(result) << "error on get";
-    auto expectedValue = jsonEngine.get_value("Metrics.ready");
-    EXPECT_EQ(*result, expectedValue);
+    auto result = Firebolt::IFireboltAccessor::Instance().StatsInterface().memoryUsage();
+
+    ASSERT_TRUE(result) << "StatsImpl::memoryUsage() returned an error";
+
+    EXPECT_EQ(result->gpuMemoryLimit, expectedValue.at("gpuMemoryLimitKiB").get<uint32_t>());
+    EXPECT_EQ(result->gpuMemoryUsed, expectedValue.at("gpuMemoryUsedKiB").get<uint32_t>());
+    EXPECT_EQ(result->userMemoryLimit, expectedValue.at("userMemoryLimitKiB").get<uint32_t>());
+    EXPECT_EQ(result->userMemoryUsed, expectedValue.at("userMemoryUsedKiB").get<uint32_t>());
 }

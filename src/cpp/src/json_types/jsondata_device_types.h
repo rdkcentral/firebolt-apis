@@ -20,17 +20,13 @@
 #pragma once
 
 #include "device.h"
-
-#include <algorithm>
-#include "Firebolt/json_types.h"
-#include <map>
+#include <firebolt/json_types.h>
 #include <nlohmann/json.hpp>
-#include <string>
 
 namespace Firebolt::Device::JsonData
 {
 // Enums
-inline Firebolt::JSON::EnumType<::Firebolt::Device::DeviceClass> const DeviceClassEnum({
+inline const Firebolt::JSON::EnumType<::Firebolt::Device::DeviceClass> DeviceClassEnum({
     {"stb", ::Firebolt::Device::DeviceClass::STB},
     {"ott", ::Firebolt::Device::DeviceClass::OTT},
     {"tv", ::Firebolt::Device::DeviceClass::TV},
@@ -40,8 +36,8 @@ inline Firebolt::JSON::EnumType<::Firebolt::Device::DeviceClass> const DeviceCla
 class DeviceClassJson : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Device::DeviceClass>
 {
 public:
-    void FromJson(const nlohmann::json &json) override { deviceClass_ = DeviceClassEnum.at(json); }
-    ::Firebolt::Device::DeviceClass Value() const override { return deviceClass_; }
+    void fromJson(const nlohmann::json& json) override { deviceClass_ = DeviceClassEnum.at(json); }
+    ::Firebolt::Device::DeviceClass value() const override { return deviceClass_; }
 
 private:
     ::Firebolt::Device::DeviceClass deviceClass_;

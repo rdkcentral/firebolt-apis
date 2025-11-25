@@ -17,24 +17,26 @@
  * limitations under the License.
  */
 
-#pragma once
+#include "stats_impl.h"
+#include "jsondata_stats_types.h"
+#include <cctype>
+#include <nlohmann/json.hpp>
+#include <string>
 
-#include "metrics.h"
-#include <firebolt/helpers.h>
+using namespace Firebolt::Helpers;
 
-namespace Firebolt::Metrics
+namespace Firebolt::Stats
 {
-class MetricsImpl : public IMetrics
+StatsImpl::StatsImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper)
 {
-public:
-    MetricsImpl(Firebolt::Helpers::IHelper& helper);
-    MetricsImpl(const MetricsImpl&) = delete;
-    MetricsImpl& operator=(const MetricsImpl&) = delete;
-    ~MetricsImpl() override;
+}
 
-    Result<bool> ready() override;
+StatsImpl::~StatsImpl() {}
 
-private:
-    Firebolt::Helpers::IHelper& helper_;
-};
-} // namespace Firebolt::Metrics
+Result<MemoryInfo> StatsImpl::memoryUsage() const
+{
+    return helper_.get<JsonData::MemoryInfo, MemoryInfo>("Stats.memoryUsage");
+}
+
+} // namespace Firebolt::Stats

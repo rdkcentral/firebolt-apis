@@ -53,6 +53,19 @@ jobs:
         id: setup-mock
         uses: ./.github/actions/setup-mock
 
+  format_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install clang-format
+        run: sudo apt-get update && sudo apt-get install -y clang-format
+
+      - name: Run clang-format check
+        run: |
+          cd ./src/cpp && git ls-files -- '*.cpp' '*.h' | xargs clang-format --dry-run --Werror
+
   build_project:
     needs: [setup_deps, setup_mock]
     runs-on: ubuntu-latest
@@ -97,17 +110,17 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          cp ${{ github.workspace }}/src/cpp/firebolt-app-open-rpc.json build/test/
+          cp ${{ github.workspace }}/src/cpp/firebolt-open-rpc.json build/test/
           ctest --test-dir build/test
 
       - name: Run Component Tests
         run: |
-          cp ${{ github.workspace }}/src/cpp/firebolt-app-open-rpc.json build/test/
+          cp ${{ github.workspace }}/src/cpp/firebolt-open-rpc.json build/test/
           ./.github/scripts/run-component-tests.sh \
             --mock ${{ env.MOCK_PATH }} \
             --config ${{ github.workspace }}/.github/mock-firebolt/config.json \
-            --openrpc ${{ github.workspace }}/.github/openrpc/firebolt-open-rpc.json \
-            --app-openrpc ${{ github.workspace }}/src/cpp/firebolt-app-open-rpc.json \
+            --openrpc ${{ github.workspace }}/src/cpp/firebolt-open-rpc.json \
+            --app-openrpc ${{ github.workspace }}/.github/openrpc/firebolt-app-open-rpc.json \
             --test-exe ${{ github.workspace }}/build/test/FireboltClientComponentTests
 
       - name: Make Release package of Native SDK

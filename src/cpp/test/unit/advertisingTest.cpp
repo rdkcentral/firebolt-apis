@@ -17,24 +17,25 @@
  * limitations under the License.
  */
 
+#include "advertising_impl.h"
 #include "json_engine.h"
-#include "metrics_impl.h"
 #include "mock_helper.h"
 
-class MetricsTest : public ::testing::Test, protected MockBase
+class AdvertisingTest : public ::testing::Test, protected MockBase
 {
 protected:
-    Firebolt::Metrics::MetricsImpl metricsImpl_{mockHelper};
+    Firebolt::Advertising::AdvertisingImpl advertisingImpl_{mockHelper};
 };
 
-TEST_F(MetricsTest, ready)
+TEST_F(AdvertisingTest, advertisingId)
 {
-    EXPECT_CALL(mockHelper, getJson("Metrics.ready", _))
-        .WillOnce(Invoke([&](const std::string& methodName, const nlohmann::json& parameters)
-                         { return Firebolt::Result<nlohmann::json>{jsonEngine.get_value("Metrics.ready")}; }));
+    mock("Advertising.advertisingId");
+    auto expectedValue = jsonEngine.get_value("Advertising.advertisingId");
 
-    auto result = metricsImpl_.ready();
-    ASSERT_TRUE(result) << "error on get";
-    auto expectedValue = jsonEngine.get_value("Metrics.ready");
-    EXPECT_EQ(*result, expectedValue);
+    auto result = advertisingImpl_.advertisingId();
+    ASSERT_TRUE(result) << "AdvertisingImpl::advertisingId() returned an error";
+
+    EXPECT_EQ(result->ifa, expectedValue["ifa"].get<std::string>());
+    EXPECT_EQ(result->ifa_type, expectedValue["ifa_type"].get<std::string>());
+    EXPECT_EQ(result->lmt, expectedValue["lmt"].get<std::string>());
 }

@@ -19,34 +19,35 @@
 
 #pragma once
 
+#include "json_engine.h"
+#include <firebolt/helpers.h>
 #include <gmock/gmock.h>
-#include "Firebolt/helpers.h"
 
 class MockHelper : public Firebolt::Helpers::IHelper
 {
 public:
-    MOCK_METHOD(Firebolt::Result<void>, set, (const std::string &methodName, const nlohmann::json &parameters),
+    MOCK_METHOD(Firebolt::Result<void>, set, (const std::string& methodName, const nlohmann::json& parameters),
                 (override));
-    MOCK_METHOD(Firebolt::Result<void>, invoke, (const std::string &methodName, const nlohmann::json &parameters),
+    MOCK_METHOD(Firebolt::Result<void>, invoke, (const std::string& methodName, const nlohmann::json& parameters),
                 (override));
 
     MOCK_METHOD(Firebolt::Result<Firebolt::SubscriptionId>, subscribe,
-                (void *owner, const std::string &eventName, std::any &&notification,
-                 void (*callback)(void *, const nlohmann::json &)),
+                (void* owner, const std::string& eventName, std::any&& notification,
+                 void (*callback)(void*, const nlohmann::json&)),
                 (override));
 
     MOCK_METHOD(Firebolt::Result<void>, unsubscribe, (Firebolt::SubscriptionId id), (override));
 
-    MOCK_METHOD(void, unsubscribeAll, (void *owner), (override));
+    MOCK_METHOD(void, unsubscribeAll, (void* owner), (override));
 
     MOCK_METHOD(Firebolt::Result<nlohmann::json>, getJson,
-                (const std::string &methodName, const nlohmann::json &parameters), (override));
+                (const std::string& methodName, const nlohmann::json& parameters), (override));
 };
 
 class MockBase
 {
 protected:
-    Firebolt::Result<nlohmann::json> getter(const std::string &methodName, const nlohmann::json &parameters)
+    Firebolt::Result<nlohmann::json> getter(const std::string& methodName, const nlohmann::json& parameters)
     {
         nlohmann::json message;
         message["method"] = methodName;
@@ -64,35 +65,29 @@ protected:
         return Firebolt::Result<nlohmann::json>{message["result"]};
     }
 
-    void mock(const std::string &methodName)
+    void mock(const std::string& methodName)
     {
         EXPECT_CALL(mockHelper, getJson(methodName, _))
-            .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
-                            { return getter(methodName, parameters); }));
+            .WillOnce(Invoke([&](const std::string& methodName, const nlohmann::json& parameters)
+                             { return getter(methodName, parameters); }));
     }
 
-    void mock_with_response(const std::string &methodName, const nlohmann::json &response)
+    void mock_with_response(const std::string& methodName, const nlohmann::json& response)
     {
         EXPECT_CALL(mockHelper, getJson(methodName, _))
-            .WillOnce(Invoke([response](const std::string &methodName, const nlohmann::json &parameters)
+            .WillOnce(Invoke([response](const std::string& /*methodName*/, const nlohmann::json& /*parameters*/)
                              { return Firebolt::Result<nlohmann::json>{response}; }));
     }
 
-    void mockSubscribe(const std::string &eventName)
+    void mockSubscribe(const std::string& eventName)
     {
         EXPECT_CALL(mockHelper, subscribe(_, eventName, _, _))
-            .WillOnce(Invoke(
-                [&](void* owner, const std::string &eventName, std::any &&notification,
-                    void (*callback)(void *, const nlohmann::json &))
-                {
-                    return Firebolt::Result<Firebolt::SubscriptionId>{1};
-                }));
+            .WillOnce(Invoke([&](void* /*owner*/, const std::string& /*eventName*/, std::any&& /*notification*/,
+                                 void (* /*callback*/)(void*, const nlohmann::json&))
+                             { return Firebolt::Result<Firebolt::SubscriptionId>{1}; }));
         EXPECT_CALL(mockHelper, unsubscribe(1))
-            .WillOnce(Invoke(
-                [&](Firebolt::SubscriptionId id)
-                {
-                    return Firebolt::Result<void>{Firebolt::Error::None};
-                }));
+            .WillOnce(
+                Invoke([&](Firebolt::SubscriptionId /*id*/) { return Firebolt::Result<void>{Firebolt::Error::None}; }));
     }
 
 protected:

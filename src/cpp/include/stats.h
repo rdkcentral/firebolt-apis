@@ -19,33 +19,34 @@
 
 #pragma once
 
-namespace Firebolt::Accessibility
+#include <firebolt/types.h>
+#include <functional>
+#include <optional>
+#include <string>
+#include <vector>
+
+namespace Firebolt::Stats
 {
-// Enums
-/**
- * @brief FontFamily
- */
-enum class FontFamily
+struct MemoryInfo
 {
-    MONOSPACED_SERIF,
-    PROPORTIONAL_SERIF,
-    MONOSPACED_SANSERIF,
-    PROPORTIONAL_SANSERIF,
-    SMALLCAPS,
-    CURSIVE,
-    CASUAL
+    uint32_t userMemoryUsed;
+    uint32_t userMemoryLimit;
+    uint32_t gpuMemoryUsed;
+    uint32_t gpuMemoryLimit;
 };
 
-/**
- * @brief FontEdge
- */
-enum class FontEdge
+class IStats
 {
-    NONE,
-    RAISED,
-    DEPRESSED,
-    UNIFORM,
-    DROP_SHADOW_LEFT,
-    DROP_SHADOW_RIGHT
+public:
+    virtual ~IStats() = default;
+
+    /**
+     @brief Returns information about container memory usage, in units of 1024 bytes
+    *
+    * @retval The platform property or error
+    * @retval MemoryInfo struct or error
+    */
+    virtual Result<MemoryInfo> memoryUsage() const = 0;
 };
-} // namespace Firebolt::Accessibility
+
+} // namespace Firebolt::Stats

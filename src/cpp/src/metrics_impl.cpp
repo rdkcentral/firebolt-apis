@@ -18,10 +18,14 @@
  */
 
 #include "metrics_impl.h"
+#include <firebolt/json_types.h>
 
 namespace Firebolt::Metrics
 {
-MetricsImpl::MetricsImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper) {}
+MetricsImpl::MetricsImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper)
+{
+}
 MetricsImpl::~MetricsImpl() {}
 
 Result<bool> MetricsImpl::ready()

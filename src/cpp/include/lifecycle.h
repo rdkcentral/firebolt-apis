@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "Firebolt/types.h"
+#include <firebolt/types.h>
 #include <functional>
 #include <string>
 #include <vector>
@@ -52,13 +52,12 @@ enum class CloseType
 };
 
 /**
- * @brief Represents a transition between two lifecycle states, including whether the app is focused after the transition
+ * @brief Represents a transition between two lifecycle states
  */
 struct StateChange
 {
     LifecycleState oldState;
     LifecycleState newState;
-    bool focused;
 };
 
 class ILifecycle
@@ -71,14 +70,14 @@ public:
      *
      * @param[in] type The type of the close app is requesting
      */
-    virtual Result<void> close(const CloseType &type) const = 0;
+    virtual Result<void> close(const CloseType& type) const = 0;
 
     /**
      * @brief Get the current lifecycle state of the app
      *
      * @retval The current lifecycle state or error
      */
-    virtual Result<LifecycleState> getCurrentState() const = 0;
+    virtual Result<LifecycleState> state() const = 0;
 
     /**
      * @brief Subscribe to lifecycle state changes
@@ -88,7 +87,7 @@ public:
      * @retval The subscriptionId or error
      */
     virtual Result<SubscriptionId>
-    subscribeOnStateChanged(std::function<void(const std::vector<StateChange>&)> &&notification) = 0;
+    subscribeOnStateChanged(std::function<void(const std::vector<StateChange>&)>&& notification) = 0;
 
     /**
      * @brief Remove subscriber from subscribers list. This method is generic for

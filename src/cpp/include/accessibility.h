@@ -19,10 +19,10 @@
 
 #pragma once
 
+#include <firebolt/types.h>
 #include <functional>
 #include <optional>
 #include <string>
-#include "Firebolt/types.h"
 #include <vector>
 
 namespace Firebolt::Accessibility
@@ -58,8 +58,7 @@ public:
      *
      * @retval SubscriptionId or error
      */
-    virtual Result<SubscriptionId>
-        subscribeOnAudioDescriptionChanged(std::function<void(bool)> &&notification) = 0;
+    virtual Result<SubscriptionId> subscribeOnAudioDescriptionChanged(std::function<void(bool)>&& notification) = 0;
 
     /**
      * @brief Returns captions settings: enabled, and a list of zero or more languages in order of decreasing preference
@@ -69,26 +68,25 @@ public:
     virtual Result<ClosedCaptionsSettings> closedCaptionsSettings() const = 0;
 
     virtual Result<SubscriptionId>
-        subscribeOnClosedCaptionsSettingsChanged(std::function<void(const ClosedCaptionsSettings &)> &&notification) = 0;
+    subscribeOnClosedCaptionsSettingsChanged(std::function<void(const ClosedCaptionsSettings&)>&& notification) = 0;
 
     /**
      * @brief Returns the high contrast UI device setting
-     * 
+     *
      * @retval The high contrast UI setting or error
-     */ 
+     */
     virtual Result<bool> highContrastUI() const = 0;
 
-    virtual Result<SubscriptionId>
-        subscribeOnHighContrastUIChanged(std::function<void(bool)> &&notification) = 0;
-      
+    virtual Result<SubscriptionId> subscribeOnHighContrastUIChanged(std::function<void(bool)>&& notification) = 0;
+
     /**
      * @brief Returns voice guidance settings: enabled, rate, and verbosity
      * @retval VoiceGuidanceSettings or error
-     */ 
+     */
     virtual Result<VoiceGuidanceSettings> voiceGuidanceSettings() const = 0;
 
     virtual Result<SubscriptionId>
-        subscribeOnVoiceGuidanceSettingsChanged(std::function<void(const VoiceGuidanceSettings &)> &&notification) = 0;
+    subscribeOnVoiceGuidanceSettingsChanged(std::function<void(const VoiceGuidanceSettings&)>&& notification) = 0;
 
     /**
      * @brief Remove subscriber from subscribers list. This method is generic for
@@ -104,7 +102,6 @@ public:
      * @brief Remove all active subscriptions from subscribers list.
      */
     virtual void unsubscribeAll() = 0;
-
 };
 
 } // namespace Firebolt::Accessibility

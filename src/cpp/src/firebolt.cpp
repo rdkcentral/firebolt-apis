@@ -17,14 +17,17 @@
  * limitations under the License.
  */
 
-#include "device_impl.h"
 #include "firebolt.h"
+#include "accessibility_impl.h"
+#include "advertising_impl.h"
+#include "device_impl.h"
 #include "lifecycle_impl.h"
 #include "localization_impl.h"
 #include "metrics_impl.h"
+#include "presentation_impl.h"
 #include "securestorage_impl.h"
-#include "accessibility_impl.h"
-#include "Firebolt/helpers.h"
+#include "stats_impl.h"
+#include <firebolt/gateway.h>
 
 namespace Firebolt
 {
@@ -32,56 +35,64 @@ class FireboltAccessorImpl : public IFireboltAccessor
 {
 public:
     FireboltAccessorImpl()
-        : device_(Firebolt::Helpers::GetHelperInstance())
-        , localization_(Firebolt::Helpers::GetHelperInstance())
-        , metrics_(Firebolt::Helpers::GetHelperInstance())
-        , lifecycle_(Firebolt::Helpers::GetHelperInstance())
-        , secureStorage_(Firebolt::Helpers::GetHelperInstance())
-		, accessibility_(Firebolt::Helpers::GetHelperInstance())
+        : accessibility_(Firebolt::Helpers::GetHelperInstance()),
+          advertising_(Firebolt::Helpers::GetHelperInstance()),
+          device_(Firebolt::Helpers::GetHelperInstance()),
+          lifecycle_(Firebolt::Helpers::GetHelperInstance()),
+          localization_(Firebolt::Helpers::GetHelperInstance()),
+          metrics_(Firebolt::Helpers::GetHelperInstance()),
+          presentation_(Firebolt::Helpers::GetHelperInstance()),
+          secureStorage_(Firebolt::Helpers::GetHelperInstance()),
+          stats_(Firebolt::Helpers::GetHelperInstance())
+          
     {
     }
 
     FireboltAccessorImpl(const FireboltAccessorImpl&) = delete;
     FireboltAccessorImpl& operator=(const FireboltAccessorImpl&) = delete;
 
-    ~FireboltAccessorImpl()
-    {
-        unsubscribeAll();
-    }
+    ~FireboltAccessorImpl() { unsubscribeAll(); }
 
-    Firebolt::Error Connect(const Firebolt::Config &config, OnConnectionChanged listener) override
+    Firebolt::Error Connect(const Firebolt::Config& config, OnConnectionChanged listener) override
     {
-        return Firebolt::Transport::GetGatewayInstance().Connect(config, listener);
+        return Firebolt::Transport::GetGatewayInstance().connect(config, listener);
     }
 
     Firebolt::Error Disconnect() override
     {
         unsubscribeAll();
-        return Firebolt::Transport::GetGatewayInstance().Disconnect();
+        return Firebolt::Transport::GetGatewayInstance().disconnect();
     }
 
-    Device::IDevice &DeviceInterface() override { return device_; }
-    Localization::ILocalization &LocalizationInterface() override { return localization_; }
-    Metrics::IMetrics &MetricsInterface() override { return metrics_; }
-    Lifecycle::ILifecycle &LifecycleInterface() override { return lifecycle_; }
-    SecureStorage::ISecureStorage &SecureStorageInterface() override { return secureStorage_; }
-    Accessibility::IAccessibility &AccessibilityInterface() override { return accessibility_; }
+    Accessibility::IAccessibility& AccessibilityInterface() override { return accessibility_; }
+    Advertising::IAdvertising& AdvertisingInterface() override { return advertising_; }
+    Device::IDevice& DeviceInterface() override { return device_; }
+    Lifecycle::ILifecycle& LifecycleInterface() override { return lifecycle_; }
+    Localization::ILocalization& LocalizationInterface() override { return localization_; }
+    Presentation::IPresentation& PresentationInterface() override { return presentation_; }
+    Metrics::IMetrics& MetricsInterface() override { return metrics_; }
+    SecureStorage::ISecureStorage& SecureStorageInterface() override { return secureStorage_; }
+    Stats::IStats& StatsInterface() override { return stats_; }
 
 private:
     void unsubscribeAll()
     {
-        localization_.unsubscribeAll();
-        lifecycle_.unsubscribeAll();
         accessibility_.unsubscribeAll();
+        lifecycle_.unsubscribeAll();
+        localization_.unsubscribeAll();
+        presentation_.unsubscribeAll();
     }
 
 private:
+    Accessibility::AccessibilityImpl accessibility_;
+    Advertising::AdvertisingImpl advertising_;
     Device::DeviceImpl device_;
+    Lifecycle::LifecycleImpl lifecycle_;
     Localization::LocalizationImpl localization_;
     Metrics::MetricsImpl metrics_;
-    Lifecycle::LifecycleImpl lifecycle_;
+    Presentation::PresentationImpl presentation_;
     SecureStorage::SecureStorageImpl secureStorage_;
-    Accessibility::AccessibilityImpl accessibility_;
+    Stats::StatsImpl stats_;
 };
 
 /* static */ IFireboltAccessor& IFireboltAccessor::Instance()

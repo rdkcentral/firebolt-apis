@@ -18,11 +18,8 @@
  */
 
 #include "lifecycle_impl.h"
-#include "firebolt.h"
 #include "jsondata_lifecycle_types.h"
-#include <algorithm>
 #include <cctype>
-#include <iostream>
 #include <nlohmann/json.hpp>
 #include <string>
 
@@ -30,31 +27,31 @@ using namespace Firebolt::Helpers;
 
 namespace Firebolt::Lifecycle
 {
-LifecycleImpl::LifecycleImpl(Firebolt::Helpers::IHelper &helper) : helper_(helper), subscriptionManager_(helper, this)
+LifecycleImpl::LifecycleImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper),
+      subscriptionManager_(helper, this)
 {
 }
 
-LifecycleImpl::~LifecycleImpl()
-{
-}
+LifecycleImpl::~LifecycleImpl() {}
 
-Result<void> LifecycleImpl::close(const CloseType &reason) const
+Result<void> LifecycleImpl::close(const CloseType& reason) const
 {
     nlohmann::json params;
-    params["type"] = Firebolt::JSON::ToString(JsonData::CloseReasonEnum, reason);
+    params["type"] = Firebolt::JSON::toString(JsonData::CloseReasonEnum, reason);
     return helper_.invoke("Lifecycle2.close", params);
 }
 
-Result<LifecycleState> LifecycleImpl::getCurrentState() const
+Result<LifecycleState> LifecycleImpl::state() const
 {
     return helper_.get<JsonData::LifecycleState, LifecycleState>("Lifecycle2.state");
 }
 
 Result<SubscriptionId>
-LifecycleImpl::subscribeOnStateChanged(std::function<void(const std::vector<StateChange> &)> &&notification)
+LifecycleImpl::subscribeOnStateChanged(std::function<void(const std::vector<StateChange>&)>&& notification)
 {
-    return subscriptionManager_.subscribe<
-        Firebolt::JSON::NL_Json_Array<JsonData::StateChange, StateChange>>("Lifecycle2.onStateChanged",
+    return subscriptionManager_
+        .subscribe<Firebolt::JSON::NL_Json_Array<JsonData::StateChange, StateChange>>("Lifecycle2.onStateChanged",
                                                                                       std::move(notification));
 }
 

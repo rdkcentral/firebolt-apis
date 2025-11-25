@@ -19,22 +19,30 @@
 
 #pragma once
 
-#include "metrics.h"
+#include "presentation.h"
 #include <firebolt/helpers.h>
 
-namespace Firebolt::Metrics
+namespace Firebolt::Presentation
 {
-class MetricsImpl : public IMetrics
-{
-public:
-    MetricsImpl(Firebolt::Helpers::IHelper& helper);
-    MetricsImpl(const MetricsImpl&) = delete;
-    MetricsImpl& operator=(const MetricsImpl&) = delete;
-    ~MetricsImpl() override;
 
-    Result<bool> ready() override;
+class PresentationImpl : public IPresentation
+{
+
+public:
+    explicit PresentationImpl(Firebolt::Helpers::IHelper& helper);
+    PresentationImpl(const PresentationImpl&) = delete;
+    PresentationImpl& operator=(const PresentationImpl&) = delete;
+
+    ~PresentationImpl() override = default;
+
+    Result<bool> focused() const override;
+    Result<SubscriptionId> subscribeOnFocusedChanged(std::function<void(bool)>&& notification) override;
+
+    virtual Result<void> unsubscribe(SubscriptionId id) override;
+    virtual void unsubscribeAll() override;
 
 private:
     Firebolt::Helpers::IHelper& helper_;
+    Firebolt::Helpers::SubscriptionManager subscriptionManager_;
 };
-} // namespace Firebolt::Metrics
+} // namespace Firebolt::Presentation

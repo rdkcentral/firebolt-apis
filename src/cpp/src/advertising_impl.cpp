@@ -17,24 +17,19 @@
  * limitations under the License.
  */
 
-#pragma once
+#include "advertising_impl.h"
+#include "jsondata_advertising_types.h"
 
-#include "metrics.h"
-#include <firebolt/helpers.h>
-
-namespace Firebolt::Metrics
+namespace Firebolt::Advertising
 {
-class MetricsImpl : public IMetrics
+AdvertisingImpl::AdvertisingImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper)
 {
-public:
-    MetricsImpl(Firebolt::Helpers::IHelper& helper);
-    MetricsImpl(const MetricsImpl&) = delete;
-    MetricsImpl& operator=(const MetricsImpl&) = delete;
-    ~MetricsImpl() override;
+}
 
-    Result<bool> ready() override;
+Result<Ifa> AdvertisingImpl::advertisingId() const
+{
+    return helper_.get<JsonData::IfaJson, Ifa>("Advertising.advertisingId");
+}
 
-private:
-    Firebolt::Helpers::IHelper& helper_;
-};
-} // namespace Firebolt::Metrics
+} // namespace Firebolt::Advertising

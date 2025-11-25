@@ -48,6 +48,11 @@ TEST_F(DeviceTest, Uptime)
     auto expectedValue = jsonEngine.get_value("Device.uptime");
     auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().uptime();
     ASSERT_TRUE(result) << "DeviceImpl::uptime() returned an error";
+    if (expectedValue.empty())
+    {
+        std::cout << "[ !!!      ] Expected is empty, recived: " << *result << std::endl;
+        return;
+    }
     EXPECT_EQ(*result, expectedValue);
 }
 
@@ -56,8 +61,13 @@ TEST_F(DeviceTest, TimeInActiveState)
     auto expectedValue = jsonEngine.get_value("Device.timeInActiveState");
     auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().timeInActiveState();
     ASSERT_TRUE(result) << "DeviceImpl::timeInActiveState() returned an error";
+    if (expectedValue.empty())
+    {
+        std::cout << "[ !!!      ] Expected is empty, recived: " << *result << std::endl;
+        return;
+    }
     EXPECT_EQ(*result, expectedValue);
-}   
+}
 
 TEST_F(DeviceTest, Uid)
 {

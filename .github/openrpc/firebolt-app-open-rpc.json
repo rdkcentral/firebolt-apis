@@ -35,17 +35,17 @@
 			]
 		},
 		{
-			"name": "Lifecycle2.stateChanged",
+			"name": "Lifecycle2.onStateChanged",
 			"tags": [
 				{
 					"name": "notifier",
-					"x-event": "Lifecycle2.onStateChanged",
-					"x-contextual-parameters": 0
+					"x-contextual-parameters": 0,
+					"x-event": "Lifecycle2.onStateChanged"
 				},
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:lifecycle2:state"
+						"xrn:firebolt:capability:cpp-client-only"
 					]
 				}
 			],
@@ -72,13 +72,11 @@
 							"value": [
 								{
 									"newState": "paused",
-									"oldState": "initializing",
-									"focused": true
+									"oldState": "initializing"
 								},
 								{
 									"newState": "active",
-									"oldState": "paused",
-									"focused": true
+									"oldState": "paused"
 								}
 							]
 						}
@@ -92,8 +90,7 @@
 							"value": [
 								{
 									"newState": "paused",
-									"oldState": "initializing",
-									"focused": false
+									"oldState": "initializing"
 								}
 							]
 						}
@@ -102,7 +99,7 @@
 			]
 		},
 		{
-			"name": "Accessibility.audioDescriptionChanged",
+			"name": "Accessibility.onAudioDescriptionChanged",
 			"summary": "Returns the audio description setting of the device",
 			"params": [
 				{
@@ -122,7 +119,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:audiodescriptions"
+						"xrn:firebolt:capability:accessibility:audio-descriptions"
 					]
 				}
 			],
@@ -139,7 +136,7 @@
 			]
 		},
 		{
-			"name": "Accessibility.closedCaptionsSettingsChanged",
+			"name": "Accessibility.onClosedCaptionsSettingsChanged",
 			"summary": "Returns captions settings: enabled, and a list of zero or more languages in order of decreasing preference",
 			"params": [
 				{
@@ -174,7 +171,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:closedcaptions"
+						"xrn:firebolt:capability:accessibility:closed-captions"
 					]
 				}
 			],
@@ -215,7 +212,7 @@
 			]
 		},
 		{
-			"name": "Accessibility.highContrastUIChanged",
+			"name": "Accessibility.onHighContrastUIChanged",
 			"summary": "Returns the high contrast UI device setting",
 			"params": [
 				{
@@ -235,7 +232,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:highcontrastui"
+						"xrn:firebolt:capability:accessibility:high-contrast-ui"
 					]
 				}
 			],
@@ -252,7 +249,7 @@
 			]
 		},
 		{
-			"name": "Accessibility.voiceGuidanceSettingsChanged",
+			"name": "Accessibility.onVoiceGuidanceSettingsChanged",
 			"summary": "Returns voice guidance settings: enabled, rate, and verbosity",
 			"params": [
 				{
@@ -286,7 +283,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:voiceguidance"
+						"xrn:firebolt:capability:accessibility:voice-guidance"
 					]
 				}
 			],
@@ -311,7 +308,7 @@
 			]
 		},
 		{
-			"name": "Localization.countryChanged",
+			"name": "Localization.onCountryChanged",
 			"tags": [
 				{
 					"name": "notifier",
@@ -357,7 +354,7 @@
 			]
 		},
 		{
-			"name": "Localization.preferredAudioLanguagesChanged",
+			"name": "Localization.onPreferredAudioLanguagesChanged",
 			"summary": "Returns a list of ISO 639-2/B codes for the preferred audio languages on this device.",
 			"params": [
 				{
@@ -380,7 +377,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:localization:language"
+						"xrn:firebolt:capability:localization:preferred-audio-languages"
 					]
 				}
 			],
@@ -400,7 +397,7 @@
 			]
 		},
 		{
-			"name": "Localization.localeChanged",
+			"name": "Localization.onLocaleChanged",
 			"tags": [
 				{
 					"name": "notifier",
@@ -431,6 +428,43 @@
 						{
 							"name": "Default Result",
 							"value": "en-US"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Presentation.onFocusedChanged",
+			"tags": [
+				{
+					"name": "notifier",
+					"x-notifier-for": "Presentation.focused",
+					"x-event": "Presentation.onFocusedChanged"
+				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:cpp-client-only"
+					]
+				}
+			],
+			"summary": "Whether the app is in focus, i.e. receiving key presses. Provided for those apps/runtimes that cannot use Wayland",
+			"params": [
+				{
+					"name": "focused",
+					"summary": "Whether the app is in focus.",
+					"schema": {
+						"type": "boolean"
+					}
+				}
+			],
+			"examples": [
+				{
+					"name": "Default example",
+					"params": [
+						{
+							"name": "Default Result",
+							"value": true
 						}
 					]
 				}
@@ -523,14 +557,11 @@
 					},
 					"oldState": {
 						"$ref": "#/components/schemas/LifecycleState"
-					},
-					"focused": {
-						"type": "boolean"
 					}
 				}
 			},
-			"MemoryInfo": {
-				"title": "MemoryInfo",
+			"MemoryUsage": {
+				"title": "MemoryUsage",
 				"type": "object",
 				"description": "Describes current and maximum memory usage of the container.",
 				"properties": {

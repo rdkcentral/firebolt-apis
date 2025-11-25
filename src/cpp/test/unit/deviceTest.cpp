@@ -19,15 +19,8 @@
 
 #include "device_impl.h"
 #include "json_engine.h"
-#include "mock_helper.h"
 #include "json_types/jsondata_device_types.h"
-
-using ::testing::_;
-using ::testing::Invoke;
-using ::testing::Return;
-
-// define when json rpc schema is not available
-#define USE_LOCAL_RESPONSE
+#include "mock_helper.h"
 
 class DeviceTest : public ::testing::Test, protected MockBase
 {
@@ -37,13 +30,8 @@ protected:
 
 TEST_F(DeviceTest, GetClass)
 {
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = "stb";
-    mock_with_response("Device.deviceClass", expectedValue);
-#else
     mock("Device.deviceClass");
-    auto expectedValue = jsonEngine.get_    value("Device.deviceClass");
-#endif
+    auto expectedValue = jsonEngine.get_value("Device.deviceClass");
 
     auto result = deviceImpl_.deviceClass();
 
@@ -54,13 +42,9 @@ TEST_F(DeviceTest, GetClass)
 
 TEST_F(DeviceTest, TimeInActiveState)
 {
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = 1800;
-    mock_with_response("Device.timeInActiveState", expectedValue);
-#else
     mock("Device.timeInActiveState");
     auto expectedValue = jsonEngine.get_value("Device.timeInActiveState");
-#endif
+
     auto result = deviceImpl_.timeInActiveState();
     ASSERT_TRUE(result) << "DeviceImpl::timeInActiveState() returned an error";
 
@@ -69,13 +53,8 @@ TEST_F(DeviceTest, TimeInActiveState)
 
 TEST_F(DeviceTest, Uptime)
 {
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = 3600;
-    mock_with_response("Device.uptime", expectedValue);
-#else
     mock("Device.uptime");
     auto expectedValue = jsonEngine.get_value("Device.uptime");
-#endif
 
     auto result = deviceImpl_.uptime();
     ASSERT_TRUE(result) << "DeviceImpl::uptime() returned an error";
@@ -85,13 +64,8 @@ TEST_F(DeviceTest, Uptime)
 
 TEST_F(DeviceTest, Uid)
 {
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = "123e4567-e89b-12d3-a456-426614174000";
-    mock_with_response("Device.uid", expectedValue);
-#else
     mock("Device.uid");
     auto expectedValue = jsonEngine.get_value("Device.uid");
-#endif  
 
     auto result = deviceImpl_.uid();
     ASSERT_TRUE(result) << "DeviceImpl::uid() returned an error";

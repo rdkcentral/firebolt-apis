@@ -19,11 +19,10 @@
 
 #pragma once
 
-#include "Firebolt/firebolt.h"
 #include <condition_variable>
+#include <firebolt/firebolt.h>
 #include <mutex>
 #include <set>
-#include <string>
 
 class FireboltDemoService
 {

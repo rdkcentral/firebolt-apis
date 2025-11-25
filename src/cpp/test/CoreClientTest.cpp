@@ -18,8 +18,9 @@
  */
 
 #include "CoreClientTest.h"
-#include "Firebolt/config.h"
-#include <iomanip>
+#include "firebolt.h"
+#include <firebolt/config.h>
+#include <iostream>
 #include <stdexcept>
 #include <string>
 #include <unistd.h>
@@ -30,10 +31,11 @@ std::map<CoreClientTest::Subscriptions, uint64_t> CoreClientTest::_subscriptionI
 
 template <typename T> inline std::string toError(const Firebolt::Result<T>& result)
 {
-  if (result) {
-      return "";
-  }
-  return "Error: " + std::to_string(static_cast<int>(result.error()));
+    if (result)
+    {
+        return "";
+    }
+    return "Error: " + std::to_string(static_cast<int>(result.error()));
 }
 
 void CoreClientTest::ConnectionChanged(const bool connected, const Firebolt::Error error)

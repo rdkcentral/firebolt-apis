@@ -21,52 +21,29 @@
 
 #include <firebolt/types.h>
 #include <functional>
-#include <optional>
-#include <vector>
 
-namespace Firebolt::Localization
+namespace Firebolt::Presentation
 {
-
-class ILocalization
+class IPresentation
 {
 public:
-    virtual ~ILocalization() = default;
+    virtual ~IPresentation() = default;
 
-    // Methods
     /**
-     * @brief Get the ISO 3166-1 alpha-2 code for the country device is located in.
+     * @brief Returns whether the application is currently focused, i.e. receiving key presses
      *
-     * @retval The device country code or error
+     * @retval The focus state or error
      */
-    virtual Result<std::string> countryCode() const = 0;
+    virtual Result<bool> focused() const = 0;
 
     /**
-     * @brief A prioritized list of ISO 639 1/2 codes for the preferred audio languages on this device.
+     * @brief Subscribe to focus change notifications
      *
-     * @retval The preferred audio languages or error
-     */
-    virtual Result<std::vector<std::string>> preferredAudioLanguages() const = 0;
-
-    // Events
-    /**
-     * @brief Subscribe on the change of CountryCodeChanged property
-     *
-     * @param[in]  notification        : The callback function
+     * @param notification : The callback function, which will be called on focus change
      *
      * @retval The subscriptionId or error
      */
-    virtual Result<SubscriptionId>
-    subscribeOnCountryCodeChanged(std::function<void(const std::string&)>&& notification) = 0;
-
-    /**
-     * @brief Subscribe on the change of PreferredAudioLanguagesChanged property
-     *
-     * @param[in]  notification        : The callback function
-     *
-     * @retval The subscriptionId or error
-     */
-    virtual Result<SubscriptionId>
-    subscribeOnPreferredAudioLanguagesChanged(std::function<void(const std::vector<std::string>&)>&& notification) = 0;
+    virtual Result<SubscriptionId> subscribeOnFocusedChanged(std::function<void(bool)>&& notification) = 0;
 
     /**
      * @brief Remove subscriber from subscribers list. This method is generic for
@@ -83,4 +60,4 @@ public:
      */
     virtual void unsubscribeAll() = 0;
 };
-} // namespace Firebolt::Localization
+} // namespace Firebolt::Presentation

@@ -18,8 +18,8 @@
  */
 
 #include "FireboltDemoService.h"
-#include "Firebolt/config.h"
 #include <cstdlib>
+#include <firebolt/config.h>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -70,7 +70,7 @@ std::ostream& operator<<(std::ostream& out, Firebolt::Error& error)
         out << "InvalidParams";
         break;
     }
-    case Firebolt::Error::CapabilityNotAvaialbale:
+    case Firebolt::Error::CapabilityNotAvailable:
     {
         out << "CapabilityNotAvaialbale";
         break;
@@ -138,10 +138,10 @@ std::string bool2str(const bool value)
 
 void FireboltDemoService::lifecycle()
 {
-    auto state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().getCurrentState();
+    auto state = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state();
     if (state)
     {
-      std::cout << "Current state: " << static_cast<int>(*state) << std::endl;
+        std::cout << "Current state: " << static_cast<int>(*state) << std::endl;
     }
     else
     {
@@ -149,11 +149,10 @@ void FireboltDemoService::lifecycle()
     }
 
     auto id = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnStateChanged(
-        [&](const std::vector<Firebolt::Lifecycle::StateChange> &changes)
+        [&](const std::vector<Firebolt::Lifecycle::StateChange>& changes)
         {
             std::cout << "[Subscription] Lifecycle state changed: " << static_cast<int>(changes[0].newState)
-                      << ", old state: " << static_cast<int>(changes[0].oldState) << ", focused: " << changes[0].focused
-                      << std::endl;
+                      << ", old state: " << static_cast<int>(changes[0].oldState) << std::endl;
         });
     if (!id)
     {
@@ -166,7 +165,7 @@ void FireboltDemoService::lifecycle()
 void FireboltDemoService::unsubscribeAll()
 {
     std::cout << "Unsubscribing..." << std::endl;
-    for (const auto &id : lifecycleSubscriptionIds_)
+    for (const auto& id : lifecycleSubscriptionIds_)
     {
         auto result{Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(id)};
         if (!result)
@@ -176,9 +175,8 @@ void FireboltDemoService::unsubscribeAll()
     }
 }
 
-void FireboltDemoService::onConnectionChanged(const bool connected, const Firebolt::Error error)
+void FireboltDemoService::onConnectionChanged(const bool connected, const Firebolt::Error /* error */)
 {
-    (void)error; //unused
     std::unique_lock<std::mutex> lock{mutex_};
     connected_ = connected;
     cv_.notify_one();

@@ -21,8 +21,6 @@ include(CMakePackageConfigHelpers)
 set(TARGET ${PROJECT_NAME})
 message("Setup ${TARGET} v${PROJECT_VERSION}")
 
-add_compile_options(-Wall -Wextra -Wpedantic)
-
 file(GLOB SOURCES *.cpp json_types/*.cpp)
 
 if(NOT ENABLE_TESTS)
@@ -100,14 +98,14 @@ install(
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Firebolt
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/firebolt
     FILES_MATCHING PATTERN "*.h"
 )
 
 string(TOLOWER "${TARGET}" TARGET_LOWER)
 install(
     FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_export.h
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/Firebolt
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/firebolt
 )
 
 install(

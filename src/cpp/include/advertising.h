@@ -20,19 +20,45 @@
 #pragma once
 
 #include <firebolt/types.h>
+#include <functional>
+#include <string>
+#include <vector>
 
-namespace Firebolt::Metrics
+namespace Firebolt::Advertising
 {
-class IMetrics
+// Types
+struct Ifa
+{
+    /* UUID*/
+    std::string ifa;
+
+    /* Advertising ID type
+        One of
+        "dpid" - device provided ID
+        "sspid" - SSP provided ID
+        "sessionid" - session/synthetic ID
+    */
+    std::string ifa_type;
+
+    /* Limit Ad Tracking
+        One of
+        "0" - LMT disabled
+        "1" - LMT enabled
+    */
+    std::string lmt;
+};
+
+class IAdvertising
 {
 public:
-    virtual ~IMetrics() = default;
+    virtual ~IAdvertising() = default;
 
     /**
-     * @brief Inform the platform that your app is minimally usable. This method is called automatically by `Lifecycle.ready()`
+     * @brief Request that the platform move your app out of focus
      *
-     * @retval The method call result
+     * @return Ifa struct or error
+     *
      */
-    virtual Result<bool> ready() = 0;
+    virtual Result<Ifa> advertisingId() const = 0;
 };
-} // namespace Firebolt::Metrics
+} // namespace Firebolt::Advertising

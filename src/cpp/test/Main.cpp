@@ -20,7 +20,6 @@
 #include "CoreClientTest.h"
 #include <getopt.h>
 #include <iostream>
-#include <stdexcept>
 #include <string>
 #include <vector>
 

@@ -17,20 +17,31 @@
  * limitations under the License.
  */
 
+#include "./component/utils.h"
 #include "firebolt.h"
 #include "json_engine.h"
+#include "json_types/jsondata_advertising_types.h"
 #include "gtest/gtest.h"
 
-class MetricsTest : public ::testing::Test
+#include <condition_variable>
+#include <iostream>
+#include <mutex>
+#include <thread>
+
+class AdvertisingTest : public ::testing::Test
 {
+
 protected:
     JsonEngine jsonEngine;
 };
 
-TEST_F(MetricsTest, ready)
+TEST_F(AdvertisingTest, AdvertisingId)
 {
-    auto result = Firebolt::IFireboltAccessor::Instance().MetricsInterface().ready();
-    ASSERT_TRUE(result) << "error on get";
-    auto expectedValue = jsonEngine.get_value("Metrics.ready");
-    EXPECT_EQ(*result, expectedValue);
+    auto expectedValue = jsonEngine.get_value("Advertising.advertisingId");
+    auto result = Firebolt::IFireboltAccessor::Instance().AdvertisingInterface().advertisingId();
+
+    ASSERT_TRUE(result) << "AdvertisingImpl::advertisingId() returned an error";
+    EXPECT_EQ(result->ifa, expectedValue["ifa"].get<std::string>());
+    EXPECT_EQ(result->ifa_type, expectedValue["ifa_type"].get<std::string>());
+    EXPECT_EQ(result->lmt, expectedValue["lmt"].get<std::string>());
 }

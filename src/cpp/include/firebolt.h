@@ -19,15 +19,18 @@
 
 #pragma once
 
-#include "fireboltclient_export.h"
+#include "accessibility.h"
+#include "advertising.h"
 #include "device.h"
+#include "fireboltclient_export.h"
 #include "lifecycle.h"
 #include "localization.h"
 #include "metrics.h"
+#include "presentation.h"
 #include "securestorage.h"
-#include "accessibility.h"
-#include "Firebolt/config.h"
-#include "Firebolt/types.h"
+#include "stats.h"
+#include <firebolt/config.h>
+#include <firebolt/types.h>
 #include <functional>
 
 namespace Firebolt
@@ -65,7 +68,7 @@ public:
      *
      * @return Firebolt::Error
      */
-    virtual Firebolt::Error Connect(const Firebolt::Config &config, OnConnectionChanged listener) = 0;
+    virtual Firebolt::Error Connect(const Firebolt::Config& config, OnConnectionChanged listener) = 0;
 
     /**
      * @brief Disconnects from the Websocket endpoint.
@@ -75,11 +78,33 @@ public:
     virtual Firebolt::Error Disconnect() = 0;
 
     /**
+     * @brief Returns instance of Accessibiilty interface
+     *
+     * @return Reference to Accessibility interface
+     */
+
+    virtual Accessibility::IAccessibility& AccessibilityInterface() = 0;
+
+    /**
+     * @brief Returns instance of Advertising interface
+     *
+     * @return Reference to Advertising interface
+     */
+    virtual Advertising::IAdvertising& AdvertisingInterface() = 0;
+
+    /**
      * @brief Returns instance of Device interface
      *
      * @return Reference to Device interface
      */
     virtual Device::IDevice& DeviceInterface() = 0;
+
+    /**
+     * @brief Returns instance of Lifecycle interface
+     *
+     * @return Reference to Lifecycle interface
+     */
+    virtual Lifecycle::ILifecycle& LifecycleInterface() = 0;
 
     /**
      * @brief Returns instance of Localization interface
@@ -96,11 +121,11 @@ public:
     virtual Metrics::IMetrics& MetricsInterface() = 0;
 
     /**
-     * @brief Returns instance of Lifecycle interface
+     * @brief Returns instance of Presentation interface
      *
-     * @return Reference to Lifecycle interface
+     * @return Reference to Presentation interface
      */
-    virtual Lifecycle::ILifecycle& LifecycleInterface() = 0;
+    virtual Presentation::IPresentation& PresentationInterface() = 0;
 
     /**
      * @brief Returns instance of SecureStorage interface
@@ -114,6 +139,13 @@ public:
      *
      * @return Reference to Accessibility interface
      */
+
+     /** 
     virtual Accessibility::IAccessibility& AccessibilityInterface() = 0;
+     * @brief Returns instance of Stats interface
+     *
+     * @return Reference to Stats interface
+     */
+    virtual Stats::IStats& StatsInterface() = 0;
 };
 } // namespace Firebolt

@@ -19,22 +19,27 @@
 
 #pragma once
 
-#include "metrics.h"
-#include <firebolt/helpers.h>
+#include "advertising.h"
+#include <firebolt/json_types.h>
+#include <nlohmann/json.hpp>
+#include <string>
 
-namespace Firebolt::Metrics
+namespace Firebolt::Advertising::JsonData
 {
-class MetricsImpl : public IMetrics
+class IfaJson : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Advertising::Ifa>
 {
 public:
-    MetricsImpl(Firebolt::Helpers::IHelper& helper);
-    MetricsImpl(const MetricsImpl&) = delete;
-    MetricsImpl& operator=(const MetricsImpl&) = delete;
-    ~MetricsImpl() override;
-
-    Result<bool> ready() override;
+    void fromJson(const nlohmann::json& json) override
+    {
+        ifa = json["ifa"].get<std::string>();
+        ifa_type = json["ifa_type"].get<std::string>();
+        lmt = json["lmt"].get<std::string>();
+    }
+    ::Firebolt::Advertising::Ifa value() const override { return ::Firebolt::Advertising::Ifa{ifa, ifa_type, lmt}; }
 
 private:
-    Firebolt::Helpers::IHelper& helper_;
+    std::string ifa;
+    std::string ifa_type;
+    std::string lmt;
 };
-} // namespace Firebolt::Metrics
+} // namespace Firebolt::Advertising::JsonData

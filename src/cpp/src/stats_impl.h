@@ -19,22 +19,23 @@
 
 #pragma once
 
-#include "metrics.h"
+#include "stats.h"
 #include <firebolt/helpers.h>
 
-namespace Firebolt::Metrics
+namespace Firebolt::Stats
 {
-class MetricsImpl : public IMetrics
+
+class StatsImpl : public IStats
 {
 public:
-    MetricsImpl(Firebolt::Helpers::IHelper& helper);
-    MetricsImpl(const MetricsImpl&) = delete;
-    MetricsImpl& operator=(const MetricsImpl&) = delete;
-    ~MetricsImpl() override;
+    StatsImpl(Firebolt::Helpers::IHelper& helper);
+    StatsImpl(const StatsImpl&) = delete;
+    StatsImpl& operator=(const StatsImpl&) = delete;
+    ~StatsImpl() override;
 
-    Result<bool> ready() override;
+    virtual Result<MemoryInfo> memoryUsage() const override;
 
 private:
     Firebolt::Helpers::IHelper& helper_;
 };
-} // namespace Firebolt::Metrics
+} // namespace Firebolt::Stats

@@ -11,6 +11,7 @@
 			"Display": "A module for querying about the display",
 			"Lifecycle2": "Methods and events for responding to Lifecycle changes in your app.",
 			"Localization": "Methods for accessing location and language preferences.",
+			"Presentation": "Methods for accessing Presentation preferences.",
 			"Stats": "Provides methods to retrieve application-level system information."
 		}
 	},
@@ -115,7 +116,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:audiodescriptions"
+						"xrn:firebolt:capability:accessibility:audio-descriptions"
 					]
 				}
 			],
@@ -150,7 +151,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:closedcaptions"
+						"xrn:firebolt:capability:accessibility:closed-captions"
 					]
 				}
 			],
@@ -203,7 +204,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:highcontrastui"
+						"xrn:firebolt:capability:accessibility:high-contrast-ui"
 					]
 				}
 			],
@@ -236,7 +237,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:voiceguidance"
+						"xrn:firebolt:capability:accessibility:voice-guidance"
 					]
 				}
 			],
@@ -358,7 +359,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:device:class"
+						"xrn:firebolt:capability:device:device-class"
 					]
 				}
 			],
@@ -388,7 +389,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:device:uptime"
+						"xrn:firebolt:capability:cpp-client-only"
 					]
 				}
 			],
@@ -418,7 +419,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:device:uptime"
+						"xrn:firebolt:capability:cpp-client-only"
 					]
 				}
 			],
@@ -441,6 +442,36 @@
 			]
 		},
 		{
+			"name": "Device.chipsetId",
+			"summary": "Returns chipset ID as a printable string, e.g. BCM72180",
+			"params": [],
+			"tags": [
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:cpp-client-only"
+					]
+				}
+			],
+			"result": {
+				"name": "chipsetId",
+				"summary": "The device chipset ID",
+				"schema": {
+					"type": "string"
+				}
+			},
+			"examples": [
+				{
+					"name": "Getting the device chipset ID",
+					"params": [],
+					"result": {
+						"name": "Default Result",
+						"value": "BCM72180"
+					}
+				}
+			]
+		},
+		{
 			"name": "Display.size",
 			"summary": "Returns the physical dimensions of the connected or integral display, in centimeters. Returns 0, 0 on a OTT/STB device when a display is not connected over HDMI",
 			"params": [],
@@ -448,7 +479,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:display:size"
+						"xrn:firebolt:capability:cpp-client-only"
 					]
 				}
 			],
@@ -491,7 +522,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:display:maxresolution"
+						"xrn:firebolt:capability:cpp-client-only"
 					]
 				}
 			],
@@ -532,7 +563,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:lifecycle2:state"
+						"xrn:firebolt:capability:cpp-client-only"
 					]
 				}
 			],
@@ -589,7 +620,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:lifecycle2:state"
+						"xrn:firebolt:capability:cpp-client-only"
 					]
 				}
 			],
@@ -664,7 +695,7 @@
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:localization:language"
+						"xrn:firebolt:capability:localization:preferred-audio-languages"
 					]
 				}
 			],
@@ -726,21 +757,25 @@
 			]
 		},
 		{
-			"name": "Stats.memoryInfo",
-			"summary": "Returns information about container memory usage, in units of 1024 bytes.",
+			"name": "Presentation.focused",
 			"tags": [
+				{
+					"name": "property:readonly"
+				},
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:app"
+						"xrn:firebolt:capability:cpp-client-only"
 					]
 				}
 			],
+			"summary": "Whether the app is in focus, i.e. receiving key presses. Provided for those apps/runtimes that cannot use Wayland",
 			"params": [],
 			"result": {
-				"name": "result",
+				"name": "focused",
+				"summary": "Whether the app is in focus.",
 				"schema": {
-					"$ref": "#/components/schemas/MemoryInfo"
+					"type": "boolean"
 				}
 			},
 			"examples": [
@@ -748,10 +783,43 @@
 					"name": "Default example",
 					"params": [],
 					"result": {
-						"userMemoryUsedKiB": 123456,
-						"userMemoryLimitKiB": 789012,
-						"gpuMemoryUsedKiB": 345678,
-						"gpuMemoryLimitKiB": 901234
+						"name": "Default Result",
+						"value": true
+					}
+				}
+			]
+		},
+		{
+			"name": "Stats.memoryUsage",
+			"summary": "Returns information about container memory usage, in units of 1024 bytes.",
+			"tags": [
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:cpp-client-only"
+					]
+				}
+			],
+			"params": [],
+			"result": {
+				"name": "result",
+				"schema": {
+					"$ref": "#/components/schemas/MemoryUsage"
+				}
+			},
+			"examples": [
+				{
+					"name": "Default example",
+					"params": [],
+					"result": {
+						"name": "value",
+						"description": "The memory usage information",
+						"value": {
+							"userMemoryUsedKiB": 123456,
+							"userMemoryLimitKiB": 789012,
+							"gpuMemoryUsedKiB": 345678,
+							"gpuMemoryLimitKiB": 901234
+						}
 					}
 				}
 			]
@@ -762,12 +830,12 @@
 				{
 					"name": "event",
 					"x-contextual-parameters": 0,
-					"x-notifier": "Lifecycle2.stateChanged"
+					"x-notifier": "Lifecycle2.onStateChanged"
 				},
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:lifecycle2:state"
+						"xrn:firebolt:capability:cpp-client-only"
 					]
 				}
 			],
@@ -829,13 +897,13 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Accessibility.audioDescriptionChanged",
+					"x-notifier": "Accessibility.onAudioDescriptionChanged",
 					"x-subscriber-for": "Accessibility.audioDescription"
 				},
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:audiodescriptions"
+						"xrn:firebolt:capability:accessibility:audio-descriptions"
 					]
 				}
 			],
@@ -875,13 +943,13 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Accessibility.closedCaptionsSettingsChanged",
+					"x-notifier": "Accessibility.onClosedCaptionsSettingsChanged",
 					"x-subscriber-for": "Accessibility.closedCaptionsSettings"
 				},
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:closedcaptions"
+						"xrn:firebolt:capability:accessibility:closed-captions"
 					]
 				}
 			],
@@ -921,13 +989,13 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Accessibility.highContrastUIChanged",
+					"x-notifier": "Accessibility.onHighContrastUIChanged",
 					"x-subscriber-for": "Accessibility.highContrastUI"
 				},
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:highcontrastui"
+						"xrn:firebolt:capability:accessibility:high-contrast-ui"
 					]
 				}
 			],
@@ -967,13 +1035,13 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Accessibility.voiceGuidanceSettingsChanged",
+					"x-notifier": "Accessibility.onVoiceGuidanceSettingsChanged",
 					"x-subscriber-for": "Accessibility.voiceGuidanceSettings"
 				},
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:accessibility:voiceguidance"
+						"xrn:firebolt:capability:accessibility:voice-guidance"
 					]
 				}
 			],
@@ -1004,7 +1072,7 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Localization.countryChanged",
+					"x-notifier": "Localization.onCountryChanged",
 					"x-subscriber-for": "Localization.country"
 				},
 				{
@@ -1072,13 +1140,13 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Localization.preferredAudioLanguagesChanged",
+					"x-notifier": "Localization.onPreferredAudioLanguagesChanged",
 					"x-subscriber-for": "Localization.preferredAudioLanguages"
 				},
 				{
 					"name": "capabilities",
 					"x-uses": [
-						"xrn:firebolt:capability:localization:language"
+						"xrn:firebolt:capability:localization:preferred-audio-languages"
 					]
 				}
 			],
@@ -1109,7 +1177,7 @@
 			"tags": [
 				{
 					"name": "event",
-					"x-notifier": "Localization.localeChanged",
+					"x-notifier": "Localization.onLocaleChanged",
 					"x-subscriber-for": "Localization.locale"
 				},
 				{
@@ -1120,6 +1188,52 @@
 				}
 			],
 			"summary": "Get the *full* BCP 47 code, including script, region, variant, etc., for the preferred locale",
+			"params": [
+				{
+					"name": "listen",
+					"schema": {
+						"type": "boolean"
+					}
+				}
+			],
+			"examples": [
+				{
+					"name": "Default example",
+					"params": [
+						{
+							"name": "listen",
+							"value": true
+						}
+					],
+					"result": {
+						"name": "result",
+						"value": null
+					}
+				}
+			],
+			"result": {
+				"name": "result",
+				"schema": {
+					"type": "null"
+				}
+			}
+		},
+		{
+			"name": "Presentation.onFocusedChanged",
+			"tags": [
+				{
+					"name": "event",
+					"x-notifier": "Presentation.onFocusedChanged",
+					"x-subscriber-for": "Presentation.focused"
+				},
+				{
+					"name": "capabilities",
+					"x-uses": [
+						"xrn:firebolt:capability:cpp-client-only"
+					]
+				}
+			],
+			"summary": "Whether the app is in focus, i.e. receiving key presses. Provided for those apps/runtimes that cannot use Wayland",
 			"params": [
 				{
 					"name": "listen",
@@ -1237,14 +1351,11 @@
 					},
 					"oldState": {
 						"$ref": "#/components/schemas/LifecycleState"
-					},
-					"focused": {
-						"type": "boolean"
 					}
 				}
 			},
-			"MemoryInfo": {
-				"title": "MemoryInfo",
+			"MemoryUsage": {
+				"title": "MemoryUsage",
 				"type": "object",
 				"description": "Describes current and maximum memory usage of the container.",
 				"properties": {
