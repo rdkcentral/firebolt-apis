@@ -87,7 +87,7 @@
       ]
     },
     {
-      "name": "locale",
+      "name": "presentationLanguage",
       "tags": [
         {
           "name": "property:readonly"

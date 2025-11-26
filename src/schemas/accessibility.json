@@ -128,9 +128,6 @@
                     "type": "boolean",
                     "description": "Whether or not closed-captions should be enabled by default"
                 },
-                "styles": {
-                    "$ref": "#/definitions/ClosedCaptionsStyles"
-                },
                 "preferredLanguages": {
                     "type": "array",
                     "items": {
