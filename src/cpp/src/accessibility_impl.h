@@ -27,7 +27,6 @@ namespace Firebolt::Accessibility
 
 class AccessibilityImpl : public IAccessibility
 {
-
 public:
     explicit AccessibilityImpl(Firebolt::Helpers::IHelper& helper);
     AccessibilityImpl(const AccessibilityImpl&) = delete;

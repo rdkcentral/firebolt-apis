@@ -128,7 +128,7 @@
 					"name": "Getting the audio description setting",
 					"params": [
 						{
-							"name": "enabled",
+							"name": "Default Result",
 							"value": true
 						}
 					]
@@ -144,12 +144,6 @@
 					"schema": {
 						"type": "boolean",
 						"description": "Whether or not closed-captions should be enabled by default"
-					}
-				},
-				{
-					"name": "styles",
-					"schema": {
-						"$ref": "#/x-schemas/Accessibility/ClosedCaptionsStyles"
 					}
 				},
 				{
@@ -182,23 +176,6 @@
 						{
 							"name": "enabled",
 							"value": true
-						},
-						{
-							"name": "styles",
-							"value": {
-								"fontFamily": "monospaced_sanserif",
-								"fontSize": 1,
-								"fontColor": "#ffffff",
-								"fontEdge": "none",
-								"fontEdgeColor": "#7F7F7F",
-								"fontOpacity": 100,
-								"backgroundColor": "#000000",
-								"backgroundOpacity": 100,
-								"textAlign": "center",
-								"textAlignVertical": "middle",
-								"windowColor": "white",
-								"windowOpacity": 50
-							}
 						},
 						{
 							"name": "preferredLanguages",
@@ -397,12 +374,12 @@
 			]
 		},
 		{
-			"name": "Localization.onLocaleChanged",
+			"name": "Localization.onPresentationLanguageChanged",
 			"tags": [
 				{
 					"name": "notifier",
-					"x-notifier-for": "Localization.locale",
-					"x-event": "Localization.onLocaleChanged"
+					"x-notifier-for": "Localization.presentationLanguage",
+					"x-event": "Localization.onPresentationLanguageChanged"
 				},
 				{
 					"name": "capabilities",
@@ -636,9 +613,6 @@
 						"type": "boolean",
 						"description": "Whether or not closed-captions should be enabled by default"
 					},
-					"styles": {
-						"$ref": "#/x-schemas/Accessibility/ClosedCaptionsStyles"
-					},
 					"preferredLanguages": {
 						"type": "array",
 						"items": {
@@ -705,113 +679,6 @@
 				"type": "number",
 				"minimum": 0.1,
 				"maximum": 10
-			},
-			"ClosedCaptionsStyles": {
-				"title": "ClosedCaptionsStyles",
-				"type": "object",
-				"description": "The default styles to use when displaying closed-captions",
-				"properties": {
-					"fontFamily": {
-						"$ref": "#/x-schemas/Accessibility/FontFamily"
-					},
-					"fontSize": {
-						"$ref": "#/x-schemas/Accessibility/FontSize"
-					},
-					"fontColor": {
-						"$ref": "#/x-schemas/Accessibility/Color"
-					},
-					"fontEdge": {
-						"$ref": "#/x-schemas/Accessibility/FontEdge"
-					},
-					"fontEdgeColor": {
-						"$ref": "#/x-schemas/Accessibility/Color"
-					},
-					"fontOpacity": {
-						"$ref": "#/x-schemas/Accessibility/Opacity"
-					},
-					"backgroundColor": {
-						"$ref": "#/x-schemas/Accessibility/Color"
-					},
-					"backgroundOpacity": {
-						"$ref": "#/x-schemas/Accessibility/Opacity"
-					},
-					"textAlign": {
-						"$ref": "#/x-schemas/Accessibility/HorizontalAlignment"
-					},
-					"textAlignVertical": {
-						"$ref": "#/x-schemas/Accessibility/VerticalAlignment"
-					},
-					"windowColor": {
-						"$ref": "#/x-schemas/Accessibility/Color"
-					},
-					"windowOpacity": {
-						"$ref": "#/x-schemas/Accessibility/Opacity"
-					}
-				}
-			},
-			"FontFamily": {
-				"type": [
-					"string",
-					"null"
-				],
-				"enum": [
-					"monospaced_serif",
-					"proportional_serif",
-					"monospaced_sanserif",
-					"proportional_sanserif",
-					"smallcaps",
-					"cursive",
-					"casual",
-					null
-				]
-			},
-			"FontSize": {
-				"type": [
-					"number",
-					"null"
-				],
-				"minimum": 0
-			},
-			"Color": {
-				"type": [
-					"string",
-					"null"
-				]
-			},
-			"FontEdge": {
-				"type": [
-					"string",
-					"null"
-				],
-				"enum": [
-					"none",
-					"raised",
-					"depressed",
-					"uniform",
-					"drop_shadow_left",
-					"drop_shadow_right",
-					null
-				]
-			},
-			"Opacity": {
-				"type": [
-					"number",
-					"null"
-				],
-				"minimum": 0,
-				"maximum": 100
-			},
-			"HorizontalAlignment": {
-				"type": [
-					"string",
-					"null"
-				]
-			},
-			"VerticalAlignment": {
-				"type": [
-					"string",
-					"null"
-				]
 			}
 		},
 		"Localization": {

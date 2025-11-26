@@ -115,7 +115,7 @@ set(COMPONENT_TESTS_APP FireboltClientComponentTests)
 message("Setup ${COMPONENT_TESTS_APP}")
 
 set(COMPONENT_TESTS
-    # "component/accessibilityTest.cpp"
+    "component/accessibilityTest.cpp"
     "component/advertisingTest.cpp"
     "component/deviceTest.cpp"
     "component/lifecycleTest.cpp"
@@ -126,6 +126,7 @@ set(COMPONENT_TESTS
 add_executable(${COMPONENT_TESTS_APP}
     ComponentTestsMain.cpp
     "component/utils.cpp"
+      #"component/accessibilityTest.cpp"
     ${COMPONENT_TESTS}
 )
 
