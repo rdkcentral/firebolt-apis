@@ -1,7 +1,4 @@
-[firebolt-native-client]
-A release package with sources for building native (c++) client is prepared from the src/cpp directory, which needs to include the associated license file (Apache-2.0).
-
-[firebolt-core-sdk]
+[firebolt-apis]
 Copyright 2021 Comcast Cable Communications Management, LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");you may not use this file except in compliance with the License.
@@ -47,4 +44,6 @@ npm is a registered trademark of npm, Inc.
 
 Copyright 2025 Sky UK
 Licensed under the Apache License, Version 2.0
+
+A release package with sources for building native (C++) client is prepared from the src/cpp directory, which needs to include the associated license file (Apache-2.0).
 
