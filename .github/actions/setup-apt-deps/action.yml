@@ -42,7 +42,8 @@ runs:
           cmake \
           jq \
           libboost-all-dev \
-          libcurl4-openssl-dev
+          libcurl4-openssl-dev \
+          netcat-openbsd
 
     - name: Save newly-downloaded apt packages into runner temp for cache
       shell: bash

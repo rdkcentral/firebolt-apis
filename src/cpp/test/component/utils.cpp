@@ -18,8 +18,8 @@
  */
 
 #include "./component/utils.h"
-#include "json_engine.h"
 #include "firebolt.h"
+#include "json_engine.h"
 
 #include "gtest/gtest.h"
 
@@ -34,21 +34,21 @@
 #include <thread>
 
 // curl http get helper function using
-std::string httpGet(const std::string &url)
+std::string httpGet(const std::string& url)
 {
-    CURL *curl = curl_easy_init();
+    CURL* curl = curl_easy_init();
     if (!curl)
         return "";
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 
-    struct curl_slist *headers = nullptr;
+    struct curl_slist* headers = nullptr;
     headers = curl_slist_append(headers, "Content-Type: application/json");
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
     std::string response;
     curl_easy_setopt(
         curl, CURLOPT_WRITEFUNCTION,
-        +[](char *ptr, size_t size, size_t nmemb, std::string *data)
+        +[](char* ptr, size_t size, size_t nmemb, std::string* data)
         {
             data->append(ptr, size * nmemb);
             return size * nmemb;
@@ -62,9 +62,9 @@ std::string httpGet(const std::string &url)
 }
 
 // curl http post helper function using
-std::string httpPost(const std::string &url, const std::string &postData)
+std::string httpPost(const std::string& url, const std::string& postData)
 {
-    CURL *curl = curl_easy_init();
+    CURL* curl = curl_easy_init();
     if (!curl)
         return "";
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
@@ -72,14 +72,14 @@ std::string httpPost(const std::string &url, const std::string &postData)
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData.c_str());
     curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, postData.size());
 
-    struct curl_slist *headers = nullptr;
+    struct curl_slist* headers = nullptr;
     headers = curl_slist_append(headers, "Content-Type: application/json");
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
     std::string response;
     curl_easy_setopt(
         curl, CURLOPT_WRITEFUNCTION,
-        +[](char *ptr, size_t size, size_t nmemb, std::string *data)
+        +[](char* ptr, size_t size, size_t nmemb, std::string* data)
         {
             data->append(ptr, size * nmemb);
             return size * nmemb;
@@ -92,12 +92,12 @@ std::string httpPost(const std::string &url, const std::string &postData)
     return (res == CURLE_OK) ? response : "";
 }
 
-void triggerRaw(const std::string &payload)
+void triggerRaw(const std::string& payload)
 {
     httpPost("http://localhost:3333/api/v1/raw", payload);
 }
 
-void triggerEvent(const std::string &method, const std::string &params)
+void triggerEvent(const std::string& method, const std::string& params)
 {
     nlohmann::json eventMessage;
     eventMessage["method"] = method;
@@ -106,7 +106,7 @@ void triggerEvent(const std::string &method, const std::string &params)
     httpPost("http://localhost:3333/api/v1/event", eventMessage.dump());
 }
 
-void verifyEventSubscription(const Firebolt::Result<Firebolt::SubscriptionId> &id)
+void verifyEventSubscription(const Firebolt::Result<Firebolt::SubscriptionId>& id)
 {
     if (id)
     {
@@ -117,7 +117,7 @@ void verifyEventSubscription(const Firebolt::Result<Firebolt::SubscriptionId> &i
         FAIL() << "Event Subscription failed. " + toError(id);
     }
 }
-void verifyUnsubscribeResult(const Firebolt::Result<void> &result)
+void verifyUnsubscribeResult(const Firebolt::Result<void>& result)
 {
 
     if (result.error() == Firebolt::Error::None)
@@ -129,7 +129,7 @@ void verifyUnsubscribeResult(const Firebolt::Result<void> &result)
         FAIL() << "Unsubscribe failed." + toError(result);
     }
 }
-void verifyEventReceived(std::mutex &mtx, std::condition_variable &cv, bool &eventReceived)
+void verifyEventReceived(std::mutex& mtx, std::condition_variable& cv, bool& eventReceived)
 {
     // Wait for the event to be received or timeout after 5 seconds
     std::unique_lock<std::mutex> lock(mtx);

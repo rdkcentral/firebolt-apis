@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-set(TESTAPP TestFireboltCore)
+set(TESTAPP TestFireboltClient)
 
 find_package(FireboltTransport CONFIG REQUIRED)
 find_package(Curl REQUIRED )
@@ -29,16 +29,16 @@ include(GoogleTest)
 
 enable_testing()
 
-add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-core-open-rpc.json")
+add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-open-rpc.json")
 
 message("Setup ${TESTAPP}")
 
-add_executable(${TESTAPP} CoreSDKTest.cpp Main.cpp)
+add_executable(${TESTAPP} CoreClientTest.cpp Main.cpp)
 
 target_link_libraries(${TESTAPP}
     PRIVATE
         FireboltTransport::FireboltTransport
-        FireboltSDK
+        FireboltClient
         nlohmann_json::nlohmann_json
 )
 
@@ -60,21 +60,27 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${TESTAPP} ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
 )
 
-set(UNIT_TESTS_APP FireboltCoreUnitTests)
+set(UNIT_TESTS_APP FireboltClientUnitTests)
 
 message("Setup ${UNIT_TESTS_APP}")
 
-file(GLOB UNIT_TESTS "unit/*")
+set(UNIT_TESTS
+    "unit/accessibilityTest.cpp"
+    "unit/advertisingTest.cpp"
+    "unit/deviceTest.cpp"
+    "unit/lifecycleTest.cpp"
+    "unit/presentationTest.cpp"
+    "unit/statsTest.cpp"
+)
 
 add_executable(${UNIT_TESTS_APP}
-    CoreSDKTest.cpp
-    Unit.cpp
+    UnitTestsMain.cpp
     ${UNIT_TESTS}
 )
 
 target_link_libraries(${UNIT_TESTS_APP}
     PRIVATE
-        FireboltSDK
+        FireboltClient
         FireboltTransport::FireboltTransport
         nlohmann_json::nlohmann_json
         nlohmann_json_schema_validator::validator
@@ -104,28 +110,29 @@ if(DISCOVER_UT)
     )
 endif()
 
-set(COMPONENT_TESTS_APP FireboltCoreComponentTests)
+set(COMPONENT_TESTS_APP FireboltClientComponentTests)
 
 message("Setup ${COMPONENT_TESTS_APP}")
 
-# file(GLOB COMPONENT_TESTS "component/*")
-set(COMPONENT_TESTS "component/deviceTest.cpp"
-                    "component/utils.cpp"
-                    "component/metricsTest.cpp"
-                    "component/localizationTest.cpp"
-                    "component/hdmiInputTest.cpp"
-                    "component/secureStorageTest.cpp"
-                    "component/lifecycle2Test.cpp"
-                    )
+set(COMPONENT_TESTS
+    "component/accessibilityTest.cpp"
+    "component/advertisingTest.cpp"
+    "component/deviceTest.cpp"
+    "component/lifecycleTest.cpp"
+    "component/presentationTest.cpp"
+    "component/statsTest.cpp"
+)
 
 add_executable(${COMPONENT_TESTS_APP}
     ComponentTestsMain.cpp
+    "component/utils.cpp"
+      #"component/accessibilityTest.cpp"
     ${COMPONENT_TESTS}
 )
 
 target_link_libraries(${COMPONENT_TESTS_APP}
     PRIVATE
-        FireboltSDK
+        FireboltClient
         FireboltTransport::FireboltTransport
         nlohmann_json::nlohmann_json
         nlohmann_json_schema_validator::validator

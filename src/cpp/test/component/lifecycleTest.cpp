@@ -51,8 +51,8 @@ TEST_F(LifecycleTest, close)
 TEST_F(LifecycleTest, state)
 {
     Firebolt::Result<Firebolt::Lifecycle::LifecycleState> result =
-        Firebolt::IFireboltAccessor::Instance().LifecycleInterface().getCurrentState();
-    ASSERT_TRUE(result) << "Error on calling LifecycleInterface.getCurrentState() method";
+        Firebolt::IFireboltAccessor::Instance().LifecycleInterface().state();
+    ASSERT_TRUE(result) << "Error on calling LifecycleInterface.state() method";
 
     auto expectedValue = jsonEngine.get_value("Lifecycle.state");
     EXPECT_EQ(*result, Firebolt::Lifecycle::LifecycleState::ACTIVE);
@@ -61,16 +61,14 @@ TEST_F(LifecycleTest, state)
 TEST_F(LifecycleTest, subscribeOnState)
 {
     auto id = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnStateChanged(
-        [&](const std::vector<Firebolt::Lifecycle::StateChange> &changes)
+        [&](const std::vector<Firebolt::Lifecycle::StateChange>& changes)
         {
             EXPECT_EQ(changes.size(), 1);
             std::cout << "[Subscription] Lifecycle state changed: " << static_cast<int>(changes[0].newState)
-                      << ", old state: " << static_cast<int>(changes[0].oldState)
-                      << ", focused: " << changes[0].focused << std::endl;
+                      << ", old state: " << static_cast<int>(changes[0].oldState) << std::endl;
 
             EXPECT_EQ(changes[0].newState, Firebolt::Lifecycle::LifecycleState::PAUSED);
             EXPECT_EQ(changes[0].oldState, Firebolt::Lifecycle::LifecycleState::INITIALIZING);
-            EXPECT_EQ(changes[0].focused, true);
 
             {
                 std::lock_guard<std::mutex> lock(mtx);
@@ -81,12 +79,10 @@ TEST_F(LifecycleTest, subscribeOnState)
     verifyEventSubscription(id);
 
     // Trigger the event from the mock server
-    // triggerEvent("Lifecycle2.onStateChanged", R"([{"focused":true,"newState":"paused","oldState":"initializing"}])");
-    triggerRaw(
-        R"({"method":"lifecycle2.stateChanged","params":[{"focused":true,"newState":"paused","oldState":"initializing"}]})");
+    triggerEvent("Lifecycle2.onStateChanged", R"([{"newState":"paused","oldState":"initializing"}])");
 
     verifyEventReceived(mtx, cv, eventReceived);
     // Unsubscribe from the event
-    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().unsubscribe(id.value());
+    auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(id.value());
     verifyUnsubscribeResult(result);
 }

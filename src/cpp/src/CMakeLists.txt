@@ -21,6 +21,8 @@ include(CMakePackageConfigHelpers)
 set(TARGET ${PROJECT_NAME})
 message("Setup ${TARGET} v${PROJECT_VERSION}")
 
+string(TOLOWER "${TARGET}" TARGET_LOWER)
+
 file(GLOB SOURCES *.cpp json_types/*.cpp)
 
 if(NOT ENABLE_TESTS)
@@ -38,9 +40,25 @@ add_library(${TARGET}
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 find_package(FireboltTransport CONFIG REQUIRED)
+
+if(NOT FireboltTransport_VERSION STREQUAL FIREBOLT_TRANSPORT_VERSION)
+    message(FATAL_ERROR "FireboltTransport version mismatch! "
+                        "Expected ${FIREBOLT_TRANSPORT_VERSION} but found ${FireboltTransport_VERSION}. "
+                        "Please check your installation.")
+endif()
+
 find_package(nlohmann_json CONFIG REQUIRED)
+if (TRANPORT_LINKAGE_STATIC)
+    find_package(websocketpp CONFIG REQUIRED)
+endif()
 
 generate_export_header(${TARGET})
+
+configure_file(
+    "${CMAKE_SOURCE_DIR}/include/version.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_version.h"
+    @ONLY
+)
 
 target_link_libraries(${TARGET}
     PRIVATE
@@ -56,7 +74,7 @@ target_include_directories(${TARGET}
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 string(REGEX REPLACE "^v?([0-9]+)\\.([0-9]+)\\.([0-9]+).*" "\\1" PROJECT_VERSION_MAJOR ${PROJECT_VERSION})
@@ -95,14 +113,15 @@ install(
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/
-    DESTINATION include/${PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/firebolt
     FILES_MATCHING PATTERN "*.h"
 )
 
-string(TOLOWER "${TARGET}" TARGET_LOWER)
 install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_export.h
-    DESTINATION include/${PROJECT_NAME}
+    FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_export.h
+        ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_version.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/firebolt
 )
 
 install(
