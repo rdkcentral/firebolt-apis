@@ -1,3 +1,109 @@
+# [1.8.0-next.26](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.25...v1.8.0-next.26) (2025-11-26)
+
+
+### Features
+
+* Component Tests for Accessibility API ([#470](https://github.com/rdkcentral/firebolt-apis/issues/470)) ([0785271](https://github.com/rdkcentral/firebolt-apis/commit/07852710a36d3497d66aeaf2affbb2730a682e71))
+
+# [1.8.0-next.25](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.24...v1.8.0-next.25) (2025-11-25)
+
+
+### Features
+
+* Set transport version to be used ([#468](https://github.com/rdkcentral/firebolt-apis/issues/468)) ([a8589dc](https://github.com/rdkcentral/firebolt-apis/commit/a8589dc0f72208eb3bbe09908a224746deb849c7))
+
+# [1.8.0-next.24](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.23...v1.8.0-next.24) (2025-11-25)
+
+
+### Features
+
+* Update demo app with presentation ([#466](https://github.com/rdkcentral/firebolt-apis/issues/466)) ([d16361c](https://github.com/rdkcentral/firebolt-apis/commit/d16361c733407102f9780c2bf3e252a154ef22d6))
+
+# [1.8.0-next.23](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.22...v1.8.0-next.23) (2025-11-25)
+
+
+### Features
+
+* Update around versioning ([#467](https://github.com/rdkcentral/firebolt-apis/issues/467)) ([57c2e70](https://github.com/rdkcentral/firebolt-apis/commit/57c2e704b3fe75634fc9722a04906dfd9407739e))
+
+# [1.8.0-next.22](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.21...v1.8.0-next.22) (2025-11-24)
+
+
+### Features
+
+* compilation warnings ([#464](https://github.com/rdkcentral/firebolt-apis/issues/464)) ([7fed125](https://github.com/rdkcentral/firebolt-apis/commit/7fed1255b5f90091929e75b60c5ecd096a28fbac))
+
+# [1.8.0-next.21](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.20...v1.8.0-next.21) (2025-11-24)
+
+
+### Features
+
+* Update clang formatter, format code, add a checker in ci ([#465](https://github.com/rdkcentral/firebolt-apis/issues/465)) ([6299894](https://github.com/rdkcentral/firebolt-apis/commit/62998949071c64b77100ed8a93122fd4b551eb1f))
+
+# [1.8.0-next.20](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.19...v1.8.0-next.20) (2025-11-24)
+
+
+### Features
+
+* Clean up code, update to changes in transport ([#462](https://github.com/rdkcentral/firebolt-apis/issues/462)) ([caae282](https://github.com/rdkcentral/firebolt-apis/commit/caae2824ff68c1c4bb1ed021761410a1b717c1a2))
+
+# [1.8.0-next.19](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.18...v1.8.0-next.19) (2025-11-21)
+
+
+### Features
+
+* Presentation API ([#461](https://github.com/rdkcentral/firebolt-apis/issues/461)) ([72268df](https://github.com/rdkcentral/firebolt-apis/commit/72268dfec24b258009833cc583f2b49fcc58e00c))
+
+# [1.8.0-next.18](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.17...v1.8.0-next.18) (2025-11-21)
+
+
+### Bug Fixes
+
+* Code refactored ([#460](https://github.com/rdkcentral/firebolt-apis/issues/460)) ([7d08c6d](https://github.com/rdkcentral/firebolt-apis/commit/7d08c6db24fc6586b30aba28983ba04bd7ef2f8f))
+
+# [1.8.0-next.17](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.16...v1.8.0-next.17) (2025-11-20)
+
+
+### Features
+
+* Accessibility API ([#452](https://github.com/rdkcentral/firebolt-apis/issues/452)) ([15a78ec](https://github.com/rdkcentral/firebolt-apis/commit/15a78ec63da8ac7389c91fd11e6639111be88e22))
+* Stats API ([#453](https://github.com/rdkcentral/firebolt-apis/issues/453)) ([2bfa1ad](https://github.com/rdkcentral/firebolt-apis/commit/2bfa1ad64c268a850a349f2e155a094f582bfcde))
+
+# [1.8.0-next.16](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.15...v1.8.0-next.16) (2025-11-20)
+
+
+### Features
+
+* Advertising api ([#457](https://github.com/rdkcentral/firebolt-apis/issues/457)) ([5f83d37](https://github.com/rdkcentral/firebolt-apis/commit/5f83d37e6a899e6fc3dbb9d043de4e3049d05fe9))
+
+# [1.8.0-next.15](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.14...v1.8.0-next.15) (2025-11-20)
+
+
+### Features
+
+* Device API ([#451](https://github.com/rdkcentral/firebolt-apis/issues/451)) ([c0bde26](https://github.com/rdkcentral/firebolt-apis/commit/c0bde2676d2fd2b9670441877cafd4d3ce522ab5))
+
+# [1.8.0-next.14](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.13...v1.8.0-next.14) (2025-11-19)
+
+
+### Features
+
+* Update namings ([#455](https://github.com/rdkcentral/firebolt-apis/issues/455)) ([2432e35](https://github.com/rdkcentral/firebolt-apis/commit/2432e356f16e0d98d3db0be34198be4a59679e4d))
+
+# [1.8.0-next.13](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.12...v1.8.0-next.13) (2025-11-18)
+
+
+### Features
+
+* New payload spec ([#454](https://github.com/rdkcentral/firebolt-apis/issues/454)) ([8b9718b](https://github.com/rdkcentral/firebolt-apis/commit/8b9718b2458545739c216d77ba86135973866485))
+
+# [1.8.0-next.12](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.11...v1.8.0-next.12) (2025-11-17)
+
+
+### Bug Fixes
+
+* Set pedantic compilation ([#450](https://github.com/rdkcentral/firebolt-apis/issues/450)) ([c3d4e3f](https://github.com/rdkcentral/firebolt-apis/commit/c3d4e3f13084e5310e91a877c61686fbbb82c1a8))
+
 # [1.8.0-next.11](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.10...v1.8.0-next.11) (2025-11-07)
 
 

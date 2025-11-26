@@ -21,7 +21,10 @@ defaults:
 env:
   HUSKY: 0
   SYSROOT_PATH: ${{ github.workspace }}/deps_install
-  DEPS_FILE: ./src/cpp/.deps
+  DEPS_FILE: ${{ github.workspace }}/.github/deps
+  MOCK_PATH: ${{ github.workspace }}/mock-firebolt
+  MOCK_SHA1SUM: cf0c4b35b5f3997bd9e6f82a18d57eafa0c62192
+  MOCK_PATCH: ${{ github.workspace }}/.github/mock-firebolt/events.patch
 
 jobs:
   setup_deps:
@@ -37,8 +40,34 @@ jobs:
         id: setup-deps
         uses: ./.github/actions/setup-cxx-deps
 
+  setup_mock:
+    runs-on: ubuntu-latest
+    outputs:
+      deps_cache_key: ${{ steps.setup-mock.outputs.deps_cache_key }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Mock-Firebolt
+        id: setup-mock
+        uses: ./.github/actions/setup-mock
+
+  format_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install clang-format
+        run: sudo apt-get update && sudo apt-get install -y clang-format
+
+      - name: Run clang-format check
+        run: |
+          cd ./src/cpp && git ls-files -- '*.cpp' '*.h' | xargs clang-format --dry-run --Werror
+
   build_project:
-    needs: setup_deps
+    needs: [setup_deps, setup_mock]
     runs-on: ubuntu-latest
 
     steps:
@@ -53,6 +82,12 @@ jobs:
           path: ${{ env.SYSROOT_PATH }}
           key: ${{ runner.os }}-deps-${{ needs.setup_deps.outputs.deps_cache_key }}
 
+      - name: Restore Mock-Firebolt Cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.MOCK_PATH }}
+          key: ${{ runner.os }}-mock-${{ needs.setup_mock.outputs.deps_cache_key }}
+
       - name: Get version
         run: |
           git config --global --add safe.directory '*'
@@ -62,6 +97,21 @@ jobs:
 
       - name: Install apt dependencies
         uses: ./.github/actions/setup-apt-deps
+
+      - name: Install Transport
+        run: |
+          version=$(cat ${{ github.workspace }}/src/cpp/.transport.version)
+          TMP_DIR=$(mktemp -d)
+          pushd "$TMP_DIR"
+          curl -sL https://github.com/rdkcentral/firebolt-native-transport/releases/download/v$version/firebolt-native-transport-$version.tar.gz | tar xzf -
+          cmake -B "build/fnt" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX:PATH="${{ env.SYSROOT_PATH }}/usr" \
+            -DBUILD_SHARED_LIBS=ON \
+            -S "firebolt-native-transport-$version"
+          cmake --build "build/fnt" --target install
+          popd
+          rm -rf "$TMP_DIR"
 
       - name: Configure CMake
         run: |
@@ -73,10 +123,20 @@ jobs:
       - name: Build Project
         run: cmake --build build
 
-      - name: Run Tests
+      - name: Run Unit Tests
         run: |
-          cp src/cpp/firebolt-core-open-rpc.json build/test/
+          cp ${{ github.workspace }}/src/cpp/firebolt-open-rpc.json build/test/
           ctest --test-dir build/test
+
+      - name: Run Component Tests
+        run: |
+          cp ${{ github.workspace }}/src/cpp/firebolt-open-rpc.json build/test/
+          ./.github/scripts/run-component-tests.sh \
+            --mock ${{ env.MOCK_PATH }} \
+            --config ${{ github.workspace }}/.github/mock-firebolt/config.json \
+            --openrpc ${{ github.workspace }}/src/cpp/firebolt-open-rpc.json \
+            --app-openrpc ${{ github.workspace }}/.github/openrpc/firebolt-app-open-rpc.json \
+            --test-exe ${{ github.workspace }}/build/test/FireboltClientComponentTests
 
       - name: Make Release package of Native SDK
         run: |

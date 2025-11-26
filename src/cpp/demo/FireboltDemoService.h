@@ -19,26 +19,14 @@
 
 #pragma once
 
-#include "firebolt.h"
 #include <condition_variable>
+#include <firebolt/firebolt.h>
 #include <mutex>
 #include <set>
-#include <string>
 
 class FireboltDemoService
 {
 public:
-    struct DeviceInfo
-    {
-        std::string id;
-        std::string manufacturer;
-        std::string model;
-        std::string name;
-        std::string platform;
-        std::string type;
-        std::string uid;
-    };
-
     FireboltDemoService();
     ~FireboltDemoService();
     FireboltDemoService(const FireboltDemoService&) = delete;
@@ -46,11 +34,9 @@ public:
     FireboltDemoService& operator=(const FireboltDemoService&) = delete;
     FireboltDemoService& operator=(FireboltDemoService&&) = delete;
 
-    DeviceInfo getAndPrintDeviceValues();
-    void ownDemo();
-    void ownSubscriptionDemo();
+    void lifecycle();
+    void presentation();
 
-    void setupDeviceSubscriptions();
     void unsubscribeAll();
 
 private:
@@ -61,6 +47,6 @@ private:
     std::mutex mutex_{};
     std::condition_variable cv_;
     bool connected_{false};
-    std::set<Firebolt::SubscriptionId> deviceSubscriptionIds_;
-    std::string currentDeviceName_;
+    std::set<Firebolt::SubscriptionId> lifecycleSubscriptionIds_;
+    std::set<Firebolt::SubscriptionId> presentationSubscriptionIds_;
 };

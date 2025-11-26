@@ -20,26 +20,24 @@
 #pragma once
 
 #include "securestorage.h"
-#include <types/json_types.h>
+#include <firebolt/json_types.h>
 
 namespace Firebolt::SecureStorage::JsonData
 {
-inline FireboltSDK::JSON::EnumType<::Firebolt::SecureStorage::StorageScope> StorageScopeEnum({
-    { "device", ::Firebolt::SecureStorage::StorageScope::DEVICE },
-    { "account", ::Firebolt::SecureStorage::StorageScope::ACCOUNT },
+inline Firebolt::JSON::EnumType<::Firebolt::SecureStorage::StorageScope> StorageScopeEnum({
+    {"device", ::Firebolt::SecureStorage::StorageScope::DEVICE},
+    {"account", ::Firebolt::SecureStorage::StorageScope::ACCOUNT},
 });
 
-class StorageOptions : public FireboltSDK::JSON::NL_Json_Basic<::Firebolt::SecureStorage::StorageOptions>
+class StorageOptions : public Firebolt::JSON::NL_Json_Basic<::Firebolt::SecureStorage::StorageOptions>
 {
 public:
-    void FromJson(const nlohmann::json& json) override
-    {
-        ttl_ = json.at("ttl").get<float>();
-    }
-    ::Firebolt::SecureStorage::StorageOptions Value() const override
+    void fromJson(const nlohmann::json& json) override { ttl_ = json.at("ttl").get<float>(); }
+    ::Firebolt::SecureStorage::StorageOptions value() const override
     {
         return ::Firebolt::SecureStorage::StorageOptions{ttl_};
     }
+
 private:
     float ttl_;
 };

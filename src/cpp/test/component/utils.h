@@ -21,22 +21,22 @@
 
 #include <firebolt.h>
 
-#include <string>
 #include <condition_variable>
 #include <mutex>
 #include <nlohmann/json.hpp>
+#include <string>
 
-std::string httpGet(const std::string &url);
-std::string httpPost(const std::string &url, const std::string &postData);
+std::string httpGet(const std::string& url);
+std::string httpPost(const std::string& url, const std::string& postData);
 
-void triggerEvent(const std::string &method, const std::string &params);
-void triggerRaw(const std::string &payload);
+void triggerEvent(const std::string& method, const std::string& params);
+void triggerRaw(const std::string& payload);
 
-void verifyEventSubscription(const Firebolt::Result<Firebolt::SubscriptionId> &id);
-void verifyUnsubscribeResult(const Firebolt::Result<void> &result);
-void verifyEventReceived(std::mutex &mtx, std::condition_variable &cv, bool &eventReceived);
+void verifyEventSubscription(const Firebolt::Result<Firebolt::SubscriptionId>& id);
+void verifyUnsubscribeResult(const Firebolt::Result<void>& result);
+void verifyEventReceived(std::mutex& mtx, std::condition_variable& cv, bool& eventReceived);
 
-template <typename T> inline std::string toError(const Firebolt::Result<T> &result)
+template <typename T> inline std::string toError(const Firebolt::Result<T>& result)
 {
     if (result)
     {

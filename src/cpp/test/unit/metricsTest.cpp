@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include "metrics_impl.h"
 #include "json_engine.h"
+#include "metrics_impl.h"
 #include "mock_helper.h"
 
 class MetricsTest : public ::testing::Test, protected MockBase
@@ -30,8 +30,8 @@ protected:
 TEST_F(MetricsTest, ready)
 {
     EXPECT_CALL(mockHelper, getJson("Metrics.ready", _))
-        .WillOnce(Invoke([&](const std::string &methodName, const nlohmann::json &parameters)
-                        { return Firebolt::Result<nlohmann::json>{jsonEngine.get_value("Metrics.ready")}; }));
+        .WillOnce(Invoke([&](const std::string& methodName, const nlohmann::json& parameters)
+                         { return Firebolt::Result<nlohmann::json>{jsonEngine.get_value("Metrics.ready")}; }));
 
     auto result = metricsImpl_.ready();
     ASSERT_TRUE(result) << "error on get";
