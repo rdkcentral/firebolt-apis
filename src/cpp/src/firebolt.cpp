@@ -28,6 +28,7 @@
 #include "presentation_impl.h"
 #include "securestorage_impl.h"
 #include "stats_impl.h"
+#include "display_impl.h"
 #include <firebolt/gateway.h>
 
 namespace Firebolt
@@ -44,7 +45,8 @@ public:
           metrics_(Firebolt::Helpers::GetHelperInstance()),
           presentation_(Firebolt::Helpers::GetHelperInstance()),
           secureStorage_(Firebolt::Helpers::GetHelperInstance()),
-          stats_(Firebolt::Helpers::GetHelperInstance())
+          stats_(Firebolt::Helpers::GetHelperInstance()),
+          display_(Firebolt::Helpers::GetHelperInstance())
     {
     }
 
@@ -75,6 +77,7 @@ public:
     Metrics::IMetrics& MetricsInterface() override { return metrics_; }
     SecureStorage::ISecureStorage& SecureStorageInterface() override { return secureStorage_; }
     Stats::IStats& StatsInterface() override { return stats_; }
+    Display::IDisplay& DisplayInterface() override { return display_; }
 
 private:
     void unsubscribeAll()
@@ -95,6 +98,7 @@ private:
     Presentation::PresentationImpl presentation_;
     SecureStorage::SecureStorageImpl secureStorage_;
     Stats::StatsImpl stats_;
+    Display::DisplayImpl display_;
 };
 
 /* static */ IFireboltAccessor& IFireboltAccessor::Instance()

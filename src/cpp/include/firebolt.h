@@ -29,6 +29,7 @@
 #include "presentation.h"
 #include "securestorage.h"
 #include "stats.h"
+#include "display.h"
 #include <firebolt/config.h>
 #include <firebolt/types.h>
 #include <functional>
@@ -140,5 +141,12 @@ public:
      * @return Reference to Stats interface
      */
     virtual Stats::IStats& StatsInterface() = 0;
+
+    /**
+     * @brief Returns instance of Display interface
+     *
+     * @return Reference to Display interface
+     */
+    virtual Display::IDisplay& DisplayInterface() = 0;
 };
 } // namespace Firebolt
