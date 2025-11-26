@@ -1,3 +1,6 @@
+[firebolt-native-client]
+A release package with sources for building native (c++) client is prepared from the src/cpp directory, which needs to include the associated license file (Apache-2.0).
+
 [firebolt-core-sdk]
 Copyright 2021 Comcast Cable Communications Management, LLC
 
