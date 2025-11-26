@@ -122,6 +122,7 @@ set(COMPONENT_TESTS
     "component/lifecycleTest.cpp"
     "component/presentationTest.cpp"
     "component/statsTest.cpp"
+    #"component/localizationTest.cpp"
 )
 
 add_executable(${COMPONENT_TESTS_APP}
