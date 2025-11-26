@@ -18,9 +18,9 @@
  */
 
 #include "accessibility_impl.h"
+#include "firebolt.h"
 #include "json_engine.h"
 #include "json_types/jsondata_accessibility_types.h"
-#include "firebolt.h"
 #include "utils.h"
 
 class AccessibilityTest : public ::testing::Test
@@ -48,7 +48,7 @@ TEST_F(AccessibilityTest, AudioDescription)
 
 TEST_F(AccessibilityTest, SubscribeOnAudioDescriptionChanged)
 {
-    auto id = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().subscribeOnAudioDescriptionChanged(  
+    auto id = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().subscribeOnAudioDescriptionChanged(
 
         [&](const bool& enabled)
         {
@@ -107,8 +107,7 @@ TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
     // Unsubscribe from the event
     auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(id.value());
     verifyUnsubscribeResult(result);
-    }
-
+}
 
 TEST_F(AccessibilityTest, HighContrastUI)
 {

@@ -140,12 +140,12 @@ public:
      * @return Reference to Accessibility interface
      */
 
-     /** 
-    virtual Accessibility::IAccessibility& AccessibilityInterface() = 0;
-     * @brief Returns instance of Stats interface
-     *
-     * @return Reference to Stats interface
-     */
+    /**
+   virtual Accessibility::IAccessibility& AccessibilityInterface() = 0;
+    * @brief Returns instance of Stats interface
+    *
+    * @return Reference to Stats interface
+    */
     virtual Stats::IStats& StatsInterface() = 0;
 };
 } // namespace Firebolt

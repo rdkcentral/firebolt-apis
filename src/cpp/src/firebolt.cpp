@@ -45,7 +45,6 @@ public:
           presentation_(Firebolt::Helpers::GetHelperInstance()),
           secureStorage_(Firebolt::Helpers::GetHelperInstance()),
           stats_(Firebolt::Helpers::GetHelperInstance())
-          
     {
     }
 
