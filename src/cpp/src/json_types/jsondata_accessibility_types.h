@@ -24,15 +24,7 @@
 
 namespace Firebolt::Accessibility::JsonData
 {
-class AudioDescription : public Firebolt::JSON::NL_Json_Basic<bool>
-{
-public:
-    void fromJson(const nlohmann::json& json) override { value_ = json["enabled"].get<bool>(); }
-    bool value() const override { return value_; }
 
-private:
-    bool value_;
-};
 class ClosedCaptionsSettings : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Accessibility::ClosedCaptionsSettings>
 {
 public:

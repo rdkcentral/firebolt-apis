@@ -1,3 +1,10 @@
+# [1.8.0-next.26](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.25...v1.8.0-next.26) (2025-11-26)
+
+
+### Features
+
+* Component Tests for Accessibility API ([#470](https://github.com/rdkcentral/firebolt-apis/issues/470)) ([0785271](https://github.com/rdkcentral/firebolt-apis/commit/07852710a36d3497d66aeaf2affbb2730a682e71))
+
 # [1.8.0-next.25](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.24...v1.8.0-next.25) (2025-11-25)
 
 
