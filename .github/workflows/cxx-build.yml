@@ -98,6 +98,21 @@ jobs:
       - name: Install apt dependencies
         uses: ./.github/actions/setup-apt-deps
 
+      - name: Install Transport
+        run: |
+          version=$(cat ${{ github.workspace }}/src/cpp/.transport.version)
+          TMP_DIR=$(mktemp -d)
+          pushd "$TMP_DIR"
+          curl -sL https://github.com/rdkcentral/firebolt-native-transport/releases/download/v$version/firebolt-native-transport-$version.tar.gz | tar xzf -
+          cmake -B "build/fnt" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX:PATH="${{ env.SYSROOT_PATH }}/usr" \
+            -DBUILD_SHARED_LIBS=ON \
+            -S "firebolt-native-transport-$version"
+          cmake --build "build/fnt" --target install
+          popd
+          rm -rf "$TMP_DIR"
+
       - name: Configure CMake
         run: |
           cmake -B build -S src/cpp \

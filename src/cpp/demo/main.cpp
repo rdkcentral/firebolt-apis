@@ -31,6 +31,7 @@ int main()
 
         std::cout << "Lifecycle" << std::endl;
         service.lifecycle();
+        service.presentation();
         std::cout << std::endl;
         std::cout << "All subscribers are registered, events can be sent to the app from mock" << std::endl;
         while (1)

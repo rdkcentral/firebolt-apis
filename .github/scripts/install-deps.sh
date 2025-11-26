@@ -28,7 +28,7 @@ SYSROOT_PATH="$(realpath "$SYSROOT_PATH")"
 
 echo "installation dir: $SYSROOT_PATH"
 
-cat $depsFile | while read name version url; do
+while read name version url; do
     case $name in
     '#'* | '') continue;;
     esac
@@ -58,5 +58,5 @@ cat $depsFile | while read name version url; do
 
     echo "Installing: $name@$version"
     cmake --build "build/$dir" --target install
-done
+done <$depsFile
 
