@@ -30,7 +30,7 @@ AccessibilityImpl::AccessibilityImpl(Firebolt::Helpers::IHelper& helper)
 
 Result<bool> AccessibilityImpl::audioDescription() const
 {
-    return helper_.get<JsonData::AudioDescription, bool>("Accessibility.audioDescription");
+    return helper_.get<Firebolt::JSON::Boolean, bool>("Accessibility.audioDescription");
 }
 
 Result<SubscriptionId> AccessibilityImpl::subscribeOnAudioDescriptionChanged(std::function<void(bool)>&& notification)

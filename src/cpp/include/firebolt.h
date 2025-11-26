@@ -136,10 +136,17 @@ public:
     virtual SecureStorage::ISecureStorage& SecureStorageInterface() = 0;
 
     /**
-     * @brief Returns instance of Stats interface
+     * @brief Returns instance of Accessibiilty interface
      *
-     * @return Reference to Stats interface
+     * @return Reference to Accessibility interface
      */
+
+    /**
+   virtual Accessibility::IAccessibility& AccessibilityInterface() = 0;
+    * @brief Returns instance of Stats interface
+    *
+    * @return Reference to Stats interface
+    */
     virtual Stats::IStats& StatsInterface() = 0;
 
     /**

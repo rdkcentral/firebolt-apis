@@ -36,7 +36,7 @@ TEST_F(AccessibilityTest, AudioDescription)
 
     ASSERT_TRUE(result) << "AccessibilityImpl::audioDescription() returned an error";
 
-    EXPECT_EQ(*result, expectedValue["enabled"].get<bool>());
+    EXPECT_EQ(*result, expectedValue.get<bool>());
 }
 
 TEST_F(AccessibilityTest, SubscribeOnAudioDescriptionChanged)
