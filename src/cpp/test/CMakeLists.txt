@@ -71,6 +71,7 @@ set(UNIT_TESTS
     "unit/lifecycleTest.cpp"
     "unit/presentationTest.cpp"
     "unit/statsTest.cpp"
+    "unit/displayTest.cpp"
 )
 
 add_executable(${UNIT_TESTS_APP}
@@ -121,6 +122,7 @@ set(COMPONENT_TESTS
     "component/lifecycleTest.cpp"
     "component/presentationTest.cpp"
     "component/statsTest.cpp"
+    #"component/displayTest.cpp"
 )
 
 add_executable(${COMPONENT_TESTS_APP}
