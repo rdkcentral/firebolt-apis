@@ -71,6 +71,7 @@ set(UNIT_TESTS
     "unit/lifecycleTest.cpp"
     "unit/presentationTest.cpp"
     "unit/statsTest.cpp"
+    "unit/localizationTest.cpp"
 )
 
 add_executable(${UNIT_TESTS_APP}

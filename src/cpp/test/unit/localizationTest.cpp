@@ -21,20 +21,27 @@
 #include "localization_impl.h"
 #include "mock_helper.h"
 
+#define USE_LOCAL_RESPONSE
+
 class LocalizationTest : public ::testing::Test, protected MockBase
 {
 protected:
     Firebolt::Localization::LocalizationImpl localizationImpl_{mockHelper};
 };
 
-TEST_F(LocalizationTest, CountryCode)
+TEST_F(LocalizationTest, Country)
 {
-    mock("Localization.countryCode");
+#ifdef USE_LOCAL_RESPONSE
+    nlohmann::json expectedValue = "US";
+    mock_with_response("Localization.country", expectedValue);
+#else
+    auto expectedValue = jsonEngine.get_value("Localization.country").get<std::string>();
+    mock("Localization.country");
+#endif
 
-    auto result = localizationImpl_.countryCode();
+    auto result = localizationImpl_.country();
     ASSERT_TRUE(result) << "error on get";
 
-    auto expectedValue = jsonEngine.get_value("Localization.countryCode").get<std::string>();
     EXPECT_EQ(*result, expectedValue);
 }
 
@@ -51,11 +58,27 @@ TEST_F(LocalizationTest, PreferredAudioLanguages)
     EXPECT_EQ(resultSet, expectedSet);
 }
 
-TEST_F(LocalizationTest, subscribeOnCountryCodeChanged)
+TEST_F(LocalizationTest, PresentationLanguage)
 {
-    mockSubscribe("Localization.onCountryCodeChanged");
+#ifdef USE_LOCAL_RESPONSE
+    nlohmann::json expectedValue = "US";
+    mock_with_response("Localization.presentationLanguage", expectedValue);
+#else
+    auto expectedValue = jsonEngine.get_value("Localization.presentationLanguage").get<std::string>();
+    mock("Localization.presentationLanguage");
+#endif
 
-    auto id = localizationImpl_.subscribeOnCountryCodeChanged([](auto) { std::cout << "callback\n"; });
+    auto result = localizationImpl_.presentationLanguage();
+    ASSERT_TRUE(result) << "error on get";
+
+    EXPECT_EQ(*result, expectedValue);
+}
+
+TEST_F(LocalizationTest, subscribeOnCountryChanged)
+{
+    mockSubscribe("Localization.onCountryChanged");
+
+    auto id = localizationImpl_.subscribeOnCountryChanged([](auto) { std::cout << "callback\n"; });
     ASSERT_TRUE(id) << "error on subscribe ";
     EXPECT_TRUE(id.has_value()) << "error on id";
     auto result = localizationImpl_.unsubscribe(id.value_or(0));
@@ -67,6 +90,17 @@ TEST_F(LocalizationTest, subscribeOnPreferredAudioLanguagesChanged)
     mockSubscribe("Localization.onPreferredAudioLanguagesChanged");
 
     auto id = localizationImpl_.subscribeOnPreferredAudioLanguagesChanged([](auto) { std::cout << "callback\n"; });
+    ASSERT_TRUE(id) << "error on subscribe ";
+    EXPECT_TRUE(id.has_value()) << "error on id";
+    auto result = localizationImpl_.unsubscribe(id.value_or(0));
+    ASSERT_TRUE(result) << "error on unsubscribe ";
+}
+
+TEST_F(LocalizationTest, subscribeOnPresentationLanguageChanged)
+{
+    mockSubscribe("Localization.onPresentationLanguageChanged");
+
+    auto id = localizationImpl_.subscribeOnPresentationLanguageChanged([](auto) { std::cout << "callback\n"; });
     ASSERT_TRUE(id) << "error on subscribe ";
     EXPECT_TRUE(id.has_value()) << "error on id";
     auto result = localizationImpl_.unsubscribe(id.value_or(0));

@@ -28,9 +28,9 @@ LocalizationImpl::LocalizationImpl(Firebolt::Helpers::IHelper& helper)
 {
 }
 
-Result<std::string> LocalizationImpl::countryCode() const
+Result<std::string> LocalizationImpl::country() const
 {
-    return helper_.get<Firebolt::JSON::String, std::string>("Localization.countryCode");
+    return helper_.get<Firebolt::JSON::String, std::string>("Localization.country");
 }
 
 Result<std::vector<std::string>> LocalizationImpl::preferredAudioLanguages() const
@@ -39,10 +39,14 @@ Result<std::vector<std::string>> LocalizationImpl::preferredAudioLanguages() con
         "Localization.preferredAudioLanguages");
 }
 
-Result<SubscriptionId>
-LocalizationImpl::subscribeOnCountryCodeChanged(std::function<void(const std::string&)>&& notification)
+Result<std::string> LocalizationImpl::presentationLanguage() const
 {
-    return subscriptionManager_.subscribe<Firebolt::JSON::String>("Localization.onCountryCodeChanged",
+    return helper_.get<Firebolt::JSON::String, std::string>("Localization.presentationLanguage");
+}
+
+Result<SubscriptionId> LocalizationImpl::subscribeOnCountryChanged(std::function<void(const std::string&)>&& notification)
+{
+    return subscriptionManager_.subscribe<Firebolt::JSON::String>("Localization.onCountryChanged",
                                                                   std::move(notification));
 }
 
@@ -51,6 +55,13 @@ Result<SubscriptionId> LocalizationImpl::subscribeOnPreferredAudioLanguagesChang
 {
     return subscriptionManager_.subscribe<Firebolt::JSON::NL_Json_Array<
         Firebolt::JSON::String, std::string>>("Localization.onPreferredAudioLanguagesChanged", std::move(notification));
+}
+
+Result<SubscriptionId>
+LocalizationImpl::subscribeOnPresentationLanguageChanged(std::function<void(const std::string&)>&& notification)
+{
+    return subscriptionManager_.subscribe<Firebolt::JSON::String>("Localization.onPresentationLanguageChanged",
+                                                                  std::move(notification));
 }
 
 Result<void> LocalizationImpl::unsubscribe(SubscriptionId id)

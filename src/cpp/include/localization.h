@@ -38,25 +38,32 @@ public:
      *
      * @retval The device country code or error
      */
-    virtual Result<std::string> countryCode() const = 0;
+    virtual Result<std::string> country() const = 0;
 
     /**
-     * @brief A prioritized list of ISO 639 1/2 codes for the preferred audio languages on this device.
+     * @brief A list of zero or more languages in order of decreasing preference.  Typically two languages are present.
+     * A language may be repeated in the list
      *
      * @retval The preferred audio languages or error
      */
     virtual Result<std::vector<std::string>> preferredAudioLanguages() const = 0;
 
+    /**
+     * @brief The presentation language of the device, in BCP 47, e.g. en-US
+     *
+     * @retval The preferred audio languages or error
+     */
+    virtual Result<std::string> presentationLanguage() const = 0;
+
     // Events
     /**
-     * @brief Subscribe on the change of CountryCodeChanged property
+     * @brief Subscribe on the change of countryChanged property
      *
      * @param[in]  notification        : The callback function
      *
      * @retval The subscriptionId or error
      */
-    virtual Result<SubscriptionId>
-    subscribeOnCountryCodeChanged(std::function<void(const std::string&)>&& notification) = 0;
+    virtual Result<SubscriptionId> subscribeOnCountryChanged(std::function<void(const std::string&)>&& notification) = 0;
 
     /**
      * @brief Subscribe on the change of PreferredAudioLanguagesChanged property
@@ -69,8 +76,17 @@ public:
     subscribeOnPreferredAudioLanguagesChanged(std::function<void(const std::vector<std::string>&)>&& notification) = 0;
 
     /**
-     * @brief Remove subscriber from subscribers list. This method is generic for
-     *        all subscriptions
+     * @brief Subscribe on the change of PresentationLanguageChanged property
+     *
+     * @param[in]  notification        : The callback function
+     *
+     * @retval The subscriptionId or error
+     */
+    virtual Result<SubscriptionId>
+    subscribeOnPresentationLanguageChanged(std::function<void(const std::string&)>&& notification) = 0;
+    
+    /**
+     * @brief  Subscribe on the change of presentationLanguage property
      *
      * @param[in] id                  : The subscription id
      *
