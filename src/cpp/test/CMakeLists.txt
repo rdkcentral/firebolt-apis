@@ -68,10 +68,10 @@ set(UNIT_TESTS
     "unit/accessibilityTest.cpp"
     "unit/advertisingTest.cpp"
     "unit/deviceTest.cpp"
+    "unit/displayTest.cpp"
     "unit/lifecycleTest.cpp"
     "unit/presentationTest.cpp"
     "unit/statsTest.cpp"
-    "unit/displayTest.cpp"
 )
 
 add_executable(${UNIT_TESTS_APP}
@@ -119,10 +119,10 @@ set(COMPONENT_TESTS
     "component/accessibilityTest.cpp"
     "component/advertisingTest.cpp"
     "component/deviceTest.cpp"
+    "component/displayTest.cpp"
     "component/lifecycleTest.cpp"
     "component/presentationTest.cpp"
     "component/statsTest.cpp"
-    "component/displayTest.cpp"
 )
 
 add_executable(${COMPONENT_TESTS_APP}

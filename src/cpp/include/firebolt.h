@@ -22,6 +22,7 @@
 #include "accessibility.h"
 #include "advertising.h"
 #include "device.h"
+#include "display.h"
 #include "fireboltclient_export.h"
 #include "lifecycle.h"
 #include "localization.h"
@@ -29,7 +30,6 @@
 #include "presentation.h"
 #include "securestorage.h"
 #include "stats.h"
-#include "display.h"
 #include <firebolt/config.h>
 #include <firebolt/types.h>
 #include <functional>
@@ -101,6 +101,13 @@ public:
     virtual Device::IDevice& DeviceInterface() = 0;
 
     /**
+     * @brief Returns instance of Display interface
+     *
+     * @return Reference to Display interface
+     */
+    virtual Display::IDisplay& DisplayInterface() = 0;
+
+    /**
      * @brief Returns instance of Lifecycle interface
      *
      * @return Reference to Lifecycle interface
@@ -148,12 +155,5 @@ public:
     * @return Reference to Stats interface
     */
     virtual Stats::IStats& StatsInterface() = 0;
-
-    /**
-     * @brief Returns instance of Display interface
-     *
-     * @return Reference to Display interface
-     */
-    virtual Display::IDisplay& DisplayInterface() = 0;
 };
 } // namespace Firebolt

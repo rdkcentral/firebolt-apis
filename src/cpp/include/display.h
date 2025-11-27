@@ -39,9 +39,9 @@ struct DisplaySize
 class IDisplay
 {
 public:
-    virtual ~IDisplay   () = default;
+    virtual ~IDisplay() = default;
     /**
-     * @brief Returns the physical dimensions of the connected or integral display, in centimeters 
+     * @brief Returns the physical dimensions of the connected or integral display, in centimeters
 
         Returns 0, 0 on a OTT/STB device when a display is not connected over HDMI
 
@@ -53,7 +53,7 @@ public:
      *
      * @retval The class property or error
      */
-    
+
     virtual Result<DisplaySize> size() const = 0;
     /**
      * @brief Returns the physical/native resolution of the connected or integral display, in pixels
@@ -71,4 +71,4 @@ public:
     virtual Result<DisplaySize> maxResolution() const = 0;
 };
 
-} // namespace Firebolt::Device
+} // namespace Firebolt::Display
