@@ -1,3 +1,10 @@
+# [1.8.0-next.28](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.27...v1.8.0-next.28) (2025-11-27)
+
+
+### Features
+
+* Display API ([#474](https://github.com/rdkcentral/firebolt-apis/issues/474)) ([2912ca3](https://github.com/rdkcentral/firebolt-apis/commit/2912ca387258f0ecb8dde22e63d44a0e86890f01))
+
 # [1.8.0-next.27](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.26...v1.8.0-next.27) (2025-11-27)
 
 
