@@ -1,3 +1,10 @@
+# [1.8.0-next.29](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.28...v1.8.0-next.29) (2025-11-27)
+
+
+### Features
+
+* Localization API  ([#477](https://github.com/rdkcentral/firebolt-apis/issues/477)) ([d639456](https://github.com/rdkcentral/firebolt-apis/commit/d6394568d5ebc11704aa79525bbb960588aea121))
+
 # [1.8.0-next.28](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.27...v1.8.0-next.28) (2025-11-27)
 
 
