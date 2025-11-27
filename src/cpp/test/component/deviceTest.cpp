@@ -69,6 +69,14 @@ TEST_F(DeviceTest, TimeInActiveState)
     EXPECT_EQ(*result, expectedValue);
 }
 
+TEST_F(DeviceTest, ChipsetId)
+{
+    auto expectedValue = jsonEngine.get_value("Device.chipsetId");
+    auto result = Firebolt::IFireboltAccessor::Instance().DeviceInterface().chipsetId();
+    ASSERT_TRUE(result) << "DeviceImpl::chipsetId() returned an error";
+    EXPECT_EQ(*result, expectedValue);
+}
+
 TEST_F(DeviceTest, Uid)
 {
     auto expectedValue = jsonEngine.get_value("Device.uid");

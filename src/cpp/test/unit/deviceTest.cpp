@@ -62,6 +62,17 @@ TEST_F(DeviceTest, Uptime)
     EXPECT_EQ(*result, expectedValue);
 }
 
+TEST_F(DeviceTest, ChipsetId)
+{
+    mock("Device.chipsetId");
+    auto expectedValue = jsonEngine.get_value("Device.chipsetId");
+
+    auto result = deviceImpl_.chipsetId();
+    ASSERT_TRUE(result) << "DeviceImpl::chipsetId() returned an error";
+
+    EXPECT_EQ(*result, expectedValue);
+}
+
 TEST_F(DeviceTest, Uid)
 {
     mock("Device.uid");
