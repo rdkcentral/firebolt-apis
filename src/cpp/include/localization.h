@@ -84,7 +84,7 @@ public:
      */
     virtual Result<SubscriptionId>
     subscribeOnPresentationLanguageChanged(std::function<void(const std::string&)>&& notification) = 0;
-    
+
     /**
      * @brief  Remove subscriber from subscribers list. This method is generic for
      *        all subscriptions

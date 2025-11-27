@@ -95,8 +95,8 @@ TEST_F(LocalizationTest, subscribeOnPreferredAudioLanguagesChanged)
         [&](const std::vector<std::string>& languages)
         {
             EXPECT_EQ(languages.size(), 2);
-            EXPECT_EQ(languages[0], "en-US");
-            EXPECT_EQ(languages[1], "fr-FR");
+            EXPECT_EQ(languages[0], "spa");
+            EXPECT_EQ(languages[1], "eng");
             {
                 std::lock_guard<std::mutex> lock(mtx);
                 eventReceived = true;
@@ -108,7 +108,7 @@ TEST_F(LocalizationTest, subscribeOnPreferredAudioLanguagesChanged)
     EXPECT_TRUE(id.has_value()) << "error on id";
 
     // Trigger the event from the mock server
-    triggerEvent("Localization.onPreferredAudioLanguagesChanged", R"({"value":["en-US","fr-FR"]})");
+    triggerEvent("Localization.onPreferredAudioLanguagesChanged", R"({"value":["spa","eng"]})");
 
     verifyEventReceived(mtx, cv, eventReceived);
 
