@@ -1,3 +1,10 @@
+# [1.8.0-next.27](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.26...v1.8.0-next.27) (2025-11-27)
+
+
+### Features
+
+* Device.chipsetId ([#476](https://github.com/rdkcentral/firebolt-apis/issues/476)) ([36dc605](https://github.com/rdkcentral/firebolt-apis/commit/36dc60527a2fcd26a9687904b24ed2f3b599feef))
+
 # [1.8.0-next.26](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.25...v1.8.0-next.26) (2025-11-26)
 
 
