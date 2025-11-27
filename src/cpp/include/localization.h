@@ -57,7 +57,7 @@ public:
 
     // Events
     /**
-     * @brief Subscribe on the change of countryChanged property
+     * @brief Subscribe on the change of CountryChanged property
      *
      * @param[in]  notification        : The callback function
      *
@@ -86,7 +86,8 @@ public:
     subscribeOnPresentationLanguageChanged(std::function<void(const std::string&)>&& notification) = 0;
     
     /**
-     * @brief  Subscribe on the change of presentationLanguage property
+     * @brief  Remove subscriber from subscribers list. This method is generic for
+     *        all subscriptions
      *
      * @param[in] id                  : The subscription id
      *

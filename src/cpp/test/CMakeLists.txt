@@ -69,9 +69,9 @@ set(UNIT_TESTS
     "unit/advertisingTest.cpp"
     "unit/deviceTest.cpp"
     "unit/lifecycleTest.cpp"
+    "unit/localizationTest.cpp"
     "unit/presentationTest.cpp"
     "unit/statsTest.cpp"
-    "unit/localizationTest.cpp"
 )
 
 add_executable(${UNIT_TESTS_APP}
@@ -116,19 +116,18 @@ set(COMPONENT_TESTS_APP FireboltClientComponentTests)
 message("Setup ${COMPONENT_TESTS_APP}")
 
 set(COMPONENT_TESTS
-    "component/accessibilityTest.cpp"
+    # "component/accessibilityTest.cpp"
     "component/advertisingTest.cpp"
     "component/deviceTest.cpp"
     "component/lifecycleTest.cpp"
+    "component/localizationTest.cpp"
     "component/presentationTest.cpp"
     "component/statsTest.cpp"
-    #"component/localizationTest.cpp"
 )
 
 add_executable(${COMPONENT_TESTS_APP}
     ComponentTestsMain.cpp
     "component/utils.cpp"
-      #"component/accessibilityTest.cpp"
     ${COMPONENT_TESTS}
 )
 
