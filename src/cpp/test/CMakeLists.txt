@@ -88,7 +88,7 @@ set(COMPONENT_TESTS_APP FireboltClientComponentTests)
 message("Setup ${COMPONENT_TESTS_APP}")
 
 set(COMPONENT_TESTS
-    # "component/accessibilityTest.cpp"
+    "component/accessibilityTest.cpp"
     "component/advertisingTest.cpp"
     "component/deviceTest.cpp"
     "component/displayTest.cpp"
