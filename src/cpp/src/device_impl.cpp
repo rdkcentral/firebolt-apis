@@ -42,6 +42,11 @@ Result<uint32_t> DeviceImpl::uptime() const
     return helper_.get<Firebolt::JSON::Integer, uint32_t>("Device.uptime");
 }
 
+Result<std::string> DeviceImpl::chipsetId() const
+{
+    return helper_.get<Firebolt::JSON::String, std::string>("Device.chipsetId");
+}
+
 Result<std::string> DeviceImpl::uid() const
 {
     return helper_.get<Firebolt::JSON::String, std::string>("Device.uid");
