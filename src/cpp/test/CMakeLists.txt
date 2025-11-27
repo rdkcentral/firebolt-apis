@@ -31,35 +31,6 @@ enable_testing()
 
 add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-open-rpc.json")
 
-message("Setup ${TESTAPP}")
-
-add_executable(${TESTAPP} CoreClientTest.cpp Main.cpp)
-
-target_link_libraries(${TESTAPP}
-    PRIVATE
-        FireboltTransport::FireboltTransport
-        FireboltClient
-        nlohmann_json::nlohmann_json
-)
-
-target_include_directories(${TESTAPP}
-    PRIVATE
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
-        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src>
-)
-
-set_target_properties(${TESTAPP} PROPERTIES
-    CXX_STANDARD 17
-    CXX_STANDARD_REQUIRED YES
-)
-
-add_custom_command(
-    TARGET ${TESTAPP}
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${TESTAPP} ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
-)
-
 set(UNIT_TESTS_APP FireboltClientUnitTests)
 
 message("Setup ${UNIT_TESTS_APP}")
@@ -70,6 +41,7 @@ set(UNIT_TESTS
     "unit/deviceTest.cpp"
     "unit/displayTest.cpp"
     "unit/lifecycleTest.cpp"
+    "unit/localizationTest.cpp"
     "unit/presentationTest.cpp"
     "unit/statsTest.cpp"
 )
@@ -121,6 +93,7 @@ set(COMPONENT_TESTS
     "component/deviceTest.cpp"
     "component/displayTest.cpp"
     "component/lifecycleTest.cpp"
+    "component/localizationTest.cpp"
     "component/presentationTest.cpp"
     "component/statsTest.cpp"
 )
@@ -128,7 +101,6 @@ set(COMPONENT_TESTS
 add_executable(${COMPONENT_TESTS_APP}
     ComponentTestsMain.cpp
     "component/utils.cpp"
-      #"component/accessibilityTest.cpp"
     ${COMPONENT_TESTS}
 )
 

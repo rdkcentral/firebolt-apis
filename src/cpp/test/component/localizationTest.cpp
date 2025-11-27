@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+#include "./component/utils.h"
 #include "firebolt.h"
 #include "json_engine.h"
 #include "gtest/gtest.h"
@@ -24,16 +25,22 @@
 class LocalizationTest : public ::testing::Test
 {
 protected:
-protected:
+    void SetUp() override { eventReceived = false; }
+
+    // Create a condition variable and mutex to wait for the events to be received
+    std::condition_variable cv;
+    std::mutex mtx;
+    bool eventReceived;
+
     JsonEngine jsonEngine;
 };
 
 TEST_F(LocalizationTest, CountryCode)
 {
-    auto result = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().countryCode();
+    auto result = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().country();
     ASSERT_TRUE(result) << "error on get";
 
-    auto expectedValue = jsonEngine.get_value("Localization.countryCode").get<std::string>();
+    auto expectedValue = jsonEngine.get_value("Localization.country").get<std::string>();
     EXPECT_EQ(*result, expectedValue);
 }
 
@@ -48,12 +55,36 @@ TEST_F(LocalizationTest, PreferredAudioLanguages)
     EXPECT_EQ(resultSet, expectedSet);
 }
 
+TEST_F(LocalizationTest, PresentationLanguage)
+{
+    auto result = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().presentationLanguage();
+    ASSERT_TRUE(result) << "error on get";
+
+    auto expectedValue = jsonEngine.get_value("Localization.presentationLanguage").get<std::string>();
+    EXPECT_EQ(*result, expectedValue);
+}
+
 TEST_F(LocalizationTest, subscribeOnCountryCodeChanged)
 {
-    auto id = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().subscribeOnCountryCodeChanged(
-        [](auto) { std::cout << "callback\n"; });
+    auto id = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().subscribeOnCountryChanged(
+        [&](const std::string& code)
+        {
+            EXPECT_EQ(code, "US");
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                eventReceived = true;
+            }
+            cv.notify_one();
+        });
+
     ASSERT_TRUE(id) << "error on subscribe ";
     EXPECT_TRUE(id.has_value()) << "error on id";
+
+    // Trigger the event from the mock server
+    triggerEvent("Localization.onCountryChanged", R"({"value":"US"})");
+
+    verifyEventReceived(mtx, cv, eventReceived);
+
     auto result = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().unsubscribe(id.value_or(0));
     ASSERT_TRUE(result) << "error on unsubscribe ";
 }
@@ -61,9 +92,51 @@ TEST_F(LocalizationTest, subscribeOnCountryCodeChanged)
 TEST_F(LocalizationTest, subscribeOnPreferredAudioLanguagesChanged)
 {
     auto id = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().subscribeOnPreferredAudioLanguagesChanged(
-        [](auto) { std::cout << "callback\n"; });
+        [&](const std::vector<std::string>& languages)
+        {
+            EXPECT_EQ(languages.size(), 2);
+            EXPECT_EQ(languages[0], "spa");
+            EXPECT_EQ(languages[1], "eng");
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                eventReceived = true;
+            }
+            cv.notify_one();
+        });
+
     ASSERT_TRUE(id) << "error on subscribe ";
     EXPECT_TRUE(id.has_value()) << "error on id";
+
+    // Trigger the event from the mock server
+    triggerEvent("Localization.onPreferredAudioLanguagesChanged", R"(["spa","eng"])");
+
+    verifyEventReceived(mtx, cv, eventReceived);
+
+    auto result = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().unsubscribe(id.value_or(0));
+    ASSERT_TRUE(result) << "error on unsubscribe ";
+}
+
+TEST_F(LocalizationTest, subscribeOnPreferredPresentationLanguageChanged)
+{
+    auto id = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().subscribeOnPresentationLanguageChanged(
+        [&](const std::string& language)
+        {
+            EXPECT_EQ(language, "en-US");
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                eventReceived = true;
+            }
+            cv.notify_one();
+        });
+
+    ASSERT_TRUE(id) << "error on subscribe ";
+    EXPECT_TRUE(id.has_value()) << "error on id";
+
+    // Trigger the event from the mock server
+    triggerEvent("Localization.onPresentationLanguageChanged", R"({"value":"en-US"})");
+
+    verifyEventReceived(mtx, cv, eventReceived);
+
     auto result = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().unsubscribe(id.value_or(0));
     ASSERT_TRUE(result) << "error on unsubscribe ";
 }

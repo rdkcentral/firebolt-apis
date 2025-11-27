@@ -34,13 +34,16 @@ public:
     ~LocalizationImpl() override = default;
 
     // Methods
-    Result<std::string> countryCode() const override;
+    Result<std::string> country() const override;
     Result<std::vector<std::string>> preferredAudioLanguages() const override;
+    Result<std::string> presentationLanguage() const override;
 
     // Events
-    Result<SubscriptionId> subscribeOnCountryCodeChanged(std::function<void(const std::string&)>&& notification) override;
+    Result<SubscriptionId> subscribeOnCountryChanged(std::function<void(const std::string&)>&& notification) override;
     Result<SubscriptionId> subscribeOnPreferredAudioLanguagesChanged(
         std::function<void(const std::vector<std::string>&)>&& notification) override;
+    Result<SubscriptionId>
+    subscribeOnPresentationLanguageChanged(std::function<void(const std::string&)>&& notification) override;
 
     Result<void> unsubscribe(SubscriptionId id) override;
     void unsubscribeAll() override;
