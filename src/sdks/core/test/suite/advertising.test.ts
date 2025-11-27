@@ -17,7 +17,7 @@
  */
 
 import { test, expect } from "@jest/globals";
-import { Advertising } from "../../build/javascript/src/firebolt";
+import { Advertising } from '@firebolt-js/sdk';
 
 test("advertisingId()", async () => {
   const res = await Advertising.advertisingId();

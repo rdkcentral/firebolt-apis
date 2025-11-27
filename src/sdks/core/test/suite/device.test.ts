@@ -17,7 +17,7 @@
  */
 
 import { test, expect } from "@jest/globals";
-import { Device } from "../../build/javascript/src/firebolt";
+import { Device } from '@firebolt-js/sdk';
 
 test("Device.uid()", async() => {
   const res = await Device.uid();

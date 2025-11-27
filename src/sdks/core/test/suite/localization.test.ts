@@ -1,5 +1,5 @@
 import { test, expect } from "@jest/globals";
-import { Localization } from "../../build/javascript/src/firebolt";
+import { Localization } from '@firebolt-js/sdk';
 
 test("country", async() => {
   return Localization.country().then((res: string) => {
