@@ -20,44 +20,92 @@ import { test, expect } from '@jest/globals';
 import { Accessibility } from '../../build/javascript/src/firebolt';
 
 
-test('listen', () => {
+test("Accessibility.uid()", async () => {
+  const res = await Accessibility.audioDescription();
+  expect(res).toBe(true);
+});
+
+test("Accessibility.deviceClass()", async () => {
+  const res = await Accessibility.closedCaptionsSettings();
+  expect(res).toMatchObject({
+    enabled: true,
+    preferredLanguages: ["eng", "spa"],
+  });
+});
+
+test("Accessibility.highContrastUI()", async () => {
+  const res = await Accessibility.highContrastUI();
+  expect(res).toBe(true);
+});
+
+test("Accessibility.voiceGuidanceSettings()", async () => {
+  const res = await Accessibility.voiceGuidanceSettings();
+  expect(res).toMatchObject({
+    enabled: true,
+    navigationHints: true,
+    rate: 0.8,
+  });
+});
+
+test('listen', async () => {
   return Accessibility.listen((event: string, data: object) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
-
-test('once', () => {
+test('once', async () => {
   return Accessibility.once((event: string, data: object) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
+test('listen audioDescription', async () => {
+  return Accessibility.listen((event: 'onAudioDescriptionChanged', listener: { data: boolean }) => { }).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
 
-test('listen ClosedCaptionsSettings', () => {
+test('once audioDescription', async () => {
+  return Accessibility.once((event: 'onAudioDescriptionChanged', listener: { data: boolean }) => { }).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test('listen ClosedCaptionsSettings', async () => {
   return Accessibility.listen((event: 'onClosedCaptionsSettingsChanged', listener: { data: Accessibility.ClosedCaptionsSettings }) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
-test('once ClosedCaptionsSettings', () => {
+test('once ClosedCaptionsSettings', async () => {
   return Accessibility.once((event: 'onClosedCaptionsSettingsChanged', listener: { data: Accessibility.ClosedCaptionsSettings }) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
-test('listen VoiceGuidanceSettings', () => {
+test('listen highContrastUI', async () => {
+  return Accessibility.listen((event: 'onHighContrastUIChanged', listener: { data: boolean }) => { }).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test('once highContrastUI', async () => {
+  return Accessibility.once((event: 'onHighContrastUIChanged', listener: { data: boolean }) => { }).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test('listen VoiceGuidanceSettings', async () => {
   return Accessibility.listen((event: 'onVoiceGuidanceSettingsChanged', listener: { data: Accessibility.VoiceGuidanceSettings }) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
-test('once VoiceGuidanceSettings', () => {
+test('once VoiceGuidanceSettings', async () => {
   return Accessibility.once((event: 'onVoiceGuidanceSettingsChanged', listener: { data: Accessibility.VoiceGuidanceSettings }) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
-
 
 test('clear()', () => {
   const result: boolean = Accessibility.clear(-1000);

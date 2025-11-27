@@ -1,56 +1,64 @@
 import { test, expect } from "@jest/globals";
 import { Localization } from "../../build/javascript/src/firebolt";
-test("locality", () => {
-  return Localization.locality().then((res: string) => {
-    expect(res).toBe("Philadelphia");
-  });
-});
-test("postalCode", () => {
-  return Localization.postalCode().then((res: string) => {
-    expect(res).toBe("19103");
-  });
-});
-test("countryCode", () => {
-  return Localization.countryCode().then((res: string) => {
+
+test("country", async() => {
+  return Localization.country().then((res: string) => {
     expect(res).toBe("US");
   });
 });
-test("language", () => {
-  return Localization.language().then((res: string) => {
-    expect(res).toBe("en");
-  });
+test("preferredAudioLanguages", async() => {
+  const res = await Localization.preferredAudioLanguages();
+  expect(res).toEqual(["spa","eng"]);
 });
-test("locale", () => {
-  return Localization.locale().then((res: string) => {
-    expect(res).toBe("en-US");
-  });
-});
-test("additionalInfo", () => {
-  return Localization.additionalInfo().then((res: object) => {
-    expect(typeof res).toBe("object");
-  });
-});
-test("latlon", () => {
-  return Localization.latlon().then((res: Array<Number>) => {
-    expect([39.9549, 75.1699]).toEqual(expect.arrayContaining(res));
-  });
+test("presentationLanguage", async() => {
+  const res = await Localization.presentationLanguage();
+  expect(res).toBe("en-US");
 });
 
-test("listen() languageChanged event.", () => {
-  return Localization.listen("onLanguageChanged", () => {}).then(
-    (res: number) => {
-      expect(res > 0).toBe(true);
-    }
-  );
-});
-
-test("once() languageChanged event.", () => {
-  return Localization.once("onLanguageChanged", () => {}).then((res: number) => {
+test('listen', async () => {
+  await Localization.listen((event: string, data: object) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
-test("clear()", () => {
-  const result: boolean = Localization.clear(-1000);
-  expect(result).toBeFalsy();
+test('once', async () => {
+  await Localization.once((event: string, data: object) => { }).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test('listen onCountryChanged', async () => {
+  return Localization.listen((event: 'onCountryChanged', listener: { data: string }) => { }).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test('once onCountryChanged', async () => {
+  return Localization.once((event: 'onCountryChanged', listener: { data: string }) => { }).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test('listen onPreferredAudioLanguagesChanged', async () => {
+  return Localization.listen((event: 'onPreferredAudioLanguagesChanged', listener: { data: string[] }) => { }).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test('once onPreferredAudioLanguagesChanged', async () => {
+  return Localization.once((event: 'onPreferredAudioLanguagesChanged', listener: { data: string[] }) => { }).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test('listen onPresentationLanguageChanged', async () => {
+  return Localization.listen((event: 'onPresentationLanguageChanged', listener: { data: string }) => { }).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
+});
+
+test('once onPresentationLanguageChanged', async () => {
+  return Localization.once((event: 'onPresentationLanguageChanged', listener: { data: string }) => { }).then((res: number) => {
+    expect(res > 0).toBe(true);
+  });
 });

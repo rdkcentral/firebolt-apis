@@ -51,7 +51,3 @@ test('Localization.listen: onPresentationLanguageChanged', async () => {
     '{"jsonrpc":"2.0","method":"Localization.onPresentationLanguageChanged","params":{"Default Result":"en-US"}}');
 });
 
-test('Localization.listen: onPresentationLanguageChanged', async () => {
-  return testListenWithOneArgument( Localization, 'listen','onPresentationLanguageChanged','en-US',
-    '{"jsonrpc":"2.0","method":"Localization.onPresentationLanguageChanged","params":{"Default Result":"en-US"}}');
-});

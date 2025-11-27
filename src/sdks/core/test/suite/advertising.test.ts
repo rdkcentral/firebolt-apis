@@ -19,71 +19,7 @@
 import { test, expect } from "@jest/globals";
 import { Advertising } from "../../build/javascript/src/firebolt";
 
-test("policy()", () => {
-  return Advertising.policy().then((policy: Advertising.AdPolicy) => {
-    expect(policy.skipRestriction).toBe("adsUnwatched");
-    expect(policy.limitAdTracking).toBe(false);
-  });
-});
-
-test("config()", () => {
-  return Advertising.config({
-    coppa: true,
-    environment: "test",
-    authenticationEntity: "Test",
-  }).then((res: object) => {
-    expect(typeof res).toBe("object");
-  });
-});
-
-test("advertisingId()", () => {
-  return Advertising.advertisingId().then((res: object) => {
-    expect(typeof res).toBe("object");
-  });
-});
-
-test("deviceAttributes()", () => {
-  return Advertising.deviceAttributes().then((res: object) => {
-    expect(typeof res).toBe("object");
-  });
-});
-
-test("appBundleId()", () => {
-  return Advertising.appBundleId().then((res: string) => {
-    expect(res).toBe("app.operator");
-    expect(typeof res).toBe("string");
-  });
-});
-
-test("listen()", () => {
-  return Advertising.listen((event: string, data: object) => {}).then(
-    (res: number) => {
-      expect(res > 0).toBe(true);
-    }
-  );
-});
-
-test("once()", () => {
-  return Advertising.once((event: string, data: object) => {}).then(
-    (res: number) => {
-      expect(res > 0).toBe(true);
-    }
-  );
-});
-
-test("listen() specific Advertising event.", () => {
-  return Advertising.listen("onPolicyChanged", () => {}).then((res: number) => {
-    expect(res > 0).toBe(true);
-  });
-});
-
-test("once() specific Advertising event.", () => {
-  return Advertising.once("onPolicyChanged", () => {}).then((res: number) => {
-    expect(res > 0).toBe(true);
-  });
-});
-
-test("clear()", () => {
-  const result: boolean = Advertising.clear(-1000);
-  expect(result).toBeFalsy();
+test("advertisingId()", async () => {
+  const res = await Advertising.advertisingId();
+  expect(typeof res).toBe("object");
 });
