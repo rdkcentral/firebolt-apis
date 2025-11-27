@@ -22,6 +22,7 @@
 #include "accessibility.h"
 #include "advertising.h"
 #include "device.h"
+#include "display.h"
 #include "fireboltclient_export.h"
 #include "lifecycle.h"
 #include "localization.h"
@@ -98,6 +99,13 @@ public:
      * @return Reference to Device interface
      */
     virtual Device::IDevice& DeviceInterface() = 0;
+
+    /**
+     * @brief Returns instance of Display interface
+     *
+     * @return Reference to Display interface
+     */
+    virtual Display::IDisplay& DisplayInterface() = 0;
 
     /**
      * @brief Returns instance of Lifecycle interface

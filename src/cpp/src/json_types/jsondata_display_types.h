@@ -19,28 +19,27 @@
 
 #pragma once
 
-#include "device.h"
-#include <firebolt/helpers.h>
+#include "display.h"
+#include <firebolt/json_types.h>
+#include <nlohmann/json.hpp>
 
-namespace Firebolt::Device
+namespace Firebolt::Display::JsonData
 {
-class DeviceImpl : public IDevice
+
+// Types
+class DisplaySizeJson : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Display::DisplaySize>
 {
 public:
-    explicit DeviceImpl(Firebolt::Helpers::IHelper& helper);
-    DeviceImpl(const DeviceImpl&) = delete;
-    DeviceImpl& operator=(const DeviceImpl&) = delete;
-
-    ~DeviceImpl() override = default;
-
-    Result<DeviceClass> deviceClass() const override;
-    Result<uint32_t> uptime() const override;
-    Result<u_int32_t> timeInActiveState() const override;
-    Result<std::string> chipsetId() const override;
-    Result<std::string> uid() const override;
+    void fromJson(const nlohmann::json& json) override
+    {
+        width_ = json["width"].get<uint32_t>();
+        height_ = json["height"].get<uint32_t>();
+    }
+    ::Firebolt::Display::DisplaySize value() const override { return Firebolt::Display::DisplaySize{width_, height_}; }
 
 private:
-    Firebolt::Helpers::IHelper& helper_;
-    // Methods
+    uint32_t width_;
+    uint32_t height_;
 };
-} // namespace Firebolt::Device
+
+} // namespace Firebolt::Display::JsonData

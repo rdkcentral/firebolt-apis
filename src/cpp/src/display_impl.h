@@ -19,28 +19,24 @@
 
 #pragma once
 
-#include "device.h"
+#include "display.h"
 #include <firebolt/helpers.h>
 
-namespace Firebolt::Device
+namespace Firebolt::Display
 {
-class DeviceImpl : public IDevice
+class DisplayImpl : public IDisplay
 {
 public:
-    explicit DeviceImpl(Firebolt::Helpers::IHelper& helper);
-    DeviceImpl(const DeviceImpl&) = delete;
-    DeviceImpl& operator=(const DeviceImpl&) = delete;
+    explicit DisplayImpl(Firebolt::Helpers::IHelper& helper);
+    DisplayImpl(const DisplayImpl&) = delete;
+    DisplayImpl& operator=(const DisplayImpl&) = delete;
 
-    ~DeviceImpl() override = default;
-
-    Result<DeviceClass> deviceClass() const override;
-    Result<uint32_t> uptime() const override;
-    Result<u_int32_t> timeInActiveState() const override;
-    Result<std::string> chipsetId() const override;
-    Result<std::string> uid() const override;
+    ~DisplayImpl() override = default;
+    Result<DisplaySize> size() const override;
+    Result<DisplaySize> maxResolution() const override;
 
 private:
     Firebolt::Helpers::IHelper& helper_;
     // Methods
 };
-} // namespace Firebolt::Device
+} // namespace Firebolt::Display

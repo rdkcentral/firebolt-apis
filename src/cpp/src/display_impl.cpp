@@ -17,30 +17,23 @@
  * limitations under the License.
  */
 
-#pragma once
+#include "display_impl.h"
+#include "jsondata_display_types.h"
 
-#include "device.h"
-#include <firebolt/helpers.h>
-
-namespace Firebolt::Device
+namespace Firebolt::Display
 {
-class DeviceImpl : public IDevice
+DisplayImpl::DisplayImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper)
 {
-public:
-    explicit DeviceImpl(Firebolt::Helpers::IHelper& helper);
-    DeviceImpl(const DeviceImpl&) = delete;
-    DeviceImpl& operator=(const DeviceImpl&) = delete;
+}
 
-    ~DeviceImpl() override = default;
+Result<DisplaySize> DisplayImpl::size() const
+{
+    return Result(helper_.get<JsonData::DisplaySizeJson, DisplaySize>("Display.size"));
+}
 
-    Result<DeviceClass> deviceClass() const override;
-    Result<uint32_t> uptime() const override;
-    Result<u_int32_t> timeInActiveState() const override;
-    Result<std::string> chipsetId() const override;
-    Result<std::string> uid() const override;
-
-private:
-    Firebolt::Helpers::IHelper& helper_;
-    // Methods
-};
-} // namespace Firebolt::Device
+Result<DisplaySize> DisplayImpl::maxResolution() const
+{
+    return helper_.get<JsonData::DisplaySizeJson, DisplaySize>("Display.maxResolution");
+}
+} // namespace Firebolt::Display
