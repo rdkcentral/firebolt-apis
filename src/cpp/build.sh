@@ -3,14 +3,13 @@
 set -e
 
 bdir="build"
-idir="install"
 do_install=false
 params=
 buildType="Debug"
 
 while [[ ! -z $1 ]]; do
   case $1 in
-  --clean) rm -rf $bdir $idir;;
+  --clean) rm -rf $bdir;;
   --release) buildTarget="Release";;
   --sysroot) SYSROOT_PATH="$2"; shift;;
   -i | --install) do_install=true;;
