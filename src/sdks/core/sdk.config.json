@@ -119,6 +119,15 @@
             ]
         },
         {
+            "module": "Network",
+            "use": [
+                "xrn:firebolt:capability:network:interfaces",
+                "xrn:firebolt:capability:network:ipproperties",
+                "xrn:firebolt:capability:network:status",
+                "xrn:firebolt:capability:network:wifistatus"
+            ]
+        },
+        {
             "module": "Parameters",
             "use": [
                 "xrn:firebolt:capability:lifecycle:state"
