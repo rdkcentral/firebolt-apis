@@ -73,6 +73,13 @@ RUN cd /deps \
     && cmake --build "build/$dir" --target install \
     && rm -rf "build/$dir" "$dir"
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3-pip \
+    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+RUN pip install gcovr
+
+# --- Transport should be always at the very end as it changes most often
 ARG DEPS_TRANSPORT_V
 RUN cd /deps \
     && dir="firebolt-native-transport-${DEPS_TRANSPORT_V}" \
@@ -83,12 +90,6 @@ RUN cd /deps \
           "$dir" \
     && cmake --build "build/$dir" --target install \
     && rm -rf "build/$dir" "$dir"
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3-pip \
-    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
-
-RUN pip install gcovr
 
 WORKDIR /workspace
 
