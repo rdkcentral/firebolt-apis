@@ -26,9 +26,7 @@
 #include "fireboltclient_export.h"
 #include "lifecycle.h"
 #include "localization.h"
-#include "metrics.h"
 #include "presentation.h"
-#include "securestorage.h"
 #include "stats.h"
 #include <firebolt/config.h>
 #include <firebolt/types.h>
@@ -122,25 +120,11 @@ public:
     virtual Localization::ILocalization& LocalizationInterface() = 0;
 
     /**
-     * @brief Returns instance of Metrics interface
-     *
-     * @return Reference to Metrics interface
-     */
-    virtual Metrics::IMetrics& MetricsInterface() = 0;
-
-    /**
      * @brief Returns instance of Presentation interface
      *
      * @return Reference to Presentation interface
      */
     virtual Presentation::IPresentation& PresentationInterface() = 0;
-
-    /**
-     * @brief Returns instance of SecureStorage interface
-     *
-     * @return Reference to SecureStorage interface
-     */
-    virtual SecureStorage::ISecureStorage& SecureStorageInterface() = 0;
 
     /**
      * @brief Returns instance of Accessibiilty interface
