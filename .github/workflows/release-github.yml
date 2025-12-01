@@ -161,6 +161,18 @@ jobs:
             --subpath ./src/cpp/demo \
             --dst ${{ github.workspace }}/release
 
+      - name: Add Checksum to Job Summary
+        shell: bash
+        run: |
+          (
+            echo "# Release Package Checksum"
+            echo
+            echo '```'
+            cd ${{ github.workspace }}/release && sha256sum *.tar.gz
+            echo '```'
+            echo
+          ) >> $GITHUB_STEP_SUMMARY
+
       - name: Release Firebolt SDKs to NPM
         if: steps.check_build.outputs.result == 'true' && github.event_name != 'pull_request' && (github.ref_name != 'main' || github.event_name == 'workflow_dispatch')
         env:
