@@ -23,6 +23,7 @@ while [[ ! -z $1 ]]; do
     mkdir -p coverage
     gcovr -r .. \
       --gcov-exclude-directory 'test' \
+      --decisions \
       --medium-threshold 50 --high-threshold 75 \
       --html-details coverage/index.html \
       --cobertura coverage.cobertura.xml

@@ -25,16 +25,6 @@ jobs:
     outputs:
       image_tag: ${{ steps.meta.outputs.tags }}
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Get Transport Version for Build-Arg
-        id: transport_version
-        run: echo "version=$(cat ${{ github.workspace }}/src/cpp/.transport.version)" >> $GITHUB_OUTPUT
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
@@ -42,12 +32,22 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}/firebolt-client-ci
           tags: type=sha
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Get Transport Version for Build-Arg
+        id: transport_version
+        run: echo "version=$(cat ${{ github.workspace }}/src/cpp/.transport.version)" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -69,15 +69,15 @@ jobs:
     needs: [build_docker]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Run clang-format check
         run: |
@@ -91,126 +91,88 @@ jobs:
     needs: [build_docker]
     runs-on: ubuntu-latest
     steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Mock-Firebolt
-        id: setup-mock
-        uses: ./.github/actions/setup-mock
-
-      - name: Restore Mock-Firebolt Cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.MOCK_PATH }}
-          key: ${{ runner.os }}-mock-${{ steps.setup-mock.outputs.deps_cache_key }}
-
       - name: Get version
         run: |
           VERSION=$(git describe --tags --dirty --match "v[0-9]*")
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "version-native: $VERSION"
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          echo "version: $VERSION"
 
       - name: Configure Project
         run: |
           docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
             bash -c " \
-              cmake -B build -S src/cpp \
-                -DCMAKE_BUILD_TYPE=Debug \
-                -DENABLE_TESTS=ON \
+              cd src/cpp \
+              && cmake -B build -S . \
+                    -DCMAKE_BUILD_TYPE=Debug \
+                    -DENABLE_TESTS=ON \
+              && cp firebolt-open-rpc.json build/test/ \
             "
 
       - name: Build Project
         run: |
           docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
-            bash -c "cmake --build build"
+            bash -c "cmake --build src/cpp/build --parallel"
 
-      - name: Run Unit Tests
-        run: |
-          cp ${{ github.workspace }}/src/cpp/firebolt-open-rpc.json build/test/
-          docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
-            bash -c "ctest --test-dir build/test"
-
-      - name: Run Component Tests
-        run: |
-          cp ${{ github.workspace }}/src/cpp/firebolt-open-rpc.json build/test/
-          docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace -v ${{ env.MOCK_PATH }}:/mock ${{ needs.build_docker.outputs.image_tag }} \
-            ./.github/scripts/run-component-tests.sh \
-              --mock /mock \
-              --config /workspace/.github/mock-firebolt/config.json \
-              --openrpc /workspace/src/cpp/firebolt-open-rpc.json \
-              --app-openrpc /workspace/.github/openrpc/firebolt-app-open-rpc.json \
-              --test-exe /workspace/build/test/FireboltClientComponentTests
-
-      - name: Make Release package of Native SDK
-        run: |
-          ./.github/scripts/mk-release-package.sh \
-            --version ${{ env.VERSION }} \
-            --package firebolt-apis-native \
-            --subpath ./src/cpp \
-            --dst ${{ github.workspace }}/release
-
-      - name: Make Release package of Native Demo
-        run: |
-          ./.github/scripts/mk-release-package.sh \
-            --version ${{ env.VERSION }} \
-            --package firebolt-apis-native-demo \
-            --subpath ./src/cpp/demo \
-            --dst ${{ github.workspace }}/release
-
-      - name: Upload native packages as an artifact
+      - name: Upload build directory
         uses: actions/upload-artifact@v4
         with:
-          name: release
-          path: ${{ github.workspace }}/release
+          name: build-dir
+          path: ${{ github.workspace }}/src/cpp/build
 
-  coverage_report:
+  unit_tests:
     permissions:
       contents: read
       packages: read
-    needs: [build_docker]
+    needs: [build_docker, build_project]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download build directory
+        uses: actions/download-artifact@v4
+        with:
+          name: build-dir
+          path: ${{ github.workspace }}/src/cpp/build
+
+      - name: Run Unit Tests
+        run: |
+          chmod +x ${{ github.workspace }}/src/cpp/build/test/FireboltClientUnitTests
+          docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
+            bash -c "ctest --test-dir src/cpp/build/test"
 
       - name: Generate Coverage Report
         run: |
           docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
             bash -c " \
               set -e \
-              && echo 'Configuring and building' \
-              && cd src/cpp \
-              && cmake -B build -S . \
-                  -DCMAKE_BUILD_TYPE=Debug \
-                  -DENABLE_TESTS=ON \
-              && cmake --build build \
-              && cd build \
-              && cp ../firebolt-open-rpc.json ./test/ \
-              && echo 'Running Tests to Generate Coverage Data' \
-              && ctest --test-dir ./test \
-              && echo 'Generating GCOV Report' \
+              && cd src/cpp/build \
               && mkdir -p coverage \
               && gcovr -r .. \
-                  --gcov-exclude-directory 'test' \
-                  --medium-threshold 50 --high-threshold 75 \
-                  --html-details coverage/index.html \
-                  --cobertura coverage.cobertura.xml \
+                    --gcov-exclude-directory 'test' \
+                    --decisions \
+                    --medium-threshold 50 --high-threshold 75 \
+                    --html-details coverage/index.html \
+                    --cobertura coverage.cobertura.xml \
             "
 
       - name: Upload Coverage Report
@@ -224,10 +186,55 @@ jobs:
         with:
           filename: src/cpp/build/coverage.cobertura.xml
           badge: true
+          hide_complexity: true
           format: markdown
-          fail_below_min: false
           output: both
           thresholds: "50 75"
+          fail_below_min: false
 
       - name: Add coverage summary to job summary
         run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+
+  component_tests:
+    permissions:
+      contents: read
+      packages: read
+    needs: [build_docker, build_project]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download build directory
+        uses: actions/download-artifact@v4
+        with:
+          name: build-dir
+          path: ${{ github.workspace }}/src/cpp/build
+
+      - name: Setup Mock-Firebolt
+        id: setup-mock
+        uses: ./.github/actions/setup-mock
+
+      - name: Restore Mock-Firebolt Cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.MOCK_PATH }}
+          key: ${{ runner.os }}-mock-${{ steps.setup-mock.outputs.deps_cache_key }}
+
+      - name: Run Component Tests
+        run: |
+          chmod +x ${{ github.workspace }}/src/cpp/build/test/FireboltClientComponentTests
+          docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace -v ${{ env.MOCK_PATH }}:/mock ${{ needs.build_docker.outputs.image_tag }} \
+            ./.github/scripts/run-component-tests.sh \
+              --mock /mock \
+              --config /workspace/.github/mock-firebolt/config.json \
+              --openrpc /workspace/src/cpp/firebolt-open-rpc.json \
+              --app-openrpc /workspace/.github/openrpc/firebolt-app-open-rpc.json \
+              --test-exe /workspace/src/cpp/build/test/FireboltClientComponentTests
