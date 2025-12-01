@@ -79,13 +79,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Git trusts directories
-        run: git config --global --add safe.directory /workspace
-
       - name: Run clang-format check
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
-            bash -c "cd ./src/cpp && git ls-files -- '*.cpp' '*.h' | xargs clang-format --dry-run --Werror"
+            bash -c " \
+                git config --global --add safe.directory /workspace \
+                cd ./src/cpp && git ls-files -- '*.cpp' '*.h' | xargs clang-format --dry-run --Werror \
+            "
 
   build_project:
     permissions:
