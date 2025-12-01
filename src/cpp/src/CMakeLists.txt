@@ -19,7 +19,7 @@ include(GenerateExportHeader)
 include(CMakePackageConfigHelpers)
 
 set(TARGET ${PROJECT_NAME})
-message("Setup ${TARGET} v${PROJECT_VERSION}")
+message("Setup ${TARGET} v${PROJECT_VERSION} with the Transport v${FIREBOLT_TRANSPORT_VERSION}")
 
 string(TOLOWER "${TARGET}" TARGET_LOWER)
 
@@ -37,6 +37,11 @@ add_library(${TARGET}
     ${SOURCES}
 )
 
+if(ENABLE_TESTS)
+    target_compile_options(${TARGET} PRIVATE --coverage -g -O0 -fno-inline)
+    target_link_options(${TARGET} PRIVATE --coverage)
+endif()
+
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 find_package(FireboltTransport CONFIG REQUIRED)
@@ -48,7 +53,7 @@ if(NOT FireboltTransport_VERSION STREQUAL FIREBOLT_TRANSPORT_VERSION)
 endif()
 
 find_package(nlohmann_json CONFIG REQUIRED)
-if (TRANPORT_LINKAGE_STATIC)
+if (TRANSPORT_LINKAGE_STATIC)
     find_package(websocketpp CONFIG REQUIRED)
 endif()
 

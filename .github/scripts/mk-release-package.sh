@@ -33,7 +33,6 @@ else
 fi
 echo "$version" >$dist_path/.version
 tar -czf "build/$dist_name.tar.gz" -C "build" "$dist_name"
-echo "sha256sum  : $(sha256sum build/$dist_name.tar.gz)"
 
 if [[ ! -z "$dst" ]]; then
   mkdir -p "$dst"

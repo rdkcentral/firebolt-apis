@@ -25,9 +25,7 @@
 #include "fireboltclient_version.h"
 #include "lifecycle_impl.h"
 #include "localization_impl.h"
-#include "metrics_impl.h"
 #include "presentation_impl.h"
-#include "securestorage_impl.h"
 #include "stats_impl.h"
 #include <firebolt/gateway.h>
 
@@ -43,9 +41,7 @@ public:
           display_(Firebolt::Helpers::GetHelperInstance()),
           lifecycle_(Firebolt::Helpers::GetHelperInstance()),
           localization_(Firebolt::Helpers::GetHelperInstance()),
-          metrics_(Firebolt::Helpers::GetHelperInstance()),
           presentation_(Firebolt::Helpers::GetHelperInstance()),
-          secureStorage_(Firebolt::Helpers::GetHelperInstance()),
           stats_(Firebolt::Helpers::GetHelperInstance())
     {
     }
@@ -75,8 +71,6 @@ public:
     Lifecycle::ILifecycle& LifecycleInterface() override { return lifecycle_; }
     Localization::ILocalization& LocalizationInterface() override { return localization_; }
     Presentation::IPresentation& PresentationInterface() override { return presentation_; }
-    Metrics::IMetrics& MetricsInterface() override { return metrics_; }
-    SecureStorage::ISecureStorage& SecureStorageInterface() override { return secureStorage_; }
     Stats::IStats& StatsInterface() override { return stats_; }
 
 private:
@@ -95,9 +89,7 @@ private:
     Display::DisplayImpl display_;
     Lifecycle::LifecycleImpl lifecycle_;
     Localization::LocalizationImpl localization_;
-    Metrics::MetricsImpl metrics_;
     Presentation::PresentationImpl presentation_;
-    SecureStorage::SecureStorageImpl secureStorage_;
     Stats::StatsImpl stats_;
 };
 

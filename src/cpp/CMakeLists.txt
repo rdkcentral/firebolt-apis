@@ -62,9 +62,9 @@ string(REGEX REPLACE "^v?([0-9]+)\\.([0-9]+)\\.([0-9]+).*" "\\3" PROJECT_VERSION
 message(STATUS "Project version: ${PROJECT_VERSION}")
 
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
-option(ENABLE_TESTS "Build openrpc native test" OFF)
+option(ENABLE_TESTS "Build tests" OFF)
 option(DISCOVER_UT "Discover all Unit Tests" ON)
-option(DISCOVER_CT "Discover all Component Tests" ON)
+option(DISCOVER_CT "Discover all Component Tests" OFF)
 option(TRANSPORT_LINKAGE_STATIC "Link transport library statically (ON) or shared (OFF)" OFF)
 option(ENABLE_DEMO_APP "Build demo app" OFF)
 
