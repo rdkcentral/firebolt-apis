@@ -15,6 +15,18 @@ while [[ ! -z $1 ]]; do
   -i | --install) do_install=true;;
   +tests) params+=" -DENABLE_TESTS=ON";;
   +demo)  params+=" -DENABLE_DEMO_APP=ON";;
+  +gen-cov)
+    set -e
+    cd build
+    cp ../firebolt-open-rpc.json ./test/
+    ctest --test-dir ./test
+    mkdir -p coverage
+    gcovr -r .. \
+      --gcov-exclude-directory 'test' \
+      --medium-threshold 50 --high-threshold 75 \
+      --html-details coverage/index.html \
+      --cobertura coverage.cobertura.xml
+    exit 0;;
   --) shift; break;;
   *) break;;
   esac; shift

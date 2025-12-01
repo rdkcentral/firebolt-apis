@@ -171,3 +171,63 @@ jobs:
         with:
           name: release
           path: ${{ github.workspace }}/release
+
+  coverage_report:
+    permissions:
+      contents: read
+      packages: read
+    needs: [build_docker]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate Coverage Report
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
+            bash -c " \
+              set -e \
+              && echo 'Configuring and building' \
+              && cd src/cpp \
+              && cmake -B build -S . \
+                  -DCMAKE_BUILD_TYPE=Debug \
+                  -DENABLE_TESTS=ON \
+              && cmake --build build \
+              && cd build \
+              && cp ../firebolt-open-rpc.json ./test/ \
+              && echo 'Running Tests to Generate Coverage Data' \
+              && ctest --test-dir ./test \
+              && echo 'Generating GCOV Report' \
+              && mkdir -p coverage \
+              && gcovr -r .. \
+                  --gcov-exclude-directory 'test' \
+                  --medium-threshold 50 --high-threshold 75 \
+                  --html-details coverage/index.html \
+                  --cobertura coverage.cobertura.xml \
+            "
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ${{ github.workspace }}/src/cpp/build/coverage/
+
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: src/cpp/build/coverage.cobertura.xml
+          badge: true
+          format: markdown
+          fail_below_min: false
+          output: both
+          thresholds: "50 75"
+
+      - name: Add coverage summary to job summary
+        run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY

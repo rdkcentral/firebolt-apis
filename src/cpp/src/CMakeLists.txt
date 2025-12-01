@@ -37,6 +37,11 @@ add_library(${TARGET}
     ${SOURCES}
 )
 
+if(ENABLE_TESTS)
+    target_compile_options(${TARGET} PRIVATE --coverage -g -O0 -fno-inline)
+    target_link_options(${TARGET} PRIVATE --coverage)
+endif()
+
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 find_package(FireboltTransport CONFIG REQUIRED)

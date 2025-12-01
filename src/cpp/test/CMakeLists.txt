@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-set(TESTAPP TestFireboltClient)
-
 find_package(FireboltTransport CONFIG REQUIRED)
 find_package(Curl REQUIRED )
 find_package(GTest CONFIG REQUIRED)
@@ -50,6 +48,9 @@ add_executable(${UNIT_TESTS_APP}
     UnitTestsMain.cpp
     ${UNIT_TESTS}
 )
+
+target_compile_options(${UNIT_TESTS_APP} PRIVATE --coverage -g -O0 -fno-inline)
+target_link_options(${UNIT_TESTS_APP} PRIVATE --coverage)
 
 target_link_libraries(${UNIT_TESTS_APP}
     PRIVATE
