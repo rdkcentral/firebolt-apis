@@ -104,6 +104,11 @@ TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
                  R"({"enabled": true, "preferredLanguages": ["eng", "fra"]})");
     verifyEventReceived(mtx, cv, eventReceived);
 
+    SetUp();
+    triggerEvent("Accessibility.onClosedCaptionsSettingsChanged",
+                 R"({"enabled": true, "preferredLanguages": ["en-gb", "fr-fr"]})");
+    verifyEventNotReceived(mtx, cv, eventReceived);
+
     // Unsubscribe from the event
     auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(id.value());
     verifyUnsubscribeResult(result);
@@ -173,8 +178,18 @@ TEST_F(AccessibilityTest, SubscribeOnVoiceGuidanceSettingsChanged)
     verifyEventSubscription(id);
 
     triggerEvent("Accessibility.onVoiceGuidanceSettingsChanged",
-                 R"({"enabled": false, "rate": 1.0, "navigationHints": false})");
+                 R"({"enabled": false, "rate": 1.0, "navigationHints": false})");   
     verifyEventReceived(mtx, cv, eventReceived);
+
+    SetUp();
+    triggerEvent("Accessibility.onVoiceGuidanceSettingsChanged",
+                 R"({"enabled": false, "rate": 11.0, "navigationHints": false})");   
+    verifyEventNotReceived(mtx, cv, eventReceived);
+
+    SetUp();
+    triggerEvent("Accessibility.onVoiceGuidanceSettingsChanged",
+                 R"({"enabled": false, "rate": 0, "navigationHints": false})");   
+    verifyEventNotReceived(mtx, cv, eventReceived);
 
     // Unsubscribe from the event
     auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(id.value());

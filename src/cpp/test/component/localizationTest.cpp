@@ -82,8 +82,11 @@ TEST_F(LocalizationTest, subscribeOnCountryCodeChanged)
 
     // Trigger the event from the mock server
     triggerEvent("Localization.onCountryChanged", R"({"value":"US"})");
-
     verifyEventReceived(mtx, cv, eventReceived);
+
+    SetUp();
+    triggerEvent("Localization.onCountryChanged", R"({"value":"eng-us"})");
+    verifyEventNotReceived(mtx, cv, eventReceived);
 
     auto result = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().unsubscribe(id.value_or(0));
     ASSERT_TRUE(result) << "error on unsubscribe ";
@@ -109,8 +112,11 @@ TEST_F(LocalizationTest, subscribeOnPreferredAudioLanguagesChanged)
 
     // Trigger the event from the mock server
     triggerEvent("Localization.onPreferredAudioLanguagesChanged", R"(["spa","eng"])");
-
     verifyEventReceived(mtx, cv, eventReceived);
+
+    SetUp();
+    triggerEvent("Localization.onPreferredAudioLanguagesChanged", R"(["es-mx","en-gb"])");
+    verifyEventNotReceived(mtx, cv, eventReceived);
 
     auto result = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().unsubscribe(id.value_or(0));
     ASSERT_TRUE(result) << "error on unsubscribe ";
@@ -134,8 +140,11 @@ TEST_F(LocalizationTest, subscribeOnPreferredPresentationLanguageChanged)
 
     // Trigger the event from the mock server
     triggerEvent("Localization.onPresentationLanguageChanged", R"({"value":"en-US"})");
-
     verifyEventReceived(mtx, cv, eventReceived);
+
+    SetUp();
+    triggerEvent("Localization.onPresentationLanguageChanged", R"({"value":"fra"})");
+    verifyEventNotReceived(mtx, cv, eventReceived);
 
     auto result = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().unsubscribe(id.value_or(0));
     ASSERT_TRUE(result) << "error on unsubscribe ";
