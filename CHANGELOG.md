@@ -1,3 +1,11 @@
+# [1.8.0-next.30](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.29...v1.8.0-next.30) (2025-12-01)
+
+
+### Features
+
+* Remove not agreed APIs ([9d6124f](https://github.com/rdkcentral/firebolt-apis/commit/9d6124fe884e65cc6cb1d7351838b38c70670348))
+* Use Transport v21 ([86fe64b](https://github.com/rdkcentral/firebolt-apis/commit/86fe64b607e67684bf7c31be274a1a66f1f0c3be))
+
 # [1.8.0-next.29](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.28...v1.8.0-next.29) (2025-11-27)
 
 
