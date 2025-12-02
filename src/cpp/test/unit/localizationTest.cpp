@@ -21,8 +21,6 @@
 #include "localization_impl.h"
 #include "mock_helper.h"
 
-#define USE_LOCAL_RESPONSE
-
 class LocalizationTest : public ::testing::Test, protected MockBase
 {
 protected:
@@ -31,13 +29,8 @@ protected:
 
 TEST_F(LocalizationTest, Country)
 {
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = "US";
-    mock_with_response("Localization.country", expectedValue);
-#else
     auto expectedValue = jsonEngine.get_value("Localization.country").get<std::string>();
     mock("Localization.country");
-#endif
 
     auto result = localizationImpl_.country();
     ASSERT_TRUE(result) << "error on get";
@@ -60,13 +53,8 @@ TEST_F(LocalizationTest, PreferredAudioLanguages)
 
 TEST_F(LocalizationTest, PresentationLanguage)
 {
-#ifdef USE_LOCAL_RESPONSE
-    nlohmann::json expectedValue = "US";
-    mock_with_response("Localization.presentationLanguage", expectedValue);
-#else
     auto expectedValue = jsonEngine.get_value("Localization.presentationLanguage").get<std::string>();
     mock("Localization.presentationLanguage");
-#endif
 
     auto result = localizationImpl_.presentationLanguage();
     ASSERT_TRUE(result) << "error on get";
