@@ -178,17 +178,17 @@ TEST_F(AccessibilityTest, SubscribeOnVoiceGuidanceSettingsChanged)
     verifyEventSubscription(id);
 
     triggerEvent("Accessibility.onVoiceGuidanceSettingsChanged",
-                 R"({"enabled": false, "rate": 1.0, "navigationHints": false})");   
+                 R"({"enabled": false, "rate": 1.0, "navigationHints": false})");
     verifyEventReceived(mtx, cv, eventReceived);
 
     SetUp();
     triggerEvent("Accessibility.onVoiceGuidanceSettingsChanged",
-                 R"({"enabled": false, "rate": 11.0, "navigationHints": false})");   
+                 R"({"enabled": false, "rate": 11.0, "navigationHints": false})");
     verifyEventNotReceived(mtx, cv, eventReceived);
 
     SetUp();
     triggerEvent("Accessibility.onVoiceGuidanceSettingsChanged",
-                 R"({"enabled": false, "rate": 0, "navigationHints": false})");   
+                 R"({"enabled": false, "rate": 0, "navigationHints": false})");
     verifyEventNotReceived(mtx, cv, eventReceived);
 
     // Unsubscribe from the event

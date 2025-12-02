@@ -39,6 +39,13 @@ TEST_F(AccessibilityTest, AudioDescription)
     EXPECT_EQ(*result, expectedValue.get<bool>());
 }
 
+TEST_F(AccessibilityTest, AudioDescriptionBadResponse)
+{
+    mock_with_response("Accessibility.audioDescription", "invalid_response");
+    ASSERT_FALSE(accessibilityImpl_.audioDescription())
+        << "AccessibilityImpl::audioDescription() did not return an error";
+}
+
 TEST_F(AccessibilityTest, SubscribeOnAudioDescriptionChanged)
 {
     nlohmann::json expectedValue = 1;
@@ -62,6 +69,13 @@ TEST_F(AccessibilityTest, ClosedCaptionsSettings)
     ASSERT_TRUE(result) << "AccessibilityImpl::closedCaptionsSettings() returned an error";
     EXPECT_EQ((*result).enabled, expectedValue["enabled"].get<bool>());
     EXPECT_EQ((*result).preferredLanguages, expectedValue["preferredLanguages"].get<std::vector<std::string>>());
+}
+
+TEST_F(AccessibilityTest, ClosedCaptionsSettingsBadResponse)
+{
+    mock_with_response("Accessibility.closedCaptionsSettings", "invalid_response");
+    ASSERT_FALSE(accessibilityImpl_.closedCaptionsSettings())
+        << "AccessibilityImpl::closedCaptionsSettings() did not return an error";
 }
 
 TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
@@ -90,6 +104,12 @@ TEST_F(AccessibilityTest, HighContrastUI)
     EXPECT_EQ(*result, expectedValue);
 }
 
+TEST_F(AccessibilityTest, HighContrastUIBadResponse)
+{
+    mock_with_response("Accessibility.highContrastUI", "invalid_response");
+    ASSERT_FALSE(accessibilityImpl_.highContrastUI()) << "AccessibilityImpl::highContrastUI() did not return an error";
+}
+
 TEST_F(AccessibilityTest, SubscribeOnHighContrastUIChanged)
 {
     nlohmann::json expectedValue = 1;
@@ -114,6 +134,13 @@ TEST_F(AccessibilityTest, VoiceGuidanceSettings)
     EXPECT_EQ((*result).enabled, expectedValue["enabled"].get<bool>());
     EXPECT_EQ((*result).rate, expectedValue["rate"].get<float>());
     EXPECT_EQ((*result).navigationHints, expectedValue["navigationHints"].get<bool>());
+}
+
+TEST_F(AccessibilityTest, VoiceGuidanceSettingsBadResponse)
+{
+    mock_with_response("Accessibility.voiceGuidanceSettings", "invalid_response");
+    ASSERT_FALSE(accessibilityImpl_.voiceGuidanceSettings())
+        << "AccessibilityImpl::voiceGuidanceSettings() did not return an error";
 }
 
 TEST_F(AccessibilityTest, SubscribeOnVoiceGuidanceSettingsChanged)

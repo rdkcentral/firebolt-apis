@@ -41,3 +41,9 @@ TEST_F(StatsTest, MemoryUsage)
     EXPECT_EQ(result->gpuMemoryUsed, expectedValue.at("gpuMemoryUsedKiB").get<uint32_t>());
     EXPECT_EQ(result->gpuMemoryLimit, expectedValue.at("gpuMemoryLimitKiB").get<uint32_t>());
 }
+
+TEST_F(StatsTest, MemoryUsageBadResponse)
+{
+    mock_with_response("Stats.memoryUsage", "bad_response");
+    ASSERT_FALSE(statsImpl_.memoryUsage()) << "StatsImpl::memoryUsage() did not return an error";
+}

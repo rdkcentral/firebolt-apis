@@ -32,12 +32,17 @@ TEST_F(DisplayTest, Size)
 {
     mock("Display.size");
     auto expectedValue = jsonEngine.get_value("Display.size");
-    std::cout << "Expected Value: " << expectedValue.dump() << std::endl;
     auto result = displayImpl_.size();
     ASSERT_TRUE(result) << "DisplayImpl::size() returned an error";
 
     EXPECT_EQ(result->height, expectedValue.at("height").get<uint32_t>());
     EXPECT_EQ(result->width, expectedValue.at("width").get<uint32_t>());
+}
+
+TEST_F(DisplayTest, SizeBadResponse)
+{
+    mock_with_response("Display.size", "bad_response");
+    ASSERT_FALSE(displayImpl_.size()) << "DisplayImpl::size() did not return an error";
 }
 
 TEST_F(DisplayTest, MaxResolution)
@@ -50,4 +55,10 @@ TEST_F(DisplayTest, MaxResolution)
 
     EXPECT_EQ(result->height, expectedValue.at("height").get<uint32_t>());
     EXPECT_EQ(result->width, expectedValue.at("width").get<uint32_t>());
+}
+
+TEST_F(DisplayTest, MaxResolutionBadResponse)
+{
+    mock_with_response("Display.maxResolution", "bad_response");
+    ASSERT_FALSE(displayImpl_.maxResolution()) << "DisplayImpl::maxResolution() did not return an error";
 }
