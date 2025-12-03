@@ -23,12 +23,12 @@ test('Localization.listen: onCountryChanged', async () => {
 
 test('Localization.preferredAudioLanguages subscription', async () => {
   return testSubscribeWithOneArgument( Localization, 'preferredAudioLanguages',['spa', 'eng'], 
-    '{"jsonrpc":"2.0","method":"Localization.onPreferredAudioLanguagesChanged","params":{"Default Result":["spa","eng"]}}');
+    '{"jsonrpc":"2.0","method":"Localization.onPreferredAudioLanguagesChanged","params":[["spa","eng"]]}');
 });
 
 test('Localization.once: onPreferredAudioLanguagesChanged', async () => {
   return testListenWithOneArgument( Localization, 'once','onPreferredAudioLanguagesChanged',['spa', 'eng'], 
-    '{"jsonrpc":"2.0","method":"Localization.onPreferredAudioLanguagesChanged","params":{"Default Result":["spa","eng"]}}');
+    '{"jsonrpc":"2.0","method":"Localization.onPreferredAudioLanguagesChanged","params":[["spa","eng"]]}');
 });
 
 test('Localization.listen: onPreferredAudioLanguagesChanged', async () => {
