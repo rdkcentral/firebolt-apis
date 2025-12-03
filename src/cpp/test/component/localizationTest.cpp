@@ -111,7 +111,8 @@ TEST_F(LocalizationTest, subscribeOnPreferredAudioLanguagesChanged)
     EXPECT_TRUE(id.has_value()) << "error on id";
 
     // Trigger the event from the mock server
-    triggerEvent("Localization.onPreferredAudioLanguagesChanged", R"(["spa","eng"])");
+    triggerEvent("Localization.onPreferredAudioLanguagesChanged", R"({"value":["spa","eng"]})");
+
     verifyEventReceived(mtx, cv, eventReceived);
 
     SetUp();
