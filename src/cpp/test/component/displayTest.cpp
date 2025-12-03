@@ -17,11 +17,9 @@
  * limitations under the License.
  */
 
-#include "./component/utils.h"
-#include "firebolt.h"
+#include "firebolt/firebolt.h"
 #include "json_engine.h"
-#include "json_types/jsondata_device_types.h"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 class DisplayTest : public ::testing::Test
 {

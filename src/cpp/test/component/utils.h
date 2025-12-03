@@ -19,9 +19,8 @@
 
 #pragma once
 
-#include <firebolt.h>
-
 #include <condition_variable>
+#include <firebolt/types.h>
 #include <mutex>
 #include <nlohmann/json.hpp>
 #include <string>

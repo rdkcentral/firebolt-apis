@@ -17,15 +17,13 @@
  * limitations under the License.
  */
 
-#include "./component/utils.h"
-#include "firebolt.h"
+#include "component/utils.h"
+#include "firebolt/firebolt.h"
 #include "json_engine.h"
-#include "gtest/gtest.h"
-
 #include <condition_variable>
+#include <gtest/gtest.h>
 #include <iostream>
 #include <mutex>
-#include <thread>
 
 class LifecycleTest : public ::testing::Test
 {
