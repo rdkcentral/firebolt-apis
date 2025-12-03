@@ -22,7 +22,8 @@ while [[ ! -z $1 ]]; do
     ctest --test-dir ./test
     mkdir -p coverage
     gcovr -r .. \
-      --gcov-exclude-directory 'test' \
+      --exclude '.*/test/.*\.h' \
+      --exclude '.*/test/.*\.cpp' \
       --decisions \
       --medium-threshold 50 --high-threshold 75 \
       --html-details coverage/index.html \
