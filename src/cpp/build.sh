@@ -44,7 +44,7 @@ if [[ ! -e $bdir ]]; then
     $params \
     "$@"
 fi
-cmake --build $bdir || exit $?
+cmake --build $bdir --parallel || exit $?
 if $do_install; then
   cmake --install $bdir || exit $?
 fi
