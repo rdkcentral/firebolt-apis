@@ -21,8 +21,6 @@ include(GenerateExportHeader)
 set(TARGET ${PROJECT_NAME})
 message("Setup ${TARGET} v${PROJECT_VERSION} with the Transport v${FIREBOLT_TRANSPORT_VERSION}")
 
-string(TOLOWER "${TARGET}" TARGET_LOWER)
-
 file(GLOB SOURCES *.cpp json_types/*.cpp)
 
 if(NOT ENABLE_TESTS)
@@ -42,21 +40,6 @@ if(ENABLE_TESTS)
     target_link_options(${TARGET} PRIVATE --coverage)
 endif()
 
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-find_package(FireboltTransport CONFIG REQUIRED)
-
-if(NOT FireboltTransport_VERSION STREQUAL FIREBOLT_TRANSPORT_VERSION)
-    message(FATAL_ERROR "FireboltTransport version mismatch! "
-                        "Expected ${FIREBOLT_TRANSPORT_VERSION} but found ${FireboltTransport_VERSION}. "
-                        "Please check your installation.")
-endif()
-
-find_package(nlohmann_json CONFIG REQUIRED)
-if (TRANSPORT_LINKAGE_STATIC)
-    find_package(websocketpp CONFIG REQUIRED)
-endif()
-
 generate_export_header(
     ${TARGET}
     EXPORT_FILE_NAME "firebolt/client_export.h"
@@ -72,7 +55,7 @@ target_link_libraries(${TARGET}
     PRIVATE
         nlohmann_json::nlohmann_json
     PUBLIC
-        FireboltTransport::FireboltTransport
+        $<IF:$<TARGET_EXISTS:FireboltTransport::FireboltTransport>,FireboltTransport::FireboltTransport,FireboltTransport>
 )
 
 target_include_directories(${TARGET}
@@ -91,6 +74,7 @@ set_target_properties(${TARGET} PROPERTIES
     CXX_STANDARD_REQUIRED YES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
+    CMAKE_POSITION_INDEPENDENT_CODE ON
 )
 
 write_basic_package_version_file(

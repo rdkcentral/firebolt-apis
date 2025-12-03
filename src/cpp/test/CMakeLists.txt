@@ -17,10 +17,8 @@
 # limitations under the License.
 #
 
-find_package(FireboltTransport CONFIG REQUIRED)
 find_package(Curl REQUIRED )
 find_package(GTest CONFIG REQUIRED)
-find_package(nlohmann_json CONFIG REQUIRED)
 find_package(nlohmann_json_schema_validator CONFIG REQUIRED)
 
 include(GoogleTest)
@@ -55,7 +53,7 @@ target_link_options(${UNIT_TESTS_APP} PRIVATE --coverage)
 target_link_libraries(${UNIT_TESTS_APP}
     PRIVATE
         FireboltClient
-        FireboltTransport::FireboltTransport
+        $<IF:$<TARGET_EXISTS:FireboltTransport::FireboltTransport>,FireboltTransport::FireboltTransport,FireboltTransport>
         nlohmann_json::nlohmann_json
         nlohmann_json_schema_validator::validator
         GTest::gtest
@@ -108,7 +106,7 @@ add_executable(${COMPONENT_TESTS_APP}
 target_link_libraries(${COMPONENT_TESTS_APP}
     PRIVATE
         FireboltClient
-        FireboltTransport::FireboltTransport
+        $<IF:$<TARGET_EXISTS:FireboltTransport::FireboltTransport>,FireboltTransport::FireboltTransport,FireboltTransport>
         nlohmann_json::nlohmann_json
         nlohmann_json_schema_validator::validator
         CURL::libcurl
