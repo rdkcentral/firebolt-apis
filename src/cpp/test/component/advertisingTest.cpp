@@ -17,16 +17,9 @@
  * limitations under the License.
  */
 
-#include "./component/utils.h"
-#include "firebolt.h"
+#include "firebolt/firebolt.h"
 #include "json_engine.h"
-#include "json_types/jsondata_advertising_types.h"
-#include "gtest/gtest.h"
-
-#include <condition_variable>
-#include <iostream>
-#include <mutex>
-#include <thread>
+#include <gtest/gtest.h>
 
 class AdvertisingTest : public ::testing::Test
 {

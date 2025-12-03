@@ -17,21 +17,14 @@
  * limitations under the License.
  */
 
-#include "./component/utils.h"
-#include "firebolt.h"
-#include "json_engine.h"
-
-#include "gtest/gtest.h"
-
-#include <nlohmann/json-schema.hpp>
-#include <nlohmann/json.hpp>
-
-#include <curl/curl.h>
-
+#include "component/utils.h"
 #include <condition_variable>
+#include <curl/curl.h>
+#include <gtest/gtest.h>
 #include <iostream>
 #include <mutex>
-#include <thread>
+#include <nlohmann/json-schema.hpp>
+#include <nlohmann/json.hpp>
 
 // curl http get helper function using
 std::string httpGet(const std::string& url)

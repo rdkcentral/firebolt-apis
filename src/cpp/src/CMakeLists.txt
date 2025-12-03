@@ -14,9 +14,9 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 include(GenerateExportHeader)
-include(CMakePackageConfigHelpers)
 
 set(TARGET ${PROJECT_NAME})
 message("Setup ${TARGET} v${PROJECT_VERSION} with the Transport v${FIREBOLT_TRANSPORT_VERSION}")
@@ -57,11 +57,14 @@ if (TRANSPORT_LINKAGE_STATIC)
     find_package(websocketpp CONFIG REQUIRED)
 endif()
 
-generate_export_header(${TARGET})
+generate_export_header(
+    ${TARGET}
+    EXPORT_FILE_NAME "firebolt/client_export.h"
+)
 
 configure_file(
-    "${CMAKE_SOURCE_DIR}/include/version.h.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_version.h"
+    "${CMAKE_SOURCE_DIR}/include/firebolt/version.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/firebolt/client_version.h"
     @ONLY
 )
 
@@ -75,7 +78,7 @@ target_link_libraries(${TARGET}
 target_include_directories(${TARGET}
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/json_types>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
@@ -118,14 +121,14 @@ install(
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/firebolt
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/
     FILES_MATCHING PATTERN "*.h"
 )
 
 install(
     FILES
-        ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_export.h
-        ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_version.h
+        ${CMAKE_CURRENT_BINARY_DIR}/firebolt/client_export.h
+        ${CMAKE_CURRENT_BINARY_DIR}/firebolt/client_version.h
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/firebolt
 )
 

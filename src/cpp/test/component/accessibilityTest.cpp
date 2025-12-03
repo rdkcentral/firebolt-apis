@@ -17,11 +17,10 @@
  * limitations under the License.
  */
 
-#include "accessibility_impl.h"
-#include "firebolt.h"
+#include "firebolt/firebolt.h"
 #include "json_engine.h"
-#include "json_types/jsondata_accessibility_types.h"
 #include "utils.h"
+#include <gtest/gtest.h>
 
 class AccessibilityTest : public ::testing::Test
 {

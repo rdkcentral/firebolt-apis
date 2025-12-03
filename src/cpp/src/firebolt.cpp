@@ -17,12 +17,12 @@
  * limitations under the License.
  */
 
-#include "firebolt.h"
+#include "firebolt/firebolt.h"
 #include "accessibility_impl.h"
 #include "advertising_impl.h"
 #include "device_impl.h"
 #include "display_impl.h"
-#include "fireboltclient_version.h"
+#include "firebolt/client_version.h"
 #include "lifecycle_impl.h"
 #include "localization_impl.h"
 #include "presentation_impl.h"

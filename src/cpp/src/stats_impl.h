@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "stats.h"
+#include "firebolt/stats.h"
 #include <firebolt/helpers.h>
 
 namespace Firebolt::Stats

@@ -18,13 +18,11 @@
  */
 
 #include "component/utils.h"
-#include "firebolt.h"
+#include "firebolt/firebolt.h"
 #include "json_engine.h"
 #include <condition_variable>
 #include <gtest/gtest.h>
-#include <iostream>
 #include <mutex>
-#include <thread>
 
 class PresentationTest : public ::testing::Test
 {
