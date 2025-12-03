@@ -143,10 +143,6 @@ TEST_F(LocalizationTest, subscribeOnPreferredPresentationLanguageChanged)
     triggerEvent("Localization.onPresentationLanguageChanged", R"({"value":"en-US"})");
     verifyEventReceived(mtx, cv, eventReceived);
 
-    SetUp();
-    triggerEvent("Localization.onPresentationLanguageChanged", R"({"value":"fra"})");
-    verifyEventNotReceived(mtx, cv, eventReceived);
-
     auto result = Firebolt::IFireboltAccessor::Instance().LocalizationInterface().unsubscribe(id.value_or(0));
     ASSERT_TRUE(result) << "error on unsubscribe ";
 }

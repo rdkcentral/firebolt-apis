@@ -86,7 +86,7 @@ TEST_F(LocalizationTest, subscribeOnCountryChanged)
 {
     mockSubscribe("Localization.onCountryChanged");
 
-    auto id = localizationImpl_.subscribeOnCountryChanged([](auto) { });
+    auto id = localizationImpl_.subscribeOnCountryChanged([](auto) {});
     ASSERT_TRUE(id) << "error on subscribe ";
     EXPECT_TRUE(id.has_value()) << "error on id";
     auto result = localizationImpl_.unsubscribe(id.value_or(0));
@@ -97,7 +97,7 @@ TEST_F(LocalizationTest, subscribeOnPreferredAudioLanguagesChanged)
 {
     mockSubscribe("Localization.onPreferredAudioLanguagesChanged");
 
-    auto id = localizationImpl_.subscribeOnPreferredAudioLanguagesChanged([](auto) { });
+    auto id = localizationImpl_.subscribeOnPreferredAudioLanguagesChanged([](auto) {});
     ASSERT_TRUE(id) << "error on subscribe ";
     EXPECT_TRUE(id.has_value()) << "error on id";
     auto result = localizationImpl_.unsubscribe(id.value_or(0));
@@ -108,7 +108,7 @@ TEST_F(LocalizationTest, subscribeOnPresentationLanguageChanged)
 {
     mockSubscribe("Localization.onPresentationLanguageChanged");
 
-    auto id = localizationImpl_.subscribeOnPresentationLanguageChanged([](auto) { });
+    auto id = localizationImpl_.subscribeOnPresentationLanguageChanged([](auto) {});
     ASSERT_TRUE(id) << "error on subscribe ";
     EXPECT_TRUE(id.has_value()) << "error on id";
     auto result = localizationImpl_.unsubscribe(id.value_or(0));
