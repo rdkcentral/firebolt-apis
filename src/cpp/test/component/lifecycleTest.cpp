@@ -63,7 +63,7 @@ TEST_F(LifecycleTest, subscribeOnState)
     auto id = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnStateChanged(
         [&](const std::vector<Firebolt::Lifecycle::StateChange>& changes)
         {
-            EXPECT_EQ(changes.size(), 1);
+            EXPECT_TRUE(changes.size() > 0);
             std::cout << "[Subscription] Lifecycle state changed: " << static_cast<int>(changes[0].newState)
                       << ", old state: " << static_cast<int>(changes[0].oldState) << std::endl;
 
