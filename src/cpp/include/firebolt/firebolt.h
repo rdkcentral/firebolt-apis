@@ -19,15 +19,15 @@
 
 #pragma once
 
-#include "accessibility.h"
-#include "advertising.h"
-#include "device.h"
-#include "display.h"
-#include "fireboltclient_export.h"
-#include "lifecycle.h"
-#include "localization.h"
-#include "presentation.h"
-#include "stats.h"
+#include "firebolt/accessibility.h"
+#include "firebolt/advertising.h"
+#include "firebolt/client_export.h"
+#include "firebolt/device.h"
+#include "firebolt/display.h"
+#include "firebolt/lifecycle.h"
+#include "firebolt/localization.h"
+#include "firebolt/presentation.h"
+#include "firebolt/stats.h"
 #include <firebolt/config.h>
 #include <firebolt/types.h>
 #include <functional>

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include "firebolt.h"
+#include "firebolt/firebolt.h"
 #include "gtest/gtest.h"
 #include <firebolt/config.h>
 #include <iostream>

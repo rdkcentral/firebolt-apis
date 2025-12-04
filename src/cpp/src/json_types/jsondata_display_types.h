@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "display.h"
+#include "firebolt/display.h"
 #include <firebolt/json_types.h>
 #include <nlohmann/json.hpp>
 

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "device.h"
+#include "firebolt/device.h"
 #include <firebolt/helpers.h>
 
 namespace Firebolt::Device

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include "firebolt.h"
+#include "firebolt/firebolt.h"
 #include "json_engine.h"
 
 class StatsTest : public ::testing::Test

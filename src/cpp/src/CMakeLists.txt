@@ -14,14 +14,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 include(GenerateExportHeader)
-include(CMakePackageConfigHelpers)
 
 set(TARGET ${PROJECT_NAME})
 message("Setup ${TARGET} v${PROJECT_VERSION} with the Transport v${FIREBOLT_TRANSPORT_VERSION}")
-
-string(TOLOWER "${TARGET}" TARGET_LOWER)
 
 file(GLOB SOURCES *.cpp json_types/*.cpp)
 
@@ -42,26 +40,14 @@ if(ENABLE_TESTS)
     target_link_options(${TARGET} PRIVATE --coverage)
 endif()
 
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-find_package(FireboltTransport CONFIG REQUIRED)
-
-if(NOT FireboltTransport_VERSION STREQUAL FIREBOLT_TRANSPORT_VERSION)
-    message(FATAL_ERROR "FireboltTransport version mismatch! "
-                        "Expected ${FIREBOLT_TRANSPORT_VERSION} but found ${FireboltTransport_VERSION}. "
-                        "Please check your installation.")
-endif()
-
-find_package(nlohmann_json CONFIG REQUIRED)
-if (TRANSPORT_LINKAGE_STATIC)
-    find_package(websocketpp CONFIG REQUIRED)
-endif()
-
-generate_export_header(${TARGET})
+generate_export_header(
+    ${TARGET}
+    EXPORT_FILE_NAME "firebolt/client_export.h"
+)
 
 configure_file(
-    "${CMAKE_SOURCE_DIR}/include/version.h.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_version.h"
+    "${CMAKE_SOURCE_DIR}/include/firebolt/version.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/firebolt/client_version.h"
     @ONLY
 )
 
@@ -69,13 +55,13 @@ target_link_libraries(${TARGET}
     PRIVATE
         nlohmann_json::nlohmann_json
     PUBLIC
-        FireboltTransport::FireboltTransport
+        $<IF:$<TARGET_EXISTS:FireboltTransport::FireboltTransport>,FireboltTransport::FireboltTransport,FireboltTransport>
 )
 
 target_include_directories(${TARGET}
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/json_types>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
@@ -88,6 +74,7 @@ set_target_properties(${TARGET} PROPERTIES
     CXX_STANDARD_REQUIRED YES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
+    CMAKE_POSITION_INDEPENDENT_CODE ON
 )
 
 write_basic_package_version_file(
@@ -118,14 +105,14 @@ install(
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/firebolt
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/
     FILES_MATCHING PATTERN "*.h"
 )
 
 install(
     FILES
-        ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_export.h
-        ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_version.h
+        ${CMAKE_CURRENT_BINARY_DIR}/firebolt/client_export.h
+        ${CMAKE_CURRENT_BINARY_DIR}/firebolt/client_version.h
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/firebolt
 )
 

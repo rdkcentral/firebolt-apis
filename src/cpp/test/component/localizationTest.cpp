@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-#include "./component/utils.h"
-#include "firebolt.h"
+#include "component/utils.h"
+#include "firebolt/firebolt.h"
 #include "json_engine.h"
 #include "gtest/gtest.h"
 

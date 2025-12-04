@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "presentation.h"
+#include "firebolt/presentation.h"
 #include <firebolt/helpers.h>
 
 namespace Firebolt::Presentation

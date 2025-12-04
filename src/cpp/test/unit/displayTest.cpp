@@ -19,7 +19,6 @@
 
 #include "display_impl.h"
 #include "json_engine.h"
-#include "json_types/jsondata_display_types.h"
 #include "mock_helper.h"
 
 class DisplayTest : public ::testing::Test, protected MockBase
