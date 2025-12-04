@@ -1,3 +1,44 @@
+# [1.8.0-next.31](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.30...v1.8.0-next.31) (2025-12-04)
+
+
+### Bug Fixes
+
+* Update internal type ([5c99780](https://github.com/rdkcentral/firebolt-apis/commit/5c997804dadaac278f3d27637687a5246ac44e3f))
+
+
+### Features
+
+* Use FetchContent for the Transport if not installed ([4d6795b](https://github.com/rdkcentral/firebolt-apis/commit/4d6795b6cafbba2931d0215f1223e6a3e00f6da2))
+
+# [1.8.0-next.30](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.29...v1.8.0-next.30) (2025-12-01)
+
+
+### Features
+
+* Remove not agreed APIs ([9d6124f](https://github.com/rdkcentral/firebolt-apis/commit/9d6124fe884e65cc6cb1d7351838b38c70670348))
+* Use Transport v21 ([86fe64b](https://github.com/rdkcentral/firebolt-apis/commit/86fe64b607e67684bf7c31be274a1a66f1f0c3be))
+
+# [1.8.0-next.29](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.28...v1.8.0-next.29) (2025-11-27)
+
+
+### Features
+
+* Localization API  ([#477](https://github.com/rdkcentral/firebolt-apis/issues/477)) ([d639456](https://github.com/rdkcentral/firebolt-apis/commit/d6394568d5ebc11704aa79525bbb960588aea121))
+
+# [1.8.0-next.28](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.27...v1.8.0-next.28) (2025-11-27)
+
+
+### Features
+
+* Display API ([#474](https://github.com/rdkcentral/firebolt-apis/issues/474)) ([2912ca3](https://github.com/rdkcentral/firebolt-apis/commit/2912ca387258f0ecb8dde22e63d44a0e86890f01))
+
+# [1.8.0-next.27](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.26...v1.8.0-next.27) (2025-11-27)
+
+
+### Features
+
+* Device.chipsetId ([#476](https://github.com/rdkcentral/firebolt-apis/issues/476)) ([36dc605](https://github.com/rdkcentral/firebolt-apis/commit/36dc60527a2fcd26a9687904b24ed2f3b599feef))
+
 # [1.8.0-next.26](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.25...v1.8.0-next.26) (2025-11-26)
 
 

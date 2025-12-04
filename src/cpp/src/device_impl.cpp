@@ -34,12 +34,17 @@ Result<DeviceClass> DeviceImpl::deviceClass() const
 
 Result<u_int32_t> DeviceImpl::timeInActiveState() const
 {
-    return helper_.get<Firebolt::JSON::Integer, u_int32_t>("Device.timeInActiveState");
+    return helper_.get<Firebolt::JSON::Unsigned, u_int32_t>("Device.timeInActiveState");
 }
 
 Result<uint32_t> DeviceImpl::uptime() const
 {
-    return helper_.get<Firebolt::JSON::Integer, uint32_t>("Device.uptime");
+    return helper_.get<Firebolt::JSON::Unsigned, uint32_t>("Device.uptime");
+}
+
+Result<std::string> DeviceImpl::chipsetId() const
+{
+    return helper_.get<Firebolt::JSON::String, std::string>("Device.chipsetId");
 }
 
 Result<std::string> DeviceImpl::uid() const

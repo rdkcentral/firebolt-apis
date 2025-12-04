@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "advertising.h"
+#include "firebolt/advertising.h"
 #include <firebolt/helpers.h>
 
 namespace Firebolt::Advertising

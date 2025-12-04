@@ -19,16 +19,15 @@
 
 #pragma once
 
-#include "accessibility.h"
-#include "advertising.h"
-#include "device.h"
-#include "fireboltclient_export.h"
-#include "lifecycle.h"
-#include "localization.h"
-#include "metrics.h"
-#include "presentation.h"
-#include "securestorage.h"
-#include "stats.h"
+#include "firebolt/accessibility.h"
+#include "firebolt/advertising.h"
+#include "firebolt/client_export.h"
+#include "firebolt/device.h"
+#include "firebolt/display.h"
+#include "firebolt/lifecycle.h"
+#include "firebolt/localization.h"
+#include "firebolt/presentation.h"
+#include "firebolt/stats.h"
 #include <firebolt/config.h>
 #include <firebolt/types.h>
 #include <functional>
@@ -100,6 +99,13 @@ public:
     virtual Device::IDevice& DeviceInterface() = 0;
 
     /**
+     * @brief Returns instance of Display interface
+     *
+     * @return Reference to Display interface
+     */
+    virtual Display::IDisplay& DisplayInterface() = 0;
+
+    /**
      * @brief Returns instance of Lifecycle interface
      *
      * @return Reference to Lifecycle interface
@@ -114,25 +120,11 @@ public:
     virtual Localization::ILocalization& LocalizationInterface() = 0;
 
     /**
-     * @brief Returns instance of Metrics interface
-     *
-     * @return Reference to Metrics interface
-     */
-    virtual Metrics::IMetrics& MetricsInterface() = 0;
-
-    /**
      * @brief Returns instance of Presentation interface
      *
      * @return Reference to Presentation interface
      */
     virtual Presentation::IPresentation& PresentationInterface() = 0;
-
-    /**
-     * @brief Returns instance of SecureStorage interface
-     *
-     * @return Reference to SecureStorage interface
-     */
-    virtual SecureStorage::ISecureStorage& SecureStorageInterface() = 0;
 
     /**
      * @brief Returns instance of Accessibiilty interface

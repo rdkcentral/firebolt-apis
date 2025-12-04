@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "lifecycle.h"
+#include "firebolt/lifecycle.h"
 #include <firebolt/helpers.h>
 
 class LifecycleTest;

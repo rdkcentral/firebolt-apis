@@ -17,24 +17,23 @@
  * limitations under the License.
  */
 
-#include "json_engine.h"
-#include "metrics_impl.h"
-#include "mock_helper.h"
+#include "display_impl.h"
+#include "jsondata_display_types.h"
 
-class MetricsTest : public ::testing::Test, protected MockBase
+namespace Firebolt::Display
 {
-protected:
-    Firebolt::Metrics::MetricsImpl metricsImpl_{mockHelper};
-};
-
-TEST_F(MetricsTest, ready)
+DisplayImpl::DisplayImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper)
 {
-    EXPECT_CALL(mockHelper, getJson("Metrics.ready", _))
-        .WillOnce(Invoke([&](const std::string& methodName, const nlohmann::json& parameters)
-                         { return Firebolt::Result<nlohmann::json>{jsonEngine.get_value("Metrics.ready")}; }));
-
-    auto result = metricsImpl_.ready();
-    ASSERT_TRUE(result) << "error on get";
-    auto expectedValue = jsonEngine.get_value("Metrics.ready");
-    EXPECT_EQ(*result, expectedValue);
 }
+
+Result<DisplaySize> DisplayImpl::size() const
+{
+    return Result(helper_.get<JsonData::DisplaySizeJson, DisplaySize>("Display.size"));
+}
+
+Result<DisplaySize> DisplayImpl::maxResolution() const
+{
+    return helper_.get<JsonData::DisplaySizeJson, DisplaySize>("Display.maxResolution");
+}
+} // namespace Firebolt::Display

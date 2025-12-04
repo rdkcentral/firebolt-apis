@@ -19,22 +19,24 @@
 
 #pragma once
 
-#include "metrics.h"
+#include "firebolt/display.h"
 #include <firebolt/helpers.h>
 
-namespace Firebolt::Metrics
+namespace Firebolt::Display
 {
-class MetricsImpl : public IMetrics
+class DisplayImpl : public IDisplay
 {
 public:
-    MetricsImpl(Firebolt::Helpers::IHelper& helper);
-    MetricsImpl(const MetricsImpl&) = delete;
-    MetricsImpl& operator=(const MetricsImpl&) = delete;
-    ~MetricsImpl() override;
+    explicit DisplayImpl(Firebolt::Helpers::IHelper& helper);
+    DisplayImpl(const DisplayImpl&) = delete;
+    DisplayImpl& operator=(const DisplayImpl&) = delete;
 
-    Result<bool> ready() override;
+    ~DisplayImpl() override = default;
+    Result<DisplaySize> size() const override;
+    Result<DisplaySize> maxResolution() const override;
 
 private:
     Firebolt::Helpers::IHelper& helper_;
+    // Methods
 };
-} // namespace Firebolt::Metrics
+} // namespace Firebolt::Display

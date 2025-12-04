@@ -17,21 +17,14 @@
  * limitations under the License.
  */
 
-#include "./component/utils.h"
-#include "firebolt.h"
-#include "json_engine.h"
-
-#include "gtest/gtest.h"
-
-#include <nlohmann/json-schema.hpp>
-#include <nlohmann/json.hpp>
-
-#include <curl/curl.h>
-
+#include "component/utils.h"
 #include <condition_variable>
+#include <curl/curl.h>
+#include <gtest/gtest.h>
 #include <iostream>
 #include <mutex>
-#include <thread>
+#include <nlohmann/json-schema.hpp>
+#include <nlohmann/json.hpp>
 
 // curl http get helper function using
 std::string httpGet(const std::string& url)
@@ -136,5 +129,15 @@ void verifyEventReceived(std::mutex& mtx, std::condition_variable& cv, bool& eve
     if (!cv.wait_for(lock, std::chrono::seconds(5), [&] { return eventReceived; }))
     {
         FAIL() << "Did not receive event within timeout";
+    }
+}
+
+void verifyEventNotReceived(std::mutex& mtx, std::condition_variable& cv, bool& eventReceived)
+{
+    // Wait for the event to be received or timeout after 5 seconds
+    std::unique_lock<std::mutex> lock(mtx);
+    if (cv.wait_for(lock, std::chrono::seconds(5), [&] { return eventReceived; }))
+    {
+        FAIL() << "Unexpectedly received event";
     }
 }

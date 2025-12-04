@@ -17,20 +17,29 @@
  * limitations under the License.
  */
 
-#include "metrics_impl.h"
+#pragma once
+
+#include "firebolt/display.h"
 #include <firebolt/json_types.h>
+#include <nlohmann/json.hpp>
 
-namespace Firebolt::Metrics
+namespace Firebolt::Display::JsonData
 {
-MetricsImpl::MetricsImpl(Firebolt::Helpers::IHelper& helper)
-    : helper_(helper)
-{
-}
-MetricsImpl::~MetricsImpl() {}
 
-Result<bool> MetricsImpl::ready()
+// Types
+class DisplaySizeJson : public Firebolt::JSON::NL_Json_Basic<::Firebolt::Display::DisplaySize>
 {
-    nlohmann::json params;
-    return helper_.get<::Firebolt::JSON::Boolean, bool>("Metrics.ready", params);
-}
-} // namespace Firebolt::Metrics
+public:
+    void fromJson(const nlohmann::json& json) override
+    {
+        width_ = json["width"].get<uint32_t>();
+        height_ = json["height"].get<uint32_t>();
+    }
+    ::Firebolt::Display::DisplaySize value() const override { return Firebolt::Display::DisplaySize{width_, height_}; }
+
+private:
+    uint32_t width_;
+    uint32_t height_;
+};
+
+} // namespace Firebolt::Display::JsonData
