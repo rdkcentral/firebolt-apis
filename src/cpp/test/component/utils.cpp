@@ -131,3 +131,13 @@ void verifyEventReceived(std::mutex& mtx, std::condition_variable& cv, bool& eve
         FAIL() << "Did not receive event within timeout";
     }
 }
+
+void verifyEventNotReceived(std::mutex& mtx, std::condition_variable& cv, bool& eventReceived)
+{
+    // Wait for the event to be received or timeout after 5 seconds
+    std::unique_lock<std::mutex> lock(mtx);
+    if (cv.wait_for(lock, std::chrono::seconds(5), [&] { return eventReceived; }))
+    {
+        FAIL() << "Unexpectedly received event";
+    }
+}

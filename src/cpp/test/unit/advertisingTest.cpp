@@ -39,3 +39,9 @@ TEST_F(AdvertisingTest, advertisingId)
     EXPECT_EQ(result->ifa_type, expectedValue["ifa_type"].get<std::string>());
     EXPECT_EQ(result->lmt, expectedValue["lmt"].get<std::string>());
 }
+
+TEST_F(AdvertisingTest, advertisingTestBadResponse)
+{
+    mock_with_response("Advertising.advertisingId", "bad_response");
+    ASSERT_FALSE(advertisingImpl_.advertisingId()) << "AdvertisingImpl::advertisingId() did not return an error";
+}

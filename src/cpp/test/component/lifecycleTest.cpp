@@ -80,6 +80,11 @@ TEST_F(LifecycleTest, subscribeOnState)
     triggerEvent("Lifecycle2.onStateChanged", R"({"value":[{"newState":"paused","oldState":"initializing"}]})");
 
     verifyEventReceived(mtx, cv, eventReceived);
+
+    SetUp();
+    triggerEvent("Lifecycle2.onStateChanged", R"([{"newState":"paused","oldState":"badstate"}])");
+    verifyEventNotReceived(mtx, cv, eventReceived);
+
     // Unsubscribe from the event
     auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(id.value());
     verifyUnsubscribeResult(result);

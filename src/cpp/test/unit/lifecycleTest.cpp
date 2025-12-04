@@ -52,17 +52,17 @@ TEST_F(LifecycleTest, close)
 
 TEST_F(LifecycleTest, state)
 {
-    EXPECT_CALL(mockHelper, getJson("Lifecycle2.state", _))
-        .WillOnce(Invoke(
-            [](const std::string& /*methodName*/, const nlohmann::json& /*parameters*/)
-            {
-                nlohmann::json response = "initializing";
-                return Firebolt::Result<nlohmann::json>{response};
-            }));
-
+    mock_with_response("Lifecycle2.state", "initializing");
     Firebolt::Result<Firebolt::Lifecycle::LifecycleState> result = lifecycleImpl_.state();
     ASSERT_TRUE(result) << "Failed to retrieve current state from Lifecycle.state() method";
     EXPECT_EQ(*result, Firebolt::Lifecycle::LifecycleState::INITIALIZING);
+}
+
+TEST_F(LifecycleTest, stateBadResponse)
+{
+    mock_with_response("Lifecycle2.state", "invalid_response");
+    Firebolt::Result<Firebolt::Lifecycle::LifecycleState> result = lifecycleImpl_.state();
+    ASSERT_FALSE(result) << "LifecycleImpl::state() did not return an error";
 }
 
 TEST_F(LifecycleTest, subscribeOnStateChanged)

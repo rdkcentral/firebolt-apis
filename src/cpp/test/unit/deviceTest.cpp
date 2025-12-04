@@ -40,6 +40,12 @@ TEST_F(DeviceTest, GetClass)
     EXPECT_EQ(static_cast<int>(*result), static_cast<int>(Firebolt::Device::JsonData::DeviceClassEnum.at(expectedValue)));
 }
 
+TEST_F(DeviceTest, GetClassBadRespons_Test)
+{
+    mock_with_response("Device.deviceClass", "abc");
+    ASSERT_FALSE(deviceImpl_.deviceClass()) << "DeviceImpl::deviceClass() NOT returned an error";
+}
+
 TEST_F(DeviceTest, TimeInActiveState)
 {
     mock("Device.timeInActiveState");
@@ -49,6 +55,12 @@ TEST_F(DeviceTest, TimeInActiveState)
     ASSERT_TRUE(result) << "DeviceImpl::timeInActiveState() returned an error";
 
     EXPECT_EQ(*result, expectedValue);
+}
+
+TEST_F(DeviceTest, TimeInActiveStateBadResponse)
+{
+    mock_with_response("Device.timeInActiveState", "invalid_response");
+    ASSERT_FALSE(deviceImpl_.timeInActiveState()) << "DeviceImpl::timeInActiveState() did not return an error";
 }
 
 TEST_F(DeviceTest, Uptime)
@@ -62,6 +74,12 @@ TEST_F(DeviceTest, Uptime)
     EXPECT_EQ(*result, expectedValue);
 }
 
+TEST_F(DeviceTest, UptimeBadResponse)
+{
+    mock_with_response("Device.uptime", "invalid_response");
+    ASSERT_FALSE(deviceImpl_.uptime()) << "DeviceImpl::uptime() did not return an error";
+}
+
 TEST_F(DeviceTest, ChipsetId)
 {
     mock("Device.chipsetId");
@@ -73,6 +91,12 @@ TEST_F(DeviceTest, ChipsetId)
     EXPECT_EQ(*result, expectedValue);
 }
 
+TEST_F(DeviceTest, ChipsetIdBadResponse)
+{
+    mock_with_response("Device.chipsetId", 12345);
+    ASSERT_FALSE(deviceImpl_.chipsetId()) << "DeviceImpl::chipsetId() did not return an error";
+}
+
 TEST_F(DeviceTest, Uid)
 {
     mock("Device.uid");
@@ -82,4 +106,10 @@ TEST_F(DeviceTest, Uid)
     ASSERT_TRUE(result) << "DeviceImpl::uid() returned an error";
 
     EXPECT_EQ(*result, expectedValue);
+}
+
+TEST_F(DeviceTest, UidBadResponse)
+{
+    mock_with_response("Device.uid", 67890);
+    ASSERT_FALSE(deviceImpl_.uid()) << "DeviceImpl::uid() did not return an error";
 }
