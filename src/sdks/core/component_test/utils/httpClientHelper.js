@@ -40,7 +40,13 @@ const triggerRaw = (payload) => {
     }
 }
 
+
+const triggerEvent = (eventName) => {
+    httpClient.post("http://localhost:3333/api/v1/trigger-event", eventName );
+}
+
 export {
     httpClient,
-    triggerRaw
+    triggerRaw,
+    triggerEvent
 };
