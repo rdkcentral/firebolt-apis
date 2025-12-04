@@ -134,16 +134,14 @@ test("once() navigateTo event.", () => {
   });
 });
 
-test("listen() policyChanged event.", () => {
-  return Discovery.listen("policyChanged", () => { }).then((res: number) => {
-    expect(res > 0).toBe(true);
-  });
+test("listen() policyChanged event.", async () => {
+  const res = await Discovery.listen("policyChanged", () => { });
+  expect(res > 0).toBe(true);
 });
 
-test("once() policyChanged event.", () => {
-  return Discovery.once("policyChanged", () => { }).then((res: number) => {
-    expect(res > 0).toBe(true);
-  });
+test("once() policyChanged event.", async () => {
+  const res = await Discovery.once("policyChanged", () => { });
+  expect(res > 0).toBe(true);
 });
 
 test("clear()", () => {
@@ -151,11 +149,15 @@ test("clear()", () => {
   expect(result).toBeFalsy();
 });
 
-test("details() provider", () => {
+test("details() provider", async () => {
 
   class myUserInterestProvider implements Discovery.UserInterestProvider {
     userInterest(parameters?: object, session?: Discovery.ProviderSession): Promise<Discovery.EntityDetails> {
       return null
     }
-  }
-})
+  };
+  const provider = new myUserInterestProvider();
+  await Discovery.provide('xrn:firebolt:capability:discovery:interest', provider);
+    
+
+});
