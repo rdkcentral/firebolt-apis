@@ -1,3 +1,15 @@
+# [1.8.0-next.31](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.30...v1.8.0-next.31) (2025-12-04)
+
+
+### Bug Fixes
+
+* Update internal type ([5c99780](https://github.com/rdkcentral/firebolt-apis/commit/5c997804dadaac278f3d27637687a5246ac44e3f))
+
+
+### Features
+
+* Use FetchContent for the Transport if not installed ([4d6795b](https://github.com/rdkcentral/firebolt-apis/commit/4d6795b6cafbba2931d0215f1223e6a3e00f6da2))
+
 # [1.8.0-next.30](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.29...v1.8.0-next.30) (2025-12-01)
 
 
