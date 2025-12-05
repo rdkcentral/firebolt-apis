@@ -14,12 +14,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 include(GenerateExportHeader)
-include(CMakePackageConfigHelpers)
 
 set(TARGET ${PROJECT_NAME})
-message("Setup ${TARGET} v${PROJECT_VERSION}")
+message("Setup ${TARGET} v${PROJECT_VERSION} with the Transport v${FIREBOLT_TRANSPORT_VERSION}")
 
 file(GLOB SOURCES *.cpp json_types/*.cpp)
 
@@ -35,28 +35,37 @@ add_library(${TARGET}
     ${SOURCES}
 )
 
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+if(ENABLE_TESTS)
+    target_compile_options(${TARGET} PRIVATE --coverage -g -O0 -fno-inline)
+    target_link_options(${TARGET} PRIVATE --coverage)
+endif()
 
-find_package(FireboltTransport CONFIG REQUIRED)
-find_package(nlohmann_json CONFIG REQUIRED)
+generate_export_header(
+    ${TARGET}
+    EXPORT_FILE_NAME "firebolt/client_export.h"
+)
 
-generate_export_header(${TARGET})
+configure_file(
+    "${CMAKE_SOURCE_DIR}/include/firebolt/version.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/firebolt/client_version.h"
+    @ONLY
+)
 
 target_link_libraries(${TARGET}
     PRIVATE
         nlohmann_json::nlohmann_json
     PUBLIC
-        FireboltTransport::FireboltTransport
+        $<IF:$<TARGET_EXISTS:FireboltTransport::FireboltTransport>,FireboltTransport::FireboltTransport,FireboltTransport>
 )
 
 target_include_directories(${TARGET}
     PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/json_types>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 string(REGEX REPLACE "^v?([0-9]+)\\.([0-9]+)\\.([0-9]+).*" "\\1" PROJECT_VERSION_MAJOR ${PROJECT_VERSION})
@@ -65,6 +74,7 @@ set_target_properties(${TARGET} PROPERTIES
     CXX_STANDARD_REQUIRED YES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
+    CMAKE_POSITION_INDEPENDENT_CODE ON
 )
 
 write_basic_package_version_file(
@@ -95,14 +105,15 @@ install(
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/
-    DESTINATION include/${PROJECT_NAME}
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/
     FILES_MATCHING PATTERN "*.h"
 )
 
-string(TOLOWER "${TARGET}" TARGET_LOWER)
 install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_LOWER}_export.h
-    DESTINATION include/${PROJECT_NAME}
+    FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/firebolt/client_export.h
+        ${CMAKE_CURRENT_BINARY_DIR}/firebolt/client_version.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/firebolt
 )
 
 install(

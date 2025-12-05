@@ -15,28 +15,12 @@ on:
 
 env:
   HUSKY: 0
-  SYSROOT_PATH: ${{ github.workspace }}/deps_install
-  DEPS_FILE: ./src/cpp/.deps
 
 jobs:
-  setup_deps:
-    runs-on: ubuntu-latest
-    outputs:
-      deps_cache_key: ${{ steps.setup-deps.outputs.deps_cache_key }}
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup CXX Dependencies
-        id: setup-deps
-        uses: ./.github/actions/setup-cxx-deps
-
   release:
     name: Release
     permissions:
       contents: read
-    needs: setup_deps
     runs-on: ubuntu-latest
 
     steps:
@@ -47,12 +31,6 @@ jobs:
           repo-token: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }}
           persist-credentials: false
 
-      - name: Restore Dependency Cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.SYSROOT_PATH }}
-          key: ${{ runner.os }}-deps-${{ needs.setup_deps.outputs.deps_cache_key }}
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -62,9 +40,6 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN  }} # <-- allow npm publish for each workspace
         run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc'
-
-      - name: Install apt dependencies
-        uses: ./.github/actions/setup-apt-deps
 
       - name: Install npm dependencies
         run: |
@@ -160,6 +135,18 @@ jobs:
             --package firebolt-apis--core-demo \
             --subpath ./src/cpp/demo \
             --dst ${{ github.workspace }}/release
+
+      - name: Add Checksum to Job Summary
+        shell: bash
+        run: |
+          (
+            echo "# Release Package Checksum"
+            echo
+            echo '```'
+            cd ${{ github.workspace }}/release && sha256sum *.tar.gz
+            echo '```'
+            echo
+          ) >> $GITHUB_STEP_SUMMARY
 
       - name: Release Firebolt SDKs to NPM
         if: steps.check_build.outputs.result == 'true' && github.event_name != 'pull_request' && (github.ref_name != 'main' || github.event_name == 'workflow_dispatch')

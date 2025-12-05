@@ -18,38 +18,50 @@
  */
 
 #include "localization_impl.h"
+#include <firebolt/json_types.h>
 
 namespace Firebolt::Localization
 {
-LocalizationImpl::LocalizationImpl(Firebolt::Helpers::IHelper &helper)
-    : helper_(helper), subscriptionManager_(helper, this)
+LocalizationImpl::LocalizationImpl(Firebolt::Helpers::IHelper& helper)
+    : helper_(helper),
+      subscriptionManager_(helper, this)
 {
 }
 
-Result<std::string> LocalizationImpl::countryCode() const
+Result<std::string> LocalizationImpl::country() const
 {
-    return helper_.get<FireboltSDK::JSON::String, std::string>("Localization.countryCode");
+    return helper_.get<Firebolt::JSON::String, std::string>("Localization.country");
 }
 
 Result<std::vector<std::string>> LocalizationImpl::preferredAudioLanguages() const
 {
-    return helper_.get<FireboltSDK::JSON::NL_Json_Array<FireboltSDK::JSON::String, std::string>, std::vector<std::string>>(
+    return helper_.get<Firebolt::JSON::NL_Json_Array<Firebolt::JSON::String, std::string>, std::vector<std::string>>(
         "Localization.preferredAudioLanguages");
 }
 
-Result<SubscriptionId>
-LocalizationImpl::subscribeOnCountryCodeChanged(std::function<void(const std::string&)>&& notification)
+Result<std::string> LocalizationImpl::presentationLanguage() const
 {
-    return subscriptionManager_.subscribe<FireboltSDK::JSON::String>("Localization.onCountryCodeChanged",
-                                                                     std::move(notification));
+    return helper_.get<Firebolt::JSON::String, std::string>("Localization.presentationLanguage");
+}
+
+Result<SubscriptionId> LocalizationImpl::subscribeOnCountryChanged(std::function<void(const std::string&)>&& notification)
+{
+    return subscriptionManager_.subscribe<Firebolt::JSON::String>("Localization.onCountryChanged",
+                                                                  std::move(notification));
 }
 
 Result<SubscriptionId> LocalizationImpl::subscribeOnPreferredAudioLanguagesChanged(
     std::function<void(const std::vector<std::string>&)>&& notification)
 {
-    return subscriptionManager_.subscribe<FireboltSDK::JSON::NL_Json_Array<
-        FireboltSDK::JSON::String, std::string>>("Localization.onPreferredAudioLanguagesChanged",
-                                                 std::move(notification));
+    return subscriptionManager_.subscribe<Firebolt::JSON::NL_Json_Array<
+        Firebolt::JSON::String, std::string>>("Localization.onPreferredAudioLanguagesChanged", std::move(notification));
+}
+
+Result<SubscriptionId>
+LocalizationImpl::subscribeOnPresentationLanguageChanged(std::function<void(const std::string&)>&& notification)
+{
+    return subscriptionManager_.subscribe<Firebolt::JSON::String>("Localization.onPresentationLanguageChanged",
+                                                                  std::move(notification));
 }
 
 Result<void> LocalizationImpl::unsubscribe(SubscriptionId id)

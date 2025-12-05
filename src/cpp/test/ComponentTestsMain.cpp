@@ -17,10 +17,9 @@
  * limitations under the License.
  */
 
-#include "firebolt.h"
+#include "firebolt/firebolt.h"
 #include "gtest/gtest.h"
-
-#include <firebolt_config.h>
+#include <firebolt/config.h>
 #include <iostream>
 #include <string>
 #include <thread>
@@ -35,16 +34,12 @@ void connectionChanged(const bool connected, const Firebolt::Error error)
     gConnected = connected;
 }
 
-void createFireboltInstance(const std::string &url)
+void createFireboltInstance(const std::string& url)
 {
-    FireboltSDK::Config config = {
-        .wsUrl = url,
-        .waitTime_ms = 1000,
-        .log =
-            {
-                .level = "Info",
-            },
-    };
+    Firebolt::Config config;
+    config.wsUrl = url;
+    config.waitTime_ms = 1000;
+    config.log.level = Firebolt::LogLevel::Debug;
 
     gConnected = false;
     Firebolt::IFireboltAccessor::Instance().Connect(config, connectionChanged);
@@ -72,7 +67,7 @@ bool waitOnConnectionReady()
     return gConnected;
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     string url = "ws://127.0.0.1:9998";
     createFireboltInstance(url);

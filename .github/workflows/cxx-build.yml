@@ -1,18 +1,10 @@
-permissions:
-  contents: read
+name: CI (c++)  Build and Test
 
-name: CXX build
 on:
-  repository_dispatch:
-    types: [trigger-workflow]
-  workflow_dispatch:
+  push:
+    branches: [ main, next ]
   pull_request:
-    branches:
-      - 'main'
-      - 'next'
-    types:
-      - opened
-      - synchronize
+    branches: [ main, next ]
 
 defaults:
   run:
@@ -20,82 +12,233 @@ defaults:
 
 env:
   HUSKY: 0
-  SYSROOT_PATH: ${{ github.workspace }}/deps_install
-  DEPS_FILE: ./src/cpp/.deps
+  MOCK_PATH: ${{ github.workspace }}/mock-firebolt
+  MOCK_SHA1SUM: cf0c4b35b5f3997bd9e6f82a18d57eafa0c62192
+  MOCK_PATCH: ${{ github.workspace }}/.github/mock-firebolt/events.patch
 
 jobs:
-  setup_deps:
+  build_docker:
+    permissions:
+      contents: read
+      packages: write
     runs-on: ubuntu-latest
     outputs:
-      deps_cache_key: ${{ steps.setup-deps.outputs.deps_cache_key }}
-
+      image_tag: ${{ steps.meta.outputs.tags }}
     steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}/firebolt-client-ci
+          tags: type=sha
+
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup CXX Dependencies
-        id: setup-deps
-        uses: ./.github/actions/setup-cxx-deps
+      - name: Get Transport Version for Build-Arg
+        id: transport_version
+        run: echo "version=$(cat ${{ github.workspace }}/src/cpp/.transport.version)" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: .github/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args:
+            DEPS_TRANSPORT_V=${{ steps.transport_version.outputs.version }}
+          cache-from: type=gha,scope=${{ github.workflow }}
+          cache-to: type=gha,mode=max,scope=${{ github.workflow }}
+
+  format_check:
+    permissions:
+      contents: read
+      packages: read
+    needs: [build_docker]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run clang-format check
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
+            bash -c " \
+                cd ./src/cpp \
+                && git ls-files -- '*.cpp' '*.h' | xargs clang-format --dry-run --Werror \
+            "
 
   build_project:
-    needs: setup_deps
+    permissions:
+      contents: read
+      packages: read
+    needs: [build_docker]
     runs-on: ubuntu-latest
-
     steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Restore Dependency Cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.SYSROOT_PATH }}
-          key: ${{ runner.os }}-deps-${{ needs.setup_deps.outputs.deps_cache_key }}
-
       - name: Get version
         run: |
-          git config --global --add safe.directory '*'
           VERSION=$(git describe --tags --dirty --match "v[0-9]*")
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "version-native: $VERSION"
+          echo "version: $VERSION"
 
-      - name: Install apt dependencies
-        uses: ./.github/actions/setup-apt-deps
-
-      - name: Configure CMake
+      - name: Configure Project
         run: |
-          cmake -B build -S src/cpp \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX:PATH=${{ env.SYSROOT_PATH }}/usr \
-            -DENABLE_TESTS=ON -DDISCOVER_UT=ON -DDISCOVER_CT=OFF
+          docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
+            bash -c " \
+              cd src/cpp \
+              && cmake -B build -S . \
+                    -DCMAKE_BUILD_TYPE=Debug \
+                    -DENABLE_TESTS=ON \
+              && cp firebolt-open-rpc.json build/test/ \
+            "
 
       - name: Build Project
-        run: cmake --build build
-
-      - name: Run Tests
         run: |
-          cp src/cpp/firebolt-core-open-rpc.json build/test/
-          ctest --test-dir build/test
+          docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
+            bash -c "cmake --build src/cpp/build --parallel"
 
-      - name: Make Release package of Native SDK
-        run: |
-          ./.github/scripts/mk-release-package.sh \
-            --version ${{ env.VERSION }} \
-            --package firebolt-apis-native \
-            --subpath ./src/cpp \
-            --dst ${{ github.workspace }}/release
-
-      - name: Make Release package of Native Demo
-        run: |
-          ./.github/scripts/mk-release-package.sh \
-            --version ${{ env.VERSION }} \
-            --package firebolt-apis-native-demo \
-            --subpath ./src/cpp/demo \
-            --dst ${{ github.workspace }}/release
-
-      - name: Upload native packages as an artifact
+      - name: Upload build directory
         uses: actions/upload-artifact@v4
         with:
-          name: release
-          path: ${{ github.workspace }}/release
+          name: build-dir
+          path: ${{ github.workspace }}/src/cpp/build
+
+  unit_tests:
+    permissions:
+      contents: read
+      packages: read
+    needs: [build_docker, build_project]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download build directory
+        uses: actions/download-artifact@v4
+        with:
+          name: build-dir
+          path: ${{ github.workspace }}/src/cpp/build
+
+      - name: Run Unit Tests
+        run: |
+          chmod +x ${{ github.workspace }}/src/cpp/build/test/FireboltClientUnitTests
+          docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
+            bash -c "ctest --test-dir src/cpp/build/test"
+
+      - name: Generate Coverage Report
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace ${{ needs.build_docker.outputs.image_tag }} \
+            bash -c " \
+              set -e \
+              && cd src/cpp/build \
+              && mkdir -p coverage \
+              && gcovr -r .. \
+                    --exclude '.*/test/.*\.h' \
+                    --exclude '.*/test/.*\.cpp' \
+                    --decisions \
+                    --medium-threshold 50 --high-threshold 75 \
+                    --html-details coverage/index.html \
+                    --cobertura coverage.cobertura.xml \
+            "
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ${{ github.workspace }}/src/cpp/build/coverage/
+
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: src/cpp/build/coverage.cobertura.xml
+          badge: true
+          hide_complexity: true
+          format: markdown
+          output: both
+          thresholds: "50 75"
+          fail_below_min: false
+
+      - name: Add coverage summary to job summary
+        run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+
+  component_tests:
+    permissions:
+      contents: read
+      packages: read
+    needs: [build_docker, build_project]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download build directory
+        uses: actions/download-artifact@v4
+        with:
+          name: build-dir
+          path: ${{ github.workspace }}/src/cpp/build
+
+      - name: Setup Mock-Firebolt
+        id: setup-mock
+        uses: ./.github/actions/setup-mock
+
+      - name: Restore Mock-Firebolt Cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.MOCK_PATH }}
+          key: ${{ runner.os }}-mock-${{ steps.setup-mock.outputs.deps_cache_key }}
+
+      - name: Run Component Tests
+        run: |
+          chmod +x ${{ github.workspace }}/src/cpp/build/test/FireboltClientComponentTests
+          docker run --rm --user "$(id -u):$(id -g)" -v ${{ github.workspace }}:/workspace -v ${{ env.MOCK_PATH }}:/mock ${{ needs.build_docker.outputs.image_tag }} \
+            ./.github/scripts/run-component-tests.sh \
+              --mock /mock \
+              --config /workspace/.github/mock-firebolt/config.json \
+              --openrpc /workspace/src/cpp/firebolt-open-rpc.json \
+              --app-openrpc /workspace/.github/openrpc/firebolt-app-open-rpc.json \
+              --test-exe /workspace/src/cpp/build/test/FireboltClientComponentTests

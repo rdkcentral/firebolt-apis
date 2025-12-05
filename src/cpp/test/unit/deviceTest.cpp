@@ -19,22 +19,8 @@
 
 #include "device_impl.h"
 #include "json_engine.h"
+#include "json_types/jsondata_device_types.h"
 #include "mock_helper.h"
-
-using ::testing::_;
-using ::testing::Invoke;
-using ::testing::Return;
-
-const std::map<std::string, ::Firebolt::Device::NetworkType> NetworkTypeMap = {
-    { "wifi", ::Firebolt::Device::NetworkType::WIFI },
-    { "ethernet", ::Firebolt::Device::NetworkType::ETHERNET },
-    { "hybrid", ::Firebolt::Device::NetworkType::HYBRID },
-};
-
-const std::map<std::string, ::Firebolt::Device::NetworkState> NetworkStateMap = {
-    { "connected", ::Firebolt::Device::NetworkState::CONNECTED },
-    { "disconnected", ::Firebolt::Device::NetworkState::DISCONNECTED },
-};
 
 class DeviceTest : public ::testing::Test, protected MockBase
 {
@@ -42,180 +28,88 @@ protected:
     Firebolt::Device::DeviceImpl deviceImpl_{mockHelper};
 };
 
-TEST_F(DeviceTest, Id)
+TEST_F(DeviceTest, GetClass)
 {
-    mock("Device.id");
+    mock("Device.deviceClass");
+    auto expectedValue = jsonEngine.get_value("Device.deviceClass");
 
-    auto result = deviceImpl_.id();
-    ASSERT_TRUE(result) << "DeviceImpl::id() returned an error";
+    auto result = deviceImpl_.deviceClass();
 
-    auto expectedValue = jsonEngine.get_value("Device.id");
+    ASSERT_TRUE(result) << "DeviceImpl::deviceClass() returned an error";
+
+    EXPECT_EQ(static_cast<int>(*result), static_cast<int>(Firebolt::Device::JsonData::DeviceClassEnum.at(expectedValue)));
+}
+
+TEST_F(DeviceTest, GetClassBadRespons_Test)
+{
+    mock_with_response("Device.deviceClass", "abc");
+    ASSERT_FALSE(deviceImpl_.deviceClass()) << "DeviceImpl::deviceClass() NOT returned an error";
+}
+
+TEST_F(DeviceTest, TimeInActiveState)
+{
+    mock("Device.timeInActiveState");
+    auto expectedValue = jsonEngine.get_value("Device.timeInActiveState");
+
+    auto result = deviceImpl_.timeInActiveState();
+    ASSERT_TRUE(result) << "DeviceImpl::timeInActiveState() returned an error";
+
     EXPECT_EQ(*result, expectedValue);
 }
 
-TEST_F(DeviceTest, Distributor)
+TEST_F(DeviceTest, TimeInActiveStateBadResponse)
 {
-    mock("Device.distributor");
+    mock_with_response("Device.timeInActiveState", "invalid_response");
+    ASSERT_FALSE(deviceImpl_.timeInActiveState()) << "DeviceImpl::timeInActiveState() did not return an error";
+}
 
-    auto result = deviceImpl_.distributor();
-    ASSERT_TRUE(result) << "DeviceImpl::distributor() returned an error";
+TEST_F(DeviceTest, Uptime)
+{
+    mock("Device.uptime");
+    auto expectedValue = jsonEngine.get_value("Device.uptime");
 
-    auto expectedValue = jsonEngine.get_value("Device.distributor");
+    auto result = deviceImpl_.uptime();
+    ASSERT_TRUE(result) << "DeviceImpl::uptime() returned an error";
+
     EXPECT_EQ(*result, expectedValue);
 }
 
-
-TEST_F(DeviceTest, Platform)
+TEST_F(DeviceTest, UptimeBadResponse)
 {
-    mock("Device.platform");
+    mock_with_response("Device.uptime", "invalid_response");
+    ASSERT_FALSE(deviceImpl_.uptime()) << "DeviceImpl::uptime() did not return an error";
+}
 
-    auto result = deviceImpl_.platform();
-    ASSERT_TRUE(result) << "DeviceImpl::platform() returned an error";
+TEST_F(DeviceTest, ChipsetId)
+{
+    mock("Device.chipsetId");
+    auto expectedValue = jsonEngine.get_value("Device.chipsetId");
 
-    auto expectedValue = jsonEngine.get_value("Device.platform");
+    auto result = deviceImpl_.chipsetId();
+    ASSERT_TRUE(result) << "DeviceImpl::chipsetId() returned an error";
+
     EXPECT_EQ(*result, expectedValue);
+}
+
+TEST_F(DeviceTest, ChipsetIdBadResponse)
+{
+    mock_with_response("Device.chipsetId", 12345);
+    ASSERT_FALSE(deviceImpl_.chipsetId()) << "DeviceImpl::chipsetId() did not return an error";
 }
 
 TEST_F(DeviceTest, Uid)
 {
     mock("Device.uid");
+    auto expectedValue = jsonEngine.get_value("Device.uid");
 
     auto result = deviceImpl_.uid();
     ASSERT_TRUE(result) << "DeviceImpl::uid() returned an error";
 
-    auto expectedValue = jsonEngine.get_value("Device.uid");
     EXPECT_EQ(*result, expectedValue);
 }
 
-TEST_F(DeviceTest, Type)
+TEST_F(DeviceTest, UidBadResponse)
 {
-    mock("Device.type");
-
-    auto result = deviceImpl_.type();
-    ASSERT_TRUE(result) << "DeviceImpl::type() returned an error";
-
-    auto expectedValue = jsonEngine.get_value("Device.type");
-    EXPECT_EQ(*result, expectedValue);
-}
-
-TEST_F(DeviceTest, Model)
-{
-    mock("Device.model");
-
-    auto result = deviceImpl_.model();
-    ASSERT_TRUE(result) << "DeviceImpl::model() returned an error";
-
-    auto expectedValue = jsonEngine.get_value("Device.model");
-    EXPECT_EQ(*result, expectedValue);
-}
-
-TEST_F(DeviceTest, Sku)
-{
-    mock("Device.sku");
-
-    auto result = deviceImpl_.sku();
-    ASSERT_TRUE(result) << "DeviceImpl::sku() returned an error";
-
-    auto expectedValue = jsonEngine.get_value("Device.sku");
-    EXPECT_EQ(*result, expectedValue);
-}
-
-TEST_F(DeviceTest, TestDeviceMake)
-{
-    mock("Device.make");
-
-    auto result = deviceImpl_.make();
-    ASSERT_TRUE(result) << "DeviceImpl::make() returned an error";
-
-    auto expectedValue = jsonEngine.get_value("Device.make");
-    EXPECT_EQ(*result, expectedValue);
-}
-
-
-TEST_F(DeviceTest, Hdcp)
-{
-    mock("Device.hdcp");
-
-    auto result = deviceImpl_.hdcp();
-    ASSERT_TRUE(result) << "Failed to retrieve hdcp from Device.hdcp() method";
-
-    auto expectedValue = jsonEngine.get_value("Device.hdcp");
-    EXPECT_EQ(result->hdcp1_4, expectedValue["hdcp1.4"]);
-    EXPECT_EQ(result->hdcp2_2, expectedValue["hdcp2.2"]);
-}
-
-
-TEST_F(DeviceTest, Hdr)
-{
-    mock("Device.hdr");
-
-    auto result = deviceImpl_.hdr();
-    ASSERT_TRUE(result) << "Failed to retrieve hdr from Device.hdr() method";
-
-    auto expectedValue = jsonEngine.get_value("Device.hdr");
-    EXPECT_EQ(result->hdr10, expectedValue["hdr10"]);
-    EXPECT_EQ(result->hdr10Plus, expectedValue["hdr10Plus"]);
-    EXPECT_EQ(result->dolbyVision, expectedValue["dolbyVision"]);
-    EXPECT_EQ(result->hlg, expectedValue["hlg"]);
-}
-
-TEST_F(DeviceTest, Audio)
-{
-    mock("Device.audio");
-
-    auto result = deviceImpl_.audio();
-    ASSERT_TRUE(result) << "Failed to retrieve audio from Device.audio() method";
-
-    auto expectedValue = jsonEngine.get_value("Device.audio");
-    EXPECT_EQ(result->stereo, expectedValue["stereo"]);
-    EXPECT_EQ(result->dolbyDigital5_1, expectedValue["dolbyDigital5.1"]);
-    EXPECT_EQ(result->dolbyDigital5_1_plus, expectedValue["dolbyDigital5.1+"]);
-    EXPECT_EQ(result->dolbyAtmos, expectedValue["dolbyAtmos"]);
-}
-
-TEST_F(DeviceTest, Network)
-{
-    mock("Device.network");
-
-    auto result = deviceImpl_.network();
-    ASSERT_TRUE(result) << "Failed to retrieve network from Device.network() method";
-
-    auto expectedValue = jsonEngine.get_value("Device.network");
-    EXPECT_EQ(result->state, NetworkStateMap.at(expectedValue["state"]));
-    EXPECT_EQ(result->type, NetworkTypeMap.at(expectedValue["type"]));
-}
-
-TEST_F(DeviceTest, ScreenResolution)
-{
-    mock("Device.screenResolution");
-
-    auto result = deviceImpl_.screenResolution();
-    ASSERT_TRUE(result) << "Failed to retrieve screenResolution from Device.screenResolution() method";
-
-    auto expectedValue = jsonEngine.get_value("Device.screenResolution");
-    EXPECT_EQ(result->at(0), expectedValue[0]);
-    EXPECT_EQ(result->at(1), expectedValue[1]);
-}
-
-TEST_F(DeviceTest, VideoResolution)
-{
-    mock("Device.videoResolution");
-
-    auto result = deviceImpl_.videoResolution();
-    ASSERT_TRUE(result) << "Failed to retrieve videoResolution from Device.videoResolution() method";
-
-    auto expectedValue = jsonEngine.get_value("Device.videoResolution");
-    EXPECT_EQ(result->at(0), expectedValue[0]);
-    EXPECT_EQ(result->at(1), expectedValue[1]);
-}
-
-TEST_F(DeviceTest, Name)
-{
-    mock("Device.name");
-
-    auto result = deviceImpl_.name();
-    ASSERT_TRUE(result) << "Failed to retrieve name from Device.name() method";
-
-    auto expectedValue = jsonEngine.get_value("Device.name");
-    EXPECT_EQ(*result, expectedValue);
+    mock_with_response("Device.uid", 67890);
+    ASSERT_FALSE(deviceImpl_.uid()) << "DeviceImpl::uid() did not return an error";
 }

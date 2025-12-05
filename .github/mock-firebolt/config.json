@@ -1,0 +1,58 @@
+{
+  "validate": [
+    "method",
+    "params",
+    "response",
+    "events"
+  ],
+  "multiUserConnections": "warn",
+  "bidirectional": true,
+  "supportedOpenRPCs": [
+    {
+      "name": "core",
+      "cliFlag": null,
+      "cliShortFlag": null,
+      "url_Note": "Can be changed to test different versions of the firebolt-open-rpc",
+      "fileName": "CORE-OPENRPC.json",
+      "enabled": true
+    },
+    {
+      "name": "mock",
+      "cliFlag": "mock",
+      "cliShortFlag": "m",
+      "fileName": "../../functional/mockOpenRpc.json",
+      "enabled": false
+    }
+  ],
+  "supportedToAppOpenRPCs": [
+    {
+      "name": "coreToApp",
+      "cliFlag": null,
+      "cliShortFlag": null,
+      "url_Note": "URL for toApp OpenRPC (Firebolt 2.0 event/provider spec)",
+      "fileName": "APP-OPENRPC.json",
+      "enabled": true
+    },
+    {
+      "name": "mockToApp",
+      "cliFlag": "mockToApp",
+      "cliShortFlag": "mt",
+      "fileName": "../../functional/mockToAppOpenRpc.json",
+      "enabled": false
+    }
+  ],
+  "eventConfig": {
+    "registrationMessage": {
+      "searchRegex": "(?=.*\\\"method\\\".*)(?=.*\\\"listen\\\":true.*).*\\.on\\S*",
+      "method": "$.method"
+    },
+    "unRegistrationMessage": {
+      "searchRegex": "(?=.*\\\"method\\\".*)(?=.*\\\"listen\\\":false.*).*\\.on\\S*",
+      "method": "$.method"
+    },
+    "registrationAck": "{\"jsonrpc\":\"2.0\",\"id\":{{registration.id}},\"result\":null}",
+    "unRegistrationAck": "{\"jsonrpc\":\"2.0\",\"id\":{{unRegistration.id}},\"result\":null}",
+    "event": "{\"result\":{{{resultAsJson}}},\"id\":{{registration.id}},\"jsonrpc\":\"2.0\"}",
+    "eventType": "Firebolt"
+  }
+}
