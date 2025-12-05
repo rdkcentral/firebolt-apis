@@ -1,3 +1,36 @@
+# [1.8.0-next-major.4](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next-major.3...v1.8.0-next-major.4) (2025-12-05)
+
+
+### Bug Fixes
+
+* Code refactored ([#460](https://github.com/rdkcentral/firebolt-apis/issues/460)) ([7d08c6d](https://github.com/rdkcentral/firebolt-apis/commit/7d08c6db24fc6586b30aba28983ba04bd7ef2f8f))
+* Set pedantic compilation ([#450](https://github.com/rdkcentral/firebolt-apis/issues/450)) ([c3d4e3f](https://github.com/rdkcentral/firebolt-apis/commit/c3d4e3f13084e5310e91a877c61686fbbb82c1a8))
+* Update internal type ([5c99780](https://github.com/rdkcentral/firebolt-apis/commit/5c997804dadaac278f3d27637687a5246ac44e3f))
+
+
+### Features
+
+* Accessibility API ([#452](https://github.com/rdkcentral/firebolt-apis/issues/452)) ([15a78ec](https://github.com/rdkcentral/firebolt-apis/commit/15a78ec63da8ac7389c91fd11e6639111be88e22))
+* Advertising api ([#457](https://github.com/rdkcentral/firebolt-apis/issues/457)) ([5f83d37](https://github.com/rdkcentral/firebolt-apis/commit/5f83d37e6a899e6fc3dbb9d043de4e3049d05fe9))
+* Clean up code, update to changes in transport ([#462](https://github.com/rdkcentral/firebolt-apis/issues/462)) ([caae282](https://github.com/rdkcentral/firebolt-apis/commit/caae2824ff68c1c4bb1ed021761410a1b717c1a2))
+* compilation warnings ([#464](https://github.com/rdkcentral/firebolt-apis/issues/464)) ([7fed125](https://github.com/rdkcentral/firebolt-apis/commit/7fed1255b5f90091929e75b60c5ecd096a28fbac))
+* Component Tests for Accessibility API ([#470](https://github.com/rdkcentral/firebolt-apis/issues/470)) ([0785271](https://github.com/rdkcentral/firebolt-apis/commit/07852710a36d3497d66aeaf2affbb2730a682e71))
+* Device API ([#451](https://github.com/rdkcentral/firebolt-apis/issues/451)) ([c0bde26](https://github.com/rdkcentral/firebolt-apis/commit/c0bde2676d2fd2b9670441877cafd4d3ce522ab5))
+* Device.chipsetId ([#476](https://github.com/rdkcentral/firebolt-apis/issues/476)) ([36dc605](https://github.com/rdkcentral/firebolt-apis/commit/36dc60527a2fcd26a9687904b24ed2f3b599feef))
+* Display API ([#474](https://github.com/rdkcentral/firebolt-apis/issues/474)) ([2912ca3](https://github.com/rdkcentral/firebolt-apis/commit/2912ca387258f0ecb8dde22e63d44a0e86890f01))
+* Localization API  ([#477](https://github.com/rdkcentral/firebolt-apis/issues/477)) ([d639456](https://github.com/rdkcentral/firebolt-apis/commit/d6394568d5ebc11704aa79525bbb960588aea121))
+* New payload spec ([#454](https://github.com/rdkcentral/firebolt-apis/issues/454)) ([8b9718b](https://github.com/rdkcentral/firebolt-apis/commit/8b9718b2458545739c216d77ba86135973866485))
+* Patch events' naming for backward compatibility with older event namings ([6663d2c](https://github.com/rdkcentral/firebolt-apis/commit/6663d2c6fab9a83f940ec6dbbc7cae5b673ee699))
+* Presentation API ([#461](https://github.com/rdkcentral/firebolt-apis/issues/461)) ([72268df](https://github.com/rdkcentral/firebolt-apis/commit/72268dfec24b258009833cc583f2b49fcc58e00c))
+* Remove not agreed APIs ([9d6124f](https://github.com/rdkcentral/firebolt-apis/commit/9d6124fe884e65cc6cb1d7351838b38c70670348))
+* Set transport version to be used ([#468](https://github.com/rdkcentral/firebolt-apis/issues/468)) ([a8589dc](https://github.com/rdkcentral/firebolt-apis/commit/a8589dc0f72208eb3bbe09908a224746deb849c7))
+* Update around versioning ([#467](https://github.com/rdkcentral/firebolt-apis/issues/467)) ([57c2e70](https://github.com/rdkcentral/firebolt-apis/commit/57c2e704b3fe75634fc9722a04906dfd9407739e))
+* Update clang formatter, format code, add a checker in ci ([#465](https://github.com/rdkcentral/firebolt-apis/issues/465)) ([6299894](https://github.com/rdkcentral/firebolt-apis/commit/62998949071c64b77100ed8a93122fd4b551eb1f))
+* Update demo app with presentation ([#466](https://github.com/rdkcentral/firebolt-apis/issues/466)) ([d16361c](https://github.com/rdkcentral/firebolt-apis/commit/d16361c733407102f9780c2bf3e252a154ef22d6))
+* Update namings ([#455](https://github.com/rdkcentral/firebolt-apis/issues/455)) ([2432e35](https://github.com/rdkcentral/firebolt-apis/commit/2432e356f16e0d98d3db0be34198be4a59679e4d))
+* Use FetchContent for the Transport if not installed ([4d6795b](https://github.com/rdkcentral/firebolt-apis/commit/4d6795b6cafbba2931d0215f1223e6a3e00f6da2))
+* Use Transport v21 ([86fe64b](https://github.com/rdkcentral/firebolt-apis/commit/86fe64b607e67684bf7c31be274a1a66f1f0c3be))
+
 # [1.8.0-next.31](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.30...v1.8.0-next.31) (2025-12-04)
 
 
