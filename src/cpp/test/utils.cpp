@@ -18,7 +18,6 @@
  */
 
 #include "utils.h"
-
 #include <condition_variable>
 #include <curl/curl.h>
 #include <gtest/gtest.h>
@@ -27,7 +26,7 @@
 #include <nlohmann/json-schema.hpp>
 #include <nlohmann/json.hpp>
 
-constexpr std::chrono::duration eventWaitTime = std::chrono::seconds(2);
+constexpr std::chrono::duration EventWaitTime = std::chrono::seconds(2);
 
 // curl http get helper function using
 std::string httpGet(const std::string& url)
@@ -128,7 +127,7 @@ void verifyUnsubscribeResult(const Firebolt::Result<void>& result)
 void verifyEventReceived(std::mutex& mtx, std::condition_variable& cv, bool& eventReceived)
 {
     std::unique_lock<std::mutex> lock(mtx);
-    if (!cv.wait_for(lock, eventWaitTime, [&] { return eventReceived; }))
+    if (!cv.wait_for(lock, EventWaitTime, [&] { return eventReceived; }))
     {
         FAIL() << "Did not receive event within timeout";
     }
@@ -138,7 +137,7 @@ void verifyEventNotReceived(std::mutex& mtx, std::condition_variable& cv, bool& 
 {
     // Wait for the event to be received or timeout after 5 seconds
     std::unique_lock<std::mutex> lock(mtx);
-    if (cv.wait_for(lock, std::chrono::seconds(5), [&] { return eventReceived; }))
+    if (cv.wait_for(lock, std::chrono::seconds(EventWaitTime), [&] { return eventReceived; }))
     {
         FAIL() << "Unexpectedly received event";
     }
