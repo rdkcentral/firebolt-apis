@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-#include "utils.h"
 #include "firebolt/firebolt.h"
 #include "json_engine.h"
+#include "utils.h"
 #include "gtest/gtest.h"
 
 class LocalizationTest : public ::testing::Test

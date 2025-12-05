@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-#include "utils.h"
 #include "firebolt/firebolt.h"
 #include "json_engine.h"
+#include "utils.h"
 #include <condition_variable>
 #include <gtest/gtest.h>
 #include <mutex>
