@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-#include "component/utils.h"
+#include "utils.h"
 #include "firebolt/firebolt.h"
 #include "json_engine.h"
 #include <condition_variable>

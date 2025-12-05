@@ -30,9 +30,6 @@
 
 using namespace ::testing;
 
-#define REMOVE_QUOTES(s) (s.substr(1, s.length() - 2))
-#define STRING_TO_BOOL(s) (s == "true" ? true : false)
-
 inline std::string capitalizeFirstChar(std::string str)
 {
     if (!str.empty())
