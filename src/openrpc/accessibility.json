@@ -45,7 +45,8 @@
       "params": [],
       "tags": [
         {
-          "name": "property:readonly"
+          "name": "property:readonly",
+          "x-notifier-params-flattening": "true"
         },
         {
           "name": "capabilities",
@@ -117,7 +118,8 @@
       "params": [],
       "tags": [
         {
-          "name": "property:readonly"
+          "name": "property:readonly",
+          "x-notifier-params-flattening": "true"
         },
         {
           "name": "capabilities",
