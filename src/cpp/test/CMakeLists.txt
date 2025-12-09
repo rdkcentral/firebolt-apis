@@ -17,12 +17,8 @@
 # limitations under the License.
 #
 
-set(TESTAPP TestFireboltClient)
-
-find_package(FireboltTransport CONFIG REQUIRED)
 find_package(Curl REQUIRED )
 find_package(GTest CONFIG REQUIRED)
-find_package(nlohmann_json CONFIG REQUIRED)
 find_package(nlohmann_json_schema_validator CONFIG REQUIRED)
 
 include(GoogleTest)
@@ -30,35 +26,6 @@ include(GoogleTest)
 enable_testing()
 
 add_compile_definitions(UT_OPEN_RPC_FILE="firebolt-open-rpc.json")
-
-message("Setup ${TESTAPP}")
-
-add_executable(${TESTAPP} CoreClientTest.cpp Main.cpp)
-
-target_link_libraries(${TESTAPP}
-    PRIVATE
-        FireboltTransport::FireboltTransport
-        FireboltClient
-        nlohmann_json::nlohmann_json
-)
-
-target_include_directories(${TESTAPP}
-    PRIVATE
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
-        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/src>
-)
-
-set_target_properties(${TESTAPP} PROPERTIES
-    CXX_STANDARD 17
-    CXX_STANDARD_REQUIRED YES
-)
-
-add_custom_command(
-    TARGET ${TESTAPP}
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${TESTAPP} ${CMAKE_BINARY_DIR}/${FIREBOLT_NAMESPACE}/usr/bin
-)
 
 set(UNIT_TESTS_APP FireboltClientUnitTests)
 
@@ -68,7 +35,9 @@ set(UNIT_TESTS
     "unit/accessibilityTest.cpp"
     "unit/advertisingTest.cpp"
     "unit/deviceTest.cpp"
+    "unit/displayTest.cpp"
     "unit/lifecycleTest.cpp"
+    "unit/localizationTest.cpp"
     "unit/presentationTest.cpp"
     "unit/statsTest.cpp"
 )
@@ -78,10 +47,13 @@ add_executable(${UNIT_TESTS_APP}
     ${UNIT_TESTS}
 )
 
+target_compile_options(${UNIT_TESTS_APP} PRIVATE --coverage -g -O0 -fno-inline)
+target_link_options(${UNIT_TESTS_APP} PRIVATE --coverage)
+
 target_link_libraries(${UNIT_TESTS_APP}
     PRIVATE
         FireboltClient
-        FireboltTransport::FireboltTransport
+        $<IF:$<TARGET_EXISTS:FireboltTransport::FireboltTransport>,FireboltTransport::FireboltTransport,FireboltTransport>
         nlohmann_json::nlohmann_json
         nlohmann_json_schema_validator::validator
         GTest::gtest
@@ -118,7 +90,9 @@ set(COMPONENT_TESTS
     "component/accessibilityTest.cpp"
     "component/advertisingTest.cpp"
     "component/deviceTest.cpp"
+    "component/displayTest.cpp"
     "component/lifecycleTest.cpp"
+    "component/localizationTest.cpp"
     "component/presentationTest.cpp"
     "component/statsTest.cpp"
 )
@@ -126,14 +100,13 @@ set(COMPONENT_TESTS
 add_executable(${COMPONENT_TESTS_APP}
     ComponentTestsMain.cpp
     "component/utils.cpp"
-      #"component/accessibilityTest.cpp"
     ${COMPONENT_TESTS}
 )
 
 target_link_libraries(${COMPONENT_TESTS_APP}
     PRIVATE
         FireboltClient
-        FireboltTransport::FireboltTransport
+        $<IF:$<TARGET_EXISTS:FireboltTransport::FireboltTransport>,FireboltTransport::FireboltTransport,FireboltTransport>
         nlohmann_json::nlohmann_json
         nlohmann_json_schema_validator::validator
         CURL::libcurl

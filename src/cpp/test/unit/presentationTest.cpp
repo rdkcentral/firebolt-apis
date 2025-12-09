@@ -39,6 +39,12 @@ TEST_F(PresentationTest, Focused)
     EXPECT_EQ(*result, expectedValue.get<bool>());
 }
 
+TEST_F(PresentationTest, FocusedBadResponse)
+{
+    mock_with_response("Presentation.focused", "invalid_response");
+    ASSERT_FALSE(presentationImpl.focused()) << "Presentation::focused() did not return an error";
+}
+
 TEST_F(PresentationTest, SubscribeOnFocusedChanged)
 {
     mockSubscribe("Presentation.onFocusedChanged");

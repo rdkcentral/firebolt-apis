@@ -17,11 +17,10 @@
  * limitations under the License.
  */
 
-#include "accessibility_impl.h"
-#include "firebolt.h"
+#include "firebolt/firebolt.h"
 #include "json_engine.h"
-#include "json_types/jsondata_accessibility_types.h"
 #include "utils.h"
+#include <gtest/gtest.h>
 
 class AccessibilityTest : public ::testing::Test
 {
@@ -54,7 +53,7 @@ TEST_F(AccessibilityTest, SubscribeOnAudioDescriptionChanged)
         {
             std::cout << "[Subscription] Accessibility audio description changed" << std::endl;
 
-            EXPECT_EQ(enabled, false);
+            EXPECT_EQ(enabled, true);
             {
                 std::lock_guard<std::mutex> lock(mtx);
                 eventReceived = true;
@@ -63,7 +62,7 @@ TEST_F(AccessibilityTest, SubscribeOnAudioDescriptionChanged)
         });
     verifyEventSubscription(id);
 
-    triggerEvent("Accessibility.onAudioDescriptionChanged", R"({"value": false})");
+    triggerEvent("Accessibility.onAudioDescriptionChanged", R"({"value": true})");
     verifyEventReceived(mtx, cv, eventReceived);
 
     // Unsubscribe from the event
@@ -90,7 +89,7 @@ TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
             EXPECT_EQ(settings.enabled, true);
             EXPECT_EQ(settings.preferredLanguages.size(), 2);
             EXPECT_EQ(settings.preferredLanguages[0], "eng");
-            EXPECT_EQ(settings.preferredLanguages[1], "fra");
+            EXPECT_EQ(settings.preferredLanguages[1], "spa");
 
             {
                 std::lock_guard<std::mutex> lock(mtx);
@@ -101,8 +100,13 @@ TEST_F(AccessibilityTest, SubscribeOnClosedCaptionsSettingsChanged)
     verifyEventSubscription(id);
 
     triggerEvent("Accessibility.onClosedCaptionsSettingsChanged",
-                 R"({"enabled": true, "preferredLanguages": ["eng", "fra"]})");
+                 R"({"enabled": true, "preferredLanguages": ["eng", "spa"]})");
     verifyEventReceived(mtx, cv, eventReceived);
+
+    SetUp();
+    triggerEvent("Accessibility.onClosedCaptionsSettingsChanged",
+                 R"({"enabled": true, "preferredLanguages": ["en-gb", "fr-fr"]})");
+    verifyEventNotReceived(mtx, cv, eventReceived);
 
     // Unsubscribe from the event
     auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(id.value());
@@ -160,9 +164,9 @@ TEST_F(AccessibilityTest, SubscribeOnVoiceGuidanceSettingsChanged)
         {
             std::cout << "[Subscription] Accessibility voice guidance settings changed" << std::endl;
 
-            EXPECT_EQ(settings.enabled, false);
-            EXPECT_EQ(settings.rate, 1.0f);
-            EXPECT_EQ(settings.navigationHints, false);
+            EXPECT_EQ(settings.enabled, true);
+            EXPECT_EQ(settings.rate, 0.8f);
+            EXPECT_EQ(settings.navigationHints, true);
 
             {
                 std::lock_guard<std::mutex> lock(mtx);
@@ -173,8 +177,18 @@ TEST_F(AccessibilityTest, SubscribeOnVoiceGuidanceSettingsChanged)
     verifyEventSubscription(id);
 
     triggerEvent("Accessibility.onVoiceGuidanceSettingsChanged",
-                 R"({"enabled": false, "rate": 1.0, "navigationHints": false})");
+                 R"({"enabled": true, "rate": 0.8, "navigationHints": true})");
     verifyEventReceived(mtx, cv, eventReceived);
+
+    SetUp();
+    triggerEvent("Accessibility.onVoiceGuidanceSettingsChanged",
+                 R"({"enabled": false, "rate": 11.0, "navigationHints": false})");
+    verifyEventNotReceived(mtx, cv, eventReceived);
+
+    SetUp();
+    triggerEvent("Accessibility.onVoiceGuidanceSettingsChanged",
+                 R"({"enabled": false, "rate": 0, "navigationHints": false})");
+    verifyEventNotReceived(mtx, cv, eventReceived);
 
     // Unsubscribe from the event
     auto result = Firebolt::IFireboltAccessor::Instance().AccessibilityInterface().unsubscribe(id.value());

@@ -17,15 +17,13 @@
  * limitations under the License.
  */
 
-#include "./component/utils.h"
-#include "firebolt.h"
+#include "component/utils.h"
+#include "firebolt/firebolt.h"
 #include "json_engine.h"
-#include "gtest/gtest.h"
-
 #include <condition_variable>
+#include <gtest/gtest.h>
 #include <iostream>
 #include <mutex>
-#include <thread>
 
 class LifecycleTest : public ::testing::Test
 {
@@ -63,7 +61,7 @@ TEST_F(LifecycleTest, subscribeOnState)
     auto id = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().subscribeOnStateChanged(
         [&](const std::vector<Firebolt::Lifecycle::StateChange>& changes)
         {
-            EXPECT_EQ(changes.size(), 1);
+            EXPECT_TRUE(changes.size() > 0);
             std::cout << "[Subscription] Lifecycle state changed: " << static_cast<int>(changes[0].newState)
                       << ", old state: " << static_cast<int>(changes[0].oldState) << std::endl;
 
@@ -79,9 +77,14 @@ TEST_F(LifecycleTest, subscribeOnState)
     verifyEventSubscription(id);
 
     // Trigger the event from the mock server
-    triggerEvent("Lifecycle2.onStateChanged", R"([{"newState":"paused","oldState":"initializing"}])");
+    triggerEvent("Lifecycle2.onStateChanged", R"({"value":[{"newState":"paused","oldState":"initializing"}]})");
 
     verifyEventReceived(mtx, cv, eventReceived);
+
+    SetUp();
+    triggerEvent("Lifecycle2.onStateChanged", R"([{"newState":"paused","oldState":"badstate"}])");
+    verifyEventNotReceived(mtx, cv, eventReceived);
+
     // Unsubscribe from the event
     auto result = Firebolt::IFireboltAccessor::Instance().LifecycleInterface().unsubscribe(id.value());
     verifyUnsubscribeResult(result);

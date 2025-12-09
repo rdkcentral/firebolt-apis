@@ -66,6 +66,13 @@ public:
     virtual Result<u_int32_t> timeInActiveState() const = 0;
 
     /**
+     * @brief Returns chipset ID as a printable string, e.g. "BCM72180"
+     *
+     * @retval The uid string or error
+     */
+    virtual Result<std::string> chipsetId() const = 0;
+
+    /**
      * @brief Returns a persistent unique UUID for the current app and device.  The UUID is reset when the app or device is reset
      *
      * @retval The uid string or error

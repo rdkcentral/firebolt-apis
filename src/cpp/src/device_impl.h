@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "device.h"
+#include "firebolt/device.h"
 #include <firebolt/helpers.h>
 
 namespace Firebolt::Device
@@ -36,6 +36,7 @@ public:
     Result<DeviceClass> deviceClass() const override;
     Result<uint32_t> uptime() const override;
     Result<u_int32_t> timeInActiveState() const override;
+    Result<std::string> chipsetId() const override;
     Result<std::string> uid() const override;
 
 private:

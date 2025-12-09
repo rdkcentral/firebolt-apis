@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "advertising.h"
+#include "firebolt/advertising.h"
 #include <firebolt/json_types.h>
 #include <nlohmann/json.hpp>
 #include <string>

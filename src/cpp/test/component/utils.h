@@ -19,9 +19,8 @@
 
 #pragma once
 
-#include <firebolt.h>
-
 #include <condition_variable>
+#include <firebolt/types.h>
 #include <mutex>
 #include <nlohmann/json.hpp>
 #include <string>
@@ -35,6 +34,7 @@ void triggerRaw(const std::string& payload);
 void verifyEventSubscription(const Firebolt::Result<Firebolt::SubscriptionId>& id);
 void verifyUnsubscribeResult(const Firebolt::Result<void>& result);
 void verifyEventReceived(std::mutex& mtx, std::condition_variable& cv, bool& eventReceived);
+void verifyEventNotReceived(std::mutex& mtx, std::condition_variable& cv, bool& eventReceived);
 
 template <typename T> inline std::string toError(const Firebolt::Result<T>& result)
 {
