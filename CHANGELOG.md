@@ -1,3 +1,10 @@
+# [1.8.0-next.32](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.31...v1.8.0-next.32) (2025-12-05)
+
+
+### Features
+
+* Transport v23 ([19e9bad](https://github.com/rdkcentral/firebolt-apis/commit/19e9bad7c27e1a021fa9aa2e0f647fe74377d860))
+
 # [1.8.0-next.31](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.30...v1.8.0-next.31) (2025-12-04)
 
 

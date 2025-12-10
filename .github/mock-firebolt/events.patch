@@ -75,7 +75,7 @@ index 3c2930e..8b43f92 100644
            return
          }
 diff --git a/server/src/fireboltOpenRpc.mjs b/server/src/fireboltOpenRpc.mjs
-index ddb4fe2..440ffc4 100644
+index ddb4fe2..ed5e5c5 100644
 --- a/server/src/fireboltOpenRpc.mjs
 +++ b/server/src/fireboltOpenRpc.mjs
 @@ -61,16 +61,22 @@ function getMeta() {
@@ -114,7 +114,7 @@ index ddb4fe2..440ffc4 100644
      logger.error('Exception:');
      logger.error(ex);
      errors.push(`ERROR: Could not validate call to method ${methodName} with params ${JSON.stringify(params)}`);
-@@ -180,8 +186,30 @@ function validateMethodResult(val, methodName) {
+@@ -180,8 +186,27 @@ function validateMethodResult(val, methodName) {
    if ( typeof val === 'string' && val.trimStart().startsWith('function') ) { return errors; }
  
    try {
@@ -122,19 +122,16 @@ index ddb4fe2..440ffc4 100644
 -    const oResult = oMethod.result;
 +    let oMethod = undefined;
 +    let oResult = undefined;
-+    if (config.dotConfig.bidirectional && methodName.includes('.on') && methodName.endsWith('Changed')) {
-+      let [module, method] = methodName.split('.');
-+      if (method.startsWith('on') && method.endsWith('Changed')) {
-+        let oMethod = getMethod(methodName, "coreToApp");
-+        if (oMethod && oMethod.tags) {
-+          const notifierTag = oMethod.tags.find(oTag => oTag['x-notifier-for']);
-+          if (notifierTag && notifierTag['x-notifier-for']) {
-+            methodName = notifierTag['x-notifier-for'];
-+            oMethod = getMethod(methodName);
-+            oResult = oMethod.result;
-+          } else {
-+            oResult = oMethod.params[0];
-+          }
++    if (config.dotConfig.bidirectional && methodName.includes('.on')) {
++      let oMethod = getMethod(methodName, "coreToApp");
++      if (oMethod && oMethod.tags) {
++        const notifierTag = oMethod.tags.find(oTag => oTag['x-notifier-for']);
++        if (notifierTag && notifierTag['x-notifier-for']) {
++          methodName = notifierTag['x-notifier-for'];
++          oMethod = getMethod(methodName);
++          oResult = oMethod.result;
++        } else {
++          oResult = oMethod.params[0];
 +        }
 +      }
 +    }
@@ -147,7 +144,7 @@ index ddb4fe2..440ffc4 100644
      let oSchema = oResult.schema;
      if ( '$ref' in oSchema  ) {
        const ref = oSchema['$ref'];
-@@ -199,12 +227,12 @@ function validateMethodResult(val, methodName) {
+@@ -199,12 +224,12 @@ function validateMethodResult(val, methodName) {
    } catch ( ex ) {
      logger.error('ERROR: Could not validate value:');
      logger.error('Value:');
