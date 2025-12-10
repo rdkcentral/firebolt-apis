@@ -616,7 +616,8 @@
         "name": "onAvailable",
         "tags": [
           {
-            "name": "notifier"
+            "name": "notifier",
+            "x-contextual-params": 1
           },
           {
             "name": "capabilities",
@@ -677,7 +678,8 @@
         "name": "onUnavailable",
         "tags": [
           {
-            "name": "notifier"
+            "name": "notifier",
+            "x-contextual-params": 1
           },
           {
             "name": "capabilities",
@@ -738,7 +740,8 @@
         "name": "onGranted",
         "tags": [
           {
-            "name": "notifier"
+            "name": "notifier",
+            "x-contextual-params": 2
           },
           {
             "name": "capabilities",
@@ -809,7 +812,8 @@
         "name": "onRevoked",
         "tags": [
           {
-            "name": "notifier"
+            "name": "notifier",
+            "x-contextual-params": 2
           },
           {
             "name": "capabilities",
