@@ -98,8 +98,8 @@ set(COMPONENT_TESTS
 )
 
 add_executable(${COMPONENT_TESTS_APP}
-    ComponentTestsMain.cpp
-    "component/utils.cpp"
+    "ComponentTestsMain.cpp"
+    "utils.cpp"
     ${COMPONENT_TESTS}
 )
 
