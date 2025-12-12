@@ -1,0 +1,37 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug cpp_test",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/cpp_test",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+                        {
+                    "description": "Add FireboltTransport source",
+                    "text": "directory /home/damien/FIREBOLT_RDKCENTRAL2/firebolt-native-transport/src",
+                    "ignoreFailures": false
+                }
+      ],
+       "environment": [
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "/home/damien/FIREBOLT_RDKCENTRAL2/sysroot/usr/lib:${env:LD_LIBRARY_PATH}"
+                }
+            ],
+      "miDebuggerPath": "/usr/bin/gdb",
+
+    }
+  ]
+}
