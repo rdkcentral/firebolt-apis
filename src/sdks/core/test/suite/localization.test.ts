@@ -26,48 +26,49 @@ test("country", async () => {
     expect(res).toBe("US");
   });
 });
+
 test("preferredAudioLanguages", async () => {
   const res = await Localization.preferredAudioLanguages();
   expect(res).toEqual(["spa", "eng"]);
 });
+
 test("presentationLanguage", async () => {
   const res = await Localization.presentationLanguage();
   expect(res).toBe("en-US");
 });
 
-
 test('listen onCountryChanged', async () => {
-  return Localization.listen((event: 'onCountryChanged', listener: { data: string }) => { }).then((res: number) => {
+  return Localization.listen('onCountryChanged', (data) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('once onCountryChanged', async () => {
-  return Localization.once((event: 'onCountryChanged', listener: { data: string }) => { }).then((res: number) => {
+  return Localization.once('onCountryChanged', (data) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('listen onPreferredAudioLanguagesChanged', async () => {
-  return Localization.listen((event: 'onPreferredAudioLanguagesChanged', listener: { data: string[] }) => { }).then((res: number) => {
+  return Localization.listen('onPreferredAudioLanguagesChanged', (data) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('once onPreferredAudioLanguagesChanged', async () => {
-  return Localization.once((event: 'onPreferredAudioLanguagesChanged', listener: { data: string[] }) => { }).then((res: number) => {
+  return Localization.once('onPreferredAudioLanguagesChanged', (data) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('listen onPresentationLanguageChanged', async () => {
-  return Localization.listen((event: 'onPresentationLanguageChanged', listener: { data: string }) => { }).then((res: number) => {
+  return Localization.listen('onPresentationLanguageChanged', (data) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('once onPresentationLanguageChanged', async () => {
-  return Localization.once((event: 'onPresentationLanguageChanged', listener: { data: string }) => { }).then((res: number) => {
+  return Localization.once('onPresentationLanguageChanged', (data) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });

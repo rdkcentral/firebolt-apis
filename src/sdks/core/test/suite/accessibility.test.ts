@@ -49,49 +49,49 @@ test("Accessibility.voiceGuidanceSettings()", async () => {
 });
 
 test('listen audioDescription', async () => {
-  return Accessibility.listen((event: 'onAudioDescriptionChanged', listener: { data: boolean }) => { }).then((res: number) => {
+  return Accessibility.listen('onAudioDescriptionChanged', (data: boolean) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('once audioDescription', async () => {
-  return Accessibility.once((event: 'onAudioDescriptionChanged', listener: { data: boolean }) => { }).then((res: number) => {
+  return Accessibility.once('onAudioDescriptionChanged', (data: boolean) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('listen ClosedCaptionsSettings', async () => {
-  return Accessibility.listen((event: 'onClosedCaptionsSettingsChanged', listener: { data: Accessibility.ClosedCaptionsSettings }) => { }).then((res: number) => {
+  return Accessibility.listen('onClosedCaptionsSettingsChanged', (data) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('once ClosedCaptionsSettings', async () => {
-  return Accessibility.once((event: 'onClosedCaptionsSettingsChanged', listener: { data: Accessibility.ClosedCaptionsSettings }) => { }).then((res: number) => {
+  return Accessibility.once('onClosedCaptionsSettingsChanged', (data) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('listen highContrastUI', async () => {
-  return Accessibility.listen((event: 'onHighContrastUIChanged', listener: { data: boolean }) => { }).then((res: number) => {
+  return Accessibility.listen('onHighContrastUIChanged', (data: boolean) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('once highContrastUI', async () => {
-  return Accessibility.once((event: 'onHighContrastUIChanged', listener: { data: boolean }) => { }).then((res: number) => {
+  return Accessibility.once('onHighContrastUIChanged', (data: boolean) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('listen VoiceGuidanceSettings', async () => {
-  return Accessibility.listen((event: 'onVoiceGuidanceSettingsChanged', listener: { data: Accessibility.VoiceGuidanceSettings }) => { }).then((res: number) => {
+  return Accessibility.listen('onVoiceGuidanceSettingsChanged', (data) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
 
 test('once VoiceGuidanceSettings', async () => {
-  return Accessibility.once((event: 'onVoiceGuidanceSettingsChanged', listener: { data: Accessibility.VoiceGuidanceSettings }) => { }).then((res: number) => {
+  return Accessibility.once('onVoiceGuidanceSettingsChanged', (data) => { }).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
