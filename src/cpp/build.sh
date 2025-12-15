@@ -11,7 +11,7 @@ cleanFirst=false
 while [[ ! -z $1 ]]; do
   case $1 in
   --clean) cleanFirst=true;;
-  --release) buildTarget="Release";;
+  --release) buildType="Release";;
   --sysroot) SYSROOT_PATH="$2"; shift;;
   -i | --install) do_install=true;;
   +tests) params+=" -DENABLE_TESTS=ON"; bdir="build-dev";;
