@@ -77,6 +77,7 @@ set_target_properties(${UNIT_TESTS_APP} PROPERTIES
 
 if(DISCOVER_UT)
     gtest_discover_tests(${UNIT_TESTS_APP}
+        DISCOVERY_MODE PRE_TEST
         PROPERTIES
             ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src"
     )
@@ -131,6 +132,7 @@ set_target_properties(${COMPONENT_TESTS_APP} PROPERTIES
 
 if(DISCOVER_CT)
     gtest_discover_tests(${COMPONENT_TESTS_APP}
+        DISCOVERY_MODE PRE_TEST
         PROPERTIES
             ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src"
     )
