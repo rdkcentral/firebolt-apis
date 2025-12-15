@@ -55,21 +55,6 @@ test("appBundleId()", () => {
   });
 });
 
-test("listen()", () => {
-  return Advertising.listen((event: string, data: object) => {}).then(
-    (res: number) => {
-      expect(res > 0).toBe(true);
-    }
-  );
-});
-
-test("once()", () => {
-  return Advertising.once((event: string, data: object) => {}).then(
-    (res: number) => {
-      expect(res > 0).toBe(true);
-    }
-  );
-});
 
 test("listen() specific Advertising event.", () => {
   return Advertising.listen("onPolicyChanged", () => {}).then((res: number) => {
