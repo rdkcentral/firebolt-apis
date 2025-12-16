@@ -7,7 +7,7 @@
 	"type": "module",
 	"scripts": {
 		"validate": "npx firebolt-openrpc validate --platformApi ./dist/firebolt-discovery-open-rpc.json --appApi ./dist/firebolt-discovery-app-open-rpc.json",
-		"sdk": "npx firebolt-openrpc sdk --platformApi ./dist/firebolt-discovery-open-rpc.json --appApi ./dist/firebolt-discovery-app-open-rpc.json --template ./src/js --output ./build/javascript/src",
+		"sdk": "npx firebolt-openrpc sdk --platformApi ./dist/firebolt-discovery-open-rpc.json --appApi ./dist/firebolt-discovery-app-open-rpc.json --template ./src/js --config-file-override ./configOverride/languages/javascript --output ./build/javascript/src",
 		"cpp": "npm run cpp:compile && npm run cpp:install",
 		"cpp:compile": "npx firebolt-openrpc sdk --platformApi ./dist/firebolt-discovery-open-rpc.json --appApi ./dist/firebolt-discovery-app-open-rpc.json --template ./src/cpp --output ./build/cpp/src --static-module Platform --language ../../../node_modules/@firebolt-js/openrpc/languages/cpp",
 		"cpp:install": "chmod +x ./build/cpp/src/scripts/install.sh && sdkVersion=$(npm run -s getVersion) && ./build/cpp/src/scripts/install.sh -i ./build/cpp/src -s ./build/cpp/src/ -m discovery -v $sdkVersion",
@@ -15,7 +15,7 @@
 		"slice": "npx firebolt-openrpc slice -i ../../../dist/firebolt-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-discovery-open-rpc.json",
 		"slice:app": "npx firebolt-openrpc slice -i ../../../dist/firebolt-app-open-rpc.json --sdk ./sdk.config.json -o ./dist/firebolt-discovery-app-open-rpc.json",
 		"docs:nodocs": "echo 'docs: disabled'",
-		"docs": "npx firebolt-openrpc docs --platformApi ./dist/firebolt-discovery-open-rpc.json --appApi ./dist/firebolt-discovery-app-open-rpc.json --output build/docs/markdown --as-path",
+		"docs": "npx firebolt-openrpc docs --platformApi ./dist/firebolt-discovery-open-rpc.json --appApi ./dist/firebolt-discovery-app-open-rpc.json --output build/docs/markdown --config-file-override ./configOverride/languages/markdown --as-path",
 		"wiki": "npx firebolt-openrpc docs --platformApi ./dist/firebolt-discovery-open-rpc.json --appApi ./dist/firebolt-discovery-app-open-rpc.json --output build/docs/markdown",
 		"dist:notest": "npm run clean && npm run slice && npm run slice:app && npm run validate && npm run sdk && npm run docs && npm run prettier && npm run dist:copy && echo 'Firebolt Core SDK /dist/ is ready.\n'",
 		"dist:copy": "npm run dist:copy:sdk && npm run dist:copy:docs",
