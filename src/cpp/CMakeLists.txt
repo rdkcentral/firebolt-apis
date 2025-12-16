@@ -46,7 +46,7 @@ if (NOT PROJECT_VERSION)
         string(STRIP ${VERSION_STRING} VERSION_STRING)
     endif()
 
-    set(PROJECT_VERSION "${VERSION_STRING}" CACHE STRING "Project version string")
+    set(PROJECT_VERSION "${VERSION_STRING}")#dmc CACHE STRING "Project version string")
 endif ()
 
 if(EXISTS "${CMAKE_SOURCE_DIR}/.transport.version")
@@ -118,3 +118,5 @@ endif()
 if (ENABLE_TESTS)
     add_subdirectory(test)
 endif()
+
+add_subdirectory(test/cpp_test)
