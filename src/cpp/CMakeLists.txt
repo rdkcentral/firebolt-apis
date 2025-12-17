@@ -98,6 +98,7 @@ if(NOT FireboltTransport_VERSION STREQUAL FIREBOLT_TRANSPORT_VERSION)
     FetchContent_Declare(
         FireboltTransport
         URL "https://github.com/rdkcentral/firebolt-native-transport/releases/download/v${FIREBOLT_TRANSPORT_VERSION}/firebolt-native-transport-${FIREBOLT_TRANSPORT_VERSION}.tar.gz"
+        URL_HASH "SHA256=058805fa53884b98f06b93a16bb2b7977fd65a8d5934c020f21736341723f4ce"
         DOWNLOAD_EXTRACT_TIMESTAMP true
     )
     set(ENABLE_TESTS_ORIG ${ENABLE_TESTS})
