@@ -120,34 +120,6 @@ jobs:
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
           echo "RELEASE_VERSION=$RELEASE_VERSION"
 
-      - name: Make Release package of firebolt-native APIs
-        run: |
-          ./.github/scripts/mk-release-package.sh \
-            --version ${{ env.RELEASE_VERSION }} \
-            --package firebolt-apis--core-sdk \
-            --subpath ./src/cpp \
-            --dst ${{ github.workspace }}/release
-
-      - name: Make Release package of firebolt-native Demo
-        run: |
-          ./.github/scripts/mk-release-package.sh \
-            --version ${{ env.RELEASE_VERSION }} \
-            --package firebolt-apis--core-demo \
-            --subpath ./src/cpp/demo \
-            --dst ${{ github.workspace }}/release
-
-      - name: Add Checksum to Job Summary
-        shell: bash
-        run: |
-          (
-            echo "# Release Package Checksum"
-            echo
-            echo '```'
-            cd ${{ github.workspace }}/release && sha256sum *.tar.gz
-            echo '```'
-            echo
-          ) >> $GITHUB_STEP_SUMMARY
-
       - name: Release Firebolt SDKs to NPM
         if: steps.check_build.outputs.result == 'true' && github.event_name != 'pull_request' && (github.ref_name != 'main' || github.event_name == 'workflow_dispatch')
         env:
@@ -156,16 +128,6 @@ jobs:
           npm --version
           echo "NPM DIST TAG :: " $NPM_DIST_TAG
           npm publish --tag $NPM_DIST_TAG --workspaces
-
-      - name: Deploy Core Native Sources
-        id: deploy_runtime_apis_cpp
-        if: false && steps.check_build.outputs.result == 'true' && github.event_name != 'pull_request' && (github.ref_name != 'main' || github.event_name == 'workflow_dispatch')
-        env:
-          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN  }}
-        run: |
-          echo "user=${{ secrets.CPP_ARTIFACT_USER }}"
-          curl -v -u ${{ secrets.CPP_ARTIFACT_USER }}:${{ secrets.CPP_ARTIFACT_SECRET }} -T ${{ github.workspace }}/release/firebolt-apis--core-sdk-$RELEASE_VERSION.tar.gz "${{ vars.DEPLOY_URL }}"
-          curl -v -u ${{ secrets.CPP_ARTIFACT_USER }}:${{ secrets.CPP_ARTIFACT_SECRET }} -T ${{ github.workspace }}/release/firebolt-apis--core-demo-$RELEASE_VERSION.tar.gz "${{ vars.DEPLOY_URL }}"
 
       - name: Upload native packages as an artifact
         uses: actions/upload-artifact@v4
