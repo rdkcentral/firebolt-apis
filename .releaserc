@@ -43,12 +43,6 @@
       }
     ],
     [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "./.github/scripts/mk-release-package.sh --version ${nextRelease.version} --package firebolt-apis--native-core --subpath ./src/cpp"
-      }
-    ],
-    [
       "@semantic-release/git",
       {
         "assets": ["CHANGELOG.md", "package.json", "package-lock.json", "npm-shrinkwrap.json", "src/sdks/core/package.json", "src/sdks/manage/package.json", "src/sdks/discovery/package.json"]
@@ -58,8 +52,7 @@
       "@semantic-release/github",
       {
         "assets": [
-          { "path":"./*.tgz" },
-          { "path": "build/firebolt-apis--native-core-*.tar.gz", "label": "Source Code - native (tar.gz)" }
+          { "path":"./*.tgz" }
         ]
       }
     ]
