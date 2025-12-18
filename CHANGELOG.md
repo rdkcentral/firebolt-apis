@@ -1,3 +1,10 @@
+# [1.8.0-next.34](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.33...v1.8.0-next.34) (2025-12-17)
+
+
+### Features
+
+* C++ Client moves to dedicated repo ([#492](https://github.com/rdkcentral/firebolt-apis/issues/492)) ([69c79f3](https://github.com/rdkcentral/firebolt-apis/commit/69c79f327a71aeb4818fec79f2fe65e9f87ad65c))
+
 # [1.8.0-next.33](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.32...v1.8.0-next.33) (2025-12-15)
 
 
