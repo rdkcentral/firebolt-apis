@@ -1,0 +1,51 @@
+{
+  "openrpc": "1.2.4",
+  "info": {
+    "title": "Network",
+    "description": "A module for returning details about the device's network connection and networking capabilities.",
+    "version": "0.0.0"
+  },
+  "methods": [
+    {
+      "name": "connected",
+      "summary": "Get whether or not the device has a valid connection to the local network",
+      "params": [],
+      "tags": [
+        {
+          "name": "property:readonly"
+        },
+        {
+          "name": "capabilities",
+          "x-uses": [
+            "xrn:firebolt:capability:network:connected"
+          ]
+        }
+      ],
+      "result": {
+        "name": "connected",
+        "summary": "The network connection state of the device",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "name": "The device has an active, valid network connection",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": true
+          }
+        },
+                {
+          "name": "The device is offline",
+          "params": [],
+          "result": {
+            "name": "Default Result",
+            "value": false
+          }
+        }
+      ]
+    }
+  ]
+}

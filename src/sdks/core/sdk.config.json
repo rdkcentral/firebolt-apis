@@ -119,6 +119,12 @@
             ]
         },
         {
+            "module": "Network",
+            "use": [
+                "xrn:firebolt:capability:network:connected"
+            ]
+        },
+        {
             "module": "Parameters",
             "use": [
                 "xrn:firebolt:capability:lifecycle:state"
