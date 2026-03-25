@@ -116,12 +116,29 @@ run_mfos_tests()
       .on("pageerror", ({ message }) => console.log(`NOPE : ${message}`))
       .on("response", response => console.log(`NORE : ${response.status()} ${response.url()}`))
       .on("requestfailed", request => console.log(`NORF : ${request.failure().errorText} ${request.url()}`));
-      // Navigate to the URL - disable the default 30s navigation timeout so a
+      // Navigate to the URL - retry up to 12 times (60s window) so a
       // slow-starting webpack-dev-server does not abort the test immediately.
       const url = "http://localhost:8081/index.html?mf=ws://localhost:9998/12345&standalone=true";
       const timeout = 300;
-      console.log(`Navigating to ${url} and waiting ${timeout}s to finish`);
-      await page.goto(url, { timeout: 0 });
+      const maxRetries = 12;
+      let navigated = false;
+      for (let attempt = 0; attempt < maxRetries; attempt++) {
+        try {
+          console.log(`Navigation attempt ${attempt + 1}/${maxRetries} to ${url}`);
+          await page.goto(url, { timeout: 0 });
+          navigated = true;
+          break;
+        } catch (err) {
+          console.log(`Navigation attempt ${attempt + 1} failed: ${err.message}. Retrying in 5s...`);
+          await new Promise(r => setTimeout(r, 5000));
+        }
+      }
+      if (!navigated) {
+        console.error("Failed to navigate to FCA after all retry attempts");
+        await browser.close();
+        process.exit(1);
+      }
+      console.log(`Successfully navigated to FCA. Waiting up to ${timeout}s for test results...`);
 
       // Sleep for "timeout" seconds
       await new Promise(resolve => setTimeout(resolve, timeout * 1000));
@@ -242,23 +259,23 @@ runTests() {
   echo "$CURL_RESP" | grep -q '"status":"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; exit 1; }
 
   # Wait for FCA's webpack bundle to finish compiling before launching puppeteer.
-  # webpack-dev-server v3 emits "Compiled successfully" once the bundle is ready;
-  # we poll the FCA log for that message (up to 120s) rather than using a fixed
-  # sleep, since compilation time varies significantly across CI runners.
-  echo "Waiting for FCA webpack-dev-server to finish compiling (up to 120s)..."
+  # webpack-dev-server v3 prints either "Compiled successfully." (no warnings)
+  # or "Compiled with warnings." - we match both.
+  echo "Waiting for FCA webpack-dev-server to finish compiling (up to 300s)..."
   fca_compiled=0
-  for i in $(seq 1 120); do
-    if grep -q -i "compiled successfully\|webpack: Compiled" "$current_dir/log-fca.log" 2>/dev/null; then
+  for i in $(seq 1 300); do
+    if grep -qi "compiled successfully\|compiled with warnings" "$current_dir/log-fca.log" 2>/dev/null; then
       fca_compiled=1
-      echo "FCA webpack compiled after ${i}s."
+      echo "FCA webpack compiled after ${i}s. Last FCA log lines:"
+      tail -5 "$current_dir/log-fca.log" | head -5 || true
       break
     fi
     sleep 1
   done
   if [ "$fca_compiled" -eq 0 ]; then
-    echo "WARNING: FCA webpack did not report successful compilation within 120s. Proceeding anyway (may fail)." >&2
-    echo "--- last 20 lines of FCA log ---" >&2
-    tail -20 "$current_dir/log-fca.log" >&2 2>/dev/null || true
+    echo "WARNING: FCA webpack did not report successful compilation within 300s. Proceeding anyway (may fail)." >&2
+    echo "--- last 30 lines of FCA log ---" >&2
+    tail -30 "$current_dir/log-fca.log" >&2 2>/dev/null || true
   fi
 
   run_mfos_tests
