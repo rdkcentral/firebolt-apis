@@ -1,0 +1,24 @@
+diff --git a/webpack.dev.js b/webpack.dev.js
+index 4a89f49..8cda20e 100644
+--- a/webpack.dev.js
++++ b/webpack.dev.js
+@@ -63,6 +63,19 @@ module.exports = {
+         test: /\.(png|svg|jpg|gif)$/,
+         use: ['file-loader'],
+       },
++      {
++        // babel-loader is required so webpack 4 (acorn 6) can parse ES2022
++        // class fields used by newer @lightningjs/core versions pulled in
++        // transitively by @lightningjs/sdk.
++        test: /\.(js|mjs)$/,
++        include: /node_modules[\\/]@lightningjs[\\/]/,
++        use: {
++          loader: 'babel-loader',
++          options: {
++            presets: [['@babel/preset-env', { modules: false, targets: { esmodules: true } }]],
++          },
++        },
++      },
+     ],
+   },
+   plugins: [
