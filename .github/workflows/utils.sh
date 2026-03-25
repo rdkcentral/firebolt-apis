@@ -50,9 +50,15 @@ run_mfos_tests()
   cd $current_dir
   echo "Run mfos tests in a headless browser"
   PUPPETEER_SKIP_DOWNLOAD=1 npm install puppeteer@${TOOL_VERSION[puppeteer]}
+  if [ -z "${PUPPETEER_EXECUTABLE_PATH:-}" ]; then
+    echo "ERROR: PUPPETEER_EXECUTABLE_PATH is not set. Set it to the path of your Chrome/Chromium binary (e.g. /usr/bin/google-chrome-stable)." >&2
+    exit 1
+  fi
   echo "Start xvfb"
   export DISPLAY=":99"
   Xvfb $DISPLAY -screen 0 1024x768x24 |& add_ts "XVFB" | tee >(clean_ansi >$current_dir/log-xvfb.log) >/dev/null 2>&1 &
+  local xvfb_pid
+  xvfb_pid=$(pgrep -n -x Xvfb 2>/dev/null || true)
   # Wait for Xvfb to be ready before launching Chrome (non-fatal: headless Chrome
   # does not require a real display, so we proceed even if xdpyinfo never connects).
   for i in $(seq 1 10); do xdpyinfo -display :99 >/dev/null 2>&1 && break; sleep 1; done
@@ -111,7 +117,7 @@ run_mfos_tests()
       for (let attempt = 0; attempt < maxRetries; attempt++) {
         try {
           console.log(`Navigation attempt ${attempt + 1}/${maxRetries} to ${url}`);
-          await page.goto(url, { timeout: 0 });
+          await page.goto(url, { timeout: 10000, waitUntil: "domcontentloaded" });
           navigated = true;
           break;
         } catch (err) {
@@ -134,6 +140,7 @@ run_mfos_tests()
       await browser.close();
     })();
   '
+  [ -n "$xvfb_pid" ] && kill-rec "$xvfb_pid" 2>/dev/null || true
 }
 
 
@@ -201,9 +208,15 @@ runTests() {
     git fetch --shallow-since=2025-01-01
     git checkout ${TOOL_VERSION[firebolt-certification-app]}
     echo "Applying dependency patch: $current_apis_dir/.github/fca/dependency.patch"
-    git apply $current_apis_dir/.github/fca/dependency.patch
+    if ! git apply "$current_apis_dir/.github/fca/dependency.patch"; then
+      echo "ERROR: Failed to apply dependency patch" >&2
+      exit 1
+    fi
     echo "Applying webpack patch: $current_apis_dir/.github/fca/webpack.patch"
-    git apply $current_apis_dir/.github/fca/webpack.patch
+    if ! git apply "$current_apis_dir/.github/fca/webpack.patch"; then
+      echo "ERROR: Failed to apply webpack patch" >&2
+      exit 1
+    fi
   fi
 
   echo "starting mfos"
@@ -241,10 +254,18 @@ runTests() {
   cd $current_dir
   CURL_RESP=$(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
   echo "Curl request with runTest install on initialization: $CURL_RESP"
-  # Fail fast if MFOS rejected the intent (empty INTENT or wrong format)
-  # Use a lenient pattern to handle optional whitespace in the JSON response
-  # (e.g. Express serialises as { "status": "SUCCESS" } with a space after the colon)
-  echo "$CURL_RESP" | grep -q '"status"\s*:\s*"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; exit 1; }
+  # Fail fast if MFOS rejected the intent (empty INTENT, wrong format, or non-JSON error response)
+  MFOS_STATUS=$(echo "$CURL_RESP" | jq -r '.status' 2>/dev/null)
+  if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to parse MFOS response as JSON while validating initialization intent."
+    echo "Received: $CURL_RESP"
+    exit 1
+  fi
+  if [ "$MFOS_STATUS" != "SUCCESS" ]; then
+    echo "ERROR: MFOS rejected initialization intent (status=$MFOS_STATUS). Check INTENT variable format."
+    echo "Received: $CURL_RESP"
+    exit 1
+  fi
 
   # Wait for FCA's webpack bundle to finish compiling before launching puppeteer.
   # webpack-dev-server v3 prints either "Compiled successfully." (no warnings)

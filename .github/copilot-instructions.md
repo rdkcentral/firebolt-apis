@@ -15,15 +15,11 @@ This is the **Firebolt API specification and SDK source** for the [Firebolt](htt
 ## Build and test commands
 
 ```bash
-make build          # full pipeline: validate → compile → sdks → test
-make compile        # compile dist/firebolt-open-rpc.json only
-make validate       # validate all OpenRPC sources
-make test           # run jest unit tests
-make clean          # remove dist/ and workspace artifacts
-
-make mfos-test      # run MFOS integration tests locally (requires xvfb + jq)
-make mfos-test-skip-build   # same but skip rebuild
-make mfos-clean-all         # re-clone MFOS/FCA repos and re-run
+npm run dist        # full pipeline: validate → compile → sdks → test
+npm run compile     # compile dist/firebolt-open-rpc.json only
+npm run validate    # validate all OpenRPC sources
+npm test            # run jest unit tests
+npm run clean       # remove dist/ and workspace artifacts
 ```
 
 Run `act -j RunStandaloneTests --var-file .act.vars` to reproduce the CI integration test locally with `act`.
