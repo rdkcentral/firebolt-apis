@@ -54,13 +54,25 @@ run_mfos_tests()
   export DISPLAY=":99"
   Xvfb $DISPLAY -screen 0 1024x768x24 |& add_ts "XVFB" | tee >(clean_ansi >$current_dir/log-xvfb.log) >/dev/null 2>&1 &
   xvfb_pid=$!
+  # Wait for Xvfb to be ready before launching Chrome
+  for i in $(seq 1 10); do xdpyinfo -display :99 >/dev/null 2>&1 && break; sleep 1; done
 
   echo "Run headless browser script with puppeteer"
   node -e '
     const puppeteer = require("puppeteer");
     const fs = require("fs");
     (async () => {
-      const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"]});
+      const browser = await puppeteer.launch({
+        headless: true,
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+        args: [
+          "--no-sandbox",
+          "--disable-dev-shm-usage",
+          "--enable-webgl",
+          "--enable-unsafe-swiftshader",
+          "--ignore-gpu-blocklist",
+        ]
+      });
       const page = await browser.newPage();
 
       // Enable console logging
@@ -172,6 +184,8 @@ runTests() {
     git checkout ${TOOL_VERSION[firebolt-certification-app]}
     echo "Applying dependency patch: $current_apis_dir/.github/fca/dependency.patch"
     git apply $current_apis_dir/.github/fca/dependency.patch
+    echo "Applying webpack patch: $current_apis_dir/.github/fca/webpack.patch"
+    git apply $current_apis_dir/.github/fca/webpack.patch
   fi
 
   echo "starting mfos"
@@ -190,7 +204,7 @@ runTests() {
   cat package.json \
   | jq '.dependencies["@firebolt-js/sdk"] = "file:'"$current_apis_dir"'/src/sdks/core"' \
   > package.json.tmp && mv package.json.tmp package.json
-  npm install
+  npm install --legacy-peer-deps
   npm start  |& add_ts "FCA" | tee >(clean_ansi >$current_dir/log-fca.log) &
   fca_pid=$!
 
@@ -198,7 +212,10 @@ runTests() {
   sleep 15
 
   cd $current_dir
-  echo "Curl request with runTest install on initialization: $(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)"
+  CURL_RESP=$(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
+  echo "Curl request with runTest install on initialization: $CURL_RESP"
+  # Fail fast if MFOS rejected the intent (empty INTENT or wrong format)
+  echo "$CURL_RESP" | grep -q '"status":"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; }
 
   run_mfos_tests
 

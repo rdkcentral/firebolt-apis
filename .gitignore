@@ -12,3 +12,4 @@ src/sdks/manage/test/transpiled-suite/*
 node_modules/*
 test/transpiled-suite/*
 .DS_Store
+.act.vars
