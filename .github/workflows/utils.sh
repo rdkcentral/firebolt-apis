@@ -53,23 +53,9 @@ run_mfos_tests()
   echo "Start xvfb"
   export DISPLAY=":99"
   Xvfb $DISPLAY -screen 0 1024x768x24 |& add_ts "XVFB" | tee >(clean_ansi >$current_dir/log-xvfb.log) >/dev/null 2>&1 &
-  # $! is the tee PID; grab the actual Xvfb PID for cleanup
-  local real_xvfb_pid
-  real_xvfb_pid=$(pgrep -n -x Xvfb 2>/dev/null || true)
-  # Wait for Xvfb to be ready before launching Chrome (up to 30 seconds)
-  xvfb_ready=0
-  for i in $(seq 1 30); do
-    if xdpyinfo -display :99 >/dev/null 2>&1; then
-      xvfb_ready=1
-      break
-    fi
-    sleep 1
-  done
-  if [ "$xvfb_ready" -ne 1 ]; then
-    echo "Xvfb display :99 did not become ready within 30 seconds; aborting tests." >&2
-    [ -n "$real_xvfb_pid" ] && kill-rec "$real_xvfb_pid" 2>/dev/null || true
-    return 1
-  fi
+  # Wait for Xvfb to be ready before launching Chrome (non-fatal: headless Chrome
+  # does not require a real display, so we proceed even if xdpyinfo never connects).
+  for i in $(seq 1 10); do xdpyinfo -display :99 >/dev/null 2>&1 && break; sleep 1; done
 
   echo "Run headless browser script with puppeteer"
   node -e '
