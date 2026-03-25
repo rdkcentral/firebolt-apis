@@ -49,13 +49,25 @@ run_mfos_tests()
 {
   cd $current_dir
   echo "Run mfos tests in a headless browser"
-  npm install puppeteer@${TOOL_VERSION[puppeteer]}
+  PUPPETEER_SKIP_DOWNLOAD=1 npm install puppeteer@${TOOL_VERSION[puppeteer]}
   echo "Start xvfb"
   export DISPLAY=":99"
   Xvfb $DISPLAY -screen 0 1024x768x24 |& add_ts "XVFB" | tee >(clean_ansi >$current_dir/log-xvfb.log) >/dev/null 2>&1 &
   xvfb_pid=$!
-  # Wait for Xvfb to be ready before launching Chrome
-  for i in $(seq 1 10); do xdpyinfo -display :99 >/dev/null 2>&1 && break; sleep 1; done
+  # Wait for Xvfb to be ready before launching Chrome (up to 10 seconds)
+  xvfb_ready=0
+  for i in $(seq 1 10); do
+    if xdpyinfo -display :99 >/dev/null 2>&1; then
+      xvfb_ready=1
+      break
+    fi
+    sleep 1
+  done
+  if [ "$xvfb_ready" -ne 1 ]; then
+    echo "Xvfb display :99 did not become ready within 10 seconds; aborting tests." >&2
+    kill-rec "$xvfb_pid"
+    return 1
+  fi
 
   echo "Run headless browser script with puppeteer"
   node -e '
@@ -215,7 +227,7 @@ runTests() {
   CURL_RESP=$(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
   echo "Curl request with runTest install on initialization: $CURL_RESP"
   # Fail fast if MFOS rejected the intent (empty INTENT or wrong format)
-  echo "$CURL_RESP" | grep -q '"status":"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; }
+  echo "$CURL_RESP" | grep -q '"status":"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; exit 1; }
 
   run_mfos_tests
 
