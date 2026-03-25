@@ -256,7 +256,9 @@ runTests() {
   CURL_RESP=$(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
   echo "Curl request with runTest install on initialization: $CURL_RESP"
   # Fail fast if MFOS rejected the intent (empty INTENT or wrong format)
-  echo "$CURL_RESP" | grep -q '"status":"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; exit 1; }
+  # Use a lenient pattern to handle optional whitespace in the JSON response
+  # (e.g. Express serialises as { "status": "SUCCESS" } with a space after the colon)
+  echo "$CURL_RESP" | grep -q '"status"\s*:\s*"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; exit 1; }
 
   # Wait for FCA's webpack bundle to finish compiling before launching puppeteer.
   # webpack-dev-server v3 prints either "Compiled successfully." (no warnings)
