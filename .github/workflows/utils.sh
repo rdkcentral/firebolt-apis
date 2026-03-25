@@ -134,8 +134,8 @@ run_mfos_tests()
       await browser.close();
     })();
   '
-  [ -n "$real_xvfb_pid" ] && kill-rec "$real_xvfb_pid" 2>/dev/null || true
 }
+
 
 runTests() {
   echo "Determine the branch to checkout"
