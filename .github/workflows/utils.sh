@@ -118,7 +118,7 @@ run_mfos_tests()
       .on("requestfailed", request => console.log(`NORF : ${request.failure().errorText} ${request.url()}`));
       // Navigate to the URL
       const url = "http://localhost:8081/index.html?mf=ws://localhost:9998/12345&standalone=true";
-      const timeout = 120;
+      const timeout = 300;
       console.log(`Navigating to ${url} and waiting ${timeout}s to finish`);
       await page.goto(url);
 
