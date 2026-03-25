@@ -53,23 +53,9 @@ run_mfos_tests()
   echo "Start xvfb"
   export DISPLAY=":99"
   Xvfb $DISPLAY -screen 0 1024x768x24 |& add_ts "XVFB" | tee >(clean_ansi >$current_dir/log-xvfb.log) >/dev/null 2>&1 &
-  # $! is the tee PID; grab the actual Xvfb PID for cleanup
-  local real_xvfb_pid
-  real_xvfb_pid=$(pgrep -n -x Xvfb 2>/dev/null || true)
-  # Wait for Xvfb to be ready before launching Chrome (up to 30 seconds)
-  xvfb_ready=0
-  for i in $(seq 1 30); do
-    if xdpyinfo -display :99 >/dev/null 2>&1; then
-      xvfb_ready=1
-      break
-    fi
-    sleep 1
-  done
-  if [ "$xvfb_ready" -ne 1 ]; then
-    echo "Xvfb display :99 did not become ready within 30 seconds; aborting tests." >&2
-    [ -n "$real_xvfb_pid" ] && kill-rec "$real_xvfb_pid" 2>/dev/null || true
-    return 1
-  fi
+  # Wait for Xvfb to be ready before launching Chrome (non-fatal: headless Chrome
+  # does not require a real display, so we proceed even if xdpyinfo never connects).
+  for i in $(seq 1 10); do xdpyinfo -display :99 >/dev/null 2>&1 && break; sleep 1; done
 
   echo "Run headless browser script with puppeteer"
   node -e '
@@ -116,11 +102,29 @@ run_mfos_tests()
       .on("pageerror", ({ message }) => console.log(`NOPE : ${message}`))
       .on("response", response => console.log(`NORE : ${response.status()} ${response.url()}`))
       .on("requestfailed", request => console.log(`NORF : ${request.failure().errorText} ${request.url()}`));
-      // Navigate to the URL
+      // Navigate to the URL - retry up to 12 times (60s window) so a
+      // slow-starting webpack-dev-server does not abort the test immediately.
       const url = "http://localhost:8081/index.html?mf=ws://localhost:9998/12345&standalone=true";
-      const timeout = 120;
-      console.log(`Navigating to ${url} and waiting ${timeout}s to finish`);
-      await page.goto(url);
+      const timeout = 300;
+      const maxRetries = 12;
+      let navigated = false;
+      for (let attempt = 0; attempt < maxRetries; attempt++) {
+        try {
+          console.log(`Navigation attempt ${attempt + 1}/${maxRetries} to ${url}`);
+          await page.goto(url, { timeout: 0 });
+          navigated = true;
+          break;
+        } catch (err) {
+          console.log(`Navigation attempt ${attempt + 1} failed: ${err.message}. Retrying in 5s...`);
+          await new Promise(r => setTimeout(r, 5000));
+        }
+      }
+      if (!navigated) {
+        console.error("Failed to navigate to FCA after all retry attempts");
+        await browser.close();
+        process.exit(1);
+      }
+      console.log(`Successfully navigated to FCA. Waiting up to ${timeout}s for test results...`);
 
       // Sleep for "timeout" seconds
       await new Promise(resolve => setTimeout(resolve, timeout * 1000));
@@ -130,7 +134,7 @@ run_mfos_tests()
       await browser.close();
     })();
   '
-  kill-rec $xvfb_pid
+  [ -n "$real_xvfb_pid" ] && kill-rec "$real_xvfb_pid" 2>/dev/null || true
 }
 
 runTests() {
@@ -222,14 +226,45 @@ runTests() {
   npm start  |& add_ts "FCA" | tee >(clean_ansi >$current_dir/log-fca.log) &
   fca_pid=$!
 
-  echo "Waiting a while for setting up mfos & fca"
-  sleep 15
+  # Wait for MFOS REST API (port 3333) to be ready before setting intent
+  echo "Waiting for MFOS to be ready on port 3333..."
+  mfos_up=0
+  for i in $(seq 1 60); do
+    if curl -s --max-time 2 http://localhost:3333/ > /dev/null 2>&1; then
+      mfos_up=1
+      break
+    fi
+    sleep 1
+  done
+  [ "$mfos_up" -eq 1 ] || { echo "ERROR: MFOS did not come up on port 3333 within 60s" >&2; exit 1; }
 
   cd $current_dir
   CURL_RESP=$(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
   echo "Curl request with runTest install on initialization: $CURL_RESP"
   # Fail fast if MFOS rejected the intent (empty INTENT or wrong format)
-  echo "$CURL_RESP" | grep -q '"status":"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; exit 1; }
+  # Use a lenient pattern to handle optional whitespace in the JSON response
+  # (e.g. Express serialises as { "status": "SUCCESS" } with a space after the colon)
+  echo "$CURL_RESP" | grep -q '"status"\s*:\s*"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; exit 1; }
+
+  # Wait for FCA's webpack bundle to finish compiling before launching puppeteer.
+  # webpack-dev-server v3 prints either "Compiled successfully." (no warnings)
+  # or "Compiled with warnings." - we match both.
+  echo "Waiting for FCA webpack-dev-server to finish compiling (up to 300s)..."
+  fca_compiled=0
+  for i in $(seq 1 300); do
+    if grep -qi "compiled successfully\|compiled with warnings" "$current_dir/log-fca.log" 2>/dev/null; then
+      fca_compiled=1
+      echo "FCA webpack compiled after ${i}s. Last FCA log lines:"
+      tail -5 "$current_dir/log-fca.log" | head -5 || true
+      break
+    fi
+    sleep 1
+  done
+  if [ "$fca_compiled" -eq 0 ]; then
+    echo "WARNING: FCA webpack did not report successful compilation within 300s. Proceeding anyway (may fail)." >&2
+    echo "--- last 30 lines of FCA log ---" >&2
+    tail -30 "$current_dir/log-fca.log" >&2 2>/dev/null || true
+  fi
 
   run_mfos_tests
 
