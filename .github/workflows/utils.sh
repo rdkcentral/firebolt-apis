@@ -116,8 +116,8 @@ run_mfos_tests()
       .on("pageerror", ({ message }) => console.log(`NOPE : ${message}`))
       .on("response", response => console.log(`NORE : ${response.status()} ${response.url()}`))
       .on("requestfailed", request => console.log(`NORF : ${request.failure().errorText} ${request.url()}`));
-      // Navigate to the URL — disable the default 30s navigation timeout so a
-      // slow-starting webpack-dev-server doesn't abort the test immediately.
+      // Navigate to the URL - disable the default 30s navigation timeout so a
+      // slow-starting webpack-dev-server does not abort the test immediately.
       const url = "http://localhost:8081/index.html?mf=ws://localhost:9998/12345&standalone=true";
       const timeout = 300;
       console.log(`Navigating to ${url} and waiting ${timeout}s to finish`);
