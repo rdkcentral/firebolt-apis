@@ -130,7 +130,7 @@ run_mfos_tests()
       await browser.close();
     })();
   '
-  kill-rec $xvfb_pid
+  [ -n "$real_xvfb_pid" ] && kill-rec "$real_xvfb_pid" 2>/dev/null || true
 }
 
 runTests() {
@@ -222,14 +222,35 @@ runTests() {
   npm start  |& add_ts "FCA" | tee >(clean_ansi >$current_dir/log-fca.log) &
   fca_pid=$!
 
-  echo "Waiting a while for setting up mfos & fca"
-  sleep 15
+  # Wait for MFOS REST API (port 3333) to be ready before setting intent
+  echo "Waiting for MFOS to be ready on port 3333..."
+  mfos_up=0
+  for i in $(seq 1 60); do
+    if curl -s --max-time 2 http://localhost:3333/ > /dev/null 2>&1; then
+      mfos_up=1
+      break
+    fi
+    sleep 1
+  done
+  [ "$mfos_up" -eq 1 ] || { echo "ERROR: MFOS did not come up on port 3333 within 60s" >&2; exit 1; }
 
   cd $current_dir
   CURL_RESP=$(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
   echo "Curl request with runTest install on initialization: $CURL_RESP"
   # Fail fast if MFOS rejected the intent (empty INTENT or wrong format)
   echo "$CURL_RESP" | grep -q '"status":"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; exit 1; }
+
+  # Wait for FCA webpack dev server (port 8081) to be ready before launching puppeteer
+  echo "Waiting for FCA webpack dev server to be ready on port 8081..."
+  fca_up=0
+  for i in $(seq 1 180); do
+    if curl -s --max-time 2 http://localhost:8081/ > /dev/null 2>&1; then
+      fca_up=1
+      break
+    fi
+    sleep 1
+  done
+  [ "$fca_up" -eq 1 ] || { echo "ERROR: FCA webpack dev server did not come up on port 8081 within 180s" >&2; exit 1; }
 
   run_mfos_tests
 
