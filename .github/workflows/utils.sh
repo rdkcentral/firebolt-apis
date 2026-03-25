@@ -240,17 +240,12 @@ runTests() {
   # Fail fast if MFOS rejected the intent (empty INTENT or wrong format)
   echo "$CURL_RESP" | grep -q '"status":"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; exit 1; }
 
-  # Wait for FCA webpack dev server (port 8081) to be ready before launching puppeteer
-  echo "Waiting for FCA webpack dev server to be ready on port 8081..."
-  fca_up=0
-  for i in $(seq 1 180); do
-    if curl -s --max-time 2 http://localhost:8081/ > /dev/null 2>&1; then
-      fca_up=1
-      break
-    fi
-    sleep 1
-  done
-  [ "$fca_up" -eq 1 ] || { echo "ERROR: FCA webpack dev server did not come up on port 8081 within 180s" >&2; exit 1; }
+  # Give FCA's webpack-dev-server time to finish its initial bundle compilation
+  # before puppeteer loads the page. Port 8081 opens as soon as the devserver
+  # starts listening (before the bundle is ready), so a port check is not
+  # sufficient — a short sleep after the devserver starts is more reliable.
+  echo "Waiting 15s for FCA webpack initial compilation to complete..."
+  sleep 15
 
   run_mfos_tests
 
