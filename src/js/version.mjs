@@ -104,5 +104,7 @@ else if (task === 'validate') {
     });
 } else if (task === 'branch-to-prerelease') {
     const branch = process.argv.shift()
-    console.log(branch.replace('/', '-'))
+    // Dots are SemVer prerelease identifier separators and must not appear in
+    // a preid string — replace everything except alphanumerics and hyphens.
+    console.log(branch.replace(/[^a-zA-Z0-9-]/g, '-'))
 }

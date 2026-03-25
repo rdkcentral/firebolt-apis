@@ -1,5 +1,5 @@
 diff --git a/package.json b/package.json
-index 8278db0..d6da436 100644
+index 8278db0..228f866 100644
 --- a/package.json
 +++ b/package.json
 @@ -22,7 +22,8 @@
@@ -12,3 +12,18 @@ index 8278db0..d6da436 100644
    },
    "scripts": {
      "start": "webpack-dev-server --config webpack.dev.js",
+@@ -52,6 +53,12 @@
+     "standard": "*",
+     "webpack": "^4.36.1",
+     "webpack-cli": "^3.3.6",
+-    "webpack-dev-server": "^3.7.2"
+-  }
++    "webpack-dev-server": "^3.7.2",
++    "babel-loader": "^8.2.3",
++    "@babel/core": "^7.0.0",
++    "@babel/preset-env": "^7.0.0"
++  },
++  "overrides": {
++    "@lightningjs/core": "2.11.0"
++  }
+ }

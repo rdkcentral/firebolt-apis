@@ -30,6 +30,25 @@ jobs:
             echo "OPENRPC_PR_BRANCH=''" >> $GITHUB_ENV  # Clear the variable for other events
           fi
 
+      # Install Chrome. On GitHub-hosted runners google-chrome-stable is already
+      # present. On stripped act images it must be installed via the Google repo.
+      # Using the system Chrome sidesteps puppeteer's managed-download entirely,
+      # so there is no need to maintain a manual list of shared-library deps.
+      - name: Install Chrome
+        run: |
+          if ! command -v google-chrome-stable &>/dev/null; then
+            wget -q -O - https://dl.google.com/linux/linux_signing_key.pub \
+              | gpg --dearmor | sudo tee /usr/share/keyrings/google-chrome.gpg >/dev/null
+            echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] \
+              http://dl.google.com/linux/chrome/deb/ stable main" \
+              | sudo tee /etc/apt/sources.list.d/google-chrome.list
+            sudo apt-get update -q
+            sudo apt-get install -y google-chrome-stable xvfb x11-utils
+          elif ! command -v Xvfb &>/dev/null; then
+            sudo apt-get update -q
+            sudo apt-get install -y xvfb x11-utils
+          fi
+
       # Run tests
       - name: Run Core Manage and Discovery tests and create assets
         env:
@@ -38,11 +57,13 @@ jobs:
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
           INTENT: ${{ vars.INTENT }}
           OPENRPC_PR_BRANCH: ${{ env.OPENRPC_PR_BRANCH }} # Comes from OPENRPC repo if triggered externally
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
         run: |
           ./.github/workflows/utils.sh runTests
 
       - name: Upload report.json as an artifact
         uses: actions/upload-artifact@v4
+        continue-on-error: true
         with:
           name: report
           path: ${{ github.workspace }}/report

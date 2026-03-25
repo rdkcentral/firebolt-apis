@@ -49,18 +49,36 @@ run_mfos_tests()
 {
   cd $current_dir
   echo "Run mfos tests in a headless browser"
-  npm install puppeteer@${TOOL_VERSION[puppeteer]}
+  PUPPETEER_SKIP_DOWNLOAD=1 npm install puppeteer@${TOOL_VERSION[puppeteer]}
+  if [ -z "${PUPPETEER_EXECUTABLE_PATH:-}" ]; then
+    echo "ERROR: PUPPETEER_EXECUTABLE_PATH is not set. Set it to the path of your Chrome/Chromium binary (e.g. /usr/bin/google-chrome-stable)." >&2
+    exit 1
+  fi
   echo "Start xvfb"
   export DISPLAY=":99"
   Xvfb $DISPLAY -screen 0 1024x768x24 |& add_ts "XVFB" | tee >(clean_ansi >$current_dir/log-xvfb.log) >/dev/null 2>&1 &
-  xvfb_pid=$!
+  local xvfb_pid
+  xvfb_pid=$(pgrep -n -x Xvfb 2>/dev/null || true)
+  # Wait for Xvfb to be ready before launching Chrome (non-fatal: headless Chrome
+  # does not require a real display, so we proceed even if xdpyinfo never connects).
+  for i in $(seq 1 10); do xdpyinfo -display :99 >/dev/null 2>&1 && break; sleep 1; done
 
   echo "Run headless browser script with puppeteer"
   node -e '
     const puppeteer = require("puppeteer");
     const fs = require("fs");
     (async () => {
-      const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"]});
+      const browser = await puppeteer.launch({
+        headless: true,
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+        args: [
+          "--no-sandbox",
+          "--disable-dev-shm-usage",
+          "--enable-webgl",
+          "--enable-unsafe-swiftshader",
+          "--ignore-gpu-blocklist",
+        ]
+      });
       const page = await browser.newPage();
 
       // Enable console logging
@@ -90,11 +108,29 @@ run_mfos_tests()
       .on("pageerror", ({ message }) => console.log(`NOPE : ${message}`))
       .on("response", response => console.log(`NORE : ${response.status()} ${response.url()}`))
       .on("requestfailed", request => console.log(`NORF : ${request.failure().errorText} ${request.url()}`));
-      // Navigate to the URL
+      // Navigate to the URL - retry up to 12 times (60s window) so a
+      // slow-starting webpack-dev-server does not abort the test immediately.
       const url = "http://localhost:8081/index.html?mf=ws://localhost:9998/12345&standalone=true";
-      const timeout = 120;
-      console.log(`Navigating to ${url} and waiting ${timeout}s to finish`);
-      await page.goto(url);
+      const timeout = 300;
+      const maxRetries = 12;
+      let navigated = false;
+      for (let attempt = 0; attempt < maxRetries; attempt++) {
+        try {
+          console.log(`Navigation attempt ${attempt + 1}/${maxRetries} to ${url}`);
+          await page.goto(url, { timeout: 10000, waitUntil: "domcontentloaded" });
+          navigated = true;
+          break;
+        } catch (err) {
+          console.log(`Navigation attempt ${attempt + 1} failed: ${err.message}. Retrying in 5s...`);
+          await new Promise(r => setTimeout(r, 5000));
+        }
+      }
+      if (!navigated) {
+        console.error("Failed to navigate to FCA after all retry attempts");
+        await browser.close();
+        process.exit(1);
+      }
+      console.log(`Successfully navigated to FCA. Waiting up to ${timeout}s for test results...`);
 
       // Sleep for "timeout" seconds
       await new Promise(resolve => setTimeout(resolve, timeout * 1000));
@@ -104,8 +140,9 @@ run_mfos_tests()
       await browser.close();
     })();
   '
-  kill-rec $xvfb_pid
+  [ -n "$xvfb_pid" ] && kill-rec "$xvfb_pid" 2>/dev/null || true
 }
+
 
 runTests() {
   echo "Determine the branch to checkout"
@@ -171,7 +208,15 @@ runTests() {
     git fetch --shallow-since=2025-01-01
     git checkout ${TOOL_VERSION[firebolt-certification-app]}
     echo "Applying dependency patch: $current_apis_dir/.github/fca/dependency.patch"
-    git apply $current_apis_dir/.github/fca/dependency.patch
+    if ! git apply "$current_apis_dir/.github/fca/dependency.patch"; then
+      echo "ERROR: Failed to apply dependency patch" >&2
+      exit 1
+    fi
+    echo "Applying webpack patch: $current_apis_dir/.github/fca/webpack.patch"
+    if ! git apply "$current_apis_dir/.github/fca/webpack.patch"; then
+      echo "ERROR: Failed to apply webpack patch" >&2
+      exit 1
+    fi
   fi
 
   echo "starting mfos"
@@ -190,15 +235,57 @@ runTests() {
   cat package.json \
   | jq '.dependencies["@firebolt-js/sdk"] = "file:'"$current_apis_dir"'/src/sdks/core"' \
   > package.json.tmp && mv package.json.tmp package.json
-  npm install
+  npm install --legacy-peer-deps
   npm start  |& add_ts "FCA" | tee >(clean_ansi >$current_dir/log-fca.log) &
   fca_pid=$!
 
-  echo "Waiting a while for setting up mfos & fca"
-  sleep 15
+  # Wait for MFOS REST API (port 3333) to be ready before setting intent
+  echo "Waiting for MFOS to be ready on port 3333..."
+  mfos_up=0
+  for i in $(seq 1 60); do
+    if curl -s --max-time 2 http://localhost:3333/ > /dev/null 2>&1; then
+      mfos_up=1
+      break
+    fi
+    sleep 1
+  done
+  [ "$mfos_up" -eq 1 ] || { echo "ERROR: MFOS did not come up on port 3333 within 60s" >&2; exit 1; }
 
   cd $current_dir
-  echo "Curl request with runTest install on initialization: $(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)"
+  CURL_RESP=$(curl -s -X POST -H "Content-Type: application/json" -d "$INTENT" http://localhost:3333/api/v1/state/method/parameters.initialization/result)
+  echo "Curl request with runTest install on initialization: $CURL_RESP"
+  # Fail fast if MFOS rejected the intent (empty INTENT, wrong format, or non-JSON error response)
+  MFOS_STATUS=$(echo "$CURL_RESP" | jq -r '.status' 2>/dev/null)
+  if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to parse MFOS response as JSON while validating initialization intent."
+    echo "Received: $CURL_RESP"
+    exit 1
+  fi
+  if [ "$MFOS_STATUS" != "SUCCESS" ]; then
+    echo "ERROR: MFOS rejected initialization intent (status=$MFOS_STATUS). Check INTENT variable format."
+    echo "Received: $CURL_RESP"
+    exit 1
+  fi
+
+  # Wait for FCA's webpack bundle to finish compiling before launching puppeteer.
+  # webpack-dev-server v3 prints either "Compiled successfully." (no warnings)
+  # or "Compiled with warnings." - we match both.
+  echo "Waiting for FCA webpack-dev-server to finish compiling (up to 300s)..."
+  fca_compiled=0
+  for i in $(seq 1 300); do
+    if grep -qi "compiled successfully\|compiled with warnings" "$current_dir/log-fca.log" 2>/dev/null; then
+      fca_compiled=1
+      echo "FCA webpack compiled after ${i}s. Last FCA log lines:"
+      tail -5 "$current_dir/log-fca.log" | head -5 || true
+      break
+    fi
+    sleep 1
+  done
+  if [ "$fca_compiled" -eq 0 ]; then
+    echo "WARNING: FCA webpack did not report successful compilation within 300s. Proceeding anyway (may fail)." >&2
+    echo "--- last 30 lines of FCA log ---" >&2
+    tail -30 "$current_dir/log-fca.log" >&2 2>/dev/null || true
+  fi
 
   run_mfos_tests
 
