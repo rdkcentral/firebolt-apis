@@ -116,11 +116,12 @@ run_mfos_tests()
       .on("pageerror", ({ message }) => console.log(`NOPE : ${message}`))
       .on("response", response => console.log(`NORE : ${response.status()} ${response.url()}`))
       .on("requestfailed", request => console.log(`NORF : ${request.failure().errorText} ${request.url()}`));
-      // Navigate to the URL
+      // Navigate to the URL — disable the default 30s navigation timeout so a
+      // slow-starting webpack-dev-server doesn't abort the test immediately.
       const url = "http://localhost:8081/index.html?mf=ws://localhost:9998/12345&standalone=true";
       const timeout = 300;
       console.log(`Navigating to ${url} and waiting ${timeout}s to finish`);
-      await page.goto(url);
+      await page.goto(url, { timeout: 0 });
 
       // Sleep for "timeout" seconds
       await new Promise(resolve => setTimeout(resolve, timeout * 1000));
@@ -240,12 +241,25 @@ runTests() {
   # Fail fast if MFOS rejected the intent (empty INTENT or wrong format)
   echo "$CURL_RESP" | grep -q '"status":"SUCCESS"' || { echo "ERROR: MFOS rejected initialization intent. Check INTENT variable format."; echo "Received: $CURL_RESP"; exit 1; }
 
-  # Give FCA's webpack-dev-server time to finish its initial bundle compilation
-  # before puppeteer loads the page. Port 8081 opens as soon as the devserver
-  # starts listening (before the bundle is ready), so a port check is not
-  # sufficient — a short sleep after the devserver starts is more reliable.
-  echo "Waiting 15s for FCA webpack initial compilation to complete..."
-  sleep 15
+  # Wait for FCA's webpack bundle to finish compiling before launching puppeteer.
+  # webpack-dev-server v3 emits "Compiled successfully" once the bundle is ready;
+  # we poll the FCA log for that message (up to 120s) rather than using a fixed
+  # sleep, since compilation time varies significantly across CI runners.
+  echo "Waiting for FCA webpack-dev-server to finish compiling (up to 120s)..."
+  fca_compiled=0
+  for i in $(seq 1 120); do
+    if grep -q -i "compiled successfully\|webpack: Compiled" "$current_dir/log-fca.log" 2>/dev/null; then
+      fca_compiled=1
+      echo "FCA webpack compiled after ${i}s."
+      break
+    fi
+    sleep 1
+  done
+  if [ "$fca_compiled" -eq 0 ]; then
+    echo "WARNING: FCA webpack did not report successful compilation within 120s. Proceeding anyway (may fail)." >&2
+    echo "--- last 20 lines of FCA log ---" >&2
+    tail -20 "$current_dir/log-fca.log" >&2 2>/dev/null || true
+  fi
 
   run_mfos_tests
 
