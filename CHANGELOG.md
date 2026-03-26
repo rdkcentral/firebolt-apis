@@ -1,3 +1,28 @@
+# [1.8.0-next.35](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.34...v1.8.0-next.35) (2026-03-26)
+
+
+### Bug Fixes
+
+* Address Copilot PR review comments ([267eeba](https://github.com/rdkcentral/firebolt-apis/commit/267eeba8a29b5f0770ea87c3813b711e7a6261bb))
+* Correct MFOS status grep to allow whitespace in JSON response ([eadcd6f](https://github.com/rdkcentral/firebolt-apis/commit/eadcd6f1dcd452b0a78a26528f2d25f0d4de4dd5))
+* Increase puppeteer test timeout from 120s to 300s ([9c56892](https://github.com/rdkcentral/firebolt-apis/commit/9c56892bf8bad7ed086f4761b143ab3e4f4147ea))
+* Increase Xvfb startup timeout and fix PID tracking ([4832ab1](https://github.com/rdkcentral/firebolt-apis/commit/4832ab1cfa8f8a9cbf3a06fc7f2c2f98c0791999))
+* Increase Xvfb startup timeout and fix PID tracking ([c273fa1](https://github.com/rdkcentral/firebolt-apis/commit/c273fa1f3b71bf099c75e92c9da8e281750af85c))
+* Match webpack warnings output; add goto retry loop ([94796b5](https://github.com/rdkcentral/firebolt-apis/commit/94796b5fa7ededb071061f341e8e2628f16e62cd))
+* release busted ([a4e2991](https://github.com/rdkcentral/firebolt-apis/commit/a4e299117aa09dd604318feb0ac76fd94b6948d0))
+* Remove apostrophe from shell-quoted JS comment (syntax error) ([b702999](https://github.com/rdkcentral/firebolt-apis/commit/b7029999f8ab6bcc5f6693c8e6c3d7b7d42269bd))
+* Replace FCA port check with sleep to allow webpack compilation ([59b1237](https://github.com/rdkcentral/firebolt-apis/commit/59b123764c6144f30827180456244d75727cdb21))
+* Revert fatal Xvfb readiness check to non-fatal loop ([585d54c](https://github.com/rdkcentral/firebolt-apis/commit/585d54c9ea63b427b29ff38f74d1b2deebd966b6))
+* RunStandaloneTests ([15f1c98](https://github.com/rdkcentral/firebolt-apis/commit/15f1c98aa744fae981918eef2a04525323abe4b6))
+* Strip dots from branch-to-prerelease preid conversion ([0c0f359](https://github.com/rdkcentral/firebolt-apis/commit/0c0f35940bc9eaff0462950d724e5ef46c80de4b))
+* Wait for MFOS and FCA readiness before running tests ([517b75a](https://github.com/rdkcentral/firebolt-apis/commit/517b75affe493b4deb3f24216296bfd0cde6cfeb))
+* Wait for webpack compilation before puppeteer; disable goto timeout ([dece63c](https://github.com/rdkcentral/firebolt-apis/commit/dece63c1923150d5d458af6cb354d57ad2e90666))
+
+
+### Features
+
+* more readme ([35d12d6](https://github.com/rdkcentral/firebolt-apis/commit/35d12d68edf8245c387ffee0ce7d2950390e0932))
+
 # [1.8.0-next.34](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.33...v1.8.0-next.34) (2025-12-17)
 
 
