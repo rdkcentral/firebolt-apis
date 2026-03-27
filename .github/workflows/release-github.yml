@@ -87,7 +87,7 @@ jobs:
           npx semantic-release
 
       - name: Dry-run mono-artifact
-        if: (github.ref_name == 'main' && github.event_name != 'workflow_dispatch') || github.event_name == 'pull_request'
+        if: ((github.ref_name == 'main' && github.event_name != 'workflow_dispatch') || github.event_name == 'pull_request') && github.actor != 'dependabot[bot]'
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }} # <-- Allows semantic-release-bot to push changes to protected branches
         run: npx semantic-release --dry-run
