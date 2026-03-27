@@ -51,7 +51,7 @@
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/npm": "^11.0.3",
+    "@semantic-release/npm": "^13.1.5",
     "@semantic-release/release-notes-generator": "^10.0.1",
     "ajv": "^6.12.6",
     "glob": ">=10.5.0",
@@ -65,6 +65,9 @@
     "production-changelog": "./src/js/production-changelog/",
     "semantic-release": "^21.1.1",
     "typescript": "~5.4.0"
+  },
+  "overrides": {
+    "@semantic-release/npm": "^13.1.5"
   },
   "keywords": [
     "firebolt",
