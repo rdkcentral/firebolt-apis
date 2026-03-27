@@ -52,7 +52,7 @@
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^13.1.5",
-    "@semantic-release/release-notes-generator": "^10.0.1",
+    "@semantic-release/release-notes-generator": "^14.1.0",
     "ajv": "^6.12.6",
     "glob": ">=10.5.0",
     "form-data": ">=4.0.5",
