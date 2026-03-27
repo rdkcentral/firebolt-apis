@@ -46,11 +46,3 @@ jobs:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # If auto-merge was blocked (e.g. CI checks failing), ask Dependabot to rebase
-      - name: Request rebase on merge failure
-        if: steps.auto-merge.outcome == 'failure'
-        run: gh pr comment "$PR_URL" --body "@dependabot rebase"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
