@@ -81,19 +81,19 @@ test('App starts up in the "initializing" state', () => {
 });
 
 test('App moves to the "inactive" state next', () => {
-  expect(callback).nthCalledWith(1, "inactive");
+  expect(callback).toHaveBeenNthCalledWith(1, "inactive");
 });
 
 test('App moves to the "foreground" state next', () => {
-  expect(callback).nthCalledWith(2, "foreground");
+  expect(callback).toHaveBeenNthCalledWith(2, "foreground");
 });
 
 test('App moves to the "inactive" state next', () => {
-  expect(callback).nthCalledWith(3, "inactive");
+  expect(callback).toHaveBeenNthCalledWith(3, "inactive");
 });
 
 test('App moves to the "unloading" state next', () => {
-  expect(callback).nthCalledWith(4, "unloading");
+  expect(callback).toHaveBeenNthCalledWith(4, "unloading");
 });
 
 test("listen() background event.", () => {
