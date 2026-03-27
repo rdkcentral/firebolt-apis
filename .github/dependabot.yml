@@ -22,6 +22,19 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    # These advisories affect brace-expansion@5.0.4 and picomatch@4.0.3 which are
+    # bundledDependencies inside npm@11.12.1 (the latest npm@11 as of this writing).
+    # They cannot be fixed without a patch release from the npm project itself.
+    # They only exist inside @semantic-release/npm, a CI-only devDependency, and
+    # are not reachable from the published SDK. Suppress these specific versions
+    # until npm@11 ships a fix.
+    ignore:
+      - dependency-name: "brace-expansion"
+        versions:
+          - "5.0.4"
+      - dependency-name: "picomatch"
+        versions:
+          - "4.0.3"
 
   # GitHub Actions
   - package-ecosystem: "github-actions"
