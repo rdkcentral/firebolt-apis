@@ -18,8 +18,11 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      # Auto-approve all Dependabot PRs
+      # Auto-approve patch and minor updates only; major updates require manual review
       - name: Approve PR
+        if: |
+          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
+          steps.metadata.outputs.update-type == 'version-update:semver-minor'
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
@@ -27,6 +30,7 @@ jobs:
 
       # Auto-merge patch and minor updates (waits for CI to pass)
       - name: Enable auto-merge for patch/minor updates
+        id: auto-merge
         if: |
           steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
           steps.metadata.outputs.update-type == 'version-update:semver-minor'
@@ -43,9 +47,9 @@ jobs:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # If CI failed, ask Dependabot to rebase in case it's a stale conflict
-      - name: Request rebase on CI failure
-        if: failure()
+      # If auto-merge was blocked (e.g. CI checks failing), ask Dependabot to rebase
+      - name: Request rebase on merge failure
+        if: steps.auto-merge.outcome == 'failure'
         run: gh pr comment "$PR_URL" --body "@dependabot rebase"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
