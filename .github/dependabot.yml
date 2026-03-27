@@ -3,6 +3,7 @@ updates:
   # Root package — covers all npm workspace members (core, manage, discovery)
   # via the single root package-lock.json. Per-workspace entries are intentionally
   # omitted to avoid lockfile mismatches.
+  # src/js/production-changelog has no npm dependencies, so no entry is needed.
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
