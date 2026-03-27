@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
        # Set the branch if the workflow is triggered from external
       - name: Set PR Branch based on the trigger

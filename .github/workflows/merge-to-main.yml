@@ -15,7 +15,7 @@ jobs:
       pull-requests: write # PR updates
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           repo-token: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }}
