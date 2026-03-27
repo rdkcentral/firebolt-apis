@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.SEMANTIC_RELEASE_BOT_PAT }}
@@ -103,7 +103,7 @@ jobs:
 
       - name: Check if semantic-release created a build
         id: check_build
-        uses: actions/github-script@v6
+        uses: actions/github-script@v8
         with:
           script: |
             const fs = require('fs');
@@ -130,7 +130,7 @@ jobs:
           npm publish --tag $NPM_DIST_TAG --workspaces
 
       - name: Upload native packages as an artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release
           path: ${{ github.workspace }}/release
