@@ -23,15 +23,6 @@ updates:
     labels:
       - "dependencies"
 
-  # Manage SDK workspace
-  - package-ecosystem: "npm"
-    directory: "/src/sdks/manage"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
-    labels:
-      - "dependencies"
-
   # Discovery SDK workspace
   - package-ecosystem: "npm"
     directory: "/src/sdks/discovery"
