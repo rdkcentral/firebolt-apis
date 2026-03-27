@@ -1,3 +1,22 @@
+# [1.8.0-next.37](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.36...v1.8.0-next.37) (2026-03-27)
+
+
+### Bug Fixes
+
+* **ci:** Fix dependabot PR failures ([dac9801](https://github.com/rdkcentral/firebolt-apis/commit/dac98010243798ae991b222c27ac2bd0e89c5861))
+
+# [1.8.0-next.36](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.35...v1.8.0-next.36) (2026-03-27)
+
+
+### Bug Fixes
+
+* **ci:** Add manage and discovery SDK workspace entries to dependabot.yml ([cd92533](https://github.com/rdkcentral/firebolt-apis/commit/cd9253396f0d3e8b819c0b6c7307658dd44bb242))
+* **ci:** Remove per-workspace npm dependabot entries ([44ff64b](https://github.com/rdkcentral/firebolt-apis/commit/44ff64b07d3e4af28328a58bb098855cb15b1925))
+* **ci:** Scope auto-approve to patch/minor and narrow rebase condition ([e8abb8b](https://github.com/rdkcentral/firebolt-apis/commit/e8abb8b8aa91f7ed0d659b2f2e3da6dac42ff2bd))
+* **ci:** Use pull_request_target for safe write-permission auto-merge workflow ([3b5b340](https://github.com/rdkcentral/firebolt-apis/commit/3b5b340c08525e829f4b7c5cbae5e40f3b4fd0de))
+* **deps:** Bump jest/ts to clear all 41 dependabot alerts ([f920113](https://github.com/rdkcentral/firebolt-apis/commit/f920113247f2fd3e2d3064439b70237b2538d867))
+* **deps:** Clarify production-changelog is omitted from dependabot.yml ([283f940](https://github.com/rdkcentral/firebolt-apis/commit/283f94078f9b30bd7cc0a002e08600b7e4fe50bf))
+
 # [1.8.0-next.35](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.34...v1.8.0-next.35) (2026-03-26)
 
 
