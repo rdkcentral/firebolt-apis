@@ -51,14 +51,14 @@ test("Localization.locale()", () => {
 
 test("Localization.listen()", () => {
   return Localization.listen("localityChanged", () => {}).then(
-    (res: Number) => {
+    (res: number) => {
       expect(res > 0).toBe(true);
     }
   );
 });
 
 test("Localization.once()", () => {
-  return Localization.once("localityChanged", () => {}).then((res: Number) => {
+  return Localization.once("localityChanged", () => {}).then((res: number) => {
     expect(res > 0).toBe(true);
   });
 });
