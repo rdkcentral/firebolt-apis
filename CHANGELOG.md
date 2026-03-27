@@ -1,3 +1,10 @@
+# [1.8.0-next.37](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.36...v1.8.0-next.37) (2026-03-27)
+
+
+### Bug Fixes
+
+* **ci:** Fix dependabot PR failures ([dac9801](https://github.com/rdkcentral/firebolt-apis/commit/dac98010243798ae991b222c27ac2bd0e89c5861))
+
 # [1.8.0-next.36](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.35...v1.8.0-next.36) (2026-03-27)
 
 
