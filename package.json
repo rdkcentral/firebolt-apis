@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/rdkcentral/firebolt-apis#readme",
   "devDependencies": {
-    "@commitlint/cli": "^17.0.3",
+    "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^17.0.3",
     "@firebolt-js/openrpc": "3.2.0",
     "@firebolt-js/schemas": "2.0.0",
