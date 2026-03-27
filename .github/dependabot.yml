@@ -1,6 +1,8 @@
 version: 2
 updates:
-  # Root package
+  # Root package — covers all npm workspace members (core, manage, discovery)
+  # via the single root package-lock.json. Per-workspace entries are intentionally
+  # omitted to avoid lockfile mismatches.
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -13,42 +15,6 @@ updates:
         dependency-type: "development"
       production-dependencies:
         dependency-type: "production"
-
-  # Core SDK workspace
-  - package-ecosystem: "npm"
-    directory: "/src/sdks/core"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
-    labels:
-      - "dependencies"
-
-  # Manage SDK workspace
-  - package-ecosystem: "npm"
-    directory: "/src/sdks/manage"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
-    labels:
-      - "dependencies"
-
-  # Discovery SDK workspace
-  - package-ecosystem: "npm"
-    directory: "/src/sdks/discovery"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
-    labels:
-      - "dependencies"
-
-  # production-changelog helper
-  - package-ecosystem: "npm"
-    directory: "/src/js/production-changelog"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
 
   # GitHub Actions
   - package-ecosystem: "github-actions"
