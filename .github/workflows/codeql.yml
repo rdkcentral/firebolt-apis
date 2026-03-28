@@ -46,6 +46,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build SDKs for CodeQL analysis
+        run: |
+          npm run compile
+          npm run slice --workspaces
+          npm run sdk --workspaces
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
         with:
