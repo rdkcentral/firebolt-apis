@@ -13,10 +13,7 @@ on:
     branches: [ main ]
 
 permissions:
-  contents: read   # minimal token permissions
-  pull-requests: write
-  actions: write
-  statuses: write
+  contents: read
 env:
   HUSKY: 0
   # Turns off installing commit hooks in CI environments

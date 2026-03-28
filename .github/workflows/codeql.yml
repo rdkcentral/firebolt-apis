@@ -13,6 +13,10 @@ jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
     runs-on: ubuntu-latest
+    # Skip forks on pull_request events: the GITHUB_TOKEN is read-only for
+    # forks and the security-events: write permission required to upload SARIF
+    # would cause the step to fail.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       actions: read
       contents: read
@@ -33,24 +37,14 @@ jobs:
           node-version: "lts/*"
           cache: "npm"
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install dependencies
-        run: npm ci
-
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           queries: +security-and-quality
-          source-root: src
-          source-root: src
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
