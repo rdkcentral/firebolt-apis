@@ -3,6 +3,9 @@ name: Dependabot auto-merge
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]
+  push:
+    branches: [next]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -12,7 +15,7 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]'
+    if: github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]'
     steps:
       - name: Fetch Dependabot metadata
         id: metadata
@@ -48,3 +51,38 @@ jobs:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # On every push to next (or manual dispatch), update the branch of every
+  # open Dependabot PR so they never fall too far behind and don't need
+  # manual rebasing before merging.
+  rebase-dependabot-prs:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Update branches of all open Dependabot PRs
+        run: |
+          PR_NUMBERS=$(gh pr list \
+            --repo "$GITHUB_REPOSITORY" \
+            --author "dependabot[bot]" \
+            --state open \
+            --json number \
+            --jq '.[].number')
+
+          if [ -z "$PR_NUMBERS" ]; then
+            echo "No open Dependabot PRs found."
+            exit 0
+          fi
+
+          for PR_NUM in $PR_NUMBERS; do
+            echo "Updating branch for PR #$PR_NUM..."
+            HEAD_SHA=$(gh api "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUM" --jq '.head.sha')
+            gh api \
+              --method PUT \
+              "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUM/update-branch" \
+              -f expected_head_sha="$HEAD_SHA" \
+              && echo "  PR #$PR_NUM updated" \
+              || echo "  PR #$PR_NUM already up to date"
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
