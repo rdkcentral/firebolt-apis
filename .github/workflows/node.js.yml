@@ -29,19 +29,19 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v6
-      with:
+      - uses: actions/checkout@v6
+        with:
           submodules: recursive
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v6
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run fs:setup
-    - run: npm run validate:each
-    - run: npm run compile
-    - run: npm run slice
-    - run: npm run validate:compiled
-    - run: npm run sdks
-    - run: npm run test
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run fs:setup
+      - run: npm run validate:each
+      - run: npm run compile
+      - run: npm run slice
+      - run: npm run validate:compiled
+      - run: npm run sdks
+      - run: npm run test
