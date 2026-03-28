@@ -48,6 +48,7 @@ jobs:
 
       - name: Build SDKs for CodeQL analysis
         run: |
+          npm run fs:setup
           npm run compile
           npm run slice --workspaces
           npm run sdk --workspaces
