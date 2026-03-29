@@ -1,0 +1,58 @@
+name: "CodeQL"
+
+on:
+  push:
+    branches: ["next", "main"]
+  pull_request:
+    branches: ["next", "main"]
+  schedule:
+    # Run every Monday at 02:17 UTC
+    - cron: "17 2 * * 1"
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    # Skip forks on pull_request events: the GITHUB_TOKEN is read-only for
+    # forks and the security-events: write permission required to upload SARIF
+    # would cause the step to fail.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["javascript-typescript"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          queries: +security-and-quality
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build SDKs for CodeQL analysis
+        run: |
+          npm run fs:setup
+          npm run compile
+          npm run slice --workspaces
+          npm run sdk --workspaces
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:javascript"
