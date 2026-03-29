@@ -1,3 +1,11 @@
+# [1.8.0-next.39](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.38...v1.8.0-next.39) (2026-03-29)
+
+
+### Bug Fixes
+
+* **codeql:** Remove no-effect expressions and exclude generated code ([2f65fe9](https://github.com/rdkcentral/firebolt-apis/commit/2f65fe942e86a8047fef75aacb7004b03d9edf83))
+* Revert typescript to ~5.4.0 (TS6 breaks test:setup and generated types) ([319bbe1](https://github.com/rdkcentral/firebolt-apis/commit/319bbe1b33575624988d67525876df759203b7d2))
+
 # [1.8.0-next.38](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.37...v1.8.0-next.38) (2026-03-27)
 
 
