@@ -22,6 +22,35 @@ updates:
         update-types:
           - "minor"
           - "patch"
+      # Major version groups — related packages must move together
+      commitlint:
+        patterns:
+          - "@commitlint/*"
+        update-types:
+          - "major"
+      semantic-release-ecosystem:
+        patterns:
+          - "semantic-release"
+          - "@semantic-release/*"
+          - "@saithodev/semantic-release-*"
+        update-types:
+          - "major"
+      jest-ecosystem:
+        patterns:
+          - "jest"
+          - "jest-*"
+          - "@jest/*"
+        update-types:
+          - "major"
+      tooling:
+        patterns:
+          - "husky"
+          - "nopt"
+          - "mkdirp"
+          - "ajv"
+          - "ajv-*"
+        update-types:
+          - "major"
     # These advisories affect brace-expansion@5.0.4 and picomatch@4.0.3 which are
     # bundledDependencies inside npm@11.12.1 (the latest npm@11 as of this writing).
     # They cannot be fixed without a patch release from the npm project itself.
