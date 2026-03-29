@@ -1,0 +1,7 @@
+paths-ignore:
+  # Generated SDK build and distribution artifacts — not hand-written source.
+  # These are produced by the compile/sdk pipeline and should not be scanned.
+  - src/sdks/*/build
+  - src/sdks/*/dist
+  - src/sdks/*/test/transpiled-suite
+  - dist
