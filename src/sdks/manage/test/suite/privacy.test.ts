@@ -1,8 +1,6 @@
 import { test, expect } from "@jest/globals";
 import { Privacy } from "../../build/javascript/src/firebolt-manage";
 
-let listenerId: number;
-
 test("privacy.allowResumePoints()", () => {
   return Privacy.allowResumePoints().then((res: boolean) => {
     // TODO: fix
