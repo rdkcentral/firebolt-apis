@@ -3,6 +3,9 @@ name: Dependabot auto-merge
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]
+  push:
+    branches: [next]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -12,7 +15,7 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]'
+    if: github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]'
     steps:
       - name: Fetch Dependabot metadata
         id: metadata
@@ -48,3 +51,54 @@ jobs:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # On every push to next (or manual dispatch), update the branch of every
+  # open Dependabot PR targeting next so they never fall too far behind and
+  # don't need manual rebasing before merging.
+  rebase-dependabot-prs:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    concurrency:
+      group: rebase-dependabot-prs-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Update branches of all open Dependabot PRs
+        run: |
+          PR_DATA=$(gh pr list \
+            --repo "$GITHUB_REPOSITORY" \
+            --author "dependabot[bot]" \
+            --base "next" \
+            --state open \
+            --limit 1000 \
+            --json number,headRefOid \
+            --jq '.[] | "\(.number) \(.headRefOid)"')
+
+          if [ -z "$PR_DATA" ]; then
+            echo "No open Dependabot PRs found targeting next."
+            exit 0
+          fi
+
+          FAILURE=0
+          while read -r PR_NUM HEAD_SHA; do
+            [ -z "$PR_NUM" ] && continue
+            echo "Updating branch for PR #$PR_NUM..."
+            HTTP_RESPONSE=$(gh api \
+              --method PUT \
+              "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUM/update-branch" \
+              -f expected_head_sha="$HEAD_SHA" \
+              -i 2>&1 || true)
+            STATUS=$(printf '%s\n' "$HTTP_RESPONSE" | head -n 1 | awk '{print $2}')
+            if [ "$STATUS" = "200" ] || [ "$STATUS" = "202" ] || [ "$STATUS" = "204" ]; then
+              echo "  PR #$PR_NUM updated"
+            elif [ "$STATUS" = "422" ]; then
+              echo "  PR #$PR_NUM already up to date"
+            else
+              echo "  Failed to update PR #$PR_NUM (status: ${STATUS:-unknown})"
+              printf '%s\n' "$HTTP_RESPONSE"
+              FAILURE=1
+            fi
+          done <<< "$PR_DATA"
+          exit $FAILURE
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
