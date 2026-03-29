@@ -1,0 +1,6 @@
+# Exclude generated SDK build and distribution artifacts.
+# These are produced by the compile/sdk pipeline and are not hand-written source.
+src/sdks/*/build/
+src/sdks/*/dist/
+src/sdks/*/test/transpiled-suite/
+dist/
