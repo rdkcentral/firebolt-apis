@@ -23,30 +23,53 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      # Auto-approve patch and minor updates only; major updates require manual review
+      # Auto-approve patch/minor updates, and major updates for dev-only safe groups
       - name: Approve PR
         if: |
           steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+          steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
+          (
+            steps.metadata.outputs.update-type == 'version-update:semver-major' &&
+            (
+              steps.metadata.outputs.dependency-group == 'commitlint' ||
+              steps.metadata.outputs.dependency-group == 'semantic-release-ecosystem' ||
+              steps.metadata.outputs.dependency-group == 'jest-ecosystem' ||
+              steps.metadata.outputs.dependency-group == 'tooling'
+            )
+          )
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Auto-merge patch and minor updates (waits for CI to pass)
-      - name: Enable auto-merge for patch/minor updates
+      # Auto-merge patch/minor and approved dev-only major groups (waits for CI to pass)
+      - name: Enable auto-merge
         id: auto-merge
         if: |
           steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+          steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
+          (
+            steps.metadata.outputs.update-type == 'version-update:semver-major' &&
+            (
+              steps.metadata.outputs.dependency-group == 'commitlint' ||
+              steps.metadata.outputs.dependency-group == 'semantic-release-ecosystem' ||
+              steps.metadata.outputs.dependency-group == 'jest-ecosystem' ||
+              steps.metadata.outputs.dependency-group == 'tooling'
+            )
+          )
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Label major updates so they're easy to find for manual review
+      # Label remaining major updates (e.g. typescript) for manual review
       - name: Label major updates for manual review
-        if: steps.metadata.outputs.update-type == 'version-update:semver-major'
+        if: |
+          steps.metadata.outputs.update-type == 'version-update:semver-major' &&
+          steps.metadata.outputs.dependency-group != 'commitlint' &&
+          steps.metadata.outputs.dependency-group != 'semantic-release-ecosystem' &&
+          steps.metadata.outputs.dependency-group != 'jest-ecosystem' &&
+          steps.metadata.outputs.dependency-group != 'tooling'
         run: gh pr edit "$PR_URL" --add-label "major-dependency-update"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
