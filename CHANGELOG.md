@@ -1,3 +1,11 @@
+# [1.8.0-next.38](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.37...v1.8.0-next.38) (2026-03-27)
+
+
+### Bug Fixes
+
+* **deps:** Address review feedback on dependabot.yml and Node version ([d8e2bb8](https://github.com/rdkcentral/firebolt-apis/commit/d8e2bb8a7319b337204bb6704e741ace15724fc9))
+* **deps:** Clear remaining 21 dependabot alerts via @semantic-release/npm upgrade ([e03c79b](https://github.com/rdkcentral/firebolt-apis/commit/e03c79b8bb05a60843cbd97514b2b3a8cae742a9))
+
 # [1.8.0-next.37](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.36...v1.8.0-next.37) (2026-03-27)
 
 
