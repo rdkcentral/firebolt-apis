@@ -206,7 +206,7 @@ function channel(version) {
 function frontmatter(data, version, sdk, category, type) {
     let matter = ''
     if (data.startsWith('---')) {
-        matter = data = data.substring(4)
+        data = data.substring(4)
         matter = data.substring(0, data.indexOf('---'))
         data = data.substring(data.indexOf('---')+4)
     }
