@@ -15,14 +15,13 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-import path from 'path'
 import { promises } from "fs"
 import { exec as exec_callback } from "child_process"
-import { logHeader, logSuccess, logInfo, logError } from '../../../node_modules/@firebolt-js/openrpc/src/shared/io.mjs'
+import { logHeader, logSuccess } from '../../../node_modules/@firebolt-js/openrpc/src/shared/io.mjs'
 
 const exec = async (command) => {
     return new Promise( (resolve, reject) => {
-        exec_callback(command, (error, stdout, stderr) => {
+        exec_callback(command, (error, stdout, _stderr) => {
             if (error) {
                 reject(error)
             }
@@ -33,51 +32,13 @@ const exec = async (command) => {
     })
 }
 
-const { readFile, writeFile } = promises
+const { readFile } = promises
 
 const run = async (version, parsedArgs) => {
 
     logHeader('Adding OpenRPC API versions')
 
     const loadJson = file => readFile(file).then(data => JSON.parse(data.toString()))
-    const loadJsonTree = async file => {
-        const json = await loadJson(file)
-        const dir = path.join('.', path.dirname(file))
-        const find = (tree, prop, value) => {
-            const results = []
-            Object.keys(tree).map(key => {
-                if (key.match(prop) && tree[key].match(value)) {
-                    results.push({
-                        parent: tree,
-                        property: key,
-                        value: tree[key]
-                    })
-                }
-                else if (typeof tree[key] === 'object' && Object.keys(tree[key]).length){
-                    results.push(...find(tree[key], prop, value))
-                }
-            })
-            return results
-        }
-    
-        const promises = []
-        find(json, /^\$ref$/, new RegExp("^" + json.$id)).map(result => {
-            const file = path.join('.' + result.value.substr(json.$id.length), result.value.split("/").pop() + ".json")
-            const root = json
-            promises.push(loadJsonTree(path.join(dir, file)).then(json => {
-                delete result.parent[result.property]
-                Object.assign(result.parent, json)
-                if (json.definitions) {
-                    root.definitions = root.definitions || {}
-                    Object.assign(root.definitions, json.definitions)
-                    delete result.parent.definitions
-                }
-                delete result.parent.$id
-            }))
-        })
-    
-        return Promise.all(promises).then(_ => json)
-    }
         
     const equals = (a, b, ignore=[]) => {
         return !diff(a, b, ignore)
@@ -153,7 +114,7 @@ const run = async (version, parsedArgs) => {
 
     logSuccess(`Added version ${packageJson.version}`)
 
-    return new Promise( async (resolve, reject) => {
+    return new Promise( async (resolve, _reject) => {
         let legacy = major-1
         while (legacy>major-parsedArgs['legacy-versions']-1 && legacy>0) {
             const v = `${legacy}.x`

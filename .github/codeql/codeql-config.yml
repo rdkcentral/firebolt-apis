@@ -5,3 +5,8 @@ paths-ignore:
   - src/sdks/*/dist
   - src/sdks/*/test/transpiled-suite
   - dist
+  # Plain-JS test files (.test.js) are paired with TypeScript counterparts
+  # (.test.ts) which are already guarded by noUnusedLocals via tsc. Scanning
+  # the .js versions produces duplicate noise for intentionally-unused
+  # callback parameters (e.g. listen/once handlers that discard event args).
+  - src/sdks/*/test/suite/*.test.js
