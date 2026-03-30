@@ -1,4 +1,7 @@
 {
+    "compilerOptions": {
+        "noUnusedLocals": true
+    },
     "include": [
         "src/sdks/core/test/suite/*",
         "src/sdks/manage/test/suite/*",

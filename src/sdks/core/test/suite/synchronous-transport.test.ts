@@ -20,18 +20,11 @@ import transport from "../../../../../test/helpers/synchronous-transport.mjs";
 
 // These all get set synchronously, so we'll update them as they happen
 let sendCalled: boolean = false;
-let inactiveListened: boolean = false;
-let callbackWiredUp: boolean = false;
 
 transport.onSend((json) => {
   // we'll assert on this later...
   sendCalled = true;
   if (json.method.toLowerCase() === "device.name") {
-    // we'll assert on this later...
-    inactiveListened = true;
-
-    // we'll assert on this later...
-    callbackWiredUp = true;
     let response = {
       jsonrpc: "2.0",
       id: json.id,

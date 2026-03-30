@@ -32,23 +32,17 @@ let pullEntityInfoListenCount = 0
 let entityInfoPulled = false
 let entityInfoReceived = false
 let entityInfoPushed = false
-let callbackWiredUp = false
-let sendCalled = false
 let correlationId:string
-let secondRegistrationFailed = false
 
 beforeAll(() => {
     return new Promise( (resolve, reject) => {
         const transport = {
             send: function(message: string) {
-                sendCalled = true
                 const json = JSON.parse(message)
                 if (json.method.toLowerCase() === 'discovery.onpullentityinfo') {
                     // we'll assert on this later...
                     pullEntityInfoListenCount++
                     if (state.callback) {
-                        // we'll assert on this later...
-                        callbackWiredUp = true
                         let response:object = {
                             jsonrpc: '2.0',
                             id: json.id,

@@ -20,7 +20,7 @@
 // setup for Firebolt SDK/TL handshake
 const win = globalThis || window
 
-import Setup from '../../../../../test/Setup'
+import '../../../../../test/Setup'
 import { beforeAll, test, expect } from '@jest/globals';
 import { Lifecycle, Discovery } from "../../build/javascript/src/firebolt";
 
