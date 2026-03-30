@@ -31,7 +31,7 @@ export const store = {
 
 async function ready() {
   let readyRes;
-  await prioritize('Lifecycle', (event, value) => {
+  await prioritize('Lifecycle', (event, _value) => {
     store._current = event
   })
   readyRes =await Transport.send('lifecycle', 'ready', {})

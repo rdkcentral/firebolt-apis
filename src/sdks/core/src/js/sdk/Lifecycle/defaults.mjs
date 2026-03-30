@@ -20,8 +20,6 @@ import MockTransport from '../Transport/MockTransport.mjs'
 
 let inactive = 0 /* ${EXAMPLE:onInactive} */
 let foreground = 0 /* ${EXAMPLE:onForeground} */
-let background = 0 /* ${EXAMPLE:onBackground} */
-let suspended = 0 /* ${EXAMPLE:onSuspended} */
 let unloading = 0 /* ${EXAMPLE:onUnloading} */
 
 const emit = (value) => {
