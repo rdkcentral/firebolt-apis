@@ -1,4 +1,7 @@
 {
+    "compilerOptions": {
+        "noUnusedLocals": true
+    },
     "include": [
         "test/suite/*"
     ]

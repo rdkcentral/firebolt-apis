@@ -107,7 +107,6 @@ test("clear", () => {
 });
 
 test("ClosedCaptions.setFontColor() with null", async () => {
-  const oldValue = await ClosedCaptions.fontColor()
   return ClosedCaptions.fontColor(null).then(async (res: null) => {
     expect(res).toBe(null);
     const newValue = await ClosedCaptions.fontColor()
