@@ -1,3 +1,11 @@
+# [1.8.0-next.43](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.42...v1.8.0-next.43) (2026-03-30)
+
+
+### Bug Fixes
+
+* **eslint:** Upgrade ESLint v7 to v9 with flat config ([a5b6daf](https://github.com/rdkcentral/firebolt-apis/commit/a5b6daffd4ab14acf24a0a580974a177ef848ac8)), closes [#529](https://github.com/rdkcentral/firebolt-apis/issues/529)
+* **lifecycle:** Add ESLint no-unused-vars guard for JS template source files ([d8ec073](https://github.com/rdkcentral/firebolt-apis/commit/d8ec0732f1e6492520338a1532652508008eb281))
+
 # [1.8.0-next.42](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.41...v1.8.0-next.42) (2026-03-30)
 
 
