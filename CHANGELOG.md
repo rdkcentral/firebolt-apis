@@ -1,3 +1,10 @@
+# [1.8.0-next.44](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.43...v1.8.0-next.44) (2026-03-30)
+
+
+### Bug Fixes
+
+* **version-specification:** Remove unused vars in JS source files and expand lint coverage ([4ee00e4](https://github.com/rdkcentral/firebolt-apis/commit/4ee00e4d56ec877547d5e5852337dfad57cc3734))
+
 # [1.8.0-next.43](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.42...v1.8.0-next.43) (2026-03-30)
 
 
