@@ -20,7 +20,6 @@
 // setup for Firebolt SDK/TL handshake
 const win = globalThis || window
 
-import '../../../../../test/Setup'
 import { beforeAll, test, expect } from '@jest/globals';
 import { Lifecycle, Discovery } from "../../build/javascript/src/firebolt";
 
@@ -34,7 +33,6 @@ const state:stateType = {
 }
 
 let navigateToListenCount = 0
-let pullEntityInfoListenCount = 0
 let callbackWiredUp = false
 let sendCalled = false
 
@@ -64,9 +62,7 @@ const transport = {
                 }
             }
         }
-        else if (json.method.toLowerCase() === 'discovery.onpullentityinfo') {
-            pullEntityInfoListenCount++
-        }
+
     },
     receive: function(callback) {
         console.log('transport.receive')
