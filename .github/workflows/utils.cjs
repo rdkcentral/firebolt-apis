@@ -44,7 +44,7 @@ async function createComment(github, context) {
         Job Logs: ${JOB_PATH}
     `;
 
-    const response = await github.rest.issues.createComment({
+    await github.rest.issues.createComment({
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: issue_number,
