@@ -15,14 +15,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-import nopt from 'nopt'
-import path from 'path'
-
-import readline from 'readline'
-
 import { promises } from "fs"
-import { logHeader, logSuccess, logInfo, logError } from '../../../node_modules/@firebolt-js/openrpc/src/shared/io.mjs'
-const { readFile, writeFile } = promises
+import { logHeader, logSuccess, logInfo } from '../../../node_modules/@firebolt-js/openrpc/src/shared/io.mjs'
+const { readFile } = promises
 
 
 const loadJson = file => readFile(file).then(data => JSON.parse(data.toString()))
@@ -85,7 +80,7 @@ const doImport = (source, target, clear=false, report=false) => {
 
     if (report) {
         const unused = []
-        Object.entries(result.capabilities).forEach(([capability, policy]) => {
+        Object.entries(result.capabilities).forEach(([capability, _policy]) => {
             const uses = source.methods.filter(m => m.tags && m.tags.find(t => t.name === "capabilities") && m.tags.find(t => t.name === "capabilities")['x-uses'] && m.tags.find(t => t.name === "capabilities")['x-uses'].includes(capability))
             const provides = source.methods.filter(m => m.tags && m.tags.find(t => t.name === "capabilities") && m.tags.find(t => t.name === "capabilities")['x-provides'] && m.tags.find(t => t.name === "capabilities")['x-provides'] === capability)
             const manages = source.methods.filter(m => m.tags && m.tags.find(t => t.name === "capabilities") && m.tags.find(t => t.name === "capabilities")['x-manages'] && m.tags.find(t => t.name === "capabilities")['x-manages'].includes(capability))
