@@ -1,3 +1,10 @@
+# [1.8.0-next.40](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.39...v1.8.0-next.40) (2026-03-29)
+
+
+### Bug Fixes
+
+* **github.io:** Remove useless assignment in frontmatter function ([846124d](https://github.com/rdkcentral/firebolt-apis/commit/846124d2b6f9304f7d6c77f259ce30ab0ffa04f1))
+
 # [1.8.0-next.39](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.38...v1.8.0-next.39) (2026-03-29)
 
 
