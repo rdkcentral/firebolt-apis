@@ -6,7 +6,7 @@ async function downloadArtifact(ARTIFACT_ID, JOB_PATH, PR_NUMBER, context, githu
         const comment = `Failed to create a report:\n Job logs: ${JOB_PATH}`;
 
         // Post the comment to the pull request
-        let prcomment = await github.rest.issues.createComment({
+        await github.rest.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: PR_NUMBER,
@@ -44,7 +44,7 @@ async function createComment(github, context) {
         Job Logs: ${JOB_PATH}
     `;
 
-    const response = await github.rest.issues.createComment({
+    await github.rest.issues.createComment({
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: issue_number,
