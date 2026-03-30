@@ -1,3 +1,10 @@
+# [1.8.0-next.41](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.40...v1.8.0-next.41) (2026-03-30)
+
+
+### Bug Fixes
+
+* **privacy:** Remove unused listenerId variable ([9c81722](https://github.com/rdkcentral/firebolt-apis/commit/9c817222261a6fe69cff7aee2725692b94f30774))
+
 # [1.8.0-next.40](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.39...v1.8.0-next.40) (2026-03-29)
 
 
