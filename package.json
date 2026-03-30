@@ -65,7 +65,7 @@
     "mkdirp": "^3.0.1",
     "nopt": "^9.0.0",
     "production-changelog": "./src/js/production-changelog/",
-    "semantic-release": "^21.1.1",
+    "semantic-release": "^25.0.3",
     "typescript": "~5.4.0"
   },
   "overrides": {
