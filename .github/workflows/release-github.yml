@@ -19,6 +19,7 @@ env:
 jobs:
   release:
     name: Release
+    if: github.actor != 'dependabot[bot]'
     permissions:
       contents: read
     runs-on: ubuntu-latest
