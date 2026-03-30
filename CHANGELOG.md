@@ -1,3 +1,12 @@
+# [1.8.0-next.42](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.41...v1.8.0-next.42) (2026-03-30)
+
+
+### Bug Fixes
+
+* **closedCaptions:** Remove unused oldValue variable ([ec8745e](https://github.com/rdkcentral/firebolt-apis/commit/ec8745e52357f67e60990c5f492f9b9a90570fd5))
+* **tests:** Add noUnusedLocals to tsconfigs and remove unused variables ([12de755](https://github.com/rdkcentral/firebolt-apis/commit/12de755c3fe670567f62b2c2adf66dad22d42cf5))
+* **tests:** Remove unused pullEntityInfoListenCount and contradictory Setup import from lazy-transport test ([7a86f27](https://github.com/rdkcentral/firebolt-apis/commit/7a86f2726b8da062e660058ef279aea49e3388e1)), closes [#528](https://github.com/rdkcentral/firebolt-apis/issues/528)
+
 # [1.8.0-next.41](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.40...v1.8.0-next.41) (2026-03-30)
 
 
