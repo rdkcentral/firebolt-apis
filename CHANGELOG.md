@@ -1,3 +1,10 @@
+# [1.8.0-next.45](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.44...v1.8.0-next.45) (2026-03-30)
+
+
+### Bug Fixes
+
+* **ci:** Skip Release job for Dependabot PRs and harden label step ([65b9d2e](https://github.com/rdkcentral/firebolt-apis/commit/65b9d2e1cbc976b02aa9b4de2927bd8b4b80b7ea))
+
 # [1.8.0-next.44](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.43...v1.8.0-next.44) (2026-03-30)
 
 
