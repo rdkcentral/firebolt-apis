@@ -1,3 +1,10 @@
+# [1.8.0-next.47](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.46...v1.8.0-next.47) (2026-03-31)
+
+
+### Bug Fixes
+
+* **security:** Override picomatch to 4.0.4 via tinyglobby scope ([7540421](https://github.com/rdkcentral/firebolt-apis/commit/75404215c7855a682ccb94d363d3bbe2f129998b))
+
 # [1.8.0-next.46](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.45...v1.8.0-next.46) (2026-03-31)
 
 
