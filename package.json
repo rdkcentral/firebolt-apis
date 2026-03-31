@@ -69,7 +69,10 @@
     "typescript": "~5.4.0"
   },
   "overrides": {
-    "@semantic-release/npm": "^13.1.5"
+    "@semantic-release/npm": "^13.1.5",
+    "tinyglobby": {
+      "picomatch": "^4.0.4"
+    }
   },
   "keywords": [
     "firebolt",
