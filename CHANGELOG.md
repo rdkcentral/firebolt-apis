@@ -1,3 +1,14 @@
+# [1.8.0-next.46](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.45...v1.8.0-next.46) (2026-03-31)
+
+
+### Bug Fixes
+
+* **ci:** Remove unused prcomment and response variables in utils.cjs ([9a39cb3](https://github.com/rdkcentral/firebolt-apis/commit/9a39cb3ca0bb78ebc45ed7890b51d4800f38d45f))
+* Correct typescript 5.4.5 integrity hash in package-lock.json ([5eabf35](https://github.com/rdkcentral/firebolt-apis/commit/5eabf35ec2885cd6c95e82c7ba1ed1b0ea37e1e2))
+* Restore lock file from next with surgical typescript downgrade only ([abe0131](https://github.com/rdkcentral/firebolt-apis/commit/abe0131f0f9332cbf4a566f6aaffa2a02885f5a8))
+* Resync package-lock.json with package.json (typescript 6.0.2 → 5.4.5) ([7edb919](https://github.com/rdkcentral/firebolt-apis/commit/7edb91933a742d110f82b2520f3614ca0d4778c6))
+* Revert SDK workspaces from typescript ~6.0.2 to ~5.4.0 ([4fb483e](https://github.com/rdkcentral/firebolt-apis/commit/4fb483e28a7b1feea2bd9b3cf275765907eec948))
+
 # [1.8.0-next.45](https://github.com/rdkcentral/firebolt-apis/compare/v1.8.0-next.44...v1.8.0-next.45) (2026-03-30)
 
 
