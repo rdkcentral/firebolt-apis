@@ -30,7 +30,7 @@ jobs:
           ./.github/workflows/utils.sh getArtifactData
 
       - name: Download an artifact
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { downloadArtifact } = require('./.github/workflows/utils.cjs');
@@ -42,7 +42,7 @@ jobs:
 
       - name: Post a Comment
         if: ${{ env.PR_NUMBER != null && env.PR_NUMBER != '' }}
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { createComment } = require('./.github/workflows/utils.cjs');
