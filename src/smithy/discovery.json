@@ -507,7 +507,7 @@
     "com.firebolt.discovery#onRequestUserInterestOutput": {
       "members": {
         "value": {
-          "target": "smithy.api#String",
+          "target": "com.firebolt.discovery#OnRequestUserInterest",
           "traits": {
             "smithy.api#required": {}
           }
@@ -534,7 +534,7 @@
     "com.firebolt.discovery#onSignInOutput": {
       "members": {
         "value": {
-          "target": "smithy.api#String",
+          "target": "com.firebolt.discovery#OnSignIn",
           "traits": {
             "smithy.api#required": {}
           }
@@ -561,7 +561,7 @@
     "com.firebolt.discovery#onSignOutOutput": {
       "members": {
         "value": {
-          "target": "smithy.api#String",
+          "target": "com.firebolt.discovery#OnSignOut",
           "traits": {
             "smithy.api#required": {}
           }
@@ -1065,6 +1065,45 @@
       "type": "string",
       "traits": {
         "smithy.api#documentation": "An entitlement identifier (entitlementId)"
+      }
+    },
+    "com.firebolt.discovery#OnSignIn": {
+      "type": "structure",
+      "members": {
+        "appId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      }
+    },
+    "com.firebolt.discovery#OnSignOut": {
+      "type": "structure",
+      "members": {
+        "appId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      }
+    },
+    "com.firebolt.discovery#OnRequestUserInterest": {
+      "type": "structure",
+      "members": {
+        "correlationId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "parameters": {
+          "target": "com.firebolt.discovery#UserInterestProviderParameters",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
       }
     }
   },
