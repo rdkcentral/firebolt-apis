@@ -1,0 +1,127 @@
+{
+  "shapes": {
+    "com.firebolt.content#ContentService": {
+      "operations": [
+        {
+          "target": "com.firebolt.content#requestUserInterest"
+        },
+        {
+          "target": "com.firebolt.content#onUserInterest"
+        }
+      ],
+      "type": "service",
+      "version": "1.0"
+    },
+    "com.firebolt.content#InterestEvent": {
+      "members": {
+        "appId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "entity": {
+          "target": "com.firebolt.content#Entity::EntityDetails",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "reason": {
+          "target": "com.firebolt.content#Discovery::InterestReason",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "type": {
+          "target": "com.firebolt.content#Discovery::InterestType",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.content#InterestResult": {
+      "members": {
+        "appId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "entity": {
+          "target": "com.firebolt.content#Entity::EntityDetails",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.content#onUserInterest": {
+      "input": {
+        "target": "com.firebolt.content#onUserInterestInput"
+      },
+      "output": {
+        "target": "com.firebolt.content#onUserInterestOutput"
+      },
+      "traits": {
+        "com.firebolt#event": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.content#onUserInterestInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.content#onUserInterestOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.content#InterestEvent",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.content#requestUserInterest": {
+      "input": {
+        "target": "com.firebolt.content#requestUserInterestInput"
+      },
+      "output": {
+        "target": "com.firebolt.content#requestUserInterestOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.content#requestUserInterestInput": {
+      "members": {
+        "reason": {
+          "target": "com.firebolt.content#Discovery::InterestReason",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "type": {
+          "target": "com.firebolt.content#Discovery::InterestType",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.content#requestUserInterestOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.content#InterestResult",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    }
+  },
+  "smithy": "2.0"
+}

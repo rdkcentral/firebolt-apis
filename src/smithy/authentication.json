@@ -1,0 +1,163 @@
+{
+  "shapes": {
+    "com.firebolt.authentication#AuthenticationService": {
+      "operations": [
+        {
+          "target": "com.firebolt.authentication#token"
+        },
+        {
+          "target": "com.firebolt.authentication#device"
+        },
+        {
+          "target": "com.firebolt.authentication#session"
+        },
+        {
+          "target": "com.firebolt.authentication#root"
+        }
+      ],
+      "type": "service",
+      "version": "1.0"
+    },
+    "com.firebolt.authentication#AuthenticationTokenResult": {
+      "members": {
+        "expires": {
+          "target": "smithy.api#String"
+        },
+        "type": {
+          "target": "smithy.api#String"
+        },
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.authentication#TokenType": {
+      "members": {
+        "device": {
+          "target": "smithy.api#Unit"
+        },
+        "distributor": {
+          "target": "smithy.api#Unit"
+        },
+        "platform": {
+          "target": "smithy.api#Unit"
+        }
+      },
+      "type": "enum"
+    },
+    "com.firebolt.authentication#device": {
+      "input": {
+        "target": "com.firebolt.authentication#deviceInput"
+      },
+      "output": {
+        "target": "com.firebolt.authentication#deviceOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.authentication#deviceInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.authentication#deviceOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.authentication#root": {
+      "input": {
+        "target": "com.firebolt.authentication#rootInput"
+      },
+      "output": {
+        "target": "com.firebolt.authentication#rootOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.authentication#rootInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.authentication#rootOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.authentication#session": {
+      "input": {
+        "target": "com.firebolt.authentication#sessionInput"
+      },
+      "output": {
+        "target": "com.firebolt.authentication#sessionOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.authentication#sessionInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.authentication#sessionOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.authentication#token": {
+      "input": {
+        "target": "com.firebolt.authentication#tokenInput"
+      },
+      "output": {
+        "target": "com.firebolt.authentication#tokenOutput"
+      },
+      "traits": {
+        "smithy.api#deprecated": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.authentication#tokenInput": {
+      "members": {
+        "options": {
+          "target": "smithy.api#String"
+        },
+        "type": {
+          "target": "com.firebolt.authentication#TokenType",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.authentication#tokenOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.authentication#AuthenticationTokenResult",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    }
+  },
+  "smithy": "2.0"
+}

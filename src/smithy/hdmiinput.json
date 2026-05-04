@@ -1,0 +1,454 @@
+{
+  "shapes": {
+    "com.firebolt.hdmiinput#AutoLowLatencyModeSignalChangedInfo": {
+      "members": {
+        "autoLowLatencyModeSignalled": {
+          "target": "smithy.api#Boolean"
+        },
+        "port": {
+          "target": "com.firebolt.hdmiinput#HDMIPortId"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#ConnectionChangedInfo": {
+      "members": {
+        "connected": {
+          "target": "smithy.api#Boolean"
+        },
+        "port": {
+          "target": "com.firebolt.hdmiinput#HDMIPortId"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#EDIDVersion": {
+      "members": {
+        "v1_4": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "1.4"
+          }
+        },
+        "v2_0": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "2.0"
+          }
+        },
+        "unknown": {
+          "target": "smithy.api#Unit"
+        }
+      },
+      "type": "enum"
+    },
+    "com.firebolt.hdmiinput#HDMIInputPort": {
+      "members": {
+        "arcCapable": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "arcConnected": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "autoLowLatencyModeCapable": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "autoLowLatencyModeSignalled": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "connected": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "edidVersion": {
+          "target": "com.firebolt.hdmiinput#EDIDVersion",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "port": {
+          "target": "com.firebolt.hdmiinput#HDMIPortId",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "signal": {
+          "target": "com.firebolt.hdmiinput#HDMISignalStatus",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#HDMIInputPortList": {
+      "member": {
+        "target": "com.firebolt.hdmiinput#HDMIInputPort"
+      },
+      "type": "list"
+    },
+    "com.firebolt.hdmiinput#HDMIInputService": {
+      "operations": [
+        {
+          "target": "com.firebolt.hdmiinput#ports"
+        },
+        {
+          "target": "com.firebolt.hdmiinput#port"
+        },
+        {
+          "target": "com.firebolt.hdmiinput#open"
+        },
+        {
+          "target": "com.firebolt.hdmiinput#close"
+        },
+        {
+          "target": "com.firebolt.hdmiinput#onConnectionChanged"
+        },
+        {
+          "target": "com.firebolt.hdmiinput#onSignalChanged"
+        },
+        {
+          "target": "com.firebolt.hdmiinput#lowLatencyMode"
+        },
+        {
+          "target": "com.firebolt.hdmiinput#onAutoLowLatencyModeSignalChanged"
+        },
+        {
+          "target": "com.firebolt.hdmiinput#autoLowLatencyModeCapable"
+        },
+        {
+          "target": "com.firebolt.hdmiinput#edidVersion"
+        }
+      ],
+      "type": "service",
+      "version": "1.0"
+    },
+    "com.firebolt.hdmiinput#HDMIPortId": {
+      "type": "string"
+    },
+    "com.firebolt.hdmiinput#HDMISignalStatus": {
+      "members": {
+        "none": {
+          "target": "smithy.api#Unit"
+        },
+        "stable": {
+          "target": "smithy.api#Unit"
+        },
+        "unknown": {
+          "target": "smithy.api#Unit"
+        },
+        "unstable": {
+          "target": "smithy.api#Unit"
+        },
+        "unsupported": {
+          "target": "smithy.api#Unit"
+        }
+      },
+      "type": "enum"
+    },
+    "com.firebolt.hdmiinput#SignalChangedInfo": {
+      "members": {
+        "port": {
+          "target": "com.firebolt.hdmiinput#HDMIPortId",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "signal": {
+          "target": "com.firebolt.hdmiinput#HDMISignalStatus",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#autoLowLatencyModeCapable": {
+      "input": {
+        "target": "com.firebolt.hdmiinput#autoLowLatencyModeCapableInput"
+      },
+      "output": {
+        "target": "com.firebolt.hdmiinput#autoLowLatencyModeCapableOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.hdmiinput#autoLowLatencyModeCapableInput": {
+      "members": {
+        "port": {
+          "target": "com.firebolt.hdmiinput#HDMIPortId",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#autoLowLatencyModeCapableOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#close": {
+      "input": {
+        "target": "com.firebolt.hdmiinput#closeInput"
+      },
+      "output": {
+        "target": "com.firebolt.hdmiinput#closeOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.hdmiinput#closeInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#closeOutput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#edidVersion": {
+      "input": {
+        "target": "com.firebolt.hdmiinput#edidVersionInput"
+      },
+      "output": {
+        "target": "com.firebolt.hdmiinput#edidVersionOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.hdmiinput#edidVersionInput": {
+      "members": {
+        "port": {
+          "target": "com.firebolt.hdmiinput#HDMIPortId",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#edidVersionOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.hdmiinput#EDIDVersion",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#lowLatencyMode": {
+      "input": {
+        "target": "com.firebolt.hdmiinput#lowLatencyModeInput"
+      },
+      "output": {
+        "target": "com.firebolt.hdmiinput#lowLatencyModeOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.hdmiinput#lowLatencyModeInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#lowLatencyModeOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#onAutoLowLatencyModeSignalChanged": {
+      "input": {
+        "target": "com.firebolt.hdmiinput#onAutoLowLatencyModeSignalChangedInput"
+      },
+      "output": {
+        "target": "com.firebolt.hdmiinput#onAutoLowLatencyModeSignalChangedOutput"
+      },
+      "traits": {
+        "com.firebolt#event": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.hdmiinput#onAutoLowLatencyModeSignalChangedInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#onAutoLowLatencyModeSignalChangedOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.hdmiinput#AutoLowLatencyModeSignalChangedInfo",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#onConnectionChanged": {
+      "input": {
+        "target": "com.firebolt.hdmiinput#onConnectionChangedInput"
+      },
+      "output": {
+        "target": "com.firebolt.hdmiinput#onConnectionChangedOutput"
+      },
+      "traits": {
+        "com.firebolt#event": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.hdmiinput#onConnectionChangedInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#onConnectionChangedOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.hdmiinput#ConnectionChangedInfo",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#onSignalChanged": {
+      "input": {
+        "target": "com.firebolt.hdmiinput#onSignalChangedInput"
+      },
+      "output": {
+        "target": "com.firebolt.hdmiinput#onSignalChangedOutput"
+      },
+      "traits": {
+        "com.firebolt#event": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.hdmiinput#onSignalChangedInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#onSignalChangedOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.hdmiinput#SignalChangedInfo",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#open": {
+      "input": {
+        "target": "com.firebolt.hdmiinput#openInput"
+      },
+      "output": {
+        "target": "com.firebolt.hdmiinput#openOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.hdmiinput#openInput": {
+      "members": {
+        "portId": {
+          "target": "com.firebolt.hdmiinput#HDMIPortId",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#openOutput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#port": {
+      "input": {
+        "target": "com.firebolt.hdmiinput#portInput"
+      },
+      "output": {
+        "target": "com.firebolt.hdmiinput#portOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.hdmiinput#portInput": {
+      "members": {
+        "portId": {
+          "target": "com.firebolt.hdmiinput#HDMIPortId",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#portOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.hdmiinput#HDMIInputPort",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#ports": {
+      "input": {
+        "target": "com.firebolt.hdmiinput#portsInput"
+      },
+      "output": {
+        "target": "com.firebolt.hdmiinput#portsOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.hdmiinput#portsInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.hdmiinput#portsOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.hdmiinput#HDMIInputPortList",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    }
+  },
+  "smithy": "2.0"
+}

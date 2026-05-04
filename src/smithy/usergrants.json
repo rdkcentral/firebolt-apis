@@ -1,0 +1,345 @@
+{
+  "shapes": {
+    "com.firebolt.usergrants#AppInfo": {
+      "members": {
+        "id": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "title": {
+          "target": "smithy.api#String"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#Capabilities::PermissionList": {
+      "member": {
+        "target": "com.firebolt.usergrants#Capabilities::Permission"
+      },
+      "type": "list"
+    },
+    "com.firebolt.usergrants#GrantInfo": {
+      "members": {
+        "app": {
+          "target": "com.firebolt.usergrants#AppInfo"
+        },
+        "capability": {
+          "target": "com.firebolt.usergrants#Capabilities::Capability",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "expires": {
+          "target": "smithy.api#String"
+        },
+        "lifespan": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "role": {
+          "target": "com.firebolt.usergrants#Capabilities::Role",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "state": {
+          "target": "com.firebolt.usergrants#GrantState",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#GrantInfoList": {
+      "member": {
+        "target": "com.firebolt.usergrants#GrantInfo"
+      },
+      "type": "list"
+    },
+    "com.firebolt.usergrants#GrantModificationOptions": {
+      "members": {
+        "appId": {
+          "target": "smithy.api#String"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#GrantState": {
+      "members": {
+        "denied": {
+          "target": "smithy.api#Unit"
+        },
+        "granted": {
+          "target": "smithy.api#Unit"
+        }
+      },
+      "type": "enum"
+    },
+    "com.firebolt.usergrants#RequestOptions": {
+      "members": {
+        "force": {
+          "target": "smithy.api#Boolean"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#UserGrantsService": {
+      "operations": [
+        {
+          "target": "com.firebolt.usergrants#app"
+        },
+        {
+          "target": "com.firebolt.usergrants#device"
+        },
+        {
+          "target": "com.firebolt.usergrants#capability"
+        },
+        {
+          "target": "com.firebolt.usergrants#grant"
+        },
+        {
+          "target": "com.firebolt.usergrants#deny"
+        },
+        {
+          "target": "com.firebolt.usergrants#clear"
+        },
+        {
+          "target": "com.firebolt.usergrants#request"
+        }
+      ],
+      "type": "service",
+      "version": "1.0"
+    },
+    "com.firebolt.usergrants#app": {
+      "input": {
+        "target": "com.firebolt.usergrants#appInput"
+      },
+      "output": {
+        "target": "com.firebolt.usergrants#appOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.usergrants#appInput": {
+      "members": {
+        "appId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#appOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.usergrants#GrantInfoList",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#capability": {
+      "input": {
+        "target": "com.firebolt.usergrants#capabilityInput"
+      },
+      "output": {
+        "target": "com.firebolt.usergrants#capabilityOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.usergrants#capabilityInput": {
+      "members": {
+        "capability": {
+          "target": "com.firebolt.usergrants#Capabilities::Capability",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#capabilityOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.usergrants#GrantInfoList",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#clear": {
+      "input": {
+        "target": "com.firebolt.usergrants#clearInput"
+      },
+      "output": {
+        "target": "com.firebolt.usergrants#clearOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.usergrants#clearInput": {
+      "members": {
+        "capability": {
+          "target": "com.firebolt.usergrants#Capabilities::Capability",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "options": {
+          "target": "com.firebolt.usergrants#GrantModificationOptions"
+        },
+        "role": {
+          "target": "com.firebolt.usergrants#Capabilities::Role",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#clearOutput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#deny": {
+      "input": {
+        "target": "com.firebolt.usergrants#denyInput"
+      },
+      "output": {
+        "target": "com.firebolt.usergrants#denyOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.usergrants#denyInput": {
+      "members": {
+        "capability": {
+          "target": "com.firebolt.usergrants#Capabilities::Capability",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "options": {
+          "target": "com.firebolt.usergrants#GrantModificationOptions"
+        },
+        "role": {
+          "target": "com.firebolt.usergrants#Capabilities::Role",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#denyOutput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#device": {
+      "input": {
+        "target": "com.firebolt.usergrants#deviceInput"
+      },
+      "output": {
+        "target": "com.firebolt.usergrants#deviceOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.usergrants#deviceInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#deviceOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.usergrants#GrantInfoList",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#grant": {
+      "input": {
+        "target": "com.firebolt.usergrants#grantInput"
+      },
+      "output": {
+        "target": "com.firebolt.usergrants#grantOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.usergrants#grantInput": {
+      "members": {
+        "capability": {
+          "target": "com.firebolt.usergrants#Capabilities::Capability",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "options": {
+          "target": "com.firebolt.usergrants#GrantModificationOptions"
+        },
+        "role": {
+          "target": "com.firebolt.usergrants#Capabilities::Role",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#grantOutput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#request": {
+      "input": {
+        "target": "com.firebolt.usergrants#requestInput"
+      },
+      "output": {
+        "target": "com.firebolt.usergrants#requestOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.usergrants#requestInput": {
+      "members": {
+        "appId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "options": {
+          "target": "com.firebolt.usergrants#RequestOptions"
+        },
+        "permissions": {
+          "target": "com.firebolt.usergrants#Capabilities::PermissionList",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.usergrants#requestOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.usergrants#GrantInfoList",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    }
+  },
+  "smithy": "2.0"
+}

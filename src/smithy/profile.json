@@ -1,0 +1,92 @@
+{
+  "shapes": {
+    "com.firebolt.profile#ProfileService": {
+      "operations": [
+        {
+          "target": "com.firebolt.profile#approveContentRating"
+        },
+        {
+          "target": "com.firebolt.profile#approvePurchase"
+        },
+        {
+          "target": "com.firebolt.profile#flags"
+        }
+      ],
+      "type": "service",
+      "version": "1.0"
+    },
+    "com.firebolt.profile#approveContentRating": {
+      "input": {
+        "target": "com.firebolt.profile#approveContentRatingInput"
+      },
+      "output": {
+        "target": "com.firebolt.profile#approveContentRatingOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.profile#approveContentRatingInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.profile#approveContentRatingOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.profile#approvePurchase": {
+      "input": {
+        "target": "com.firebolt.profile#approvePurchaseInput"
+      },
+      "output": {
+        "target": "com.firebolt.profile#approvePurchaseOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.profile#approvePurchaseInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.profile#approvePurchaseOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.profile#flags": {
+      "input": {
+        "target": "com.firebolt.profile#flagsInput"
+      },
+      "output": {
+        "target": "com.firebolt.profile#flagsOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.profile#flagsInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.profile#flagsOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.profile#Types::FlatMap",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    }
+  },
+  "smithy": "2.0"
+}

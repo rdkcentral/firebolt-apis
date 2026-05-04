@@ -1,0 +1,475 @@
+{
+  "shapes": {
+    "com.firebolt.privacy#PrivacyService": {
+      "operations": [
+        {
+          "target": "com.firebolt.privacy#allowResumePoints"
+        },
+        {
+          "target": "com.firebolt.privacy#allowUnentitledResumePoints"
+        },
+        {
+          "target": "com.firebolt.privacy#allowWatchHistory"
+        },
+        {
+          "target": "com.firebolt.privacy#allowProductAnalytics"
+        },
+        {
+          "target": "com.firebolt.privacy#allowPersonalization"
+        },
+        {
+          "target": "com.firebolt.privacy#allowUnentitledPersonalization"
+        },
+        {
+          "target": "com.firebolt.privacy#allowRemoteDiagnostics"
+        },
+        {
+          "target": "com.firebolt.privacy#allowPrimaryContentAdTargeting"
+        },
+        {
+          "target": "com.firebolt.privacy#allowPrimaryBrowseAdTargeting"
+        },
+        {
+          "target": "com.firebolt.privacy#allowAppContentAdTargeting"
+        },
+        {
+          "target": "com.firebolt.privacy#allowACRCollection"
+        },
+        {
+          "target": "com.firebolt.privacy#allowCameraAnalytics"
+        },
+        {
+          "target": "com.firebolt.privacy#settings"
+        }
+      ],
+      "type": "service",
+      "version": "1.0"
+    },
+    "com.firebolt.privacy#PrivacySettings": {
+      "members": {
+        "allowACRCollection": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "allowAppContentAdTargeting": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "allowCameraAnalytics": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "allowPersonalization": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "allowPrimaryBrowseAdTargeting": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "allowPrimaryContentAdTargeting": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "allowProductAnalytics": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "allowRemoteDiagnostics": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "allowResumePoints": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "allowUnentitledPersonalization": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "allowUnentitledResumePoints": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "allowWatchHistory": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowACRCollection": {
+      "input": {
+        "target": "com.firebolt.privacy#allowACRCollectionInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowACRCollectionOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowACRCollectionInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowACRCollectionOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowAppContentAdTargeting": {
+      "input": {
+        "target": "com.firebolt.privacy#allowAppContentAdTargetingInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowAppContentAdTargetingOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowAppContentAdTargetingInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowAppContentAdTargetingOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowCameraAnalytics": {
+      "input": {
+        "target": "com.firebolt.privacy#allowCameraAnalyticsInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowCameraAnalyticsOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowCameraAnalyticsInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowCameraAnalyticsOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowPersonalization": {
+      "input": {
+        "target": "com.firebolt.privacy#allowPersonalizationInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowPersonalizationOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowPersonalizationInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowPersonalizationOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowPrimaryBrowseAdTargeting": {
+      "input": {
+        "target": "com.firebolt.privacy#allowPrimaryBrowseAdTargetingInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowPrimaryBrowseAdTargetingOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowPrimaryBrowseAdTargetingInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowPrimaryBrowseAdTargetingOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowPrimaryContentAdTargeting": {
+      "input": {
+        "target": "com.firebolt.privacy#allowPrimaryContentAdTargetingInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowPrimaryContentAdTargetingOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowPrimaryContentAdTargetingInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowPrimaryContentAdTargetingOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowProductAnalytics": {
+      "input": {
+        "target": "com.firebolt.privacy#allowProductAnalyticsInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowProductAnalyticsOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowProductAnalyticsInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowProductAnalyticsOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowRemoteDiagnostics": {
+      "input": {
+        "target": "com.firebolt.privacy#allowRemoteDiagnosticsInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowRemoteDiagnosticsOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowRemoteDiagnosticsInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowRemoteDiagnosticsOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowResumePoints": {
+      "input": {
+        "target": "com.firebolt.privacy#allowResumePointsInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowResumePointsOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowResumePointsInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowResumePointsOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowUnentitledPersonalization": {
+      "input": {
+        "target": "com.firebolt.privacy#allowUnentitledPersonalizationInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowUnentitledPersonalizationOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowUnentitledPersonalizationInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowUnentitledPersonalizationOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowUnentitledResumePoints": {
+      "input": {
+        "target": "com.firebolt.privacy#allowUnentitledResumePointsInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowUnentitledResumePointsOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowUnentitledResumePointsInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowUnentitledResumePointsOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowWatchHistory": {
+      "input": {
+        "target": "com.firebolt.privacy#allowWatchHistoryInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#allowWatchHistoryOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#allowWatchHistoryInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#allowWatchHistoryOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.privacy#settings": {
+      "input": {
+        "target": "com.firebolt.privacy#settingsInput"
+      },
+      "output": {
+        "target": "com.firebolt.privacy#settingsOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.privacy#settingsInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.privacy#settingsOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.privacy#PrivacySettings",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    }
+  },
+  "smithy": "2.0"
+}

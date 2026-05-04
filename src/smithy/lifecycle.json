@@ -1,0 +1,208 @@
+{
+  "shapes": {
+    "com.firebolt.lifecycle#LifecycleEvent": {
+      "members": {
+        "previous": {
+          "target": "com.firebolt.lifecycle#LifecycleState",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "source": {
+          "target": "smithy.api#String"
+        },
+        "state": {
+          "target": "com.firebolt.lifecycle#LifecycleState",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#LifecycleService": {
+      "operations": [
+        {
+          "target": "com.firebolt.lifecycle#close"
+        },
+        {
+          "target": "com.firebolt.lifecycle#onInactive"
+        },
+        {
+          "target": "com.firebolt.lifecycle#onForeground"
+        },
+        {
+          "target": "com.firebolt.lifecycle#onBackground"
+        },
+        {
+          "target": "com.firebolt.lifecycle#onSuspended"
+        },
+        {
+          "target": "com.firebolt.lifecycle#onUnloading"
+        }
+      ],
+      "type": "service",
+      "version": "1.0"
+    },
+    "com.firebolt.lifecycle#close": {
+      "input": {
+        "target": "com.firebolt.lifecycle#closeInput"
+      },
+      "output": {
+        "target": "com.firebolt.lifecycle#closeOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.lifecycle#closeInput": {
+      "members": {
+        "reason": {
+          "target": "com.firebolt.lifecycle#CloseReason",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#closeOutput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#onBackground": {
+      "input": {
+        "target": "com.firebolt.lifecycle#onBackgroundInput"
+      },
+      "output": {
+        "target": "com.firebolt.lifecycle#onBackgroundOutput"
+      },
+      "traits": {
+        "com.firebolt#event": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.lifecycle#onBackgroundInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#onBackgroundOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.lifecycle#LifecycleEvent",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#onForeground": {
+      "input": {
+        "target": "com.firebolt.lifecycle#onForegroundInput"
+      },
+      "output": {
+        "target": "com.firebolt.lifecycle#onForegroundOutput"
+      },
+      "traits": {
+        "com.firebolt#event": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.lifecycle#onForegroundInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#onForegroundOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.lifecycle#LifecycleEvent",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#onInactive": {
+      "input": {
+        "target": "com.firebolt.lifecycle#onInactiveInput"
+      },
+      "output": {
+        "target": "com.firebolt.lifecycle#onInactiveOutput"
+      },
+      "traits": {
+        "com.firebolt#event": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.lifecycle#onInactiveInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#onInactiveOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.lifecycle#LifecycleEvent",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#onSuspended": {
+      "input": {
+        "target": "com.firebolt.lifecycle#onSuspendedInput"
+      },
+      "output": {
+        "target": "com.firebolt.lifecycle#onSuspendedOutput"
+      },
+      "traits": {
+        "com.firebolt#event": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.lifecycle#onSuspendedInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#onSuspendedOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.lifecycle#LifecycleEvent",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#onUnloading": {
+      "input": {
+        "target": "com.firebolt.lifecycle#onUnloadingInput"
+      },
+      "output": {
+        "target": "com.firebolt.lifecycle#onUnloadingOutput"
+      },
+      "traits": {
+        "com.firebolt#event": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.lifecycle#onUnloadingInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.lifecycle#onUnloadingOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.lifecycle#LifecycleEvent",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    }
+  },
+  "smithy": "2.0"
+}

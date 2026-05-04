@@ -1,0 +1,266 @@
+{
+  "shapes": {
+    "com.firebolt.advertising#AdConfigurationOptions": {
+      "members": {
+        "authenticationEntity": {
+          "target": "smithy.api#String"
+        },
+        "coppa": {
+          "target": "smithy.api#Boolean"
+        },
+        "environment": {
+          "target": "smithy.api#String"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.advertising#AdPolicy": {
+      "members": {
+        "limitAdTracking": {
+          "target": "smithy.api#Boolean"
+        },
+        "skipRestriction": {
+          "target": "com.firebolt.advertising#SkipRestriction"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.advertising#AdvertisingIdOptions": {
+      "members": {
+        "scope": {
+          "target": "smithy.api#String"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.advertising#AdvertisingIdResult": {
+      "members": {
+        "ifa": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "ifa_type": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "lmt": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.advertising#AdvertisingService": {
+      "operations": [
+        {
+          "target": "com.firebolt.advertising#config"
+        },
+        {
+          "target": "com.firebolt.advertising#policy"
+        },
+        {
+          "target": "com.firebolt.advertising#skipRestriction"
+        },
+        {
+          "target": "com.firebolt.advertising#advertisingId"
+        },
+        {
+          "target": "com.firebolt.advertising#deviceAttributes"
+        },
+        {
+          "target": "com.firebolt.advertising#appBundleId"
+        },
+        {
+          "target": "com.firebolt.advertising#resetIdentifier"
+        }
+      ],
+      "type": "service",
+      "version": "1.0"
+    },
+    "com.firebolt.advertising#advertisingId": {
+      "input": {
+        "target": "com.firebolt.advertising#advertisingIdInput"
+      },
+      "output": {
+        "target": "com.firebolt.advertising#advertisingIdOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.advertising#advertisingIdInput": {
+      "members": {
+        "options": {
+          "target": "com.firebolt.advertising#AdvertisingIdOptions"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.advertising#advertisingIdOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.advertising#AdvertisingIdResult",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.advertising#appBundleId": {
+      "input": {
+        "target": "com.firebolt.advertising#appBundleIdInput"
+      },
+      "output": {
+        "target": "com.firebolt.advertising#appBundleIdOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.advertising#appBundleIdInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.advertising#appBundleIdOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.advertising#config": {
+      "input": {
+        "target": "com.firebolt.advertising#configInput"
+      },
+      "output": {
+        "target": "com.firebolt.advertising#configOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.advertising#configInput": {
+      "members": {
+        "options": {
+          "target": "com.firebolt.advertising#AdConfigurationOptions",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.advertising#configOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.advertising#deviceAttributes": {
+      "input": {
+        "target": "com.firebolt.advertising#deviceAttributesInput"
+      },
+      "output": {
+        "target": "com.firebolt.advertising#deviceAttributesOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.advertising#deviceAttributesInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.advertising#deviceAttributesOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.advertising#policy": {
+      "input": {
+        "target": "com.firebolt.advertising#policyInput"
+      },
+      "output": {
+        "target": "com.firebolt.advertising#policyOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.advertising#policyInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.advertising#policyOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.advertising#AdPolicy",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.advertising#resetIdentifier": {
+      "input": {
+        "target": "com.firebolt.advertising#resetIdentifierInput"
+      },
+      "output": {
+        "target": "com.firebolt.advertising#resetIdentifierOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.advertising#resetIdentifierInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.advertising#resetIdentifierOutput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.advertising#skipRestriction": {
+      "input": {
+        "target": "com.firebolt.advertising#skipRestrictionInput"
+      },
+      "output": {
+        "target": "com.firebolt.advertising#skipRestrictionOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.advertising#skipRestrictionInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.advertising#skipRestrictionOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.advertising#SkipRestriction",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    }
+  },
+  "smithy": "2.0"
+}

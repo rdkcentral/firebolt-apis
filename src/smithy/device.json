@@ -1,0 +1,688 @@
+{
+  "shapes": {
+    "com.firebolt.device#AudioProfiles": {
+      "type": "structure",
+      "members": {
+        "stereo": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "dolbyDigital51": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {},
+            "smithy.api#jsonName": "dolbyDigital5.1"
+          }
+        },
+        "dolbyDigital51Plus": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {},
+            "smithy.api#jsonName": "dolbyDigital5.1+"
+          }
+        },
+        "dolbyAtmos": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      }
+    },
+    "com.firebolt.device#DeviceService": {
+      "operations": [
+        {
+          "target": "com.firebolt.device#id"
+        },
+        {
+          "target": "com.firebolt.device#distributor"
+        },
+        {
+          "target": "com.firebolt.device#platform"
+        },
+        {
+          "target": "com.firebolt.device#uid"
+        },
+        {
+          "target": "com.firebolt.device#type"
+        },
+        {
+          "target": "com.firebolt.device#model"
+        },
+        {
+          "target": "com.firebolt.device#sku"
+        },
+        {
+          "target": "com.firebolt.device#make"
+        },
+        {
+          "target": "com.firebolt.device#hdcp"
+        },
+        {
+          "target": "com.firebolt.device#hdr"
+        },
+        {
+          "target": "com.firebolt.device#audio"
+        },
+        {
+          "target": "com.firebolt.device#screenResolution"
+        },
+        {
+          "target": "com.firebolt.device#videoResolution"
+        },
+        {
+          "target": "com.firebolt.device#name"
+        },
+        {
+          "target": "com.firebolt.device#onDeviceNameChanged"
+        },
+        {
+          "target": "com.firebolt.device#network"
+        },
+        {
+          "target": "com.firebolt.device#provision"
+        }
+      ],
+      "type": "service",
+      "version": "1.0"
+    },
+    "com.firebolt.device#DeviceVersion": {
+      "members": {
+        "api": {
+          "target": "com.firebolt.device#Types::SemanticVersion",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "debug": {
+          "target": "smithy.api#String"
+        },
+        "firmware": {
+          "target": "com.firebolt.device#Types::SemanticVersion",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "os": {
+          "target": "com.firebolt.device#Types::SemanticVersion",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "sdk": {
+          "target": "com.firebolt.device#Types::SemanticVersion"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#HDCPVersionMap": {
+      "type": "structure",
+      "members": {
+        "hdcp14": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {},
+            "smithy.api#jsonName": "hdcp1.4"
+          }
+        },
+        "hdcp22": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {},
+            "smithy.api#jsonName": "hdcp2.2"
+          }
+        }
+      }
+    },
+    "com.firebolt.device#HDRFormatMap": {
+      "members": {
+        "dolbyVision": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "hdr10": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "hdr10Plus": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "hlg": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#NetworkInfoResult": {
+      "members": {
+        "state": {
+          "target": "com.firebolt.device#NetworkState",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "type": {
+          "target": "com.firebolt.device#NetworkType",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#NetworkState": {
+      "members": {
+        "connected": {
+          "target": "smithy.api#Unit"
+        },
+        "disconnected": {
+          "target": "smithy.api#Unit"
+        }
+      },
+      "type": "enum"
+    },
+    "com.firebolt.device#NetworkType": {
+      "members": {
+        "ethernet": {
+          "target": "smithy.api#Unit"
+        },
+        "hybrid": {
+          "target": "smithy.api#Unit"
+        },
+        "wifi": {
+          "target": "smithy.api#Unit"
+        }
+      },
+      "type": "enum"
+    },
+    "com.firebolt.device#Resolution": {
+      "type": "list",
+      "member": {
+        "target": "smithy.api#Integer"
+      },
+      "traits": {
+        "smithy.api#documentation": "[width, height] integer pair. Valid pairs: [720,480] NTSC SD, [720,576] PAL SD, [1280,720] HD, [1920,1080] FHD, [3840,2160] UHD."
+      }
+    },
+    "com.firebolt.device#audio": {
+      "input": {
+        "target": "com.firebolt.device#audioInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#audioOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#audioInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#audioOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.device#AudioProfiles",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#distributor": {
+      "input": {
+        "target": "com.firebolt.device#distributorInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#distributorOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#distributorInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#distributorOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#hdcp": {
+      "input": {
+        "target": "com.firebolt.device#hdcpInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#hdcpOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#hdcpInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#hdcpOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.device#HDCPVersionMap",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#hdr": {
+      "input": {
+        "target": "com.firebolt.device#hdrInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#hdrOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#hdrInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#hdrOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.device#HDRFormatMap",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#id": {
+      "input": {
+        "target": "com.firebolt.device#idInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#idOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#idInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#idOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#make": {
+      "input": {
+        "target": "com.firebolt.device#makeInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#makeOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#makeInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#makeOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#model": {
+      "input": {
+        "target": "com.firebolt.device#modelInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#modelOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#modelInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#modelOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#name": {
+      "input": {
+        "target": "com.firebolt.device#nameInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#nameOutput"
+      },
+      "traits": {
+        "com.firebolt#property": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#nameInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#nameOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#network": {
+      "input": {
+        "target": "com.firebolt.device#networkInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#networkOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#networkInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#networkOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.device#NetworkInfoResult",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#onDeviceNameChanged": {
+      "input": {
+        "target": "com.firebolt.device#onDeviceNameChangedInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#onDeviceNameChangedOutput"
+      },
+      "traits": {
+        "com.firebolt#event": {},
+        "smithy.api#deprecated": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#onDeviceNameChangedInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#onDeviceNameChangedOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#platform": {
+      "input": {
+        "target": "com.firebolt.device#platformInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#platformOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#platformInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#platformOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#provision": {
+      "input": {
+        "target": "com.firebolt.device#provisionInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#provisionOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#provisionInput": {
+      "members": {
+        "accountId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "deviceId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "distributorId": {
+          "target": "smithy.api#String"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#provisionOutput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#screenResolution": {
+      "input": {
+        "target": "com.firebolt.device#screenResolutionInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#screenResolutionOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {},
+        "smithy.api#deprecated": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#screenResolutionInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#screenResolutionOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.device#Resolution",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#sku": {
+      "input": {
+        "target": "com.firebolt.device#skuInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#skuOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#skuInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#skuOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#type": {
+      "input": {
+        "target": "com.firebolt.device#typeInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#typeOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#typeInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#typeOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#uid": {
+      "input": {
+        "target": "com.firebolt.device#uidInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#uidOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#uidInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#uidOutput": {
+      "members": {
+        "value": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.device#videoResolution": {
+      "input": {
+        "target": "com.firebolt.device#videoResolutionInput"
+      },
+      "output": {
+        "target": "com.firebolt.device#videoResolutionOutput"
+      },
+      "traits": {
+        "com.firebolt#propertyReadonly": {}
+      },
+      "type": "operation"
+    },
+    "com.firebolt.device#videoResolutionInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.device#videoResolutionOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.device#Resolution",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    }
+  },
+  "smithy": "2.0"
+}

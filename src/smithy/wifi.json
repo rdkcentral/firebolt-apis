@@ -1,0 +1,248 @@
+{
+  "shapes": {
+    "com.firebolt.wifi#AccessPoint": {
+      "members": {
+        "frequency": {
+          "target": "com.firebolt.wifi#WifiFrequency"
+        },
+        "securityMode": {
+          "target": "com.firebolt.wifi#WifiSecurityMode"
+        },
+        "signalStrength": {
+          "target": "com.firebolt.wifi#WifiSignalStrength"
+        },
+        "ssid": {
+          "target": "smithy.api#String"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.wifi#AccessPointList": {
+      "type": "structure",
+      "members": {
+        "list": {
+          "target": "com.firebolt.wifi#AccessPointItems"
+        }
+      }
+    },
+    "com.firebolt.wifi#WPSSecurityPin": {
+      "members": {
+        "manufacturerPin": {
+          "target": "smithy.api#Unit"
+        },
+        "pin": {
+          "target": "smithy.api#Unit"
+        },
+        "pushButton": {
+          "target": "smithy.api#Unit"
+        }
+      },
+      "type": "enum"
+    },
+    "com.firebolt.wifi#WifiConnectRequest": {
+      "members": {
+        "passphrase": {
+          "target": "smithy.api#Unit"
+        },
+        "securityMode": {
+          "target": "smithy.api#Unit"
+        },
+        "ssid": {
+          "target": "smithy.api#Unit"
+        },
+        "timeout": {
+          "target": "smithy.api#Unit"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.wifi#WifiFrequency": {
+      "type": "double"
+    },
+    "com.firebolt.wifi#WifiSecurityMode": {
+      "members": {
+        "none": {
+          "target": "smithy.api#Unit"
+        },
+        "wep128": {
+          "target": "smithy.api#Unit"
+        },
+        "wep64": {
+          "target": "smithy.api#Unit"
+        },
+        "wpa2Enterprise": {
+          "target": "smithy.api#Unit"
+        },
+        "wpa2EnterpriseAes": {
+          "target": "smithy.api#Unit"
+        },
+        "wpa2EnterpriseTkip": {
+          "target": "smithy.api#Unit"
+        },
+        "wpa2Psk": {
+          "target": "smithy.api#Unit"
+        },
+        "wpa2PskAes": {
+          "target": "smithy.api#Unit"
+        },
+        "wpa2PskTkip": {
+          "target": "smithy.api#Unit"
+        },
+        "wpa3PskAes": {
+          "target": "smithy.api#Unit"
+        },
+        "wpa3Sae": {
+          "target": "smithy.api#Unit"
+        },
+        "wpaEnterpriseAes": {
+          "target": "smithy.api#Unit"
+        },
+        "wpaEnterpriseTkip": {
+          "target": "smithy.api#Unit"
+        },
+        "wpaPskAes": {
+          "target": "smithy.api#Unit"
+        },
+        "wpaPskTkip": {
+          "target": "smithy.api#Unit"
+        }
+      },
+      "type": "enum"
+    },
+    "com.firebolt.wifi#WifiService": {
+      "operations": [
+        {
+          "target": "com.firebolt.wifi#scan"
+        },
+        {
+          "target": "com.firebolt.wifi#connect"
+        },
+        {
+          "target": "com.firebolt.wifi#disconnect"
+        },
+        {
+          "target": "com.firebolt.wifi#wps"
+        }
+      ],
+      "type": "service",
+      "version": "1.0"
+    },
+    "com.firebolt.wifi#WifiSignalStrength": {
+      "type": "integer"
+    },
+    "com.firebolt.wifi#connect": {
+      "input": {
+        "target": "com.firebolt.wifi#connectInput"
+      },
+      "output": {
+        "target": "com.firebolt.wifi#connectOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.wifi#connectInput": {
+      "members": {
+        "passphrase": {
+          "target": "smithy.api#String"
+        },
+        "security": {
+          "target": "com.firebolt.wifi#WifiSecurityMode"
+        },
+        "ssid": {
+          "target": "smithy.api#String"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.wifi#connectOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.wifi#AccessPoint",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.wifi#disconnect": {
+      "input": {
+        "target": "com.firebolt.wifi#disconnectInput"
+      },
+      "output": {
+        "target": "com.firebolt.wifi#disconnectOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.wifi#disconnectInput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.wifi#disconnectOutput": {
+      "members": {},
+      "type": "structure"
+    },
+    "com.firebolt.wifi#scan": {
+      "input": {
+        "target": "com.firebolt.wifi#scanInput"
+      },
+      "output": {
+        "target": "com.firebolt.wifi#scanOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.wifi#scanInput": {
+      "members": {
+        "timeout": {
+          "target": "com.firebolt.wifi#Types::Timeout"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.wifi#scanOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.wifi#AccessPointList",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.wifi#wps": {
+      "input": {
+        "target": "com.firebolt.wifi#wpsInput"
+      },
+      "output": {
+        "target": "com.firebolt.wifi#wpsOutput"
+      },
+      "type": "operation"
+    },
+    "com.firebolt.wifi#wpsInput": {
+      "members": {
+        "security": {
+          "target": "com.firebolt.wifi#WPSSecurityPin"
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.wifi#wpsOutput": {
+      "members": {
+        "value": {
+          "target": "com.firebolt.wifi#AccessPoint",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      },
+      "type": "structure"
+    },
+    "com.firebolt.wifi#AccessPointItems": {
+      "type": "list",
+      "member": {
+        "target": "com.firebolt.wifi#AccessPoint"
+      }
+    }
+  },
+  "smithy": "2.0"
+}
