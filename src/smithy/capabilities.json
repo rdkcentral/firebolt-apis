@@ -398,6 +398,88 @@
         }
       },
       "type": "structure"
+    },
+    "com.firebolt.capabilities#Capability": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "A Firebolt capability identifier (xrn:firebolt:capability:*)",
+        "smithy.api#pattern": "^xrn:firebolt:capability:([a-z0-9\\-]+:)*[a-z0-9\\-]+$"
+      }
+    },
+    "com.firebolt.capabilities#Role": {
+      "type": "enum",
+      "members": {
+        "USE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "use"
+          }
+        },
+        "MANAGE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "manage"
+          }
+        },
+        "PROVIDE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "provide"
+          }
+        }
+      }
+    },
+    "com.firebolt.capabilities#CapabilityInfo": {
+      "type": "structure",
+      "members": {
+        "capability": {
+          "target": "com.firebolt.capabilities#Capability"
+        },
+        "supported": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "available": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "use": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "manage": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "provide": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        }
+      }
+    },
+    "com.firebolt.capabilities#Permission": {
+      "type": "structure",
+      "members": {
+        "capability": {
+          "target": "com.firebolt.capabilities#Capability",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "role": {
+          "target": "com.firebolt.capabilities#Role"
+        }
+      }
     }
   },
   "smithy": "2.0"

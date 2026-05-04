@@ -61,12 +61,6 @@
       ],
       "type": "structure"
     },
-    "com.firebolt.closedcaptions#Localization::ISO639_2LanguageList": {
-      "member": {
-        "target": "com.firebolt.closedcaptions#Localization::ISO639_2Language"
-      },
-      "type": "list"
-    },
     "com.firebolt.closedcaptions#backgroundColor": {
       "input": {
         "target": "com.firebolt.closedcaptions#backgroundColorInput"
@@ -86,7 +80,7 @@
     "com.firebolt.closedcaptions#backgroundColorOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::Color",
+          "target": "com.firebolt.closedcaptions#Color",
           "traits": {
             "smithy.api#required": {}
           }
@@ -113,7 +107,7 @@
     "com.firebolt.closedcaptions#backgroundOpacityOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::Opacity",
+          "target": "com.firebolt.closedcaptions#Opacity",
           "traits": {
             "smithy.api#required": {}
           }
@@ -167,7 +161,7 @@
     "com.firebolt.closedcaptions#fontColorOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::Color",
+          "target": "com.firebolt.closedcaptions#Color",
           "traits": {
             "smithy.api#required": {}
           }
@@ -206,7 +200,7 @@
     "com.firebolt.closedcaptions#fontEdgeColorOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::Color",
+          "target": "com.firebolt.closedcaptions#Color",
           "traits": {
             "smithy.api#required": {}
           }
@@ -221,7 +215,7 @@
     "com.firebolt.closedcaptions#fontEdgeOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::FontEdge",
+          "target": "com.firebolt.closedcaptions#FontEdge",
           "traits": {
             "smithy.api#required": {}
           }
@@ -248,7 +242,7 @@
     "com.firebolt.closedcaptions#fontFamilyOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::FontFamily",
+          "target": "com.firebolt.closedcaptions#FontFamily",
           "traits": {
             "smithy.api#required": {}
           }
@@ -275,7 +269,7 @@
     "com.firebolt.closedcaptions#fontOpacityOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::Opacity",
+          "target": "com.firebolt.closedcaptions#Opacity",
           "traits": {
             "smithy.api#required": {}
           }
@@ -302,7 +296,7 @@
     "com.firebolt.closedcaptions#fontSizeOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::FontSize",
+          "target": "com.firebolt.closedcaptions#FontSize",
           "traits": {
             "smithy.api#required": {}
           }
@@ -329,7 +323,7 @@
     "com.firebolt.closedcaptions#preferredLanguagesOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Localization::ISO639_2LanguageList",
+          "target": "com.firebolt.closedcaptions#ISO639_2LanguageList",
           "traits": {
             "smithy.api#required": {}
           }
@@ -356,7 +350,7 @@
     "com.firebolt.closedcaptions#textAlignOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::HorizontalAlignment",
+          "target": "com.firebolt.closedcaptions#HorizontalAlignment",
           "traits": {
             "smithy.api#required": {}
           }
@@ -383,7 +377,7 @@
     "com.firebolt.closedcaptions#textAlignVerticalOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::VerticalAlignment",
+          "target": "com.firebolt.closedcaptions#VerticalAlignment",
           "traits": {
             "smithy.api#required": {}
           }
@@ -410,7 +404,7 @@
     "com.firebolt.closedcaptions#windowColorOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::Color",
+          "target": "com.firebolt.closedcaptions#Color",
           "traits": {
             "smithy.api#required": {}
           }
@@ -437,13 +431,144 @@
     "com.firebolt.closedcaptions#windowOpacityOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.closedcaptions#Accessibility::Opacity",
+          "target": "com.firebolt.closedcaptions#Opacity",
           "traits": {
             "smithy.api#required": {}
           }
         }
       },
       "type": "structure"
+    },
+    "com.firebolt.closedcaptions#ISO639_2LanguageList": {
+      "type": "list",
+      "member": {
+        "target": "com.firebolt.closedcaptions#ISO639_2Language"
+      }
+    },
+    "com.firebolt.closedcaptions#Color": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "A color value (CSS hex or named color)"
+      }
+    },
+    "com.firebolt.closedcaptions#FontEdge": {
+      "type": "enum",
+      "members": {
+        "NONE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "none"
+          }
+        },
+        "RAISED": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "raised"
+          }
+        },
+        "DEPRESSED": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "depressed"
+          }
+        },
+        "UNIFORM": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "uniform"
+          }
+        },
+        "DROP_SHADOW_LEFT": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "drop_shadow_left"
+          }
+        },
+        "DROP_SHADOW_RIGHT": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "drop_shadow_right"
+          }
+        }
+      }
+    },
+    "com.firebolt.closedcaptions#FontFamily": {
+      "type": "enum",
+      "members": {
+        "MONOSPACED_SERIF": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "monospaced_serif"
+          }
+        },
+        "PROPORTIONAL_SERIF": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "proportional_serif"
+          }
+        },
+        "MONOSPACED_SANSERIF": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "monospaced_sanserif"
+          }
+        },
+        "PROPORTIONAL_SANSERIF": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "proportional_sanserif"
+          }
+        },
+        "SMALLCAPS": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "smallcaps"
+          }
+        },
+        "CURSIVE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "cursive"
+          }
+        },
+        "CASUAL": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "casual"
+          }
+        }
+      }
+    },
+    "com.firebolt.closedcaptions#FontSize": {
+      "type": "float",
+      "traits": {
+        "smithy.api#documentation": "Font size (relative scale, minimum 0)"
+      }
+    },
+    "com.firebolt.closedcaptions#HorizontalAlignment": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "Horizontal alignment (left, center, right)"
+      }
+    },
+    "com.firebolt.closedcaptions#VerticalAlignment": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "Vertical alignment (top, middle, bottom)"
+      }
+    },
+    "com.firebolt.closedcaptions#Opacity": {
+      "type": "float",
+      "traits": {
+        "smithy.api#documentation": "Opacity percentage (0\u2013100)"
+      }
+    },
+    "com.firebolt.closedcaptions#ISO639_2Language": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "ISO 639-2/B three-letter language code",
+        "smithy.api#pattern": "^[a-z]{3}$"
+      }
     }
   },
   "smithy": "2.0"
