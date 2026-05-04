@@ -79,13 +79,25 @@
     "com.firebolt.profile#flagsOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.profile#Types::FlatMap",
+          "target": "com.firebolt.profile#FlatMap",
           "traits": {
             "smithy.api#required": {}
           }
         }
       },
       "type": "structure"
+    },
+    "com.firebolt.profile#FlatMap": {
+      "type": "map",
+      "key": {
+        "target": "smithy.api#String"
+      },
+      "value": {
+        "target": "smithy.api#String"
+      },
+      "traits": {
+        "smithy.api#documentation": "A flat key-value map with string values"
+      }
     }
   },
   "smithy": "2.0"

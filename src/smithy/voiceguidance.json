@@ -91,7 +91,7 @@
     "com.firebolt.voiceguidance#rateOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.voiceguidance#Accessibility::SpeechRate",
+          "target": "com.firebolt.voiceguidance#SpeechRate",
           "traits": {
             "smithy.api#required": {}
           }
@@ -119,13 +119,19 @@
     "com.firebolt.voiceguidance#speedOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.voiceguidance#Accessibility::SpeechRate",
+          "target": "com.firebolt.voiceguidance#SpeechRate",
           "traits": {
             "smithy.api#required": {}
           }
         }
       },
       "type": "structure"
+    },
+    "com.firebolt.voiceguidance#SpeechRate": {
+      "type": "float",
+      "traits": {
+        "smithy.api#documentation": "Voice guidance speed (0.5 = slow, 1.0 = normal, 2.0 = fast)"
+      }
     }
   },
   "smithy": "2.0"

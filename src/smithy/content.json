@@ -21,19 +21,19 @@
           }
         },
         "entity": {
-          "target": "com.firebolt.content#Entity::EntityDetails",
+          "target": "com.firebolt.content#EntityDetails",
           "traits": {
             "smithy.api#required": {}
           }
         },
         "reason": {
-          "target": "com.firebolt.content#Discovery::InterestReason",
+          "target": "com.firebolt.content#InterestReason",
           "traits": {
             "smithy.api#required": {}
           }
         },
         "type": {
-          "target": "com.firebolt.content#Discovery::InterestType",
+          "target": "com.firebolt.content#InterestType",
           "traits": {
             "smithy.api#required": {}
           }
@@ -50,7 +50,7 @@
           }
         },
         "entity": {
-          "target": "com.firebolt.content#Entity::EntityDetails",
+          "target": "com.firebolt.content#EntityDetails",
           "traits": {
             "smithy.api#required": {}
           }
@@ -97,13 +97,13 @@
     "com.firebolt.content#requestUserInterestInput": {
       "members": {
         "reason": {
-          "target": "com.firebolt.content#Discovery::InterestReason",
+          "target": "com.firebolt.content#InterestReason",
           "traits": {
             "smithy.api#required": {}
           }
         },
         "type": {
-          "target": "com.firebolt.content#Discovery::InterestType",
+          "target": "com.firebolt.content#InterestType",
           "traits": {
             "smithy.api#required": {}
           }
@@ -121,6 +121,77 @@
         }
       },
       "type": "structure"
+    },
+    "com.firebolt.content#InterestType": {
+      "type": "enum",
+      "members": {
+        "INTEREST": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "interest"
+          }
+        },
+        "DISINTEREST": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "disinterest"
+          }
+        }
+      }
+    },
+    "com.firebolt.content#InterestReason": {
+      "type": "enum",
+      "members": {
+        "PLAYLIST": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "playlist"
+          }
+        },
+        "REACTION": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "reaction"
+          }
+        },
+        "RECORDING": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "recording"
+          }
+        }
+      }
+    },
+    "com.firebolt.content#ContentIdentifiers": {
+      "type": "structure",
+      "members": {
+        "assetId": {
+          "target": "smithy.api#String"
+        },
+        "entityId": {
+          "target": "smithy.api#String"
+        },
+        "seasonId": {
+          "target": "smithy.api#String"
+        },
+        "seriesId": {
+          "target": "smithy.api#String"
+        }
+      }
+    },
+    "com.firebolt.content#EntityDetails": {
+      "type": "structure",
+      "members": {
+        "identifiers": {
+          "target": "com.firebolt.content#ContentIdentifiers",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "info": {
+          "target": "smithy.api#String"
+        }
+      }
     }
   },
   "smithy": "2.0"

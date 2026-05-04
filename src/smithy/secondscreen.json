@@ -146,13 +146,43 @@
     "com.firebolt.secondscreen#protocolsOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.secondscreen#Types::BooleanMap",
+          "target": "com.firebolt.secondscreen#BooleanMap",
           "traits": {
             "smithy.api#required": {}
           }
         }
       },
       "type": "structure"
+    },
+    "com.firebolt.secondscreen#BooleanMap": {
+      "type": "map",
+      "key": {
+        "target": "smithy.api#String"
+      },
+      "value": {
+        "target": "smithy.api#Boolean"
+      },
+      "traits": {
+        "smithy.api#documentation": "A map of string keys to boolean values"
+      }
+    },
+    "com.firebolt.secondscreen#SecondScreenEvent": {
+      "type": "structure",
+      "members": {
+        "type": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {},
+            "smithy.api#documentation": "The second screen event type (e.g. dial)"
+          }
+        },
+        "version": {
+          "target": "smithy.api#String"
+        },
+        "data": {
+          "target": "smithy.api#String"
+        }
+      }
     }
   },
   "smithy": "2.0"

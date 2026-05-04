@@ -193,7 +193,7 @@
     "com.firebolt.wifi#scanInput": {
       "members": {
         "timeout": {
-          "target": "com.firebolt.wifi#Types::Timeout"
+          "target": "com.firebolt.wifi#Timeout"
         }
       },
       "type": "structure"
@@ -241,6 +241,12 @@
       "type": "list",
       "member": {
         "target": "com.firebolt.wifi#AccessPoint"
+      }
+    },
+    "com.firebolt.wifi#Timeout": {
+      "type": "integer",
+      "traits": {
+        "smithy.api#documentation": "Timeout in milliseconds"
       }
     }
   },
