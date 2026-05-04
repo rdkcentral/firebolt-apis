@@ -133,7 +133,7 @@
     "com.firebolt.metrics#actionInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "category": {
           "target": "smithy.api#String",
@@ -142,7 +142,7 @@
           }
         },
         "parameters": {
-          "target": "com.firebolt.metrics#Types::FlatMap"
+          "target": "com.firebolt.metrics#FlatMap"
         },
         "type": {
           "target": "smithy.api#String",
@@ -200,7 +200,7 @@
     "com.firebolt.metrics#errorInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "code": {
           "target": "smithy.api#String",
@@ -215,7 +215,7 @@
           }
         },
         "parameters": {
-          "target": "com.firebolt.metrics#Types::FlatMap"
+          "target": "com.firebolt.metrics#FlatMap"
         },
         "type": {
           "target": "com.firebolt.metrics#ErrorType",
@@ -255,7 +255,7 @@
     "com.firebolt.metrics#eventInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "data": {
           "target": "com.firebolt.metrics#EventObject",
@@ -288,7 +288,7 @@
     "com.firebolt.metrics#mediaEndedInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String",
@@ -322,7 +322,7 @@
     "com.firebolt.metrics#mediaLoadStartInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String",
@@ -356,7 +356,7 @@
     "com.firebolt.metrics#mediaPauseInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String",
@@ -390,7 +390,7 @@
     "com.firebolt.metrics#mediaPlayInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String",
@@ -424,7 +424,7 @@
     "com.firebolt.metrics#mediaPlayingInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String",
@@ -458,7 +458,7 @@
     "com.firebolt.metrics#mediaProgressInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String",
@@ -498,7 +498,7 @@
     "com.firebolt.metrics#mediaRateChangeInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String",
@@ -538,7 +538,7 @@
     "com.firebolt.metrics#mediaRenditionChangeInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "bitrate": {
           "target": "smithy.api#Double",
@@ -593,7 +593,7 @@
     "com.firebolt.metrics#mediaSeekedInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String",
@@ -633,7 +633,7 @@
     "com.firebolt.metrics#mediaSeekingInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String",
@@ -673,7 +673,7 @@
     "com.firebolt.metrics#mediaWaitingInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String",
@@ -707,7 +707,7 @@
     "com.firebolt.metrics#pageInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "pageId": {
           "target": "smithy.api#String",
@@ -813,7 +813,7 @@
     "com.firebolt.metrics#startContentInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String"
@@ -844,7 +844,7 @@
     "com.firebolt.metrics#stopContentInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.metrics#Policies::AgePolicy"
+          "target": "com.firebolt.metrics#AgePolicy"
         },
         "entityId": {
           "target": "smithy.api#String"
@@ -862,6 +862,24 @@
         }
       },
       "type": "structure"
+    },
+    "com.firebolt.metrics#AgePolicy": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "The COPPA age policy designation for content. One of 'coppa', 'coppaKidZone', or a custom string."
+      }
+    },
+    "com.firebolt.metrics#FlatMap": {
+      "type": "map",
+      "key": {
+        "target": "smithy.api#String"
+      },
+      "value": {
+        "target": "smithy.api#String"
+      },
+      "traits": {
+        "smithy.api#documentation": "A flat key-value map with string values"
+      }
     }
   },
   "smithy": "2.0"

@@ -196,6 +196,56 @@
         }
       },
       "type": "structure"
+    },
+    "com.firebolt.accessibility#ClosedCaptionsSettings": {
+      "type": "structure",
+      "members": {
+        "enabled": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {},
+            "smithy.api#documentation": "Whether or not closed-captions should be enabled by default"
+          }
+        },
+        "preferredLanguages": {
+          "target": "com.firebolt.accessibility#StringList",
+          "traits": {
+            "smithy.api#documentation": "Preferred languages for closed captions (ISO 639-2)"
+          }
+        }
+      }
+    },
+    "com.firebolt.accessibility#VoiceGuidanceSettings": {
+      "type": "structure",
+      "members": {
+        "enabled": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {},
+            "smithy.api#documentation": "Whether or not voice guidance should be enabled by default"
+          }
+        },
+        "rate": {
+          "target": "smithy.api#Float",
+          "traits": {
+            "smithy.api#required": {},
+            "smithy.api#documentation": "The rate at which voice guidance speech will be read back to the user"
+          }
+        },
+        "navigationHints": {
+          "target": "smithy.api#Boolean",
+          "traits": {
+            "smithy.api#required": {},
+            "smithy.api#documentation": "Whether or not voice guidance should include navigation hints"
+          }
+        }
+      }
+    },
+    "com.firebolt.accessibility#StringList": {
+      "type": "list",
+      "member": {
+        "target": "smithy.api#String"
+      }
     }
   },
   "smithy": "2.0"

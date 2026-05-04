@@ -260,6 +260,38 @@
         }
       },
       "type": "structure"
+    },
+    "com.firebolt.advertising#SkipRestriction": {
+      "type": "enum",
+      "members": {
+        "NONE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "none"
+          }
+        },
+        "ADS_UNWATCHED": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "adsUnwatched"
+          }
+        },
+        "ADS_ALL": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "adsAll"
+          }
+        },
+        "ALL": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "all"
+          }
+        }
+      },
+      "traits": {
+        "smithy.api#documentation": "The advertisement skip restriction setting"
+      }
     }
   },
   "smithy": "2.0"

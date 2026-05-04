@@ -122,13 +122,13 @@
     },
     "com.firebolt.discovery#Entertainment::EntitlementList": {
       "member": {
-        "target": "com.firebolt.discovery#Entertainment::Entitlement"
+        "target": "com.firebolt.discovery#Entitlement"
       },
       "type": "list"
     },
     "com.firebolt.discovery#Entertainment::EntityInfoList": {
       "member": {
-        "target": "com.firebolt.discovery#Entertainment::EntityInfo"
+        "target": "com.firebolt.discovery#EntityInfo"
       },
       "type": "list"
     },
@@ -176,24 +176,22 @@
       "type": "structure"
     },
     "com.firebolt.discovery#EntityInfoResult": {
+      "type": "structure",
       "members": {
-        "entity": {
-          "target": "com.firebolt.discovery#Entertainment::EntityInfo",
-          "traits": {
-            "smithy.api#required": {}
-          }
-        },
         "expires": {
           "target": "smithy.api#String",
           "traits": {
-            "smithy.api#required": {}
+            "smithy.api#required": {},
+            "smithy.api#documentation": "ISO 8601 expiry timestamp"
           }
         },
-        "related": {
-          "target": "com.firebolt.discovery#Entertainment::EntityInfoList"
+        "entity": {
+          "target": "com.firebolt.discovery#EntityInfo",
+          "traits": {
+            "smithy.api#required": {}
+          }
         }
-      },
-      "type": "structure"
+      }
     },
     "com.firebolt.discovery#FederatedRequest": {
       "members": {
@@ -247,6 +245,7 @@
       "type": "structure"
     },
     "com.firebolt.discovery#PurchasedContentParameters": {
+      "type": "structure",
       "members": {
         "limit": {
           "target": "smithy.api#Integer",
@@ -255,13 +254,12 @@
           }
         },
         "offeringType": {
-          "target": "com.firebolt.discovery#Entertainment::OfferingType"
+          "target": "com.firebolt.discovery#OfferingType"
         },
         "programType": {
-          "target": "com.firebolt.discovery#Entertainment::ProgramType"
+          "target": "com.firebolt.discovery#ProgramType"
         }
-      },
-      "type": "structure"
+      }
     },
     "com.firebolt.discovery#PurchasedContentResult": {
       "members": {
@@ -447,7 +445,7 @@
           }
         },
         "intent": {
-          "target": "com.firebolt.discovery#Intents::NavigationIntent"
+          "target": "com.firebolt.discovery#NavigationIntent"
         }
       },
       "type": "structure"
@@ -482,7 +480,7 @@
     "com.firebolt.discovery#onNavigateToOutput": {
       "members": {
         "value": {
-          "target": "com.firebolt.discovery#Intents::NavigationIntent",
+          "target": "com.firebolt.discovery#NavigationIntent",
           "traits": {
             "smithy.api#required": {}
           }
@@ -702,7 +700,7 @@
     "com.firebolt.discovery#userInterestInput": {
       "members": {
         "entity": {
-          "target": "com.firebolt.discovery#Entity::EntityDetails",
+          "target": "com.firebolt.discovery#EntityDetails",
           "traits": {
             "smithy.api#required": {}
           }
@@ -741,7 +739,7 @@
           "target": "smithy.api#String"
         },
         "identifiers": {
-          "target": "com.firebolt.discovery#Entertainment::ContentIdentifiers",
+          "target": "com.firebolt.discovery#ContentIdentifiers",
           "traits": {
             "smithy.api#required": {}
           }
@@ -750,7 +748,7 @@
           "target": "smithy.api#String"
         },
         "title": {
-          "target": "com.firebolt.discovery#Types::LocalizedString",
+          "target": "com.firebolt.discovery#LocalizedString",
           "traits": {
             "smithy.api#required": {}
           }
@@ -781,7 +779,7 @@
     "com.firebolt.discovery#watchedInput": {
       "members": {
         "agePolicy": {
-          "target": "com.firebolt.discovery#Policies::AgePolicy"
+          "target": "com.firebolt.discovery#AgePolicy"
         },
         "completed": {
           "target": "smithy.api#Boolean"
@@ -811,6 +809,263 @@
         }
       },
       "type": "structure"
+    },
+    "com.firebolt.discovery#AgePolicy": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "COPPA age policy designation"
+      }
+    },
+    "com.firebolt.discovery#LocalizedString": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "A localized string (use current locale)"
+      }
+    },
+    "com.firebolt.discovery#NavigationIntent": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "A Firebolt navigation intent identifier"
+      }
+    },
+    "com.firebolt.discovery#InterestType": {
+      "type": "enum",
+      "members": {
+        "INTEREST": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "interest"
+          }
+        },
+        "DISINTEREST": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "disinterest"
+          }
+        }
+      }
+    },
+    "com.firebolt.discovery#InterestReason": {
+      "type": "enum",
+      "members": {
+        "PLAYLIST": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "playlist"
+          }
+        },
+        "REACTION": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "reaction"
+          }
+        },
+        "RECORDING": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "recording"
+          }
+        }
+      }
+    },
+    "com.firebolt.discovery#OfferingType": {
+      "type": "enum",
+      "members": {
+        "FREE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "free"
+          }
+        },
+        "SUBSCRIBE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "subscribe"
+          }
+        },
+        "BUY": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "buy"
+          }
+        },
+        "RENT": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "rent"
+          }
+        }
+      }
+    },
+    "com.firebolt.discovery#ProgramType": {
+      "type": "enum",
+      "members": {
+        "MOVIE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "movie"
+          }
+        },
+        "EPISODE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "episode"
+          }
+        },
+        "SEASON": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "season"
+          }
+        },
+        "SERIES": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "series"
+          }
+        },
+        "OTHER": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "other"
+          }
+        },
+        "PREVIEW": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "preview"
+          }
+        },
+        "EXTRA": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "extra"
+          }
+        },
+        "CONCERT": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "concert"
+          }
+        },
+        "SPORTING_EVENT": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "sportingEvent"
+          }
+        },
+        "ADVERTISEMENT": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "advertisement"
+          }
+        },
+        "MUSIC_VIDEO": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "musicVideo"
+          }
+        },
+        "MINISODE": {
+          "target": "smithy.api#Unit",
+          "traits": {
+            "smithy.api#enumValue": "minisode"
+          }
+        }
+      }
+    },
+    "com.firebolt.discovery#ContentIdentifiers": {
+      "type": "structure",
+      "members": {
+        "assetId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#documentation": "Identifies a particular playable asset"
+          }
+        },
+        "entityId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#documentation": "Identifies an entity (program, series)"
+          }
+        },
+        "seasonId": {
+          "target": "smithy.api#String"
+        },
+        "seriesId": {
+          "target": "smithy.api#String"
+        },
+        "appContentData": {
+          "target": "smithy.api#String"
+        }
+      }
+    },
+    "com.firebolt.discovery#EntityInfo": {
+      "type": "structure",
+      "members": {
+        "title": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "entityId": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "entityType": {
+          "target": "smithy.api#String",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "programType": {
+          "target": "com.firebolt.discovery#ProgramType"
+        },
+        "synopsis": {
+          "target": "smithy.api#String"
+        },
+        "releaseDate": {
+          "target": "smithy.api#String"
+        },
+        "contentRatings": {
+          "target": "com.firebolt.discovery#ContentRatingList"
+        }
+      }
+    },
+    "com.firebolt.discovery#ContentRatingList": {
+      "type": "list",
+      "member": {
+        "target": "smithy.api#String"
+      }
+    },
+    "com.firebolt.discovery#EntityDetails": {
+      "type": "structure",
+      "members": {
+        "identifiers": {
+          "target": "com.firebolt.discovery#ContentIdentifiers",
+          "traits": {
+            "smithy.api#required": {}
+          }
+        },
+        "info": {
+          "target": "smithy.api#String"
+        }
+      }
+    },
+    "com.firebolt.discovery#EntitlementList": {
+      "type": "list",
+      "member": {
+        "target": "smithy.api#String"
+      }
+    },
+    "com.firebolt.discovery#Entitlement": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "An entitlement identifier (entitlementId)"
+      }
     }
   },
   "smithy": "2.0"

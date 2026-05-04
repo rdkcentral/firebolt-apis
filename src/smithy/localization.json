@@ -357,6 +357,45 @@
       "traits": {
         "smithy.api#documentation": "Open map of string keys to any primitive value (number, string, or boolean). Max 32 properties, values max 1024 chars."
       }
+    },
+    "com.firebolt.localization#Locale": {
+      "type": "string",
+      "traits": {
+        "smithy.api#pattern": "^[a-zA-Z]+([a-zA-Z0-9\\-]*)$",
+        "smithy.api#documentation": "A BCP 47 locale identifier (e.g. en-US)"
+      }
+    },
+    "com.firebolt.localization#Language": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "ISO 639 language code (e.g. en)"
+      }
+    },
+    "com.firebolt.localization#CountryCode": {
+      "type": "string",
+      "traits": {
+        "smithy.api#pattern": "^[A-Z]{2}$",
+        "smithy.api#documentation": "ISO 3166-1 alpha-2 country code (e.g. US)"
+      }
+    },
+    "com.firebolt.localization#TimeZone": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "IANA time zone identifier (e.g. America/New_York)"
+      }
+    },
+    "com.firebolt.localization#Locality": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "Geographic locality (city or region name)"
+      }
+    },
+    "com.firebolt.localization#ISO639_2Language": {
+      "type": "string",
+      "traits": {
+        "smithy.api#documentation": "ISO 639-2/B three-letter language code",
+        "smithy.api#pattern": "^[a-z]{3}$"
+      }
     }
   },
   "smithy": "2.0"
