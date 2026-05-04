@@ -1,0 +1,470 @@
+{
+  "smithy": "2.0",
+  "shapes": {
+    "com.firebolt.texttospeech#TextToSpeechService": {
+      "type": "service",
+      "version": "1.0",
+      "operations": [
+        { "target": "com.firebolt.texttospeech#speak" },
+        { "target": "com.firebolt.texttospeech#pause" },
+        { "target": "com.firebolt.texttospeech#resume" },
+        { "target": "com.firebolt.texttospeech#cancel" },
+        { "target": "com.firebolt.texttospeech#getspeechstate" },
+        { "target": "com.firebolt.texttospeech#onWillspeak" },
+        { "target": "com.firebolt.texttospeech#onSpeechstart" },
+        { "target": "com.firebolt.texttospeech#onSpeechpause" },
+        { "target": "com.firebolt.texttospeech#onSpeechresume" },
+        { "target": "com.firebolt.texttospeech#onSpeechcomplete" },
+        { "target": "com.firebolt.texttospeech#onSpeechinterrupted" },
+        { "target": "com.firebolt.texttospeech#onNetworkerror" },
+        { "target": "com.firebolt.texttospeech#onPlaybackerror" },
+        { "target": "com.firebolt.texttospeech#listvoices" }
+      ]
+    },
+
+    "com.firebolt.texttospeech#speak": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#speakInput" },
+      "output": { "target": "com.firebolt.texttospeech#speakOutput" }
+    },
+    "com.firebolt.texttospeech#speakInput": {
+      "type": "structure",
+      "members": {
+        "text": { "target": "smithy.api#String", "traits": { "smithy.api#required": {} } }
+      }
+    },
+    "com.firebolt.texttospeech#speakOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#SpeechResponse",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#pause": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#pauseInput" },
+      "output": { "target": "com.firebolt.texttospeech#pauseOutput" }
+    },
+    "com.firebolt.texttospeech#pauseInput": {
+      "type": "structure",
+      "members": {
+        "speechid": { "target": "smithy.api#Integer", "traits": { "smithy.api#required": {} } }
+      }
+    },
+    "com.firebolt.texttospeech#pauseOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#TTSStatusResponse",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#resume": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#resumeInput" },
+      "output": { "target": "com.firebolt.texttospeech#resumeOutput" }
+    },
+    "com.firebolt.texttospeech#resumeInput": {
+      "type": "structure",
+      "members": {
+        "speechid": { "target": "smithy.api#Integer", "traits": { "smithy.api#required": {} } }
+      }
+    },
+    "com.firebolt.texttospeech#resumeOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#TTSStatusResponse",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#cancel": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#cancelInput" },
+      "output": { "target": "com.firebolt.texttospeech#cancelOutput" }
+    },
+    "com.firebolt.texttospeech#cancelInput": {
+      "type": "structure",
+      "members": {
+        "speechid": { "target": "smithy.api#Integer", "traits": { "smithy.api#required": {} } }
+      }
+    },
+    "com.firebolt.texttospeech#cancelOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#TTSStatusResponse",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#getspeechstate": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#getspeechstateInput" },
+      "output": { "target": "com.firebolt.texttospeech#getspeechstateOutput" }
+    },
+    "com.firebolt.texttospeech#getspeechstateInput": {
+      "type": "structure",
+      "members": {
+        "speechid": { "target": "smithy.api#Integer", "traits": { "smithy.api#required": {} } }
+      }
+    },
+    "com.firebolt.texttospeech#getspeechstateOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#SpeechStateResponse",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#onWillspeak": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#onWillspeakInput" },
+      "output": { "target": "com.firebolt.texttospeech#onWillspeakOutput" },
+      "traits": { "com.firebolt#event": {} }
+    },
+    "com.firebolt.texttospeech#onWillspeakInput": {
+      "type": "structure",
+      "members": {
+        "SpeechId": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+    "com.firebolt.texttospeech#onWillspeakOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#onSpeechstart": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#onSpeechstartInput" },
+      "output": { "target": "com.firebolt.texttospeech#onSpeechstartOutput" },
+      "traits": { "com.firebolt#event": {} }
+    },
+    "com.firebolt.texttospeech#onSpeechstartInput": {
+      "type": "structure",
+      "members": {
+        "SpeechId": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+    "com.firebolt.texttospeech#onSpeechstartOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#onSpeechpause": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#onSpeechpauseInput" },
+      "output": { "target": "com.firebolt.texttospeech#onSpeechpauseOutput" },
+      "traits": { "com.firebolt#event": {} }
+    },
+    "com.firebolt.texttospeech#onSpeechpauseInput": {
+      "type": "structure",
+      "members": {
+        "SpeechId": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+    "com.firebolt.texttospeech#onSpeechpauseOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#onSpeechresume": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#onSpeechresumeInput" },
+      "output": { "target": "com.firebolt.texttospeech#onSpeechresumeOutput" },
+      "traits": { "com.firebolt#event": {} }
+    },
+    "com.firebolt.texttospeech#onSpeechresumeInput": {
+      "type": "structure",
+      "members": {
+        "SpeechId": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+    "com.firebolt.texttospeech#onSpeechresumeOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#onSpeechcomplete": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#onSpeechcompleteInput" },
+      "output": { "target": "com.firebolt.texttospeech#onSpeechcompleteOutput" },
+      "traits": { "com.firebolt#event": {} }
+    },
+    "com.firebolt.texttospeech#onSpeechcompleteInput": {
+      "type": "structure",
+      "members": {
+        "SpeechId": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+    "com.firebolt.texttospeech#onSpeechcompleteOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#onSpeechinterrupted": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#onSpeechinterruptedInput" },
+      "output": { "target": "com.firebolt.texttospeech#onSpeechinterruptedOutput" },
+      "traits": { "com.firebolt#event": {} }
+    },
+    "com.firebolt.texttospeech#onSpeechinterruptedInput": {
+      "type": "structure",
+      "members": {
+        "SpeechId": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+    "com.firebolt.texttospeech#onSpeechinterruptedOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#onNetworkerror": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#onNetworkerrorInput" },
+      "output": { "target": "com.firebolt.texttospeech#onNetworkerrorOutput" },
+      "traits": { "com.firebolt#event": {} }
+    },
+    "com.firebolt.texttospeech#onNetworkerrorInput": {
+      "type": "structure",
+      "members": {
+        "SpeechId": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+    "com.firebolt.texttospeech#onNetworkerrorOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#onPlaybackerror": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#onPlaybackerrorInput" },
+      "output": { "target": "com.firebolt.texttospeech#onPlaybackerrorOutput" },
+      "traits": { "com.firebolt#event": {} }
+    },
+    "com.firebolt.texttospeech#onPlaybackerrorInput": {
+      "type": "structure",
+      "members": {
+        "SpeechId": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+    "com.firebolt.texttospeech#onPlaybackerrorOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#SpeechIdEvent",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#listvoices": {
+      "type": "operation",
+      "input":  { "target": "com.firebolt.texttospeech#listvoicesInput" },
+      "output": { "target": "com.firebolt.texttospeech#listvoicesOutput" }
+    },
+    "com.firebolt.texttospeech#listvoicesInput": {
+      "type": "structure",
+      "members": {
+        "language": { "target": "smithy.api#String", "traits": { "smithy.api#required": {} } }
+      }
+    },
+    "com.firebolt.texttospeech#listvoicesOutput": {
+      "type": "structure",
+      "members": {
+        "value": {
+          "target": "com.firebolt.texttospeech#ListVoicesResponse",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#SpeechResponse": {
+      "type": "structure",
+      "members": {
+        "speechid":   { "target": "smithy.api#Integer", "traits": { "smithy.api#required": {} } },
+        "TTS_Status": { "target": "smithy.api#Integer", "traits": { "smithy.api#required": {} } },
+        "success":    { "target": "smithy.api#Boolean", "traits": { "smithy.api#required": {} } }
+      }
+    },
+
+    "com.firebolt.texttospeech#TTSStatusResponse": {
+      "type": "structure",
+      "members": {
+        "TTS_Status": { "target": "smithy.api#Integer", "traits": { "smithy.api#required": {} } },
+        "success":    { "target": "smithy.api#Boolean", "traits": { "smithy.api#required": {} } }
+      }
+    },
+
+    "com.firebolt.texttospeech#SpeechIdEvent": {
+      "type": "structure",
+      "members": {
+        "speechid": { "target": "smithy.api#Integer", "traits": { "smithy.api#required": {} } }
+      }
+    },
+
+    "com.firebolt.texttospeech#SpeechState": {
+      "type": "intEnum",
+      "members": {
+        "SPEECH_PENDING":     { "target": "smithy.api#Unit", "traits": { "smithy.api#enumValue": 0 } },
+        "SPEECH_IN_PROGRESS": { "target": "smithy.api#Unit", "traits": { "smithy.api#enumValue": 1 } },
+        "SPEECH_PAUSED":      { "target": "smithy.api#Unit", "traits": { "smithy.api#enumValue": 2 } },
+        "SPEECH_NOT_FOUND":   { "target": "smithy.api#Unit", "traits": { "smithy.api#enumValue": 3 } }
+      }
+    },
+
+    "com.firebolt.texttospeech#SpeechStateResponse": {
+      "type": "structure",
+      "members": {
+        "speechstate": {
+          "target": "com.firebolt.texttospeech#SpeechState",
+          "traits": { "smithy.api#required": {} }
+        },
+        "TTS_Status": { "target": "smithy.api#Integer", "traits": { "smithy.api#required": {} } },
+        "success":    { "target": "smithy.api#Boolean", "traits": { "smithy.api#required": {} } }
+      }
+    },
+
+    "com.firebolt.texttospeech#ListVoicesResponse": {
+      "type": "structure",
+      "members": {
+        "TTS_Status": { "target": "smithy.api#Integer", "traits": { "smithy.api#required": {} } },
+        "voices": {
+          "target": "com.firebolt.texttospeech#StringList",
+          "traits": { "smithy.api#required": {} }
+        }
+      }
+    },
+
+    "com.firebolt.texttospeech#StringList": {
+      "type": "list",
+      "member": { "target": "smithy.api#String" }
+    },
+
+    "com.firebolt.texttospeech#TTSEnabled": {
+      "type": "structure",
+      "members": {
+        "TTS_Status": { "target": "smithy.api#Integer", "traits": { "smithy.api#required": {} } },
+        "isenabled":  { "target": "smithy.api#Boolean", "traits": { "smithy.api#required": {} } }
+      }
+    },
+
+    "com.firebolt.texttospeech#TTSConfiguration": {
+      "type": "structure",
+      "members": {
+        "success":            { "target": "smithy.api#Boolean", "traits": { "smithy.api#required": {} } },
+        "ttsendpoint":        { "target": "smithy.api#String" },
+        "ttsendpointsecured": { "target": "smithy.api#String" },
+        "language":           { "target": "smithy.api#String" },
+        "voice":              { "target": "smithy.api#String" },
+        "volume":             { "target": "smithy.api#Integer" },
+        "primvolduckpercent": { "target": "smithy.api#Integer" },
+        "rate":               { "target": "smithy.api#Integer" },
+        "speechrate":         { "target": "com.firebolt.texttospeech#SpeechRate" },
+        "fallbacktext":       { "target": "com.firebolt.texttospeech#FallbackText" }
+      }
+    },
+
+    "com.firebolt.texttospeech#SpeechRate": {
+      "type": "enum",
+      "members": {
+        "SLOW":    { "target": "smithy.api#Unit", "traits": { "smithy.api#enumValue": "slow" } },
+        "MEDIUM":  { "target": "smithy.api#Unit", "traits": { "smithy.api#enumValue": "medium" } },
+        "FAST":    { "target": "smithy.api#Unit", "traits": { "smithy.api#enumValue": "fast" } },
+        "FASTER":  { "target": "smithy.api#Unit", "traits": { "smithy.api#enumValue": "faster" } },
+        "FASTEST": { "target": "smithy.api#Unit", "traits": { "smithy.api#enumValue": "fastest" } }
+      }
+    },
+
+    "com.firebolt.texttospeech#FallbackText": {
+      "type": "structure",
+      "members": {
+        "scenario": { "target": "smithy.api#String" },
+        "value":    { "target": "smithy.api#String" }
+      }
+    },
+
+    "com.firebolt.texttospeech#TTSState": {
+      "type": "structure",
+      "members": {
+        "state": { "target": "smithy.api#Boolean", "traits": { "smithy.api#required": {} } }
+      }
+    },
+
+    "com.firebolt.texttospeech#TTSVoice": {
+      "type": "structure",
+      "members": {
+        "voice": { "target": "smithy.api#String", "traits": { "smithy.api#required": {} } }
+      }
+    }
+  }
+}
