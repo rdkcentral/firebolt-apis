@@ -117,3 +117,53 @@ INTENT={"result":{"lmt":0,...}}
 ## Requirements documents
 
 Normative specs live in `requirements/specifications/`. They use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY). When adding or changing an API, update the corresponding spec document. New specs should follow the template in `requirements/style-guide-and-template.md`.
+
+---
+
+## API authoring with OpenSpec
+
+This repo uses **OpenSpec** to manage API changes — new modules, new methods, type changes. All
+in-flight changes live under `openspec/changes/`. The full governance context (type conventions,
+method tags, naming rules, tooling commands) is in `openspec/config.yaml`.
+
+### Workflow commands
+
+| Command | What it does |
+|---------|--------------|
+| `/opsc:propose` | Propose a new API change — generates `proposal.md`, `design.md`, `specs/`, `tasks.md` |
+| `/opsc:apply` | Work through the tasks in an active change (drafts `.smithy`, runs validation) |
+| `/opsc:explore` | Thinking-partner mode — explore a design question before committing to a proposal |
+| `/opsc:archive` | Archive a completed change after all tasks are done |
+
+### What the AI does during `/opsc:apply`
+
+When applying a spec change task, the AI will:
+1. Read existing `src/smithy/` files to infer type and naming conventions
+2. Draft or modify the target `src/smithy/<module>.json` Smithy AST
+3. Call `fb-gen --lint` to validate the spec
+4. Call `fb-gen --diff` to confirm no unintended upstream drift
+5. Mark the task complete and proceed to the next
+
+### MCP tooling (`fb-mcp`)
+
+`fb-mcp` is an MCP server that exposes the SDK generator as structured tools for AI agents.
+Configure it in your VS Code `mcp.json`:
+
+```json
+{
+  "firebolt": {
+    "command": "fb-mcp",
+    "env": {
+      "FB_SPEC_DIR": "${workspaceFolder}/src/smithy"
+    }
+  }
+}
+```
+
+Tools available to the AI:
+- `list_modules` — list all modules in `src/smithy/`
+- `get_module` — full IR summary of a module (method names, types, kinds)
+- `validate_module` — parse and lint a spec file, returns errors with no side effects
+- `generate` — generate C++/Rust/TS bindings and return file contents (does not write to disk)
+- `diff_vs_upstream` — compare Smithy specs against OpenRPC upstream for drift
+
