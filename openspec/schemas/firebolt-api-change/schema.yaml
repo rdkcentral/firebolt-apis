@@ -1,0 +1,209 @@
+name: firebolt-api-change
+version: 1
+description: Firebolt API authoring workflow - interview-driven proposal → specs → design → tasks with VERIFY enforcement
+artifacts:
+  - id: proposal
+    generates: proposal.md
+    description: Initial proposal document outlining the change
+    template: proposal.md
+    instruction: |
+      You are helping a developer add or change a Firebolt API. They may know
+      nothing about Smithy IDL. Your job is to interview them in plain English,
+      resolve all IDL decisions yourself, and then write the proposal.
+
+      INTERVIEW SCRIPT - ask these questions in order, one at a time:
+
+      Q1. "Which Firebolt module does this API belong to?
+           (e.g. device, localization, hdmiinput, voiceguidance, or a new module name)"
+
+      Q2. "Describe what this API does in one or two sentences, as if explaining
+           to someone who has never seen Firebolt."
+
+      Q3. "Can an app CHANGE this value, or does the platform own it?
+           - Platform owns it, apps only read it, and the value can change at runtime  → read-only property
+           - Apps can both read AND write this value  → read-write property
+           - This value is set at factory time and never changes (e.g. device model)  → immutable property
+           - The platform pushes this to apps without them asking  → event
+           - The app triggers an action (like launching or clearing)  → plain call"
+
+      Q4. "What does the API return? Describe the value, not the type:
+           - A count, size, duration, percentage, or other non-negative number  → UInt32
+           - A yes/no flag  → Boolean
+           - One of a fixed set of named options (list them)  → enum
+           - Free-form text  → String
+           - A number that could be negative  → Integer
+           - A complex object with multiple fields (describe each)  → structure
+           - Nothing (action with no return value)  → void"
+
+      Q5. "Is there an existing Firebolt capability string for this?
+           (e.g. xrn:firebolt:capability:device:model)
+           If you don’t know, say so and I’ll use the module’s existing pattern."
+
+      Q6. "Is this adding to an existing module, or creating a brand new module?"
+
+      ESCAPE HATCH: If none of the patterns in Q3 fit, ask the developer to
+      describe the full interaction and determine the correct trait yourself.
+
+      TRAIT DECISION TABLE (for your reference - do not show to user):
+        read-only property (platform owns, can push changes)  → @propertyReadonly
+        read-write property (app can set)                     → @property
+        immutable property (set at factory)                   → @propertyImmutable
+        platform-initiated push (no getter)                   → @event
+        app-triggered action                                  → (no trait)
+
+      TYPE DECISION TABLE (for your reference - do not show to user):
+        count/size/duration/percentage/non-negative           → UInt32
+        yes/no                                                → Boolean
+        fixed named options                                   → enum ShapeName { VALUE1 VALUE2 }
+        free text                                             → String
+        signed number                                         → Integer
+        multi-field object                                    → structure (ask for each field)
+        nothing                                               → void (omit output shape)
+
+      NAMING RULES (apply automatically - do not ask the user):
+        - Module name: lowercase (hdmiinput, voiceguidance)
+        - Service: <Module>Service (HdmiinputService)
+        - Operation: camelCase (getVolume, onVolumeChanged)
+        - Shape names: PascalCase, NO module name prefix (Volume not HdmiinputVolume)
+        - Input/Output wrappers: <Operation>Input / <Operation>Output
+
+      After the interview, write the proposal using the template. Fill in all
+      resolved decisions (trait, type, shape names) - the user should never see
+      Smithy syntax in the proposal.
+
+      Capabilities section rules:
+        - Each new or changed module becomes one capability (use module name as kebab-case id)
+        - Check openspec/specs/ for existing spec names before listing Modified Capabilities
+    requires: []
+  - id: specs
+    generates: specs/**/*.md
+    description: Detailed specifications for the change
+    template: spec.md
+    instruction: |
+      Create one spec file per capability (module) listed in the proposal.
+
+      FILE LOCATION RULES:
+        - New module: specs/<module-name>/spec.md (use module name as capability id)
+        - Existing module with new operations: specs/<module-name>/spec.md (delta)
+        - Check openspec/specs/ first — use the existing folder name if one exists
+
+      FIREBOLT REQUIREMENT FORMAT:
+        Each requirement describes one operation or group of related operations.
+        Include the resolved Smithy trait in the requirement text.
+
+        Example:
+          ### Requirement: Module exposes <operationName> as a read-only property
+          The `<module>` module SHALL expose `<operationName>` as a
+          `@propertyReadonly` operation returning `<Type>`. Apps MAY subscribe
+          to receive push notifications when the value changes.
+
+      SCENARIO RULES:
+        - Exactly 4 hashtags (####) — not 3, not 5
+        - WHEN describes the app action or platform trigger
+        - THEN describes the observable result
+        - Every requirement needs at least one scenario
+        - Name scenarios after the observable behaviour, not the implementation
+
+      DELTA OPERATIONS:
+        - ## ADDED Requirements — new operations or modules
+        - ## MODIFIED Requirements — changed behaviour (paste full updated block)
+        - ## REMOVED Requirements — deprecated (include Reason + Migration)
+
+      COMMON PITFALL: Scenarios with 3 hashtags (###) are silently treated as
+      requirements. Always use #### for scenarios.
+    requires:
+      - proposal
+  - id: design
+    generates: design.md
+    description: Trait and type rationale - scales from 1-3 sentences to full doc
+    template: design.md
+    instruction: |
+      Write the design document. Depth scales with complexity:
+
+      SIMPLE CASE (adding one or two operations to an existing module):
+        Write 1-3 sentences only, using the Short Rationale template sections:
+        - Trait choice: why @propertyReadonly / @property / @event / plain call
+        - Type decisions: why UInt32 / Boolean / enum / String / Integer for each return value
+        - Notes: anything non-obvious (e.g. why this module and not another)
+
+        Example:
+          "Used @propertyReadonly because the platform owns the volume level and
+          apps cannot set it directly. Returned UInt32 because volume is 0-100
+          (always non-negative). Placed in hdmiinput module as it is specific to
+          the HDMI input subsystem."
+
+      COMPLEX CASE (new module, or 3+ new shapes, or non-standard trait pattern):
+        Write a full design doc using the Full Design template sections:
+        Context, Goals/Non-Goals, Decisions (with alternatives), Risks/Trade-offs.
+
+      ALWAYS required regardless of complexity:
+        - The trait choice and its reason
+        - Why UInt32 vs Integer (if integers involved)
+        - Why enum vs String (if a choice was made)
+
+      This file is the permanent audit trail. Future developers reading the
+      archived change should be able to answer "why this shape?" from design.md.
+    requires:
+      - proposal
+  - id: tasks
+    generates: tasks.md
+    description: Implementation checklist with VERIFY enforcement
+    template: tasks.md
+    instruction: |
+      Generate the task list using the four-group template. Fill in the
+      <module> and <operation> placeholders from the proposal.
+
+      For the method count delta in task 3.1: count the operations being added.
+        - @propertyReadonly adds 2 methods (getter + subscriber)
+        - @property adds 3 methods (getter + setter + subscriber)
+        - @propertyImmutable adds 1 method (getter only)
+        - @event adds 1 method
+        - Plain call adds 1 method
+
+      Add a ## 0. New module setup group ONLY if this is a new module:
+        - [ ] 0.1 Create src/smithy/<module>.smithy with service skeleton
+        - [ ] 0.2 Add module to openspec/rdke.profile.yaml smithy-canonical layer
+
+      VERIFY tasks are mandatory gating steps. The apply phase will paste
+      actual command output into the <!-- paste output here --> slot before
+      marking the task complete. Never pre-fill or skip these slots.
+    requires:
+      - specs
+      - design
+apply:
+  requires:
+    - tasks
+  tracks: tasks.md
+  instruction: |
+    Read all context files (proposal, design, specs, tasks) before starting.
+    Work through tasks in order. Mark each complete immediately after finishing it.
+
+    VERIFY TASK RULES (tasks marked **VERIFY**):
+      1. Run the exact command shown
+      2. Paste the full output into the <!-- paste output here --> slot
+      3. Check the output for errors before marking complete
+      4. If the output shows errors: STOP, report the error and output, wait for guidance
+      5. Do NOT mark a VERIFY task complete without pasted output
+      6. Do NOT assume the command succeeded — run it and check
+
+    TYPE CORRECTNESS (task group 2):
+      For each integer field in the .smithy file, confirm:
+        - Non-negative values (counts, percentages, sizes, durations) use UInt32
+        - Signed values use Integer
+        - Boolean fields use Boolean (not 0/1 integers)
+      For each string field, confirm:
+        - If it has a fixed set of valid values, it should be an enum, not String
+      For each shape name, confirm:
+        - No shape name starts with the module name (Volume not HdmiinputVolume)
+
+    QUIRKS DISCIPLINE (task group 4):
+      If you discover a type error in the upstream spec during this change:
+        - Fix it directly in the .smithy file
+        - Do NOT add a [spec-bug] entry to rdke.quirks.toml
+      New quirk entries are only acceptable as [platform-dev] with a justification
+      comment explaining why the platform genuinely differs from the spec.
+
+    Pause if:
+      - A VERIFY command output shows errors
+      - A task is ambiguous or contradicts the spec
+      - You are about to add a [spec-bug] quirk entry

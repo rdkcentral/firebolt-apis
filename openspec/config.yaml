@@ -1,4 +1,4 @@
-schema: spec-driven
+schema: firebolt-api-change
 
 context: |
   ## Project: firebolt-apis

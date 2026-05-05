@@ -110,7 +110,9 @@ openspec new change "my-new-api"
 
 | Command | What it does |
 |---|---|
-| `/opsx:propose` | Generate proposal, design, specs, and task list in one step |
+| `/opsx:new-fb-api` | **Recommended** — full end-to-end interview: resolves module, trait, and types from plain English, then creates the change and implements it. No Smithy knowledge required. |
+| `/opsx:modify-fb-api` | **Recommended** — same for modifying an existing operation: identifies the change, checks for breaking changes, and implements it. |
+| `/opsx:propose` | Generate proposal, design, specs, and task list in one step (manual) |
 | `/opsx:apply` | Implement the tasks in an active change |
 | `/opsx:archive` | Archive a completed change |
 

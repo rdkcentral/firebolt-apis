@@ -41,3 +41,17 @@ the canonical source format.
 #### Scenario: README references the smithy canonical format rule
 - **WHEN** `README.md` is read
 - **THEN** it states that all specs in `src/smithy/` are `.smithy` IDL files and that `.json` JSON AST files SHALL NOT be created
+
+### Requirement: AI-guided authoring does not require Smithy knowledge
+The `smithy-idl-canonical` authoring workflow SHALL be accessible to developers
+with no prior Smithy IDL knowledge. The `firebolt-api-change` schema SHALL encode
+all IDL knowledge (traits, types, naming rules) so that the user only needs to
+describe API behaviour in plain English.
+
+#### Scenario: Developer adds API without writing IDL manually
+- **WHEN** a developer follows the `/opsx:new-fb-api` or `/opsx:modify-fb-api` workflow
+- **THEN** the AI generates the correct `.smithy` IDL content from the developer's plain-English answers, including the correct trait, types, and naming
+
+#### Scenario: IDL correctness verified by tooling, not by user
+- **WHEN** the apply workflow reaches the validation tasks
+- **THEN** `fb-gen --lint` is run and its output is recorded before the task is marked complete — the user does not manually verify IDL correctness

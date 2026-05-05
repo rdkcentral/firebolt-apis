@@ -130,6 +130,8 @@ method tags, naming rules, tooling commands) is in `openspec/config.yaml`.
 
 | Command | What it does |
 |---------|--------------|
+| `/opsx:new-fb-api` | **Add a new Firebolt API end-to-end** — interviews you in plain English, resolves all Smithy decisions, creates the change, and implements it. No Smithy knowledge required. |
+| `/opsx:modify-fb-api` | **Modify an existing Firebolt API end-to-end** — interviews you to identify the operation and what is changing, detects breaking changes, creates the change, and implements it. No Smithy knowledge required. |
 | `/opsc:propose` | Propose a new API change — generates `proposal.md`, `design.md`, `specs/`, `tasks.md` |
 | `/opsc:apply` | Work through the tasks in an active change (drafts `.smithy`, runs validation) |
 | `/opsc:explore` | Thinking-partner mode — explore a design question before committing to a proposal |
