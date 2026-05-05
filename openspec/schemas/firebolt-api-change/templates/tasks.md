@@ -4,7 +4,7 @@
 ## 1. IDL
 
 - [ ] 1.1 Edit `src/smithy/<module>.smithy` — add `<operation>` operation with resolved trait and types
-- [ ] 1.2 **VERIFY** `fb-gen --lint --input src/smithy/<module>.smithy`
+- [ ] 1.2 **VERIFY** `fb-gen --profile openspec/rdke.profile.yaml --dry-run` (validates Smithy IDL; `--lint --input` is JSON-only)
   <!-- paste output here -->
 
 ## 2. Type correctness

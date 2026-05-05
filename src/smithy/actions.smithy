@@ -1,9 +1,11 @@
 $version: "2"
 namespace com.firebolt.actions
 
+use com.firebolt#event
+
 service ActionsService {
     version: "1.0"
-    operations: [start]
+    operations: [start, onIntent]
 }
 
 operation start {
@@ -17,3 +19,16 @@ structure StartInput {
 }
 
 structure StartOutput {}
+
+@event
+operation onIntent {
+    input: OnIntentInput
+    output: OnIntentOutput
+}
+
+structure OnIntentInput {}
+
+structure OnIntentOutput {
+    @required
+    value: String
+}
