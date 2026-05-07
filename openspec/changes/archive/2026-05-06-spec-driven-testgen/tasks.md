@@ -106,9 +106,9 @@ If all six pass, the change is shippable for Phase 1.
 
 ## 0. Prerequisites
 
-- [ ] 0.1 Confirm `fb-gen --profile openspec/rdke.profile.yaml --dry-run` passes clean
+- [x] 0.1 Confirm `fb-gen --profile openspec/rdke.profile.yaml --dry-run` passes clean
   before starting (record baseline method count as reference)
-  <!-- paste output here -->
+  <!-- voiceguidance: 4 methods, wifi: 4 methods — fb-gen (compose): --dry-run — no files written. -->
 
 ---
 

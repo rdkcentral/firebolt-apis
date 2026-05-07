@@ -127,3 +127,7 @@ structure VoiceGuidanceSettings {
 list StringList {
     member: String
 }
+
+/// Speech rate multiplier — 0.1 (slowest) to 10.0 (fastest).
+@range(min: 0.1, max: 10.0)
+float SpeechRate
