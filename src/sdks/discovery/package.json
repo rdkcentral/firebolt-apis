@@ -40,9 +40,9 @@
 	},
 	"homepage": "https://github.com/rdkcentral/firebolt-core-sdk#readme",
 	"devDependencies": {
-		"jest": "^30.0.0",
-		"jest-environment-jsdom": "^30.0.0",
-		"prettier": "^3.8.1",
+		"jest": "^30.4.2",
+		"jest-environment-jsdom": "^30.4.1",
+		"prettier": "^3.8.3",
 		"typescript": "~5.4.0"
 	},
 	"keywords": [
