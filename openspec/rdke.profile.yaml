@@ -54,6 +54,7 @@ layers:
       - privacy
       - securestorage
       - text_to_speech
+      - firebolt
 
   # ── Remaining modules (upstream OpenRPC, pending graduation) ──────────────
   - name: openrpc-upstream

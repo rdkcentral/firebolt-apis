@@ -8,7 +8,7 @@ use com.firebolt#propertyReadonly
 
 service DeviceService {
     version: "1.0"
-    operations: [id, distributor, platform, uid, type, model, sku, make, hdcp, hdr, audio, screenResolution, videoResolution, name, onDeviceNameChanged, network, provision, deviceClass, uptime, timeInActiveState, chipsetId]
+    operations: [id, distributor, platform, uid, type, model, sku, make, hdcp, hdr, audio, screenResolution, videoResolution, name, onDeviceNameChanged, network, provision, deviceClass, uptime, timeInActiveState, chipsetId, room]
 }
 
 @propertyReadonly
@@ -298,6 +298,21 @@ structure ChipsetIdInput {
 }
 
 structure ChipsetIdOutput {
+    @required
+    value: String
+}
+
+@propertyReadonly
+operation room {
+    input: RoomInput
+    output: RoomOutput
+}
+
+structure RoomInput {
+}
+
+structure RoomOutput {
+    /// The room name configured for this device, e.g. "Living Room"
     @required
     value: String
 }
