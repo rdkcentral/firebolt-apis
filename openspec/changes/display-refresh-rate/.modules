@@ -1,5 +1,0 @@
-# Modules affected by the display-refresh-rate change.
-# One module slug per line. Used by build-stack.sh --change display-refresh-rate.
-device
-localization
-firebolt

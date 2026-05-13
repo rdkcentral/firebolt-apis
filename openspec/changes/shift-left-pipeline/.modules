@@ -1,5 +1,0 @@
-# Modules affected by the shift-left-pipeline change.
-# One module slug per line. Used by build-stack.sh --change shift-left-pipeline.
-# These are the modules that have Provider methods (the primary fix in Phase 2).
-discovery
-keyboard
