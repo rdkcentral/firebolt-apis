@@ -1,0 +1,16 @@
+# .legacy-impl — Shadow-comparison sidecar for fb-gen --lang compare
+#
+# Format: one entry per module (must match .modules).
+# Each entry: <module-name> <include-path> <FullyQualifiedClassName>
+#
+# <include-path>         — path passed to #include "..." in the compare harness;
+#                          relative to the include path used when compiling.
+# <FullyQualifiedClassName> — C++ class name that implements the IModule interface;
+#                             must accept a Firebolt::Helpers::IHelper& in its constructor.
+#
+# Lines starting with # are comments. Blank lines are ignored.
+#
+# Example:
+# device  legacy/DeviceImpl.h  com::sky::firebolt::DeviceImpl
+
+device  device_impl.h  Firebolt::Device::DeviceImpl
