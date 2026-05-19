@@ -1,6 +1,7 @@
 $version: "2"
 namespace com.firebolt.localization
 
+use com.firebolt#capability
 use com.firebolt#property
 use com.firebolt#propertyReadonly
 
@@ -9,6 +10,7 @@ service LocalizationService {
     operations: [locality, postalCode, countryCode, language, preferredAudioLanguages, locale, latlon, additionalInfo, addAdditionalInfo, removeAdditionalInfo, timeZone, country, presentationLanguage]
 }
 
+@capability(uses: ["xrn:firebolt:capability:localization:locality"])
 @property
 operation locality {
     input: LocalityInput
@@ -23,6 +25,7 @@ structure LocalityOutput {
     value: Locality
 }
 
+@capability(uses: ["xrn:firebolt:capability:localization:postal-code"])
 @property
 operation postalCode {
     input: PostalCodeInput
@@ -37,6 +40,7 @@ structure PostalCodeOutput {
     value: String
 }
 
+@capability(uses: ["xrn:firebolt:capability:localization:country-code"])
 @property
 operation countryCode {
     input: CountryCodeInput
@@ -51,6 +55,7 @@ structure CountryCodeOutput {
     value: CountryCode
 }
 
+@capability(uses: ["xrn:firebolt:capability:localization:language"])
 @property
 operation language {
     input: LanguageInput
@@ -65,6 +70,7 @@ structure LanguageOutput {
     value: Language
 }
 
+@capability(uses: ["xrn:firebolt:capability:localization:language"])
 @property
 operation preferredAudioLanguages {
     input: PreferredAudioLanguagesInput
@@ -79,6 +85,7 @@ structure PreferredAudioLanguagesOutput {
     value: ISO639_2LanguageList
 }
 
+@capability(uses: ["xrn:firebolt:capability:localization:locale"])
 @property
 operation locale {
     input: LocaleInput
@@ -93,6 +100,7 @@ structure LocaleOutput {
     value: Locale
 }
 
+@capability(uses: ["xrn:firebolt:capability:localization:location"])
 operation latlon {
     input: LatlonInput
     output: LatlonOutput
@@ -106,6 +114,7 @@ structure LatlonOutput {
     value: DoubleList
 }
 
+@capability(uses: ["xrn:firebolt:capability:localization:additional-info"])
 operation additionalInfo {
     input: AdditionalInfoInput
     output: AdditionalInfoOutput
@@ -119,6 +128,7 @@ structure AdditionalInfoOutput {
     value: StringMap
 }
 
+@capability(manages: ["xrn:firebolt:capability:localization:additional-info"])
 operation addAdditionalInfo {
     input: AddAdditionalInfoInput
     output: AddAdditionalInfoOutput
@@ -133,6 +143,7 @@ structure AddAdditionalInfoInput {
 
 structure AddAdditionalInfoOutput {}
 
+@capability(manages: ["xrn:firebolt:capability:localization:additional-info"])
 operation removeAdditionalInfo {
     input: RemoveAdditionalInfoInput
     output: RemoveAdditionalInfoOutput
@@ -145,6 +156,7 @@ structure RemoveAdditionalInfoInput {
 
 structure RemoveAdditionalInfoOutput {}
 
+@capability(uses: ["xrn:firebolt:capability:localization:time-zone"])
 @property
 operation timeZone {
     input: TimeZoneInput

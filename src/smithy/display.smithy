@@ -2,6 +2,8 @@ $version: "2"
 namespace com.firebolt.display
 
 use com.firebolt#UInt32
+use com.firebolt#capability
+use com.firebolt#rpcOnly
 
 service DisplayService {
     version: "1.0"
@@ -34,6 +36,7 @@ structure SizeOutput {
     value: DisplaySize
 }
 
+@rpcOnly
 operation maxResolution {
     input: MaxResolutionInput
     output: MaxResolutionOutput
@@ -81,6 +84,7 @@ list ColorimetryStandardList {
 /// Returns an unordered list of HD video resolution formats supported by the
 /// connected or integral display. Returns an empty list when no HDMI display
 /// is connected.
+@capability(uses: ["xrn:firebolt:capability:display:info"])
 operation videoResolutions {
     input: VideoResolutionsInput
     output: VideoResolutionsOutput
@@ -95,6 +99,7 @@ structure VideoResolutionsOutput {
 
 /// Returns the SDR and HDR colorimetry standards supported by the connected
 /// or integral display. Returns an empty list when no HDMI display is connected.
+@capability(uses: ["xrn:firebolt:capability:display:info"])
 operation colorimetry {
     input: ColorimetryInput
     output: ColorimetryOutput

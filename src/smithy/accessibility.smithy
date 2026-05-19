@@ -1,6 +1,7 @@
 $version: "2"
 namespace com.firebolt.accessibility
 
+use com.firebolt#capability
 use com.firebolt#propertyReadonly
 
 service AccessibilityService {
@@ -8,6 +9,7 @@ service AccessibilityService {
     operations: [closedCaptions, closedCaptionsSettings, highContrastUI, voiceGuidance, voiceGuidanceSettings, audioDescriptionSettings, audioDescription]
 }
 
+@capability(uses: ["xrn:firebolt:capability:accessibility:closedcaptions"])
 operation closedCaptions {
     input: ClosedCaptionsInput
     output: ClosedCaptionsOutput
@@ -21,6 +23,7 @@ structure ClosedCaptionsOutput {
     value: ClosedCaptionsSettings
 }
 
+@capability(uses: ["xrn:firebolt:capability:accessibility:closedcaptions"])
 @propertyReadonly
 operation closedCaptionsSettings {
     input: ClosedCaptionsSettingsInput
@@ -35,6 +38,7 @@ structure ClosedCaptionsSettingsOutput {
     value: ClosedCaptionsSettings
 }
 
+@capability(uses: ["xrn:firebolt:capability:accessibility:highcontrastui"])
 @propertyReadonly
 operation highContrastUI {
     input: HighContrastUIInput
@@ -49,6 +53,7 @@ structure HighContrastUIOutput {
     value: Boolean
 }
 
+@capability(uses: ["xrn:firebolt:capability:accessibility:voiceguidance"])
 operation voiceGuidance {
     input: VoiceGuidanceInput
     output: VoiceGuidanceOutput
@@ -62,6 +67,7 @@ structure VoiceGuidanceOutput {
     value: VoiceGuidanceSettings
 }
 
+@capability(uses: ["xrn:firebolt:capability:accessibility:voiceguidance"])
 @propertyReadonly
 operation voiceGuidanceSettings {
     input: VoiceGuidanceSettingsInput
@@ -76,6 +82,7 @@ structure VoiceGuidanceSettingsOutput {
     value: VoiceGuidanceSettings
 }
 
+@capability(uses: ["xrn:firebolt:capability:accessibility:audiodescriptions"])
 @propertyReadonly
 operation audioDescriptionSettings {
     input: AudioDescriptionSettingsInput

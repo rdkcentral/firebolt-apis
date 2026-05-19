@@ -2,6 +2,7 @@ $version: "2"
 namespace com.firebolt.device
 
 use com.firebolt#UInt32
+use com.firebolt#capability
 use com.firebolt#event
 use com.firebolt#property
 use com.firebolt#propertyReadonly
@@ -11,6 +12,7 @@ service DeviceService {
     operations: [id, distributor, platform, uid, type, model, sku, make, hdcp, hdr, audio, screenResolution, videoResolution, name, onDeviceNameChanged, network, provision, deviceClass, uptime, timeInActiveState, chipsetId, room]
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:id"])
 @propertyReadonly
 operation id {
     input: IdInput
@@ -25,6 +27,7 @@ structure IdOutput {
     value: String
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:distributor"])
 @propertyReadonly
 operation distributor {
     input: DistributorInput
@@ -39,6 +42,7 @@ structure DistributorOutput {
     value: String
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:info"])
 @propertyReadonly
 operation platform {
     input: PlatformInput
@@ -53,6 +57,7 @@ structure PlatformOutput {
     value: String
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:uid"])
 @propertyReadonly
 operation uid {
     input: UidInput
@@ -67,6 +72,7 @@ structure UidOutput {
     value: String
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:info"])
 @propertyReadonly
 operation type {
     input: TypeInput
@@ -81,6 +87,7 @@ structure TypeOutput {
     value: String
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:model"])
 @propertyReadonly
 operation model {
     input: ModelInput
@@ -95,6 +102,7 @@ structure ModelOutput {
     value: String
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:sku"])
 @propertyReadonly
 operation sku {
     input: SkuInput
@@ -109,6 +117,7 @@ structure SkuOutput {
     value: String
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:make"])
 @propertyReadonly
 operation make {
     input: MakeInput
@@ -123,6 +132,7 @@ structure MakeOutput {
     value: String
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:info"])
 @propertyReadonly
 operation hdcp {
     input: HdcpInput
@@ -137,6 +147,7 @@ structure HdcpOutput {
     value: HDCPVersionMap
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:info"])
 @propertyReadonly
 operation hdr {
     input: HdrInput
@@ -151,6 +162,7 @@ structure HdrOutput {
     value: HDRFormat
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:info"])
 @propertyReadonly
 operation audio {
     input: AudioInput
@@ -165,6 +177,7 @@ structure AudioOutput {
     value: AudioProfiles
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:info"])
 @propertyReadonly
 operation screenResolution {
     input: ScreenResolutionInput
@@ -179,6 +192,7 @@ structure ScreenResolutionOutput {
     value: IntegerList
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:info"])
 @propertyReadonly
 operation videoResolution {
     input: VideoResolutionInput
@@ -193,6 +207,7 @@ structure VideoResolutionOutput {
     value: IntegerList
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:name"])
 @property
 operation name {
     input: NameInput
@@ -207,6 +222,7 @@ structure NameOutput {
     value: String
 }
 
+@capability(uses: ["xrn:firebolt:capability:device:name"])
 @event
 operation onDeviceNameChanged {
     input: OnDeviceNameChangedInput
@@ -221,6 +237,7 @@ structure OnDeviceNameChangedOutput {
     value: String
 }
 
+@capability(uses: ["xrn:firebolt:capability:network:status"])
 @propertyReadonly
 operation network {
     input: NetworkInput
@@ -235,6 +252,7 @@ structure NetworkOutput {
     value: NetworkInfoResult
 }
 
+@capability(manages: ["xrn:firebolt:capability:account:id", "xrn:firebolt:capability:device:id", "xrn:firebolt:capability:device:distributor"])
 operation provision {
     input: ProvisionInput
     output: ProvisionOutput

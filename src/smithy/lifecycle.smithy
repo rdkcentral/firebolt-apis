@@ -1,6 +1,7 @@
 $version: "2"
 namespace com.firebolt.lifecycle
 
+use com.firebolt#capability
 use com.firebolt#event
 
 service LifecycleService {
@@ -8,6 +9,7 @@ service LifecycleService {
     operations: [close, onInactive, onForeground, onBackground, onSuspended, onUnloading]
 }
 
+@capability(uses: ["xrn:firebolt:capability:lifecycle:state"])
 operation close {
     input: CloseInput
     output: CloseOutput
@@ -20,6 +22,7 @@ structure CloseInput {
 
 structure CloseOutput {}
 
+@capability(uses: ["xrn:firebolt:capability:lifecycle:state"])
 @event
 operation onInactive {
     input: OnInactiveInput
@@ -34,6 +37,7 @@ structure OnInactiveOutput {
     value: LifecycleEvent
 }
 
+@capability(uses: ["xrn:firebolt:capability:lifecycle:state"])
 @event
 operation onForeground {
     input: OnForegroundInput
@@ -48,6 +52,7 @@ structure OnForegroundOutput {
     value: LifecycleEvent
 }
 
+@capability(uses: ["xrn:firebolt:capability:lifecycle:state"])
 @event
 operation onBackground {
     input: OnBackgroundInput
@@ -62,6 +67,7 @@ structure OnBackgroundOutput {
     value: LifecycleEvent
 }
 
+@capability(uses: ["xrn:firebolt:capability:lifecycle:state"])
 @event
 operation onSuspended {
     input: OnSuspendedInput
@@ -76,6 +82,7 @@ structure OnSuspendedOutput {
     value: LifecycleEvent
 }
 
+@capability(uses: ["xrn:firebolt:capability:lifecycle:state"])
 @event
 operation onUnloading {
     input: OnUnloadingInput
