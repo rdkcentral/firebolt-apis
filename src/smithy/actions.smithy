@@ -5,20 +5,20 @@ use com.firebolt#event
 
 service ActionsService {
     version: "1.0"
-    operations: [start, onIntent]
+    operations: [intent, onIntent]
 }
 
-operation start {
-    input: StartInput
-    output: StartOutput
+operation intent {
+    input: IntentInput
+    output: IntentOutput
 }
 
-structure StartInput {
+structure IntentInput {
     @required
     intent: String
 }
 
-structure StartOutput {}
+structure IntentOutput {}
 
 @event
 operation onIntent {
