@@ -6,7 +6,7 @@ use com.firebolt#event
 
 service TexttospeechService {
     version: "1.0"
-    operations: [speak, pause, resume, cancel, getspeechstate, onWillspeak, onSpeechstart, onSpeechpause, onSpeechresume, onSpeechcomplete, onSpeechinterrupted, onNetworkerror, onPlaybackerror, listvoices]
+    operations: [speak, pause, resume, cancel, getSpeechState, onWillSpeak, onSpeechStart, onSpeechPause, onSpeechResume, onSpeechComplete, onSpeechInterrupted, onNetworkError, onPlaybackError, listVoices]
 }
 
 operation speak {
@@ -31,7 +31,7 @@ operation pause {
 
 structure PauseInput {
     @required
-    speechid: Integer
+    speechid: UInt32
 }
 
 structure PauseOutput {
@@ -46,7 +46,7 @@ operation resume {
 
 structure ResumeInput {
     @required
-    speechid: Integer
+    speechid: UInt32
 }
 
 structure ResumeOutput {
@@ -61,7 +61,7 @@ operation cancel {
 
 structure CancelInput {
     @required
-    speechid: Integer
+    speechid: UInt32
 }
 
 structure CancelOutput {
@@ -69,160 +69,160 @@ structure CancelOutput {
     value: TTSStatusResponse
 }
 
-operation getspeechstate {
-    input: GetspeechstateInput
-    output: GetspeechstateOutput
+operation getSpeechState {
+    input: GetSpeechStateInput
+    output: GetSpeechStateOutput
 }
 
-structure GetspeechstateInput {
+structure GetSpeechStateInput {
     @required
-    speechid: Integer
+    speechid: UInt32
 }
 
-structure GetspeechstateOutput {
+structure GetSpeechStateOutput {
     @required
     value: SpeechStateResponse
 }
 
 @event
-operation onWillspeak {
-    input: OnWillspeakInput
-    output: OnWillspeakOutput
+operation onWillSpeak {
+    input: OnWillSpeakInput
+    output: OnWillSpeakOutput
 }
 
-structure OnWillspeakInput {
+structure OnWillSpeakInput {
     @required
     SpeechId: SpeechIdEvent
 }
 
-structure OnWillspeakOutput {
+structure OnWillSpeakOutput {
     @required
     value: SpeechIdEvent
 }
 
 @event
-operation onSpeechstart {
-    input: OnSpeechstartInput
-    output: OnSpeechstartOutput
+operation onSpeechStart {
+    input: OnSpeechStartInput
+    output: OnSpeechStartOutput
 }
 
-structure OnSpeechstartInput {
+structure OnSpeechStartInput {
     @required
     SpeechId: SpeechIdEvent
 }
 
-structure OnSpeechstartOutput {
+structure OnSpeechStartOutput {
     @required
     value: SpeechIdEvent
 }
 
 @event
-operation onSpeechpause {
-    input: OnSpeechpauseInput
-    output: OnSpeechpauseOutput
+operation onSpeechPause {
+    input: OnSpeechPauseInput
+    output: OnSpeechPauseOutput
 }
 
-structure OnSpeechpauseInput {
+structure OnSpeechPauseInput {
     @required
     SpeechId: SpeechIdEvent
 }
 
-structure OnSpeechpauseOutput {
+structure OnSpeechPauseOutput {
     @required
     value: SpeechIdEvent
 }
 
 @event
-operation onSpeechresume {
-    input: OnSpeechresumeInput
-    output: OnSpeechresumeOutput
+operation onSpeechResume {
+    input: OnSpeechResumeInput
+    output: OnSpeechResumeOutput
 }
 
-structure OnSpeechresumeInput {
+structure OnSpeechResumeInput {
     @required
     SpeechId: SpeechIdEvent
 }
 
-structure OnSpeechresumeOutput {
+structure OnSpeechResumeOutput {
     @required
     value: SpeechIdEvent
 }
 
 @event
-operation onSpeechcomplete {
-    input: OnSpeechcompleteInput
-    output: OnSpeechcompleteOutput
+operation onSpeechComplete {
+    input: OnSpeechCompleteInput
+    output: OnSpeechCompleteOutput
 }
 
-structure OnSpeechcompleteInput {
+structure OnSpeechCompleteInput {
     @required
     SpeechId: SpeechIdEvent
 }
 
-structure OnSpeechcompleteOutput {
+structure OnSpeechCompleteOutput {
     @required
     value: SpeechIdEvent
 }
 
 @event
-operation onSpeechinterrupted {
-    input: OnSpeechinterruptedInput
-    output: OnSpeechinterruptedOutput
+operation onSpeechInterrupted {
+    input: OnSpeechInterruptedInput
+    output: OnSpeechInterruptedOutput
 }
 
-structure OnSpeechinterruptedInput {
+structure OnSpeechInterruptedInput {
     @required
     SpeechId: SpeechIdEvent
 }
 
-structure OnSpeechinterruptedOutput {
+structure OnSpeechInterruptedOutput {
     @required
     value: SpeechIdEvent
 }
 
 @event
-operation onNetworkerror {
-    input: OnNetworkerrorInput
-    output: OnNetworkerrorOutput
+operation onNetworkError {
+    input: OnNetworkErrorInput
+    output: OnNetworkErrorOutput
 }
 
-structure OnNetworkerrorInput {
+structure OnNetworkErrorInput {
     @required
     SpeechId: SpeechIdEvent
 }
 
-structure OnNetworkerrorOutput {
+structure OnNetworkErrorOutput {
     @required
     value: SpeechIdEvent
 }
 
 @event
-operation onPlaybackerror {
-    input: OnPlaybackerrorInput
-    output: OnPlaybackerrorOutput
+operation onPlaybackError {
+    input: OnPlaybackErrorInput
+    output: OnPlaybackErrorOutput
 }
 
-structure OnPlaybackerrorInput {
+structure OnPlaybackErrorInput {
     @required
     SpeechId: SpeechIdEvent
 }
 
-structure OnPlaybackerrorOutput {
+structure OnPlaybackErrorOutput {
     @required
     value: SpeechIdEvent
 }
 
-operation listvoices {
-    input: ListvoicesInput
-    output: ListvoicesOutput
+operation listVoices {
+    input: ListVoicesInput
+    output: ListVoicesOutput
 }
 
-structure ListvoicesInput {
+structure ListVoicesInput {
     @required
     language: String
 }
 
-structure ListvoicesOutput {
+structure ListVoicesOutput {
     @required
     value: ListVoicesResponse
 }

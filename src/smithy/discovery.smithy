@@ -63,7 +63,7 @@ operation watched {
 }
 
 structure WatchedInput {
-    agePolicy: AgePolicy
+    agePolicy: String
     completed: Boolean
     @required
     entityId: String
@@ -87,7 +87,7 @@ structure WatchNextInput {
     identifiers: ContentIdentifiers
     images: String
     @required
-    title: LocalizedString
+    title: String
 }
 
 structure WatchNextOutput {
@@ -140,7 +140,7 @@ operation launch {
 structure LaunchInput {
     @required
     appId: String
-    intent: NavigationIntent
+    intent: String
 }
 
 structure LaunchOutput {
@@ -159,7 +159,7 @@ structure OnNavigateToInput {
 
 structure OnNavigateToOutput {
     @required
-    value: NavigationIntent
+    value: String
 }
 
 operation signIn {
@@ -247,8 +247,6 @@ structure OnRequestUserInterestOutput {
     value: OnRequestUserInterest
 }
 
-// TODO: alias AgePolicy = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
 structure Availability {
     catalogId: String
     endTime: String
@@ -280,8 +278,6 @@ structure DiscoveryPolicy {
     @required
     shareWatchHistory: Boolean
 }
-
-// TODO: alias Entitlement = String (Smithy has no direct alias — use a newtype structure or inline the target)
 
 structure EntityDetails {
     @required
@@ -344,10 +340,6 @@ enum InterestType {
     D_I_S_I_N_T_E_R_E_S_T = "DISINTEREST"
     I_N_T_E_R_E_S_T = "INTEREST"
 }
-
-// TODO: alias LocalizedString = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
-// TODO: alias NavigationIntent = String (Smithy has no direct alias — use a newtype structure or inline the target)
 
 enum OfferingType {
     B_U_Y = "BUY"
@@ -425,7 +417,7 @@ structure UserInterestProviderParameters {
 }
 
 list EntitlementList {
-    member: Entitlement
+    member: String
 }
 
 list AvailabilityList {

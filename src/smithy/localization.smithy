@@ -22,7 +22,7 @@ structure LocalityInput {
 
 structure LocalityOutput {
     @required
-    value: Locality
+    value: String
 }
 
 @capability(uses: ["xrn:firebolt:capability:localization:postal-code"])
@@ -52,7 +52,7 @@ structure CountryCodeInput {
 
 structure CountryCodeOutput {
     @required
-    value: CountryCode
+    value: String
 }
 
 @capability(uses: ["xrn:firebolt:capability:localization:language"])
@@ -67,11 +67,11 @@ structure LanguageInput {
 
 structure LanguageOutput {
     @required
-    value: Language
+    value: String
 }
 
 @capability(uses: ["xrn:firebolt:capability:localization:language"])
-@property
+@propertyReadonly
 operation preferredAudioLanguages {
     input: PreferredAudioLanguagesInput
     output: PreferredAudioLanguagesOutput
@@ -97,7 +97,7 @@ structure LocaleInput {
 
 structure LocaleOutput {
     @required
-    value: Locale
+    value: String
 }
 
 @capability(uses: ["xrn:firebolt:capability:localization:location"])
@@ -168,7 +168,7 @@ structure TimeZoneInput {
 
 structure TimeZoneOutput {
     @required
-    value: TimeZone
+    value: String
 }
 
 @propertyReadonly
@@ -182,7 +182,7 @@ structure CountryInput {
 
 structure CountryOutput {
     @required
-    value: CountryCode
+    value: String
 }
 
 @propertyReadonly
@@ -196,23 +196,11 @@ structure PresentationLanguageInput {
 
 structure PresentationLanguageOutput {
     @required
-    value: Locale
+    value: String
 }
 
-// TODO: alias CountryCode = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
-// TODO: alias ISO639_2Language = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
-// TODO: alias Language = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
-// TODO: alias Locale = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
-// TODO: alias Locality = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
-// TODO: alias TimeZone = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
 list ISO639_2LanguageList {
-    member: ISO639_2Language
+    member: String
 }
 
 list DoubleList {

@@ -97,6 +97,7 @@ structure AudioDescriptionSettingsOutput {
     value: AudioDescriptionSettings
 }
 
+@capability(uses: ["xrn:firebolt:capability:accessibility:audiodescriptions"])
 @propertyReadonly
 operation audioDescription {
     input: AudioDescriptionInput
