@@ -7,7 +7,7 @@ service WifiService {
 }
 
 operation scan {
-    input: ScanInput
+    input: ScanInput                                                                                                
     output: ScanOutput
 }
 

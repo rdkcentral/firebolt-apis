@@ -9,16 +9,13 @@ service ActionsService {
 }
 
 operation intent {
-    input: IntentInput
     output: IntentOutput
 }
 
-structure IntentInput {
-    @required
-    intent: String
+structure IntentOutput {
+     @required
+     value: String
 }
-
-structure IntentOutput {}
 
 @event
 operation onIntent {
@@ -30,5 +27,5 @@ structure OnIntentInput {}
 
 structure OnIntentOutput {
     @required
-    value: String
+     intent: String
 }
