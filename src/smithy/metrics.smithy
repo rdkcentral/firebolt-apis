@@ -1,9 +1,11 @@
 $version: "2"
 namespace com.firebolt.metrics
 
+use com.firebolt#UInt32
+
 service MetricsService {
     version: "1.0"
-    operations: [ready, signIn, signOut, startContent, stopContent, page, action, error, mediaLoadStart, mediaPlay, mediaPlaying, mediaPause, mediaWaiting, mediaProgress, mediaSeeking, mediaSeeked, mediaRateChange, mediaRenditionChange, mediaEnded, event, appInfo, mediaRateChanged, mediaRenditionChanged]
+    operations: [ready, signIn, signOut, startContent, stopContent, page, error, mediaLoadStart, mediaPlay, mediaPlaying, mediaPause, mediaWaiting, mediaSeeking, mediaSeeked, mediaRateChanged, mediaRenditionChanged, mediaEnded, event, appInfo]
 }
 
 operation ready {
@@ -15,8 +17,6 @@ structure ReadyInput {
 }
 
 structure ReadyOutput {
-    @required
-    value: Boolean
 }
 
 operation signIn {
@@ -28,8 +28,6 @@ structure SignInInput {
 }
 
 structure SignInOutput {
-    @required
-    value: Boolean
 }
 
 operation signOut {
@@ -41,8 +39,6 @@ structure SignOutInput {
 }
 
 structure SignOutOutput {
-    @required
-    value: Boolean
 }
 
 operation startContent {
@@ -51,13 +47,11 @@ operation startContent {
 }
 
 structure StartContentInput {
-    agePolicy: AgePolicy
     entityId: String
+    agePolicy: AgePolicy
 }
 
 structure StartContentOutput {
-    @required
-    value: Boolean
 }
 
 operation stopContent {
@@ -66,13 +60,11 @@ operation stopContent {
 }
 
 structure StopContentInput {
-    agePolicy: AgePolicy
     entityId: String
+    agePolicy: AgePolicy
 }
 
 structure StopContentOutput {
-    @required
-    value: Boolean
 }
 
 operation page {
@@ -81,14 +73,12 @@ operation page {
 }
 
 structure PageInput {
-    agePolicy: AgePolicy
     @required
     pageId: String
+    agePolicy: AgePolicy
 }
 
 structure PageOutput {
-    @required
-    value: Boolean
 }
 
 operation action {
@@ -116,21 +106,19 @@ operation error {
 }
 
 structure ErrorInput {
-    agePolicy: AgePolicy
+    @required
+    type: ErrorType
     @required
     code: String
     @required
     description: String
-    parameters: StringMap
-    @required
-    type: ErrorType
     @required
     visible: Boolean
+    parameters: StringMap
+    agePolicy: AgePolicy
 }
 
 structure ErrorOutput {
-    @required
-    value: Boolean
 }
 
 operation mediaLoadStart {
@@ -145,8 +133,6 @@ structure MediaLoadStartInput {
 }
 
 structure MediaLoadStartOutput {
-    @required
-    value: Boolean
 }
 
 operation mediaPlay {
@@ -161,8 +147,6 @@ structure MediaPlayInput {
 }
 
 structure MediaPlayOutput {
-    @required
-    value: Boolean
 }
 
 operation mediaPlaying {
@@ -177,8 +161,6 @@ structure MediaPlayingInput {
 }
 
 structure MediaPlayingOutput {
-    @required
-    value: Boolean
 }
 
 operation mediaPause {
@@ -193,8 +175,6 @@ structure MediaPauseInput {
 }
 
 structure MediaPauseOutput {
-    @required
-    value: Boolean
 }
 
 operation mediaWaiting {
@@ -209,8 +189,6 @@ structure MediaWaitingInput {
 }
 
 structure MediaWaitingOutput {
-    @required
-    value: Boolean
 }
 
 operation mediaProgress {
@@ -237,16 +215,14 @@ operation mediaSeeking {
 }
 
 structure MediaSeekingInput {
-    agePolicy: AgePolicy
     @required
     entityId: String
     @required
-    target: MediaPosition
+    target: Double
+    agePolicy: AgePolicy
 }
 
 structure MediaSeekingOutput {
-    @required
-    value: Boolean
 }
 
 operation mediaSeeked {
@@ -255,16 +231,14 @@ operation mediaSeeked {
 }
 
 structure MediaSeekedInput {
-    agePolicy: AgePolicy
     @required
     entityId: String
     @required
-    position: MediaPosition
+    position: Double
+    agePolicy: AgePolicy
 }
 
 structure MediaSeekedOutput {
-    @required
-    value: Boolean
 }
 
 operation mediaRateChange {
@@ -280,10 +254,7 @@ structure MediaRateChangeInput {
     rate: Double
 }
 
-structure MediaRateChangeOutput {
-    @required
-    value: Boolean
-}
+structure MediaRateChangeOutput {}
 
 operation mediaRenditionChange {
     input: MediaRenditionChangeInput
@@ -303,10 +274,7 @@ structure MediaRenditionChangeInput {
     width: Double
 }
 
-structure MediaRenditionChangeOutput {
-    @required
-    value: Boolean
-}
+structure MediaRenditionChangeOutput {}
 
 operation mediaEnded {
     input: MediaEndedInput
@@ -320,8 +288,6 @@ structure MediaEndedInput {
 }
 
 structure MediaEndedOutput {
-    @required
-    value: Boolean
 }
 
 operation event {
@@ -330,11 +296,11 @@ operation event {
 }
 
 structure EventInput {
-    agePolicy: AgePolicy
-    @required
-    data: EventObject
     @required
     schema: String
+    @required
+    data: String
+    agePolicy: AgePolicy
 }
 
 structure EventOutput {}
@@ -365,8 +331,6 @@ structure MediaRateChangedInput {
 }
 
 structure MediaRateChangedOutput {
-    @required
-    value: Boolean
 }
 
 operation mediaRenditionChanged {
@@ -378,21 +342,17 @@ structure MediaRenditionChangedInput {
     @required
     entityId: String
     @required
-    bitrate: Double
+    bitrate: UInt32
     @required
-    width: Double
+    width: UInt32
     @required
-    height: Double
+    height: UInt32
     profile: String
     agePolicy: AgePolicy
 }
 
 structure MediaRenditionChangedOutput {
-    @required
-    value: Boolean
 }
-
-// TODO: alias AgePolicy = String (Smithy has no direct alias — use a newtype structure or inline the target)
 
 enum ErrorType {
     ENTITLEMENT = "entitlement"
@@ -407,14 +367,22 @@ structure EventObject {
     value: EventObjectPrimitivesMap
 }
 
+structure MediaPosition {
+    @required
+    value: Double
+}
+
+structure AgePolicy {
+    @required
+    value: String
+}
+
 union EventObjectPrimitives {
     stringValue: String
     doubleValue: Double
     intValue: Integer
     boolValue: Boolean
 }
-
-// TODO: alias MediaPosition = Double (Smithy has no direct alias — use a newtype structure or inline the target)
 
 map StringMap {
     key: String

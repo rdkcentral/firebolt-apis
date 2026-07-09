@@ -118,7 +118,10 @@ structure AppInfo {
     title: String
 }
 
-// TODO: alias Capability = String (Smithy has no direct alias — use a newtype structure or inline the target)
+structure Capability {
+    @required
+    value: String
+}
 
 structure GrantInfo {
     app: AppInfo

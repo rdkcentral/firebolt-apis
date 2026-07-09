@@ -6,7 +6,7 @@ use com.firebolt#propertyReadonly
 
 service AdvertisingService {
     version: "1.0"
-    operations: [config, policy, skipRestriction, advertisingId, deviceAttributes, appBundleId, resetIdentifier]
+    operations: [advertisingId]
 }
 
 operation config {
@@ -58,7 +58,6 @@ operation advertisingId {
 }
 
 structure AdvertisingIdInput {
-    options: AdvertisingIdOptions
 }
 
 structure AdvertisingIdOutput {

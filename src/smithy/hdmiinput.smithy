@@ -182,8 +182,6 @@ structure HDMIInputPort {
     signal: HDMISignalStatus
 }
 
-// TODO: alias HDMIPortId = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
 enum HDMISignalStatus {
     NONE = "none"
     STABLE = "stable"
@@ -197,6 +195,11 @@ structure SignalChangedInfo {
     port: HDMIPortId
     @required
     signal: HDMISignalStatus
+}
+
+structure HDMIPortId {
+    @required
+    value: String
 }
 
 list HDMIInputPortList {

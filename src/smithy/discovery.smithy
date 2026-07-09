@@ -6,7 +6,7 @@ use com.firebolt#propertyReadonly
 
 service DiscoveryService {
     version: "1.0"
-    operations: [policy, entityInfo, purchasedContent, watched, watchNext, entitlements, contentAccess, clearContentAccess, launch, onNavigateTo, signIn, signOut, onSignIn, onSignOut, userInterest, onRequestUserInterest]
+    operations: [watched, watchedV2]
 }
 
 @propertyReadonly
@@ -63,15 +63,34 @@ operation watched {
 }
 
 structure WatchedInput {
-    agePolicy: String
-    completed: Boolean
     @required
     entityId: String
     progress: Double
+    completed: Boolean
     watchedOn: String
+    agePolicy: AgePolicy
 }
 
 structure WatchedOutput {
+    @required
+    value: Boolean
+}
+
+operation watchedV2 {
+    input: WatchedV2Input
+    output: WatchedV2Output
+}
+
+structure WatchedV2Input {
+    @required
+    entityId: String
+    progress: Double
+    completed: Boolean
+    watchedOn: String
+    agePolicy: AgePolicy
+}
+
+structure WatchedV2Output {
     @required
     value: Boolean
 }
@@ -407,6 +426,11 @@ structure PurchasedContentResult {
 
 enum TuneChannels {
     XRN_FIREBOLT_CHANNEL_ANY = "xrnFireboltChannelAny"
+}
+
+structure AgePolicy {
+    @required
+    value: String
 }
 
 structure UserInterestProviderParameters {

@@ -50,6 +50,12 @@ structure SessionInput {
 
 structure SessionOutput {}
 
-// TODO: alias Expiry = Integer (Smithy has no direct alias — use a newtype structure or inline the target)
+structure Expiry {
+    @required
+    value: Integer
+}
 
-// TODO: alias Token = String (Smithy has no direct alias — use a newtype structure or inline the target)
+structure Token {
+    @required
+    value: String
+}

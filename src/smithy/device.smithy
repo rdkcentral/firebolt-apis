@@ -9,7 +9,7 @@ use com.firebolt#propertyReadonly
 
 service DeviceService {
     version: "1.0"
-    operations: [id, distributor, platform, uid, type, model, sku, make, hdcp, hdr, audio, screenResolution, videoResolution, name, onDeviceNameChanged, network, provision, deviceClass, uptime, timeInActiveState, chipsetId, room]
+    operations: [uid, hdr, deviceClass, uptime, timeInActiveState, chipsetId]
 }
 
 @capability(uses: ["xrn:firebolt:capability:device:id"])
@@ -58,7 +58,6 @@ structure PlatformOutput {
 }
 
 @capability(uses: ["xrn:firebolt:capability:device:uid"])
-@propertyReadonly
 operation uid {
     input: UidInput
     output: UidOutput

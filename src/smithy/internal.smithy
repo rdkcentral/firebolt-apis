@@ -13,7 +13,7 @@ operation initialize {
 
 structure InitializeInput {
     @required
-    version: Types::SemanticVersion
+    version: SemanticVersion
 }
 
 structure InitializeOutput {
@@ -23,5 +23,16 @@ structure InitializeOutput {
 
 structure InitializeResult {
     @required
-    version: Types::SemanticVersion
+    version: SemanticVersion
+}
+
+structure SemanticVersion {
+    @required
+    major: Integer
+    @required
+    minor: Integer
+    @required
+    patch: Integer
+    @required
+    readable: String
 }

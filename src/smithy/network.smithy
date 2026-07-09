@@ -19,7 +19,5 @@ structure ConnectedInput {
 
 structure ConnectedOutput {
     @required
-    value: Connected
+    value: Boolean
 }
-
-// TODO: alias Connected = Boolean (Smithy has no direct alias — use a newtype structure or inline the target)

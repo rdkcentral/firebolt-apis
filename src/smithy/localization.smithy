@@ -7,7 +7,7 @@ use com.firebolt#propertyReadonly
 
 service LocalizationService {
     version: "1.0"
-    operations: [locality, postalCode, countryCode, language, preferredAudioLanguages, locale, latlon, additionalInfo, addAdditionalInfo, removeAdditionalInfo, timeZone, country, presentationLanguage]
+    operations: [country, preferredAudioLanguages, presentationLanguage, timeZone]
 }
 
 @capability(uses: ["xrn:firebolt:capability:localization:locality"])
@@ -157,7 +157,7 @@ structure RemoveAdditionalInfoInput {
 structure RemoveAdditionalInfoOutput {}
 
 @capability(uses: ["xrn:firebolt:capability:localization:time-zone"])
-@property
+@propertyReadonly
 operation timeZone {
     input: TimeZoneInput
     output: TimeZoneOutput

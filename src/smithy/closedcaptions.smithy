@@ -208,8 +208,6 @@ structure ClosedCaptionsSettingsProviderRequest {
     parameters: String
 }
 
-// TODO: alias Color = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
 enum FontEdge {
     D_E_P_R_E_S_S_E_D = "DEPRESSED"
     D_R_O_P__S_H_A_D_O_W__L_E_F_T = "DROP_SHADOW_LEFT"
@@ -229,16 +227,36 @@ enum FontFamily {
     S_M_A_L_L_C_A_P_S = "SMALLCAPS"
 }
 
-// TODO: alias FontSize = Float (Smithy has no direct alias — use a newtype structure or inline the target)
-
-// TODO: alias HorizontalAlignment = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
-// TODO: alias ISO639_2Language = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
-// TODO: alias Opacity = Float (Smithy has no direct alias — use a newtype structure or inline the target)
-
-// TODO: alias VerticalAlignment = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
 list ISO639_2LanguageList {
     member: ISO639_2Language
+}
+
+structure Color {
+    @required
+    value: String
+}
+
+structure FontSize {
+    @required
+    value: Float
+}
+
+structure HorizontalAlignment {
+    @required
+    value: String
+}
+
+structure ISO639_2Language {
+    @required
+    value: String
+}
+
+structure Opacity {
+    @required
+    value: Float
+}
+
+structure VerticalAlignment {
+    @required
+    value: String
 }

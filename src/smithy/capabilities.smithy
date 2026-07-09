@@ -167,8 +167,6 @@ structure OnRevokedOutput {
     value: CapabilityInfo
 }
 
-// TODO: alias Capability = String (Smithy has no direct alias — use a newtype structure or inline the target)
-
 structure CapabilityInfo {
     @required
     available: Boolean
@@ -201,6 +199,11 @@ enum Role {
 
 list CapabilityList {
     member: Capability
+}
+
+structure Capability {
+    @required
+    value: String
 }
 
 list CapabilityInfoList {
