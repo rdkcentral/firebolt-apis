@@ -68,10 +68,13 @@ structure AccessPoint {
 }
 
 structure AccessPointList {
-    list: AccessPointList
+    list: AccessPointItems
 }
 
-// TODO: alias Timeout = Integer (Smithy has no direct alias — use a newtype structure or inline the target)
+/// Defines the timeout in seconds. If the threshold for timeout is passed for
+/// any operation without a result it will throw an error.
+@range(min: 0)
+integer Timeout
 
 enum WPSSecurityPin {
     MANUFACTURER_PIN = "manufacturerPin"
@@ -86,7 +89,9 @@ structure WifiConnectRequest {
     timeout: String
 }
 
-// TODO: alias WifiFrequency = Double (Smithy has no direct alias — use a newtype structure or inline the target)
+/// Wifi frequency in Ghz, for example 2.4 or 5.0.
+@range(min: 0)
+double WifiFrequency
 
 enum WifiSecurityMode {
     NONE = "none"
@@ -106,8 +111,10 @@ enum WifiSecurityMode {
     WPA_PSK_TKIP = "wpaPskTkip"
 }
 
-// TODO: alias WifiSignalStrength = Integer (Smithy has no direct alias — use a newtype structure or inline the target)
+/// Strength of wifi signal based on RSSI, expected range -255..0.
+@range(min: -255, max: 0)
+integer WifiSignalStrength
 
-list AccessPointList {
+list AccessPointItems {
     member: AccessPoint
 }

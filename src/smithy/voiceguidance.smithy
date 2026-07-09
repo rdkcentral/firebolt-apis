@@ -2,7 +2,6 @@ $version: "2"
 namespace com.firebolt.voiceguidance
 
 use com.firebolt#property
-use com.firebolt.accessibility#SpeechRate
 
 service VoiceguidanceService {
     version: "1.0"
@@ -64,3 +63,7 @@ structure SpeedOutput {
     @required
     value: SpeechRate
 }
+
+/// Speech rate multiplier — 0.1 (slowest) to 10.0 (fastest).
+@range(min: 0.1, max: 10.0)
+float SpeechRate
