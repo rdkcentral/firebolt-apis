@@ -2,6 +2,7 @@ $version: "2"
 namespace com.firebolt.actions
 
 use com.firebolt#event
+use com.firebolt#JsonDocument
 
 service ActionsService {
     version: "1.0"
@@ -14,7 +15,7 @@ operation intent {
 
 structure IntentOutput {
      @required
-     value: String
+     value: JsonDocument
 }
 
 @event
