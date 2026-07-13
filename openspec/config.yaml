@@ -1,0 +1,84 @@
+schema: spec-driven
+
+project: firebolt-apis
+
+context: |
+  # Firebolt APIs Repository
+
+  Canonical API surface definitions for the Firebolt SDK stack.
+  All API changes start here — specs flow downstream through fb-gen into C++ and JS/TS SDKs.
+
+  ## Source of Truth Hierarchy
+
+  - **Smithy IDL** (`src/smithy/`): RDKe canonical source. Overrides OpenRPC for all graduated modules.
+  - **OpenRPC JSON** (`src/openrpc/`): Upstream canonical source for non-graduated modules.
+  - **JSON Schemas** (`src/schemas/`): Shared type definitions referenced by OpenRPC specs.
+  - **Shared Type Dictionary** (`src/smithy/types.smithy`): `namespace com.firebolt` prelude types (e.g. `JsonDocument`, `UInt32`).
+
+  ## Repository Structure
+
+  ```
+  src/smithy/         # Smithy 2.0 IDL — one file per module (graduated modules)
+  src/smithy/types.smithy  # Global type dictionary (com.firebolt namespace)
+  src/openrpc/        # OpenRPC JSON — upstream specs (non-graduated modules)
+  src/schemas/        # Shared JSON schema definitions
+  src/sdks/           # SDK compositions (core, manage, discovery)
+  src/descriptions/   # Human-readable module descriptions
+  src/template/       # Code generation templates (openrpc, declarations)
+  src/js/             # JS layer (versioning, changelog, github.io)
+  src/json/           # Compiled specification artifacts
+  openspec/           # OpenSpec change management (this directory)
+  ```
+
+  ## Module Graduation
+
+  A module is "graduated" when its Smithy IDL in `src/smithy/` is the authoritative source.
+  Non-graduated modules remain in `src/openrpc/` and are consumed by the compose pipeline as-is.
+
+  Graduation checklist:
+  1. Add `src/smithy/<module>.smithy` with the Smithy IDL
+  2. Add module to the `smithy-canonical` layer in `openspec/rdke.profile.yaml` (forge workspace)
+  3. Add module to the `exclude:` list in the `openrpc-upstream` layer
+  4. Run `fb-gen --diff --smithy src/smithy/ --openrpc src/openrpc/` to confirm drift is zero
+  5. Run the full E2E gate (regen → unit tests → compliance)
+
+  ## Smithy IDL Conventions
+
+  - One service per file, namespace `com.firebolt.<module>`
+  - Use `com.firebolt#event` for event operations
+  - Use `com.firebolt#property` / `#propertyReadonly` / `#propertyImmutable` for property traits
+  - Use `com.firebolt#JsonDocument` (from `types.smithy`) for untyped JSON document fields
+  - Use `com.firebolt#UInt32` / `#UInt64` for unsigned integer scalars
+  - Struct names must be unique within the module (no cross-module struct reuse)
+
+  ## Downstream Impact
+
+  Changes to Smithy IDL or OpenRPC JSON in this repo flow through:
+  1. `fb-gen --profile openspec/rdke.profile.yaml --lang cpp` → C++ bindings in firebolt-cpp-client
+  2. `npm run dist` in firebolt-js-client → JS/TS SDK
+  3. FCAPP plan generation → compliance run against SoC
+
+  ## Commit Conventions
+
+  Conventional Commits enforced by commitlint:
+    feat(<module>): Add <description>
+    fix(<module>): Correct <description>
+
+  Valid types: feat, fix, build, chore, ci, docs, perf, refactor, revert, style, test
+
+rules:
+  proposal:
+    - "Identify the target module(s) and whether they are graduated (Smithy) or upstream (OpenRPC)"
+    - "Specify if this is a new method, property, event, or type change"
+    - "Call out any breaking changes to the wire protocol or generated SDK surface"
+  design:
+    - "For Smithy changes: include the before/after IDL snippet"
+    - "For new types: specify whether they belong in types.smithy (shared) or the module file (local)"
+    - "Document the expected C++ generated signature"
+  specs:
+    - "Reference the Smithy shape name and generated wire method name (e.g. Actions.intent)"
+    - "Include example request/response JSON if the method is an RPC call"
+  tasks:
+    - "Always include: IDL edit → dry-run validation → C++ bindings regen → unit tests → compliance"
+    - "Flag generator tasks: changes to fb-gen prelude_scalar() or backend emitters"
+    - "Flag breaking tasks: changes that require firebolt-cpp-client header updates"
