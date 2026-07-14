@@ -10,6 +10,7 @@ service AccessibilityService {
 }
 
 @capability(uses: ["xrn:firebolt:capability:accessibility:closedcaptions"])
+@documentation("Get the user's preferred closed-captions settings")
 operation closedCaptions {
     input: ClosedCaptionsInput
     output: ClosedCaptionsOutput
@@ -25,6 +26,7 @@ structure ClosedCaptionsOutput {
 
 @capability(uses: ["xrn:firebolt:capability:accessibility:closedcaptions"])
 @propertyReadonly
+@documentation("Get the user's preferred closed-captions settings")
 operation closedCaptionsSettings {
     input: ClosedCaptionsSettingsInput
     output: ClosedCaptionsSettingsOutput
@@ -40,6 +42,7 @@ structure ClosedCaptionsSettingsOutput {
 
 @capability(uses: ["xrn:firebolt:capability:accessibility:highcontrastui"])
 @propertyReadonly
+@documentation("The user's preference for a high-contrast UI")
 operation highContrastUI {
     input: HighContrastUIInput
     output: HighContrastUIOutput
@@ -54,6 +57,7 @@ structure HighContrastUIOutput {
 }
 
 @capability(uses: ["xrn:firebolt:capability:accessibility:voiceguidance"])
+@documentation("Get the user's preferred voice guidance settings")
 operation voiceGuidance {
     input: VoiceGuidanceInput
     output: VoiceGuidanceOutput
@@ -69,6 +73,7 @@ structure VoiceGuidanceOutput {
 
 @capability(uses: ["xrn:firebolt:capability:accessibility:voiceguidance"])
 @propertyReadonly
+@documentation("Get the user's preferred voice guidance settings")
 operation voiceGuidanceSettings {
     input: VoiceGuidanceSettingsInput
     output: VoiceGuidanceSettingsOutput
@@ -84,6 +89,7 @@ structure VoiceGuidanceSettingsOutput {
 
 @capability(uses: ["xrn:firebolt:capability:accessibility:audiodescriptions"])
 @propertyReadonly
+@documentation("Get the user's preferred audio description settings")
 operation audioDescriptionSettings {
     input: AudioDescriptionSettingsInput
     output: AudioDescriptionSettingsOutput
@@ -99,6 +105,7 @@ structure AudioDescriptionSettingsOutput {
 
 @capability(uses: ["xrn:firebolt:capability:accessibility:audiodescriptions"])
 @propertyReadonly
+@documentation("Get the user's audio description setting")
 operation audioDescription {
     input: AudioDescriptionInput
     output: AudioDescriptionOutput
