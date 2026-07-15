@@ -17,6 +17,8 @@ structure ReadyInput {
 }
 
 structure ReadyOutput {
+    @required
+    value: Boolean
 }
 
 operation signIn {
@@ -28,6 +30,8 @@ structure SignInInput {
 }
 
 structure SignInOutput {
+    @required
+    value: Boolean
 }
 
 operation signOut {
@@ -39,6 +43,8 @@ structure SignOutInput {
 }
 
 structure SignOutOutput {
+    @required
+    value: Boolean
 }
 
 operation startContent {
@@ -52,6 +58,8 @@ structure StartContentInput {
 }
 
 structure StartContentOutput {
+    @required
+    value: Boolean
 }
 
 operation stopContent {
@@ -65,6 +73,8 @@ structure StopContentInput {
 }
 
 structure StopContentOutput {
+    @required
+    value: Boolean
 }
 
 operation page {
@@ -79,6 +89,8 @@ structure PageInput {
 }
 
 structure PageOutput {
+    @required
+    value: Boolean
 }
 
 operation action {
@@ -119,6 +131,8 @@ structure ErrorInput {
 }
 
 structure ErrorOutput {
+    @required
+    value: Boolean
 }
 
 operation mediaLoadStart {
@@ -133,6 +147,8 @@ structure MediaLoadStartInput {
 }
 
 structure MediaLoadStartOutput {
+    @required
+    value: Boolean
 }
 
 operation mediaPlay {
@@ -147,6 +163,8 @@ structure MediaPlayInput {
 }
 
 structure MediaPlayOutput {
+    @required
+    value: Boolean
 }
 
 operation mediaPlaying {
@@ -161,6 +179,8 @@ structure MediaPlayingInput {
 }
 
 structure MediaPlayingOutput {
+    @required
+    value: Boolean
 }
 
 operation mediaPause {
@@ -175,6 +195,8 @@ structure MediaPauseInput {
 }
 
 structure MediaPauseOutput {
+    @required
+    value: Boolean
 }
 
 operation mediaWaiting {
@@ -189,6 +211,8 @@ structure MediaWaitingInput {
 }
 
 structure MediaWaitingOutput {
+    @required
+    value: Boolean
 }
 
 operation mediaProgress {
@@ -223,6 +247,8 @@ structure MediaSeekingInput {
 }
 
 structure MediaSeekingOutput {
+    @required
+    value: Boolean
 }
 
 operation mediaSeeked {
@@ -239,6 +265,8 @@ structure MediaSeekedInput {
 }
 
 structure MediaSeekedOutput {
+    @required
+    value: Boolean
 }
 
 operation mediaRateChange {
@@ -288,6 +316,8 @@ structure MediaEndedInput {
 }
 
 structure MediaEndedOutput {
+    @required
+    value: Boolean
 }
 
 operation event {

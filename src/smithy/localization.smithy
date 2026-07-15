@@ -166,9 +166,14 @@ operation timeZone {
 structure TimeZoneInput {
 }
 
-structure TimeZoneOutput {
+structure TimeZone {
     @required
     value: String
+}
+
+structure TimeZoneOutput {
+    @required
+    value: TimeZone
 }
 
 @propertyReadonly
@@ -199,8 +204,13 @@ structure PresentationLanguageOutput {
     value: String
 }
 
+structure ISO639_2Language {
+    @required
+    value: String
+}
+
 list ISO639_2LanguageList {
-    member: String
+    member: ISO639_2Language
 }
 
 list DoubleList {
