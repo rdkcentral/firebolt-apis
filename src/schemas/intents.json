@@ -181,7 +181,11 @@
                         },
                         "agePolicy": {
                             "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/AgePolicy",
-                            "description": "The age policy associated with the intent. The age policy describes the age groups to which content is directed. For example, content launched from a child-directed menu should have the appropriate child policy attached, which may inform an app or service to enable enhanced data protections or features."
+                            "description": "The age policy associated with this intent. The age policy describes the age group to which content is directed and informs the app to enable enhanced data protection logic, as appropriate. For example, content launched from a child-directed menu would have the appropriate child age policy attached, suggesting that the action may have been taken by a child. See distributor documentation for more details."
+                        },
+                        "profilePolicy": {
+                            "$ref": "https://meta.comcast.com/firebolt/policies#/definitions/ProfilePolicy",
+                            "description": "The profile policy associated with this intent. This describes the type of user profile that was selected when this intent was triggered and informs the app to enable enhanced data protection logic, as appropriate. For example, if the user is currently in a child profile and takes an action, this field would have the appropriate child profile policy attached, informing an app that the action was likely taken by a child. See distributor documentation for more details."
                         }
                     }
                 }

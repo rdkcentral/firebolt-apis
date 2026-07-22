@@ -18,6 +18,24 @@
                     ]
                 }
             ]
+        },
+        "ProfilePolicy": {
+            "title": "ProfilePolicy",
+            "description": "The policy that describes various user profiles that a user may be in. See distributor documentation for further details.",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "string",
+                    "enum": [
+                        "adultProfile",
+                        "childProfile",
+                        "teenProfile",
+                        "unknown"
+                    ]
+                }
+            ]
         }
     }
 }
