@@ -8,7 +8,7 @@
   "methods": [
     {
       "name": "token",
-      "summary": "Get a specific `type` of authentication token",
+      "summary": "Get a Firebolt platform token",
       "tags": [
         {
           "name": "deprecated",
@@ -25,7 +25,7 @@
       "params": [
         {
           "name": "type",
-          "summary": "What type of token to get",
+          "summary": "The token type to get (deprecated: platform only)",
           "schema": {
             "$ref": "#/components/schemas/TokenType"
           },
@@ -62,50 +62,6 @@
               "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
               "expires": "2022-04-23T18:25:43.511Z",
               "type": "platform"
-            }
-          }
-        },
-        {
-          "name": "Acquire a Firebolt device identity token",
-          "params": [
-            {
-              "name": "type",
-              "value": "device"
-            }
-          ],
-          "result": {
-            "name": "token",
-            "value": {
-              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-              "expires": "2022-04-23T18:25:43.511Z",
-              "type": "device"
-            }
-          }
-        },
-        {
-          "name": "Acquire a Firebolt distributor token",
-          "params": [
-            {
-              "name": "type",
-              "value": "distributor"
-            },
-            {
-              "name": "options",
-              "value": {
-                "clientId": "xyz"
-              }
-            }
-          ],
-          "result": {
-            "name": "token",
-            "value": {
-              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-              "expires": "2022-04-23T18:25:43.511Z",
-              "type": "distributor",
-              "data": {
-                "tid": "EB00E9230AB2A35F57DB4EFDDC4908F6446D38F08F4FF0BD57FE6A61E21EEFD9",
-                "scope": "scope"
-              }
             }
           }
         }
@@ -214,9 +170,7 @@
         "title": "TokenType",
         "type": "string",
         "enum": [
-          "platform",
-          "device",
-          "distributor"
+          "platform"
         ]
       },
       "AuthenticationTokenResult": {
