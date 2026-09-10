@@ -220,13 +220,29 @@ function getArtifactData(){
 }
 
 function unzipArtifact(){
-  unzip report.zip
-  # Extract values from report.json
-  report=$(cat report.json | jq -r '.')
-  passes=$(echo "$report" | jq -r '.stats.passes')
-  failures=$(echo "$report" | jq -r '.stats.failures')
-  pending=$(echo "$report" | jq -r '.stats.pending')
-  skipped=$(echo "$report" | jq -r '.stats.skipped')
+  local report_entry tmp_report passes failures pending skipped
+
+  report_entry=$(zipinfo -1 report.zip | awk '/(^|\/)report\.json$/ {print; exit}')
+  if [[ -z "$report_entry" ]]; then
+    echo "report.json not found in report.zip" >&2
+    exit 1
+  fi
+
+  if [[ "$report_entry" == /* || "$report_entry" == *"../"* || "$report_entry" == *"..\\"* ]]; then
+    echo "Unsafe report path in artifact: $report_entry" >&2
+    exit 1
+  fi
+
+  tmp_report=$(mktemp)
+  unzip -p report.zip "$report_entry" > "$tmp_report"
+
+  passes=$(jq -r '.stats.passes' "$tmp_report")
+  failures=$(jq -r '.stats.failures' "$tmp_report")
+  pending=$(jq -r '.stats.pending' "$tmp_report")
+  skipped=$(jq -r '.stats.skipped' "$tmp_report")
+
+  rm -f "$tmp_report"
+
   echo "Skipped=$skipped" >> "$GITHUB_ENV"
   echo "Pending=$pending" >> "$GITHUB_ENV"
   echo "Passes=$passes" >> "$GITHUB_ENV"
