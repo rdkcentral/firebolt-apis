@@ -236,17 +236,24 @@ function unzipArtifact(){
   tmp_report=$(mktemp)
   unzip -p report.zip "$report_entry" > "$tmp_report"
 
-  passes=$(jq -r '.stats.passes' "$tmp_report")
-  failures=$(jq -r '.stats.failures' "$tmp_report")
-  pending=$(jq -r '.stats.pending' "$tmp_report")
-  skipped=$(jq -r '.stats.skipped' "$tmp_report")
+  passes=$(jq -er '.stats.passes | tonumber | floor' "$tmp_report")
+  failures=$(jq -er '.stats.failures | tonumber | floor' "$tmp_report")
+  pending=$(jq -er '.stats.pending | tonumber | floor' "$tmp_report")
+  skipped=$(jq -er '.stats.skipped | tonumber | floor' "$tmp_report")
 
   rm -f "$tmp_report"
 
-  echo "Skipped=$skipped" >> "$GITHUB_ENV"
-  echo "Pending=$pending" >> "$GITHUB_ENV"
-  echo "Passes=$passes" >> "$GITHUB_ENV"
-  echo "Failures=$failures" >> "$GITHUB_ENV"
+  for stat_name in passes failures pending skipped; do
+    if ! [[ "${!stat_name}" =~ ^[0-9]+$ ]]; then
+      echo "Invalid ${stat_name} value in report artifact: ${!stat_name}" >&2
+      exit 1
+    fi
+  done
+
+  printf 'Skipped=%s\n' "$skipped" >> "$GITHUB_ENV"
+  printf 'Pending=%s\n' "$pending" >> "$GITHUB_ENV"
+  printf 'Passes=%s\n' "$passes" >> "$GITHUB_ENV"
+  printf 'Failures=%s\n' "$failures" >> "$GITHUB_ENV"
 }
 
 function cloneAndInstallDeps() {
