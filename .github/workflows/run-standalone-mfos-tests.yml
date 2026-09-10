@@ -18,11 +18,17 @@ jobs:
        # Set the branch if the workflow is triggered from external
       - name: Set PR Branch based on the trigger
         id: set-pr-branch
+        env:
+          OPENRPC_PR_BRANCH_RAW: ${{ github.event.client_payload.OPENRPC_PR_BRANCH }}
         run: |
-          if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
-            echo "OPENRPC_PR_BRANCH='${{ github.event.client_payload.OPENRPC_PR_BRANCH }}'" >> $GITHUB_ENV  # Set from payload
+          if [ "$GITHUB_EVENT_NAME" == "repository_dispatch" ]; then
+            if [[ -n "${OPENRPC_PR_BRANCH_RAW:-}" && ! "$OPENRPC_PR_BRANCH_RAW" =~ ^[A-Za-z0-9._/-]+$ ]]; then
+              echo "Invalid OPENRPC_PR_BRANCH value" >&2
+              exit 1
+            fi
+            echo "OPENRPC_PR_BRANCH=${OPENRPC_PR_BRANCH_RAW:-}" >> "$GITHUB_ENV"
           else
-            echo "OPENRPC_PR_BRANCH=''" >> $GITHUB_ENV  # Clear the variable for other events
+            echo "OPENRPC_PR_BRANCH=" >> "$GITHUB_ENV"
           fi
 
       # Run tests

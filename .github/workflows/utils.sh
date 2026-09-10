@@ -52,7 +52,7 @@ function runTests(){
   if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$PR_BRANCH" == "repository_dispatch" ]; then
       # Check if the branch exists in firebolt-apis
       if branch_exists "$OPENRPC_PR_BRANCH"; then
-          PR_BRANCH=$OPENRPC_PR_BRANCH
+        PR_BRANCH="$OPENRPC_PR_BRANCH"
           echo "Using branch from OPENRPC_PR_BRANCH: $OPENRPC_PR_BRANCH"
       else
           echo "Branch '$OPENRPC_PR_BRANCH' does not exist in firebolt-apis. Defaulting to 'next'."
@@ -60,10 +60,10 @@ function runTests(){
       fi
   elif [ "$PR_BRANCH" == "pull_request" ]; then
       # If it's a pull request event, use the PR branch
-      PR_BRANCH=$PR_HEAD_REF
+      PR_BRANCH="$PR_HEAD_REF"
   elif [ "$PR_BRANCH" == "push" ]; then
       # For push events, extract the branch name
-      PR_BRANCH=$GITHUB_REF
+      PR_BRANCH="$GITHUB_REF"
       PR_BRANCH="${PR_BRANCH#refs/heads/}"
   else
       echo "Unsupported event: $EVENT_NAME"
@@ -73,7 +73,7 @@ function runTests(){
   cd $current_dir
   if [[ ! -e firebolt-apis ]]; then
     echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
-    git clone --branch $PR_BRANCH https://github.com/rdkcentral/firebolt-apis.git
+    git clone --branch "$PR_BRANCH" https://github.com/rdkcentral/firebolt-apis.git
   fi
   echo "Cd to firebolt-apis repo and compile firebolt-open-rpc.json"
   cd firebolt-apis
@@ -81,7 +81,7 @@ function runTests(){
   # If OPENRPC_PR_BRANCH is set and is not 'next'
     if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$OPENRPC_PR_BRANCH" != "next" ]; then
       echo "Updating OpenRPC dependency to branch: $OPENRPC_PR_BRANCH"
-      jq ".dependencies[\"@firebolt-js/openrpc\"] = \"file:../firebolt-openrpc#$OPENRPC_PR_BRANCH\"" package.json > package.json.tmp && mv package.json.tmp package.json
+      jq --arg branch "$OPENRPC_PR_BRANCH" '.dependencies["@firebolt-js/openrpc"] = ("file:../firebolt-openrpc#" + $branch)' package.json > package.json.tmp && mv package.json.tmp package.json
     fi
   fi
   npm i

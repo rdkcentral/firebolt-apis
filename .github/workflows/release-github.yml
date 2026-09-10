@@ -55,15 +55,20 @@ jobs:
           echo "DOCS_TAGE=next-major" >> $GITHUB_ENV
       - name: Set feature branch tags
         if: github.ref_name != 'main' && github.ref_name != 'next' && github.ref_name != 'next-major' && github.event_name != 'pull_request'
+        env:
+          FEATURE_BRANCH_REF: ${{ github.ref_name }}
         run: |
-          echo "NPM_DIST_TAG=test" >> $GITHUB_ENV
-          echo "FEATURE_BRANCH=${{ github.ref_name }}" >> $GITHUB_ENV
+          echo "NPM_DIST_TAG=test" >> "$GITHUB_ENV"
+          echo "FEATURE_BRANCH=$FEATURE_BRANCH_REF" >> "$GITHUB_ENV"
       - name: Set PR tags
         if: github.ref_name != 'main' && github.ref_name != 'next' && github.ref_name != 'next-major' && github.event_name == 'pull_request'
+        env:
+          PR_HEAD_REF: ${{ github.head_ref }}
         run: |
-          echo "NPM_DIST_TAG=test" >> $GITHUB_ENV
-          echo "DOCS_TAG=pr-$(node ./src/js/version.mjs branch-to-prerelease ${{ github.head_ref }})" >> $GITHUB_ENV
-          echo "FEATURE_BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
+          echo "NPM_DIST_TAG=test" >> "$GITHUB_ENV"
+          PRERELEASE_BRANCH=$(node ./src/js/version.mjs branch-to-prerelease "$PR_HEAD_REF")
+          echo "DOCS_TAG=pr-$PRERELEASE_BRANCH" >> "$GITHUB_ENV"
+          echo "FEATURE_BRANCH=$PR_HEAD_REF" >> "$GITHUB_ENV"
 
       # Perform real (When not a PR) or dry-run (When PR) semantic-release
       - name: Release mono-artifact to GitHub
