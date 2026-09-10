@@ -52,7 +52,7 @@ function runTests(){
   if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$PR_BRANCH" == "repository_dispatch" ]; then
       # Check if the branch exists in firebolt-apis
       if branch_exists "$OPENRPC_PR_BRANCH"; then
-          PR_BRANCH=$OPENRPC_PR_BRANCH
+        PR_BRANCH="$OPENRPC_PR_BRANCH"
           echo "Using branch from OPENRPC_PR_BRANCH: $OPENRPC_PR_BRANCH"
       else
           echo "Branch '$OPENRPC_PR_BRANCH' does not exist in firebolt-apis. Defaulting to 'next'."
@@ -60,10 +60,10 @@ function runTests(){
       fi
   elif [ "$PR_BRANCH" == "pull_request" ]; then
       # If it's a pull request event, use the PR branch
-      PR_BRANCH=$PR_HEAD_REF
+      PR_BRANCH="$PR_HEAD_REF"
   elif [ "$PR_BRANCH" == "push" ]; then
       # For push events, extract the branch name
-      PR_BRANCH=$GITHUB_REF
+      PR_BRANCH="$GITHUB_REF"
       PR_BRANCH="${PR_BRANCH#refs/heads/}"
   else
       echo "Unsupported event: $EVENT_NAME"
@@ -73,7 +73,7 @@ function runTests(){
   cd $current_dir
   if [[ ! -e firebolt-apis ]]; then
     echo "Cloning firebolt-apis repo with branch: $PR_BRANCH"
-    git clone --branch $PR_BRANCH https://github.com/rdkcentral/firebolt-apis.git
+    git clone --branch "$PR_BRANCH" https://github.com/rdkcentral/firebolt-apis.git
   fi
   echo "Cd to firebolt-apis repo and compile firebolt-open-rpc.json"
   cd firebolt-apis
@@ -81,7 +81,7 @@ function runTests(){
   # If OPENRPC_PR_BRANCH is set and is not 'next'
     if [ -n "$OPENRPC_PR_BRANCH" ] && [ "$OPENRPC_PR_BRANCH" != "next" ]; then
       echo "Updating OpenRPC dependency to branch: $OPENRPC_PR_BRANCH"
-      jq ".dependencies[\"@firebolt-js/openrpc\"] = \"file:../firebolt-openrpc#$OPENRPC_PR_BRANCH\"" package.json > package.json.tmp && mv package.json.tmp package.json
+      jq --arg branch "$OPENRPC_PR_BRANCH" '.dependencies["@firebolt-js/openrpc"] = ("file:../firebolt-openrpc#" + $branch)' package.json > package.json.tmp && mv package.json.tmp package.json
     fi
   fi
   npm i
@@ -220,17 +220,40 @@ function getArtifactData(){
 }
 
 function unzipArtifact(){
-  unzip report.zip
-  # Extract values from report.json
-  report=$(cat report.json | jq -r '.')
-  passes=$(echo "$report" | jq -r '.stats.passes')
-  failures=$(echo "$report" | jq -r '.stats.failures')
-  pending=$(echo "$report" | jq -r '.stats.pending')
-  skipped=$(echo "$report" | jq -r '.stats.skipped')
-  echo "Skipped=$skipped" >> "$GITHUB_ENV"
-  echo "Pending=$pending" >> "$GITHUB_ENV"
-  echo "Passes=$passes" >> "$GITHUB_ENV"
-  echo "Failures=$failures" >> "$GITHUB_ENV"
+  local report_entry tmp_report passes failures pending skipped
+
+  report_entry=$(zipinfo -1 report.zip | awk '/(^|\/)report\.json$/ {print; exit}')
+  if [[ -z "$report_entry" ]]; then
+    echo "report.json not found in report.zip" >&2
+    exit 1
+  fi
+
+  if [[ "$report_entry" == /* || "$report_entry" == *"../"* || "$report_entry" == *"..\\"* ]]; then
+    echo "Unsafe report path in artifact: $report_entry" >&2
+    exit 1
+  fi
+
+  tmp_report=$(mktemp)
+  unzip -p report.zip "$report_entry" > "$tmp_report"
+
+  passes=$(jq -er '.stats.passes | tonumber | floor' "$tmp_report")
+  failures=$(jq -er '.stats.failures | tonumber | floor' "$tmp_report")
+  pending=$(jq -er '.stats.pending | tonumber | floor' "$tmp_report")
+  skipped=$(jq -er '.stats.skipped | tonumber | floor' "$tmp_report")
+
+  rm -f "$tmp_report"
+
+  for stat_name in passes failures pending skipped; do
+    if ! [[ "${!stat_name}" =~ ^[0-9]+$ ]]; then
+      echo "Invalid ${stat_name} value in report artifact: ${!stat_name}" >&2
+      exit 1
+    fi
+  done
+
+  printf 'Skipped=%s\n' "$skipped" >> "$GITHUB_ENV"
+  printf 'Pending=%s\n' "$pending" >> "$GITHUB_ENV"
+  printf 'Passes=%s\n' "$passes" >> "$GITHUB_ENV"
+  printf 'Failures=%s\n' "$failures" >> "$GITHUB_ENV"
 }
 
 function cloneAndInstallDeps() {
